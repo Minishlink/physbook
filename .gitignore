@@ -8,3 +8,4 @@
 /app/logs/*
 /vendor/
 /app/config/parameters.yml
+/Symfony2/
