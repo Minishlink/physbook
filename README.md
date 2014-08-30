@@ -16,6 +16,10 @@ On Windows, install with [this option](https://raw.githubusercontent.com/zaggino
 Windows : [WampServer](http://www.wampserver.com/) (download 32 bits version !)
 Mac : [XAMPP](https://www.apachefriends.org/fr/download.html)
 
+(Windows) Configure PATH path to PHP.
+
+Enable openssl extension.
+
 ### Install and configure Brackets ###
 Use [Brackets](http://brackets.io) (Windows/Mac/Linux)
 recommended with extensions :
