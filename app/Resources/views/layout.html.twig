@@ -2,55 +2,10 @@
 
 {% block body %}
 <div class="container-fluid">
-    <div id="header" class="jumbotron">
-        <h1>AMJE Bordeaux</h1>
-        <p>espace membre</p>
-    </div>
+    {# menu #}
+    {% include("::nav.html.twig") %}
 
-    <div class="row">
-        <div id="menu" class="col-md-3">
-            <h3>Ton compte</h3>
-            Bienvenue, {{ app.user.prenom }}.<br>
-            <a class="btn btn-default" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-
-            {% if is_granted('ROLE_CA') %}
-            {# TODO ROLE_MEMBRE #}
-            <h3>Accès</h3>
-            <ul class="nav nav-pills nav-stacked">
-                <li{% if app.request.get('_route') == 'amjebordeaux_intranet_accueil' %} class="active"{% endif %}><a href="{{ path('amjebordeaux_intranet_accueil') }}">Accueil</a></li>
-                {% if is_granted('ROLE_BUREAU') %}
-                <li{% if app.request.get('_route') == 'amjebordeaux_admin_accueil' %} class="active"{% endif %}><a href="{{ path('amjebordeaux_admin_accueil') }}">Admin</a></li>
-                {% endif %}
-                <li{% if app.request.get('_route') == 'amje_bordeaux_prospection_accueil' %} class="active"{% endif %}><a href="{{ path('amje_bordeaux_prospection_accueil') }}">Prospection</a></li>
-            </ul>
-            <h3>Gestion</h3>
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href="https://outlook.office365.com/owa/?realm=amje-bordeaux.fr" target="_blank">Outlook</a></li>
-                <li><a href="https://amjebordeaux-my.sharepoint.com/personal/local_amje-bordeaux_fr/Documents/Forms/All.aspx" target="_blank">OneDrive</a></li>
-                <li><a href="https://amjebordeaux-my.sharepoint.com/personal/archives_amje-bordeaux_fr/Documents/Forms/All.aspx" target="_blank">Archives</a></li>
-                <li><a href="https://pro.siaje.com/amje-bordeaux/" target="_blank">SIAJE</a></li>
-            </ul>
-            {% endif %}
-            <h3>Réseaux sociaux</h3>
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href="https://www.facebook.com/amje.bordeaux" target="_blank">Facebook</a></li>
-                <li><a href="https://twitter.com/AMJE_Bordeaux" target="_blank">Twitter</a></li>
-                <li><a href="https://www.linkedin.com/company/amje-bordeaux/" target="_blank">LinkedIn</a></li>
-                <li><a href="http://www.viadeo.com/v/company/amje-bordeaux" target="_blank">Viadeo</a></li>
-                <li><a href="https://plus.google.com/+AMJEBordeauxTalence" target="_blank">Google+</a></li>
-            </ul>
-            <h3>Mouvement</h3>
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href="http://kiwi.junior-entreprises.com/" target="_blank">Kiwi</a></li>
-                <li><a href="http://junior-entreprises-bordelaises.com" target="_blank">JEB</a></li>
-                <li><a href="https://www.junior-entreprises.com" target="_blank">Les Junior-Entreprises</a></li>
-                <li><a href="http://talents.je" target="_blank">Talents.JE</a></li>
-            </ul>
-        </div>
-        <div id="content" class="col-md-9">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
+    {# contenu #}
+    {% block content %}{% endblock %}
 </div>
 {% endblock %}
