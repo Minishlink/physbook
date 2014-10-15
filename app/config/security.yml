@@ -4,7 +4,7 @@ jms_security_extra:
 
 security:
     encoders:
-        PJM\UserBundle\Entity\User: sha512
+        PJM\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_MODERATEUR:  [ROLE_USER]
@@ -14,11 +14,11 @@ security:
 
     providers:
         main:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
 
     firewalls:
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js|fonts)/
             security: false
 
         main:
@@ -30,7 +30,7 @@ security:
                 csrf_provider: form.csrf_provider
             logout:
                 path:   fos_user_security_logout
-                target: /news
+                target: /
             remember_me:
                 key: %secret%
             anonymous: true
