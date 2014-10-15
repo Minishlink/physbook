@@ -2,13 +2,23 @@
 
 ## What is this repository for? ##
 
-C'est notre PJM &bid'ss.
+Super PJM &bid'ss.
 
 ## How do I get set up? ##
 
 ### Install and configure Git ###
 
-### Install and configure WAMP Server ###
+Download Git for [Windows](http://msysgit.github.io/) or for [Mac](http://git-scm.com/download/mac).
+On Windows, install with [this option](https://raw.githubusercontent.com/zaggino/brackets-git/master/screenshots/gitInstall.png) and "Checkout as-is, commit Unix style endings".
+
+### Install and configure a PHP local server ###
+
+Windows : [WampServer](http://www.wampserver.com/) (download 32 bits version !)
+Mac : [XAMPP](https://www.apachefriends.org/fr/download.html)
+
+(Windows) Configure PATH path to PHP.
+
+Enable openssl extension.
 
 ### Install and configure Brackets ###
 Use [Brackets](http://brackets.io) (Windows/Mac/Linux)
