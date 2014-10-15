@@ -1,1 +1,16 @@
-Hello {{ name }}!
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block title %}
+	Accueil - {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="well">
+
+   <p>Sal'ss</p>
+
+</div>
+
+
+{% endblock %}
