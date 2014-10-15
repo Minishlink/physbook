@@ -1,0 +1,3 @@
+pjm_app_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PJMAppBundle:Default:index }

@@ -1,0 +1,7 @@
+parameters:
+#    pjm_app.example.class: PJM\AppBundle\Example
+
+services:
+#    pjm_app.example:
+#        class: %pjm_app.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
