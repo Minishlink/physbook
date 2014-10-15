@@ -1,0 +1,95 @@
+{# Cette vue n'hérite de personne, elle sera incluse par d'autres vues qui, elles, hériteront probablement du layout. #}
+{# Je dis « probablement » car, ici pour cette vue, on n'en sait rien et c'est une info qui ne nous concerne pas. #}
+
+<h3>Formulaire d'article</h3>
+
+{# Ici on laisse vide la vue pour l'instant, on la comblera plus tard lorsqu'on saura afficher un formulaire. #}
+<div class="well">
+    <form method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <div>
+            {# Génération du label. #}
+            {{ form_label(form.titre, "Titre de l'article") }}
+
+            {# Affichage des erreurs pour ce champ précis. #}
+            {{ form_errors(form.titre) }}
+
+            {# Génération de l'input. #}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div>
+            {{ form_label(form.contenu, "Contenu de l'article") }}
+            {{ form_errors(form.contenu) }}
+            <br>{{ form_widget(form.contenu) }}
+        </div>
+
+        {{ form_rest(form) }}
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</div>
+
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+    var $container = $('div#pjm_newsbundle_articletype_categories');
+
+    var $lienAjout = $('<a href="#" id="ajout_categorie" class="btn">Ajouter une catégorie</a>');
+    $container.append($lienAjout);
+
+    $lienAjout.click(function(e)
+    {
+        ajouterCategorie($container);
+        e.preventDefault();
+        return false;
+    });
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+
+    // On ajoute un premier champ directement s'il n'en existe pas déjà un (cas d'un nouvel article par exemple).
+    if (index == 0)
+        ajouterCategorie($container);
+    else
+    {
+        // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+        $container.children('div').each(function()
+        {
+            ajouterLienSuppression($(this));
+        });
+    }
+
+    function ajouterCategorie($container)
+    {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+                           .replace(/__name__/g, index));
+
+        ajouterLienSuppression($prototype);
+
+        $container.append($prototype);
+
+        index++;
+    }
+
+    function ajouterLienSuppression($prototype)
+    {
+        $lienSuppression = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+        $prototype.append($lienSuppression);
+
+        $lienSuppression.click(function(e)
+        {
+            index--;
+            $prototype.remove();
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            return false;
+        });
+    }
+});
+</script>
