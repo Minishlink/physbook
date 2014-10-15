@@ -13,7 +13,7 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        main:
+        fos_userbundle:
             id: fos_user.user_provider.username_email
 
     firewalls:
@@ -23,7 +23,7 @@ security:
 
         main:
             pattern: ^/
-            provider:  main
+            provider:  fos_userbundle
             form_login:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
