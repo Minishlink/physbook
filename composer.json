@@ -21,7 +21,6 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "jms/security-extra-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "dev-master",
         "winzou/console-bundle": "dev-master"
     },
