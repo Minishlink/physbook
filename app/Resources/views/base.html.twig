@@ -21,7 +21,18 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            {% javascripts
+                '%kernel.root_dir%/../app/Resources/public/js/jquery.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/moment*.js'
+                '%kernel.root_dir%/../app/Resources/public/js/bootstrap.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/bootstrap-*.js'
+                '%kernel.root_dir%/../app/Resources/public/js/chosen.jquery.min.js'
+                filter=''
+                output='js/extra.js'
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
             <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         {% endblock %}
     </body>
