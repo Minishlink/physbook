@@ -1,11 +1,20 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-<div class="container-fluid">
-    {# menu #}
-    {% include("::nav.html.twig") %}
 
-    {# contenu #}
-    {% block content %}{% endblock %}
+{# menu #}
+{% include("::nav.html.twig") %}
+
+{# contenu #}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 </div>
+
+{# footer #}
+{% include("::footer.html.twig") %}
+
 {% endblock %}

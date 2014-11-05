@@ -1,5 +1,15 @@
 {% extends "::layout.html.twig" %}
 
+{% block stylesheets %}
+    {% stylesheets
+        '%kernel.root_dir%/../app/Resources/public/less/sections/accueil.less'
+        filter='less,cssrewrite'
+        output='css/design-accueil.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block content %}
 
 	{% block pjm_app_body %}

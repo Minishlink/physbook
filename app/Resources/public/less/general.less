@@ -1,6 +1,17 @@
+@import "custom-bootstrap.less";
+@import "layout/layout.less";
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
+
+    background-color: @bg-color;
+    margin-bottom: 60px; // hauteur du footer
 }
 
 .panel {
