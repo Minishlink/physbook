@@ -22,11 +22,12 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             {% javascripts
-                '%kernel.root_dir%/../app/Resources/public/js/jquery.min.js'
-                '%kernel.root_dir%/../app/Resources/public/js/moment*.js'
-                '%kernel.root_dir%/../app/Resources/public/js/bootstrap.min.js'
-                '%kernel.root_dir%/../app/Resources/public/js/bootstrap-*.js'
-                '%kernel.root_dir%/../app/Resources/public/js/chosen.jquery.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/jquery.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/moment*.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/bootstrap.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/bootstrap-*.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/chosen.jquery.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/nav.js'
                 filter='?yui_js'
                 output='js/extra.js'
             %}
