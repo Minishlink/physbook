@@ -19,9 +19,50 @@
     }
 
     #liste-menu {
-        li {
-            &:active {
 
+        // slider en mode desktop
+        @media (min-width: 992px) {
+            .enable-slider {
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                display: inline-block;
+
+                > li {
+                    > a {
+                        width: @slider_width*2;
+                    }
+
+                    &.nav-slider {
+                        transition: left 0.42s ease-in-out;
+
+                        position: absolute;
+                        height: 3px;
+                        width: @slider_width;
+                        bottom: 0;
+                        background-color: #ebbf00;
+                    }
+
+                    .generer-slider(@max, @i: 1) when (@i <= @max) {
+                        &:nth-child(@{i}) {
+                            &.active  ~ .nav-slider {
+                                left: ((@i - 0.5) * @slider_width);
+                            }
+
+                            &:hover,
+                            &:focus {
+                                ~ .nav-slider {
+                                    left: (@i - 0.75) * 2*@slider_width !important;
+                                }
+                            }
+
+                        }
+
+                        .generer-slider(@max, (@i + 1));
+                    }
+
+                    .generer-slider(5);
+                }
             }
         }
     }
