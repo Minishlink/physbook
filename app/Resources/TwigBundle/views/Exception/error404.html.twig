@@ -1,0 +1,24 @@
+{% extends "::layout.error.html.twig" %}
+
+{% block title %}
+	Page non trouvée | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="alert alert-danger">
+            <p>
+                Cette page n'existe pas ou n'a jamais existée ! DMD.
+            </p>
+        </div>
+        <div class="alert alert-warning">
+            <p>
+                Erreur {{ status_code }} : {{ status_text }}
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
