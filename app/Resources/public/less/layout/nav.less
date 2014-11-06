@@ -5,8 +5,22 @@
         }
     }
 
+    @media (min-width: @screen-sm-min) {
+        #chargement {
+            position: absolute;
+            left: 0;
+        }
+    }
+
+    @media (max-width: @screen-xs-max) {
+        #chargement {
+            position: absolute;
+            left: 50%;
+        }
+    }
+
     .navbar-brand {
-        background: url('../../images/general/Physsbook-G-200.png') no-repeat;
+        background: url('images/general/Physsbook-G-200.png') no-repeat;
         background-position: center;
         background-size: 40px;
         padding-left:68px;
