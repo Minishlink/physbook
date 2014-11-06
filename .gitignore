@@ -9,4 +9,6 @@
 /vendor/
 /app/config/parameters.yml
 /Symfony2/
+/web/css/
+/web/js/
 /composer.lock
