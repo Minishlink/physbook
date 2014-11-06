@@ -1,0 +1,38 @@
+{% extends "PJMUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% set loginPage = true %}
+
+{% block fos_user_content %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin" role="form">
+    {% if error %}
+        <div id="alert" class="alert alert-warning" role="alert">{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="E-mail ou Nom d'utilisateur" required="required" autofocus>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+            <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required="required">
+        </div>
+    </div>
+
+    <div class="checkbox">
+        <label>
+          <input type="checkbox" id="remember_me" name="_remember_me" value="on"> {{ 'security.login.remember_me'|trans }}
+        </label>
+    </div>
+
+    <button class="btn" id="_submit" name="_submit" type="submit">Connexion</button>
+    <br>
+    <br>
+    <div id="forgottenPwd"><span style="color:rgb(160,160,160)" class="glyphicon glyphicon-question-sign"></span> <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a></div>
+</form>
+
+{% endblock fos_user_content %}

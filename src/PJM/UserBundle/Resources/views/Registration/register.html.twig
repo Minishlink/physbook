@@ -1,0 +1,47 @@
+{% extends "AMJEBordeauxUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% set registerPage = true %}
+
+{% block fos_user_content %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="fos_user_registration_register" role="form">
+
+    <div class="form-group">
+        {{ form_widget(form.prenom, {'attr': {'placeholder': 'Prénom'}}) }}
+        {{ form_errors(form.prenom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.promo, {'attr': {'class': 'form-control', 'placeholder': 'Promotion'}}) }}
+        <span class="aide-form">Ton année d'entrée aux Arts.</span>
+        {{ form_errors(form.promo) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse e-mail'}}) }}
+        <span class="aide-form">Ton adresse ENSAM.</span>
+        {{ form_errors(form.email) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+        {{ form_errors(form.plainPassword.first) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Vérification du mot de passe'}}) }}
+        {{ form_errors(form.plainPassword.second) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    <button class="btn" id="_submit" name="_submit" type="submit">Inscription</button>
+
+</form>
+
+{% endblock fos_user_content %}

@@ -1,14 +1,36 @@
-{% extends "::layout.html.twig" %}
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+{% stylesheets
+    '%kernel.root_dir%/../app/Resources/public/less/UserBundle.less'
+    filter='less,cssrewrite'
+    output='css/design-connexion.css'
+%}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
 
 {% block body %}
 
-    {% for key, message in app.session.flashbag.all() %}
-        <div class="alert alert-warning">
-        {{ message|trans({}, 'FOSUserBundle') }}
-        </div>
-    {% endfor %}
+<header>
+<img src="{{ asset('images/logo.png') }}" alt="Logo d'AMJE Bordeaux" />
+</header>
 
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <ul class="menu">
+                    <li{% if loginPage is defined %} class="active"{% endif %}><a style="float:left;" href="{{ path('fos_user_security_login') }}">CONNEXION</a></li>
+                    <li{% if registerPage is defined %} class="active"{% endif %}><a style="float:right;"  href="{{ path('fos_user_registration_register') }}">INSCRIPTION</a></li>
+            </ul>
+            <div id="connexion_wrapper">
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
 
 {% endblock %}
