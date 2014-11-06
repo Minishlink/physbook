@@ -1,3 +1,7 @@
 pjm_app_homepage:
     path:     /
-    defaults: { _controller: PJMAppBundle:Default:index }
+    defaults: { _controller: PJMAppBundle:App:index }
+
+pjm_app_a_propos:
+    path:     /a-propos
+    defaults: { _controller: PJMAppBundle:App:aPropos }
