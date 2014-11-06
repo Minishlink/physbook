@@ -3,7 +3,7 @@
 {% block stylesheets %}
 {% stylesheets
     '%kernel.root_dir%/../app/Resources/public/less/UserBundle.less'
-    filter='less,cssrewrite'
+    filter='less,cssrewrite,?yui_css'
     output='css/design-connexion.css'
 %}
     <link rel="stylesheet" href="{{ asset_url }}" />

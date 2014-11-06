@@ -10,7 +10,7 @@
         {% block stylesheets %}
         {% stylesheets
             '%kernel.root_dir%/../app/Resources/public/less/custom-bootstrap.less'
-            filter='less,cssrewrite'
+            filter='less,cssrewrite,?yui_css'
             output='css/design.css'
         %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -27,7 +27,7 @@
                 '%kernel.root_dir%/../app/Resources/public/js/bootstrap.min.js'
                 '%kernel.root_dir%/../app/Resources/public/js/bootstrap-*.js'
                 '%kernel.root_dir%/../app/Resources/public/js/chosen.jquery.min.js'
-                filter=''
+                filter='?yui_js'
                 output='js/extra.js'
             %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
