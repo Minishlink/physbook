@@ -1,5 +1,7 @@
 {% extends "::layout.error.html.twig" %}
 
+{% block pageName %}error403{% endblock %}
+
 {% block title %}
 	Accès non autorisé | {{ parent() }}
 {% endblock %}
@@ -7,17 +9,17 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="alert alert-danger">
-            <p>
-                Tu n'as pas accès à cette page. DMD.
-            </p>
-        </div>
-        <div class="alert alert-warning">
-            <p>
-                Erreur {{ status_code }} : {{ status_text }}
-            </p>
-        </div>
+    <div class="col-md-12">
+        <p class="text-center text-uppercase">
+            <span class="font-blackout_midnight" style="font-size: 8em;">ERROR #403</span><br>
+            <strong style="font-size: 6em;">Accès refusé</strong><br>
+            <span class="font-blackout_two_am" style="font-size: 6em;">#DMD</span>
+        </p>
+
+        <p style="font-size: 2em;">
+            Sacripan, ce n'est pas de ton âge.<br>
+            <a href="{{ path('pjm_app_homepage') }}">Reviens sur le droit chemin, clique ici.</a>
+        </p>
     </div>
 </div>
 

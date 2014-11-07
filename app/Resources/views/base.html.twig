@@ -37,7 +37,7 @@
         <meta name="msapplication-TileImage" content="{{ asset('images/favicon/mstile-144x144.png') }}">
         <meta name="application-name" content="Phy'ssbook">
     </head>
-    <body>
+    <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}
         {% block javascripts %}
             {% javascripts
