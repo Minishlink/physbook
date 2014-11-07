@@ -2,6 +2,18 @@
 
 {% set error_page = true %}
 
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    '%kernel.root_dir%/../app/Resources/public/js/nav.js'
+    '%kernel.root_dir%/../app/Resources/public/js/chargement.js'
+    filter='?yui_js'
+    output='js/menu.js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
 {% block body %}
 
 {# menu #}

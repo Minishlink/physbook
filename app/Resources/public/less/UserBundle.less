@@ -1,27 +1,36 @@
 @import "custom-bootstrap.less";
 
-@gris: lighten(@je_gris, 30%);
-
-header {
-    position: relative;
-    text-align: center;
-    max-height: 20%;
-    width:auto;
-}
-
-header img {
-    width:30%;
+body {
+    background-color: #e1e1e1;
 }
 
 #connexion_wrapper {
-    background-color: @je_bleu;
-    border-top: 0.5em solid @je_orange;
+    background-color: @rouge;
+    border: 0.5em solid lighten(@rouge, 10%);
 
     color: white;
     text-align: center;
-    max-width: 380px;
-    padding: 30px 35px 30px;
-    margin: 0 auto;
+}
+
+#logo {
+    padding: 1em 0 1.5em;
+
+    img {
+        width: 30%;
+    }
+}
+
+#pingouin {
+    margin-top: 10%;
+    text-align: center;
+
+    #pingouin-ferme {
+        display: none;
+    }
+
+    img {
+        width: 60%;
+    }
 }
 
 #forgottenPwd {
@@ -34,12 +43,12 @@ header img {
 
 .form-control {
     background-color: white;
-    border:0;
+    border:0.25em solid #e6e6e6;
 }
 
 .form-group {
     ul { // erreur formulaire inscription
-        color: @je_orange;
+        color: orange;
         padding: 0;
         font-weight: 400;
         list-style: none;
@@ -50,7 +59,7 @@ header img {
 
 
 .input-group-addon {
-    background-color: @gris;
+    background-color: #949494;
     border:0;
     color: white;
 }
@@ -62,29 +71,6 @@ header img {
 }
 
 .btn {
-    background-color: @je_orange;
+    background-color: orange;
 }
 
-.menu {
-    font-size: 150%;
-    clear:both;
-    margin-bottom: 0;
-    padding-left: 0; // Override default ul/ol
-    list-style: none;
-    &:extend(.clearfix all);
-
-    > li {
-        > a {
-            color: @gris;
-            &:hover,
-            &:focus {
-                text-decoration: none;
-            }
-        }
-
-        &.active > a {
-            font-weight: 400;
-            color: @je_bleu;
-        }
-    }
-}
