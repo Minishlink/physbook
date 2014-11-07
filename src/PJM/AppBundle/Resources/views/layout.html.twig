@@ -1,14 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block stylesheets %}
-    {% stylesheets
-        '%kernel.root_dir%/../app/Resources/public/less/sections/accueil.less'
-        filter='less,cssrewrite,?yui_css'
-        output='css/design-accueil.css'
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
+{% block pageName %}accueil{% endblock %}
 
 {% block content %}
 
