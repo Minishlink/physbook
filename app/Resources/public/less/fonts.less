@@ -1,0 +1,27 @@
+.include-custom-font("blackout_midnight-webfont");
+.include-custom-font("blackout_sunrise-webfont");
+.include-custom-font("blackout_two_am-webfont");
+.include-custom-font(@family, @weight: normal, @style: normal) {
+    @font-face {
+        font-family: @family;
+        src:url('fonts/@{family}.eot');
+        src:url('fonts/@{family}.eot?#iefix') format('embedded-opentype'),
+            url('fonts/@{family}.woff') format('woff'),
+            url('fonts/@{family}.ttf') format('truetype'),
+            url('fonts/@{family}.svg#@{family}') format('svg');
+        font-weight: @weight;
+        font-style: @style;
+    }
+}
+
+.font-blackout_midnight {
+    font-family: "blackout_midnight-webfont" !important;
+}
+
+.font-blackout_sunrise {
+    font-family: "blackout_sunrise-webfont" !important;
+}
+
+.font-blackout_two_am {
+    font-family: "blackout_two_am-webfont" !important;
+}
