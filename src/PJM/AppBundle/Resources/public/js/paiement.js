@@ -4,13 +4,6 @@ $(document).ready(function () {
 
         var req = $.ajax({
             type: "POST",
-            beforeSend: function (request)
-            {
-                request.setRequestHeader("Access-Control-Allow-Origin", "*");
-                request.setRequestHeader("Authorization", "Bearer MTsxMztUR3F4ZUZwdDFs");
-                request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            },
-            crossDomain: true,
             url: "https://rest-pp.s-money.fr/commerce/payments/smoney",
             data: { amount: 20 },
             cache: false
