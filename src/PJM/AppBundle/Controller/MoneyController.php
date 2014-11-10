@@ -29,8 +29,8 @@ class MoneyController extends Controller
             "identifier" => ""
         );
 
-        // post(url, headers, content)
         $response = $buzz->post($url, $headers, $content);
+        //$response = $buzz->submit($url, $content, "POST", $headers);
 
         if ($response->getStatusCode() != 200) {
             // échec

@@ -4,13 +4,20 @@ $(document).ready(function () {
 
         var req = $.ajax({
             type: "POST",
-            url: "https://rest.s-money.fr/commerce/payments/smoney",
+            beforeSend: function (request)
+            {
+                request.setRequestHeader("Access-Control-Allow-Origin", "*");
+                request.setRequestHeader("Authorization", "Bearer ***REMOVED***");
+                request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            },
+            crossDomain: true,
+            url: "https://rest-pp.s-money.fr/commerce/payments/smoney",
             data: { amount: 20 },
             cache: false
         });
 
         req.done(function (data) {
-            $("#infos_paiement").hide().html(data).show("slow", "swing");
+            $("#return_paiement").hide().html(data).show("slow", "swing");
             console.log('ok');
         });
 
