@@ -1,0 +1,27 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block title %}
+	Paiement | {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    '@PJMAppBundle/Resources/public/js/paiement.js'
+    filter='?yui_js'
+    output='js/paiement.js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="well">
+
+    <button id="init_paiement">Initialiser la demande de paiement</button>
+    <div id="infos_paiement">{{ response }}</div>
+
+</div>
+
+{% endblock %}
