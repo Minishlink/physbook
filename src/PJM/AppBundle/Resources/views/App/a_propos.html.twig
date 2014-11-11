@@ -1,15 +1,46 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
+{% block pageName %}a-propos{% endblock %}
+
 {% block title %}
 	&Agrave; propos | {{ parent() }}
 {% endblock %}
 
 {% block pjm_app_body %}
 
-<div class="well">
+<h1 class="font-blackout_sunrise">&Agrave; propos de Phy'sbook</h1>
 
-   <p>Super PJM</p>
+<h2>Qui sommes-nous ?</h2>
+<p>
+    Il était une fois, en l’an 213, cinq vaillants Gadzarts se sacrifiant pour offrir à leur promotion un outil magique... Phy’sbook. Durant 6 mois entiers, ces cinq valeureux PGs ont errés dans les salles des Arts et Métiers et ont vécu, reclus, devant leurs ordinateurs pour gnasser nuit et jour. Leur courage, leur fratern’ss et leur motivation (ainsi que les snickers du C’vis) leur ont permis de tenir durant tout ce temps et de mener à bien cette mission pour laquelle Gorgu les avait élus... Résultat : Phy’sbook est le premier réseau social mondial, devant celui créé par Mark Zukerberg et que nous ne citerons pas.
+</p>
 
+<h2>Comment est né Phy'sbook ?</h2>
+<p>
+    Nous sommes partis d’un simple constat : il manquait aux Arts un vrai moyen de communication attractif externe et interne. En effet, de très nombreuses informations circulaient entre les PGs, mais celles-ci étaient éparpillées dans les différents moyens de communication et avaient besoin d’être centralisées. De plus, la vitrine de notre vie associative n’était pas complète ni attractive.<br>
+    Le site de l’Association des élèves représente la partie « externe » de notre projet et montre à chaque visiteur tout ce qu’il est possible de faire à l’école. Phy’sbook représente la partie « interne » de notre projet. C’est une interface numérique dont le but est de faciliter la vie des PGs au tabagn’ss : gain de temps pour une meilleure organisation, concentration des infos, utilisation simplifiée, ... Phy’sbook révolutionne la vie des PGs !
+</p>
+
+<h2>Qu’est-ce que Phy’sbook peut t’apporter ?</h2>
+<p>
+    Avec Phy’sbook, tu peux :
+    <ul>
+        <li>Consulter le solde de tes comptes et les recharger</li>
+        <li>Être au courant des actualités du tabagn'ss (Thuyss, UAI, calendrier des évènements, ...)</li>
+        <li>Avoir accès aux archives du Thuyss, aux photos de la prom’ss, aux thuysses des Zi Zambirse</li>
+    </ul>
+</p>
+<span class="space"></span>
+<div class="row">
+    <div class="col-xs-4">
+        <img style="width:50%" class="pull-right img-responsive" src="{{ asset('images/general/logo_bg-blanc.png') }}">
+    </div>
+    <div class="col-xs-6">
+        <p>
+            <img style="width:80%" class="img-responsive" src="{{ asset('images/general/physbook_bg-transp.png') }}"><br>
+            <span style="font-size: larger;">Phy’sbook est bouffam’ss et le restera a toüt tap’ss !</span>
+        </p>
+    </div>
 </div>
 
 {% endblock %}
