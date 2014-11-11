@@ -91,7 +91,7 @@ fos_user:
         mailer: fos_user.mailer.twig_swift
     from_email:
         address:        louis.lagrange@gadz.org
-        sender_name:    Phy'ssbook
+        sender_name:    Phy'sbook
     registration:
         form:
             type: pjm_user_registration
