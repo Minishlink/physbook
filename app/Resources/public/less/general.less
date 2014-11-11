@@ -1,5 +1,6 @@
 @import "custom-bootstrap.less";
 @import "fonts.less";
+@import "text.less";
 @import "layout/layout.less";
 @import "sections/accueil.less";
 @import "sections/erreurs.less";
@@ -17,6 +18,10 @@ body {
     background-color: white;
 }
 
+#content {
+    margin-bottom: 3em;
+}
+
 .panel {
     box-shadow:unset;
 }
@@ -24,6 +29,17 @@ body {
 .space {
     display: block;
     height: 1em;
+}
+
+.debuttonize {
+    background-color: transparent;
+    color: white;
+    border: 0;
+
+    &:hover {
+        //color: darken(currentColor, 10%);
+        text-decoration: underline;
+    }
 }
 
 .glyphicon-refresh-animate {
