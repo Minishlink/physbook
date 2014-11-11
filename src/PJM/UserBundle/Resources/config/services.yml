@@ -2,6 +2,8 @@ parameters:
 #    pjm_user.example.class: PJM\UserBundle\Example
 
 services:
-#    pjm_user.example:
-#        class: %pjm_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    pjm_user.registration.form.type:
+        class: PJM\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: pjm_user_registration }
