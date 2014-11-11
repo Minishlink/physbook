@@ -1,24 +1,29 @@
 body {
-    &.error403 {
-        background-color: #ed98ec;
-
+    &.error {
         #content {
+            margin-top: 3%;
+            word-wrap: break-word;
             color: white;
+            display: block !important;
+        }
 
-            a {
-                color: #5a2559;
+        &.error403 {
+            background-color: #ed98ec;
+
+            #content {
+                a {
+                    color: #5a2559;
+                }
             }
         }
-    }
 
-    &.error404 {
-        background-color: #57c0f6;
+        &.error404 {
+            background-color: #57c0f6;
 
-        #content {
-            color: white;
-
-            a {
-                color: #0a1357;
+            #content {
+                a {
+                    color: #0a1357;
+                }
             }
         }
     }
