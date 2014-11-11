@@ -8,19 +8,16 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-12">
-        <p class="text-center text-uppercase">
-            <span class="font-blackout_midnight" style="font-size: 8em;">ERROR #403</span><br>
-            <strong style="font-size: 6em;">Accès refusé</strong><br>
-            <span class="font-blackout_two_am" style="font-size: 6em;">#DMD</span>
-        </p>
 
-        <p style="font-size: 2em;">
-            Sacripan, ce n'est pas de ton âge.<br>
-            <a href="{{ path('pjm_app_homepage') }}">Reviens sur le droit chemin, clique ici.</a>
-        </p>
-    </div>
-</div>
+<p class="text-center text-uppercase">
+    <span class="font-blackout_midnight" style="font-size: 8em;">ERROR #403</span><br>
+    <strong style="font-size: 6em;">Accès refusé</strong><br>
+    <span class="font-blackout_two_am" style="font-size: 6em;">#DMD</span>
+</p>
+
+<p style="font-size: 2em;">
+    Sacripan, ce n'est pas de ton âge.<br>
+    <a href="{{ path('pjm_app_homepage') }}">Reviens sur le droit chemin, clique ici. <span class="glyphicon glyphicon-chevron-right"></span> <img class="militaire pull-right img-responsive" src="{{ asset('images/erreurs/Militaire.png') }}"></a>
+</p>
 
 {% endblock %}

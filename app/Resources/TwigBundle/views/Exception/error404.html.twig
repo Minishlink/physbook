@@ -8,19 +8,15 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-12">
-        <p class="text-center text-uppercase">
-            <span class="font-blackout_midnight" style="font-size: 8em;">ERROR #404</span><br>
-            <span style="font-size: 6em;"><strong>Page introuvable</strong></span><br>
-            <span class="font-blackout_two_am" style="font-size: 6em;">#DMD</span>
-        </p>
+<p class="text-center text-uppercase">
+    <span class="font-blackout_midnight" style="font-size: 8em;">ERROR #404</span><br>
+    <span style="font-size: 6em;"><strong>Page introuvable</strong></span><br>
+    <span class="font-blackout_two_am" style="font-size: 6em;">#DMD</span>
+</p>
 
-        <p style="font-size: 2em;">
-            Pauvre petit chat.<br>
-            <a href="{{ path('pjm_app_homepage') }}">Si tu es perdu, clique ici.</a>
-        </p>
-    </div>
-</div>
+<p style="font-size: 2em;">
+    Pauvre petit chat.<br>
+    <a href="{{ path('pjm_app_homepage') }}">Si tu es perdu, clique ici. <span class="glyphicon glyphicon-chevron-right"></span> <img class="chat pull-right img-responsive" src="{{ asset('images/erreurs/Chat.png') }}"></a>
+</p>
 
 {% endblock %}
