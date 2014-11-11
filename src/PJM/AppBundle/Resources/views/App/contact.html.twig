@@ -1,0 +1,32 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}contact{% endblock %}
+
+{% block title %}
+	Contact | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="col-md-8 col-md-offset-2">
+    <h1 class="font-blackout_sunrise text-rouge">Nous contacter</h1>
+
+    {% if envoi == true %}<div class="alert alert-success">Message envoyé.</div>{% endif %}
+
+    <form method="post" role="form">
+        <div class="form-group">
+            {{ form_widget(form.sujet, {'attr': {'class': 'form-control', 'placeholder': 'Sujet'}}) }}
+            {{ form_errors(form.sujet) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Contenu'}}) }}
+            {{ form_errors(form.contenu) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <button class="debuttonize text-rouge text-larger pull-right"><span class="font-blackout_sunrise">Envoyer <span class="glyphicon glyphicon-chevron-right"></span></span></button>
+    </form>
+</div>
+
+{% endblock %}

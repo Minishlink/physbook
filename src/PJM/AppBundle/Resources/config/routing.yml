@@ -6,6 +6,10 @@ pjm_app_a_propos:
     path:     /a-propos
     defaults: { _controller: PJMAppBundle:App:aPropos }
 
+pjm_app_contact:
+    path:     /contact
+    defaults: { _controller: PJMAppBundle:App:contact }
+
 pjm_app_paiement:
     path:     /paiement
     defaults: { _controller: PJMAppBundle:Money:envoyerPaiement }
