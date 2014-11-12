@@ -14,6 +14,11 @@ class AppController extends Controller
         return $this->render('PJMAppBundle:App:index.html.twig');
     }
 
+    public function enConstructionAction()
+    {
+        return $this->render('PJMAppBundle:App:en_construction.html.twig');
+    }
+
     public function aProposAction()
     {
         return $this->render('PJMAppBundle:App:a_propos.html.twig');
@@ -59,5 +64,17 @@ class AppController extends Controller
             'form' => $form->createView(),
             'envoi' => $envoi
         ));
+    }
+
+    public function supportTechniqueAction()
+    {
+        return $this->enConstructionAction();
+        //return $this->render('PJMAppBundle:App:support_technique.html.twig');
+    }
+
+    public function planDuSiteAction()
+    {
+        return $this->enConstructionAction();
+        //return $this->render('PJMAppBundle:App:plan_du_site.html.twig');
     }
 }

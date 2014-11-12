@@ -10,6 +10,14 @@ pjm_app_contact:
     path:     /contact
     defaults: { _controller: PJMAppBundle:App:contact }
 
+pjm_app_support_technique:
+    path:     /support-technique
+    defaults: { _controller: PJMAppBundle:App:supportTechnique }
+
+pjm_app_plan_du_site:
+    path:     /plan-du-site
+    defaults: { _controller: PJMAppBundle:App:planDuSite }
+
 pjm_app_paiement:
     path:     /paiement
     defaults: { _controller: PJMAppBundle:Money:envoyerPaiement }
