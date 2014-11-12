@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // slider
-    $('ul.enable-slider').append('<div id="nav-slider" class="hidden-xs"></div>');
+    $('ul.enable-slider').append('<div id="nav-slider" class="hidden-collapsed"></div>');
 
     initSlider();
 

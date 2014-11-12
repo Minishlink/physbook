@@ -27,17 +27,37 @@
         z-index: 1;
     }
 
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: @grid-float-breakpoint) {
         #chargement {
             position: absolute;
             left: 0;
         }
+
+        .hidden-collapsed {
+            display: block;
+        }
+
+        .visible-collapsed, .visible-collapsed-inline {
+            display: none;
+        }
     }
 
-    @media (max-width: @screen-xs-max) {
+    @media (max-width: (@grid-float-breakpoint - 1)) {
         #chargement {
             position: absolute;
             left: 50%;
+        }
+
+        .hidden-collapsed {
+            display: none;
+        }
+
+        .visible-collapsed {
+            display: block;
+        }
+
+        .visible-collapsed-inline {
+            display: inline;
         }
     }
 
