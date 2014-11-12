@@ -19,7 +19,7 @@ class MoneyController extends Controller
             "Authorization" => "Bearer ***REMOVED***",
         );
         $content = array(
-            "amount" => 0,
+            "amount" => 1,
             "receiver" => "aeensambordeaux",
             "transactionId" => "0",
             "amountEditable" => true,
@@ -33,15 +33,25 @@ class MoneyController extends Controller
         //$response = $buzz->submit($url, $content, "POST", $headers);
 
         if ($response->getStatusCode() != 200) {
-            // échec
+            $erreur = array(
+                'niveau' => 'error',
+                'code' => $response->getStatusCode(),
+                'contenu' => $response->getReasonPhrase()
+            );
         }
 
-        $content = $response->getContent();
-        $data = json_decode($content);
+        $data = json_decode($response->getContent(), true);
+
+        $erreur = array(
+            'niveau' => 'warning',
+            'code' => $data['Code'],
+            'contenu' => $data['ErrorMessage']
+        );
 
         return $this->render('PJMAppBundle:Money:index.html.twig', array(
-            'response' => $response,
-            'requete' => $buzz->getLastRequest()
+            'response' => $data,
+            'requete' => $buzz->getLastRequest(),
+            'erreur' => isset($erreur) ? $erreur : null
         ));
     }
 }
