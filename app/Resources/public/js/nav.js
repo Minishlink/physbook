@@ -71,7 +71,7 @@ $(document).ready(function () {
         var cible = $(this).attr('data-target');
         // si un sous-menu est visible
         if($('ul[id^="menu-"]').is(":visible")) {
-            // on cache tous les sous-menus visibles autre que la cible
+            // on cache tous les sous-menus visibles autres que la cible
             $('ul[id^="menu-"]:visible').not(cible).slideUp(200, function() {
                 // on affiche la cible
                 $(cible).slideDown();
@@ -82,7 +82,8 @@ $(document).ready(function () {
         }
     });
 
-    $('.navbar-toggle').click(function () {
+    // si on clique sur le bouton navbar-toggle on cache les menus visibles
+    $('.navbar-toggle, .navbar-header').click(function () {
         $('ul[id^="menu-"]:visible').slideUp(100);
     });
 
