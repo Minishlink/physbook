@@ -63,6 +63,13 @@ $(document).ready(function () {
         e.preventDefault();
         $($(this).attr('data-target')).toggle();
     });
+
+    $('#menu').hover(function() {
+        $('.navbar-brand').addClass('active');
+    },
+    function () {
+        $('.navbar-brand').removeClass('active');
+    });
 });
 
 
