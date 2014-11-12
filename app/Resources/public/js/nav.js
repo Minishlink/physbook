@@ -6,6 +6,8 @@ $(document).ready(function () {
 
     $('ul.enable-slider li a').hover(
         function() {
+            $(this + ' img.active').show();
+
             var left = $(this).parent().position().left;
             var width = $(this).parent().width()+1;
             var target = $(this).attr('data-target');
