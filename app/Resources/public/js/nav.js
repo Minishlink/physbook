@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     initSlider();
 
-    $('ul.enable-slider li a').hover(
+    $('ul.enable-slider > li > a').hover(
         function() {
             // lorsque la souris survole le lien, on affiche l'icône correspondante en rouge
             $(this).children('img').hide(0);
