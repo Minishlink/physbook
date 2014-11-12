@@ -1,18 +1,14 @@
 #menu {
-    #sous-menu {
-        ul {
-            display: none;
-        }
-
-        #menu-vie {
+    .sous-menu {
+        &#menu-vie {
             background-color: rgba(182, 57, 56, 0.9);
         }
 
-        #menu-assos {
+        &#menu-assos {
             background-color: rgba(254, 191, 0, 0.9);
         }
 
-        #menu-consos {
+        &#menu-consos {
             background-color: rgba(235, 102, 29, 0.9);
         }
 
@@ -20,6 +16,7 @@
             color: white;
         }
 
+        display: none;
         position: fixed;
         top: @navbar-height;
         left: 0;
@@ -95,10 +92,6 @@
             z-index:0;
         }
 
-        img.active {
-            display: none;
-        }
-
         #nav-slider-active {
             position: absolute;
 
@@ -110,6 +103,10 @@
             background-color: @gris;
 
             z-index:0;
+        }
+
+        img.active {
+            display: none;
         }
 
         .navbar-nav {

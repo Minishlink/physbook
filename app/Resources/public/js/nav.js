@@ -82,6 +82,10 @@ $(document).ready(function () {
         }
     });
 
+    $('.navbar-toggle').click(function () {
+        $('ul[id^="menu-"]:visible').slideUp(100);
+    });
+
     $('#menu').hover(function() {
         // on colore le logo phy'sbook en rouge
         $('.navbar-brand').addClass('active');
