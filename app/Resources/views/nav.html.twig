@@ -14,11 +14,37 @@
 
             <div class="collapse navbar-collapse" id="liste-menu">
                 <ul class="nav navbar-nav enable-slider">
-                    <li class="active"><a href="#" class="disable-fade" data-toggle="sous-menu-collapse" data-target="#menu-consos">Consos</a></li>
-                    <li><a class="disable-fade" href="#">Vie à l'ec'ss</a></li>
-                    <li><a class="disable-fade" href="#">Les assos</a></li>
-                    <li><a class="disable-fade" href="#">Thuyss</a></li>
-                    <li><a class="disable-fade" href="#">Tutos</a></li>
+                    <li>
+                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-vie">
+                            <img class="height-large" src="{{ asset('images/header/Fignos-G.png') }}">
+                            Vie à l'ec's
+                        </a>
+                    </li>
+                    <li>
+                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-assos">
+                            <img class="height-large" src="{{ asset('images/header/Groupe-G.png') }}">
+                            Assos
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#" class="disable-fade" data-toggle="sous-menu-collapse" data-target="#menu-consos">
+                            <img class="height-large" src="{{ asset('images/header/Fast-food-G.png') }}">
+                            Consos
+                        </a>
+                        <div id="nav-slider-active"></div>
+                    </li>
+                    <li>
+                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-thuyss">
+                            <img class="height-large" src="{{ asset('images/header/Fignos-G.png') }}">
+                            Thuyss
+                        </a>
+                    </li>
+                    <li>
+                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-tutos">
+                            <img class="height-large" src="{{ asset('images/header/Tuto-G.png') }}">
+                            Tutos
+                        </a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" title="Rechercher"><span class="glyphicon glyphicon-search"></span><span class="visible-xs-inline"> Rechercher</span></a></li>
@@ -30,13 +56,7 @@
         </div>
     </nav>
     <section id="sous-menu">
-        <ul id="menu-consos">
-            <li><a href="">Pian's</a></li>
-            <li><a href="">C'Vis</a></li>
-            <li><a href="">Brag's</a></li>
-            <li><a href="">Paniers</a></li>
-        </ul>
-        <ul id="menu-vie-ecole">
+        <ul id="menu-vie">
             <li><a href="">Fin's</a></li>
             <li><a href="">Élections</a></li>
             <li><a href="">Infos</a></li>
@@ -46,6 +66,12 @@
             <li><a href="">Asso</a></li>
             <li><a href="">AMJE Bordeaux</a></li>
             <li><a href="">UAI</a></li>
+        </ul>
+        <ul id="menu-consos">
+            <li><a href="">Pian's</a></li>
+            <li><a href="">C'Vis</a></li>
+            <li><a href="">Brag's</a></li>
+            <li><a href="">Paniers</a></li>
         </ul>
     </section>
 </section>
