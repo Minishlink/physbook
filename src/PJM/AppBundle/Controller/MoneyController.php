@@ -13,8 +13,8 @@ class MoneyController extends Controller
         $curl->setOption(CURLOPT_SSL_VERIFYHOST, false);
         $curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
 
-        $url = 'https://rest-pp.s-money.fr/commerce/payments/smoney';
-        // #FUTURE https://rest.s-money.fr/commerce/payments/smoney
+        $url = '***REMOVED***';
+        // #FUTURE ***REMOVED***
         $headers = array(
             "Authorization" => "Bearer ***REMOVED***",
         );
