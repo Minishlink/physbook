@@ -1,9 +1,8 @@
 $(document).ready(function () {
+    // slider
     $('ul.enable-slider').append('<div id="nav-slider" class="hidden-xs"></div>');
 
-    var left = $('ul.enable-slider li.active').parent().position().left;
-    var width = $('ul.enable-slider li.active').width();
-    $('#nav-slider').css({'left' : left, 'width' : width});
+    initSlider();
 
     $('ul.enable-slider li a').hover(
         function() {
@@ -25,11 +24,24 @@ $(document).ready(function () {
             });
         }
     );
-
     $(window).resize(function() {
-        var left = $('ul.enable-slider li.active').parent().position().left;
-        var width = $('ul.enable-slider li.active').width();
+        initSlider();
+    });
+    $(window).load(function() {
+        initSlider();
+    });
 
-        $('#nav-slider').css({'left' : left, 'width' : width});
+    // sous-menu
+    $('a.disable-fade').click(function(e) {
+        e.preventDefault();
+        $($(this).attr('data-target')).toggle();
     });
 });
+
+
+function initSlider() {
+    var left = $('ul.enable-slider li.active').parent().position().left;
+    var width = $('ul.enable-slider li.active').width();
+
+    $('#nav-slider').css({'left' : left, 'width' : width});
+}

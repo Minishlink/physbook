@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $('#content').fadeIn(200);
 
-    $('a').click(function() {
+    $('a').not(".disable-fade").click(function() {
         $('#content').fadeOut(200);
 
         $('#chargement').css('visibility', 'visible');
