@@ -6,7 +6,8 @@ $(document).ready(function () {
 
     $('ul.enable-slider li a').hover(
         function() {
-            $(this + ' img.active').show();
+            $(this).children('img').hide(0);
+            $(this).children('img.active').show(0);
 
             var left = $(this).parent().position().left;
             var width = $(this).parent().width()+1;
@@ -37,6 +38,9 @@ $(document).ready(function () {
             });
         },
         function() {
+            $(this).children('img').not('.active').show(0);
+            $(this).children('img.active').hide(0);
+
             var left = $('ul.enable-slider li.active').position().left;
             var width = $('ul.enable-slider li.active').width()+1;
 
