@@ -6,13 +6,12 @@ $(document).ready(function () {
 
     $('ul.enable-slider li a').hover(
         function() {
+            // lorsque la souris survole le lien, on affiche l'icône correspondante en rouge
             $(this).children('img').hide(0);
             $(this).children('img.active').show(0);
 
-            var left = $(this).parent().position().left;
-            var width = $(this).parent().width()+1;
+            // on colore le slider en fonction du lien visé
             var target = $(this).attr('data-target');
-
             switch(target) {
                 case '#menu-vie':
                     $('#nav-slider').css('background-color', '#b63938');
@@ -31,6 +30,9 @@ $(document).ready(function () {
                     break;
             }
 
+            // on place le slider coloré à l'endroit de la souris
+            var left = $(this).parent().position().left;
+            var width = $(this).parent().width()+1;
             $('#nav-slider').stop().animate({
                 'left' : left,
                 'width' : width,
@@ -38,9 +40,11 @@ $(document).ready(function () {
             });
         },
         function() {
+            // lorsque la souris quitte le lien, on affiche l'icône correspondante en noir
             $(this).children('img').not('.active').show(0);
             $(this).children('img.active').hide(0);
 
+            // on remet le slider en place
             var left = $('ul.enable-slider li.active').position().left;
             var width = $('ul.enable-slider li.active').width()+1;
 
@@ -60,15 +64,24 @@ $(document).ready(function () {
 
     // sous-menu
     $('a.disable-fade').click(function(e) {
+        // le lien ne pointe plus vers #
         e.preventDefault();
-        $($(this).attr('data-target')).toggle();
+
+        // on cache tous les sous-menus et on affiche celui qui est cliqué
+        $('ul[id^="menu-"]').slideUp();
+        $($(this).attr('data-target')).slideDown();
     });
 
     $('#menu').hover(function() {
+        // on colore le logo phy'sbook en rouge
         $('.navbar-brand').addClass('active');
     },
     function () {
+        // on décolore le logo phy'sbook
         $('.navbar-brand').removeClass('active');
+
+        // on cache le sous-menu
+        $('ul[id^="menu-"]').slideUp();
     });
 });
 
