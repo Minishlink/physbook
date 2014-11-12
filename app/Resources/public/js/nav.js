@@ -68,8 +68,18 @@ $(document).ready(function () {
         e.preventDefault();
 
         // on cache tous les sous-menus et on affiche celui qui est cliqué
-        $('ul[id^="menu-"]').slideUp();
-        $($(this).attr('data-target')).slideDown();
+        var cible = $(this).attr('data-target');
+        // si un sous-menu est visible
+        if($('ul[id^="menu-"]').is(":visible")) {
+            // on cache tous les sous-menus visibles autre que la cible
+            $('ul[id^="menu-"]:visible').not(cible).slideUp(200, function() {
+                // on affiche la cible
+                $(cible).slideDown();
+            });
+        } else {
+            // si aucun sous-menu n'est visible on affiche directement la cible
+            $(cible).slideDown();
+        }
     });
 
     $('#menu').hover(function() {
