@@ -105,5 +105,8 @@ function initSlider() {
     var left = $('ul.enable-slider li.active').position().left;
     var width = $('ul.enable-slider li.active').width()+1;
 
-    $('#nav-slider').css({'left' : left, 'width' : width});
+    $('#nav-slider').css({
+        'left' : left,
+        'width' : width,
+    });
 }

@@ -14,13 +14,14 @@
 
             <div class="collapse navbar-collapse" id="liste-menu">
                 <ul class="nav navbar-nav enable-slider">
-                    <li>
+                    <li class="active">
                         <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-vie">
                             <img class="height-large" src="{{ asset('images/header/Fignos-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Fignos-R.png') }}">
                             Vie à l'ec's
                         </a>
-
+                        {# si page = active
+                        <div id="nav-slider-active"></div> #}
                         <ul id="menu-vie" class="sous-menu">
                             <li><a href="">Fin's</a></li>
                             <li><a href="">Élections</a></li>
@@ -41,13 +42,13 @@
                             <li><a href="">UAI</a></li>
                         </ul>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#" class="disable-fade" data-toggle="sous-menu-collapse" data-target="#menu-consos">
                             <img class="height-large" src="{{ asset('images/header/Fast-food-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Fast-food-R.png') }}">
                             Consos
                         </a>
-                        <div id="nav-slider-active" class="hidden-collapsed"></div>
+
                         <ul id="menu-consos" class="sous-menu">
                             <li><a href="">Pian's</a></li>
                             <li><a href="">C'Vis</a></li>
