@@ -1,0 +1,21 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}brags{% endblock %}
+
+{% block title %}
+	Brag's | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+{% if erreur is not null %}
+    <div class="alert alert-{{ erreur.niveau }}">Erreur {{ erreur.code }} : {{ erreur.contenu }}</div>
+{% endif %}
+
+Quelle est ta commande ?
+1 baguette chaque jour.
+
+Prix de la baguette : 0,65€.
+Tu as 30€ sur ton compte Pian'ss, ce qui t'assure des baguettes pour 8 jours à 1 baguettes par jour.
+
+{% endblock %}
