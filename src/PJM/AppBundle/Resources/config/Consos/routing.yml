@@ -1,0 +1,3 @@
+pjm_app_consos_pians:
+    path:     /pians
+    defaults: { _controller: PJMAppBundle:Consos/Pians:index }
