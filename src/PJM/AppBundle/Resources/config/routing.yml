@@ -21,8 +21,3 @@ pjm_app_plan_du_site:
 pjm_app_consos:
     resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"
     prefix:   /consos
-
-pjm_app_paiement:
-    path:     /paiement
-    defaults: { _controller: PJMAppBundle:Money:envoyerPaiement }
-

@@ -41,8 +41,9 @@ class BragsController extends Controller
         if ($form->isValid()) {
             // on va chercher l'URL S-Money
             $rechargement = $this->container->get('pjm_app.rechargement');
+            $resRechargement = $rechargement->rechargerSMoney($montant);
 
-            if($rechargement->rechargerSMoney()) {
+            if($resRechargement[0] === true) {
                 // succès
                 $messages[] = array(
                     'niveau' => 'success',
@@ -54,6 +55,7 @@ class BragsController extends Controller
                     'niveau' => 'danger',
                     'contenu' => 'Il y a eu une erreur lors de la communication avec S-Money.'
                 );
+                $messages[] = $resRechargement[1];
             }
         } else {
             if (isset($montant) && $montant < 1) {
