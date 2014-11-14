@@ -5,3 +5,7 @@ pjm_app_consos_pians:
 pjm_app_consos_brags:
     path:     /brags
     defaults: { _controller: PJMAppBundle:Consos/Brags:index }
+
+pjm_app_consos_rechargement_getURL:
+    path:     /rechargement
+    defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
