@@ -1,7 +1,7 @@
 parameters:
-#    pjm_app.example.class: PJM\AppBundle\Example
+    paiement.smoney.auth: 'Bearer ***REMOVED***'
+    paiement.smoney.url: '***REMOVED***'
 
 services:
-#    pjm_app.example:
-#        class: %pjm_app.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    pjm_app.rechargement:
+        class: PJM\AppBundle\Rechargement\PJMRechargement

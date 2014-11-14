@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class BragsController extends Controller
@@ -13,11 +13,11 @@ class BragsController extends Controller
     {
         $resHandleFormRechargement = $this->handleFormRechargement($request);
         $formRechargement = $resHandleFormRechargement['form'];
-        $message = $resHandleFormRechargement['message'];
+        $messages = $resHandleFormRechargement['messages'];
 
         return $this->render('PJMAppBundle:Consos:brags.html.twig', array(
             'formRechargement' => $formRechargement->createView(),
-            'message' => isset($message) ? $message : null
+            'messages' => isset($messages) ? $messages : null
         ));
     }
 
@@ -27,24 +27,46 @@ class BragsController extends Controller
             ->add('montant', 'money', array(
                 'constraints' => array(
                 new NotBlank(),
-                ),
-            ))
+                new Range(array(
+                    'min' => 1,
+                    'minMessage' => 'Le montant doit être supérieur à 1€.',
+                )),
+            )))
         ->getForm();
 
         $form->handleRequest($request);
+        $data = $form->getData();
+        $montant = $data['montant'];
 
         if ($form->isValid()) {
-            $data = $form->getData();
+            // on va chercher l'URL S-Money
+            $rechargement = $this->container->get('pjm_app.rechargement');
 
-            $message = array(
-                'niveau' => 'success',
-                'contenu' => 'Rechargement de '.$data['montant'].'€ effectué.'
-            );
+            if($rechargement->rechargerSMoney()) {
+                // succès
+                $messages[] = array(
+                    'niveau' => 'success',
+                    'contenu' => 'Rechargement de '.$montant.'€ effectué.'
+                );
+            } else {
+                // erreur
+                $messages[] = array(
+                    'niveau' => 'danger',
+                    'contenu' => 'Il y a eu une erreur lors de la communication avec S-Money.'
+                );
+            }
+        } else {
+            if (isset($montant) && $montant < 1) {
+                $messages[] = array(
+                    'niveau' => 'danger',
+                    'contenu' => 'Le montant ('.$montant.'€) doit être supérieur à 1€.'
+                );
+            }
         }
 
         return array(
             'form' => $form,
-            'message' => isset($message) ? $message : null
+            'messages' => isset($messages) ? $messages : null
         );
     }
 }
