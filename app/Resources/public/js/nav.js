@@ -63,7 +63,7 @@ $(document).ready(function () {
     });
 
     // sous-menu
-    $('a.disable-fade').click(function(e) {
+    $('#liste-menu > ul > li > a').click(function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 
