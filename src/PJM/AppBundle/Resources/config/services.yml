@@ -1,7 +1,8 @@
 parameters:
-    paiement.smoney.auth: 'Bearer ***REMOVED***'
-    paiement.smoney.url: '***REMOVED***'
+    paiement.smoney.url: ***REMOVED***
+    paiement.smoney.auth: Bearer ***REMOVED***
 
 services:
     pjm_app.rechargement:
         class: PJM\AppBundle\Rechargement\PJMRechargement
+        arguments: [@buzz, '%paiement.smoney.url%', '%paiement.smoney.auth%']
