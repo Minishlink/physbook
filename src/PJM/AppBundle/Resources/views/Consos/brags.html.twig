@@ -14,8 +14,17 @@
     </div>
 </div>
 
-{% if message is not null %}
-    <div class="alert alert-{{ message.niveau }}">{{ message.contenu }}</div>
+{% if messages is not null %}
+{% for message in messages %}
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="alert alert-{{ message.niveau }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+            {{ message.contenu }}
+        </div>
+    </div>
+</div>
+{% endfor %}
 {% endif %}
 
 <div class="row">
