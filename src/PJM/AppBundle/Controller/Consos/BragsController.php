@@ -11,19 +11,7 @@ class BragsController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $resHandleFormRechargement = $this->handleFormRechargement($request);
-        $formRechargement = $resHandleFormRechargement['form'];
-        $messages = $resHandleFormRechargement['messages'];
-
-        return $this->render('PJMAppBundle:Consos:brags.html.twig', array(
-            'formRechargement' => $formRechargement->createView(),
-            'messages' => isset($messages) ? $messages : null
-        ));
-    }
-
-    private function handleFormRechargement(Request $request)
-    {
-        $form = $this->createFormBuilder()
+        $formRechargement = $this->createFormBuilder()
             ->add('montant', 'money', array(
                 'constraints' => array(
                 new NotBlank(),
@@ -34,28 +22,35 @@ class BragsController extends Controller
             )))
         ->getForm();
 
-        $form->handleRequest($request);
-        $data = $form->getData();
+        $formRechargement->handleRequest($request);
+        $data = $formRechargement->getData();
         $montant = $data['montant'];
 
-        if ($form->isValid()) {
-            // on va chercher l'URL S-Money
-            $rechargement = $this->container->get('pjm_app.rechargement');
-            $resRechargement = $rechargement->rechargerSMoney($montant);
+        if ($formRechargement->isValid()) {
+            // on redirige vers S-Money
+            $resRechargement = json_decode(
+                $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
+                    'montant' => $montant*100,
+                    'compte' => 'aeensambordeaux'
+                ))->getContent(),
+                true
+            );
 
-            if($resRechargement[0] === true) {
+            if($resRechargement['valid'] === true) {
                 // succès
                 $messages[] = array(
                     'niveau' => 'success',
                     'contenu' => 'Rechargement de '.$montant.'€ effectué.'
                 );
+
+                // TODO rediriger vers $resRechargement['url']
             } else {
                 // erreur
                 $messages[] = array(
                     'niveau' => 'danger',
                     'contenu' => 'Il y a eu une erreur lors de la communication avec S-Money.'
                 );
-                $messages[] = $resRechargement[1];
+                $messages[] = $resRechargement['message'];
             }
         } else {
             if (isset($montant) && $montant < 1) {
@@ -66,9 +61,9 @@ class BragsController extends Controller
             }
         }
 
-        return array(
-            'form' => $form,
+        return $this->render('PJMAppBundle:Consos:brags.html.twig', array(
+            'formRechargement' => $formRechargement->createView(),
             'messages' => isset($messages) ? $messages : null
-        );
+        ));
     }
 }

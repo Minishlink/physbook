@@ -2,7 +2,4 @@ parameters:
     paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
     paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
 
-services:
-    pjm_app.rechargement:
-        class: PJM\AppBundle\Rechargement\PJMRechargement
-        arguments: [@buzz, '%paiement.smoney.url%', '%paiement.smoney.auth%']
+#services:
