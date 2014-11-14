@@ -26,7 +26,7 @@ class RechargementController extends Controller
         );
         $content = array(
             "amount" => $montant,
-            "receiver" => "aeensambordeax",
+            "receiver" => "aeensambordeaux",
             "transactionId" => "5",
             "amountEditable" => true,
             "receiverEditable" => true,
