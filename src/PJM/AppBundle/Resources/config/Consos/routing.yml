@@ -7,5 +7,19 @@ pjm_app_consos_brags:
     defaults: { _controller: PJMAppBundle:Consos/Brags:index }
 
 pjm_app_consos_rechargement_getURL:
-    path:     /rechargement
+    path:     /smoney/envoi
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
+    requirements:
+        _method: POST
+
+pjm_app_consos_rechargement_retourSMoney:
+    path:     /smoney/retour
+    defaults: { _controller: PJMAppBundle:Consos/Rechargement:retourSMoney }
+    requirements:
+        _method: POST
+
+pjm_app_consos_rechargement_redirectionDepuisSMoney:
+    path:     /smoney/redirection
+    defaults: { _controller: PJMAppBundle:Consos/Rechargement:redirectionDepuisSMoney }
+    requirements:
+        _method: POST
