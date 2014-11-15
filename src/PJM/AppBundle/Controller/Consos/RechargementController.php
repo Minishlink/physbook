@@ -7,12 +7,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
+use PJM\AppBundle\Entity\Transaction;
 
 class RechargementController extends Controller
 {
-    public function getURLAction($montant, $compte)
+    public function getURLAction($montant, $caisseSMoney, $boquette)
     {
-        // TODO créer transaction pour avoir transactionId unique
+        // on crée une transaction pour récupérer l'ID unique
+        $transaction = new Transaction($montant, $caisseSMoney, $boquette, $this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($transaction);
+        $em->flush();
 
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
@@ -28,11 +35,11 @@ class RechargementController extends Controller
         );
         $content = array(
             "amount" => $montant,
-            "receiver" => "aeensambordeaux",
-            "transactionId" => "9",
+            "receiver" => $caisseSMoney,
+            "transactionId" => "a_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
-            "agent" => "other",
+            "agent" => "web",
             "source" => "web",
             "identifier" => "",
             "message" => "[Physbook] Brags"
@@ -72,5 +79,65 @@ class RechargementController extends Controller
         $res = new JsonResponse();
         $res->setData($resData);
         return $res;
+    }
+
+    public function retourSMoneyAction(Request $request)
+    {
+
+    }
+
+    public function redirectionDepuisSMoneyAction($transactionId)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('PJMAppBundle:Transaction');
+        $transaction = $repository->findOneById(substr($transactionId, 2));
+
+        if (isset($transaction)) {
+            if ($this->getUser() == $transaction->getUser()) {
+                if (null !== $transaction->getValide()) {
+                    if ($transaction->getValide() === true) {
+                        // si le paiement a été complété
+                        $messages[] = array(
+                            'niveau' => 'success',
+                            'contenu' => 'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
+                        );
+                    } else {
+                        // si le paiement a été annulé
+                        $messages[] = array(
+                            'niveau' => 'warning',
+                            'contenu' => 'Le rechargement de '.$transaction->showMontant().'€ n\'a pu être effectué.'
+                        );
+                    }
+                } else {
+                    // si l'utilisateur n'est pas allé plus loin que la page sur S-Money
+                    $messages[] = array(
+                        'niveau' => 'info',
+                        'contenu' => 'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
+                    );
+                }
+
+                switch ($transaction->getBoquette()) {
+                    case 'brags':
+                        $action = 'PJMAppBundle:Consos/Brags:index';
+                        break;
+                    default:
+                        throw new HttpException(
+                            404,
+                            "La boquette concernée (".$transaction->getBoquette().") n'a pas de page."
+                        );
+                        break;
+                }
+
+                return $this->forward($action, array(
+                    'messages' => $messages
+                ));
+            } else {
+                throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
+            }
+        }
+
+        throw new HttpException(404, "La transaction n'existe pas.");
     }
 }

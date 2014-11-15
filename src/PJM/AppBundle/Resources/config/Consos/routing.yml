@@ -19,7 +19,7 @@ pjm_app_consos_rechargement_retourSMoney:
         _method: POST
 
 pjm_app_consos_rechargement_redirectionDepuisSMoney:
-    path:     /smoney/redirection
+    path:     /smoney/redirection/{transactionId}
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:redirectionDepuisSMoney }
     requirements:
         _method: POST

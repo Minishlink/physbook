@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class BragsController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $messages = null)
     {
         $formRechargement = $this->createFormBuilder()
             ->add('montant', 'money', array(
@@ -31,12 +31,13 @@ class BragsController extends Controller
             $resRechargement = json_decode(
                 $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
                     'montant' => $montant*100,
-                    'compte' => 'aeensambordeaux'
+                    'caisseSMoney' => 'aeensambordeaux',
+                    'boquette' => 'brags'
                 ))->getContent(),
                 true
             );
 
-            if($resRechargement['valid'] === true) {
+            if ($resRechargement['valid'] === true) {
                 // succès, on redirige vers l'URL de paiement
                 // TODO pour app iphone
                 return $this->redirect($resRechargement['url']);

@@ -16,6 +16,7 @@
 
 {% if messages is not null %}
 {% for message in messages %}
+{% if message is not null %}
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="alert alert-{{ message.niveau }} alert-dismissible" role="alert">
@@ -24,6 +25,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endfor %}
 {% endif %}
 
