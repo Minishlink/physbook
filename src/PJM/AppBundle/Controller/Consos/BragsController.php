@@ -37,13 +37,9 @@ class BragsController extends Controller
             );
 
             if($resRechargement['valid'] === true) {
-                // succès
-                $messages[] = array(
-                    'niveau' => 'success',
-                    'contenu' => 'Rechargement de '.$montant.'€ effectué.'
-                );
-
-                // TODO rediriger vers $resRechargement['url']
+                // succès, on redirige vers l'URL de paiement
+                // TODO pour app iphone
+                return $this->redirect($resRechargement['url']);
             } else {
                 // erreur
                 $messages[] = array(

@@ -12,6 +12,8 @@ class RechargementController extends Controller
 {
     public function getURLAction($montant, $compte)
     {
+        // TODO créer transaction pour avoir transactionId unique
+
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
         $curl->setOption(CURLOPT_SSL_VERIFYHOST, false);
@@ -27,12 +29,13 @@ class RechargementController extends Controller
         $content = array(
             "amount" => $montant,
             "receiver" => "aeensambordeaux",
-            "transactionId" => "5",
-            "amountEditable" => true,
-            "receiverEditable" => true,
+            "transactionId" => "9",
+            "amountEditable" => false,
+            "receiverEditable" => false,
             "agent" => "other",
             "source" => "web",
-            "identifier" => ""
+            "identifier" => "",
+            "message" => "[Physbook] Brags"
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
