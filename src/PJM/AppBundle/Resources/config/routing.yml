@@ -4,7 +4,11 @@ pjm_app_homepage:
 
 pjm_app_a_propos:
     path:     /a-propos
-    defaults: { _controller: PJMAppBundle:App:aPropos }
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:a_propos.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
 
 pjm_app_contact:
     path:     /contact
@@ -16,7 +20,11 @@ pjm_app_support_technique:
 
 pjm_app_plan_du_site:
     path:     /plan-du-site
-    defaults: { _controller: PJMAppBundle:App:planDuSite }
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:en_construction.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
 
 pjm_app_consos:
     resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"

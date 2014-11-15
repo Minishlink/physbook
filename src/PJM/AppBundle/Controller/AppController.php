@@ -14,16 +14,6 @@ class AppController extends Controller
         return $this->render('PJMAppBundle:App:index.html.twig');
     }
 
-    public function enConstructionAction()
-    {
-        return $this->render('PJMAppBundle:App:en_construction.html.twig');
-    }
-
-    public function aProposAction()
-    {
-        return $this->render('PJMAppBundle:App:a_propos.html.twig');
-    }
-
     public function contactAction(Request $request)
     {
         $envoi = false;
@@ -68,13 +58,7 @@ class AppController extends Controller
 
     public function supportTechniqueAction()
     {
-        return $this->enConstructionAction();
+        return $this->render('PJMAppBundle:App:en_construction.html.twig');
         //return $this->render('PJMAppBundle:App:support_technique.html.twig');
-    }
-
-    public function planDuSiteAction()
-    {
-        return $this->enConstructionAction();
-        //return $this->render('PJMAppBundle:App:plan_du_site.html.twig');
     }
 }
