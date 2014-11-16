@@ -60,7 +60,7 @@ class Compte
     }
 
     /**
-     * Set solde
+     * Set solde (en centimes)
      *
      * @param integer $solde
      * @return Compte
@@ -73,13 +73,23 @@ class Compte
     }
 
     /**
-     * Get solde
+     * Get solde (en centimes)
      *
      * @return integer
      */
     public function getSolde()
     {
         return $this->solde;
+    }
+
+    /**
+     * Show solde (en euros)
+     *
+     * @return string
+     */
+    public function showSolde()
+    {
+        return (string) $this->solde/100;
     }
 
     /**
