@@ -30,7 +30,7 @@ class Boquette
      * @Assert\NotBlank()
      */
     private $nom;
-
+    
     /**
      * @Gedmo\Slug(fields={"nom"})
      * @ORM\Column(length=128, unique=true)

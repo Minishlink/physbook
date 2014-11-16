@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Transaction
@@ -25,6 +26,7 @@ class Transaction
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -36,9 +38,8 @@ class Transaction
     private $caisseSMoney;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="boquette", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
 
@@ -68,11 +69,11 @@ class Transaction
 
 
 
-    public function __construct($montant, $caisseSMoney, $boquette, \PJM\UserBundle\Entity\User $user)
+    public function __construct($montant, \PJM\AppBundle\Entity\Boquette $boquette, \PJM\UserBundle\Entity\User $user)
     {
         $this->date = new \DateTime();
         $this->montant = $montant;
-        $this->caisseSMoney = $caisseSMoney;
+        $this->caisseSMoney = $boquette->getCaisseSMoney();
         $this->boquette = $boquette;
         $this->user = $user;
     }
@@ -190,29 +191,6 @@ class Transaction
     }
 
     /**
-     * Set boquette
-     *
-     * @param string $boquette
-     * @return Transaction
-     */
-    public function setBoquette($boquette)
-    {
-        $this->boquette = $boquette;
-
-        return $this;
-    }
-
-    /**
-     * Get boquette
-     *
-     * @return string
-     */
-    public function getBoquette()
-    {
-        return $this->boquette;
-    }
-
-    /**
      * Set user
      *
      * @param \PJM\UserBundle\Entity\User $user
@@ -233,5 +211,28 @@ class Transaction
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Transaction
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
     }
 }

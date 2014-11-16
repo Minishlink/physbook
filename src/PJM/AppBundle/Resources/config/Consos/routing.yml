@@ -7,7 +7,7 @@ pjm_app_consos_brags:
     defaults: { _controller: PJMAppBundle:Consos/Brags:index }
 
 pjm_app_consos_rechargement_getURL:
-    path:     /smoney/envoi
+    path:     /smoney/envoi/{montant}/{boquette_slug}
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
     requirements:
         _method: POST
@@ -17,7 +17,8 @@ pjm_app_consos_rechargement_retourSMoney:
     defaults:
         _controller: PJMAppBundle:Consos/Rechargement:retourSMoney
         errorCode: 200
-
+    requirements:
+        _method: POST
 
 pjm_app_consos_rechargement_redirectionDepuisSMoney:
     path:     /smoney/redirection/{transactionId}

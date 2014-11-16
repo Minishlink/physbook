@@ -9,15 +9,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Transaction;
+use PJM\AppBundle\Entity\Compte;
 
 class RechargementController extends Controller
 {
-    public function getURLAction($montant, $caisseSMoney, $boquette)
+    /**
+     * @ParamConverter("boquette", options={"mapping": {"boquette_slug": "slug"}})
+     */
+    public function getURLAction($montant, Boquette $boquette)
     {
         // on crée une transaction pour récupérer l'ID unique
-        $transaction = new Transaction($montant, $caisseSMoney, $boquette, $this->getUser());
+        $transaction = new Transaction($montant, $boquette, $this->getUser());
         $em = $this->getDoctrine()->getManager();
         $em->persist($transaction);
         $em->flush();
@@ -36,8 +42,8 @@ class RechargementController extends Controller
         );
         $content = array(
             "amount" => $montant,
-            "receiver" => $caisseSMoney,
-            "transactionId" => "a_".$transaction->getId(),
+            "receiver" => $boquette->getCaisseSMoney(),
+            "transactionId" => "b_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
             "agent" => "web",
@@ -91,7 +97,14 @@ class RechargementController extends Controller
         if (isset($transaction)) {
             if(null === $transaction->getStatus()) {
                 if ($status == "OK") {
-                    // TODO enregistrer rechargement dans compte utilisateur
+                    $repository = $em->getRepository('PJMAppBundle:Compte');
+                    $compte = $repository->findOneByUserAndBoquette($transaction->getUser(), $transaction->getBoquette());
+                    if($compte === null) {
+                        $compte = new Compte($transaction->getUser(), $transaction->getBoquette());
+                    }
+
+                    $compte->setSolde($compte->getSolde() + $transaction->getMontant());
+                    $em->persist($compte);
 
                     $transaction->setStatus("OK");
                 } else {
@@ -103,6 +116,7 @@ class RechargementController extends Controller
                 }
 
                 $em->persist($transaction);
+
                 $em->flush();
                 return new Response('Transaction traitee');
             } else {
@@ -165,14 +179,14 @@ class RechargementController extends Controller
                     );
                 }
 
-                switch ($transaction->getBoquette()) {
+                switch ($transaction->getBoquette()->getSlug()) {
                     case 'brags':
                         $action = 'PJMAppBundle:Consos/Brags:index';
                         break;
                     default:
                         throw new HttpException(
                             404,
-                            "La boquette concernée (".$transaction->getBoquette().") n'a pas de page."
+                            "La boquette concernée (".$transaction->getBoquette()->getNom().") n'a pas de page."
                         );
                         break;
                 }

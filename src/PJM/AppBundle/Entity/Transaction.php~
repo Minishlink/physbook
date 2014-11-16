@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Transaction
@@ -25,6 +26,7 @@ class Transaction
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -34,11 +36,10 @@ class Transaction
      * @ORM\Column(name="caisseSMoney", type="string", length=255)
      */
     private $caisseSMoney;
-    
+
     /**
-     * @var string
-     *
-     * @ORM\Column(name="boquette", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
 
@@ -51,31 +52,36 @@ class Transaction
 
     /**
      * @var boolean
-     * 1 : paiement validé / 0 : paiement non validé / null : paiement non complété
-     * @ORM\Column(name="valide", type="boolean", nullable=true)
+     * "OK" : paiement validé et enregistré
+     * "NOK" : paiement non validé
+     * {errorCode} : erreur communiquée par S-Money
+     * null : paiement non complété
+     *
+     * @ORM\Column(name="status", type="string", length=5, nullable=true)
      */
-    private $valide;
-    
+    private $status;
+
     /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
-    
-    
-    public function __construct($montant, $caisseSMoney, $boquette)
+
+
+    public function __construct($montant, $caisseSMoney, \PJM\AppBundle\Entity\Boquette $boquette, \PJM\UserBundle\Entity\User $user)
     {
         $this->date = new \DateTime();
         $this->montant = $montant;
         $this->caisseSMoney = $caisseSMoney;
         $this->boquette = $boquette;
+        $this->user = $user;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -150,7 +156,7 @@ class Transaction
     {
         return $this->montant;
     }
-    
+
     /**
      * Show montant
      *
@@ -162,49 +168,26 @@ class Transaction
     }
 
     /**
-     * Set valide
+     * Set status
      *
-     * @param boolean $valide
+     * @param string $status
      * @return Transaction
      */
-    public function setValide($valide)
+    public function setStatus($status)
     {
-        $this->valide = $valide;
+        $this->status = $status;
 
         return $this;
     }
 
     /**
-     * Get valide
-     *
-     * @return boolean
-     */
-    public function getValide()
-    {
-        return $this->valide;
-    }
-
-    /**
-     * Set boquette
-     *
-     * @param string $boquette
-     * @return Transaction
-     */
-    public function setBoquette($boquette)
-    {
-        $this->boquette = $boquette;
-
-        return $this;
-    }
-
-    /**
-     * Get boquette
+     * Get status
      *
      * @return string
      */
-    public function getBoquette()
+    public function getStatus()
     {
-        return $this->boquette;
+        return $this->status;
     }
 
     /**
@@ -213,7 +196,7 @@ class Transaction
      * @param \PJM\UserBundle\Entity\User $user
      * @return Transaction
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user = null)
+    public function setUser(\PJM\UserBundle\Entity\User $user)
     {
         $this->user = $user;
 

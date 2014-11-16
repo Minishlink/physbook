@@ -31,8 +31,7 @@ class BragsController extends Controller
             $resRechargement = json_decode(
                 $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
                     'montant' => $montant*100,
-                    'caisseSMoney' => 'aeensambordeaux',
-                    'boquette' => 'brags'
+                    'boquette_slug' => 'brags'
                 ))->getContent(),
                 true
             );

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\CompteRepository")
  */
 class Compte
 {
@@ -28,25 +27,18 @@ class Compte
      * @ORM\Column(name="solde", type="smallint")
      */
     private $solde;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
-    {
-        $this->solde = 0;
-        $this->user = $user;
-        $this->boquette = $boquette;
-    }
 
 
     /**
