@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use PJM\AppBundle\Entity\Transaction;
@@ -81,9 +82,35 @@ class RechargementController extends Controller
         return $res;
     }
 
-    public function retourSMoneyAction(Request $request)
+    public function retourSMoneyAction($transactionId, $status, $errorCode = "200")
     {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Transaction');
+        $transaction = $repository->findOneById(substr($transactionId, 2));
 
+        if (isset($transaction)) {
+            if(null === $transaction->getStatus()) {
+                if ($status == "OK") {
+                    // TODO enregistrer rechargement dans compte utilisateur
+
+                    $transaction->setStatus("OK");
+                } else {
+                    if ($errorCode != "200") {
+                        $transaction->setStatus($errorCode);
+                    } else {
+                        $transaction->setStatus("NOK");
+                    }
+                }
+
+                $em->persist($transaction);
+                $em->flush();
+                return new Response('Transaction traitee');
+            } else {
+                return new Response('Cette transaction a deja ete traitee.', 403);
+            }
+        }
+
+        return new Response('Transaction inconnue', 404);
     }
 
     public function redirectionDepuisSMoneyAction($transactionId)
@@ -96,8 +123,8 @@ class RechargementController extends Controller
 
         if (isset($transaction)) {
             if ($this->getUser() == $transaction->getUser()) {
-                if (null !== $transaction->getValide()) {
-                    if ($transaction->getValide() === true) {
+                if (null !== $transaction->getStatus()) {
+                    if ($transaction->getStatus() == "OK") {
                         // si le paiement a été complété
                         $messages[] = array(
                             'niveau' => 'success',
@@ -106,8 +133,28 @@ class RechargementController extends Controller
                     } else {
                         // si le paiement a été annulé
                         $messages[] = array(
-                            'niveau' => 'warning',
+                            'niveau' => 'danger',
                             'contenu' => 'Le rechargement de '.$transaction->showMontant().'€ n\'a pu être effectué.'
+                        );
+
+                        switch ($transaction->getStatus()) {
+                            case "623":
+                                $source = "Phy'sbook";
+                                break;
+                            case "624":
+                                $source = "S-Money";
+                                break;
+                            case "625":
+                                $source = "Utilisateur";
+                                break;
+                            default:
+                                $source = "inconnue";
+                                break;
+                        }
+
+                        $messages[] = array(
+                            'niveau' => 'warning',
+                            'contenu' => 'Code d\'erreur : '.$transaction->getStatus().' ('.$source.')'
                         );
                     }
                 } else {

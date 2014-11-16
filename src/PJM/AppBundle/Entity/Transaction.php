@@ -51,10 +51,14 @@ class Transaction
 
     /**
      * @var boolean
-     * 1 : paiement validé / 0 : paiement non validé / null : paiement non complété
-     * @ORM\Column(name="valide", type="boolean", nullable=true)
+     * "OK" : paiement validé et enregistré
+     * "NOK" : paiement non validé
+     * {errorCode} : erreur communiquée par S-Money
+     * null : paiement non complété
+     *
+     * @ORM\Column(name="status", type="string", length=5, nullable=true)
      */
-    private $valide;
+    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
@@ -163,26 +167,26 @@ class Transaction
     }
 
     /**
-     * Set valide
+     * Set status
      *
-     * @param boolean $valide
+     * @param string $status
      * @return Transaction
      */
-    public function setValide($valide)
+    public function setStatus($status)
     {
-        $this->valide = $valide;
+        $this->status = $status;
 
         return $this;
     }
 
     /**
-     * Get valide
+     * Get status
      *
-     * @return boolean
+     * @return string
      */
-    public function getValide()
+    public function getStatus()
     {
-        return $this->valide;
+        return $this->status;
     }
 
     /**

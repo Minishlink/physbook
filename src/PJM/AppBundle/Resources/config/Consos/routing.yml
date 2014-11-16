@@ -13,10 +13,11 @@ pjm_app_consos_rechargement_getURL:
         _method: POST
 
 pjm_app_consos_rechargement_retourSMoney:
-    path:     /smoney/retour
-    defaults: { _controller: PJMAppBundle:Consos/Rechargement:retourSMoney }
-    requirements:
-        _method: POST
+    path:     /smoney/retour/{transactionId}/{status}/{errorCode}
+    defaults:
+        _controller: PJMAppBundle:Consos/Rechargement:retourSMoney
+        errorCode: 200
+
 
 pjm_app_consos_rechargement_redirectionDepuisSMoney:
     path:     /smoney/redirection/{transactionId}
