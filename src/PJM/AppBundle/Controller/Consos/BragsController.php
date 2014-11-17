@@ -11,6 +11,8 @@ class BragsController extends Controller
 {
     public function indexAction(Request $request, $messages = null)
     {
+        $slug = 'brags';
+
         $formRechargement = $this->createFormBuilder()
             ->add('montant', 'money', array(
                 'constraints' => array(
@@ -31,14 +33,13 @@ class BragsController extends Controller
             $resRechargement = json_decode(
                 $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
                     'montant' => $montant*100,
-                    'boquette_slug' => 'brags'
+                    'boquette_slug' => $slug
                 ))->getContent(),
                 true
             );
 
             if ($resRechargement['valid'] === true) {
                 // succès, on redirige vers l'URL de paiement
-                // TODO pour app iphone
                 return $this->redirect($resRechargement['url']);
             } else {
                 // erreur
@@ -59,7 +60,30 @@ class BragsController extends Controller
 
         return $this->render('PJMAppBundle:Consos:brags.html.twig', array(
             'formRechargement' => $formRechargement->createView(),
-            'messages' => isset($messages) ? $messages : null
+            'messages' => isset($messages) ? $messages : null,
+            'solde' => $this->getSolde($slug),
+            'prixBaguette' => 0.65,
+            'nbParJour' => 0.5
         ));
+    }
+
+    public function getSolde($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository('PJMAppBundle:Boquette');
+        $boquette = $repository->findOneBySlug($slug);
+
+
+        $repository = $em->getRepository('PJMAppBundle:Compte');
+        $compte = $repository->findOneByUserAndBoquette($this->getUser(), $boquette);
+
+        if($compte === null) {
+            $solde = 0;
+        } else {
+            $solde = $compte->showSolde();
+        }
+
+        return $solde;
     }
 }

@@ -1,5 +1,6 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
+{% set section = "consos" %}
 {% block pageName %}brags{% endblock %}
 
 {% block title %}
@@ -89,13 +90,13 @@
 <div class="row">
     <div class="col-md-7">
         <h2>Ma commande</h2>
-        <p class="text-blanc"><strong>1 baguette</strong> par jour</p>
+        <p class="text-blanc"><strong>{{ nbParJour|number_format(1, ',', ' ') }} baguette</strong> par jour</p>
     </div>
     <div class="col-md-5 text-center">
         <h2>Prix</h2>
         <p class="text-blanc text-larger">
             La baguette à<br>
-            <span class="text-larger">0,65€</span>
+            <span class="text-larger">{{ prixBaguette|number_format(2, ',', ' ') }}€</span>
         </p>
     </div>
 </div>
@@ -103,7 +104,28 @@
 <div class="row">
     <div class="col-md-7">
         <h2>Solde</h2>
-        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-0.png') }}">
+        {% if solde >= 40 %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-plein.png') }}">
+        {% elseif solde >= 30 %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-34.png') }}">
+        {% elseif solde >= 20 %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-12.png') }}">
+        {% elseif solde >= 10 %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-14.png') }}">
+        {% elseif solde >= 0 %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-0.png') }}">
+        {% else %}
+            <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-neg.png') }}">
+        {% endif %}
+        <p>
+            {% if solde > 0 %}
+                Il te reste {{ solde|number_format(2, ',', ' ') }}€, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/nbParJour)|round(0, 'floor') }} jours.
+            {% elseif solde == 0 %}
+                Tu n'as plus d'argent sur ton compte Brag's ! AQH tu recharges ?
+            {% else %}
+                Tu es en négat'ss ({{ solde|number_format(2, ',', ' ') }}€) ! Régularise au plus vite ta situation !!
+            {% endif %}
+        </p>
     </div>
     <div class="col-md-5 text-center">
         <h2>Rechargement</h2>
@@ -141,11 +163,5 @@
         </p>
     </div>
 </div>
-
-Quelle est ta commande ?
-1 baguette chaque jour.
-
-Prix de la baguette : 0,65€.
-Tu as 30€ sur ton compte Pian'ss, ce qui t'assure des baguettes pour 8 jours à 1 baguettes par jour.
 
 {% endblock %}
