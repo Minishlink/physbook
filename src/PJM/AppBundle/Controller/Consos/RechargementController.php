@@ -95,11 +95,14 @@ class RechargementController extends Controller
         $transaction = $repository->findOneById(substr($transactionId, 2));
 
         if (isset($transaction)) {
-            if(null === $transaction->getStatus()) {
+            if (null === $transaction->getStatus()) {
                 if ($status == "OK") {
                     $repository = $em->getRepository('PJMAppBundle:Compte');
-                    $compte = $repository->findOneByUserAndBoquette($transaction->getUser(), $transaction->getBoquette());
-                    if($compte === null) {
+                    $compte = $repository->findOneByUserAndBoquette(
+                        $transaction->getUser(),
+                        $transaction->getBoquette()
+                    );
+                    if ($compte === null) {
                         $compte = new Compte($transaction->getUser(), $transaction->getBoquette());
                     }
 
@@ -140,15 +143,15 @@ class RechargementController extends Controller
                 if (null !== $transaction->getStatus()) {
                     if ($transaction->getStatus() == "OK") {
                         // si le paiement a été complété
-                        $messages[] = array(
-                            'niveau' => 'success',
-                            'contenu' => 'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
+                        $this->get('session')->getFlashBag()->add(
+                            'success',
+                            'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
                         );
                     } else {
                         // si le paiement a été annulé
-                        $messages[] = array(
-                            'niveau' => 'danger',
-                            'contenu' => 'Le rechargement de '.$transaction->showMontant().'€ n\'a pu être effectué.'
+                        $this->get('session')->getFlashBag()->add(
+                            'danger',
+                            'Le rechargement de '.$transaction->showMontant().'€ n\'a pu être effectué.'
                         );
 
                         switch ($transaction->getStatus()) {
@@ -166,22 +169,22 @@ class RechargementController extends Controller
                                 break;
                         }
 
-                        $messages[] = array(
-                            'niveau' => 'warning',
-                            'contenu' => 'Code d\'erreur : '.$transaction->getStatus().' ('.$source.')'
+                        $this->get('session')->getFlashBag()->add(
+                            'warning',
+                            'Code d\'erreur : '.$transaction->getStatus().' ('.$source.')'
                         );
                     }
                 } else {
                     // si l'utilisateur n'est pas allé plus loin que la page sur S-Money
-                    $messages[] = array(
-                        'niveau' => 'info',
-                        'contenu' => 'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
+                    $this->get('session')->getFlashBag()->add(
+                        'info',
+                        'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
                     );
                 }
 
                 switch ($transaction->getBoquette()->getSlug()) {
                     case 'brags':
-                        $action = 'PJMAppBundle:Consos/Brags:index';
+                        $action = "pjm_app_consos_brags";
                         break;
                     default:
                         throw new HttpException(
@@ -191,9 +194,7 @@ class RechargementController extends Controller
                         break;
                 }
 
-                return $this->forward($action, array(
-                    'messages' => $messages
-                ));
+                return $this->redirect($this->generateUrl($action));
             } else {
                 throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
             }
