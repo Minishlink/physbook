@@ -7,52 +7,35 @@
 	Brag's | {{ parent() }}
 {% endblock %}
 
-{% block pjm_app_body %}
-
-<div class="row">
-    <div class="col-md-12">
-        <h1>Brag's</h1>
-    </div>
-</div>
-
-{% for flashMessage in app.session.flashbag.get('success') %}
-    <div class="alert alert-success">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
-
-{% for flashMessage in app.session.flashbag.get('info') %}
-    <div class="alert alert-info">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
-
-{% for flashMessage in app.session.flashbag.get('danger') %}
-    <div class="alert alert-danger">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
-
-{% for flashMessage in app.session.flashbag.get('warning') %}
-    <div class="alert alert-warning">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
-
-{% if messages is not null %}
-{% for message in messages %}
-{% if message is not null %}
-<div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-        <div class="alert alert-{{ message.niveau }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
-            {{ message.contenu }}
+{% block pjm_app_body_title %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Brag's</h1>
         </div>
     </div>
-</div>
-{% endif %}
-{% endfor %}
-{% endif %}
+{% endblock %}
+
+{% block pjm_app_body_flashbag %}
+    {{ parent() }}
+
+    {% if messages is not null %}
+    {% for message in messages %}
+    {% if message is not null %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="alert alert-{{ message.niveau }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                {{ message.contenu }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}
+
+{% block pjm_app_body %}
 
 <div class="row">
     <div class="col-md-12">
