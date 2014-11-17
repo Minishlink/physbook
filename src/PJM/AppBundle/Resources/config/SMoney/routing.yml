@@ -1,0 +1,19 @@
+pjm_app_smoney_rechargement_getURL:
+    path:     /envoi/{montant}/{boquette_slug}
+    defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
+    requirements:
+        _method: POST
+
+pjm_app_smoney_rechargement_retourSMoney:
+    path:     /retour/{transactionId}/{status}/{errorCode}
+    defaults:
+        _controller: PJMAppBundle:Consos/Rechargement:retourSMoney
+        errorCode: 200
+    requirements:
+        _method: POST
+
+pjm_app_smoney_rechargement_redirectionDepuisSMoney:
+    path:     /redirection/{transactionId}
+    defaults: { _controller: PJMAppBundle:Consos/Rechargement:redirectionDepuisSMoney }
+    requirements:
+        _method: POST
