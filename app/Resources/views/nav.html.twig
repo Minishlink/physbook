@@ -1,3 +1,4 @@
+{% if section is not defined %}{% set section = "" %}{% endif %}
 <section id="menu">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="menu-principal">
         <div class="container">
@@ -14,14 +15,13 @@
 
             <div class="collapse navbar-collapse" id="liste-menu">
                 <ul class="nav navbar-nav enable-slider">
-                    <li class="active">
+                    <li class="default{% if section == "vie" %} active{% endif %}">
                         <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-vie">
                             <img class="height-large" src="{{ asset('images/header/Fignos-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Fignos-R.png') }}">
                             Vie à l'ec's
                         </a>
-                        {# si page = active
-                        <div id="nav-slider-active"></div> #}
+                        {% if section == "vie" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-vie" class="sous-menu">
                             <li><a href="" title="Fin's"><img src="{{ asset('images/header/Fins-B.png') }}" alt="Fin's"></a></li>
                             <li><a href="" title="Élections"><img src="{{ asset('images/header/Elections-BR.png') }}" alt="Élections"></a></li>
@@ -29,26 +29,26 @@
                             <li><a href="" title="Média"><img src="{{ asset('images/header/Media-B.png') }}" alt="Média"></a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li{% if section == "assos" %} class="active"{% endif %}>
                         <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-assos">
                             <img class="height-large" src="{{ asset('images/header/Groupe-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Groupe-R.png') }}">
                             Assos
                         </a>
-
+                        {% if section == "assos" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-assos" class="sous-menu">
                             <li><a href="http://amje-bordeaux.fr/intranet/web" title="AMJE Bordeaux"><img src="{{ asset('images/header/AMJE-B.png') }}" alt="AMJE Bordeaux"></a></li>
                             <li><a href="" title="Asso"><img src="{{ asset('images/header/AE-ENSAM-B.png') }}" alt="AE ENSAM"></a></li>
                             <li><a href="" title="UAI"><img src="{{ asset('images/header/UAI-B.png') }}" alt="UAI"></a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li{% if section == "consos" %} class="active"{% endif %}>
                         <a href="#" class="disable-fade" data-toggle="sous-menu-collapse" data-target="#menu-consos">
                             <img class="height-large" src="{{ asset('images/header/Fast-food-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Fast-food-R.png') }}">
                             Consos
                         </a>
-
+                        {% if section == "consos" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-consos" class="sous-menu">
                             <li><a href="{{ path('pjm_app_consos_pians') }}" title="Pian's"><img src="{{ asset('images/header/Pians-B.png') }}" alt="Pian's"></a></li>
                             <li><a href="" title="C'vis"><img src="{{ asset('images/header/Cvis-B.png') }}" alt="C'vis"></a></li>
@@ -56,19 +56,21 @@
                             <li><a href="" title="Paniers de fruits et légumes"><img src="{{ asset('images/header/Fruits-et-legumes-B.png') }}" alt="Paniers"></a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li{% if section == "thuyss" %} class="active"{% endif %}>
                         <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-thuyss">
                             <img class="height-large" src="{{ asset('images/header/Thuyss-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Thuyss-R.png') }}">
                             Thuyss
                         </a>
+                        {% if section == "thuyss" %}<div id="nav-slider-active"></div>{% endif %}
                     </li>
-                    <li>
+                    <li{% if section == "tutos" %} class="active"{% endif %}>
                         <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-tutos">
                             <img class="height-large" src="{{ asset('images/header/Tuto-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Tuto-R.png') }}">
                             Tutos
                         </a>
+                        {% if section == "tutos" %}<div id="nav-slider-active"></div>{% endif %}
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -81,3 +83,4 @@
         </div>
     </nav>
 </section>
+{% block section %}{% endblock %}

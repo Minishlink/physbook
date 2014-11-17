@@ -45,12 +45,11 @@ $(document).ready(function () {
             $(this).children('img.active').hide(0);
 
             // on remet le slider en place
-            var left = $('ul.enable-slider li.active').position().left;
-            var width = $('ul.enable-slider li.active').width()+1;
+            var target = getSliderTargetPos();
 
             $('#nav-slider').stop().animate({
-                'left' : left,
-                'width' : width,
+                'left' : target[0],
+                'width' : target[1],
                 'opacity': 0
             });
         }
@@ -102,11 +101,22 @@ $(document).ready(function () {
 
 
 function initSlider() {
-    var left = $('ul.enable-slider li.active').position().left;
-    var width = $('ul.enable-slider li.active').width()+1;
+    var target = getSliderTargetPos();
 
     $('#nav-slider').css({
-        'left' : left,
-        'width' : width,
+        'left' : target[0],
+        'width' : target[1],
     });
+}
+
+function getSliderTargetPos() {
+    if($('ul.enable-slider > li.active').length) {
+        var left = $('ul.enable-slider > li.active').position().left;
+        var width = $('ul.enable-slider > li.active').width()+1;
+    } else {
+        var left = $('ul.enable-slider > li.default').position().left;
+        var width = $('ul.enable-slider > li.default').width()+1;
+    }
+
+    return [left, width];
 }
