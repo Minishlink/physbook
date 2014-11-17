@@ -11,4 +11,26 @@ class AdminController extends Controller
     {
         return $this->render('PJMAppBundle:Admin:index.html.twig');
     }
+
+    // TODO gérer promos à l'ec'ss ou pas
+    public function listeAction()
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $users = $userManager->findUsers();
+
+        return $this->render('PJMAppBundle:Admin:users_liste.html.twig', array(
+            'users' => $users
+        ));
+    }
+
+    public function inscriptionListeAction()
+    {
+        // updateUser($user, false); *X
+        // $this->getDoctrine()->getManager()->flush();
+    }
+
+    public function inscriptionUniqueAction()
+    {
+        // updateUser($user);
+    }
 }

@@ -1,0 +1,40 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "admin" %}
+{% block pageName %}admin{% endblock %}
+
+{% block title %}
+	Liste des utilisateurs | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Administration</h1>
+{% endblock %}
+
+{% block pjm_app_body %}
+            <h2>Liste des utilisateurs</h2>
+
+            <p>Il y a {{ users|length }} utilisateurs.</p>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-condensed">
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>E-mail</th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
