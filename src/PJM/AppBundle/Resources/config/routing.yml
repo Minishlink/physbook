@@ -2,6 +2,18 @@ pjm_app_homepage:
     path:     /
     defaults: { _controller: PJMAppBundle:App:index }
 
+pjm_app_consos:
+    resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"
+    prefix:   /consos
+
+pjm_app_smoney:
+    resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
+    prefix:   /smoney
+
+pjm_app_admin:
+    resource: "@PJMAppBundle/Resources/config/Admin/routing.yml"
+    prefix:   /admin
+
 pjm_app_a_propos:
     path:     /a-propos
     defaults:
@@ -25,11 +37,3 @@ pjm_app_plan_du_site:
         template: 'PJMAppBundle:App:en_construction.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
-
-pjm_app_consos:
-    resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"
-    prefix:   /consos
-
-pjm_app_smoney:
-    resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
-    prefix:   /smoney
