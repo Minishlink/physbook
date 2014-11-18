@@ -71,6 +71,11 @@
                             {{ form_errors(form.classe) }}
                         </div>
 
+                        <div class="form-group">
+                            {{ form_widget(form.anniversaire, {'attr': {'class': 'form-control', 'placeholder': 'Anniversaire'}}) }}
+                            {{ form_errors(form.anniversaire) }}
+                        </div>
+
                         {{ form_rest(form) }}
 
                         <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>

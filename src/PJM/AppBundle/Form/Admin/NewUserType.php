@@ -36,6 +36,7 @@ class NewUserType extends AbstractType
             ->add('telephone', 'text', array('required' => false))
             ->add('appartement', 'text', array('required' => false))
             ->add('classe', 'text', array('required' => false))
+            ->add('anniversaire', 'text', array('required' => false))
         ;
     }
 
