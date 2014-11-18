@@ -16,6 +16,23 @@
 {% block pjm_app_body %}
             <h2>Ajout d'une liste d'utilisateurs</h2>
 
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>
+                        {{ form_errors(form) }}
+
+                        <div class="form-group">
+                            {{ form_widget(form.liste, {'attr': {'class': 'form-control', 'placeholder': 'Liste'}}) }}
+                            {{ form_errors(form.liste) }}
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 
