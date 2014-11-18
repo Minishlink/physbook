@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "dev-master",
         "winzou/console-bundle": "dev-master",
-        "sensio/buzz-bundle": "dev-master"
+        "sensio/buzz-bundle": "dev-master",
+        "ircmaxell/password-compat": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
