@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use PJM\AppBundle\Form\Admin\NewUserType;
 
@@ -25,13 +26,110 @@ class AdminController extends Controller
         ));
     }
 
-    public function inscriptionListeAction()
+    public function inscriptionListeAction(Request $request)
     {
-        // updateUser($user, false); *X
-        // $this->getDoctrine()->getManager()->flush();
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->createUser();
+
+        $form = $this->createFormBuilder(null, array(
+            'action' => $this->generateUrl('pjm_app_admin_users_inscriptionListe'),
+            'method' => 'POST',
+        ))
+            ->add('liste', 'file')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['liste']->getData();
+
+            if ($file->isValid()) {
+                $handle = fopen($file, "r");
+                $nbUsers = 0;
+                $problem = 0;
+
+                while (($data = fgetcsv($handle, 0, ",")) !== false) {
+                    if (count($data) >= 6) {
+                        // si il y a au moins le nombre de paramètres requis
+                        $user = $userManager->createUser();
+
+                        $user->setFams($data[0]);
+                        $user->setTabagns(strtolower($data[1]));
+                        $user->setProms($data[2]);
+                        $user->setEmail($data[3]);
+                        $user->setBucque($data[4]);
+                        $user->setPrenom($data[5]);
+                        $user->setNom($data[6]);
+
+                        $password = uniqid();
+                        $user->setPassword($password);
+                        $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
+
+                        if (!empty($data[7])) {
+                            $user->setTelephone($data[7]);
+                        }
+
+                        if (!empty($data[8])) {
+                            $user->setAppartement(strtoupper($data[8]));
+                        }
+
+                        if (!empty($data[9])) {
+                            $user->setClasse(strtoupper($data[9]));
+                        }
+
+                        // TODO envoyer password par mail
+
+                        $userManager->updateUser($user, false);
+                    } else {
+                        $problem++;
+                    }
+                    $nbUsers++;
+                }
+
+                fclose($handle);
+
+                if (!$problem) {
+                    if ($nbUsers) {
+                        $success = true;
+
+                        try {
+                            $this->getDoctrine()->getManager()->flush();
+                        } catch (\Doctrine\DBAL\DBALException $e) {
+                            if ($e->getPrevious()->getCode() === '23000') {
+                                $success = false;
+
+                                $request->getSession()->getFlashBag()->add(
+                                    'danger',
+                                    'Erreur : un utilisateur existe déjà !'
+                                );
+
+                                $request->getSession()->getFlashBag()->add(
+                                    'warning',
+                                    $e->getMessage()
+                                );
+                            } else {
+                                throw $e;
+                            }
+                        }
+
+                        if ($success) {
+                            $request->getSession()->getFlashBag()->add(
+                                'success',
+                                $nbUsers.' utilisateurs ajoutés.'
+                            );
+                        }
+                    }
+                } else {
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        "Aucun ajout n'a été fait. Il y a ".$problem." problèmes sur cette liste de ".$nbUsers." utilisateurs."
+                    );
+                }
+            }
+        }
 
         return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
-            //'users' => $users
+            'form' => $form->createView(),
         ));
     }
 
@@ -48,8 +146,8 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO faire ça dans un listener
-            $user->setPassword(uniqid());
+            $password = uniqid();
+            $user->setPassword($password);
             $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
 
             // TODO envoyer password par mail
