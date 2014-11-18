@@ -43,13 +43,13 @@ class RechargementController extends Controller
         $content = array(
             "amount" => $montant,
             "receiver" => $boquette->getCaisseSMoney(),
-            "transactionId" => "b_".$transaction->getId(),
+            "transactionId" => substr(uniqid(), 0, 3)."_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
             "agent" => "web",
             "source" => "web",
             "identifier" => "",
-            "message" => "[Physbook] Brags"
+            "message" => "[Phy'sbook] ".$boquette->getNom()
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -92,7 +92,7 @@ class RechargementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 2));
+        $transaction = $repository->findOneById(substr($transactionId, 4));
 
         if (isset($transaction)) {
             if (null === $transaction->getStatus()) {
@@ -136,7 +136,7 @@ class RechargementController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 2));
+        $transaction = $repository->findOneById(substr($transactionId, 4));
 
         if (isset($transaction)) {
             if ($this->getUser() == $transaction->getUser()) {
