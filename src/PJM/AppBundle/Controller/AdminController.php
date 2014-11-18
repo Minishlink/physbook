@@ -26,6 +26,7 @@ class AdminController extends Controller
         ));
     }
 
+    // TODO confirmation (check accents)
     public function inscriptionListeAction(Request $request)
     {
         $userManager = $this->get('fos_user.user_manager');
@@ -48,7 +49,7 @@ class AdminController extends Controller
                 $nbUsers = 0;
                 $problem = 0;
 
-                while (($data = fgetcsv($handle, 0, ",")) !== false) {
+                while (($data = fgetcsv($handle, 0, "\t")) !== false) {
                     if (count($data) >= 6) {
                         // si il y a au moins le nombre de paramètres requis
                         $user = $userManager->createUser();
@@ -58,27 +59,23 @@ class AdminController extends Controller
                         $user->setProms($data[2]);
                         $user->setEmail($data[3]);
                         $user->setBucque($data[4]);
-                        $user->setPrenom($data[5]);
-                        $user->setNom($data[6]);
+                        $user->setPassword($data[5]);
+                        $user->setPrenom($data[6]);
+                        $user->setNom($data[7]);
 
-                        $password = uniqid();
-                        $user->setPassword($password);
                         $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
 
-                        if (!empty($data[7])) {
-                            $user->setTelephone($data[7]);
-                        }
-
                         if (!empty($data[8])) {
-                            $user->setAppartement(strtoupper($data[8]));
+                            $user->setTelephone($data[8]);
                         }
 
                         if (!empty($data[9])) {
-                            $user->setClasse(strtoupper($data[9]));
+                            $user->setAppartement(strtoupper($data[9]));
                         }
 
-                        // TODO envoyer password par mail
-
+                        if (!empty($data[10])) {
+                            $user->setClasse(strtoupper($data[10]));
+                        }
                         $userManager->updateUser($user, false);
                     } else {
                         $problem++;
