@@ -94,6 +94,14 @@ class User extends BaseUser
     private $classe;
 
     /**
+     * @var date
+     *
+     * @ORM\Column(name="anniversaire", type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $anniversaire;
+
+    /**
      * Get id
      *
      * @return integer
@@ -308,5 +316,28 @@ class User extends BaseUser
     public function getClasse()
     {
         return $this->classe;
+    }
+
+    /**
+     * Set anniversaire
+     *
+     * @param string $anniversaire
+     * @return User
+     */
+    public function setAnniversaire($anniversaire)
+    {
+        $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+
+        return $this;
+    }
+
+    /**
+     * Get anniversaire
+     *
+     * @return \DateTime
+     */
+    public function getAnniversaire()
+    {
+        return $this->anniversaire;
     }
 }
