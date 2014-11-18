@@ -1,0 +1,22 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "admin" %}
+{% block pageName %}admin{% endblock %}
+
+{% block title %}
+	Ajout d'une liste d'utilisateurs | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Administration</h1>
+{% endblock %}
+
+{% block pjm_app_body %}
+            <h2>Ajout d'une liste d'utilisateurs</h2>
+
+        </div>
+    </div>
+
+{% endblock %}
