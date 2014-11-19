@@ -36,6 +36,17 @@ class RechargementController extends Controller
         $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
 
+        $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+        $ua_checker = array(
+          'android' => preg_match('/android/', $ua),
+          'ios' => preg_match('/iphone|ipod|ipad/', $ua),
+        );
+
+        $agent = "web";
+        if ($ua_checker['ios']) {
+            $agent = "iphoneweb";
+        }
+
         // #FUTURE ***REMOVED***
         $headers = array(
             "Authorization" => $authToken,
@@ -43,13 +54,13 @@ class RechargementController extends Controller
         $content = array(
             "amount" => $montant,
             "receiver" => $boquette->getCaisseSMoney(),
-            "transactionId" => substr(uniqid(), 0, 3)."_".$transaction->getId(),
+            "transactionId" => substr(uniqid(), 0, 6)."_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
-            "agent" => "web",
+            "agent" => $agent,
             "source" => "web",
             "identifier" => "",
-            "message" => "[Phy'sbook] ".$boquette->getNom()
+            "message" => "[Phy'sbook] ".$this->getUser()->getUsername()." - ".$boquette->getNom()." (".$transaction->getId().")"
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -92,7 +103,7 @@ class RechargementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 4));
+        $transaction = $repository->findOneById(substr($transactionId, 7));
 
         if (isset($transaction)) {
             if (null === $transaction->getStatus()) {
@@ -136,7 +147,7 @@ class RechargementController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 4));
+        $transaction = $repository->findOneById(substr($transactionId, 7));
 
         if (isset($transaction)) {
             if ($this->getUser() == $transaction->getUser()) {
