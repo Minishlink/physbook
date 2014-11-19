@@ -99,50 +99,59 @@ class RechargementController extends Controller
         return $res;
     }
 
-    public function retourSMoneyAction($transactionId, $status, $errorCode = "200")
+    public function retourSMoneyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 7));
+        if ($request->request->get('transactionId')) {
+            $transactionId = $request->request->get('transactionId');
+            $status = $request->request->get('status');
+            $errorCode = $request->request->get('errorCode');
 
-        if (isset($transaction)) {
-            if (null === $transaction->getStatus()) {
-                if ($status == "OK") {
-                    $repository = $em->getRepository('PJMAppBundle:Compte');
-                    $compte = $repository->findOneByUserAndBoquette(
-                        $transaction->getUser(),
-                        $transaction->getBoquette()
-                    );
-                    if ($compte === null) {
-                        $compte = new Compte($transaction->getUser(), $transaction->getBoquette());
-                    }
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Transaction');
+            $transaction = $repository->findOneById(substr($transactionId, 7));
 
-                    $compte->setSolde($compte->getSolde() + $transaction->getMontant());
-                    $em->persist($compte);
+            if (isset($transaction)) {
+                if (null === $transaction->getStatus()) {
+                    if ($status == "OK") {
+                        $repository = $em->getRepository('PJMAppBundle:Compte');
+                        $compte = $repository->findOneByUserAndBoquette(
+                            $transaction->getUser(),
+                            $transaction->getBoquette()
+                        );
 
-                    $transaction->setStatus("OK");
-                } else {
-                    if ($errorCode != "200") {
-                        $transaction->setStatus($errorCode);
+                        if ($compte === null) {
+                            $compte = new Compte($transaction->getUser(), $transaction->getBoquette());
+                        }
+
+                        $compte->setSolde($compte->getSolde() + $transaction->getMontant());
+                        $em->persist($compte);
+
+                        $transaction->setStatus("OK");
                     } else {
-                        $transaction->setStatus("NOK");
+                        if ($errorCode != null) {
+                            $transaction->setStatus($errorCode);
+                        } else {
+                            $transaction->setStatus("NOK");
+                        }
                     }
+
+                    $em->persist($transaction);
+                    $em->flush();
+
+                    return new Response('Transaction traitee');
+                } else {
+                    return new Response('Cette transaction a deja ete traitee.', 403);
                 }
-
-                $em->persist($transaction);
-
-                $em->flush();
-                return new Response('Transaction traitee');
-            } else {
-                return new Response('Cette transaction a deja ete traitee.', 403);
             }
         }
 
         return new Response('Transaction inconnue', 404);
     }
 
-    public function redirectionDepuisSMoneyAction($transactionId)
+    public function redirectionDepuisSMoneyAction(Request $request)
     {
+        $transactionId = $request->query->get('transactionId');
+
         $repository = $this
             ->getDoctrine()
             ->getManager()
