@@ -59,14 +59,15 @@ class AdminController extends Controller
                         $user->setProms($data[2]);
                         $user->setEmail($data[3]);
                         $user->setBucque($data[4]);
-                        $user->setPassword($data[5]);
+                        $user->setPlainPassword($data[5]);
                         $user->setPrenom($data[6]);
                         $user->setNom($data[7]);
 
                         $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
 
                         if (!empty($data[8])) {
-                            $user->setTelephone($data[8]);
+                            $tel = (strlen($data[8]) == 9) ? "0".$data[8] : $data[8];
+                            $user->setTelephone($tel);
                         }
 
                         if (!empty($data[9])) {
@@ -76,6 +77,12 @@ class AdminController extends Controller
                         if (!empty($data[10])) {
                             $user->setClasse(strtoupper($data[10]));
                         }
+
+                        if (!empty($data[11])) {
+                            $user->setAnniversaire($data[11]);
+                        }
+
+                        $user->setEnabled(true);
                         $userManager->updateUser($user, false);
                     } else {
                         $problem++;
