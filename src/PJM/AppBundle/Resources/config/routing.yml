@@ -6,6 +6,10 @@ pjm_app_consos:
     resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"
     prefix:   /consos
 
+pjm_app_profil:
+    resource: "@PJMAppBundle/Resources/config/Profil/routing.yml"
+    prefix:   /profil
+
 pjm_app_smoney:
     resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
     prefix:   /smoney

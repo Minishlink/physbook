@@ -1,0 +1,39 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}profil{% endblock %}
+
+{% block title %}
+	Modifier mon profil | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="well">
+
+    <h2>Modifier mon profil</h2>
+
+    <form action="{{ path('pjm_profil_modifier') }}" method="POST" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <div class="form-group">
+            {{ form_widget(form.bucque, {'attr': {'class': 'form-control', 'placeholder': 'Bucque'}}) }}
+            {{ form_errors(form.bucque) }}
+        </div>
+
+
+        <div class="form-group">
+            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Adresse e-mail'}}) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <div class="form-group">
+            <button class="btn" id="_submit" name="_submit" type="submit">Mettre à jour</button>
+        </div>
+
+        {{ form_rest(form) }}
+    </form>
+
+</div>
+
+
+{% endblock %}

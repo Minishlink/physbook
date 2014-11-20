@@ -1,0 +1,12 @@
+pjm_profil_modifier:
+    path:       /modifier
+    defaults:   { _controller: PJMAppBundle:Profil:modifier }
+
+fos_user_profile_show:
+    path:       /
+    defaults:   { _controller: PJMAppBundle:Profil:voir }
+
+pjm_profil_voir:
+    path:       /{username}
+    defaults:   { _controller: PJMAppBundle:Profil:voir }
+
