@@ -138,7 +138,7 @@ class RechargementController extends Controller
                     $em->persist($transaction);
                     $em->flush();
 
-                    return new Response('Transaction traitee');
+                    return new Response('OK');
                 } else {
                     return new Response('Cette transaction a deja ete traitee.', 403);
                 }
