@@ -1,0 +1,27 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}profil{% endblock %}
+
+{% block title %}
+    {% if user == app.user %}Mon profil{% else %}
+    Profil de {{ user.bucque }} {{ user.fams }}{{ user.tabagns }}{{ user.proms }}{% endif %} | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="well">
+
+    <h4>
+        {{ user.bucque }} {{ user.fams }}{{ user.tabagns }}{{ user.proms }}
+        {% if user.prenom != "" %}<br><small>dit <em>{{ user.prenom|capitalize }} {{ user.nom|capitalize }}</em></small>{% endif %}
+    </h4>
+
+    {% if user == app.user %}
+    <ul>
+        <li><a href="{{ path('pjm_profil_modifier') }}">Modifier mon profil</a></li>
+        <li><a href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a></li>
+    </ul>
+    {% endif %}
+</div>
+
+{% endblock %}
