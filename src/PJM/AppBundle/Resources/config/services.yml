@@ -2,4 +2,8 @@ parameters:
     paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
     paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
 
-#services:
+services:
+    pjm.twig.intranet_extension:
+        class: PJM\AppBundle\Twig\IntranetExtension
+        tags:
+            - { name: twig.extension }
