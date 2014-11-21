@@ -28,7 +28,7 @@ monolog:
         swift:
             type:               swift_mailer
             from_email:         error@physbook.fr
-            to_email:           louis.lagrange@gadz.org
+            to_email:           admin@physbook.fr
             subject:            "OOps"
             level:              debug
         login:
