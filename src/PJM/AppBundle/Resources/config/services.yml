@@ -2,4 +2,8 @@ parameters:
     paiement.smoney.url: ***REMOVED***
     paiement.smoney.auth: Bearer ***REMOVED***
 
-#services:
+services:
+    pjm.twig.intranet_extension:
+        class: PJM\AppBundle\Twig\IntranetExtension
+        tags:
+            - { name: twig.extension }

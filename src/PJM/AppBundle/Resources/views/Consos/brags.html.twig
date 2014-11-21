@@ -72,14 +72,13 @@
 
 <div class="row">
     <div class="col-md-7">
-        <h2>Ma commande</h2>
-        <p class="text-blanc"><strong>{{ nbParJour|number_format(1, ',', ' ') }} baguette</strong> par jour</p>
+        {% render(controller('PJMAppBundle:Consos/Brags:commande')) %}
     </div>
     <div class="col-md-5 text-center">
         <h2>Prix</h2>
         <p class="text-blanc text-larger">
             La baguette à<br>
-            <span class="text-larger">{{ prixBaguette|number_format(2, ',', ' ') }}€</span>
+            <span class="text-larger">{{ prixBaguette|prix }}</span>
         </p>
     </div>
 </div>
@@ -102,7 +101,7 @@
         {% endif %}
         <p>
             {% if solde > 0 %}
-                Il te reste {{ solde|number_format(2, ',', ' ') }}€, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/nbParJour)|round(0, 'floor') }} jours.
+                Il te reste {{ solde|number_format(2, ',', ' ')|prix }}, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/nbParJour)|round(0, 'floor') }} jours.
             {% elseif solde == 0 %}
                 Tu n'as plus d'argent sur ton compte Brag's ! AQH tu recharges ?
             {% else %}
