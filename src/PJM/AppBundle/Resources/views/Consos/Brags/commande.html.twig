@@ -1,0 +1,4 @@
+<h2>Ma commande</h2>
+        <p class="text-blanc"><strong>{{ nbParJour|number_format(1, ',', ' ') }} baguette{% if nbParJour > 1 %}s{% endif %}</strong> par jour</p>
+
+{% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}

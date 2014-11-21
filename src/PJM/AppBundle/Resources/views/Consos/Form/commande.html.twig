@@ -1,0 +1,12 @@
+<form method="post" role="form">
+
+    <div class="form-group">
+        {{ form_widget(form.nombre, {'attr': {'placeholder': 'Nb/j'}}) }}
+        {{ form_errors(form.nombre) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    <button class="btn" id="_submit" name="_submit" type="submit">Go !</button>
+
+</form>
