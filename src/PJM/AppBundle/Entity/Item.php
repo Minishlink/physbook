@@ -29,11 +29,24 @@ class Item
     private $libelle;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="prix", type="smallint")
      */
     private $prix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $boquette;
 
 
     /**
@@ -90,5 +103,51 @@ class Item
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Item
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Item
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
