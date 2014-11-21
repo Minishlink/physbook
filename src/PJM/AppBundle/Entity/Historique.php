@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Historique
@@ -21,6 +22,40 @@ class Historique
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Item")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $item;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $date;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nombre", type="smallint")
+     */
+    private $nombre;
+
+    public function __construct(\PJM\AppBundle\Entity\Item $item, \PJM\UserBundle\Entity\User $user)
+    {
+        $this->date = new \DateTime();
+        $this->item = $item;
+        $this->user = $user;
+    }
+
 
     /**
      * Get id
@@ -30,5 +65,97 @@ class Historique
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Historique
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param integer $nombre
+     * @return Historique
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return integer
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set item
+     *
+     * @param \PJM\AppBundle\Entity\Item $item
+     * @return Historique
+     */
+    public function setItem(\PJM\AppBundle\Entity\Item $item)
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return \PJM\AppBundle\Entity\Item
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \PJM\UserBundle\Entity\User $user
+     * @return Historique
+     */
+    public function setUser(\PJM\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \PJM\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
