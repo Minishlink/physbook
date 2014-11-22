@@ -152,10 +152,17 @@ class BragsController extends Controller
                 $em->persist($commande);
                 $em->flush($commande);
 
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'Ta commande a été passée. Elle sera validée par le ZiBrag\'s le jour où tu commenceras à pouvoir prendre ton pain. Tu seras notifié.'
-                );
+                if ($commande->getNombre() > 0) {
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        'Ta commande a été passée. Elle sera validée par le ZiBrag\'s le jour où tu commenceras à pouvoir prendre ton pain. Tu seras notifié.'
+                    );
+                } else {
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        'Tu ne recevras plus de pain bientôt. Tant que ta résiliation n\'a pas été validée par le ZiBrag\'s, tu peux continuer à prendre ton pain et tu seras débité. Tu seras notifié quand il aura validé  ta résiliation.'
+                    );
+                }
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
