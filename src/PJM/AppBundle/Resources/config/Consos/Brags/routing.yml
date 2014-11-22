@@ -5,3 +5,7 @@ pjm_app_consos_brags_index:
 pjm_app_consos_brags_commande:
     path:     /commande
     defaults: { _controller: PJMAppBundle:Consos/Brags:commande }
+
+pjm_app_consos_brags_rechargement:
+    path:     /rechargement
+    defaults: { _controller: PJMAppBundle:Consos/Brags:rechargement }

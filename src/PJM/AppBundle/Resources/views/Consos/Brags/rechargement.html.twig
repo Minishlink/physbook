@@ -1,0 +1,17 @@
+<h2>Rechargement</h2>
+<button type="button" class="debuttonize" data-toggle="modal" data-target="#modalRechargement">
+    <img style="height: 3em;" class="img-responsive center-block" src="{{ asset('images/paiement/S-Money-N.png') }}" alt="S-Money" title="Par S-Money">
+</button>
+<div class="modal fade" id="modalRechargement" tabindex="-1" role="dialog" aria-labelledby="rechargement" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                <h4 class="modal-title" id="rechargement">Rechargement</h4>
+            </div>
+            <div class="modal-body">
+                {% include "PJMAppBundle:Consos:Form/rechargement.html.twig" with {'form': form } %}
+            </div>
+        </div>
+    </div>
+</div>
