@@ -24,8 +24,16 @@ class BragsController extends Controller
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'solde' => $this->getSolde(),
             'prixBaguette' => $this->getPrixBaguette(),
-            'nbParJour' => 0.5
+            'commande' => $this->getCommande()
         ));
+    }
+
+    public function getCommande()
+    {
+        return array(
+            'active' => 0,
+            'attente' => 0.5
+        );
     }
 
     public function getSolde()
@@ -169,8 +177,7 @@ class BragsController extends Controller
 
         return $this->render('PJMAppBundle:Consos:Brags/commande.html.twig', array(
             'form' => $form->createView(),
-            'messages' => isset($messages) ? $messages : null,
-            'nbParJour' => 0.5
+            'commande' => $this->getCommande()
         ));
     }
 }

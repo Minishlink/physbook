@@ -14,7 +14,11 @@
 {% endif %}
 <p>
     {% if solde > 0 %}
-        Il te reste {{ solde|prix }}, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/nbParJour)|round(0, 'floor') }} jours.
+        {% if commande.active != 0 %}
+            Il te reste {{ solde|prix }}, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/commande.active)|round(0, 'floor') }} jours.
+        {% else %}
+            Tu as {{ solde|prix }} sur ton compte Brag's.
+        {% endif %}
     {% elseif solde == 0 %}
         Tu n'as plus d'argent sur ton compte Brag's ! AQH tu recharges ?
     {% else %}
