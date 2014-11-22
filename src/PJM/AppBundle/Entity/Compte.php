@@ -83,16 +83,6 @@ class Compte
     }
 
     /**
-     * Show solde (en euros)
-     *
-     * @return string
-     */
-    public function showSolde()
-    {
-        return (string) $this->solde/100;
-    }
-
-    /**
      * Set boquette
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette

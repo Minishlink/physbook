@@ -41,7 +41,7 @@ class BragsController extends Controller
         if ($compte === null) {
             $solde = 0;
         } else {
-            $solde = $compte->showSolde();
+            $solde = $compte->getSolde();
         }
 
         return $solde;
