@@ -3,5 +3,5 @@ pjm_app_consos_pians:
     defaults: { _controller: PJMAppBundle:Consos/Pians:index }
 
 pjm_app_consos_brags:
-    path:     /brags
-    defaults: { _controller: PJMAppBundle:Consos/Brags:index }
+    resource: "@PJMAppBundle/Resources/config/Consos/Brags/routing.yml"
+    prefix:   /brags
