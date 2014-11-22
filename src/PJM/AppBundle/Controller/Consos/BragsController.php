@@ -19,63 +19,11 @@ class BragsController extends Controller
         $this->slug = 'brags';
     }
 
-    public function indexAction(Request $request, $messages = null)
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $prixBaguette = $em->getRepository('PJMAppBundle:Item')
-            ->findOneBySlug('baguette')
-            ->getPrix();
-
-        $formRechargement = $this->createFormBuilder()
-            ->add('montant', 'money', array(
-                'constraints' => array(
-                new NotBlank(),
-                new Range(array(
-                    'min' => 1,
-                    'minMessage' => 'Le montant doit être supérieur à 1€.',
-                )),
-            )))
-        ->getForm();
-
-        $formRechargement->handleRequest($request);
-        $data = $formRechargement->getData();
-        $montant = $data['montant'];
-
-        if ($formRechargement->isValid()) {
-            // on redirige vers S-Money
-            $resRechargement = json_decode(
-                $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
-                    'montant' => $montant*100,
-                    'boquette_slug' => $this->slug
-                ))->getContent(),
-                true
-            );
-
-            if ($resRechargement['valid'] === true) {
-                // succès, on redirige vers l'URL de paiement
-                return $this->redirect($resRechargement['url']);
-            } else {
-                // erreur
-                $messages[] = array(
-                    'niveau' => 'danger',
-                    'contenu' => 'Il y a eu une erreur lors de la communication avec S-Money.'
-                );
-                $messages[] = $resRechargement['message'];
-            }
-        } else {
-            if (isset($montant) && $montant < 1) {
-                $messages[] = array(
-                    'niveau' => 'danger',
-                    'contenu' => 'Le montant ('.$montant.'€) doit être supérieur à 1€.'
-                );
-            }
-        }
-
-        return $this->render('PJMAppBundle:Consos:brags.html.twig', array(
-            'formRechargement' => $formRechargement->createView(),
-            'messages' => isset($messages) ? $messages : null,
+        return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'solde' => $this->getSolde(),
-            'prixBaguette' => $prixBaguette,
+            'prixBaguette' => $this->getPrixBaguette(),
             'nbParJour' => 0.5
         ));
     }
@@ -87,7 +35,6 @@ class BragsController extends Controller
         $repository = $em->getRepository('PJMAppBundle:Boquette');
         $boquette = $repository->findOneBySlug($this->slug);
 
-
         $repository = $em->getRepository('PJMAppBundle:Compte');
         $compte = $repository->findOneByUserAndBoquette($this->getUser(), $boquette);
 
@@ -98,6 +45,81 @@ class BragsController extends Controller
         }
 
         return $solde;
+    }
+
+    public function getPrixBaguette()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $prixBaguette = $em->getRepository('PJMAppBundle:Item')
+            ->findOneBySlug('baguette')
+            ->getPrix();
+
+        return $prixBaguette;
+    }
+
+    public function rechargementAction(Request $request)
+    {
+        $form = $this->createFormBuilder()
+            ->add('montant', 'money', array(
+                'error_bubbling' => true,
+                'constraints' => array(
+                new NotBlank(),
+                new Range(array(
+                    'min' => 1,
+                    'minMessage' => 'Le montant doit être supérieur à 1€.',
+                )),
+            )))
+            ->setMethod('POST')
+            ->setAction($this->generateUrl('pjm_app_consos_brags_rechargement'))
+            ->getForm();
+
+        $form->handleRequest($request);
+        $data = $form->getData();
+        $montant = $data['montant'];
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // on redirige vers S-Money
+                $resRechargement = json_decode(
+                    $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
+                        'montant' => $montant*100,
+                        'boquette_slug' => $this->slug
+                    ))->getContent(),
+                    true
+                );
+
+                if ($resRechargement['valid'] === true) {
+                    // succès, on redirige vers l'URL de paiement
+                    return $this->redirect($resRechargement['url']);
+                } else {
+                    // erreur
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        'Il y a eu une erreur lors de la communication avec S-Money.'
+                    );
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de ton rechargement. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_index'));
+        }
+
+        return $this->render('PJMAppBundle:Consos:Brags/rechargement.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function commandeAction(Request $request)
@@ -137,10 +159,9 @@ class BragsController extends Controller
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',
-                        $error->getMessage()."<br>".$data->getNombre()
+                        $error->getMessage()
                     );
                 }
-
             }
 
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_index'));

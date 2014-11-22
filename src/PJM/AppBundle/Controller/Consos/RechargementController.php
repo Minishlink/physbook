@@ -69,10 +69,11 @@ class RechargementController extends Controller
             // si échec
             $resData = array(
                 'valid' => false,
-                'message' => array(
-                    'niveau' => 'warning',
-                    'contenu' => 'Erreur '.$response->getStatusCode().': '.$response->getReasonPhrase()
-                ),
+            );
+
+            $this->get('session')->getFlashBag()->add(
+                'warning',
+                'Erreur '.$response->getStatusCode().': '.$response->getReasonPhrase()
             );
         } else {
             // si on a une réponse valide de la part de S-Money
@@ -86,10 +87,11 @@ class RechargementController extends Controller
             } else {
                 $resData = array(
                     'valid' => false,
-                    'message' => array(
-                        'niveau' => 'warning',
-                        'contenu' => 'Erreur '.$data['Code'].': '.$data['ErrorMessage']
-                    )
+                );
+
+                $this->get('session')->getFlashBag()->add(
+                    'warning',
+                    'Erreur '.$data['Code'].': '.$data['ErrorMessage']
                 );
             }
         }
@@ -204,7 +206,7 @@ class RechargementController extends Controller
 
                 switch ($transaction->getBoquette()->getSlug()) {
                     case 'brags':
-                        $action = "pjm_app_consos_brags";
+                        $action = "pjm_app_consos_brags_index";
                         break;
                     default:
                         throw new HttpException(
