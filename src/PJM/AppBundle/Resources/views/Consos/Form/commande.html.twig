@@ -1,4 +1,4 @@
-<form method="post" role="form">
+<form method="post" action="{{ form.vars.action }}" {{ form_enctype(form) }} role="form">
 
     <div class="form-group">
         {{ form_widget(form.nombre, {'attr': {'placeholder': 'Nb/j'}}) }}
