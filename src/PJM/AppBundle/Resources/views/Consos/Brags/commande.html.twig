@@ -8,26 +8,15 @@ Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette
 </p>
 
 <div class="panel-group" id="accordionCommande">
-{# modifier commande #}
-<div class="panel">
-    <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#modifierCommande">
-        <span class="panel-title">Modifier ma commande <span class="glyphicon glyphicon-pencil pull-right"></span></span>
-    </div>
-    <div id="modifierCommande" class="panel-collapse collapse">
-        <div class="panel-body">
-            {% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
+    {# modifier commande #}
+    <div class="panel">
+        <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#modifierCommande">
+            <span class="panel-title">Modifier ma commande <span class="glyphicon glyphicon-pencil pull-right"></span></span>
+        </div>
+        <div id="modifierCommande" class="panel-collapse collapse">
+            <div class="panel-body">
+                {% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
+            </div>
         </div>
     </div>
-</div>
-{# résilier commande #}
-<div class="panel">
-    <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#resilierCommande">
-        <span class="panel-title">Résilier ma commande</span><span class="glyphicon glyphicon-remove pull-right"></span>
-    </div>
-    <div id="resilierCommande" class="panel-collapse collapse">
-        <div class="panel-body">
-            {% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
-        </div>
-    </div>
-</div>
 </div>

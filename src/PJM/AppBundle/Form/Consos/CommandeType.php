@@ -39,7 +39,7 @@ class CommandeType extends AbstractType
     public static function getRangeBaguettes($keys = false)
     {
         // min, max, step
-        $range = range(0.5, 5, 0.5);
+        $range = range(0, 5, 0.5);
 
         if ($keys) {
             return array_combine($range, $range);
