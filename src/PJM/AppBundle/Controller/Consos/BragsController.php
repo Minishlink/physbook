@@ -30,9 +30,31 @@ class BragsController extends Controller
 
     public function getCommande()
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository('PJMAppBundle:Item');
+        $item = $repository->findOneBySlug("baguette");
+
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $commandes = $repository->findAllByUserAndItem($this->getUser(), $item);
+
+        foreach ($commandes as $commande) {
+            if (!isset($active) && $commande->getValid()) {
+                $active = $commande->getNombre()/10;
+            }
+
+            if (!isset($attente) && null === $commande->getValid()) {
+                $attente = $commande->getNombre()/10;
+            }
+
+            if (isset($active) && isset($attente)) {
+                break;
+            }
+        }
+
         return array(
-            'active' => 0,
-            'attente' => 0.5
+            'active' => isset($active) ? $active : 0,
+            'attente' => isset($attente) ? $attente : null,
         );
     }
 
