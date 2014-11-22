@@ -1,10 +1,14 @@
 <h2>Ma commande</h2>
 <p class="text-blanc">
-Tu reçois <strong>{{ commande.active }} baguette{% if commande.active > 1 %}s{% endif %}</strong> par jour.
-{% if commande.attente != null %}
-<br>
-Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette{% if commande.attente > 1 %}s{% endif %} par jour. Elle est en cours de traitement par le ZiBrag's et tu seras notifié quand elle sera validée.
-{% endif %}
+    {% if commande.active != 0 %}
+    Tu reçois <strong>{{ commande.active }} baguette{% if commande.active > 1 %}s{% endif %}</strong> par jour.
+    {% else %}
+    Tu n'as pas encore de commande active.
+    {% endif %}
+    {% if commande.attente != null %}
+    <br>
+    Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette{% if commande.attente > 1 %}s{% endif %} par jour. Elle est en cours de traitement par le ZiBrag's et tu seras notifié quand elle sera validée.
+    {% endif %}
 </p>
 
 <div class="panel-group" id="accordionCommande">
