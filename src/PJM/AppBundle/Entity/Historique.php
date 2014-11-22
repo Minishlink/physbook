@@ -43,17 +43,22 @@ class Historique
     private $date;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valid", type="boolean", nullable=true)
+     */
+    private $valid;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="nombre", type="smallint")
      */
     private $nombre;
 
-    public function __construct(\PJM\AppBundle\Entity\Item $item, \PJM\UserBundle\Entity\User $user)
+    public function __construct()
     {
         $this->date = new \DateTime();
-        $this->item = $item;
-        $this->user = $user;
     }
 
 
@@ -157,5 +162,28 @@ class Historique
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set valid
+     *
+     * @param boolean $valid
+     * @return Historique
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * Get valid
+     *
+     * @return boolean
+     */
+    public function getValid()
+    {
+        return $this->valid;
     }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class CommandeType extends AbstractType
 {
@@ -18,15 +19,33 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre', 'number', array(
+            ->add('nombre', 'choice', array(
+                'error_bubbling' => true,
+                'choices' => $this->getRangeBaguettes(true),
                 'constraints' => array(
                     new NotBlank(),
-                    new Range(array(
-                        'min' => 0.5,
-                        'max' => 5
+                    new Choice(array(
+                        'choices' => $this->getRangeBaguettes(),
+                        'message' => "Choisis un nombre de baguettes par jour valide."
                     ))
                 )
             ));
+    }
+
+    /** Get nombre de baguettes par jour possibles
+     *
+     * @return array
+     */
+    public static function getRangeBaguettes($keys = false)
+    {
+        // min, max, step
+        $range = range(0.5, 5, 0.5);
+
+        if ($keys) {
+            return array_combine($range, $range);
+        }
+
+        return $range;
     }
 
     /**

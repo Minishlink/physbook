@@ -5,5 +5,3 @@ pjm_app_consos_brags_index:
 pjm_app_consos_brags_commande:
     path:     /commande
     defaults: { _controller: PJMAppBundle:Consos/Brags:commande }
-    requirements:
-        _method: POST
