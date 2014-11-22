@@ -1,4 +1,33 @@
 <h2>Ma commande</h2>
-        <p class="text-blanc"><strong>{{ nbParJour|number_format(1, ',', ' ') }} baguette{% if nbParJour > 1 %}s{% endif %}</strong> par jour</p>
+<p class="text-blanc">
+Tu reçois <strong>{{ commande.active }} baguette{% if commande.active > 1 %}s{% endif %}</strong> par jour.
+{% if commande.attente != null %}
+<br>
+Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette{% if commande.attente > 1 %}s{% endif %} par jour. Elle est en cours de traitement par le ZiBrag's et tu seras notifié quand elle sera validée.
+{% endif %}
+</p>
 
-{% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
+<div class="panel-group" id="accordionCommande">
+{# modifier commande #}
+<div class="panel">
+    <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#modifierCommande">
+        <span class="panel-title">Modifier ma commande <span class="glyphicon glyphicon-pencil pull-right"></span></span>
+    </div>
+    <div id="modifierCommande" class="panel-collapse collapse">
+        <div class="panel-body">
+            {% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
+        </div>
+    </div>
+</div>
+{# résilier commande #}
+<div class="panel">
+    <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#resilierCommande">
+        <span class="panel-title">Résilier ma commande</span><span class="glyphicon glyphicon-remove pull-right"></span>
+    </div>
+    <div id="resilierCommande" class="panel-collapse collapse">
+        <div class="panel-body">
+            {% include "PJMAppBundle:Consos:Form/commande.html.twig" with {'form': form } %}
+        </div>
+    </div>
+</div>
+</div>
