@@ -1,0 +1,33 @@
+<h2>Liste des commandes</h2>
+
+{% if commandes != null %}
+<p>
+    toutes<br>
+    actives<br>
+    en attente de validation<br>
+    résiliées<br>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-condensed">
+        <tr>
+            <th>Date</th>
+            <th>PG</th>
+            <th>Nombre</th>
+            <th>&Eacute;tat</th>
+            <th>Action</th>
+        </tr>
+        {% for commande in commandes %}
+        <tr>
+            <td>{{ commande.date|date('d/m/y') }}</td>
+            <td>{{ commande.user.username }}</td>
+            <td>{{ commande.nombre/10 }}</td>
+            <td>{% if commande.valid is null %}En attente{% elseif commande.valid == false %}Résiliée{% else %}En cours{% endif %}</td>
+            <td>{% if commande.valid is null %}<a href="{{ path('pjm_app_consos_brags_admin_validerCommande', {'commande': commande.id}) }}">Valider</a>{%endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% else %}
+Il n'y a pas de commandes.
+{% endif %}

@@ -1,0 +1,11 @@
+pjm_app_consos_brags_admin_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Consos/Brags:admin }
+
+pjm_app_consos_brags_admin_listeCommandes:
+    path:     /liste
+    defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
+
+pjm_app_consos_brags_admin_validerCommande:
+    path:     /valider/{commande}
+    defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommande }

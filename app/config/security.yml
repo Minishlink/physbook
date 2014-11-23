@@ -5,6 +5,7 @@ security:
     role_hierarchy:
         ROLE_MODERATEUR:  [ROLE_USER]
         ROLE_AUTEUR:      [ROLE_USER]
+        ROLE_ZIBRAGS:     [ROLE_USER]
         ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 

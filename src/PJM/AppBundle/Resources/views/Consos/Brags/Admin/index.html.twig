@@ -1,0 +1,26 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}brags{% endblock %}
+
+{% block title %}
+	Gestion Brag's | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Brag's</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="row">
+    <div class="col-md-12">
+        {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+    </div>
+</div>
+
+{% endblock %}

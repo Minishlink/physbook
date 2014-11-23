@@ -10,14 +10,33 @@ use PJM\UserBundle\Entity\User;
  */
 class HistoriqueRepository extends EntityRepository
 {
-    public function findAllByUserAndItem(User $user, Item $item)
+    public function findByUserAndItemSlug(User $user, $item_slug)
     {
         $query = $this->createQueryBuilder('h')
                     ->where('h.user = :user')
-                    ->andWhere('h.item = :item')
+                    ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
                     ->setParameters(array(
                         'user' => $user,
-                        'item'  => $item,
+                        'item_slug'  => $item_slug,
+                    ))
+                    ->orderBy('h.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
+    public function findByItemSlug($item_slug)
+    {
+        $query = $this->createQueryBuilder('h')
+                    ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
+                    ->setParameters(array(
+                        'item_slug'  => $item_slug,
                     ))
                     ->orderBy('h.date', 'desc')
                     ->getQuery();
