@@ -26,7 +26,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="fams", type="string", length=20)
+     * @ORM\Column(name="fams", type="string", length=20, nullable=true)
      * @Assert\NotBlank()
      */
     private $fams;
@@ -34,7 +34,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="tabagns", type="string", length=5)
+     * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"bo", "li", "an", "me", "ch", "cl", "ai", "ka", "pa"})
      */
@@ -43,7 +43,7 @@ class User extends BaseUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="proms", type="smallint", length=5)
+     * @ORM\Column(name="proms", type="smallint", length=5, nullable=true)
      * @Assert\NotBlank()
      */
     private $proms;
@@ -51,7 +51,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="bucque", type="string", length=255)
+     * @ORM\Column(name="bucque", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $bucque;
@@ -59,7 +59,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $prenom;
@@ -67,7 +67,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $nom;
