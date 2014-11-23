@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Form\Consos\CommandeType;
@@ -32,11 +33,8 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $repository = $em->getRepository('PJMAppBundle:Item');
-        $item = $repository->findOneBySlug("baguette");
-
         $repository = $em->getRepository('PJMAppBundle:Historique');
-        $commandes = $repository->findAllByUserAndItem($this->getUser(), $item);
+        $commandes = $repository->findByUserAndItemSlug($this->getUser(), 'baguette');
 
         foreach ($commandes as $commande) {
             if (!isset($active) && $commande->getValid()) {
@@ -208,5 +206,44 @@ class BragsController extends Controller
             'form' => $form->createView(),
             'commande' => $this->getCommande()
         ));
+    }
+
+    /**
+    * @Security("has_role('ROLE_ZIBRAGS')")
+    */
+    public function adminAction()
+    {
+        // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig');
+    }
+
+    /**
+    * @Security("has_role('ROLE_ZIBRAGS')")
+    */
+    public function listeCommandesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $commandes = $repository->findByItemSlug('baguette');
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCommandes.html.twig', array(
+            'commandes' => $commandes
+        ));
+    }
+
+    /**
+    * @Security("has_role('ROLE_ZIBRAGS')")
+    */
+    public function validerCommandeAction(Historique $commande)
+    {
+        // TODO sélectionner commandes et faire une action globale
+        // TODO access control
+        $em = $this->getDoctrine()->getManager();
+        $commande->setValid(true);
+        $em->persist($commande);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
     }
 }
