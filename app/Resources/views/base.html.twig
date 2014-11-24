@@ -10,6 +10,7 @@
         {% block stylesheets %}
         {% stylesheets
             '%kernel.root_dir%/../app/Resources/public/less/general.less'
+            '%kernel.root_dir%/../app/Resources/public/css/dataTables.bootstrap.css'
             filter='less,cssrewrite,?yui_css'
             output='css/design.css'
         %}
@@ -46,11 +47,20 @@
                 '%kernel.root_dir%/../app/Resources/public/js/ext/bootstrap.min.js'
                 '%kernel.root_dir%/../app/Resources/public/js/ext/bootstrap-*.js'
                 '%kernel.root_dir%/../app/Resources/public/js/ext/chosen.jquery.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/jquery.dataTables.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/ext/dataTables.bootstrap.min.js'
+                '%kernel.root_dir%/../app/Resources/public/js/datatables.conf.js'
+                '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
                 filter='?yui_js'
                 output='js/extra.js'
             %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
+
+            <!-- Piwik -->
+            <noscript><p><img src="//analytics.physbook.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+            <!-- End Piwik Code -->
+
         {% endblock %}
     </body>
 </html>
