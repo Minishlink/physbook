@@ -3,10 +3,12 @@ security:
         PJM\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
-        ROLE_MODERATEUR:  [ROLE_USER]
-        ROLE_AUTEUR:      [ROLE_USER]
         ROLE_ZIBRAGS:     [ROLE_USER]
-        ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]
+        ROLE_ZICVIS:      [ROLE_USER]
+        ROLE_ZIPIANS:     [ROLE_USER]
+        ROLE_ZIPANIERS:   [ROLE_USER]
+        ROLE_ZI:          [ROLE_ZIBRAGS, ROLE_ZICVIS, ROLE_ZIPIANS, ROLE_ZIPANIERS]
+        ROLE_ADMIN:       [ROLE_ZI]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
