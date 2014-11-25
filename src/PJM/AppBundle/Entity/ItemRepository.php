@@ -28,4 +28,25 @@ class ItemRepository extends EntityRepository
 
         return $res;
     }
+
+    public function findOneBySlugAndValid($slug, $valid)
+    {
+        $query = $this->createQueryBuilder('i')
+                    ->where('i.slug = :slug')
+                    ->andWhere('i.valid = :valid')
+                    ->setParameters(array(
+                        'slug'  => $slug,
+                        'valid'  => $valid,
+                    ))
+                    ->orderBy('i.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
 }

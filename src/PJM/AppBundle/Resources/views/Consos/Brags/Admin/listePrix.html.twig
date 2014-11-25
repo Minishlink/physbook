@@ -2,6 +2,8 @@
 
 <h3>Prix de la baguette</h3>
 
+{% include "PJMAppBundle:Consos:Form/prix.html.twig" with {'form': form } %}
+
 {% if listePrix != null %}
 <div class="table-responsive">
     <table id="tabGestionPrixBaguette" class="table table-striped table-hover table-condensed">

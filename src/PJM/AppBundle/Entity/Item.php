@@ -32,8 +32,6 @@ class Item
     /**
      * @var string
      *
-     * Si item déprécié, la valeur du slug est "[slugItem]-old"
-     *
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
@@ -46,9 +44,16 @@ class Item
     private $prix;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valid", type="boolean")
+     */
+    private $valid;
+
+    /**
      * @var \DateTime
      *
-     * Sert à avoir un historique des prix d'un item, le slug étant remplacé par "[slugItem]-old".
+     * Sert à avoir un historique des prix d'un item
      *
      * @ORM\Column(name="date", type="datetime")
      * @Assert\DateTime()
@@ -64,6 +69,7 @@ class Item
     public function __construct()
     {
         $this->date = new \DateTime();
+        $this->valid = true;
     }
 
 
@@ -190,5 +196,28 @@ class Item
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set valid
+     *
+     * @param boolean $valid
+     * @return Item
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * Get valid
+     *
+     * @return boolean
+     */
+    public function getValid()
+    {
+        return $this->valid;
     }
 }

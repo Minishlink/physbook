@@ -10,7 +10,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use PJM\AppBundle\Entity\Historique;
+use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Form\Consos\CommandeType;
+use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsController extends Controller
 {
@@ -279,14 +281,61 @@ class BragsController extends Controller
         ));
     }
 
-    public function listePrixAction()
+    public function listePrixAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-        $listePrix = $repository->findBySlugRegex('(baguette)+(([-])+(old)+)*');
+
+        $nouveauPrix = new Item();
+        $nouveauPrix->setLibelle('Baguette de pain');
+        $nouveauPrix->setBoquette(
+            $em->getRepository('PJMAppBundle:Boquette')
+                ->findOneBySlug($this->slug)
+        );
+        $nouveauPrix->setSlug('baguette');
+
+        $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
+            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listePrix'),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $ancienPrix = $repository->findOneBySlugAndValid('baguette', true);
+                $ancienPrix->setValid(false);
+                $em->persist($ancienPrix);
+                $em->persist($nouveauPrix);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Le prix du pain a bien été changé de '.$ancienPrix->getPrix().' à '.$nouveauPrix->getPrix().' cents.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors du changement de prix. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        $listePrix = $repository->findBySlug('baguette');
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
-            'listePrix' => $listePrix
+            'listePrix' => $listePrix,
+            'form'      => $form->createView()
         ));
     }
 }
