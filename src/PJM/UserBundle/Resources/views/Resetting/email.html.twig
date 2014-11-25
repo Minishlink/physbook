@@ -1,0 +1,29 @@
+{% block subject %}[Phy'sbook] Modification de ton mot de passe{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Sal's {{ user.bucque }} {{ user.username }},
+
+Réinitialise ton mot de passe en allant là :
+{{ confirmationUrl }}
+
+Fratern's,
+les ZiPhy'sbook
+{% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+<div style="color: #b63938;">
+<p style="text-align:center"><a href="physbook.fr"><img style="" src="http://physbook.fr/brand_small.png" alt="Phy'sbook"></a></p>
+<h2>Sal's {{ user.bucque }} {{ user.username }},</h2>
+
+<p>
+    Réinitialise ton mot de passe en cliquant <a style="color: #555" href="{{ confirmationUrl }}">ici</a>.
+</p>
+
+<p>
+    Fratern's,<br>
+    les ZiPhy'sbook
+</p>
+</div>
+{% endblock %}
