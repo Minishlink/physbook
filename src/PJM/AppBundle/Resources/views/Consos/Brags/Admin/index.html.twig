@@ -3,6 +3,17 @@
 {% set section = "consos" %}
 {% block pageName %}brags{% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#tabGestionCommande').DataTable({
+        order: [1, "desc"]
+    });
+} );
+</script>
+{% endblock %}
+
 {% block title %}
 	Gestion Brag's | {{ parent() }}
 {% endblock %}

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use PJM\AppBundle\Entity\Historique;
@@ -235,15 +236,39 @@ class BragsController extends Controller
     /**
     * @Security("has_role('ROLE_ZIBRAGS')")
     */
-    public function validerCommandeAction(Historique $commande)
+    public function validerCommandeAction(Request $request, Historique $commande)
     {
         // TODO sélectionner commandes et faire une action globale
         // TODO access control
-        $em = $this->getDoctrine()->getManager();
-        $commande->setValid(true);
-        $em->persist($commande);
-        $em->flush();
+        if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commandes = $repository->findByUserAndItemSlug($commande->getUser(), 'baguette');
 
-        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+            foreach ($commandes as $c) {
+                if ($c->getValid() === true) {
+                    $request->getSession()->getFlashBag()->add(
+                        'info',
+                        'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
+                    );
+
+                    $c->setValid(false);
+                    $em->persist($c);
+                }
+            }
+
+            $commande->setValid(true);
+            $em->persist($commande);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') est validée.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
 }
