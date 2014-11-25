@@ -65,6 +65,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+            numeric_functions:
+                regexp: PJM\AppBundle\DoctrineFunctions\RegexpFunction
 
 # Swiftmailer Configuration
 swiftmailer:
