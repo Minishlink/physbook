@@ -82,7 +82,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $prixBaguette = $em->getRepository('PJMAppBundle:Item')
-            ->findOneBySlug('baguette')
+            ->findOneBySlugAndValid('baguette', true)
             ->getPrix();
 
         return $prixBaguette;
