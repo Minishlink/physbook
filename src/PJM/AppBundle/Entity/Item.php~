@@ -3,12 +3,13 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Item
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ItemRepository")
  */
 class Item
 {
@@ -27,14 +28,16 @@ class Item
      * @ORM\Column(name="libelle", type="string", length=255)
      */
     private $libelle;
-    
+
     /**
      * @var string
+     * 
+     * Si item déprécié, la valeur du slug est "[slugItem]-old"
      *
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
-    
+
     /**
      * @var integer
      *
@@ -43,10 +46,25 @@ class Item
     private $prix;
     
     /**
+     * @var \DateTime
+     * 
+     * Sert à avoir un historique des prix d'un item, le slug étant remplacé par "[slugItem]-old".
+     * 
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $date;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
+    
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
 
     /**
@@ -104,7 +122,7 @@ class Item
     {
         return $this->prix;
     }
-    
+
     /**
      * Set boquette
      *
@@ -126,5 +144,28 @@ class Item
     public function getBoquette()
     {
         return $this->boquette;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Item
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
