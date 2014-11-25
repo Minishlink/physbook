@@ -209,8 +209,8 @@ class BragsController extends Controller
         ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
+    /*
+    * ADMIN
     */
     public function adminAction()
     {
@@ -219,9 +219,6 @@ class BragsController extends Controller
         return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig');
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
     public function listeCommandesAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -233,9 +230,6 @@ class BragsController extends Controller
         ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
     public function validerCommandeAction(Request $request, Historique $commande)
     {
         // TODO sélectionner commandes et faire une action globale
@@ -272,9 +266,6 @@ class BragsController extends Controller
         throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
     public function listeBucquagesAction()
     {
         /*$em = $this->getDoctrine()->getManager();
@@ -288,9 +279,6 @@ class BragsController extends Controller
         ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
     public function listePrixAction()
     {
         $em = $this->getDoctrine()->getManager();
