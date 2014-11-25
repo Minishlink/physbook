@@ -234,8 +234,8 @@ class BragsController extends Controller
 
     public function validerCommandeAction(Request $request, Historique $commande)
     {
+        // TODO listener envoi d'email de notification
         // TODO sélectionner commandes et faire une action globale
-        // TODO access control
         if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Historique');
@@ -260,6 +260,27 @@ class BragsController extends Controller
             $request->getSession()->getFlashBag()->add(
                 'success',
                 'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') est validée.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
+    }
+
+    public function resilierCommandeAction(Request $request, Historique $commande)
+    {
+        if ($commande->getItem()->getSlug() == "baguette"
+            && ($commande->getValid() === true || null === $commande->getValid())) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commande->setValid(false);
+            $em->persist($commande);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
             );
 
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));

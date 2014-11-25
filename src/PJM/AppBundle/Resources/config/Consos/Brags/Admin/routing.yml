@@ -10,6 +10,10 @@ pjm_app_consos_brags_admin_validerCommande:
     path:     /valider/{commande}
     defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommande }
 
+pjm_app_consos_brags_admin_resilierCommande:
+    path:     /resilier/{commande}
+    defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommande }
+
 pjm_app_consos_brags_admin_listeBucquages:
     path:     /listeBucquages
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
