@@ -16,7 +16,8 @@
                             <th>PG</th>
                             <th>Nombre</th>
                             <th>&Eacute;tat</th>
-                            <th>Action</th>
+                            <th>Valider</th>
+                            <th>Résilier</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +28,18 @@
                             <td>{{ commande.user.username }}</td>
                             <td>{{ commande.nombre/10 }}</td>
                             <td>{% if commande.valid is null %}En attente{% elseif commande.valid == false %}Résiliée{% else %}En cours{% endif %}</td>
-                            <td>{% if commande.valid is null %}<a href="{{ path('pjm_app_consos_brags_admin_validerCommande', {'commande': commande.id}) }}">Valider</a>{%endif %}</td>
+                            <td>
+                                {% if commande.valid is null %}
+                                <a href="{{ path('pjm_app_consos_brags_admin_validerCommande', {'commande': commande.id}) }}">Valider</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if commande.valid == true %}
+                                <a href="{{ path('pjm_app_consos_brags_admin_resilierCommande', {'commande': commande.id}) }}">Résilier</a>
+                                {% elseif commande.valid is null %}
+                                <a href="{{ path('pjm_app_consos_brags_admin_resilierCommande', {'commande': commande.id}) }}">Annuler</a>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
