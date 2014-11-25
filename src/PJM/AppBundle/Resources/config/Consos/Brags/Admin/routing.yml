@@ -3,9 +3,17 @@ pjm_app_consos_brags_admin_index:
     defaults: { _controller: PJMAppBundle:Consos/Brags:admin }
 
 pjm_app_consos_brags_admin_listeCommandes:
-    path:     /liste
+    path:     /listeCommandes
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
 
 pjm_app_consos_brags_admin_validerCommande:
     path:     /valider/{commande}
     defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommande }
+
+pjm_app_consos_brags_admin_listeBucquages:
+    path:     /listeBucquages
+    defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
+
+pjm_app_consos_brags_admin_listePrix:
+    path:     /listePrix
+    defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }

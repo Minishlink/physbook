@@ -271,4 +271,34 @@ class BragsController extends Controller
 
         throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
+
+    /**
+    * @Security("has_role('ROLE_ZIBRAGS')")
+    */
+    public function listeBucquagesAction()
+    {
+        /*$em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $commandes = $repository->findByItemSlug('baguette');*/
+
+        $bucquages = null;
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
+            'bucquages' => $bucquages
+        ));
+    }
+
+    /**
+    * @Security("has_role('ROLE_ZIBRAGS')")
+    */
+    public function listePrixAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+        $listePrix = $repository->findBySlugRegex('(baguette)+(([-])+(old)+)*');
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
+            'listePrix' => $listePrix
+        ));
+    }
 }
