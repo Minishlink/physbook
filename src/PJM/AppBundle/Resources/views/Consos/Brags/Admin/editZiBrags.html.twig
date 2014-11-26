@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingZiBrags" data-toggle="collapse" data-parent="#accordion" data-target="#collapseZiBrags" aria-expanded="true" aria-controls="collapseZiBrags">
+        <h2 class="panel-title">
+                ZiBrag's
+        </h2>
+    </div>
+    <div id="collapseZiBrags" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZiBrags">
+        <div class="panel-body">
+            {% if listeZiBrags|length == 1 %}
+                Le ZiBrags est {{ listeZiBrags[0].bucque }} {{ listeZiBrags[0].username }}.
+            {% elseif listeZiBrags|length == 0 %}
+                Il n'y a pas de ZiBrag's actuellement.
+            {% else %}
+                Les ZiBrag's sont :
+                <ul>
+                {% for ZiBrags in listeZiBrags %}
+                    <li>{{ ZiBrags.bucque }} {{ ZiBrags.username }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <br>
+            {% include "PJMAppBundle:Consos:Form/User.html.twig" with {'form': form } %}
+        </div>
+    </div>
+</div>

@@ -21,3 +21,7 @@ pjm_app_consos_brags_admin_listeBucquages:
 pjm_app_consos_brags_admin_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
+
+pjm_app_consos_brags_admin_editZiBrags:
+    path:     /editZiBrags
+    defaults: { _controller: PJMAppBundle:Consos/Brags:editZiBrags }
