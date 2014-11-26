@@ -27,6 +27,7 @@ class BragsController extends Controller
     public function indexAction(Request $request)
     {
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
+            'ZiBrags' => $this->getZiBrags(),
             'solde' => $this->getSolde(),
             'prixBaguette' => $this->getPrixBaguette(),
             'commande' => $this->getCommande()
@@ -87,6 +88,20 @@ class BragsController extends Controller
             ->getPrix();
 
         return $prixBaguette;
+    }
+
+    public function getZiBrags($tous = false)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ZiBrags = $em->getRepository('PJMUserBundle:User')
+            ->findByRole('ROLE_ZIBRAGS');
+
+        if ($tous) {
+            return $ZiBrags;
+        }
+
+        return (isset($ZiBrags[0])) ? $ZiBrags[0] : null;
+
     }
 
     public function rechargementAction(Request $request)
