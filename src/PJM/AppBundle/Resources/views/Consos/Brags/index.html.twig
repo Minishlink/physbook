@@ -11,6 +11,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Brag's</h1>
+            {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_consos_brags_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
         </div>
     </div>
 {% endblock %}

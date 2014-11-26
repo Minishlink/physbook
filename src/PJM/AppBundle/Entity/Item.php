@@ -3,12 +3,13 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Item
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ItemRepository")
  */
 class Item
 {
@@ -43,10 +44,33 @@ class Item
     private $prix;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valid", type="boolean")
+     */
+    private $valid;
+
+    /**
+     * @var \DateTime
+     *
+     * Sert à avoir un historique des prix d'un item
+     *
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $date;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+        $this->valid = true;
+    }
 
 
     /**
@@ -149,5 +173,51 @@ class Item
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Item
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set valid
+     *
+     * @param boolean $valid
+     * @return Item
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * Get valid
+     *
+     * @return boolean
+     */
+    public function getValid()
+    {
+        return $this->valid;
     }
 }

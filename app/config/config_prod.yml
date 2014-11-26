@@ -28,9 +28,9 @@ monolog:
         swift:
             type:               swift_mailer
             from_email:         error@physbook.fr
-            to_email:           admin@physbook.fr
-            subject:            "OOps"
-            level:              debug
+            to_email:           error@physbook.fr
+            subject:            "[Phy'sbook] Oops"
+            level:              error
         login:
             type:               stream
             path:               "%kernel.logs_dir%/auth.log"

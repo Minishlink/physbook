@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Historique
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\HistoriqueRepository")
  */
 class Historique
