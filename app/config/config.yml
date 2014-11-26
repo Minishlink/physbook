@@ -65,6 +65,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+            numeric_functions:
+                regexp: PJM\AppBundle\DoctrineFunctions\RegexpFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -87,8 +90,11 @@ fos_user:
     service:
         mailer: fos_user.mailer.twig_swift
     from_email:
-        address:        louis.lagrange@gadz.org
+        address:        admin@physbook.fr
         sender_name:    Phy'sbook
     registration:
         form:
             type: pjm_user_registration
+    resetting:
+        email:
+            template: PJMUserBundle:Resetting:email.html.twig

@@ -6,10 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use PJM\AppBundle\Entity\Historique;
+use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Form\Consos\CommandeType;
+use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsController extends Controller
 {
@@ -79,7 +82,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $prixBaguette = $em->getRepository('PJMAppBundle:Item')
-            ->findOneBySlug('baguette')
+            ->findOneBySlugAndValid('baguette', true)
             ->getPrix();
 
         return $prixBaguette;
@@ -208,8 +211,8 @@ class BragsController extends Controller
         ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
+    /*
+    * ADMIN
     */
     public function adminAction()
     {
@@ -218,9 +221,6 @@ class BragsController extends Controller
         return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig');
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
     public function listeCommandesAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -232,18 +232,131 @@ class BragsController extends Controller
         ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ZIBRAGS')")
-    */
-    public function validerCommandeAction(Historique $commande)
+    public function validerCommandeAction(Request $request, Historique $commande)
     {
+        // TODO listener envoi d'email de notification
         // TODO sélectionner commandes et faire une action globale
-        // TODO access control
-        $em = $this->getDoctrine()->getManager();
-        $commande->setValid(true);
-        $em->persist($commande);
-        $em->flush();
+        if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commandes = $repository->findByUserAndItemSlug($commande->getUser(), 'baguette');
 
-        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+            foreach ($commandes as $c) {
+                if ($c->getValid() === true) {
+                    $request->getSession()->getFlashBag()->add(
+                        'info',
+                        'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
+                    );
+
+                    $c->setValid(false);
+                    $em->persist($c);
+                }
+            }
+
+            $commande->setValid(true);
+            $em->persist($commande);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') est validée.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
+    }
+
+    public function resilierCommandeAction(Request $request, Historique $commande)
+    {
+        if ($commande->getItem()->getSlug() == "baguette"
+            && ($commande->getValid() === true || null === $commande->getValid())) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commande->setValid(false);
+            $em->persist($commande);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
+    }
+
+    public function listeBucquagesAction()
+    {
+        /*$em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $commandes = $repository->findByItemSlug('baguette');*/
+
+        $bucquages = null;
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
+            'bucquages' => $bucquages
+        ));
+    }
+
+    public function listePrixAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+
+        $nouveauPrix = new Item();
+        $nouveauPrix->setLibelle('Baguette de pain');
+        $nouveauPrix->setBoquette(
+            $em->getRepository('PJMAppBundle:Boquette')
+                ->findOneBySlug($this->slug)
+        );
+        $nouveauPrix->setSlug('baguette');
+
+        $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
+            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listePrix'),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $ancienPrix = $repository->findOneBySlugAndValid('baguette', true);
+                $ancienPrix->setValid(false);
+                $em->persist($ancienPrix);
+                $em->persist($nouveauPrix);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Le prix du pain a bien été changé de '.$ancienPrix->getPrix().' à '.$nouveauPrix->getPrix().' cents.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors du changement de prix. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        $listePrix = $repository->findBySlug('baguette');
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
+            'listePrix' => $listePrix,
+            'form'      => $form->createView()
+        ));
     }
 }

@@ -3,6 +3,17 @@
 {% set section = "consos" %}
 {% block pageName %}brags{% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#tabGestionCommandes, #tabGestionPrixBaguette, #tabGestionBucquages').DataTable({
+        order: [1, "desc"]
+    });
+} );
+</script>
+{% endblock %}
+
 {% block title %}
 	Gestion Brag's | {{ parent() }}
 {% endblock %}
@@ -10,7 +21,7 @@
 {% block pjm_app_body_title %}
     <div class="row">
         <div class="col-md-12">
-            <h1>Brag's</h1>
+            <h1>Gestion Brag's</h1>
         </div>
     </div>
 {% endblock %}
@@ -19,7 +30,11 @@
 
 <div class="row">
     <div class="col-md-12">
-        {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {% render(url('pjm_app_consos_brags_admin_listeBucquages')) %}
+            {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+            {% render(url('pjm_app_consos_brags_admin_listePrix')) %}
+        </div>
     </div>
 </div>
 

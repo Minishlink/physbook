@@ -1,0 +1,12 @@
+<form method="post" action="{{ form.vars.action }}" {{ form_enctype(form) }} role="form">
+
+    <div class="form-group">
+        {{ form_widget(form.prix, {'attr': {'placeholder': 'Prix'}}) }}
+        {{ form_errors(form.prix) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    <button class="btn" id="_submit" name="_submit" type="submit">Modifier</button>
+
+</form>
