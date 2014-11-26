@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="pjm_user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\UserBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {

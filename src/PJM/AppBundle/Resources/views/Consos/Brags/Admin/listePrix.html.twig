@@ -1,17 +1,15 @@
 <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingParametres" data-toggle="collapse" data-parent="#accordion" data-target="#collapseParametres" aria-expanded="true" aria-controls="collapseParametres">
+    <div class="panel-heading" role="tab" id="headingPrix" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePrix" aria-expanded="true" aria-controls="collapsePrix">
         <h2 class="panel-title">
-                Paramètres
+                Prix de la baguette
         </h2>
     </div>
-    <div id="collapseParametres" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingParametres">
+    <div id="collapsePrix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPrix">
         <div class="panel-body">
-            <h3>Prix de la baguette</h3>
-
-            <h4>Modification</h4>
+            <h3>Modification</h3>
             {% include "PJMAppBundle:Consos:Form/prix.html.twig" with {'form': form } %}
 
-            <h4>Historique</h4>
+            <h3>Historique</h3>
 
             {% if listePrix != null %}
             <div class="table-responsive">
