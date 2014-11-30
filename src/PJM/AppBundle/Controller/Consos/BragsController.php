@@ -38,7 +38,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $repository = $em->getRepository('PJMAppBundle:Commande');
         $commandes = $repository->findByUserAndItemSlug($this->getUser(), 'baguette');
 
         foreach ($commandes as $commande) {
@@ -248,13 +248,13 @@ class BragsController extends Controller
         ));
     }
 
-    public function validerCommandeAction(Request $request, Historique $commande)
+    public function validerCommandeAction(Request $request, Commande $commande)
     {
         // TODO listener envoi d'email de notification
         // TODO sélectionner commandes et faire une action globale
         if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $repository = $em->getRepository('PJMAppBundle:Commande');
             $commandes = $repository->findByUserAndItemSlug($commande->getUser(), 'baguette');
 
             foreach ($commandes as $c) {
@@ -265,13 +265,19 @@ class BragsController extends Controller
                     );
 
                     $c->setValid(false);
+                    $c->setDateFin(new \DateTime());
                     $em->persist($c);
                 }
             }
 
-            $commande->setValid(true);
-            $commande->setDateDebut(new \DateTime());
-            $em->persist($commande);
+            if ($commande->getNombre() != 0) {
+                $commande->setValid(true);
+                $commande->setDateDebut(new \DateTime());
+                $em->persist($commande);
+            } else {
+                $em->remove($commande);
+            }
+
             $em->flush();
 
             $request->getSession()->getFlashBag()->add(
@@ -310,7 +316,7 @@ class BragsController extends Controller
     public function listeBucquagesAction()
     {
         /*$em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $repository = $em->getRepository('PJMAppBundle:Commande');
         $commandes = $repository->findByItemSlug('baguette');*/
 
         $bucquages = null;

@@ -54,7 +54,7 @@ class CommandeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Historique'
+            'data_class' => 'PJM\AppBundle\Entity\Commande'
         ));
     }
 
