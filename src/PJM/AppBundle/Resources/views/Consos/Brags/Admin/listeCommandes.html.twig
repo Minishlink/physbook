@@ -4,7 +4,7 @@
                 Liste des commandes
         </h2>
     </div>
-    <div id="collapseCommandes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCommandes">
+    <div id="collapseCommandes" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCommandes">
         <div class="panel-body">
             {% if commandes != null %}
             <div class="table-responsive">
@@ -12,7 +12,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Date</th>
+                            <th>Date (création)</th>
+                            <th>Date (début)</th>
+                            <th>Date (fin)</th>
                             <th>PG</th>
                             <th>Nombre</th>
                             <th>&Eacute;tat</th>
@@ -25,6 +27,8 @@
                         <tr>
                             <td>{{ commande.id }}</td>
                             <td>{{ commande.date|date('d/m/y') }}</td>
+                            <td>{% if commande.dateDebut is not null %}{{ commande.dateDebut|date('d/m/y') }}{% endif %}</td>
+                            <td>{% if commande.dateFin is not null %}{{ commande.dateFin|date('d/m/y') }}{% endif %}</td>
                             <td>{{ commande.user.username }}</td>
                             <td>{{ commande.nombre/10 }}</td>
                             <td>{% if commande.valid is null %}En attente{% elseif commande.valid == false %}Résiliée{% else %}En cours{% endif %}</td>
