@@ -18,6 +18,10 @@ pjm_app_consos_brags_admin_listeBucquages:
     path:     /listeBucquages
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
 
+pjm_app_consos_brags_admin_listeVacances:
+    path:     /listeVacances
+    defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
+
 pjm_app_consos_brags_admin_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }

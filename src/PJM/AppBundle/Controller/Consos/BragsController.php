@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\ORM\EntityRepository;
 
-use PJM\AppBundle\Entity\Historique;
+use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
@@ -173,7 +173,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $commande = new Historique();
+        $commande = new Commande();
 
         $form = $this->createForm(new CommandeType(), $commande, array(
             'action' => $this->generateUrl('pjm_app_consos_brags_commande'),
@@ -240,7 +240,7 @@ class BragsController extends Controller
     public function listeCommandesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $repository = $em->getRepository('PJMAppBundle:Commande');
         $commandes = $repository->findByItemSlug('baguette');
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCommandes.html.twig', array(
@@ -270,6 +270,7 @@ class BragsController extends Controller
             }
 
             $commande->setValid(true);
+            $commande->setDateDebut(new \DateTime());
             $em->persist($commande);
             $em->flush();
 
@@ -284,13 +285,14 @@ class BragsController extends Controller
         throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
 
-    public function resilierCommandeAction(Request $request, Historique $commande)
+    public function resilierCommandeAction(Request $request, Commande $commande)
     {
         if ($commande->getItem()->getSlug() == "baguette"
             && ($commande->getValid() === true || null === $commande->getValid())) {
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $repository = $em->getRepository('PJMAppBundle:Commande');
             $commande->setValid(false);
+            $commande->setDateFin(new \DateTime());
             $em->persist($commande);
             $em->flush();
 
@@ -315,6 +317,68 @@ class BragsController extends Controller
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
             'bucquages' => $bucquages
+        ));
+    }
+
+    public function listeVacancesAction(Request $request)
+    {
+        $form = $this->createFormBuilder()
+            ->add('nbJours', 'number', array(
+                'error_bubbling' => true,
+                'constraints' => array(
+                    new NotBlank(),
+            )))
+            ->add('date', 'date', array(
+                'error_bubbling' => true,
+                'constraints' => array(
+                    new NotBlank(),
+            )))
+            ->setMethod('POST')
+            ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeVacances'))
+            ->getForm();
+
+        $form->handleRequest($request);
+        $data = $form->getData();
+        $nbJours = $data['nbJours'];
+        $date = $data['date'];
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // on va chercher la liste des personnes ayant une commande en cours
+                $em = $this->getDoctrine()->getManager();
+                $repository = $em->getRepository('PJMAppBundle:Commande');
+                $nbEleves = 10;
+
+                // on enregistre dans l'historique un crédit à la date donnée
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Un crédit de '.$nbJours.' jours sera effectué pour '.$nbEleves.' personnes le '.$date->format('d/m/Y').'.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de l\'envoi de crédit de vacances/jours fériés. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
+        $bucquages = null;
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeVacances.html.twig', array(
+            'bucquages' => $bucquages,
+            'form' => $form->createView()
         ));
     }
 

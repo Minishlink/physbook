@@ -1,0 +1,17 @@
+<form method="post" action="{{ form.vars.action }}" {{ form_enctype(form) }} role="form">
+
+    <div class="form-group">
+        {{ form_widget(form.nbJours, {'attr': {'placeholder': 'Nb de jours'}}) }}
+        {{ form_errors(form.nbJours) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.date, {'attr': {'placeholder': 'Date'}}) }}
+        {{ form_errors(form.date) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    <button class="btn" id="_submit" name="_submit" type="submit">Programmer le crédit</button>
+
+</form>
