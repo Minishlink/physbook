@@ -4,13 +4,13 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Entity\Commande;
+use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
@@ -18,10 +18,12 @@ use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 class BragsController extends Controller
 {
     private $slug;
+    private $itemSlug;
 
     public function __construct()
     {
         $this->slug = 'brags';
+        $this->itemSlug = 'baguette';
     }
 
     public function indexAction(Request $request)
@@ -39,7 +41,7 @@ class BragsController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $repository = $em->getRepository('PJMAppBundle:Commande');
-        $commandes = $repository->findByUserAndItemSlug($this->getUser(), 'baguette');
+        $commandes = $repository->findByUserAndItemSlug($this->getUser(), $this->itemSlug);
 
         foreach ($commandes as $commande) {
             if (!isset($active) && $commande->getValid()) {
@@ -84,7 +86,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $prixBaguette = $em->getRepository('PJMAppBundle:Item')
-            ->findOneBySlugAndValid('baguette', true)
+            ->findOneBySlugAndValid($this->itemSlug, true)
             ->getPrix();
 
         return $prixBaguette;
@@ -110,8 +112,8 @@ class BragsController extends Controller
             ->add('montant', 'money', array(
                 'error_bubbling' => true,
                 'constraints' => array(
-                new NotBlank(),
-                new Range(array(
+                new Assert\NotBlank(),
+                new Assert\Range(array(
                     'min' => 1,
                     'minMessage' => 'Le montant doit être supérieur à 1€.',
                 )),
@@ -184,7 +186,7 @@ class BragsController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $item = $em->getRepository('PJMAppBundle:Item')
-                    ->findOneBySlug('baguette');
+                    ->findOneBySlug($this->itemSlug);
                 $commande->setItem($item);
                 $commande->setUser($this->getUser());
                 $commande->setNombre($commande->getNombre()*10);
@@ -241,7 +243,7 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Commande');
-        $commandes = $repository->findByItemSlug('baguette');
+        $commandes = $repository->findByItemSlug($this->itemSlug);
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCommandes.html.twig', array(
             'commandes' => $commandes
@@ -255,7 +257,7 @@ class BragsController extends Controller
         if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Commande');
-            $commandes = $repository->findByUserAndItemSlug($commande->getUser(), 'baguette');
+            $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
 
             foreach ($commandes as $c) {
                 if ($c->getValid() === true) {
@@ -317,7 +319,7 @@ class BragsController extends Controller
     {
         /*$em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Commande');
-        $commandes = $repository->findByItemSlug('baguette');*/
+        $commandes = $repository->findByItemSlug($this->itemSlug);*/
 
         $bucquages = null;
 
@@ -332,42 +334,55 @@ class BragsController extends Controller
             ->add('nbJours', 'number', array(
                 'error_bubbling' => true,
                 'constraints' => array(
-                    new NotBlank(),
+                    new Assert\NotBlank(),
+                    new Assert\GreaterThan(0),
             )))
             ->add('date', 'date', array(
                 'error_bubbling' => true,
                 'constraints' => array(
-                    new NotBlank(),
+                    new Assert\NotBlank(),
             )))
             ->setMethod('POST')
             ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeVacances'))
             ->getForm();
 
         $form->handleRequest($request);
-        $data = $form->getData();
-        $nbJours = $data['nbJours'];
-        $date = $data['date'];
 
         if ($form->isSubmitted()) {
+            $data = $form->getData();
+
             if ($form->isValid()) {
+                $nbJours = $data['nbJours'];
+                $date = $data['date'];
+
                 // on va chercher la liste des personnes ayant une commande en cours
                 $em = $this->getDoctrine()->getManager();
                 $repository = $em->getRepository('PJMAppBundle:Commande');
-                $nbEleves = 10;
+                $commandesActives = $repository->findByItemSlugAndValid($this->itemSlug, true);
+                $nbActives = count($commandesActives);
 
                 // on enregistre dans l'historique un crédit à la date donnée
+                $repository = $em->getRepository('PJMAppBundle:Historique');
+                foreach ($commandesActives as $commande) {
+                    $creditProgramme = new Historique();
+                    $creditProgramme->setDate($date);
+                    $creditProgramme->setItem($commande->getItem());
+                    $creditProgramme->setUser($commande->getUser());
+                    $creditProgramme->setNombre($commande->getNombre()*$nbJours);
+                    $em->persist($creditProgramme);
+                }
+
+                $em->flush();
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    'Un crédit de '.$nbJours.' jours sera effectué pour '.$nbEleves.' personnes le '.$date->format('d/m/Y').'.'
+                    'Un crédit de '.$nbJours.' jours sera effectué pour '.$nbActives.' personnes le '.$date->format('d/m/Y').'.'
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
                     'Un problème est survenu lors de l\'envoi de crédit de vacances/jours fériés. Réessaye.'
                 );
-
-                $data = $form->getData();
 
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
@@ -399,7 +414,7 @@ class BragsController extends Controller
             $em->getRepository('PJMAppBundle:Boquette')
                 ->findOneBySlug($this->slug)
         );
-        $nouveauPrix->setSlug('baguette');
+        $nouveauPrix->setSlug($this->itemSlug);
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
             'action' => $this->generateUrl('pjm_app_consos_brags_admin_listePrix'),
@@ -409,7 +424,7 @@ class BragsController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $ancienPrix = $repository->findOneBySlugAndValid('baguette', true);
+                $ancienPrix = $repository->findOneBySlugAndValid($this->itemSlug, true);
                 $ancienPrix->setValid(false);
                 $em->persist($ancienPrix);
                 $em->persist($nouveauPrix);
@@ -438,7 +453,7 @@ class BragsController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        $listePrix = $repository->findBySlug('baguette');
+        $listePrix = $repository->findBySlug($this->itemSlug);
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
             'listePrix' => $listePrix,
@@ -461,7 +476,7 @@ class BragsController extends Controller
                         ->orderBy('u.username', 'ASC');
                 },
                 'constraints' => array(
-                    new NotBlank(),
+                    new Assert\NotBlank(),
             )))
             ->setMethod('POST')
             ->setAction($this->generateUrl('pjm_app_consos_brags_admin_editZiBrags'))
