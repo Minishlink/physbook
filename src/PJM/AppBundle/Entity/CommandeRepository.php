@@ -52,4 +52,25 @@ class CommandeRepository extends EntityRepository
 
         return $res;
     }
+
+    public function findByItemSlugAndValid($item_slug, $valid)
+    {
+        $query = $this->createQueryBuilder('h')
+                    ->where('h.valid = :valid')
+                    ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
+                    ->setParameters(array(
+                        'item_slug'  => $item_slug,
+                        'valid' => $valid
+                    ))
+                    ->orderBy('h.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
 }
