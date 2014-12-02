@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="pjm_user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\UserBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
@@ -22,11 +22,18 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="lastActivity", type="datetime", nullable=true)
+     */
+    private $lastActivity;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fams", type="string", length=20)
+     * @ORM\Column(name="fams", type="string", length=20, nullable=true)
      * @Assert\NotBlank()
      */
     private $fams;
@@ -34,7 +41,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="tabagns", type="string", length=5)
+     * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"bo", "li", "an", "me", "ch", "cl", "ai", "ka", "pa"})
      */
@@ -43,7 +50,7 @@ class User extends BaseUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="proms", type="smallint", length=5)
+     * @ORM\Column(name="proms", type="smallint", length=5, nullable=true)
      * @Assert\NotBlank()
      */
     private $proms;
@@ -51,7 +58,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="bucque", type="string", length=255)
+     * @ORM\Column(name="bucque", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $bucque;
@@ -59,7 +66,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $prenom;
@@ -67,7 +74,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     private $nom;
@@ -92,12 +99,12 @@ class User extends BaseUser
      * @ORM\Column(name="classe", type="string", length=10, nullable=true)
      */
     private $classe;
-    
+
     /**
-     * @var datetime
+     * @var date
      *
-     * @ORM\Column(name="anniversaire", type="datetime", nullable=true)
-     * @Assert\DateTime()
+     * @ORM\Column(name="anniversaire", type="date", nullable=true)
+     * @Assert\Date()
      */
     private $anniversaire;
 
@@ -316,5 +323,28 @@ class User extends BaseUser
     public function getClasse()
     {
         return $this->classe;
+    }
+
+    /**
+     * Set anniversaire
+     *
+     * @param string $anniversaire
+     * @return User
+     */
+    public function setAnniversaire($anniversaire)
+    {
+        $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+
+        return $this;
+    }
+
+    /**
+     * Get anniversaire
+     *
+     * @return \DateTime
+     */
+    public function getAnniversaire()
+    {
+        return $this->anniversaire;
     }
 }

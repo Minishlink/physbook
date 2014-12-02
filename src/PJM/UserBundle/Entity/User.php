@@ -24,6 +24,13 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var datetime
+     *
+     * @ORM\Column(name="lastActivity", type="datetime", nullable=true)
+     */
+    private $lastActivity;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="fams", type="string", length=20, nullable=true)
@@ -339,5 +346,28 @@ class User extends BaseUser
     public function getAnniversaire()
     {
         return $this->anniversaire;
+    }
+
+    /**
+     * Set lastActivity
+     *
+     * @param \DateTime $lastActivity
+     * @return User
+     */
+    public function setLastActivity($lastActivity)
+    {
+        $this->lastActivity = $lastActivity;
+
+        return $this;
+    }
+
+    /**
+     * Get lastActivity
+     *
+     * @return \DateTime
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
     }
 }

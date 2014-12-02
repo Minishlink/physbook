@@ -16,8 +16,13 @@ class ProfilController extends Controller
             $user = $this->getUser();
         }
 
+        $online = $this->getDoctrine()->getManager()
+            ->getRepository('PJMUserBundle:User')
+            ->getOneActive($user);
+
         return $this->render('PJMAppBundle:Profil:voir.html.twig', array(
             'user' => $user,
+            'online' => isset($online)
         ));
     }
 
