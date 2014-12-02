@@ -16,6 +16,8 @@
         {% if user.prenom != "" %}<br><small>dit <em>{{ user.prenom|capitalize }} {{ user.nom|capitalize }}</em></small>{% endif %}
     </h4>
 
+    {% if online %}<p>En ligne</p>{% endif %}
+
     {% if user == app.user %}
     <ul>
         <li><a href="{{ path('pjm_profil_modifier') }}">Modifier mon profil</a></li>

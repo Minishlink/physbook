@@ -7,3 +7,8 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: pjm_user_registration }
+    activity_listener:
+        class: PJM\UserBundle\Listener\ActivityListener
+        arguments: [@security.context, @doctrine.orm.default_entity_manager]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
