@@ -6,6 +6,9 @@
     </div>
     <div id="collapsePrix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPrix">
         <div class="panel-body">
+            <p>
+                Le prix actuel est de {{ prixActuel|prix }}.
+            </p>
             <h3>Modification</h3>
             {{ form(form) }}
 

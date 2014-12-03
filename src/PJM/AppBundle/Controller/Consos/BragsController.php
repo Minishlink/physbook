@@ -466,6 +466,7 @@ class BragsController extends Controller
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
             'listePrix' => $listePrix,
+            'prixActuel' => $this->getPrixBaguette(),
             'form'      => $form->createView()
         ));
     }

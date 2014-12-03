@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Compte
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\CompteRepository")
  */
 class Compte
