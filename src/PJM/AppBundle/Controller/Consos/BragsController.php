@@ -587,6 +587,7 @@ class BragsController extends Controller
         $repository = $em->getRepository('PJMAppBundle:Historique');
 
         // on regarde quand a été fait le dernier bucquage
+        $lastBucquage = $repository->findLast($this->itemSlug);
 
         // pour tous les jours jusqu'à aujourd'hui, on bucque
 
