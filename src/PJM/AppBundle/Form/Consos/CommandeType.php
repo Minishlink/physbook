@@ -29,7 +29,11 @@ class CommandeType extends AbstractType
                         'message' => "Choisis un nombre de baguettes par jour valide."
                     ))
                 )
-            ));
+            ))
+            ->add('save', 'submit', array(
+                'label' => 'Modifier',
+            ))
+        ;
     }
 
     /** Get nombre de baguettes par jour possibles

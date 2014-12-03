@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -115,9 +116,14 @@ class BragsController extends Controller
                 new Assert\NotBlank(),
                 new Assert\Range(array(
                     'min' => 1,
+                    'max' => 200,
                     'minMessage' => 'Le montant doit être supérieur à 1€.',
+                    'maxMessage' => 'Tu ne peux pas envoyer plus de 200€ par rechargement.',
                 )),
             )))
+            ->add('save', 'submit', array(
+                'label' => 'Recharger',
+            ))
             ->setMethod('POST')
             ->setAction($this->generateUrl('pjm_app_consos_brags_rechargement'))
             ->getForm();
@@ -317,9 +323,11 @@ class BragsController extends Controller
 
     public function listeBucquagesAction()
     {
-        /*$em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Commande');
-        $commandes = $repository->findByItemSlug($this->itemSlug);*/
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $bucquages = $repository->findByItemSlug($this->itemSlug);
+
+        // avoir le prix du moment de l'historique
 
         $bucquages = null;
 
@@ -333,15 +341,21 @@ class BragsController extends Controller
         $form = $this->createFormBuilder()
             ->add('nbJours', 'number', array(
                 'error_bubbling' => true,
+                'label' => 'Nombre de jours',
                 'constraints' => array(
                     new Assert\NotBlank(),
                     new Assert\GreaterThan(0),
             )))
             ->add('date', 'date', array(
                 'error_bubbling' => true,
+                'label' => 'Date',
+                'data' => new \DateTime(),
                 'constraints' => array(
                     new Assert\NotBlank(),
             )))
+            ->add('save', 'submit', array(
+                'label' => 'Programmer le crédit',
+            ))
             ->setMethod('POST')
             ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeVacances'))
             ->getForm();
@@ -368,7 +382,7 @@ class BragsController extends Controller
                     $creditProgramme->setDate($date);
                     $creditProgramme->setItem($commande->getItem());
                     $creditProgramme->setUser($commande->getUser());
-                    $creditProgramme->setNombre($commande->getNombre()*$nbJours);
+                    $creditProgramme->setNombre(-$commande->getNombre()*$nbJours);
                     $em->persist($creditProgramme);
                 }
 
@@ -418,6 +432,7 @@ class BragsController extends Controller
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
             'action' => $this->generateUrl('pjm_app_consos_brags_admin_listePrix'),
+            'method' => 'POST',
         ));
 
         $form->handleRequest($request);
@@ -532,5 +547,17 @@ class BragsController extends Controller
             'form'      => $form->createView(),
             'listeZiBrags' => $listeZiBrags
         ));
+    }
+
+    /*
+    * LOCALHOST
+    */
+    public function bucquageCronAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+
+        //$aBucque
+        return new Response('ok');
     }
 }
