@@ -12,32 +12,32 @@
             <h3>Ajout</h3>
             {{ form(form) }}
 
-            <h3>Historique</h3>
-            {% if bucquages != null %}
+            <h3>Liste</h3>
+            {% if listeVacances != null %}
             <div class="table-responsive">
                 <table id="tabGestionVacances" class="table table-striped table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Date</th>
-                            <th>PG</th>
-                            <th>Prix</th>
+                            <th>Nombre de jours</th>
+                            <th>Crédité ?</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for bucquage in bucquages %}
+                        {% for vacances in listeVacances %}
                         <tr>
-                            <td>{{ bucquage.id }}</td>
-                            <td>{{ bucquage.date|date('d/m/y') }}</td>
-                            <td>{{ bucquage.user.username }}</td>
-                            <td>{{ bucquage.prix/10 }}</td>
+                            <td>{{ vacances.date|date('d/m/y') }}</td>
+                            <td>{{ vacances.nbJours }}</td>
+                            <td>{{ vacances.crediteBrags ? 'Oui':'Non' }}</td>
+                            <td>{% if not vacances.crediteBrags %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Annuler</a>{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             {% else %}
-            Il n'y a pas de bucquages.
+            Il n'y a pas de vacances/jours fériés enregistrés.
             {% endif %}
         </div>
     </div>

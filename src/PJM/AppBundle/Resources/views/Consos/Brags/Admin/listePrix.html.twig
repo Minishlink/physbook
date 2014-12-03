@@ -24,7 +24,7 @@
                         {% for prix in listePrix %}
                         <tr>
                             <td>{{ prix.date|date('d/m/y') }}</td>
-                            <td>{{ prix.prix }}</td>
+                            <td>{{ prix.prix|prix }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

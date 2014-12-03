@@ -26,7 +26,7 @@
                             <td>{{ bucquage.id }}</td>
                             <td>{{ bucquage.date|date('d/m/y') }}</td>
                             <td>{{ bucquage.user.username }}</td>
-                            <td>{{ bucquage.prix/10 }}</td>
+                            <td>{{ (bucquage.nombre/10*bucquage.item.prix)|prix }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
