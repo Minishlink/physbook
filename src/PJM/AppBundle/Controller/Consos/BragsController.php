@@ -85,14 +85,18 @@ class BragsController extends Controller
         return $solde;
     }
 
+    public function getCurrentBaguette()
+    {
+        return $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('PJMAppBundle:Item')
+            ->findOneBySlugAndValid($this->itemSlug, true);
+    }
+
     public function getPrixBaguette()
     {
-        $em = $this->getDoctrine()->getManager();
-        $prixBaguette = $em->getRepository('PJMAppBundle:Item')
-            ->findOneBySlugAndValid($this->itemSlug, true)
-            ->getPrix();
-
-        return $prixBaguette;
+        return $this->getCurrentBaguette()->getPrix();
     }
 
     public function getZiBrags($tous = false)
@@ -194,9 +198,7 @@ class BragsController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $item = $em->getRepository('PJMAppBundle:Item')
-                    ->findOneBySlug($this->itemSlug);
-                $commande->setItem($item);
+                $commande->setItem($this->getCurrentBaguette());
                 $commande->setUser($this->getUser());
                 $commande->setNombre($commande->getNombre()*10);
                 $em->persist($commande);
@@ -268,28 +270,39 @@ class BragsController extends Controller
             $repository = $em->getRepository('PJMAppBundle:Commande');
             $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
 
+            // on résilie les précédentes commandes
             foreach ($commandes as $c) {
-                if ($c->getValid() === true) {
-                    $request->getSession()->getFlashBag()->add(
+                if ($c != $commande && (null === $c->getValid() || $c->getValid() == true)) {
+                    $msgEnAttente[] = array(
                         'info',
-                        'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
+                        'La commande #'.$c->getId().' ('.($c->getNombre()/10).' baguettes de pain par jour pour '.$c->getUser()->getUsername().') a été résiliée.'
                     );
 
-                    $c->setValid(false);
-                    $c->setDateFin(new \DateTime());
+                    $c->resilier();
                     $em->persist($c);
                 }
             }
 
             if ($commande->getNombre() != 0) {
-                $commande->setValid(true);
-                $commande->setDateDebut(new \DateTime());
+                // on valide la commande demandée
+                $commande->valider();
+
+                // on met à jour le prix de la commande car il pourrait avoir changé
+                $commande->setItem($this->getCurrentBaguette());
+
                 $em->persist($commande);
             } else {
+                // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
                 $em->remove($commande);
             }
 
             $em->flush();
+
+            if (isset($msgEnAttente)) {
+                foreach ($msgEnAttente as $msg) {
+                    $request->getSession()->getFlashBag()->add($msg[0], $msg[1]);
+                }
+            }
 
             $request->getSession()->getFlashBag()->add(
                 'success',
@@ -308,8 +321,7 @@ class BragsController extends Controller
             && ($commande->getValid() === true || null === $commande->getValid())) {
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Commande');
-            $commande->setValid(false);
-            $commande->setDateFin(new \DateTime());
+            $commande->resilier();
             $em->persist($commande);
             $em->flush();
 
@@ -433,10 +445,28 @@ class BragsController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $ancienPrix = $repository->findOneBySlugAndValid($this->itemSlug, true);
+                // on met à jour le prix
+                $ancienPrix = $this->getCurrentBaguette();
                 $ancienPrix->setValid(false);
                 $em->persist($ancienPrix);
                 $em->persist($nouveauPrix);
+
+                // on va chercher les commandes en cours
+                $repository = $em->getRepository('PJMAppBundle:Commande');
+                $commandesActives = $repository->findByItemSlugAndValid($this->itemSlug, true);
+
+                // on les duplique avec le nouveau prix
+                foreach ($commandesActives as $oldCommande) {
+                    $newCommande = clone $oldCommande;
+                    $newCommande->setItem($nouveauPrix);
+                    $newCommande->valider();
+
+                    $oldCommande->resilier();
+
+                    $em->persist($newCommande);
+                    $em->persist($oldCommande);
+                }
+
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add(
@@ -556,7 +586,14 @@ class BragsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
 
-        //$aBucque
+        // on regarde quand a été fait le dernier bucquage
+
+        // pour tous les jours jusqu'à aujourd'hui, on bucque
+
+        // on bucque les commandes
+        // on bucque les vacances
+        // si on a pas déjà bucqué
+
         return new Response('ok');
     }
 }

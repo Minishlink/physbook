@@ -7,8 +7,12 @@
 {{ parent() }}
 <script type="text/javascript">
 $(document).ready( function () {
-    $('#tabGestionCommandes, #tabGestionPrixBaguette, #tabGestionBucquages, #tabGestionVacances').DataTable({
+    $('#tabGestionBucquages').DataTable({
         order: [1, "desc"]
+    });
+
+    $('#tabGestionVacances, #tabGestionPrixBaguette, #tabGestionCommandes').DataTable({
+        order: [0, "desc"]
     });
 } );
 </script>
