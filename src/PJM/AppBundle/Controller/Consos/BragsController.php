@@ -485,6 +485,7 @@ class BragsController extends Controller
         $form = $this->createFormBuilder()
             ->add('user', 'entity', array(
                 'error_bubbling' => true,
+                'label' => 'Utilisateur',
                 'class' => 'PJMUserBundle:User',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -493,6 +494,9 @@ class BragsController extends Controller
                 'constraints' => array(
                     new Assert\NotBlank(),
             )))
+            ->add('save', 'submit', array(
+                'label' => 'Modifier',
+            ))
             ->setMethod('POST')
             ->setAction($this->generateUrl('pjm_app_consos_brags_admin_editZiBrags'))
             ->getForm();
