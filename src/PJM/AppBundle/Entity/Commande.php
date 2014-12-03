@@ -77,6 +77,17 @@ class Commande
         $this->date = new \DateTime();
     }
 
+    public function valider()
+    {
+        $this->setValid(true);
+        $this->setDateDebut(new \DateTime());
+    }
+
+    public function resilier()
+    {
+        $this->setValid(false);
+        $this->setDateFin(new \DateTime());
+    }
 
     /**
      * Get id
