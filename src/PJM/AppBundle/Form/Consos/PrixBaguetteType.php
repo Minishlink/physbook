@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PrixBaguetteType extends AbstractType
 {
@@ -21,9 +21,17 @@ class PrixBaguetteType extends AbstractType
                 'error_bubbling' => true,
                 'divisor' => 100,
                 'constraints' => array(
-                    new NotBlank(),
+                    new Assert\NotBlank(),
+                    new Assert\LessThan(array(
+                        'value' => 200,
+                        'message' => 'Le prix de la baguette ne devrait pas être plus grand que 2€.'
+                    )),
                 )
-            ));
+            ))
+            ->add('save', 'submit', array(
+                'label' => 'Modifier',
+            ))
+        ;
     }
 
     /**

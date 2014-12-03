@@ -7,7 +7,7 @@
     <div id="collapsePrix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPrix">
         <div class="panel-body">
             <h3>Modification</h3>
-            {% include "PJMAppBundle:Consos:Form/prix.html.twig" with {'form': form } %}
+            {{ form(form) }}
 
             <h3>Historique</h3>
 

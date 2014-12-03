@@ -10,8 +10,10 @@ pjm_app_consos_brags_rechargement:
     path:     /rechargement
     defaults: { _controller: PJMAppBundle:Consos/Brags:rechargement }
 
+pjm_app_consos_brags_bucquage:
+    path:     /bucquage
+    defaults: { _controller: PJMAppBundle:Consos/Brags:bucquageCron }
+
 pjm_app_consos_brags_admin:
     resource: "@PJMAppBundle/Resources/config/Consos/Brags/Admin/routing.yml"
     prefix:   /admin
-
-
