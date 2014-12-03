@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
 use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
+use PJM\AppBundle\Entity\Vacances;
+use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
@@ -184,6 +186,7 @@ class BragsController extends Controller
         $commande = new Commande();
 
         $form = $this->createForm(new CommandeType(), $commande, array(
+            'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_consos_brags_commande'),
         ));
 
@@ -327,10 +330,6 @@ class BragsController extends Controller
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $bucquages = $repository->findByItemSlug($this->itemSlug);
 
-        // avoir le prix du moment de l'historique
-
-        $bucquages = null;
-
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
             'bucquages' => $bucquages
         ));
@@ -338,65 +337,39 @@ class BragsController extends Controller
 
     public function listeVacancesAction(Request $request)
     {
-        $form = $this->createFormBuilder()
-            ->add('nbJours', 'number', array(
-                'error_bubbling' => true,
-                'label' => 'Nombre de jours',
-                'constraints' => array(
-                    new Assert\NotBlank(),
-                    new Assert\GreaterThan(0),
-            )))
-            ->add('date', 'date', array(
-                'error_bubbling' => true,
-                'label' => 'Date',
-                'data' => new \DateTime(),
-                'constraints' => array(
-                    new Assert\NotBlank(),
-            )))
-            ->add('save', 'submit', array(
-                'label' => 'Programmer le crédit',
-            ))
-            ->setMethod('POST')
-            ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeVacances'))
-            ->getForm();
+        $em = $this->getDoctrine()->getManager();
+
+        $vacances = new Vacances();
+
+        $form = $this->createForm(new VacancesType(), $vacances, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeVacances'),
+        ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $data = $form->getData();
-
             if ($form->isValid()) {
-                $nbJours = $data['nbJours'];
-                $date = $data['date'];
-
-                // on va chercher la liste des personnes ayant une commande en cours
-                $em = $this->getDoctrine()->getManager();
-                $repository = $em->getRepository('PJMAppBundle:Commande');
-                $commandesActives = $repository->findByItemSlugAndValid($this->itemSlug, true);
-                $nbActives = count($commandesActives);
-
-                // on enregistre dans l'historique un crédit à la date donnée
-                $repository = $em->getRepository('PJMAppBundle:Historique');
-                foreach ($commandesActives as $commande) {
-                    $creditProgramme = new Historique();
-                    $creditProgramme->setDate($date);
-                    $creditProgramme->setItem($commande->getItem());
-                    $creditProgramme->setUser($commande->getUser());
-                    $creditProgramme->setNombre(-$commande->getNombre()*$nbJours);
-                    $em->persist($creditProgramme);
-                }
-
+                $em->persist($vacances);
                 $em->flush();
+
+                if ($vacances->getNbJours() === 1) {
+                    $msg = 'Un jour férié a été enregistré le '.$vacances->getDate()->format('d/m/y').'.';
+                } else {
+                    $msg = 'Des vacances ont été enregistrées à partir du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours, sans compter les WE.';
+                }
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    'Un crédit de '.$nbJours.' jours sera effectué pour '.$nbActives.' personnes le '.$date->format('d/m/Y').'.'
+                    $msg
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
                     'Un problème est survenu lors de l\'envoi de crédit de vacances/jours fériés. Réessaye.'
                 );
+
+                $data = $form->getData();
 
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
@@ -409,12 +382,33 @@ class BragsController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        $bucquages = null;
+        $repository = $em->getRepository('PJMAppBundle:Vacances');
+        $listeVacances = $repository->findAll();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeVacances.html.twig', array(
-            'bucquages' => $bucquages,
+            'listeVacances' => $listeVacances,
             'form' => $form->createView()
         ));
+    }
+
+    public function annulerVacancesAction(Request $request, Vacances $vacances)
+    {
+        if (!$vacances->getCrediteBrags()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($vacances);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'Les vacances du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours (sans compter les WE) ont bien été annulés.'
+            );
+        } else {
+            $request->getSession()->getFlashBag()->add(
+                'danger',
+                'Les vacances du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours (sans compter les WE) ne peuvent pas être annulées.'
+            );
+        }
+        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
     }
 
     public function listePrixAction(Request $request)

@@ -119,6 +119,16 @@ class Historique
     }
 
     /**
+     * Get prix (cents)
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->nombre*$this->item->prix;
+    }
+
+    /**
      * Set item
      *
      * @param \PJM\AppBundle\Entity\Item $item
