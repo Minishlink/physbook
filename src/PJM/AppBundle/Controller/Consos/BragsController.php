@@ -14,6 +14,7 @@ use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
+use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
@@ -97,6 +98,15 @@ class BragsController extends Controller
     public function getPrixBaguette()
     {
         return $this->getCurrentBaguette()->getPrix();
+    }
+
+    public function getBoquette()
+    {
+        return $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('PJMAppBundle:Boquette')
+            ->findOneBySlug($this->slug);
     }
 
     public function getZiBrags($tous = false)
@@ -584,17 +594,93 @@ class BragsController extends Controller
     public function bucquageCronAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $boquette = $this->getBoquette();
+        $repositoryHistorique = $em->getRepository('PJMAppBundle:Historique');
+        $repositoryCommande = $em->getRepository('PJMAppBundle:Commande');
+        $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
+        $repositoryVacances = $em->getRepository('PJMAppBundle:Vacances');
 
         // on regarde quand a été fait le dernier bucquage
-        $lastBucquage = $repository->findLast($this->itemSlug);
+        $lastBucquage = $repositoryHistorique->findLastValidByItemSlug($this->itemSlug);
+        $now = new \DateTime("now");
+        if (isset($lastBucquage)) {
+            /*
+            * s'il y a déjà eu un bucquage,
+            * on compte le nombre de jours depuis
+            * qu'a été fait le dernier bucquage
+            */
+            $startDate = $lastBucquage->getDate()->setTime(0, 0, 0);
+            $nbJours = $startDate->diff($now)->days;
+        } else {
+            // sinon on bucque le premier jour
+            $startDate = $now;
+            $nbJours = 1;
+        }
+        $endDate = clone $startDate;
+        $endDate->add(new \DateInterval('P'.($nbJours+1).'D')); // +1 pour inclure le dernier
 
-        // pour tous les jours jusqu'à aujourd'hui, on bucque
+        // on obtient tous les jours à bucquer (contient encore les WE)
+        $period = new \DatePeriod(
+            $startDate,
+            new \DateInterval('P1D'),
+            $endDate,
+            \DatePeriod::EXCLUDE_START_DATE
+        );
 
-        // on bucque les commandes
-        // on bucque les vacances
-        // si on a pas déjà bucqué
+        // pour tous les jours jusqu'à aujourd'hui, on débite
+        foreach ($period as $date) {
+            // si le jour n'est pas un samedi/dimanche
+            if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
+                // on va chercher la liste des commandes actives
+                $commandesActives = $repositoryCommande->findByItemSlugAndValid($this->itemSlug);
 
-        return new Response('ok');
+                foreach ($commandesActives as $commande) {
+                    // calculer prix (en cents, et le nombre est enregistré en déciunité)
+                    $prix = $commande->getItem()->getPrix()*$commande->getNombre()/10;
+
+                    // bucquer dans l'historique
+                    $historique = new Historique();
+                    $historique->setCommande($commande);
+                    $historique->setValid(true);
+                    $em->persist($historique);
+
+                    // réduire le solde
+                    $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $boquette);
+                    if (!isset($compte)) {
+                        // s'il n'existe pas
+                        $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
+                    }
+                    $compte->debiter($prix);
+                    $em->persist($compte);
+
+                    // on enregistre l'utilisateur comme "à regarder" pour le negat'ss
+                    $listeUsers[] = $compte->getUser();
+                }
+            } else {
+                // si c'est un samedi ou un dimanche on compte un jour en moins
+                $nbJours--;
+            }
+        }
+
+        // propagation en BDD des débits
+        $em->flush();
+
+        // on bucque les vacances qui n'ont pas encore été créditées
+        //$listeVacances = $repositoryVacances->findAll();
+
+        // pour tous ceux qui ont été débité ou crédité,
+        // on check les comptes en negat'ss et envoit un mail
+        foreach ($listeUsers as $user)
+        {
+            $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
+            if ($compte->getSolde < 0) {
+                var_dump(array(
+                    'user' => $compte->getUser(),
+                    'solde' => $compte->getSolde()
+                ));
+            }
+        }
+
+        return new Response($nbJours.' jours bucqués à partir du '.$startDate->format('d/m/y').'.');
     }
 }

@@ -61,6 +61,12 @@ class Historique
         $this->date = new \DateTime();
     }
 
+    public function setCommande(Commande $commande)
+    {
+        $this->item = $commande->getItem();
+        $this->user = $commande->getUser();
+        $this->nombre = $commande->getNombre();
+    }
 
     /**
      * Get id

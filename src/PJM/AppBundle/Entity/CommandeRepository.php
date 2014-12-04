@@ -53,7 +53,7 @@ class CommandeRepository extends EntityRepository
         return $res;
     }
 
-    public function findByItemSlugAndValid($item_slug, $valid)
+    public function findByItemSlugAndValid($item_slug, $valid = true)
     {
         $query = $this->createQueryBuilder('h')
                     ->where('h.valid = :valid')

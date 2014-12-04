@@ -47,6 +47,15 @@ class Compte
         $this->boquette = $boquette;
     }
 
+    public function debiter($montant)
+    {
+        $this->solde -= $montant;
+    }
+
+    public function crediter($montant)
+    {
+        $this->solde += $montant;
+    }
 
     /**
      * Get id

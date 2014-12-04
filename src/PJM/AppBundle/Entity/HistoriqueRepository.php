@@ -50,7 +50,7 @@ class HistoriqueRepository extends EntityRepository
         return $res;
     }
 
-    public function findLast($item_slug)
+    public function findLastValidByItemSlug($item_slug)
     {
         $query = $this->createQueryBuilder('h')
                     ->where('h.valid = true')
