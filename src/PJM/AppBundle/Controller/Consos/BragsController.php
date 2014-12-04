@@ -599,6 +599,7 @@ class BragsController extends Controller
         $repositoryCommande = $em->getRepository('PJMAppBundle:Commande');
         $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
         $repositoryVacances = $em->getRepository('PJMAppBundle:Vacances');
+        $listeUsers = [];
 
         // on regarde quand a été fait le dernier bucquage
         $lastBucquage = $repositoryHistorique->findLastValidByItemSlug($this->itemSlug);
@@ -631,12 +632,27 @@ class BragsController extends Controller
         foreach ($period as $date) {
             // si le jour n'est pas un samedi/dimanche
             if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
-                // on va chercher la liste des commandes actives
-                $commandesActives = $repositoryCommande->findByItemSlugAndValid($this->itemSlug);
+                // on regarde les commandes actives à cette date
 
-                foreach ($commandesActives as $commande) {
+
+                // on regarde les commandes résiliées à cette date
+                $commandes = array_merge(
+                    $repositoryCommande->findByItemSlugAndValidAndAtDate($this->itemSlug, true, $date),
+                    $repositoryCommande->findByItemSlugAndValidAndAtDate($this->itemSlug, false, $date)
+                );
+
+                foreach ($commandes as $commande) {
                     // calculer prix (en cents, et le nombre est enregistré en déciunité)
                     $prix = $commande->getItem()->getPrix()*$commande->getNombre()/10;
+
+                    /*
+                    var_dump(array(
+                        'date' => $date->format('d/m'),
+                        'dateCommande' => $commande->getDateDebut()->format('d/m'),
+                        'user' => $commande->getUser()->getUsername(),
+                        'prix' => $prix
+                    ));
+                    */
 
                     // bucquer dans l'historique
                     $historique = new Historique();
@@ -654,7 +670,10 @@ class BragsController extends Controller
                     $em->persist($compte);
 
                     // on enregistre l'utilisateur comme "à regarder" pour le negat'ss
-                    $listeUsers[] = $compte->getUser();
+                    if(!in_array($compte->getUser(), $listeUsers)) {
+                        $listeUsers[] = $compte->getUser();
+                    }
+
                 }
             } else {
                 // si c'est un samedi ou un dimanche on compte un jour en moins
@@ -663,19 +682,27 @@ class BragsController extends Controller
         }
 
         // propagation en BDD des débits
-        $em->flush();
+        //$em->flush();
 
         // on bucque les vacances qui n'ont pas encore été créditées
-        //$listeVacances = $repositoryVacances->findAll();
+        $listeVacances = $repositoryVacances->findAll();
+        foreach ($listeVacances as $vacances) {
+            $period = new \DatePeriod(
+                $startDate,
+                new \DateInterval('P1D'),
+                $endDate,
+                \DatePeriod::EXCLUDE_START_DATE
+            );
+        }
 
         // pour tous ceux qui ont été débité ou crédité,
         // on check les comptes en negat'ss et envoit un mail
         foreach ($listeUsers as $user)
         {
             $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
-            if ($compte->getSolde < 0) {
+            if ($compte->getSolde() < 0) {
                 var_dump(array(
-                    'user' => $compte->getUser(),
+                    'user' => $compte->getUser()->getUsername(),
                     'solde' => $compte->getSolde()
                 ));
             }
