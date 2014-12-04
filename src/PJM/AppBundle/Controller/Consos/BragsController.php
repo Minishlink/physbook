@@ -327,17 +327,20 @@ class BragsController extends Controller
 
     public function resilierCommandeAction(Request $request, Commande $commande)
     {
-        if ($commande->getItem()->getSlug() == "baguette"
-            && ($commande->getValid() === true || null === $commande->getValid())) {
+        if ($commande->getItem()->getSlug() == "baguette" && $commande->getValid() !== false) {
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Commande');
-            $commande->resilier();
-            $em->persist($commande);
+            if ($commande->getValid() === true) {
+                $commande->resilier();
+                $em->persist($commande);
+            } else if (null === $commande->getValid()) {
+                $em->remove($commande);
+            }
             $em->flush();
 
             $request->getSession()->getFlashBag()->add(
                 'success',
-                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée.'
+                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée/annulée.'
             );
 
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
@@ -375,10 +378,10 @@ class BragsController extends Controller
                 $em->persist($vacances);
                 $em->flush();
 
-                if ($vacances->getNbJours() === 1) {
-                    $msg = 'Un jour férié a été enregistré le '.$vacances->getDate()->format('d/m/y').'.';
+                if ($vacances->getDateDebut() == $vacances->getDateFin()) {
+                    $msg = 'Un jour férié a été enregistré le '.$vacances->getDateDebut()->format('d/m/y').'.';
                 } else {
-                    $msg = 'Des vacances ont été enregistrées à partir du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours, sans compter les WE.';
+                    $msg = 'Des vacances ont été enregistrées du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').'.';
                 }
 
                 $request->getSession()->getFlashBag()->add(
@@ -422,12 +425,12 @@ class BragsController extends Controller
 
             $request->getSession()->getFlashBag()->add(
                 'success',
-                'Les vacances du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours (sans compter les WE) ont bien été annulés.'
+                'Les vacances du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').' ont bien été annulés.'
             );
         } else {
             $request->getSession()->getFlashBag()->add(
                 'danger',
-                'Les vacances du '.$vacances->getDate()->format('d/m/y').' pour '.$vacances->getNbJours().' jours (sans compter les WE) ne peuvent pas être annulées.'
+                'Les vacances du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').' ne peuvent pas être annulées.'
             );
         }
         return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
@@ -632,10 +635,7 @@ class BragsController extends Controller
         foreach ($period as $date) {
             // si le jour n'est pas un samedi/dimanche
             if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
-                // on regarde les commandes actives à cette date
-
-
-                // on regarde les commandes résiliées à cette date
+                // on regarde les commandes actives et résiliées à cette date
                 $commandes = array_merge(
                     $repositoryCommande->findByItemSlugAndValidAndAtDate($this->itemSlug, true, $date),
                     $repositoryCommande->findByItemSlugAndValidAndAtDate($this->itemSlug, false, $date)
@@ -688,11 +688,17 @@ class BragsController extends Controller
         $listeVacances = $repositoryVacances->findAll();
         foreach ($listeVacances as $vacances) {
             $period = new \DatePeriod(
-                $startDate,
+                $vacances->getDateDebut(),
                 new \DateInterval('P1D'),
-                $endDate,
-                \DatePeriod::EXCLUDE_START_DATE
+                $vacances->getDateFin()->add(new \DateInterval('P1D'))
             );
+
+            foreach ($period as $date) {
+                // si le jour n'est pas un samedi/dimanche
+                if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
+                    var_dump($date->format('d/m/y'));
+                }
+            }
         }
 
         // pour tous ceux qui ont été débité ou crédité,
