@@ -23,22 +23,21 @@ class Vacances
     private $id;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="nbJours", type="smallint")
+     * @ORM\Column(name="date_debut", type="date")
      * @Assert\NotBlank()
-     * @Assert\GreaterThan(0)
-     * @Assert\LessThan(30)
      */
-    private $nbJours;
+    private $dateDebut;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date_fin", type="date")
      * @Assert\NotBlank()
      */
-    private $date;
+    private $dateFin;
+
 
     /**
      * @var boolean
@@ -50,8 +49,14 @@ class Vacances
 
     public function __construct()
     {
-        $this->date = new \DateTime();
+        $this->dateDebut = new \DateTime();
+        $this->dateFin = new \DateTime();
         $this->crediteBrags = false;
+    }
+
+    public function getNbJours()
+    {
+        return $this->dateFin->diff($this->dateDebut)->days+1;
     }
 
     /**
@@ -62,52 +67,6 @@ class Vacances
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set nbJours
-     *
-     * @param integer $nbJours
-     * @return Vacances
-     */
-    public function setNbJours($nbJours)
-    {
-        $this->nbJours = $nbJours;
-
-        return $this;
-    }
-
-    /**
-     * Get nbJours
-     *
-     * @return integer
-     */
-    public function getNbJours()
-    {
-        return $this->nbJours;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Vacances
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 
     /**
@@ -131,5 +90,51 @@ class Vacances
     public function getCrediteBrags()
     {
         return $this->crediteBrags;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     * @return Vacances
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     * @return Vacances
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
     }
 }

@@ -15,14 +15,14 @@ class VacancesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', 'date', array(
+            ->add('dateDebut', 'date', array(
                 'error_bubbling' => true,
-                'label' => 'Date',
+                'label' => 'Début',
             ))
-            ->add('nbJours', 'integer', array(
+            ->add('dateFin', 'date', array(
                 'error_bubbling' => true,
-                'label' => 'Nombre de jours (sans compter les WE)',
-                ))
+                'label' => 'Fin',
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Programmer le crédit',
             ))

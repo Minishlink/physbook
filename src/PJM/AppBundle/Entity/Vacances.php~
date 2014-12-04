@@ -23,41 +23,41 @@ class Vacances
     private $id;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="nbJours", type="smallint")
+     * @ORM\Column(name="date_debut", type="date")
      * @Assert\NotBlank()
-     * @Assert\GreaterThan(0)
-     * @Assert\LessThan(30)
      */
-    private $nbJours;
-
+    private $dateDebut;
+    
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date_fin", type="date")
      * @Assert\NotBlank()
      */
-    private $date;
+    private $dateFin;
     
+
     /**
      * @var boolean
      *
      * @ORM\Column(name="credite_brags", type="boolean")
      */
     private $crediteBrags;
-    
-    
-    public function __construct()
+
+
+    public function __construct(\DateTime $dateFin)
     {
-        $this->date = new \DateTime();
+        $this->dateDebut = new \DateTime();
         $this->crediteBrags = false;
+        $this->dateFin = $dateFin;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,48 +65,25 @@ class Vacances
     }
 
     /**
-     * Set nbJours
+     * Set crediteBrags
      *
-     * @param integer $nbJours
+     * @param boolean $crediteBrags
      * @return Vacances
      */
-    public function setNbJours($nbJours)
+    public function setCrediteBrags($crediteBrags)
     {
-        $this->nbJours = $nbJours;
+        $this->crediteBrags = $crediteBrags;
 
         return $this;
     }
 
     /**
-     * Get nbJours
+     * Get crediteBrags
      *
-     * @return integer 
+     * @return boolean
      */
-    public function getNbJours()
+    public function getCrediteBrags()
     {
-        return $this->nbJours;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Vacances
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
-    {
-        return $this->date;
+        return $this->crediteBrags;
     }
 }
