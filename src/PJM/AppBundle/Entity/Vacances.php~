@@ -29,7 +29,7 @@ class Vacances
      * @Assert\NotBlank()
      */
     private $dateDebut;
-    
+
     /**
      * @var \DateTime
      *
@@ -37,21 +37,25 @@ class Vacances
      * @Assert\NotBlank()
      */
     private $dateFin;
-    
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="credite_brags", type="boolean")
+     * @ORM\Column(name="fait", type="boolean")
      */
-    private $crediteBrags;
+    private $fait;
 
 
-    public function __construct(\DateTime $dateFin)
+    public function __construct()
     {
         $this->dateDebut = new \DateTime();
+        $this->dateFin = new \DateTime();
         $this->crediteBrags = false;
-        $this->dateFin = $dateFin;
+    }
+
+    public function getNbJours()
+    {
+        return $this->dateFin->diff($this->dateDebut)->days+1;
     }
 
     /**
@@ -65,25 +69,48 @@ class Vacances
     }
 
     /**
-     * Set crediteBrags
+     * Set dateDebut
      *
-     * @param boolean $crediteBrags
+     * @param \DateTime $dateDebut
      * @return Vacances
      */
-    public function setCrediteBrags($crediteBrags)
+    public function setDateDebut($dateDebut)
     {
-        $this->crediteBrags = $crediteBrags;
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
     /**
-     * Get crediteBrags
+     * Get dateDebut
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getCrediteBrags()
+    public function getDateDebut()
     {
-        return $this->crediteBrags;
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     * @return Vacances
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
     }
 }

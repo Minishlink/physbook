@@ -31,8 +31,8 @@
                             <td>{{ vacances.dateDebut|date('d/m/y') }}</td>
                             <td>{{ vacances.dateFin|date('d/m/y') }}</td>
                             <td>{{ vacances.getNbJours() }}</td>
-                            <td>{{ vacances.crediteBrags ? 'Oui':'Non' }}</td>
-                            <td>{% if not vacances.crediteBrags %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Annuler</a>{% endif %}</td>
+                            <td>{{ vacances.fait ? 'Oui':'Non' }}</td>
+                            <td>{% if not vacances.fait %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Annuler</a>{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

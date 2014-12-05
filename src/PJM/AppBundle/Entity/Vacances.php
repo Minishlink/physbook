@@ -38,13 +38,12 @@ class Vacances
      */
     private $dateFin;
 
-
     /**
      * @var boolean
      *
-     * @ORM\Column(name="credite_brags", type="boolean")
+     * @ORM\Column(name="fait", type="boolean")
      */
-    private $crediteBrags;
+    private $fait;
 
 
     public function __construct()
@@ -67,29 +66,6 @@ class Vacances
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set crediteBrags
-     *
-     * @param boolean $crediteBrags
-     * @return Vacances
-     */
-    public function setCrediteBrags($crediteBrags)
-    {
-        $this->crediteBrags = $crediteBrags;
-
-        return $this;
-    }
-
-    /**
-     * Get crediteBrags
-     *
-     * @return boolean
-     */
-    public function getCrediteBrags()
-    {
-        return $this->crediteBrags;
     }
 
     /**
@@ -136,5 +112,28 @@ class Vacances
     public function getDateFin()
     {
         return $this->dateFin;
+    }
+
+    /**
+     * Set fait
+     *
+     * @param boolean $fait
+     * @return Vacances
+     */
+    public function setFait($fait)
+    {
+        $this->fait = $fait;
+
+        return $this;
+    }
+
+    /**
+     * Get fait
+     *
+     * @return boolean
+     */
+    public function getFait()
+    {
+        return $this->fait;
     }
 }
