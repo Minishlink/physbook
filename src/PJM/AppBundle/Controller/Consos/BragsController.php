@@ -636,12 +636,8 @@ class BragsController extends Controller
         // on va chercher les vacances
         $listeVacances = $repositoryVacances->findByFait(false);
 
-        var_dump($nbJours);
-        var_dump($period);
-
         // pour tous les jours jusqu'à aujourd'hui, on débite
         foreach ($period as $date) {
-            var_dump($date->format('d/m'));
             // si le jour n'est pas un samedi/dimanche
             if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
                 $jourDeVacs = false; // par défaut
@@ -654,10 +650,6 @@ class BragsController extends Controller
                         $vacances->setFait(true);
                         $em->persist($vacances);
                     }
-
-
-                    var_dump($vacances->getDateFin());
-                    var_dump($date);
 
                     $endDateFinVacs = clone $vacances->getDateFin();
                     $endDateFinVacs->add(new \DateInterval('P1D'));
@@ -673,7 +665,6 @@ class BragsController extends Controller
                         if ($date == $dateVacs) {
                             // on l'indique
                             $jourDeVacs = true;
-                            var_dump("vacances".$date->format('d/m'));
                             // on a un jour de vacances donc on a notre info, on arrête le bouclage
                             break 2;
                         }
