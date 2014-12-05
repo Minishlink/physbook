@@ -100,15 +100,6 @@ class BragsController extends Controller
         return $this->getCurrentBaguette()->getPrix();
     }
 
-    public function getBoquette()
-    {
-        return $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('PJMAppBundle:Boquette')
-            ->findOneBySlug($this->slug);
-    }
-
     public function getZiBrags($tous = false)
     {
         $em = $this->getDoctrine()->getManager();
@@ -333,7 +324,7 @@ class BragsController extends Controller
             if ($commande->getValid() === true) {
                 $commande->resilier();
                 $em->persist($commande);
-            } else if (null === $commande->getValid()) {
+            } elseif (null === $commande->getValid()) {
                 $em->remove($commande);
             }
             $em->flush();
@@ -594,7 +585,7 @@ class BragsController extends Controller
     public function bucquageCronAction()
     {
         $utils = $this->get('pjm.services.utils');
-        $msg = $utils->bucquage($this->getBoquette(), $this->itemSlug);
+        $msg = $utils->bucquage($this->slug, $this->itemSlug);
         return new Response($msg);
     }
 }

@@ -17,8 +17,17 @@ class Utils
         $this->em = $em;
     }
 
-    public function bucquage(Boquette $boquette, $itemSlug)
+    public function getBoquette($boquetteSlug)
     {
+        return $this
+            ->em
+            ->getRepository('PJMAppBundle:Boquette')
+            ->findOneBySlug($boquetteSlug);
+    }
+
+    public function bucquage($boquetteSlug, $itemSlug)
+    {
+        $boquette = $this->getBoquette($boquetteSlug);
         $repositoryHistorique = $this->em->getRepository('PJMAppBundle:Historique');
         $repositoryCommande = $this->em->getRepository('PJMAppBundle:Commande');
         $repositoryCompte = $this->em->getRepository('PJMAppBundle:Compte');
@@ -33,7 +42,7 @@ class Utils
         if (isset($lastBucquage)) {
             // si ce bucquage a été aujourd'hui, on arrête
             if ($lastBucquage->getDate()->setTime(0, 0, 0) == $now) {
-                return 'Un bucquage a déjà été fait aujourd\'hui.';
+                return 'Un bucquage a deja ete fait aujourd\'hui.';
             }
 
             // sinon on compte le nombre de jours à bucquer
@@ -159,6 +168,6 @@ class Utils
             }
         }
 
-        return $nbJours.' jours bucqués à partir du '.$startDate->format('d/m/y').'.';
+        return $nbJours.' jours bucques a partir du '.$startDate->format('d/m/y').'.';
     }
 }
