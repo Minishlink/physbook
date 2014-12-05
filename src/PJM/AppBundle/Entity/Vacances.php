@@ -50,7 +50,7 @@ class Vacances
     {
         $this->dateDebut = new \DateTime();
         $this->dateFin = new \DateTime();
-        $this->crediteBrags = false;
+        $this->fait = false;
     }
 
     public function getNbJours()
