@@ -7,3 +7,6 @@ services:
         class: PJM\AppBundle\Twig\IntranetExtension
         tags:
             - { name: twig.extension }
+    pjm.services.utils:
+        class:  PJM\AppBundle\Services\Utils
+        arguments: [@doctrine.orm.entity_manager]
