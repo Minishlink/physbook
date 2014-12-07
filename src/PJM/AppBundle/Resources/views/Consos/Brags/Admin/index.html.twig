@@ -11,7 +11,7 @@ $(document).ready( function () {
         order: [1, "desc"]
     });
 
-    $('#tabGestionVacances, #tabGestionPrixBaguette, #tabGestionCommandes').DataTable({
+    $('#tabGestionVacances, #tabGestionPrixBaguette, #tabGestionCommandes, #tabGestionCredits').DataTable({
         order: [0, "desc"]
     });
 } );
@@ -37,6 +37,7 @@ $(document).ready( function () {
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             {% render(url('pjm_app_consos_brags_admin_listeVacances')) %}
             {% render(url('pjm_app_consos_brags_admin_listeBucquages')) %}
+            {% render(url('pjm_app_consos_brags_admin_listeCredits')) %}
             {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
             {% render(url('pjm_app_consos_brags_admin_listePrix')) %}
             {% render(url('pjm_app_consos_brags_admin_editZiBrags')) %}

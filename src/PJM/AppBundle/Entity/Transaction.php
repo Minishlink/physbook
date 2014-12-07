@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Transaction
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\TransactionRepository")
  */
 class Transaction
 {
@@ -76,6 +76,23 @@ class Transaction
         $this->caisseSMoney = $boquette->getCaisseSMoney();
         $this->boquette = $boquette;
         $this->user = $user;
+    }
+
+    public function getMoyenPaiement()
+    {
+        switch ($this->caisseSMoney) {
+            case 'cheque':
+                $moyen = "Chèque";
+                break;
+            case 'monnaie':
+                $moyen = "Monnaie";
+                break;
+            default:
+                $moyen = "[S-Money] ".$this->caisseSMoney;
+                break;
+        }
+
+        return $moyen;
     }
 
     /**
