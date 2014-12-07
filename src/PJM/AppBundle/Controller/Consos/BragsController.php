@@ -15,6 +15,7 @@ use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
 use PJM\AppBundle\Entity\Compte;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
@@ -71,11 +72,8 @@ class BragsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $repository = $em->getRepository('PJMAppBundle:Boquette');
-        $boquette = $repository->findOneBySlug($this->slug);
-
         $repository = $em->getRepository('PJMAppBundle:Compte');
-        $compte = $repository->findOneByUserAndBoquette($this->getUser(), $boquette);
+        $compte = $repository->findOneByUserAndBoquette($this->getUser(), $this->getBoquette($this->slug));
 
         if ($compte === null) {
             $solde = 0;
@@ -86,13 +84,45 @@ class BragsController extends Controller
         return $solde;
     }
 
+    public function getBoquette($boquetteSlug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $boquette = $em
+            ->getRepository('PJMAppBundle:Boquette')
+            ->findOneBySlug($boquetteSlug);
+
+        if (null === $boquette) {
+            $boquette = new Boquette();
+            $boquette->setNom('Brag\'s');
+            $boquette->setSlug($this->slug);
+            $boquette->setCaisseSMoney('aeensambrags');
+            $em->persist($boquette);
+            $em->flush();
+        }
+
+        return $boquette;
+    }
+
     public function getCurrentBaguette()
     {
-        return $this
-            ->getDoctrine()
-            ->getManager()
+        $em = $this->getDoctrine()->getManager();
+        $baguette = $em
             ->getRepository('PJMAppBundle:Item')
             ->findOneBySlugAndValid($this->itemSlug, true);
+
+        if (null === $baguette) {
+            $baguette = new Item();
+            $baguette->setLibelle('Baguette de pain');
+            $baguette->setPrix(65);
+            $baguette->setSlug($this->itemSlug);
+            $baguette->setBoquette($this->getBoquette($this->slug));
+            $baguette->setValid(true);
+            $em->persist($baguette);
+            $em->flush();
+        }
+
+        return $baguette;
+
     }
 
     public function getPrixBaguette()
@@ -434,10 +464,7 @@ class BragsController extends Controller
 
         $nouveauPrix = new Item();
         $nouveauPrix->setLibelle('Baguette de pain');
-        $nouveauPrix->setBoquette(
-            $em->getRepository('PJMAppBundle:Boquette')
-                ->findOneBySlug($this->slug)
-        );
+        $nouveauPrix->setBoquette($this->getBoquette($this->slug));
         $nouveauPrix->setSlug($this->itemSlug);
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(

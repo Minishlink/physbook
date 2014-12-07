@@ -7,7 +7,11 @@
     <div id="collapsePrix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPrix">
         <div class="panel-body">
             <p>
+                {% if prixActuel is not null %}
                 Le prix actuel est de {{ prixActuel|prix }}.
+                {% else %}
+                Afin d'utiliser ce module, il te faut indiquer le prix d'une la baguette de pain.
+                {% endif %}
             </p>
             <h3>Modification</h3>
             {{ form(form) }}
