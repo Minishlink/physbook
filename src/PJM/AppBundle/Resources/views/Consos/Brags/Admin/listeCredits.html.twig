@@ -9,6 +9,10 @@
             <p>
                 Les crédits sont effectués instantanément.
             </p>
+            <h3>Ajout</h3>
+            {{ form(form) }}
+
+            <h3>Historique</h3>
             {% if credits != null %}
             <div class="table-responsive">
                 <table id="tabGestionCredits" class="table table-striped table-hover table-condensed">
@@ -17,6 +21,7 @@
                             <th>Date</th>
                             <th>PG</th>
                             <th>Moyen</th>
+                            <th>Infos</th>
                             <th>Prix</th>
                         </tr>
                     </thead>
@@ -25,7 +30,8 @@
                         <tr>
                             <td>{{ credit.date|date('d/m/y') }}</td>
                             <td>{{ credit.user.username }}</td>
-                            <td>{{ credit.getMoyenPaiement() }}</td>
+                            <td>{{ credit.moyenPaiement|moyenPaiement }}</td>
+                            <td>{{ credit.infos }}</td>
                             <td>{{ credit.montant|prix }}</td>
                         </tr>
                         {% endfor %}
