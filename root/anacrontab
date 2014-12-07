@@ -1,0 +1,5 @@
+# num@period  delay(unused) name script...
+#
+# uncomment to purge files older than 7days in TMP
+#1@daily 0 purgetmp find /srv/data/tmp -type f -mtime +7 -delete > /dev/null
+@daily 0 bucquage_brags php -f /srv/data/web/vhosts/physbook.fr/htdocs/app/console bucquage:brags
