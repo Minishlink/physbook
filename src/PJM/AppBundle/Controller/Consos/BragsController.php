@@ -292,6 +292,17 @@ class BragsController extends Controller
         ));
     }
 
+    public function listeCreditsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Transaction');
+        $listeCredits = $repository->findByBoquetteSlugAndValid($this->slug);
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
+            'credits' => $listeCredits
+        ));
+    }
+
     public function validerCommandeAction(Request $request, Commande $commande)
     {
         // TODO listener envoi d'email de notification
