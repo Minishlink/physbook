@@ -16,8 +16,10 @@ use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
+use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsController extends Controller
@@ -292,13 +294,62 @@ class BragsController extends Controller
         ));
     }
 
-    public function listeCreditsAction()
+    public function listeCreditsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $credit = new Transaction();
+
+        $form = $this->createForm(new TransactionType(), $credit, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeCredits'),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // on enregistre le crédit dans l'historique
+                $credit->setStatus("OK");
+                $credit->setBoquette($this->getBoquette($this->slug));
+                $em->persist($credit);
+
+                // on modifie le solde de l'utilisateur
+                $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
+                $compte = $repositoryCompte->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
+                $compte->crediter($credit->getMontant());
+                $em->persist($compte);
+
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'La transaction a été enregistrée et le compte a été crédité.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de la transaction. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        }
+
         $repository = $em->getRepository('PJMAppBundle:Transaction');
         $listeCredits = $repository->findByBoquetteSlugAndValid($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
+            'form' => $form->createView(),
             'credits' => $listeCredits
         ));
     }

@@ -8,6 +8,7 @@ class IntranetExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('prix', array($this, 'prixFilter')),
+            new \Twig_SimpleFilter('moyenPaiement', array($this, 'moyenPaiementFilter')),
         );
     }
 
@@ -21,6 +22,19 @@ class IntranetExtension extends \Twig_Extension
         }
 
         return $string.$unit;
+    }
+
+    public function moyenPaiementFilter($string)
+    {
+        $map = array(
+            'smoney' => "S-Money",
+            'cheque' => "Chèque",
+            'monnaie' => "Monnaie"
+        );
+
+        return array_key_exists($string, $map)
+            ? $map[$string]
+            : $string;
     }
 
     public function getName()

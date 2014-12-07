@@ -23,7 +23,13 @@ class RechargementController extends Controller
     public function getURLAction($montant, Boquette $boquette)
     {
         // on crée une transaction pour récupérer l'ID unique
-        $transaction = new Transaction($montant, $boquette, $this->getUser());
+        $transaction = new Transaction();
+        $transaction->setMontant($montant);
+        $transaction->setBoquette($boquette);
+        $transaction->setMoyenPaiement("smoney");
+        $transaction->setInfos($boquette->getCaisseSMoney);
+        $transaction->setUser($this->getUser());
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($transaction);
         $em->flush();

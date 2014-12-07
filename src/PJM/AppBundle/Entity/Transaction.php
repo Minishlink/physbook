@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Transaction
@@ -33,9 +34,18 @@ class Transaction
     /**
      * @var string
      *
-     * @ORM\Column(name="caisseSMoney", type="string", length=255)
+     * @ORM\Column(name="moyenPaiement", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Choice(choices = {"smoney", "cheque", "monnaie"})
      */
-    private $caisseSMoney;
+    private $moyenPaiement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="infos", type="string", length=255, nullable=true)
+     */
+    private $infos;
 
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
@@ -47,6 +57,8 @@ class Transaction
      * @var integer
      *
      * @ORM\Column(name="montant", type="smallint")
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $montant;
 
@@ -69,30 +81,35 @@ class Transaction
 
 
 
-    public function __construct($montant, \PJM\AppBundle\Entity\Boquette $boquette, \PJM\UserBundle\Entity\User $user)
+    public function __construct()
     {
         $this->date = new \DateTime();
-        $this->montant = $montant;
-        $this->caisseSMoney = $boquette->getCaisseSMoney();
-        $this->boquette = $boquette;
-        $this->user = $user;
     }
 
-    public function getMoyenPaiement()
+    /**
+     * @Assert\Callback
+     */
+    public function isInfosValid(ExecutionContextInterface $context)
     {
-        switch ($this->caisseSMoney) {
-            case 'cheque':
-                $moyen = "Chèque";
-                break;
-            case 'monnaie':
-                $moyen = "Monnaie";
-                break;
-            default:
-                $moyen = "[S-Money] ".$this->caisseSMoney;
-                break;
+        $moyenPaiement = $this->getMoyenPaiement();
+        $infos = $this->getInfos();
+        if ($moyenPaiement == "cheque" && empty($infos)) {
+            $context->addViolationAt(
+                'infos',
+                'Merci de renseigner le n° du chèque.',
+                array(),
+                null
+            );
         }
 
-        return $moyen;
+        if ($moyenPaiement == "monnaie" && !empty($infos)) {
+            $context->addViolationAt(
+                'infos',
+                'Le champ de n° de chèque doit être vide pour de la monnaie.',
+                array(),
+                null
+            );
+        }
     }
 
     /**
@@ -251,5 +268,51 @@ class Transaction
     public function getBoquette()
     {
         return $this->boquette;
+    }
+
+    /**
+     * Set moyenPaiement
+     *
+     * @param string $moyenPaiement
+     * @return Transaction
+     */
+    public function setMoyenPaiement($moyenPaiement)
+    {
+        $this->moyenPaiement = $moyenPaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get moyenPaiement
+     *
+     * @return string
+     */
+    public function getMoyenPaiement()
+    {
+        return $this->moyenPaiement;
+    }
+
+    /**
+     * Set infos
+     *
+     * @param string $infos
+     * @return Transaction
+     */
+    public function setInfos($infos)
+    {
+        $this->infos = $infos;
+
+        return $this;
+    }
+
+    /**
+     * Get infos
+     *
+     * @return string
+     */
+    public function getInfos()
+    {
+        return $this->infos;
     }
 }

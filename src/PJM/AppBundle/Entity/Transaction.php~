@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Transaction
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\TransactionRepository")
  */
 class Transaction
 {
@@ -33,9 +33,16 @@ class Transaction
     /**
      * @var string
      *
-     * @ORM\Column(name="caisseSMoney", type="string", length=255)
+     * @ORM\Column(name="moyenPaiement", type="string", length=255)
      */
-    private $caisseSMoney;
+    private $moyenPaiement;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="infos", type="string", length=255)
+     */
+    private $infos;
 
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
@@ -69,13 +76,9 @@ class Transaction
 
 
 
-    public function __construct($montant, $caisseSMoney, \PJM\AppBundle\Entity\Boquette $boquette, \PJM\UserBundle\Entity\User $user)
+    public function __construct()
     {
         $this->date = new \DateTime();
-        $this->montant = $montant;
-        $this->caisseSMoney = $caisseSMoney;
-        $this->boquette = $boquette;
-        $this->user = $user;
     }
 
     /**
@@ -211,5 +214,28 @@ class Transaction
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Transaction
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
     }
 }
