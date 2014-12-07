@@ -108,6 +108,31 @@ class User extends BaseUser
      */
     private $anniversaire;
 
+    public function __toString()
+    {
+        $user = $this->username;
+        if (!empty($this->bucque)) {
+            $user = $this->bucque." ".$user;
+        }
+
+        if (!empty($this->prenom) || !empty($this->nom)) {
+            $user .= " (";
+            if (!empty($this->prenom)) {
+                $user .= $this->prenom;
+            }
+            if (!empty($this->nom)) {
+                if (!empty($this->prenom)) {
+                    $user .= " ";
+                }
+
+                $user .= $this->nom;
+            }
+            $user .= ")";
+        }
+
+        return $user;
+    }
+
     /**
      * Get id
      *
