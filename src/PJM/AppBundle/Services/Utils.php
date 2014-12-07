@@ -103,7 +103,6 @@ class Utils
 
                 // si le jour n'est pas un jour de vacances
                 if (!$jourDeVacs) {
-                    var_dump("bucquage".$date->format('d/m'));
                     // on regarde les commandes actives et résiliées à cette date
                     $commandes = array_merge(
                         $repositoryCommande->findByItemSlugAndValidAndAtDate($itemSlug, true, $date),
@@ -114,15 +113,6 @@ class Utils
                         // calculer prix (en cents, et le nombre est enregistré en déciunité)
                         $prix = $commande->getItem()->getPrix()*$commande->getNombre()/10;
 
-
-                        var_dump(array(
-                            'date' => $date->format('d/m'),
-                            'dateCommande' => $commande->getDateDebut()->format('d/m'),
-                            'user' => $commande->getUser()->getUsername(),
-                            'prix' => $prix
-                        ));
-
-
                         // bucquer dans l'historique
                         $historique = new Historique();
                         $historique->setCommande($commande);
@@ -132,14 +122,14 @@ class Utils
                         // réduire le solde
                         $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $boquette);
                         if (!isset($compte)) {
-                            // s'il n'existe pas
-                            $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
+                            return 'Erreur : le compte de '.$commande->getUser()->getUsername().' n\'existe pas.';
                         }
+
                         $compte->debiter($prix);
                         $this->em->persist($compte);
 
                         // on enregistre l'utilisateur comme "à regarder" pour le negat'ss
-                        if(!in_array($compte->getUser(), $listeUsers)) {
+                        if (!in_array($compte->getUser(), $listeUsers)) {
                             $listeUsers[] = $compte->getUser();
                         }
                     }
@@ -157,8 +147,7 @@ class Utils
 
         // pour tous ceux qui ont été débité,
         // on check les comptes en negat'ss et envoit un mail
-        foreach ($listeUsers as $user)
-        {
+        foreach ($listeUsers as $user) {
             $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
             if ($compte->getSolde() < 0) {
                 var_dump(array(

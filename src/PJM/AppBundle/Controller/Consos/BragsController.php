@@ -327,6 +327,15 @@ class BragsController extends Controller
                 $em->remove($commande);
             }
 
+            // on vérifie que l'utilisateur a un compte, sinon on le crée
+            $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
+            $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $commande->getItem()->getBoquette());
+            if (!isset($compte)) {
+                // s'il n'existe pas
+                $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
+                $em->persist($compte);
+            }
+
             $em->flush();
 
             if (isset($msgEnAttente)) {
