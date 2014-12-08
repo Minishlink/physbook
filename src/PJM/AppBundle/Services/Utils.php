@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Compte;
+use PJM\UserBundle\Entity\User;
 
 class Utils
 {
@@ -25,6 +26,20 @@ class Utils
             ->em
             ->getRepository('PJMAppBundle:Boquette')
             ->findOneBySlug($boquetteSlug);
+    }
+
+    public function getSolde(User $user, $boquetteSlug)
+    {
+        $repository = $this->em->getRepository('PJMAppBundle:Compte');
+        $compte = $repository->findOneByUserAndBoquetteSlug($user, $boquetteSlug);
+
+        if ($compte === null) {
+            $compte = new Compte($user, $this->getBoquette($boquetteSlug));
+            $this->em->persist($compte);
+            $this->em->flush();
+        }
+
+        return $compte->getSolde();
     }
 
     public function bucquage($boquetteSlug, $itemSlug)

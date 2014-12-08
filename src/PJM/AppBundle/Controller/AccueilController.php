@@ -14,8 +14,13 @@ class AccueilController extends Controller
 
     public function etatComptesAction()
     {
+        $utils = $this->get('pjm.services.utils');
+        $solde['brags'] = $utils->getSolde($this->getUser(), 'brags');
+        $solde['pians'] = $utils->getSolde($this->getUser(), 'pians');
+        $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');
+
         return $this->render('PJMAppBundle:Accueil:etatComptes.html.twig', array(
-            'solde' => null
+            'solde' => $solde
         ));
     }
 
