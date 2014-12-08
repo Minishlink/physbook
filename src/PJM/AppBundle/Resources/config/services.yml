@@ -2,6 +2,7 @@ parameters:
     paiement.smoney.url: ***REMOVED***
     paiement.smoney.auth: Bearer ***REMOVED***
 
+
 services:
     pjm.twig.intranet_extension:
         class: PJM\AppBundle\Twig\IntranetExtension
@@ -9,4 +10,15 @@ services:
             - { name: twig.extension }
     pjm.services.utils:
         class:  PJM\AppBundle\Services\Utils
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer]
+    pjm.services.mailer:
+        class:  PJM\AppBundle\Services\Mailer
+        arguments:
+            - @mailer
+            - @router
+            - @twig
+            - template:
+                layout: 'PJMAppBundle:Mail:layout.html.twig'
+                alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
+              notificationEmail: 'notification@physbook.fr'
+
