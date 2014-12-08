@@ -31,6 +31,12 @@ class TransactionType extends AbstractType
             ->add('infos', null, array(
                 'label' => 'N° de chèque',
                 'error_bubbling' => true,
+                'constraints' => array(
+                    new Assert\Length(array(
+                        'min' => 3,
+                        'max' => 10
+                    ))
+                )
             ))
             ->add('montant', 'money', array(
                 'label' => 'Montant',
