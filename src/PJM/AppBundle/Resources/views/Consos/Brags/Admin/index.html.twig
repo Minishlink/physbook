@@ -32,15 +32,17 @@ $(document).ready( function () {
 
 {% block pjm_app_body %}
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            {% render(url('pjm_app_consos_brags_admin_listeVacances')) %}
-            {% render(url('pjm_app_consos_brags_admin_listeBucquages')) %}
-            {% render(url('pjm_app_consos_brags_admin_listeCredits')) %}
-            {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
-            {% render(url('pjm_app_consos_brags_admin_listePrix')) %}
-            {% render(url('pjm_app_consos_brags_admin_listeZiBrags')) %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {% render(url('pjm_app_consos_brags_admin_listeVacances')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeBucquages')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeCredits')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+                {% render(url('pjm_app_consos_brags_admin_listePrix')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeZiBrags')) %}
+            </div>
         </div>
     </div>
 </div>

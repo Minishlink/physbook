@@ -9,11 +9,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AppController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('PJMAppBundle:App:index.html.twig');
-    }
-
     public function contactAction(Request $request)
     {
         $envoi = false;

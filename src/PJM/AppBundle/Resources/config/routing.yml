@@ -1,6 +1,6 @@
-pjm_app_homepage:
-    path:     /
-    defaults: { _controller: PJMAppBundle:App:index }
+pjm_app_accueil:
+    resource: "@PJMAppBundle/Resources/config/Accueil/routing.yml"
+    prefix:   /
 
 pjm_app_consos:
     resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"

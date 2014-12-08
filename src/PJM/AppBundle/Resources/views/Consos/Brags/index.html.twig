@@ -8,94 +8,95 @@
 {% endblock %}
 
 {% block pjm_app_body_title %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Brag's</h1>
-            {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_consos_brags_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <h1>Brag's</h1>
+        {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_consos_brags_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
     </div>
+</div>
 {% endblock %}
 
 {% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Vous rêvez chaque soir de la bonne odeur du pain moelleux qui sort tout juste du four, de la pâte fraiche
+            pétrie avec amour et confectionnée pour votre seul plaisir. Vous vous léchez les babines à l’idée de
+            déguster {{ random(['un pain au chocolat croustifondant', 'une chocolatine croustifondante']) }} ou un croissant pur beurre en regardant TFou. N’attendez pas une seconde de plus, <strong>le <span class="text-larger">brag’s</span> est là pour vous</strong>.</p>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <p>Vous rêvez chaque soir de la bonne odeur du pain moelleux qui sort tout juste du four, de la pâte fraiche
-        pétrie avec amour et confectionnée pour votre seul plaisir. Vous vous léchez les babines à l’idée de
-        déguster {{ random(['un pain au chocolat croustifondant', 'une chocolatine croustifondante']) }} ou un croissant pur beurre en regardant TFou. N’attendez pas une seconde de plus, <strong>le <span class="text-larger">brag’s</span> est là pour vous</strong>.</p>
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="sous-menu-brags" class="list-inline text-uppercase text-center">
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/brags/Croissant.png') }}"><br>
+                        Ma commande
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/brags/Niveau-N.png') }}"><br>
+                        Mon compte
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/brags/SOS.png') }}"><br>
+                        S.O.S.
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <ul id="sous-menu-brags" class="list-inline text-uppercase text-center">
-            <li>
-                <a href="">
-                    <img src="{{ asset('images/consos/brags/Croissant.png') }}"><br>
-                    Ma commande
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="{{ asset('images/consos/brags/Niveau-N.png') }}"><br>
-                    Mon compte
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="{{ asset('images/consos/brags/SOS.png') }}"><br>
-                    S.O.S.
-                </a>
-            </li>
-        </ul>
+    <div class="row">
+        <div class="col-md-7">
+            {% render(url('pjm_app_consos_brags_commande')) %}
+        </div>
+        <div class="col-md-5 text-center">
+            <h2>Prix</h2>
+            <p class="text-blanc text-larger">
+                La baguette à<br>
+                <span class="text-larger">{{ prixBaguette|prix }}</span>
+            </p>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-7">
-        {% render(url('pjm_app_consos_brags_commande')) %}
+    <div class="row">
+        <div class="col-md-7">
+            {%
+                include "PJMAppBundle:Consos:Brags/solde.html.twig"
+                with {
+                    'solde': solde,
+                    'prixBaguette': prixBaguette,
+                    'commande': commande
+                }
+            %}
+        </div>
+        <div class="col-md-5 text-center">
+            {% render(url('pjm_app_consos_brags_rechargement')) %}
+        </div>
     </div>
-    <div class="col-md-5 text-center">
-        <h2>Prix</h2>
-        <p class="text-blanc text-larger">
-            La baguette à<br>
-            <span class="text-larger">{{ prixBaguette|prix }}</span>
-        </p>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-7">
-        {%
-            include "PJMAppBundle:Consos:Brags/solde.html.twig"
-            with {
-                'solde': solde,
-                'prixBaguette': prixBaguette,
-                'commande': commande
-            }
-        %}
-    </div>
-    <div class="col-md-5 text-center">
-        {% render(url('pjm_app_consos_brags_rechargement')) %}
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-7">
-        <h2>Informations</h2>
-        Le brag's, c'est tous les matins à 10h.
-    </div>
-    <div class="col-md-5 text-center">
-        {% if ZiBrags is not null %}
-        <h2>S.O.S. Brag's</h2>
-        <a class="disable-fade" href="mailto:{{ ZiBrags.email }}"><img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/consos/brags/Contact.png') }}"></a>
-        <p class="text-blanc">
-            une question pratique,<br>
-            un problème de biroüte ?<br>
-            <a class="disable-fade" href="mailto:{{ ZiBrags.email }}">contacte ton ZiBrag’s<br>
-            {{ ZiBrags.bucque }} {{ ZiBrags.username }}</a>
-        </p>
-        {% endif %}
+    <div class="row">
+        <div class="col-md-7">
+            <h2>Informations</h2>
+            Le brag's, c'est tous les matins à 10h.
+        </div>
+        <div class="col-md-5 text-center">
+            {% if ZiBrags is not null %}
+            <h2>S.O.S. Brag's</h2>
+            <a class="disable-fade" href="mailto:{{ ZiBrags.email }}"><img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/consos/brags/Contact.png') }}"></a>
+            <p class="text-blanc">
+                une question pratique,<br>
+                un problème de biroüte ?<br>
+                <a class="disable-fade" href="mailto:{{ ZiBrags.email }}">contacte ton ZiBrag’s<br>
+                {{ ZiBrags.bucque }} {{ ZiBrags.username }}</a>
+            </p>
+            {% endif %}
+        </div>
     </div>
 </div>
 
