@@ -73,18 +73,8 @@ class BragsController extends Controller
 
     public function getSolde()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $repository = $em->getRepository('PJMAppBundle:Compte');
-        $compte = $repository->findOneByUserAndBoquette($this->getUser(), $this->getBoquette($this->slug));
-
-        if ($compte === null) {
-            $solde = 0;
-        } else {
-            $solde = $compte->getSolde();
-        }
-
-        return $solde;
+        $utils = $this->get('pjm.services.utils');
+        return $utils->getSolde($this->getUser(), $this->slug);
     }
 
     public function getBoquette($boquetteSlug)
