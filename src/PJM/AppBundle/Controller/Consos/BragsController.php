@@ -17,6 +17,7 @@ use PJM\AppBundle\Entity\Vacances;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Transaction;
+use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\TransactionType;
@@ -603,7 +604,7 @@ class BragsController extends Controller
         ));
     }
 
-    public function editZiBragsAction(Request $request)
+    public function listeZiBragsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMUserBundle:User');
@@ -622,10 +623,10 @@ class BragsController extends Controller
                     new Assert\NotBlank(),
             )))
             ->add('save', 'submit', array(
-                'label' => 'Modifier',
+                'label' => 'Ajout',
             ))
             ->setMethod('POST')
-            ->setAction($this->generateUrl('pjm_app_consos_brags_admin_editZiBrags'))
+            ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeZiBrags'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -636,13 +637,6 @@ class BragsController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $listeAncienZiBrags = $repository->findByRole($role);
-
-                foreach ($listeAncienZiBrags as $zibrags) {
-                    $zibrags->removeRole($role);
-                    $userManager->updateUser($zibrags, false);
-                }
-
                 if (!$user->hasRole($role)) {
                     $user->addRole($role);
                     $userManager->updateUser($user);
@@ -656,7 +650,7 @@ class BragsController extends Controller
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    'Un problème est survenu lors du changement de ZiBrag\'s. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
+                    'Un problème est survenu lors de l\'ajout du ZiBrag\'s. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
                 );
 
                 $data = $form->getData();
@@ -674,10 +668,30 @@ class BragsController extends Controller
 
         $listeZiBrags = $repository->findByRole($role);
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/editZiBrags.html.twig', array(
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeZiBrags.html.twig', array(
             'form'      => $form->createView(),
             'listeZiBrags' => $listeZiBrags
         ));
+    }
+
+    public function removeZiBragsAction(Request $request, User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMUserBundle:User');
+        $role = 'ROLE_ZIBRAGS';
+        $userManager = $this->get('fos_user.user_manager');
+
+        if ($user->hasRole($role)) {
+            $user->removeRole($role);
+            $userManager->updateUser($user);
+
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                $user.' est maintenant ZiBrag\'s.'
+            );
+        }
+
+        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
     }
 
     public function bucquageCronAction()

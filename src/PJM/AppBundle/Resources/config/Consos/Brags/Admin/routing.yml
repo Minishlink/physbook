@@ -34,9 +34,13 @@ pjm_app_consos_brags_admin_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
 
-pjm_app_consos_brags_admin_editZiBrags:
-    path:     /editZiBrags
-    defaults: { _controller: PJMAppBundle:Consos/Brags:editZiBrags }
+pjm_app_consos_brags_admin_listeZiBrags:
+    path:     /listeZiBrags
+    defaults: { _controller: PJMAppBundle:Consos/Brags:listeZiBrags }
+
+pjm_app_consos_brags_admin_removeZiBrags:
+    path:     /removeZiBrags/{user}
+    defaults: { _controller: PJMAppBundle:Consos/Brags:removeZiBrags }
 
 pjm_app_consos_brags_bucquage:
     path:     /bucquage

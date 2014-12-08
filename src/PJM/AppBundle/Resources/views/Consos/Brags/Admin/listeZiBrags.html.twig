@@ -6,20 +6,20 @@
     </div>
     <div id="collapseZiBrags" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZiBrags">
         <div class="panel-body">
-            {% if listeZiBrags|length == 1 %}
-                Le ZiBrag's actuel est {{ listeZiBrags[0].bucque }} {{ listeZiBrags[0].username }}.
-            {% elseif listeZiBrags|length == 0 %}
+            <h3>Ajout</h3>
+            {{ form(form) }}
+
+            <h3>Liste</h3>
+            {% if listeZiBrags|length == 0 %}
                 Il n'y a pas de ZiBrag's actuellement.
             {% else %}
                 Les ZiBrag's actuels sont :
                 <ul>
                 {% for ZiBrags in listeZiBrags %}
-                    <li>{{ ZiBrags.bucque }} {{ ZiBrags.username }}</li>
+                    <li>{{ ZiBrags }} (<a href="{{ path('pjm_app_consos_brags_admin_removeZiBrags', {'user': ZiBrags.id}) }}">supprimer</a>)</li>
                 {% endfor %}
                 </ul>
             {% endif %}
-            <h3>Modification</h3>
-            {{ form(form) }}
         </div>
     </div>
 </div>
