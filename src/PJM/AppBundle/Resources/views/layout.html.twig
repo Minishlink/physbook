@@ -4,6 +4,7 @@
 
 {% block content %}
 
+<div class="container">
     {% block pjm_app_body_title %}{% endblock %}
 
     {% block pjm_app_body_flashbag %}
@@ -31,7 +32,8 @@
             </div>
         {% endfor %}
     {% endblock %}
+</div>
 
-	{% block pjm_app_body %}{% endblock %}
+{% block pjm_app_body %}{% endblock %}
 
 {% endblock %}
