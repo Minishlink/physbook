@@ -4,8 +4,37 @@
 
 {% block body_text %}
 {% autoescape false %}
+** Phy'sbook
+------------------------------------------------------------
+pour de meilleurs échanges et des paiements faciles au tabagn's
+http://physbook.fr
+
+{% block content_text %}{% endblock %}
 {% endautoescape %}
 {% endblock %}
 
 {% block body_html %}
+<html>
+    <head>
+        <title>{{ block('subject') }}</title>
+    </head>
+    <body style="background-color: #b63938;height: 100% !important;width: 100% !important;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="color: white; border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;margin: 0;padding: 0;background-color: #b63938;height: 100% !important;width: 100% !important;padding:1em;text-align:justify;">
+            <tr>
+                <td>
+                    <a href="{{ url('pjm_app_homepage') }}" style="color:#ffba00">
+                        <img src="{{ asset('images/general/physbook_bg-transp-small.png') }}" style="text-align:center" alt="Phy'sbook" />
+                    </a>
+                    <br><small>pour de meilleurs échanges et des paiements faciles au tabagn's</small>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% block content_html %}{% endblock %}
+                </td>
+            </tr>
+
+        </table>
+    </body>
+</html>
 {% endblock %}

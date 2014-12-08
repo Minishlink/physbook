@@ -21,3 +21,8 @@ parameters:
     use_assetic_controller: true
     
     java_path: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
+    
+    router.request_context.scheme: http
+    router.request_context.host: physbook.fr
+    router.request_context.base_url: ~
+    assets_base_url: "%router.request_context.scheme%://%router.request_context.host%%router.request_context.base_url%"
