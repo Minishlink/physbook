@@ -1,0 +1,45 @@
+{# src/PJM/AppBundle/Resources/views/Mail/alerteSolde.email.twig #}
+
+{% extends "PJMAppBundle:Mail:layout.html.twig" %}
+
+{% block subject %}{{ parent() }} Négat's de {{ dette|prix }}{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+
+Sal's {{ user.bucque }},
+
+tu es en négat's sur ton compte {{ boquette.nom }} de {{ dette|prix }} ! Régularise ta situation au plus vite en rechargeant ton compte sur Phy'sbook.fr.
+
+{% if boquette.slug == "brags" %}
+Si tu ne veux plus recevoir de brag's, rends toi sur Phy'sbook.fr et modifie ta commande pour avoir 0 brag's par jour. Ton solde cessera de baisser quand le ZiBrag's aura confirmé ta résiliation au boulanger. Une fois cela fait, il te faudra rembourser ton négat's.
+{% endif %}
+
+Ici :
+{{ url('pjm_app_consos_brags_index') }}
+
+Fratern's.
+Phy'sbook
+admin@physbook.fr
+{% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+
+<a href="{{ url('pjm_app_homepage') }}"><img style="background-color: red" src="" style="text-align:center" alt="Phy'sbook" /></a>
+
+<h1>Sal's {{ user.bucque }},</h1>
+
+<h2>Alerte de négat's !</h2>
+
+<p>Tu es en négat's sur ton compte {{ boquette.nom }} de <strong>{{ dette|prix }}</strong> ! Régularise ta situation au plus vite en rechargeant ton compte sur <a href="{{ url('pjm_app_consos_brags_index') }}">Phy'sbook.fr</a>.</p>
+
+{% if boquette.slug == "brags" %}
+<p>Si tu ne veux plus recevoir de brag's, rends toi sur <a href="{{ url('pjm_app_consos_brags_index') }}">Phy'sbook.fr</a> et modifie ta commande pour avoir 0 brag's par jour. Ton solde cessera de baisser quand le ZiBrag's aura confirmé ta résiliation au boulanger. Une fois cela fait, il te faudra rembourser ton négat's.</p>
+{% endif %}
+
+<p>Fratern's.<br>
+Phy'sbook<br>
+<a href="mailto:admin@physbook.fr">admin@physbook.fr</a>
+</p>
+{% endblock %}

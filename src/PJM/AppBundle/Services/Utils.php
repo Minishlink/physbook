@@ -11,10 +11,12 @@ use PJM\AppBundle\Entity\Compte;
 class Utils
 {
     protected $em;
+    protected $mailer;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Mailer $mailer)
     {
         $this->em = $em;
+        $this->mailer = $mailer;
     }
 
     public function getBoquette($boquetteSlug)
@@ -150,10 +152,7 @@ class Utils
         foreach ($listeUsers as $user) {
             $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
             if ($compte->getSolde() < 0) {
-                var_dump(array(
-                    'user' => $compte->getUser()->getUsername(),
-                    'solde' => $compte->getSolde()
-                ));
+                $this->mailer->sendAlerteSolde($compte);
             }
         }
 
