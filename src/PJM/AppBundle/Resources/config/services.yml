@@ -4,6 +4,10 @@ parameters:
 
 
 services:
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
     pjm.twig.intranet_extension:
         class: PJM\AppBundle\Twig\IntranetExtension
         tags:
