@@ -25,6 +25,7 @@
             </p>
             <div class="row">
                 <div class="col-md-6">
+                    {{ "now"|localizeddate('medium', 'short') }}
                     <h1>A la une</h1>
                     <p>...</p>
                 </div>
@@ -47,8 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="space"></div>
-    <div class="row text-center">
+    <div class="row bg-bleu text-center">
         <div class="col-md-12">
             {% render(url('pjm_app_accueil_anniversaires')) %}
         </div>

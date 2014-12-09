@@ -31,8 +31,6 @@ class AccueilController extends Controller
 
         $listeAnniv = $repository->findByAnniversaire(new \DateTime());
 
-        dump($listeAnniv);
-
         return $this->render('PJMAppBundle:Accueil:anniversaires.html.twig', array(
             'listeAnniv' => $listeAnniv,
         ));
