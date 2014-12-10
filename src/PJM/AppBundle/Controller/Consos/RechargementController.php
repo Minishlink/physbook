@@ -97,6 +97,14 @@ class RechargementController extends Controller
 
     public function retourSMoneyAction(Request $request)
     {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Debug')
+            ->setFrom('admin@physbook.fr')
+            ->setTo('admin@physbook.fr')
+            ->setBody("Request : ".$request)
+        ;
+        $this->get('mailer')->send($message);
+
         if ($request->request->get('transactionId')) {
             $transactionId = $request->request->get('transactionId');
             $status = $request->request->get('status');
