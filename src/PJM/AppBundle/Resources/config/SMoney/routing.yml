@@ -1,5 +1,5 @@
 pjm_app_smoney_rechargement_getURL:
-    path:     /envoi/{montant}/{boquette_slug}
+    path:     /envoi/{transaction}
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
     requirements:
         _method: POST

@@ -17,20 +17,10 @@ use PJM\AppBundle\Entity\Compte;
 
 class RechargementController extends Controller
 {
-    /**
-     * @ParamConverter("boquette", options={"mapping": {"boquette_slug": "slug"}})
-     */
-    public function getURLAction($montant, Boquette $boquette)
+    public function getURLAction(Transaction $transaction)
     {
-        // on crée une transaction pour récupérer l'ID unique
-        $transaction = new Transaction();
-        $transaction->setMontant($montant);
-        $transaction->setBoquette($boquette);
-        $transaction->setMoyenPaiement("smoney");
-        $transaction->setInfos($boquette->getCaisseSMoney);
-        $transaction->setUser($this->getUser());
-
         $em = $this->getDoctrine()->getManager();
+        // on met la transaction en queue pour récupérer l'id
         $em->persist($transaction);
         $em->flush();
 
@@ -53,20 +43,19 @@ class RechargementController extends Controller
             $agent = "iphoneweb";
         }
 
-        // #FUTURE https://mon-espace.s-money.fr/ecommerce/payments/smoney
         $headers = array(
             "Authorization" => $authToken,
         );
         $content = array(
-            "amount" => $montant,
-            "receiver" => $boquette->getCaisseSMoney(),
+            "amount" => $transaction->getMontant(),
+            "receiver" => $transaction->getBoquette()->getCaisseSMoney(),
             "transactionId" => substr(uniqid(), 0, 6)."_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
             "agent" => $agent,
             "source" => "web",
             "identifier" => "",
-            "message" => "[Phy'sbook] ".$this->getUser()->getUsername()." - ".$boquette->getNom()." (".$transaction->getId().")"
+            "message" => "[Phy'sbook] ".$this->getUser()->getUsername()." - ".$transaction->getBoquette()->getNom()." (".$transaction->getId().")"
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -84,7 +73,7 @@ class RechargementController extends Controller
         } else {
             // si on a une réponse valide de la part de S-Money
             $data = json_decode($response->getContent(), true);
-
+            // s
             if (isset($data['url'])) {
                 $resData = array(
                     'valid' => true,
