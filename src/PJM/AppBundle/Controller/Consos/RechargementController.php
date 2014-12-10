@@ -55,7 +55,7 @@ class RechargementController extends Controller
             "agent" => $agent,
             "source" => "web",
             "identifier" => "",
-            "message" => "[Phy'sbook] ".$this->getUser()->getUsername()." - ".$transaction->getBoquette()->getNom()." (".$transaction->getId().")"
+            "message" => "[Phy'sbook] ".$transaction->getUser()->getUsername()." - ".$transaction->getBoquette()->getNom()." (".$transaction->getId().")"
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -73,7 +73,6 @@ class RechargementController extends Controller
         } else {
             // si on a une réponse valide de la part de S-Money
             $data = json_decode($response->getContent(), true);
-            // s
             if (isset($data['url'])) {
                 $resData = array(
                     'valid' => true,
