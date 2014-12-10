@@ -4,6 +4,15 @@
 	Accueil | {{ parent() }}
 {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.progress .progress-bar').progressbar();
+});
+</script>
+{% endblock %}
+
 {% block pjm_app_body %}
 
 <div class="container-fluid">

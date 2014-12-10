@@ -1,5 +1,34 @@
-<h1>Etat des comptes</h1>
+<h1>État des comptes</h1>
 
-Pian's + C'vis : {{ solde.pians|prix }}<br>
-Brag's : {{ solde.brags|prix }}<br>
-Paniers : {{ solde.paniers|prix }}<br>
+<div class="row">
+    <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
+        <div class="progress progress-striped active vertical bottom">
+            <div class="text-center prix">{{ solde.pians|prix }}</div>
+            <div class="progress-bar bg-rouge" role="progressbar" data-transitiongoal="{{ solde.pians }}" aria-valuenow="{{ solde.pians }}" aria-valuemin="0" aria-valuemax="5000"></div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <div class="progress progress-striped active vertical bottom">
+            <div class="text-center prix">{{ solde.brags|prix }}</div>
+            <div class="progress-bar bg-jaune" role="progressbar" data-transitiongoal="{{ solde.brags }}" aria-valuenow="{{ solde.brags }}" aria-valuemin="0" aria-valuemax="5000"></div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <div class="progress progress-striped active vertical bottom">
+            <div class="text-center prix">{{ solde.paniers|prix }}</div>
+            <div class="progress-bar bg-vert" role="progressbar" data-transitiongoal="{{ solde.paniers }}" aria-valuenow="{{ solde.paniers }}" aria-valuemin="0" aria-valuemax="2000"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
+        <div class="text-center boquette">Pian's<br>C'vis</div>
+    </div>
+    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <div class="text-center boquette">Brag's</div>
+    </div>
+    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <div class="text-center boquette">Paniers</div>
+    </div>
+</div>
+
