@@ -58,7 +58,10 @@ class Transaction
      *
      * @ORM\Column(name="montant", type="smallint")
      * @Assert\NotBlank()
-     * @Assert\GreaterThan(0)
+     * @Assert\GreaterThan(
+     *      value = 0,
+     *      message = "Le montant doit être supérieur à 0€."
+     * )
      */
     private $montant;
 

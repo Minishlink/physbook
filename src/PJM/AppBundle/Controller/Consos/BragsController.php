@@ -21,6 +21,7 @@ use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\TransactionType;
+use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsController extends Controller
@@ -115,7 +116,6 @@ class BragsController extends Controller
         }
 
         return $baguette;
-
     }
 
     public function getPrixBaguette()
@@ -139,36 +139,29 @@ class BragsController extends Controller
 
     public function rechargementAction(Request $request)
     {
-        $form = $this->createFormBuilder()
-            ->add('montant', 'money', array(
-                'error_bubbling' => true,
-                'constraints' => array(
-                new Assert\NotBlank(),
-                new Assert\Range(array(
-                    'min' => 1,
-                    'max' => 200,
-                    'minMessage' => 'Le montant doit être supérieur à 1€.',
-                    'maxMessage' => 'Tu ne peux pas envoyer plus de 200€ par rechargement.',
-                )),
-            )))
-            ->add('save', 'submit', array(
-                'label' => 'Recharger',
-            ))
-            ->setMethod('POST')
-            ->setAction($this->generateUrl('pjm_app_consos_brags_rechargement'))
-            ->getForm();
+        $em = $this->getDoctrine()->getManager();
+
+        $transaction = new Transaction();
+        $transaction->setMoyenPaiement('smoney');
+
+        $form = $this->createForm(new MontantType(), $transaction, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_consos_brags_rechargement'),
+        ));
 
         $form->handleRequest($request);
-        $data = $form->getData();
-        $montant = $data['montant'];
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                $boquette = $this->getBoquette($this->slug);
+                $transaction->setBoquette($boquette);
+                $transaction->setInfos($boquette->getCaisseSMoney());
+                $transaction->setUser($this->getUser());
+
                 // on redirige vers S-Money
                 $resRechargement = json_decode(
                     $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
-                        'montant' => $montant*100,
-                        'boquette_slug' => $this->slug
+                        'transaction' => $transaction,
                     ))->getContent(),
                     true
                 );
@@ -186,7 +179,7 @@ class BragsController extends Controller
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    'Un problème est survenu lors de ton rechargement. Réessaye.'
+                    'Un problème est survenu lors de l\'envoi du formulaire de rechargement. Réessaye.'
                 );
 
                 $data = $form->getData();
@@ -285,6 +278,7 @@ class BragsController extends Controller
         ));
     }
 
+    // ajout et liste d'un crédit
     public function listeCreditsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
