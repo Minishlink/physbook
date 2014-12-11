@@ -1,3 +1,11 @@
+pjm_app_consos_historique:
+    path:     /historique
+    defaults: { _controller: PJMAppBundle:Consos:historique }
+
+pjm_app_consos_historiqueResults:
+    path:     /historique/results
+    defaults: { _controller: PJMAppBundle:Consos:historiqueResults }
+
 pjm_app_consos_pians:
     path:     /pians
     defaults: { _controller: PJMAppBundle:Consos/Pians:index }
