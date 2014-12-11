@@ -7,7 +7,7 @@
     <div id="collapseVacances" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingVacances">
         <div class="panel-body">
             <p>
-                Ce module sert à recréditer les élèves pour les jours fériés et les vacances. Le crédit se fait le jour du jour férié ou du début des vacances concernées.
+                Ce module sert à définir les vacances et jours fériés de façon à ce que les utilisateurs ne soient pas débités quand il n'y a pas de pain.
             </p>
             <h3>Ajout</h3>
             {{ form(form) }}
@@ -21,7 +21,6 @@
                             <th>Début</th>
                             <th>Fin</th>
                             <th>Jours</th>
-                            <th>Crédité ?</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -31,8 +30,7 @@
                             <td>{{ vacances.dateDebut|date('d/m/y') }}</td>
                             <td>{{ vacances.dateFin|date('d/m/y') }}</td>
                             <td>{{ vacances.getNbJours() }}</td>
-                            <td>{{ vacances.fait ? 'Oui':'Non' }}</td>
-                            <td>{% if not vacances.fait %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Annuler</a>{% endif %}</td>
+                            <td>{% if not vacances.fait %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Supprimer</a>{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
