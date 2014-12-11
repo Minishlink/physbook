@@ -43,6 +43,8 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             {% javascripts
+                'bundles/fosjsrouting/js/router.js'
+                'js/fos_js_routes.js'
                 '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
                 '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment-with-locales.min.js'
                 '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
@@ -62,7 +64,6 @@
             <!-- Piwik -->
             <noscript><p><img src="//analytics.physbook.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
             <!-- End Piwik Code -->
-
         {% endblock %}
     </body>
 </html>

@@ -25,7 +25,8 @@
         "friendsofsymfony/user-bundle": "dev-master",
         "winzou/console-bundle": "dev-master",
         "sensio/buzz-bundle": "dev-master",
-        "ircmaxell/password-compat": "~1.0"
+        "ircmaxell/password-compat": "~1.0",
+        "sg/datatablesbundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

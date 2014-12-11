@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Sg\DatatablesBundle\SgDatatablesBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\NewsBundle\PJMNewsBundle(),
             new PJM\UserBundle\PJMUserBundle(),

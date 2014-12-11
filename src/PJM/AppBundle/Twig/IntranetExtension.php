@@ -9,6 +9,8 @@ class IntranetExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('prix', array($this, 'prixFilter')),
             new \Twig_SimpleFilter('moyenPaiement', array($this, 'moyenPaiementFilter')),
+            new \Twig_SimpleFilter('datatableJS', array($this, 'datatableJSFilter'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('datatableHTML', array($this, 'datatableHTMLFilter'), array('is_safe' => array('html'))),
         );
     }
 
@@ -35,6 +37,18 @@ class IntranetExtension extends \Twig_Extension
         return array_key_exists($string, $map)
             ? $map[$string]
             : $string;
+    }
+
+    // on enlève les balises script pour ne garder que le html
+    public function datatableHTMLFilter($html)
+    {
+        return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $html);
+    }
+
+    public function datatableJSFilter($html)
+    {
+        $split = preg_split("/<\/table>/", $html);
+        return $split[1];
     }
 
     public function getName()

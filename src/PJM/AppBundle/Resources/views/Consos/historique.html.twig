@@ -1,0 +1,31 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}{{ parent() }}{% endblock %}
+
+{% block title %}
+	Historique | {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ datatable_render(datatable)|datatableJS }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Historique</h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {{ datatable_render(datatable)|datatableHTML }}
+        </div>
+    </div>
+</div>
+{% endblock %}
