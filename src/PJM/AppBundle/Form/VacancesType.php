@@ -24,7 +24,7 @@ class VacancesType extends AbstractType
                 'label' => 'Fin',
             ))
             ->add('save', 'submit', array(
-                'label' => 'Programmer le crédit',
+                'label' => 'Enregistrer',
             ))
         ;
     }
