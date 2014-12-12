@@ -506,7 +506,7 @@ class BragsController extends Controller
 
     public function annulerVacancesAction(Request $request, Vacances $vacances)
     {
-        if (!$vacances->getCrediteBrags()) {
+        if (!$vacances->getFait()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($vacances);
             $em->flush();

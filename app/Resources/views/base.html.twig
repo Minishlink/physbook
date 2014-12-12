@@ -56,6 +56,7 @@
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+        {% if app.environment == 'dev' %}<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>{% endif %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}

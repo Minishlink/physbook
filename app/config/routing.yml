@@ -12,3 +12,5 @@ pjm_user:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    options:
+        baseUrl: /app_dev.php
