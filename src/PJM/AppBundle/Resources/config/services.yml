@@ -29,3 +29,8 @@ services:
         class: PJM\AppBundle\Datatables\HistoriqueDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.vacances:
+        class: PJM\AppBundle\Datatables\VacancesDatatable
+        tags:
+            - { name: sg.datatable.view }
+

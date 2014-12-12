@@ -38,32 +38,30 @@
         <meta name="msapplication-TileColor" content="#2b5797">
         <meta name="msapplication-TileImage" content="{{ asset('images/favicon/mstile-144x144.png') }}">
         <meta name="application-name" content="Phy'sbook">
+        {% javascripts
+            'bundles/fosjsrouting/js/router.js'
+            'js/fos_js_routes.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment-with-locales.min.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/bootstrap-progressbar/bootstrap-progressbar.min.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+            '%kernel.root_dir%/../app/Resources/public/js/ext/chosen.jquery.min.js'
+            '%kernel.root_dir%/../app/Resources/public/lib/datatables/media/js/jquery.dataTables.min.js'
+            '%kernel.root_dir%/../app/Resources/public/js/ext/dataTables.bootstrap.min.js'
+            '%kernel.root_dir%/../app/Resources/public/js/datatables.conf.js'
+            '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
+            filter='?yui_js'
+            output='js/extra.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}
-        {% block javascripts %}
-            {% javascripts
-                'bundles/fosjsrouting/js/router.js'
-                'js/fos_js_routes.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment-with-locales.min.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/bootstrap-progressbar/bootstrap-progressbar.min.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
-                '%kernel.root_dir%/../app/Resources/public/js/ext/chosen.jquery.min.js'
-                '%kernel.root_dir%/../app/Resources/public/lib/datatables/media/js/jquery.dataTables.min.js'
-                '%kernel.root_dir%/../app/Resources/public/js/ext/dataTables.bootstrap.min.js'
-                '%kernel.root_dir%/../app/Resources/public/js/datatables.conf.js'
-                '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
-                filter='?yui_js'
-                output='js/extra.js'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-
-            <!-- Piwik -->
+        {% block javascripts %}{% endblock %}
+        <!-- Piwik -->
             <noscript><p><img src="//analytics.physbook.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-            <!-- End Piwik Code -->
-        {% endblock %}
+        <!-- End Piwik Code -->
     </body>
 </html>

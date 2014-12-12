@@ -13,6 +13,7 @@
             {{ form(form) }}
 
             <h3>Liste</h3>
+            {{ datatable_render(datatable) }}
             {% if listeVacances != null %}
             <div class="table-responsive">
                 <table id="tabGestionVacances" class="table table-striped table-hover table-condensed">
