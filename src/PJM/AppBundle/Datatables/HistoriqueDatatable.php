@@ -25,7 +25,7 @@ class HistoriqueDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
-            ->add('date', 'column', array('title' => 'Date',))
+            ->add('date', 'datetime', array('title' => 'Date',))
             ->add('nombre', 'column', array('title' => 'Nombre',))
             ->add('item.libelle', 'column', array('title' => 'Item',))
             ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
