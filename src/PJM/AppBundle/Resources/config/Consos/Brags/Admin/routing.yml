@@ -26,6 +26,10 @@ pjm_app_consos_brags_admin_listeVacances:
     path:     /listeVacances
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
 
+pjm_app_consos_brags_admin_vacancesResults:
+    path:     /listeVacances/results
+    defaults: { _controller: PJMAppBundle:Consos/Brags:vacancesResults }
+
 pjm_app_consos_brags_admin_annulerVacances:
     path:     /annulerVacances/{vacances}
     defaults: { _controller: PJMAppBundle:Consos/Brags:annulerVacances }

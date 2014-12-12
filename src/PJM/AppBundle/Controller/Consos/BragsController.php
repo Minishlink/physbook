@@ -487,10 +487,21 @@ class BragsController extends Controller
         $repository = $em->getRepository('PJMAppBundle:Vacances');
         $listeVacances = $repository->findAll();
 
+        $datatable = $this->get("pjm.datatable.vacances");
+        $datatable->buildDatatableView();
+
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeVacances.html.twig', array(
             'listeVacances' => $listeVacances,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'datatable' => $datatable
         ));
+    }
+
+    public function vacancesResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.vacances"));
+
+        return $datatable->getResponse();
     }
 
     public function annulerVacancesAction(Request $request, Vacances $vacances)
