@@ -21,6 +21,10 @@ class HistoriqueDatatable extends AbstractDatatableView
             ->setServerSide(true)
             ->setProcessing(true);
 
+        $this->getOptions()
+            ->setOrder(array("column" => 0, "direction" => "desc"))
+        ;
+
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_historiqueResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
@@ -32,6 +36,7 @@ class HistoriqueDatatable extends AbstractDatatableView
             ))
             ->add('nombre', 'column', array('title' => 'Nombre',))
             ->add('item.libelle', 'column', array('title' => 'Item',))
+            ->add('item.prix', 'column', array('title' => 'Prix',))
             ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
         ;
     }
@@ -43,8 +48,8 @@ class HistoriqueDatatable extends AbstractDatatableView
     {
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
-            $line["prix"] = $ext->prixFilter($line["prix"]);
-
+            $line["nombre"] = $ext->nombreFilter($line["nombre"]);
+            $line["item"]["prix"] = $ext->prixFilter($line["nombre"]*$line["item"]["prix"]);
             return $line;
         };
 

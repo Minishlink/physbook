@@ -21,6 +21,10 @@ class HistoriqueAdminDatatable extends AbstractDatatableView
             ->setServerSide(true)
             ->setProcessing(true);
 
+        $this->getOptions()
+            ->setOrder(array("column" => 0, "direction" => "desc"))
+        ;
+
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_bucquagesResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);

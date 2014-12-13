@@ -83,4 +83,16 @@ class HistoriqueRepository extends EntityRepository
             ;
         };
     }
+
+    public function callbackFindByUser($user)
+    {
+        return function($qb) use($user) {
+            $qb
+                ->join('Historique.user', 'u', 'WITH', 'u = :user')
+                ->setParameters(array(
+                    'user'  => $user,
+                ))
+            ;
+        };
+    }
 }
