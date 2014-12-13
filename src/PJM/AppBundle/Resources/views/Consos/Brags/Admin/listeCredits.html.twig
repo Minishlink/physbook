@@ -13,34 +13,7 @@
             {{ form(form) }}
 
             <h3>Historique</h3>
-            {% if credits != null %}
-            <div class="table-responsive">
-                <table id="tabGestionCredits" class="table table-striped table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>PG</th>
-                            <th>Moyen</th>
-                            <th>Infos</th>
-                            <th>Prix</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for credit in credits %}
-                        <tr>
-                            <td>{{ credit.date|date('d/m/y') }}</td>
-                            <td>{{ credit.user.username }}</td>
-                            <td>{{ credit.moyenPaiement|moyenPaiement }}</td>
-                            <td>{{ credit.infos }}</td>
-                            <td>{{ credit.montant|prix }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            Il n'y a pas de crédits.
-            {% endif %}
+            {{ datatable_render(datatable) }}
         </div>
     </div>
 </div>

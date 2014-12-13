@@ -34,4 +34,20 @@ class TransactionRepository extends EntityRepository
 
         return $res;
     }
+
+    public function callbackFindByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
+    {
+        $status = $valid ? "OK" : "NOK";
+
+        return function($qb) use($boquette_slug, $status) {
+            $qb
+                ->andWhere('Transaction.status = :status')
+                ->join('Transaction.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                ->setParameters(array(
+                    'boquette_slug'  => $boquette_slug,
+                    'status' => $status
+                ))
+            ;
+        };
+    }
 }
