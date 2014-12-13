@@ -484,14 +484,10 @@ class BragsController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        $repository = $em->getRepository('PJMAppBundle:Vacances');
-        $listeVacances = $repository->findAll();
-
         $datatable = $this->get("pjm.datatable.vacances");
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeVacances.html.twig', array(
-            'listeVacances' => $listeVacances,
             'form' => $form->createView(),
             'datatable' => $datatable
         ));
