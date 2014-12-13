@@ -18,7 +18,13 @@ class VacancesDatatable extends AbstractDatatableView
     {
         $this->getFeatures()
             ->setServerSide(true)
-            ->setProcessing(true);
+            ->setProcessing(true)
+            ->setAutoWidth(true)
+        ;
+
+        $this->getOptions()
+            ->setOrder(array("column" => 0, "direction" => "desc"))
+        ;
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_vacancesResults'));
 
@@ -33,17 +39,21 @@ class VacancesDatatable extends AbstractDatatableView
                 'title' => 'Fin',
                 'format' => 'll'
             ))
+            ->add("fait", "boolean", array(
+                    "title" => "Fait",
+                    "visible" => false,
+                    "true_icon" => "glyphicon glyphicon-ok",
+                    "false_icon" => "glyphicon glyphicon-remove"
+                ))
             ->add(null, "action", array(
                 "title" => "Actions",
-                "start" => '<div class="wrapper_example_class">',
-                "end" => '</div>',
                 "actions" => array(
                     array(
                         "route" => "pjm_app_consos_brags_admin_annulerVacances",
                         "route_parameters" => array(
                             "vacances" => "id"
                         ),
-                        "icon" => "glyphicon glyphicon-remove",
+                        "icon" => "glyphicon glyphicon-trash",
                         "attributes" => array(
                             "rel" => "tooltip",
                             "title" => "Supprimer",
@@ -54,7 +64,8 @@ class VacancesDatatable extends AbstractDatatableView
                         "confirm_message" => "Es-tu sûr ?",
                         "role" => "ROLE_ZIBRAGS",
                         "renderif" => array(
-
+                            // #FUTURE remplacer si MAJ bundle datatable
+                            "fait) == false; var dummy = function(){}; dummy("
                         )
                     ),
                 )

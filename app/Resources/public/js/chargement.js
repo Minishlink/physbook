@@ -16,4 +16,9 @@ $(document).ready(function () {
             $('#chargement').fadeTo(200, 1);
         }
     });
+
+    $('.collapse').on('shown.bs.collapse', function () {
+        var tables = $.fn.dataTable.tables(true);
+        $(tables).DataTable().columns.adjust();
+    })
 });

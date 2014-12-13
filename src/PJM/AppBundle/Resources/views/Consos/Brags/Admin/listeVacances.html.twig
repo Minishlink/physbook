@@ -14,32 +14,6 @@
 
             <h3>Liste</h3>
             {{ datatable_render(datatable) }}
-            {% if listeVacances != null %}
-            <div class="table-responsive">
-                <table id="tabGestionVacances" class="table table-striped table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Début</th>
-                            <th>Fin</th>
-                            <th>Jours</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for vacances in listeVacances %}
-                        <tr>
-                            <td>{{ vacances.dateDebut|date('d/m/y') }}</td>
-                            <td>{{ vacances.dateFin|date('d/m/y') }}</td>
-                            <td>{{ vacances.getNbJours() }}</td>
-                            <td>{% if not vacances.fait %}<a href="{{ path('pjm_app_consos_brags_admin_annulerVacances', {'vacances': vacances.id}) }}">Supprimer</a>{% endif %}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            Il n'y a pas de vacances/jours fériés enregistrés.
-            {% endif %}
         </div>
     </div>
 </div>
