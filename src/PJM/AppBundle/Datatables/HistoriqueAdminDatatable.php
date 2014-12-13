@@ -6,11 +6,11 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class HistoriqueDatatable
+ * Class HistoriqueAdminDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class HistoriqueDatatable extends AbstractDatatableView
+class HistoriqueAdminDatatable extends AbstractDatatableView
 {
     /**
      * {@inheritdoc}
@@ -21,7 +21,7 @@ class HistoriqueDatatable extends AbstractDatatableView
             ->setServerSide(true)
             ->setProcessing(true);
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_historiqueResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_bucquagesResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -30,9 +30,10 @@ class HistoriqueDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
-            ->add('nombre', 'column', array('title' => 'Nombre',))
+            ->add('user.username', 'column', array('title' => 'PG',))
             ->add('item.libelle', 'column', array('title' => 'Item',))
-            ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+            ->add('nombre', 'column', array('title' => 'Nombre',))
+            ->add('item.prix', 'column', array('title' => 'P.U.',))
         ;
     }
 
@@ -43,8 +44,8 @@ class HistoriqueDatatable extends AbstractDatatableView
     {
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
-            $line["prix"] = $ext->prixFilter($line["prix"]);
-
+            $line["item"]["prix"] = $ext->prixFilter($line["item"]["prix"]);
+            $line["nombre"] = $ext->nombreFilter($line["nombre"]);
             return $line;
         };
 
@@ -64,6 +65,6 @@ class HistoriqueDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'historique_datatable';
+        return 'historique_admin_datatable';
     }
 }

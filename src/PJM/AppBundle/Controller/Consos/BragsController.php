@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\ORM\EntityRepository;
 
@@ -269,74 +272,25 @@ class BragsController extends Controller
 
     public function listeCommandesAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Commande');
-        $commandes = $repository->findByItemSlug($this->itemSlug);
+        $datatable = $this->get("pjm.datatable.commandes");
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCommandes.html.twig', array(
-            'commandes' => $commandes
+            'datatable' => $datatable
         ));
     }
 
-    // ajout et liste d'un crédit
-    public function listeCreditsAction(Request $request)
+    // action ajax de rendu de la liste des commandes
+    public function commandesResultsAction()
     {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.commandes"));
         $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Commande');
 
-        $credit = new Transaction();
+        // Add callback
+        //$datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($this->slug));
 
-        $form = $this->createForm(new TransactionType(), $credit, array(
-            'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeCredits'),
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                // on enregistre le crédit dans l'historique
-                $credit->setStatus("OK");
-                $credit->setBoquette($this->getBoquette($this->slug));
-                $em->persist($credit);
-
-                // on modifie le solde de l'utilisateur
-                $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
-                $compte = $repositoryCompte->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
-                $compte->crediter($credit->getMontant());
-                $em->persist($compte);
-
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'La transaction a été enregistrée et le compte a été crédité.'
-                );
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de la transaction. Réessaye.'
-                );
-
-                $data = $form->getData();
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
-        }
-
-        $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $listeCredits = $repository->findByBoquetteSlugAndValid($this->slug);
-
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
-            'form' => $form->createView(),
-            'credits' => $listeCredits
-        ));
+        return $datatable->getResponse();
     }
 
     public function validerCommandeAction(Request $request, Commande $commande)
@@ -402,39 +356,171 @@ class BragsController extends Controller
         throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
 
-    public function resilierCommandeAction(Request $request, Commande $commande)
+    public function validerCommandesAction(Request $request)
     {
-        if ($commande->getItem()->getSlug() == "baguette" && $commande->getValid() !== false) {
+        if ($request->isXmlHttpRequest()) {
+            $listeCommandes = $request->request->get("data");
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Commande');
-            if ($commande->getValid() === true) {
-                $commande->resilier();
-                $em->persist($commande);
-            } elseif (null === $commande->getValid()) {
-                $em->remove($commande);
+            $repository = $em->getRepository("PJMAppBundle:Commande");
+            $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
+
+            foreach ($listeCommandes as $commandeChoice) {
+                $commande = $repository->find($commandeChoice["value"]);
+
+                if ($commande->getItem()->getSlug() == $this->itemSlug && null === $commande->getValid()) {
+                    $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
+
+                    // on résilie les précédentes commandes
+                    foreach ($commandes as $c) {
+                        if ($c != $commande && (null === $c->getValid() || $c->getValid() == true)) {
+                            $c->resilier();
+                            $em->persist($c);
+                        }
+                    }
+
+                    if ($commande->getNombre() != 0) {
+                        // on valide la commande demandée
+                        $commande->valider();
+
+                        // on met à jour le prix de la commande car il pourrait avoir changé
+                        $commande->setItem($this->getCurrentBaguette());
+
+                        $em->persist($commande);
+                    } else {
+                        // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
+                        $em->remove($commande);
+                    }
+
+                    // on vérifie que l'utilisateur a un compte, sinon on le crée
+                    $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $commande->getItem()->getBoquette());
+                    if (!isset($compte)) {
+                        // s'il n'existe pas
+                        $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
+                        $em->persist($compte);
+                    }
+                }
             }
+
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add(
-                'success',
-                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') a été résiliée/annulée.'
-            );
+            return new Response("This is an ajax response.");
+        }
+
+        return new Response("This is not ajax.", 400);
+    }
+
+    public function resilierCommandesAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $listeCommandes = $request->request->get("data");
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:Commande");
+
+            foreach ($listeCommandes as $commandeChoice) {
+                $commande = $repository->find($commandeChoice["value"]);
+
+                if ($commande->getItem()->getSlug() == $this->itemSlug && $commande->getValid() !== false) {
+                    $em = $this->getDoctrine()->getManager();
+                    if ($commande->getValid() === true) {
+                        $commande->resilier();
+                        $em->persist($commande);
+                    } elseif (null === $commande->getValid()) {
+                        $em->remove($commande);
+                    }
+                }
+            }
+
+            $em->flush();
+
+            return new Response("This is an ajax response.");
+        }
+
+        return new Response("This is not ajax.", 400);
+    }
+
+    // ajout et liste d'un crédit
+    public function listeCreditsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $credit = new Transaction();
+
+        $form = $this->createForm(new TransactionType(), $credit, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeCredits'),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // on enregistre le crédit dans l'historique
+                $credit->setStatus("OK");
+                $credit->setBoquette($this->getBoquette($this->slug));
+                $em->persist($credit);
+
+                // on modifie le solde de l'utilisateur
+                $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
+                $compte = $repositoryCompte->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
+                $compte->crediter($credit->getMontant());
+                $em->persist($compte);
+
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'La transaction a été enregistrée et le compte a été crédité.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de la transaction. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
 
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
+        $repository = $em->getRepository('PJMAppBundle:Transaction');
+        $listeCredits = $repository->findByBoquetteSlugAndValid($this->slug);
+
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
+            'form' => $form->createView(),
+            'credits' => $listeCredits
+        ));
     }
 
+    // liste des débits de baguettes
     public function listeBucquagesAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
-        $bucquages = $repository->findByItemSlug($this->itemSlug);
+        $datatable = $this->get("pjm.datatable.historiqueAdmin");
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
-            'bucquages' => $bucquages
+            'datatable' => $datatable
         ));
+    }
+
+    // action ajax de rendu de la liste des bucquages
+    public function bucquagesResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.historiqueAdmin"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+
+        // Add callback
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($this->slug));
+
+        return $datatable->getResponse();
     }
 
     public function listeVacancesAction(Request $request)
@@ -586,13 +672,26 @@ class BragsController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        $listePrix = $repository->findBySlug($this->itemSlug);
+        $datatable = $this->get('pjm.datatable.prix');
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
-            'listePrix' => $listePrix,
+            'datatable' => $datatable,
             'prixActuel' => $this->getPrixBaguette(),
             'form'      => $form->createView()
         ));
+    }
+
+    public function prixResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.prix"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+
+        // Add callback
+        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
+
+        return $datatable->getResponse();
     }
 
     public function listeZiBragsAction(Request $request)

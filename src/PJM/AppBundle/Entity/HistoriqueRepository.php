@@ -70,4 +70,17 @@ class HistoriqueRepository extends EntityRepository
 
         return $res;
     }
+
+    public function callbackFindByBoquetteSlug($boquette_slug)
+    {
+        return function($qb) use($boquette_slug) {
+            $qb
+                ->join('Historique.item', 'i')
+                ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                ->setParameters(array(
+                    'boquette_slug'  => $boquette_slug,
+                ))
+            ;
+        };
+    }
 }
