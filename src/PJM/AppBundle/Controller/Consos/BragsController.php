@@ -286,74 +286,9 @@ class BragsController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.commandes"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Commande');
-
-        // Add callback
-        //$datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($this->slug));
+        $datatable->addWhereBuilderCallback($repository->callbackFindByItemSlug($this->itemSlug));
 
         return $datatable->getResponse();
-    }
-
-    public function validerCommandeAction(Request $request, Commande $commande)
-    {
-        // TODO listener envoi d'email de notification
-        // TODO sélectionner commandes et faire une action globale
-        if ($commande->getItem()->getSlug() == "baguette" && null === $commande->getValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Commande');
-            $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
-
-            // on résilie les précédentes commandes
-            foreach ($commandes as $c) {
-                if ($c != $commande && (null === $c->getValid() || $c->getValid() == true)) {
-                    $msgEnAttente[] = array(
-                        'info',
-                        'La commande #'.$c->getId().' ('.($c->getNombre()/10).' baguettes de pain par jour pour '.$c->getUser()->getUsername().') a été résiliée.'
-                    );
-
-                    $c->resilier();
-                    $em->persist($c);
-                }
-            }
-
-            if ($commande->getNombre() != 0) {
-                // on valide la commande demandée
-                $commande->valider();
-
-                // on met à jour le prix de la commande car il pourrait avoir changé
-                $commande->setItem($this->getCurrentBaguette());
-
-                $em->persist($commande);
-            } else {
-                // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
-                $em->remove($commande);
-            }
-
-            // on vérifie que l'utilisateur a un compte, sinon on le crée
-            $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
-            $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $commande->getItem()->getBoquette());
-            if (!isset($compte)) {
-                // s'il n'existe pas
-                $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
-                $em->persist($compte);
-            }
-
-            $em->flush();
-
-            if (isset($msgEnAttente)) {
-                foreach ($msgEnAttente as $msg) {
-                    $request->getSession()->getFlashBag()->add($msg[0], $msg[1]);
-                }
-            }
-
-            $request->getSession()->getFlashBag()->add(
-                'success',
-                'La commande #'.$commande->getId().' ('.($commande->getNombre()/10).' baguettes de pain par jour pour '.$commande->getUser()->getUsername().') est validée.'
-            );
-
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
-        }
-
-        throw new HttpException(403, 'Cette commande de pain n\'est pas valide.');
     }
 
     public function validerCommandesAction(Request $request)
@@ -490,13 +425,24 @@ class BragsController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
         }
 
-        $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $listeCredits = $repository->findByBoquetteSlugAndValid($this->slug);
+        $datatable = $this->get("pjm.datatable.credits");
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
             'form' => $form->createView(),
-            'credits' => $listeCredits
+            'datatable' => $datatable
         ));
+    }
+
+    // action ajax de rendu de la liste des crédits
+    public function creditsResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Transaction');
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($this->slug));
+
+        return $datatable->getResponse();
     }
 
     // liste des débits de baguettes
@@ -516,8 +462,6 @@ class BragsController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.historiqueAdmin"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
-
-        // Add callback
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($this->slug));
 
         return $datatable->getResponse();
@@ -687,8 +631,6 @@ class BragsController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.prix"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-
-        // Add callback
         $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
 
         return $datatable->getResponse();

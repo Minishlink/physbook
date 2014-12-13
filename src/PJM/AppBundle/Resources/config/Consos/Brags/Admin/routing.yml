@@ -30,6 +30,10 @@ pjm_app_consos_brags_admin_listeCredits:
     path:     /listeCredits
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeCredits }
 
+pjm_app_consos_brags_admin_creditsResults:
+    path:     /listeCredits/results
+    defaults: { _controller: PJMAppBundle:Consos/Brags:creditsResults }
+
 pjm_app_consos_brags_admin_listeVacances:
     path:     /listeVacances
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }

@@ -45,4 +45,7 @@ services:
         class: PJM\AppBundle\Datatables\CommandesDatatable
         tags:
             - { name: sg.datatable.view }
-
+    pjm.datatable.credits:
+        class: PJM\AppBundle\Datatables\CreditsDatatable
+        tags:
+            - { name: sg.datatable.view }

@@ -105,4 +105,16 @@ class CommandeRepository extends EntityRepository
 
         return $res;
     }
+
+    public function callbackFindByItemSlug($item_slug)
+    {
+        return function($qb) use($item_slug) {
+            $qb
+                ->join('Commande.item', 'i', 'WITH', 'i.slug = :item_slug')
+                ->setParameters(array(
+                    'item_slug'  => $item_slug,
+                ))
+            ;
+        };
+    }
 }
