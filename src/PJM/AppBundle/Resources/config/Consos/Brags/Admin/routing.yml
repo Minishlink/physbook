@@ -6,17 +6,25 @@ pjm_app_consos_brags_admin_listeCommandes:
     path:     /listeCommandes
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
 
-pjm_app_consos_brags_admin_validerCommande:
-    path:     /valider/{commande}
-    defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommande }
+pjm_app_consos_brags_admin_commandesResults:
+    path:     /listeCommandes/results
+    defaults: { _controller: PJMAppBundle:Consos/Brags:commandesResults }
 
-pjm_app_consos_brags_admin_resilierCommande:
-    path:     /resilier/{commande}
-    defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommande }
+pjm_app_consos_brags_admin_validerCommandes:
+    path:     /valider
+    defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommandes }
+
+pjm_app_consos_brags_admin_resilierCommandes:
+    path:     /resilier
+    defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommandes }
 
 pjm_app_consos_brags_admin_listeBucquages:
     path:     /listeBucquages
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
+
+pjm_app_consos_brags_admin_bucquagesResults:
+    path:     /listeBucquages/results
+    defaults: { _controller: PJMAppBundle:Consos/Brags:bucquagesResults }
 
 pjm_app_consos_brags_admin_listeCredits:
     path:     /listeCredits
@@ -39,6 +47,10 @@ pjm_app_consos_brags_admin_annulerVacances:
 pjm_app_consos_brags_admin_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
+
+pjm_app_consos_brags_admin_prixResults:
+    path:     /listePrix/results
+    defaults: { _controller: PJMAppBundle:Consos/Brags:prixResults }
 
 pjm_app_consos_brags_admin_listeZiBrags:
     path:     /listeZiBrags

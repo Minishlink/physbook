@@ -19,7 +19,6 @@ class VacancesDatatable extends AbstractDatatableView
         $this->getFeatures()
             ->setServerSide(true)
             ->setProcessing(true)
-            ->setAutoWidth(true)
         ;
 
         $this->getOptions()
@@ -40,11 +39,11 @@ class VacancesDatatable extends AbstractDatatableView
                 'format' => 'll'
             ))
             ->add("fait", "boolean", array(
-                    "title" => "Fait",
-                    "visible" => false,
-                    "true_icon" => "glyphicon glyphicon-ok",
-                    "false_icon" => "glyphicon glyphicon-remove"
-                ))
+                "title" => "Fait",
+                "visible" => false,
+                "true_icon" => "glyphicon glyphicon-ok",
+                "false_icon" => "glyphicon glyphicon-remove"
+            ))
             ->add(null, "action", array(
                 "title" => "Actions",
                 "actions" => array(

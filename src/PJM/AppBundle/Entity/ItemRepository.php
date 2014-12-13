@@ -49,4 +49,16 @@ class ItemRepository extends EntityRepository
 
         return $res;
     }
+
+    public function callbackFindBySlug($slug)
+    {
+        return function($qb) use($slug) {
+            $qb
+                ->andWhere('Item.slug = :slug')
+                ->setParameters(array(
+                    'slug'  => $slug,
+                ))
+            ;
+        };
+    }
 }

@@ -6,11 +6,11 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class HistoriqueDatatable
+ * Class PrixDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class HistoriqueDatatable extends AbstractDatatableView
+class PrixDatatable extends AbstractDatatableView
 {
     /**
      * {@inheritdoc}
@@ -19,9 +19,14 @@ class HistoriqueDatatable extends AbstractDatatableView
     {
         $this->getFeatures()
             ->setServerSide(true)
-            ->setProcessing(true);
+            ->setProcessing(true)
+        ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_historiqueResults'));
+        $this->getOptions()
+            ->setOrder(array("column" => 0, "direction" => "desc"))
+        ;
+
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_prixResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -30,9 +35,9 @@ class HistoriqueDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
-            ->add('nombre', 'column', array('title' => 'Nombre',))
-            ->add('item.libelle', 'column', array('title' => 'Item',))
-            ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+            ->add('prix', 'column', array(
+                'title' => 'Prix',
+            ))
         ;
     }
 
@@ -56,7 +61,7 @@ class HistoriqueDatatable extends AbstractDatatableView
      */
     public function getEntity()
     {
-        return 'PJM\AppBundle\Entity\Historique';
+        return 'PJM\AppBundle\Entity\Item';
     }
 
     /**
@@ -64,6 +69,6 @@ class HistoriqueDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'historique_datatable';
+        return 'prix_datatable';
     }
 }
