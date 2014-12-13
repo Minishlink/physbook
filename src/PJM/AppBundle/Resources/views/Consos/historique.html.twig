@@ -7,11 +7,6 @@
 	Historique | {{ parent() }}
 {% endblock %}
 
-{% block javascripts %}
-{{ parent() }}
-{{ datatable_render(datatable)|datatableJS }}
-{% endblock %}
-
 {% block pjm_app_body_title %}
 <div class="row">
     <div class="col-md-12">
@@ -24,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            {{ datatable_render(datatable)|datatableHTML }}
+            {{ datatable_render(datatable) }}
         </div>
     </div>
 </div>

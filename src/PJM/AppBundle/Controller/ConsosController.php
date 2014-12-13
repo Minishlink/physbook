@@ -21,6 +21,9 @@ class ConsosController extends Controller
     public function historiqueResultsAction()
     {
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.historique"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($this->getUser()));
 
         return $datatable->getResponse();
     }
