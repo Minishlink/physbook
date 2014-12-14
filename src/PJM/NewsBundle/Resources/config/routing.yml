@@ -4,6 +4,12 @@ pjm_news_accueil:
     requirements:
         page:  \d*
 
+pjm_news_extrait:
+    path:     /extrait/{nombre}
+    defaults: { _controller: PJMNewsBundle:News:menu, nombre: 3 }
+    requirements:
+        nombre:  \d*
+
 pjm_news_voir:
     path:      /article/{slug}
     defaults:  { _controller: PJMNewsBundle:News:voir }

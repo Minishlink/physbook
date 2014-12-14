@@ -36,7 +36,8 @@ $(document).ready(function () {
                 <div class="col-md-6">
                     {{ "now"|localizeddate('medium', 'short') }}
                     <h1>A la une</h1>
-                    <p>...</p>
+                    {% render(url('pjm_news_extrait')) %}
+                    {% render(url('pjm_app_accueil_anniversaires')) %}
                 </div>
                 <div class="col-md-6">
                     {% render(url('pjm_app_accueil_etatComptes')) %}
@@ -55,11 +56,6 @@ $(document).ready(function () {
                     <h1>Bonjour Gadz'Arts</h1>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row bg-bleu text-center">
-        <div class="col-md-12">
-            {% render(url('pjm_app_accueil_anniversaires')) %}
         </div>
     </div>
 </div>
