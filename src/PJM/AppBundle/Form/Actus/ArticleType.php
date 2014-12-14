@@ -21,36 +21,44 @@ class ArticleType extends AbstractType
             ->add('contenu', 'textarea')
             ->add('auteur', 'text')
             ->add('image', new ImageType(), array('required' => false))
-            ->add('categories', 'entity', array(
+            ->add('categories', 'genemu_jqueryselect2_entity', array(
                 'class'    => 'PJMAppBundle:Actus\Categorie',
                 'property' => 'nom',
                 'multiple' => true,
-                'required' => false));
+                'required' => false
+            ))
+        ;
 
-            $factory = $builder->getFormFactory();
+        $factory = $builder->getFormFactory();
 
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use ($factory) {
-                    $article = $event->getData();
-                    if (null === $article) {
-                        return;
-                    }
-
-                    if (false === $article->getPublication()) {
-                        $event->getForm()->add(
-                            $factory->createNamed(
-                                'publication',
-                                'checkbox',
-                                null,
-                                array('required' => false, 'auto_initialize' => false)
-                            )
-                        );
-                    } else {
-                        $event->getForm()->remove('publication');
-                    }
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function(FormEvent $event) use ($factory) {
+                $article = $event->getData();
+                if (null === $article) {
+                    return;
                 }
-            );
+
+                if (false === $article->getPublication()) {
+                    $event->getForm()->add(
+                        $factory->createNamed(
+                            'publication',
+                            'checkbox',
+                            null,
+                            array('required' => false, 'auto_initialize' => false)
+                        )
+                    );
+                } else {
+                    $event->getForm()->remove('publication');
+                }
+            }
+        );
+
+        $builder
+            ->add('save', 'submit', array(
+                'label' => 'Ajouter',
+            ))
+        ;
     }
 
     /**
