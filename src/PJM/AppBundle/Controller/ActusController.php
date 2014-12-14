@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use PJM\AppBundle\Entity\Actus\Article;
@@ -44,15 +45,17 @@ class ActusController extends Controller
     /**
     * @Security("has_role('ROLE_ADMIN')")
     */
-    public function ajouterAction()
+    public function ajouterAction(Request $request)
     {
         $article = new Article();
-        $form = $this->createForm(new ArticleType, $article);
+        $form = $this->createForm(new ArticleType(), $article, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_actus_ajouter'),
+        ));
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+        $form->handleRequest($request);
 
+         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
@@ -60,7 +63,12 @@ class ActusController extends Controller
 
                 return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
             }
-        }
+
+             $request->getSession()->getFlashBag()->add(
+                'danger',
+                'Un problème est survenu lors de l\'ajout. Réessaye.'
+            );
+         }
 
         return $this->render('PJMAppBundle:Actus:ajouter.html.twig', array(
             'form' => $form->createView(),

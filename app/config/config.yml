@@ -88,6 +88,9 @@ stof_doctrine_extensions:
         default:
             sluggable: true
 
+genemu_form:
+    select2: ~
+
 fos_user:
     db_driver:     orm
     firewall_name: main

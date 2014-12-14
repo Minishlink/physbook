@@ -26,7 +26,8 @@
         "winzou/console-bundle": "dev-master",
         "sensio/buzz-bundle": "dev-master",
         "ircmaxell/password-compat": "~1.0",
-        "sg/datatablesbundle": "dev-master"
+        "sg/datatablesbundle": "dev-master",
+        "genemu/form-bundle": "~2.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
