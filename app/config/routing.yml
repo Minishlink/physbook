@@ -2,10 +2,6 @@ pjm_app:
     resource: "@PJMAppBundle/Resources/config/routing.yml"
     prefix:   /
 
-pjm_news:
-    resource: "@PJMNewsBundle/Resources/config/routing.yml"
-    prefix:   /news
-
 pjm_user:
     resource: "@PJMUserBundle/Resources/config/routing.yml"
     prefix:   /

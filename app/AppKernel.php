@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Sg\DatatablesBundle\SgDatatablesBundle(),
             new PJM\AppBundle\PJMAppBundle(),
-            new PJM\NewsBundle\PJMNewsBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );
 
