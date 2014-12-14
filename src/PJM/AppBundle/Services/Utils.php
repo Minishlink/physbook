@@ -22,14 +22,20 @@ class Utils
 
     public function getBoquette($boquetteSlug)
     {
-        return $this
-            ->em
+        $boquette = $this->em
             ->getRepository('PJMAppBundle:Boquette')
             ->findOneBySlug($boquetteSlug);
+
+        return $boquette;
     }
 
-    public function getSolde(User $user, $boquetteSlug)
+    public function getCompte(User $user, $boquetteSlug)
     {
+        // Le C'vis est dans le compte du Pian's
+        if ($boquetteSlug == "cvis") {
+            $boquetteSlug = "pians";
+        }
+
         $repository = $this->em->getRepository('PJMAppBundle:Compte');
         $compte = $repository->findOneByUserAndBoquetteSlug($user, $boquetteSlug);
 
@@ -39,7 +45,12 @@ class Utils
             $this->em->flush();
         }
 
-        return $compte->getSolde();
+        return $compte;
+    }
+
+    public function getSolde(User $user, $boquetteSlug)
+    {
+        return $this->getCompte($user, $boquetteSlug)->getSolde();
     }
 
     public function bucquage($boquetteSlug, $itemSlug)

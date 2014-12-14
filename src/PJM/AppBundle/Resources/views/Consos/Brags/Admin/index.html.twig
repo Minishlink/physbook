@@ -1,33 +1,21 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
 {% set section = "consos" %}
-{% block pageName %}brags{% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
-<script type="text/javascript">
-$(document).ready( function () {
-    $('#tabGestionBucquages').DataTable({
-        order: [1, "desc"]
-    });
-
-    $('#tabGestionVacances, #tabGestionPrixBaguette, #tabGestionCommandes, #tabGestionCredits').DataTable({
-        order: [0, "desc"]
-    });
-} );
-</script>
-{% endblock %}
+{% block pageName %}boquette brags{% endblock %}
 
 {% block title %}
 	Gestion Brag's | {{ parent() }}
 {% endblock %}
 
 {% block pjm_app_body_title %}
+<div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Gestion Brag's</h1>
+            <h1><img id="logoBoquette" src="{{ asset('images/consos/brags/Brags-N.png') }}"> Gestion Brag's</h1>
+            <small><a href="{{ path('pjm_app_consos_brags_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block pjm_app_body %}

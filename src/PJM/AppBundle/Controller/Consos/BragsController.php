@@ -27,9 +27,8 @@ use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
-class BragsController extends Controller
+class BragsController extends BoquetteController
 {
-    private $slug;
     private $itemSlug;
 
     public function __construct()
@@ -75,44 +74,16 @@ class BragsController extends Controller
         );
     }
 
-    public function getSolde()
-    {
-        $utils = $this->get('pjm.services.utils');
-        return $utils->getSolde($this->getUser(), $this->slug);
-    }
-
-    public function getBoquette($boquetteSlug)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $boquette = $em
-            ->getRepository('PJMAppBundle:Boquette')
-            ->findOneBySlug($boquetteSlug);
-
-        if (null === $boquette) {
-            $boquette = new Boquette();
-            $boquette->setNom('Brag\'s');
-            $boquette->setSlug($this->slug);
-            $boquette->setCaisseSMoney('aeensambrags');
-            $em->persist($boquette);
-            $em->flush();
-        }
-
-        return $boquette;
-    }
-
     public function getCurrentBaguette()
     {
-        $em = $this->getDoctrine()->getManager();
-        $baguette = $em
-            ->getRepository('PJMAppBundle:Item')
-            ->findOneBySlugAndValid($this->itemSlug, true);
+        $baguette = $this->getItem($this->itemSlug);
 
         if (null === $baguette) {
             $baguette = new Item();
             $baguette->setLibelle('Baguette de pain');
             $baguette->setPrix(65);
             $baguette->setSlug($this->itemSlug);
-            $baguette->setBoquette($this->getBoquette($this->slug));
+            $baguette->setBoquette($this->getBoquette());
             $baguette->setValid(true);
             $em->persist($baguette);
             $em->flush();
@@ -156,7 +127,7 @@ class BragsController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $boquette = $this->getBoquette($this->slug);
+                $boquette = $this->getBoquette();
                 $transaction->setBoquette($boquette);
                 $transaction->setInfos($boquette->getCaisseSMoney());
                 $transaction->setUser($this->getUser());
@@ -391,7 +362,7 @@ class BragsController extends Controller
             if ($form->isValid()) {
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
-                $credit->setBoquette($this->getBoquette($this->slug));
+                $credit->setBoquette($this->getBoquette());
                 $em->persist($credit);
 
                 // on modifie le solde de l'utilisateur
@@ -557,7 +528,7 @@ class BragsController extends Controller
 
         $nouveauPrix = new Item();
         $nouveauPrix->setLibelle('Baguette de pain');
-        $nouveauPrix->setBoquette($this->getBoquette($this->slug));
+        $nouveauPrix->setBoquette($this->getBoquette());
         $nouveauPrix->setSlug($this->itemSlug);
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(

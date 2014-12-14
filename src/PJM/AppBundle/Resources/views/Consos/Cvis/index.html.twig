@@ -1,0 +1,72 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}boquette cvis{% endblock %}
+
+{% block title %}
+	C'vis | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1><img id="logoBoquette" src="{{ asset('images/consos/cvis/Cvis.png') }}"> C'vis</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Tu n’as plus rien dans ton frigo ? Tu ressens soudain une folle envie de saucisson, pizza ou barre chocolatée calorique ? Tu recherches désespérément des équipements de protection individuels afin de compléter ta garde-robe ? Tu souhaites customiser ta blouse traditionnelle ?<br>
+                Tu trouveras tout ce dont tu as besoin au <strong><span class="text-larger">C’Vis</span></strong> !
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="sous-menu" class="list-inline text-uppercase text-center">
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/cvis/Niveau-B.png') }}"><br>
+                        Mon compte
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/cvis/Historique-B.png') }}"><br>
+                        Historique
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/cvis/Jambon.png') }}"><br>
+                        Produit du moment
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/cvis/Catalogue.png') }}"><br>
+                        Catalogue
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/cvis/Coeur-B.png') }}"><br>
+                        ZiConsommateurs
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {{ solde|prix }}
+
+</div>
+
+{% endblock %}
