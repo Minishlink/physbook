@@ -3,7 +3,7 @@ $(document).ready(function () {
         $('#chargement').css('visibility', 'hidden');
     });
 
-    $('#content').fadeIn(200);
+    $('#content').fadeIn(400);
 
     $('a').not(".disable-fade").click(function(e) {
         if (e.ctrlKey === false && e.button === 0) {

@@ -1,0 +1,69 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}boquette pians{% endblock %}
+
+{% block title %}
+	Pian's | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1><img id="logoBoquette" src="{{ asset('images/consos/pians/Pians-O.png') }}"> Pian's</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Le <strong><span class="text-larger">Pian’s</span></strong>, c’est un endroit vraiment sympa où on peut s’assoir dans des canapés molletonés, boire une bière entre amis, siroter un café, défier des extés au bière-pong, valider la Strass, prendre une râclée au baby-foot ou tout simplement se mettre une chiée. Alors viens, on est bien !</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="sous-menu" class="list-inline text-uppercase text-center">
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/pians/Niveau-R.png') }}"><br>
+                        Mon compte
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/pians/Historique-RB.png') }}"><br>
+                        Historique
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/pians/Calendrier-G.png') }}"><br>
+                        Calendrier
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/pians/Nettoyage-R.png') }}"><br>
+                        D'reunssage
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('images/consos/pians/Pinte-R.png') }}"><br>
+                        Bière du moment
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {{ solde|prix }}
+
+</div>
+
+{% endblock %}
