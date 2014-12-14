@@ -5,7 +5,7 @@ namespace PJM\NewsBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use PJM\NewsBundle\Entity\Article;
 use PJM\NewsBundle\Entity\Image;
 use PJM\NewsBundle\Entity\Commentaire;
@@ -42,7 +42,7 @@ class NewsController extends Controller
     }
 
     /**
-    * @Secure(roles="ROLE_AUTEUR")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function ajouterAction()
     {

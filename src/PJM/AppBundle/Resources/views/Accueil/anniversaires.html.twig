@@ -1,6 +1,4 @@
-{% if listeAnniv|length == 0 %}
-Pas d'anniversaires aujourd'hui !
-{% else %}
+{% if listeAnniv|length != 0 %}
 <span class="text-x-large"><span class="text-rouge">Happy</span> <strong>birthday</strong></span><br>
 <span class="text-large">to {% for user in listeAnniv %}{{ user.bucque }}{% if not loop.last %} + {% endif %}{% endfor %}</span>
 {% endif %}
