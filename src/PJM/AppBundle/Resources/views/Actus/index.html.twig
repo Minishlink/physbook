@@ -1,0 +1,47 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block title %}
+	Actus | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+	<h2>Liste des articles</h2>
+
+	{% for article in articles %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {% if article.image is not null %}
+                        <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}" style="height:1.5em" />
+                    {% endif %}
+                    <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}">{{ article.titre }}</a>
+                </h3>
+                {% for categorie in article.categories %}
+                    <span class="label label-info">{{ categorie.nom }}</span>
+                {% endfor %}
+            </div>
+            <div class="panel-body">
+                {{ article.contenu|raw }}
+            </div>
+            <div class="panel-footer"><small>
+                par <strong>{{ article.auteur }}</strong> le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i') }}
+                {% if article.dateEdition is not null %}
+                    <br><small>dernière édition le {{ article.dateEdition|date('d/m/Y') }} à {{ article.dateEdition|date('H:i') }}</small>
+                {% endif %}
+            </small></div>
+        </div>
+
+	{% else %}
+		Pas (encore !) d'articles
+	{% endfor %}
+
+    <ul class="pagination">
+        {% for p in range(1, nombrePages) %}
+        <li{% if p == page %} class="active"{% endif %}>
+            <a href="{{ path('pjm_app_actus_index', {'page': p}) }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

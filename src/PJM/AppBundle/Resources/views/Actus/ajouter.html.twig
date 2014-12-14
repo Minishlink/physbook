@@ -1,0 +1,17 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block title %}
+	Ajouter un article | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+	<h2>Ajouter un article</h2>
+
+	{% include "PJMAppBundle:Actus:formulaire.html.twig" %}
+
+	<p>
+		Ajout !
+	</p>
+
+{% endblock %}

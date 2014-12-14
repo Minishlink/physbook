@@ -1,0 +1,27 @@
+pjm_app_actus_index:
+    path:     /{page}
+    defaults: { _controller: PJMAppBundle:Actus:index, page: 1 }
+    requirements:
+        page:  \d*
+
+pjm_app_actus_extrait:
+    path:     /extrait/{nombre}
+    defaults: { _controller: PJMAppBundle:Actus:menu, nombre: 3 }
+    requirements:
+        nombre:  \d*
+
+pjm_app_actus_voir:
+    path:      /article/{slug}
+    defaults:  { _controller: PJMAppBundle:Actus:voir }
+
+pjm_app_actus_ajouter:
+    path:      /ajouter
+    defaults:  { _controller: PJMAppBundle:Actus:ajouter }
+
+pjm_app_actus_modifier:
+    path:      /modifier/{slug}
+    defaults:  { _controller: PJMAppBundle:Actus:modifier }
+
+pjm_app_actus_supprimer:
+    path:      /supprimer/{slug}
+    defaults:  { _controller: PJMAppBundle:Actus:supprimer }

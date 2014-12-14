@@ -1,0 +1,40 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block title %}
+	Lecture d'un article | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body %}
+
+    <h2>
+        {# On vérifie qu'une image soit bien associée à l'article #}
+        {% if article.image is not null %}
+            <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}" style="height:1em" />
+        {% endif %}
+        {{ article.titre }}
+    </h2>
+	<i>Par {{ article.auteur }}, le {{ article.date|date('d/m/Y') }}</i>
+    {% for categorie in article.categories %}
+        <span class="label label-info">{{ categorie.nom }}</span>
+    {% endfor %}
+
+	<div class="well">
+		{{ article.contenu|raw }}
+	</div>
+
+    <h3 class="">Commentaires</h3>
+
+    {% for commentaire in article.commentaires %}
+    <div class="panel panel-default">
+        <div class="panel-body">{{ commentaire.contenu }}</div>
+        <div class="panel-footer">De {{ commentaire.auteur }}<br><small>Le {{ commentaire.date|date('d/m/Y') }} à {{ commentaire.date|date('H:i') }}</small></div>
+    </div>
+    {% endfor %}
+
+	<p>
+		<a href="{{ path('pjm_app_actus_accueil') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+		<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>
+		<a href="{{ path('pjm_app_actus_supprimer', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Supprimer l'article</a>
+	</p>
+
+{% endblock %}
