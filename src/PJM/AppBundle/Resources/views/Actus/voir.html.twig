@@ -1,11 +1,10 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
+{% extends "PJMAppBundle:Actus:layout.html.twig" %}
 
 {% block title %}
-	Lecture d'un article | {{ parent() }}
+    {{ article.titre }} - {{ parent() }}
 {% endblock %}
 
-{% block pjm_app_body %}
-
+{% block pjm_app_body_actus %}
     <h2>
         {# On vérifie qu'une image soit bien associée à l'article #}
         {% if article.image is not null %}
@@ -32,9 +31,9 @@
     {% endfor %}
 
 	<p>
-		<a href="{{ path('pjm_app_actus_accueil') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
-		<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>
-		<a href="{{ path('pjm_app_actus_supprimer', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Supprimer l'article</a>
+		<a href="{{ path('pjm_app_actus_index') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+        {% if app.user == article.auteur %}<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>{% endif %}
+		{% if app.user == article.auteur or is_granted('ROLE_ASSO_COM') %}<a href="{{ path('pjm_app_actus_supprimer', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Supprimer l'article</a>{% endif %}
 	</p>
 
 {% endblock %}

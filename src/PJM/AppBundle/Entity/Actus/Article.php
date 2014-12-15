@@ -49,10 +49,8 @@ class Article
     private $titre;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="auteur", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $auteur;
 
@@ -171,10 +169,10 @@ class Article
     /**
      * Set auteur
      *
-     * @param string $auteur
+     * @param \PJM\UserBundle\Entity\User $auteur
      * @return Article
      */
-    public function setAuteur($auteur)
+    public function setAuteur(\PJM\UserBundle\Entity\User $auteur)
     {
         $this->auteur = $auteur;
 
@@ -184,7 +182,7 @@ class Article
     /**
      * Get auteur
      *
-     * @return string
+     * @return \PJM\UserBundle\Entity\User
      */
     public function getAuteur()
     {

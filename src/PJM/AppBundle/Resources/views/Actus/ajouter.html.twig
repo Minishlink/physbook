@@ -1,8 +1,7 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
+{% extends "PJMAppBundle:Actus:layout.html.twig" %}
 
-{% set section = "vie" %}
 {% block title %}
-	Ajouter un article | {{ parent() }}
+	Ajout - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,23 +14,7 @@
     {{ form_javascript(form) }}
 {% endblock %}
 
-{% block pjm_app_body_title %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Actus</h1>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block pjm_app_body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Ajouter un article</h2>
-            {{ form(form) }}
-        </div>
-    </div>
-</div>
+{% block pjm_app_body_actus %}
+    <h2>Ajouter un article</h2>
+    {{ form(form) }}
 {% endblock %}

@@ -19,13 +19,15 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre', 'text')
             ->add('contenu', 'textarea')
-            ->add('auteur', 'text')
             ->add('image', new ImageType(), array('required' => false))
             ->add('categories', 'genemu_jqueryselect2_entity', array(
                 'class'    => 'PJMAppBundle:Actus\Categorie',
                 'property' => 'nom',
                 'multiple' => true,
                 'required' => false
+            ))
+            ->add('save', 'submit', array(
+                'label' => $options['ajout'] ? 'Ajouter' : 'Modifier',
             ))
         ;
 
@@ -53,12 +55,6 @@ class ArticleType extends AbstractType
                 }
             }
         );
-
-        $builder
-            ->add('save', 'submit', array(
-                'label' => 'Ajouter',
-            ))
-        ;
     }
 
     /**
@@ -67,7 +63,8 @@ class ArticleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Actus\Article'
+            'data_class' => 'PJM\AppBundle\Entity\Actus\Article',
+            'ajout' => true,
         ));
     }
 
