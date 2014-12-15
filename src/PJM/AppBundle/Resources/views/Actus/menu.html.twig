@@ -1,7 +1,0 @@
-<ul>
-	<ul class="nav nav-pills nav-stacked">
-		{% for article in liste_articles %}
-			<li><a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}">{{ article.titre }}</a></li>
-		{% endfor %}
-	</ul>
-</ul>
