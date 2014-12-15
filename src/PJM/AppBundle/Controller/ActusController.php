@@ -155,7 +155,7 @@ class ActusController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
     }
 
-    public function menuAction($nombre)
+    public function extraitAction($nombre)
     {
         // on récupère la liste des articles
         $articles = $this->getDoctrine()
@@ -169,7 +169,7 @@ class ActusController extends Controller
                         );
 
         // affichage du menu
-        return $this->render('PJMAppBundle:Actus:menu.html.twig', array(
+        return $this->render('PJMAppBundle:Actus:extrait.html.twig', array(
             'liste_articles' => $articles
         ));
     }
