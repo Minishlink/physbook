@@ -3,13 +3,17 @@ security:
         PJM\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
-        ROLE_ZIBRAGS:     [ROLE_USER]
-        ROLE_ZICVIS:      [ROLE_USER]
-        ROLE_ZIPIANS:     [ROLE_USER]
-        ROLE_ZIPANIERS:   [ROLE_USER]
-        ROLE_ZI:          [ROLE_ZIBRAGS, ROLE_ZICVIS, ROLE_ZIPIANS, ROLE_ZIPANIERS]
-        ROLE_ADMIN:       [ROLE_ZI]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ZIBRAGS:       [ROLE_USER]
+        ROLE_ZICVIS:        [ROLE_USER]
+        ROLE_ZIPIANS:       [ROLE_USER]
+        ROLE_ZIPANIERS:     [ROLE_USER]
+        ROLE_ASSO_ZI:       [ROLE_USER]
+        ROLE_ASSO_COM:  [ROLE_USER]
+        ROLE_ASSO_TRESORS:  [ROLE_USER]
+        ROLE_ZI:            [ROLE_ZIBRAGS, ROLE_ZICVIS, ROLE_ZIPIANS, ROLE_ZIPANIERS]
+        ROLE_ASSO:          [ROLE_ASSO_ZI, ROLE_ASSO_COM, ROLE_ASSO_TRESORS]
+        ROLE_ADMIN:         [ROLE_ZI, ROLE_ASSO]
+        ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:
@@ -41,6 +45,5 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/smoney/retour, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /brags/admin/, roles: ROLE_ZIBRAGS }
-        - { path: ^/news/, roles: ROLE_ADMIN }
         - { path: ^/admin/, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }

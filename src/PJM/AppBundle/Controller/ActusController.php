@@ -42,9 +42,6 @@ class ActusController extends Controller
             ));
     }
 
-    /**
-    * @Security("has_role('ROLE_ADMIN')")
-    */
     public function ajouterAction(Request $request)
     {
         $article = new Article();
@@ -58,13 +55,14 @@ class ActusController extends Controller
          if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                $article->setAuteur($this->getUser());
                 $em->persist($article);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
             }
 
-             $request->getSession()->getFlashBag()->add(
+            $request->getSession()->getFlashBag()->add(
                 'danger',
                 'Un problème est survenu lors de l\'ajout. Réessaye.'
             );
@@ -75,53 +73,86 @@ class ActusController extends Controller
         ));
     }
 
-    public function modifierAction(Article $article)
+    public function modifierAction(Request $request, Article $article)
     {
-        $form = $this->createForm(new ArticleType, $article);
+        if ($this->getUser() == $article->getAuteur()) {
+            $form = $this->createForm(new ArticleType(), $article, array(
+                'method' => 'POST',
+                'action' => $this->generateUrl('pjm_app_actus_modifier', array(
+                    'slug' => $article->getSlug()
+                )),
+                'ajout' => false,
+            ));
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($article);
+                    $em->flush();
 
-                return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
+                    return $this->redirect($this->generateUrl('pjm_app_actus_voir', array(
+                        'slug' => $article->getSlug()
+                    )));
+                }
+
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de la modification. Réessaye.'
+                );
             }
+
+            return $this->render('PJMAppBundle:Actus:modifier.html.twig', array(
+                'article' => $article,
+                'form' => $form->createView()
+            ));
         }
 
-        // affichage du formulaire
-        return $this->render('PJMAppBundle:Actus:modifier.html.twig', array(
-            'article' => $article,
-            'form' => $form->createView()
-        ));
+        $request->getSession()->getFlashBag()->add(
+            'danger',
+            "Tu ne peux pas modifier cet article car tu n'en es pas l'auteur."
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
     }
 
-    public function supprimerAction(Article $article)
+    public function supprimerAction(Request $request, Article $article)
     {
-        $form = $this->createFormBuilder()->getForm();
+        if ($this->getUser() == $article->getAuteur() || $this->getUser()->hasRole('ROLE_ASSO_COM')) {
+            $form = $this->createFormBuilder()->getForm();
 
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($article);
-                $em->flush();
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($article);
+                    $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Article bien supprimé');
+                    $this->get('session')->getFlashBag()->add('info', 'Article bien supprimé');
 
-                return $this->redirect($this->generateUrl('pjm_app_actus_index'));
+                    return $this->redirect($this->generateUrl('pjm_app_actus_index'));
+                }
+
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de la suppression. Réessaye.'
+                );
             }
+
+            return $this->render('PJMAppBundle:Actus:supprimer.html.twig', array(
+                'article' => $article,
+                'form' => $form->createView()
+            ));
         }
 
-        return $this->render('PJMAppBundle:Actus:supprimer.html.twig', array(
-            'article' => $article,
-            'form' => $form->createView()
-        ));
+        $request->getSession()->getFlashBag()->add(
+            'danger',
+            "Tu ne peux pas supprimer cet article car tu n'en es pas l'auteur ou tu n'es pas ZiCom Asso."
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
     }
 
     public function menuAction($nombre)
