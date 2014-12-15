@@ -23,11 +23,47 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
+                    <h2 class="panel-title">
+                            Manuel
+                    </h2>
+                </div>
+                <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
+                    <div class="panel-body">
+                        <p>
+                            Sur le panneau <strong>"Commandes"</strong>, tu vas pouvoir lister toutes les commandes de pain existantes et les résilier si besoin (trop de négat's ou grandes vacances).<br>
+                            Les PGs peuvent effectuer une demande de changement ou résiliation de leur commande : tu peux accepter leur demande via ce panneau lorsque tu auras transmis le changement au boulanger. Fais-le le jour où le boulanger l'a pris en compte pour éviter que le PG ne soit débité de trop ou pas assez.<br>
+                            A la fin de l'année, n'oublie pas de résilier toutes les commandes ! En effet, la date de la reprise du brag's en début d'année n'est pas vraiment fixée.
+                        </p>
+                        <p>
+                            Tu peux consulter la liste des débits (bucquages) sur le panneau <strong>"Débits"</strong>.
+                        </p>
+                        <p>
+                            Si un PG te donne un chèque ou de la monnaie pour le brag's, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. Tu peux aussi y consulter la liste des crédits S-Money.
+                        </p>
+                        <p>
+                            Pour les petites vacances et les jours fériés, comme il n'y a pas de brag's, tu peux empêcher le débit quotidien à tout le monde sur le panneau <strong>"Vacances/jours fériés"</strong>.<br>
+                            Pour le stage 1A ou toute autre absence d'une partie des PGs, tu peux leur dire de faire une demande de résiliation, mais le plus simple c'est sans doute que tu résilies leur commande pour ce laps de temps. Il faudra qu'ils fassent une nouvelle demande de commande ensuite.
+
+                        </p>
+                        <p>
+                            Il peut arriver que le prix de la baguette change pendant l'année, tu peux facilement le changer dans le panneau <strong>"Prix de la baguette"</strong>.
+                        </p>
+                        <p>
+                            Enfin, quand tu voudras passasser ton prochain, rends toi sur le panneau <strong>"ZiBrag's"</strong>.
+                        </p>
+                        <p>
+                            Cette page est accessible par les ZiBrag's, ZiAsso, Harpag's Asso, et Zi²Phy'sbook.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                {% render(url('pjm_app_consos_brags_admin_listeVacances')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
                 {% render(url('pjm_app_consos_brags_admin_listeBucquages')) %}
                 {% render(url('pjm_app_consos_brags_admin_listeCredits')) %}
-                {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+                {% render(url('pjm_app_consos_brags_admin_listeVacances')) %}
                 {% render(url('pjm_app_consos_brags_admin_listePrix')) %}
                 {% render(url('pjm_app_consos_brags_admin_listeZiBrags')) %}
             </div>

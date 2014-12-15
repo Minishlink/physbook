@@ -19,8 +19,9 @@ class TransactionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', null, array(
+            ->add('user', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataire',
+                'class'    => 'PJMUserBundle:User',
                 'error_bubbling' => true,
             ))
             ->add('moyenPaiement', 'choice', array(

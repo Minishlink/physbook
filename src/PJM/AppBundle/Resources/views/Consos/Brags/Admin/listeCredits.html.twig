@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingCredits" data-toggle="collapse" data-parent="#accordion" data-target="#collapseCredits" aria-expanded="true" aria-controls="collapseCredits">
         <h2 class="panel-title">
-                Liste des crédits
+                Crédits
         </h2>
     </div>
     <div id="collapseCredits" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCredits">
@@ -10,6 +10,8 @@
                 Les crédits sont effectués instantanément.
             </p>
             <h3>Ajout</h3>
+            {{ form_stylesheet(form) }}
+            {{ form_javascript(form) }}
             {{ form(form) }}
 
             <h3>Historique</h3>

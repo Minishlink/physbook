@@ -614,7 +614,7 @@ class BragsController extends BoquetteController
         $role = 'ROLE_ZIBRAGS';
 
         $form = $this->createFormBuilder()
-            ->add('user', 'entity', array(
+            ->add('user', 'genemu_jqueryselect2_entity', array(
                 'error_bubbling' => true,
                 'label' => 'Utilisateur',
                 'class' => 'PJMUserBundle:User',
