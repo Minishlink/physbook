@@ -39,8 +39,12 @@ class Mailer
             $template = $this->parameters['template']['layout'];
         }
 
-        $from = $this->parameters['notificationEmail'];
-        $to = $user->getEmail();
+        $from = array(
+            $this->parameters['notificationEmail'] => $this->parameters['notificationSender']
+        );
+        $to = array(
+            $user->getEmail() => $user
+        );
 
         $this->sendMessage($template, $context, $from, $to);
     }

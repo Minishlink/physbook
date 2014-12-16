@@ -35,7 +35,10 @@ $(document).ready(function () {
             <div class="row">
                 <div class="col-md-6">
                     {{ "now"|localizeddate('medium', 'short') }}
-                    <h1>A la une</h1>
+                    <h1 class="en-tete-actus">
+                        A la une
+                        <img src="{{ asset('images/accueil/Cafe.png') }}">
+                    </h1>
                     {% render(url('pjm_app_actus_extrait')) %}
                     {% render(url('pjm_app_accueil_anniversaires')) %}
                 </div>
