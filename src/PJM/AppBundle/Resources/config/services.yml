@@ -28,7 +28,9 @@ services:
             - template:
                 layout: 'PJMAppBundle:Mail:layout.html.twig'
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
-              notificationEmail: 'notification@physbook.fr'
+              notificationEmail: "notification@physbook.fr"
+              notificationSender: "Phy'sbook"
+
     pjm.datatable.historique:
         class: PJM\AppBundle\Datatables\HistoriqueDatatable
         tags:
