@@ -2,6 +2,8 @@
 .include-custom-font("blackout_midnight-webfont");
 .include-custom-font("blackout_sunrise-webfont");
 .include-custom-font("blackout_two_am-webfont");
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+
 .include-custom-font(@family, @weight: normal, @style: normal) {
     @font-face {
         font-family: @family;
@@ -13,6 +15,10 @@
         font-weight: @weight;
         font-style: @style;
     }
+}
+
+.font-lobster {
+    font-family: "Lobster", cursive !important;
 }
 
 .font-huitcentsix {

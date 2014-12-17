@@ -33,7 +33,7 @@ $(document).ready(function () {
                 Sal's <span class="text-rouge">{{ app.user.bucque }}</span>
             </p>
             <div class="row">
-                <div class="col-md-6">
+                <div id="actus" class="col-md-6">
                     {{ "now"|localizeddate('medium', 'short') }}
                     <h1 class="en-tete-actus">
                         A la une
@@ -42,21 +42,21 @@ $(document).ready(function () {
                     {% render(url('pjm_app_actus_extrait')) %}
                     {% render(url('pjm_app_accueil_anniversaires')) %}
                 </div>
-                <div class="col-md-6">
+                <div id="etatComptes" class="col-md-6">
                     {% render(url('pjm_app_accueil_etatComptes')) %}
                 </div>
             </div>
         </div>
     </div>
     <div class="space"></div>
-    <div class="row bg-bleu">
+    <div id="bandeauBleu" class="row">
         <div class="col-md-offset-2 col-md-8">
             <div class="row">
-                <div class="col-md-6">
+                <div id="aVenir" class="col-md-6">
                     <h1>A venir</h1>
                 </div>
-                <div class="col-md-6">
-                    <h1>Bonjour Gadz'Arts</h1>
+                <div id="bonjourGadzarts" class="col-md-6">
+                    {% render(url('pjm_app_accueil_bonjourGadzarts')) %}
                 </div>
             </div>
         </div>
