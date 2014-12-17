@@ -9,3 +9,7 @@ pjm_app_accueil_etatComptes:
 pjm_app_accueil_anniversaires:
     path:     /anniversaires
     defaults: { _controller: PJMAppBundle:Accueil:anniversaires }
+
+pjm_app_accueil_bonjourGadzarts:
+    path:     /bonjourGadzarts
+    defaults: { _controller: PJMAppBundle:Accueil:bonjourGadzarts }

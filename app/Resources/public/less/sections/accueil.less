@@ -2,73 +2,165 @@ body {
     &.accueil {
         background-color: white;
 
-        .progress {
-            width: 100%;
-            min-height: 16em;
-            margin-bottom: 0px;
-            .box-shadow(2px 3px 3px 1px rgba(0, 0, 0, 0.1));
+        #bandeauBleu {
+            .bg-bleu();
+            padding-bottom: 2em;
         }
 
-        .progress-bar {
-            &.bg-rouge {
-                background: @rouge linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+        #etatComptes {
+            h1 {
+                .text-center();
+                margin-bottom: 0.5em;
             }
 
-            &.bg-jaune {
-                background: @jaune linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+            .progress {
+                width: 100%;
+                min-height: 16em;
+                margin-bottom: 0px;
+                .box-shadow(2px 3px 3px 1px rgba(0, 0, 0, 0.1));
             }
 
-            &.bg-vert {
-                background: @vert linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+            .progress-bar {
+                &.bg-rouge {
+                    background: @rouge linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+                }
+
+                &.bg-jaune {
+                    background: @jaune linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+                }
+
+                &.bg-vert {
+                    background: @vert linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+                }
+
+                border-radius: 5px 5px 0 0;
             }
-        }
 
-        .prix {
-            position: absolute;
-            bottom: 0.5em;
-            width: 100%;
-            z-index: 1;
-        }
+            .prix {
+                position: absolute;
+                bottom: 0.5em;
+                width: 100%;
+                z-index: 1;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
 
-        #comptesImgLabel {
-            .boquette {
-                background-color: #fefefe;
-                padding-top: 0.2em;
-                padding-bottom: 0.2em;
-                .box-shadow(2px 4px 3px 0px rgba(0, 0, 0, 0.1));
+            #comptesImgLabel {
+                .boquette {
+                    background: #fefefe linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
+                    padding-top: 0.2em;
+                    padding-bottom: 0.2em;
+                    .box-shadow(2px 4px 3px 0px rgba(0, 0, 0, 0.1));
+                    border-radius: 0 0 5px 5px;
 
-                img {
-                    height: 1.5em;
+                    img {
+                        height: 1.5em;
+                    }
+                }
+            }
+
+            #comptesTextLabel {
+                .boquette {
+                    text-transform: uppercase;
+                    margin-top: 0.5em;
+                }
+            }
+
+            #plusDeDetails {
+                .text-larger();
+                .text-right();
+
+                .glyphicon {
+                    .text-larger();
+                    color: @rouge;
+                }
+
+                a {
+                    color: @gris-clair;
                 }
             }
         }
 
-        #comptesTextLabel {
-            .boquette {
-                text-transform: uppercase;
+        #actus {
+            .en-tete-actus {
+                .font-huitcentsix();
+                margin-top:0;
+                border-top: 2px solid;
+                border-bottom: 2px solid;
+                position:relative;
+
+                > img {
+                    position:absolute;
+                    z-index:-1;
+                    top:-50%;
+                    right:10%;
+                    height:200%;
+                }
+            }
+
+            .titreArticle {
+                .text-larger();
+                .text-uppercase();
+                .text-noir();
             }
         }
 
-        .en-tete-actus {
-            .font-huitcentsix();
-            margin-top:0;
-            border-top: 2px solid;
-            border-bottom: 2px solid;
-            position:relative;
-
-            > img {
-                position:absolute;
-                z-index:-1;
-                top:-50%;
-                right:10%;
-                height:200%;
+        #bonjourGadzarts {
+            h1 {
+                padding: 0.4em 0.5em 0.4em 0.5em;
+                background-color: @rose;
+                color: white;
+                text-align: center;
             }
-        }
 
-        .titreArticle {
-            .text-larger();
-            .text-uppercase();
-            .text-noir();
+            #photoContainer {
+                padding-top: 1em;
+                .rotate(-2deg);
+
+                #photo {
+                    background-color: white;
+
+                    img {
+                        .center-block;
+                        width: 100%;
+                        padding-top: 1em;
+                        padding-bottom: 0.5em;
+                    }
+                }
+
+                #legende {
+                    background-color: white;
+                    color: black;
+                    text-align: center;
+                    .text-larger();
+                    .font-lobster();
+                }
+            }
+
+            #hm {
+                margin-top: 1em;
+
+                img {
+                    height: 2em;
+                }
+
+                p {
+                    .text-larger();
+                }
+            }
+
+            #enVoirPlus {
+                .text-larger();
+                text-align: right;
+
+                a {
+                    color: white;
+
+                    .glyphicon {
+                        .text-larger();
+                        color: @rose;
+                    }
+                }
+            }
         }
     }
 }

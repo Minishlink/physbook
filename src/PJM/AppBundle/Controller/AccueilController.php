@@ -35,4 +35,17 @@ class AccueilController extends Controller
             'listeAnniv' => $listeAnniv,
         ));
     }
+
+    public function bonjourGadzartsAction()
+    {
+        $photo = array(
+            'url' => 'images/accueil/Niatur.jpg',
+            'legende' => 'Niatur aime la bonne wave',
+            'hm' => 123
+        );
+
+        return $this->render('PJMAppBundle:Accueil:bonjourGadzarts.html.twig', array(
+            'photo' => $photo,
+        ));
+    }
 }
