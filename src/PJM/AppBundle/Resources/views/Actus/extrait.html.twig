@@ -2,19 +2,16 @@
 <ul class="list-unstyled">
 {% for article in liste_articles %}
     <li>
-        <span class="text-larger text-uppercase"><a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}"><span class="font-huitcentsix text-larger">{{ article.titre|slice(0,1) }}</span>{{ article.titre|slice(1,null) }}</a></span><br>
-        {{ article.contenu|truncate(140,true) }}
+        <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}" class="titreArticle"><span class="font-huitcentsix text-larger">{{ article.titre|slice(0,1) }}</span>{{ article.titre|slice(1,null) }}</a><br>
+        {{ article.contenu|truncate(140,true) }} <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}"><em>Lire la suite</em></a>
     </li>
 {% endfor %}
 </ul>
 {% endif %}
-<p><small>
-    <a href="{{ path('pjm_app_actus_index') }}" class="btn btn-primary btn-xs">
-        <span class="glyphicon glyphicon-list"></span>
-        Liste
-    </a>
-    <a href="{{ path('pjm_app_actus_ajouter') }}" class="btn btn-default btn-xs">
-        <span class="glyphicon glyphicon-plus"></span>
-        Ajouter
+<div class="space mini bordered"></div>
+<div class="space mini"></div>
+<p class="text-larger text-right">
+    <a href="{{ path('pjm_app_actus_index') }}">
+        <span class="glyphicon glyphicon-plus"></span> <span class="text-noir">d'actus</span>
     </a>
 </small></p>
