@@ -6,6 +6,21 @@ body {
             width: 100%;
             min-height: 16em;
             margin-bottom: 0px;
+            .box-shadow(2px 3px 3px 1px rgba(0, 0, 0, 0.1));
+        }
+
+        .progress-bar {
+            &.bg-rouge {
+                background: @rouge linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+            }
+
+            &.bg-jaune {
+                background: @jaune linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+            }
+
+            &.bg-vert {
+                background: @vert linear-gradient(to right, rgba(0,0,0,0) 0%,  rgba(0,0,0,0.1) 100%);
+            }
         }
 
         .prix {
@@ -15,8 +30,23 @@ body {
             z-index: 1;
         }
 
-        .boquette {
-            background-color: #eee;
+        #comptesImgLabel {
+            .boquette {
+                background-color: #fefefe;
+                padding-top: 0.2em;
+                padding-bottom: 0.2em;
+                .box-shadow(2px 4px 3px 0px rgba(0, 0, 0, 0.1));
+
+                img {
+                    height: 1.5em;
+                }
+            }
+        }
+
+        #comptesTextLabel {
+            .boquette {
+                text-transform: uppercase;
+            }
         }
 
         .en-tete-actus {
