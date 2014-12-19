@@ -1,0 +1,31 @@
+<div id="historique">
+    <h2>Historique</h2>
+
+    {% if liste|length != 0 %}
+    <div class="table-responsive">
+        <table class="table table-unstyle">
+            <tbody>
+                {% for historique in liste %}
+                <tr>
+                    <td>{{ historique.date|date('d/m/y') }}</td>
+                    <td>{{ historique.nom|moyenPaiement }}</td>
+                    <td>
+                        <span class="prix{% if historique.montant < 0 %} negats{% endif %}">
+                            {% if historique.montant >= 0 %}+{% endif %}{{ historique.montant|prix }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        Tu n'as pas encore d'historique.
+    {% endif %}
+
+    <p class="text-center">
+        <a href="">
+            <span class="glyphicon glyphicon-plus"></span>
+            <em class="text-gris">Historique détaillé</em></a>
+    </p>
+</div>

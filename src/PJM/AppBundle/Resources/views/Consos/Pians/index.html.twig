@@ -61,6 +61,23 @@
             </ul>
         </div>
     </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="col-md-4">
+            {%
+                include "PJMAppBundle:Consos:Pians/historique.html.twig"
+                with {
+                    'liste': listeHistorique,
+                }
+            %}
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
 
     {{ solde|prix }}
 

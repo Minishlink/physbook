@@ -71,6 +71,23 @@ class HistoriqueRepository extends EntityRepository
         return $res;
     }
 
+    public function findByUserAndBoquetteSlug(User $user, $boquetteSlug)
+    {
+        $query = $this->createQueryBuilder('h')
+            ->where('h.user = :user')
+            ->join('h.item', 'i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameters(array(
+                'user' => $user,
+                'boquette_slug'  => $boquetteSlug
+            ))
+            ->orderBy('h.date', 'desc')
+            ->getQuery()
+        ;
+
+        return $query->getResult();
+    }
+
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         return function($qb) use($boquette_slug) {
