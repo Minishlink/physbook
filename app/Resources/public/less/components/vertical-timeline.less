@@ -11,13 +11,13 @@
 		content: '';
 		position: absolute;
 		top: 0;
-		left: 18px;
+		left: @rayon/2;
 		height: 100%;
 		width: @largeurLigne;
 		background: white;
 	}
 
-	@media @desktop {
+	@media @phone {
 		&::before {
 			left: @ecartGauche;
 			margin-left: -11px;
@@ -38,7 +38,7 @@
 		margin-bottom: 0;
 	}
 
-	@media @desktop {
+	@media @phone {
 		margin: 4em 0;
 
 		&:first-child {
@@ -54,7 +54,7 @@
 .timeline-img {
 	position: absolute;
 	top: 0;
-	left: 0;
+	left: 1px;
 	width: @rayon;
 	height: @rayon;
 	border-radius: 50%;
@@ -66,9 +66,10 @@
         height: @rayon/2;
         background: @bleu;
         border: @largeurLigne solid;
+        left: 8.5px;
     }
 
-	@media @desktop {
+	@media @phone {
 		width: @rayon*4/3;
 		height: @rayon*4/3;
 		left: @ecartGauche;
@@ -80,6 +81,7 @@
 
         &.empty-circle {
             margin-left: -17.5px;
+            left: 30%;
         }
 	}
 }
@@ -110,7 +112,7 @@
         }
 	}
 
-	@media @desktop {
+	@media @phone {
         float: right;
 		margin-left: 0;
 		width: 65%;
