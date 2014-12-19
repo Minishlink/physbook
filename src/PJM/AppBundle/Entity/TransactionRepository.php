@@ -13,6 +13,23 @@ use PJM\UserBundle\Entity\User;
  */
 class TransactionRepository extends EntityRepository
 {
+    public function findValidByUserAndBoquetteSlug(User $user, $boquetteSlug)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->andWhere('t.status = \'OK\'')
+            ->join('t.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameters(array(
+                'user' => $user,
+                'boquette_slug'  => $boquetteSlug
+            ))
+            ->orderBy('t.date', 'desc')
+            ->getQuery()
+        ;
+
+        return $query->getResult();
+    }
+
     public function findByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
     {
         $status = $valid ? "OK" : "NOK";
