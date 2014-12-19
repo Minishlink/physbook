@@ -25,6 +25,29 @@ body {
                     color: @rouge;
                 }
             }
+
+            &::before {
+                @tailleCoinBasDroit: 2.5em;
+                // coin bas droit
+                content: "";
+
+                position:absolute;
+                bottom: 0;
+                right: 1em;
+
+                border-width: @tailleCoinBasDroit @tailleCoinBasDroit 0em 0em;
+                border-color: #bbb transparent #fff #fff;
+                border-style: solid;
+
+                width: 0px;
+                height: 0px;
+
+                background-color: @orange;
+
+                height: 0px;
+                width: 0px;
+                display: block;
+            }
         }
     }
 }

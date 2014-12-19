@@ -17,7 +17,7 @@ class PiansController extends BoquetteController
     public function indexAction(Request $request)
     {
         $utils = $this->get('pjm.services.utils');
-        $historique = $utils->getHistoriqueComplet($this->getUser(), $this->slug);
+        $historique = $utils->getHistoriqueComplet($this->getUser(), $this->slug, 5);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'solde' => $this->getSolde(),

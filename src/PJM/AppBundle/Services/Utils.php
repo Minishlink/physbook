@@ -20,39 +20,43 @@ class Utils
         $this->mailer = $mailer;
     }
 
-    public function getHistoriqueComplet(User $user, $boquetteSlug)
+    public function getHistoriqueComplet(User $user, $boquetteSlug, $limit)
     {
         $debits = $this->em
             ->getRepository('PJMAppBundle:Historique')
-            ->findByUserAndBoquetteSlug($user, $boquetteSlug)
+            ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, true)
         ;
 
-        foreach ($debits as $k => $debit)
-        {
+        foreach ($debits as $k => $debit) {
             $debitsFormate[$k]['date'] = $debit->getDate();
-            $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle();
+            $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
             $debitsFormate[$k]['montant'] = -$debit->getItem()->getPrix()*$debit->getNombre()/10;
         }
         unset($debits);
 
         $credits = $this->em
             ->getRepository('PJMAppBundle:Transaction')
-            ->findValidByUserAndBoquetteSlug($user, $boquetteSlug)
+            ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, 'OK')
         ;
 
-        foreach ($credits as $k => $credit)
-        {
+        foreach ($credits as $k => $credit) {
             $creditsFormate[$k]['date'] = $credit->getDate();
             $creditsFormate[$k]['nom'] = $credit->getMoyenPaiement();
             $creditsFormate[$k]['montant'] = $credit->getMontant();
         }
         unset($credits);
 
-
         $liste = array_merge($debitsFormate, $creditsFormate);
         unset($debitsFormate);
+        unset($creditsFormate);
 
-        return $liste;
+        $sort_function = function($a, $b) {
+            $diff = $a["date"]->diff($b["date"]);
+            return $diff->invert ? '-1' : '1';
+        };
+        usort($liste, $sort_function);
+
+        return array_slice($liste, 0, 5);
     }
 
     public function getBoquette($boquetteSlug)
