@@ -13,9 +13,9 @@ use PJM\UserBundle\Entity\User;
  */
 class TransactionRepository extends EntityRepository
 {
-    public function findValidByUserAndBoquetteSlug(User $user, $boquetteSlug)
+    public function findByUserAndBoquetteSlug(User $user, $boquetteSlug, $limit = null, $status = null)
     {
-        $query = $this->createQueryBuilder('t')
+        $qb = $this->createQueryBuilder('t')
             ->where('t.user = :user')
             ->andWhere('t.status = \'OK\'')
             ->join('t.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
@@ -24,10 +24,20 @@ class TransactionRepository extends EntityRepository
                 'boquette_slug'  => $boquetteSlug
             ))
             ->orderBy('t.date', 'desc')
-            ->getQuery()
         ;
 
-        return $query->getResult();
+        if ($limit != null) {
+            $qb->setMaxResults($limit);
+        }
+
+        if ($status != null) {
+            $qb
+                ->andWhere('t.status = :status')
+                ->setParameter('status', $status)
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
