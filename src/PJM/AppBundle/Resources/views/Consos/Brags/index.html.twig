@@ -12,7 +12,6 @@
     <div class="row">
         <div class="col-md-12">
             <h1><img id="logoBoquette" src="{{ asset('images/consos/brags/Brags-N.png') }}"> Brag's</h1>
-            {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_consos_brags_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
         </div>
     </div>
 </div>
@@ -22,6 +21,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <p>
+                {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_consos_brags_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+            </p>
             <p>Vous rêvez chaque soir de la bonne odeur du pain moelleux qui sort tout juste du four, de la pâte fraiche
             pétrie avec amour et confectionnée pour votre seul plaisir. Vous vous léchez les babines à l’idée de
             déguster {{ random(['un pain au chocolat croustifondant', 'une chocolatine croustifondante']) }} ou un croissant pur beurre en regardant TFou. N’attendez pas une seconde de plus, <strong>le <span class="text-larger">brag’s</span> est là pour vous</strong>.</p>
