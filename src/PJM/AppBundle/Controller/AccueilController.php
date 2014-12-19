@@ -48,4 +48,11 @@ class AccueilController extends Controller
             'photo' => $photo,
         ));
     }
+
+    public function aVenirAction()
+    {
+        return $this->render('PJMAppBundle:Accueil:aVenir.html.twig', array(
+
+        ));
+    }
 }

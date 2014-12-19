@@ -13,3 +13,7 @@ pjm_app_accueil_anniversaires:
 pjm_app_accueil_bonjourGadzarts:
     path:     /bonjourGadzarts
     defaults: { _controller: PJMAppBundle:Accueil:bonjourGadzarts }
+
+pjm_app_accueil_aVenir:
+    path:     /aVenir
+    defaults: { _controller: PJMAppBundle:Accueil:aVenir }
