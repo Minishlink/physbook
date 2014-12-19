@@ -4,10 +4,14 @@
 
 {% block content %}
 
+{% set block_pjm_app_body_title = block('pjm_app_body_title') %}
+{% if block_pjm_app_body_title is not empty %}
 <div class="container-fluid" id="bandeauTitre">
-    {% block pjm_app_body_title %}{% endblock %}
+     {{ block_pjm_app_body_title|raw }}
 </div>
+{% endif %}
 
+{% if app.session.flashbag.peekAll is not empty %}
 <div class="container">
     {% block pjm_app_body_flashbag %}
         {% for flashMessage in app.session.flashbag.get('success') %}
@@ -35,6 +39,7 @@
         {% endfor %}
     {% endblock %}
 </div>
+{% endif %}
 
 {% block pjm_app_body %}{% endblock %}
 
