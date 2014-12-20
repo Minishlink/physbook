@@ -24,4 +24,16 @@ class PiansController extends BoquetteController
             'listeHistorique' => $historique,
         ));
     }
+
+    public function boissonDuMoisAction(Request $request)
+    {
+        // TODO on va chercher la boisson ayant le plus de bucquage ce mois-ci
+        $em = $this->getDoctrine()->getEntityManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+        $boissonDuMois = $repository->findBySlug('biere');
+
+        return $this->render('PJMAppBundle:Consos:Pians/boissonDuMois.html.twig', array(
+            'boissonDuMois' => $boissonDuMois[0],
+        ));
+    }
 }
