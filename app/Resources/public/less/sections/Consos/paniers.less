@@ -12,5 +12,40 @@ body {
                 height: 3em;
             }
         }
+
+        #commande {
+            margin-bottom: 1.5em;
+        }
+
+        @taillePrixPanier: 4em;
+        #prix {
+            #prixPanierContainer {
+                .center-block();
+                margin-bottom: 1.5em;
+
+                width: @taillePrixPanier*(@taillePrixPanier - 1);
+                height: @taillePrixPanier*(@taillePrixPanier - 1);
+
+                border-radius: 50% 50%;
+                background-color: lighten(@vert, 10%);
+
+                > div {
+                    font-size: @taillePrixPanier;
+
+                    padding-top: 25%;
+                }
+            }
+        }
+
+        #com3pom {
+            margin-bottom: 1.5em;
+
+            > img {
+                .img-responsive();
+                .center-block();
+
+                height: @taillePrixPanier*(@taillePrixPanier - 1);
+            }
+        }
     }
 }
