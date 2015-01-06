@@ -85,6 +85,7 @@ class BragsController extends BoquetteController
             $baguette->setSlug($this->itemSlug);
             $baguette->setBoquette($this->getBoquette());
             $baguette->setValid(true);
+            $em = $this->getDoctrine()->getManager();
             $em->persist($baguette);
             $em->flush();
         }

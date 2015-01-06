@@ -50,6 +50,65 @@
         </div>
     </div>
 
+    <div class="row">
+        <div id="contenuPanier" class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0">
+            <p><img style="width: 90%;" class="img-responsive center-block" src="{{ asset('images/consos/paniers/Tableau-GV.png') }}" alt=""></p>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0">
+            <div class="row">
+                <div id="commande" class="col-sm-6 text-center">
+                    <h2 class="sr-only">Commande</h2>
+                    <p class="text-larger">
+                        <a href="" title="Commander" class="text-blanc">
+                            <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
+                            Télécharge le panier dans ton k'gib
+                        </a>
+                    </p>
+                    <p class="text-mauve text-larger">
+                        Livré le 15 janvier
+                    </p>
+                </div>
+                <div id="prix" class="col-sm-6 text-center">
+                    <h2 class="sr-only">Prix</h2>
+                    <div id="prixPanierContainer">
+                        <div>{{ prixPanier|prix }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p id="com3pom"><img src="{{ asset('images/consos/paniers/Com3Pom.png') }}" alt=""></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+
+        </div>
+        <div class="col-md-5 text-center">
+
+        </div>
+    </div>
+
+    {# <div class="row">
+        <div class="col-md-7">
+            <h2>Informations</h2>
+            Le brag's, c'est tous les matins à 10h.
+        </div>
+        <div class="col-md-5 text-center">
+            {% if ZiBrags is not null %}
+            <h2>S.O.S. Brag's</h2>
+            <a class="disable-fade" href="mailto:{{ ZiBrags.email }}"><img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/consos/brags/Contact.png') }}"></a>
+            <p class="text-blanc">
+                une question pratique,<br>
+                un problème de biroüte ?<br>
+                <a class="disable-fade" href="mailto:{{ ZiBrags.email }}">contacte ton ZiBrag’s<br>
+                {{ ZiBrags.bucque }} {{ ZiBrags.username }}</a>
+            </p>
+            {% endif %}
+        </div>
+    </div> #}
+
     {{ solde|prix }}
 </div>
 
