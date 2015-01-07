@@ -47,5 +47,29 @@ body {
                 height: @taillePrixPanier*(@taillePrixPanier - 1);
             }
         }
+
+        #solde {
+            margin-bottom: 1.5em;
+
+            #soldeContainer {
+                position: relative;
+                @hauteurSolde: 9em;
+
+                > img {
+                    .img-responsive();
+                    .center-block();
+                    height: @hauteurSolde;
+                }
+
+                > span {
+                    position: absolute;
+                    width: 100%;
+                    text-align: center;
+                    font-size: @hauteurSolde/3;
+                    line-height: @hauteurSolde/3;
+                    vertical-align: middle;
+                }
+            }
+        }
     }
 }
