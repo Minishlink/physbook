@@ -2,7 +2,6 @@ parameters:
     paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
     paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
 
-
 services:
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
@@ -19,6 +18,9 @@ services:
     pjm.services.utils:
         class:  PJM\AppBundle\Services\Utils
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer]
+    pjm.services.rezal:
+        class:  PJM\AppBundle\Services\Rezal
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.mailer:
         class:  PJM\AppBundle\Services\Mailer
         arguments:
