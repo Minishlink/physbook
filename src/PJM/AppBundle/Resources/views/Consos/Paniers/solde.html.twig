@@ -1,0 +1,15 @@
+<h2 class="sr-only">Solde</h2>
+<div id="soldeContainer">
+    <span>{{ solde|prix }}</span>
+{% if solde >= 2000 %}
+    <img src="{{ asset('images/consos/paniers/Fruits-plein.png') }}">
+{% elseif solde >= 1500 %}
+    <img src="{{ asset('images/consos/paniers/Fruits-34.png') }}">
+{% elseif solde >= 1000 %}
+    <img src="{{ asset('images/consos/paniers/Fruits-12.png') }}">
+{% elseif solde >= 500 %}
+    <img src="{{ asset('images/consos/paniers/Fruits-14.png') }}">
+{% else %}
+    <img src="{{ asset('images/consos/paniers/Fruits-vide.png') }}">
+{% endif %}
+</div>
