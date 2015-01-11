@@ -85,6 +85,6 @@ class CommandesDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'commandes_datatable';
+        return 'brags_commandes_datatable';
     }
 }
