@@ -23,7 +23,6 @@ use PJM\AppBundle\Entity\Transaction;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
-use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
@@ -348,73 +347,18 @@ class BragsController extends BoquetteController
     // ajout et liste d'un crédit
     public function listeCreditsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $credit = new Transaction();
-
-        $form = $this->createForm(new TransactionType(), $credit, array(
-            'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeCredits'),
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                // on enregistre le crédit dans l'historique
-                $credit->setStatus("OK");
-                $credit->setBoquette($this->getBoquette());
-                $em->persist($credit);
-
-                // on modifie le solde de l'utilisateur
-                $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
-                $compte = $repositoryCompte->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
-                $compte->crediter($credit->getMontant());
-                $em->persist($compte);
-
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'La transaction a été enregistrée et le compte a été crédité.'
-                );
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de la transaction. Réessaye.'
-                );
-
-                $data = $form->getData();
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
-        }
-
-        $datatable = $this->get("pjm.datatable.credits");
-        $datatable->buildDatatableView();
-
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCredits.html.twig', array(
-            'form' => $form->createView(),
-            'datatable' => $datatable
-        ));
+        return $this->gestionCredits(
+            $request,
+            'pjm_app_consos_brags_admin_listeCredits',
+            'pjm_app_consos_brags_admin_creditsResults',
+            'pjm_app_consos_brags_admin_index'
+        );
     }
 
     // action ajax de rendu de la liste des crédits
     public function creditsResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($this->slug));
-
-        return $datatable->getResponse();
+        return $this->creditsResults();
     }
 
     // liste des débits de baguettes
