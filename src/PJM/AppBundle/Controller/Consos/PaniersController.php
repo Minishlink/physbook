@@ -48,4 +48,14 @@ class PaniersController extends BoquetteController
     {
         return $this->getCurrentPanier()->getPrix();
     }
+
+    /*
+    * ADMIN
+    */
+    public function adminAction()
+    {
+        // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
+
+        return $this->render('PJMAppBundle:Consos:Paniers/Admin/index.html.twig');
+    }
 }

@@ -13,6 +13,74 @@ body {
             }
         }
 
+        #panneauPanier {
+            @panierWidth: 90%;
+
+            #conteneurPanneaux {
+                position: relative;
+                transform: perspective(1000px) rotateY(30deg);
+                transform-style: preserve-3d;
+
+                .conteneur {
+                    width: @panierWidth;
+                    transform: perspective(1200px);
+                    outline: 1px solid transparent;
+
+                    > .contenu {
+                        width: @panierWidth;
+                        border: @gris-tres-clair 2em solid;
+                        background-color: @mauve;
+                        text-align: center;
+                        min-height: 30em;
+                    }
+
+                    > .bas {
+                        width: @panierWidth;
+                        height: 6em;
+                        border-left: @gris-tres-clair 2em solid;
+                        border-right: @gris-tres-clair 2em solid;
+                    }
+
+                    &.devant {
+                        transform: rotateX(10deg);
+                        transform-origin: center top 0px;
+                    }
+
+                    &.derriere {
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        right: 0px;
+                        z-index: -1;
+
+                        transform: rotateX(-10deg);
+                        transform-origin: center top 0px;
+
+                        > .contenu {
+                            background-color: darken(@mauve, 5%);
+                            border-color: darken(@gris-tres-clair, 10%);
+                        }
+
+                        > .bas {
+                            border-color: darken(@gris-tres-clair, 10%);
+                        }
+                    }
+                }
+            }
+
+            /*> img {
+                width: @panierWidth;
+            }
+
+            > div {
+                position: absolute;
+                width: @panierWidth;
+                text-align: center;
+                top: 3em;
+                transform: perspective(210px) rotateY(10deg) rotateZ(-5deg);
+            }*/
+        }
+
         #commande {
             margin-bottom: 1.5em;
         }
@@ -40,7 +108,7 @@ body {
         #com3pom {
             margin-bottom: 1.5em;
 
-            > img {
+            > a > img {
                 .img-responsive();
                 .center-block();
 

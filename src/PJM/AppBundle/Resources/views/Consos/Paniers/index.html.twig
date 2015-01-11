@@ -21,6 +21,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <p>
+                {% if is_granted('ROLE_ZIPANIERS') %}<small><a href="{{ path('pjm_app_consos_paniers_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+            </p>
             <p>Parce qu’ils sont riches en vitamines, en minéraux, en fibres et parce que leur effet favorable sur la santé a été démontré, il te faut manger {{ app.user.fams }} fruits et légumes par jour. De plus, ils offrent une incroyable variété de saveurs, tout ce qu’il faut pour conjuguer santé et plaisir. C’est pourquoi les Gadz ont inventé <strong><span class="text-larger">le panier de fruits et légumes</span></strong>.</p>
         </div>
     </div>
@@ -49,10 +52,63 @@
             </ul>
         </div>
     </div>
-
     <div class="row">
-        <div id="contenuPanier" class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0">
-            <p><img style="width: 90%;" class="img-responsive center-block" src="{{ asset('images/consos/paniers/Tableau-GV.png') }}" alt=""></p>
+        <div id="panneauPanier" class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0">
+            <div id="conteneurPanneaux">
+                <div class="conteneur devant center-block">
+                    <div class="contenu">
+                        <h3>Semaine 03</h3>
+                        <p>
+                            1 kg de carottes<br>
+                            (FR-47)<br>
+                            <br>
+                            1 kg d'oignons<br>
+                            (FR-92)
+                            <br>
+                            1 kg de carottes<br>
+                            (FR-47)<br>
+                            <br>
+                            1 kg d'oignons<br>
+                            (FR-92)
+                            <br>
+                            1 kg de carottes<br>
+                            (FR-47)<br>
+                            <br>
+                            1 kg d'oignons<br>
+                            (FR-92)
+                        </p>
+                    </div>
+                    <div class="bas"></div>
+                </div>
+
+                <div class="conteneur derriere center-block">
+                    <div class="contenu">
+                        <div style="visibility: hidden;">
+                            <h3>Semaine 03</h3>
+                            <p>
+                                1 kg de carottes<br>
+                                (FR-47)<br>
+                                <br>
+                                1 kg d'oignons<br>
+                                (FR-92)
+                                <br>
+                                1 kg de carottes<br>
+                                (FR-47)<br>
+                                <br>
+                                1 kg d'oignons<br>
+                                (FR-92)
+                                <br>
+                                1 kg de carottes<br>
+                                (FR-47)<br>
+                                <br>
+                                1 kg d'oignons<br>
+                                (FR-92)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bas"></div>
+                </div>
+            </div>
         </div>
         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0">
             <div class="row">
@@ -76,7 +132,7 @@
                 </div>
             </div>
             <div class="row">
-                <p id="com3pom"><img src="{{ asset('images/consos/paniers/Com3Pom.png') }}" alt=""></p>
+                <p id="com3pom"><a href="http://www.com3pom.fr" target="_blank" alt=""><img src="{{ asset('images/consos/paniers/Com3Pom.png') }}" alt="Com3Pom"></a></p>
             </div>
             <div class="row">
                 <div id="solde" class="col-lg-7">

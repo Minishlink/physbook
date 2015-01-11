@@ -2,3 +2,6 @@ pjm_app_consos_paniers_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Consos/Paniers:index }
 
+pjm_app_consos_paniers_admin:
+    resource: "@PJMAppBundle/Resources/config/Consos/Paniers/Admin/routing.yml"
+    prefix:   /admin

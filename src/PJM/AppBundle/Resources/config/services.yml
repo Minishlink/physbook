@@ -20,7 +20,7 @@ services:
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer]
     pjm.services.rezal:
         class:  PJM\AppBundle\Services\Rezal
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, %kernel.environment%]
     pjm.services.mailer:
         class:  PJM\AppBundle\Services\Mailer
         arguments:

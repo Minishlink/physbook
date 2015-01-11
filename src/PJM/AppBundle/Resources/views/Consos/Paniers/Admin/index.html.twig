@@ -1,0 +1,49 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}boquette paniers{% endblock %}
+
+{% block title %}
+	Gestion Paniers de fruits &amp; légumes | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1><img id="logoBoquette" src="{{ asset('images/consos/paniers/Fruits-et-legumes-V.png') }}"> Gestion Paniers de fruits &amp; légumes</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pjm_app_body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <small><a href="{{ path('pjm_app_consos_paniers_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+            </p>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
+                    <h2 class="panel-title">
+                            Manuel
+                    </h2>
+                </div>
+                <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
+                    <div class="panel-body">
+                        <p>Todo</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {#
+                {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
+                #}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
