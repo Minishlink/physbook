@@ -55,9 +55,7 @@ class ItemRepository extends EntityRepository
         return function($qb) use($slug) {
             $qb
                 ->andWhere('Item.slug = :slug')
-                ->setParameters(array(
-                    'slug'  => $slug,
-                ))
+                ->setParameter('slug', $slug)
             ;
         };
     }

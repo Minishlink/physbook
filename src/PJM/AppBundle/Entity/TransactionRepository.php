@@ -70,10 +70,8 @@ class TransactionRepository extends EntityRepository
             $qb
                 ->andWhere('Transaction.status = :status')
                 ->join('Transaction.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
-                ->setParameters(array(
-                    'boquette_slug'  => $boquette_slug,
-                    'status' => $status
-                ))
+                ->setParameter('boquette_slug', $boquette_slug)
+                ->setParameter('status', $status)
             ;
         };
     }

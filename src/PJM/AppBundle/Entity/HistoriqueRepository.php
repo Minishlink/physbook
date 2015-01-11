@@ -104,9 +104,7 @@ class HistoriqueRepository extends EntityRepository
             $qb
                 ->join('Historique.item', 'i')
                 ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
-                ->setParameters(array(
-                    'boquette_slug'  => $boquette_slug,
-                ))
+                ->setParameter('boquette_slug', $boquette_slug)
             ;
         };
     }
