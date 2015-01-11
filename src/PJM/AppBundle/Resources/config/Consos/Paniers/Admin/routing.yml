@@ -1,0 +1,3 @@
+pjm_app_consos_paniers_admin_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:admin }
