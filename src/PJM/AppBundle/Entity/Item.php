@@ -61,6 +61,13 @@ class Item
     private $date;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="infos", type="text", nullable=true)
+     */
+    private $infos;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=false)
      */
