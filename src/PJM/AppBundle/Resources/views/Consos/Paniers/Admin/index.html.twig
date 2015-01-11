@@ -33,11 +33,14 @@
                 </div>
                 <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
                     <div class="panel-body">
-                        <p>Todo</p>
+                        <p>
+                            Si un PG te donne un chèque ou de la monnaie pour les paniers de fruits et légumes, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. S'il s'agit d'un chèque, renseigne son numéro (7 chiffres). Tu peux aussi y consulter la liste des crédits S-Money.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {% render(url('pjm_app_consos_paniers_admin_listeCredits')) %}
                 {#
                 {% render(url('pjm_app_consos_brags_admin_listeCommandes')) %}
                 #}

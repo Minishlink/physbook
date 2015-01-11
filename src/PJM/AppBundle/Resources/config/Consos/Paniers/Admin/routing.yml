@@ -1,3 +1,11 @@
 pjm_app_consos_paniers_admin_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Consos/Paniers:admin }
+
+pjm_app_consos_paniers_admin_listeCredits:
+    path:     /listeCredits
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:listeCredits }
+
+pjm_app_consos_paniers_admin_creditsResults:
+    path:     /listeCredits/results
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:creditsResults }
