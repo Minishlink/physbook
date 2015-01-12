@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingPaniers" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePaniers" aria-expanded="true" aria-controls="collapsePaniers">
+        <h2 class="panel-title">
+            Paniers
+        </h2>
+    </div>
+    <div id="collapsePaniers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPaniers">
+        <div class="panel-body">
+            <p>
+                Le nouveau panier remplacera l'ancien sur la page Paniers.
+            </p>
+            <h3>Ajout</h3>
+            {{ form_stylesheet(form) }}
+            {{ form_javascript(form) }}
+            {{ form(form) }}
+
+            <h3>Historique</h3>
+            {{ datatable_render(datatable) }}
+        </div>
+    </div>
+</div>

@@ -57,25 +57,9 @@
             <div id="conteneurPanneaux">
                 <div class="conteneur devant center-block">
                     <div class="contenu">
-                        <h3>Semaine 03</h3>
-                        <p>
-                            1 kg de carottes<br>
-                            (FR-47)<br>
-                            <br>
-                            1 kg d'oignons<br>
-                            (FR-92)
-                            <br>
-                            1 kg de carottes<br>
-                            (FR-47)<br>
-                            <br>
-                            1 kg d'oignons<br>
-                            (FR-92)
-                            <br>
-                            1 kg de carottes<br>
-                            (FR-47)<br>
-                            <br>
-                            1 kg d'oignons<br>
-                            (FR-92)
+                        <h3>Semaine {{ panier.date|date('W') }}</h3>
+                        <p class="text-larger">
+                            {{ panier.infos|nl2br }}
                         </p>
                     </div>
                     <div class="bas"></div>
@@ -84,25 +68,9 @@
                 <div class="conteneur derriere center-block">
                     <div class="contenu">
                         <div style="visibility: hidden;">
-                            <h3>Semaine 03</h3>
-                            <p>
-                                1 kg de carottes<br>
-                                (FR-47)<br>
-                                <br>
-                                1 kg d'oignons<br>
-                                (FR-92)
-                                <br>
-                                1 kg de carottes<br>
-                                (FR-47)<br>
-                                <br>
-                                1 kg d'oignons<br>
-                                (FR-92)
-                                <br>
-                                1 kg de carottes<br>
-                                (FR-47)<br>
-                                <br>
-                                1 kg d'oignons<br>
-                                (FR-92)
+                            <h3>Semaine {{ panier.date|date('W') }}</h3>
+                            <p class="text-larger">
+                                {{ panier.infos|nl2br }}
                             </p>
                         </div>
                     </div>
@@ -121,13 +89,13 @@
                         </a>
                     </p>
                     <p class="text-mauve text-larger">
-                        Livré le 15 janvier
+                        Livré le {{ panier.date|localizeddate('full', 'none')|slice(0,-4) }}
                     </p>
                 </div>
                 <div id="prix" class="col-sm-5 text-center">
                     <h2 class="sr-only">Prix</h2>
                     <div id="prixPanierContainer">
-                        <div>{{ prixPanier|prix }}</div>
+                        <div>{{ panier.prix|prix }}</div>
                     </div>
                 </div>
             </div>

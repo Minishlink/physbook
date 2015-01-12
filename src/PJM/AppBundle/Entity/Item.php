@@ -227,4 +227,27 @@ class Item
     {
         return $this->valid;
     }
+
+    /**
+     * Set infos
+     *
+     * @param string $infos
+     * @return Item
+     */
+    public function setInfos($infos)
+    {
+        $this->infos = $infos;
+
+        return $this;
+    }
+
+    /**
+     * Get infos
+     *
+     * @return string
+     */
+    public function getInfos()
+    {
+        return $this->infos;
+    }
 }
