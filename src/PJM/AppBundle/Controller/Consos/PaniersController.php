@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 use PJM\AppBundle\Entity\Item;
+use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Form\Consos\PanierType;
 
 class PaniersController extends BoquetteController
@@ -24,6 +25,23 @@ class PaniersController extends BoquetteController
             'panier' => $this->getCurrentPanier(),
             'solde' => $this->getSolde(),
         ));
+    }
+
+    public function commanderAction()
+    {
+        // on va chercher le panier actif
+        $panier = $this->getCurrentPanier();
+
+        // on vérifie si l'utilisateur n'a pas déjà commandé un panier
+        if (true) {
+            // on enregistre dans l'historique
+            $achat = new Historique();
+            $achat->setUser($this->getUser());
+            $achat->setItem($panier);
+            $achat->setValid(true);
+        }
+
+        return $this->redirect($this->generateUrl('pjm_app_consos_paniers_index'));
     }
 
     public function getCurrentPanier()

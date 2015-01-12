@@ -5,6 +5,8 @@ namespace PJM\AppBundle\Form\Consos;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,12 +21,12 @@ class PanierType extends AbstractType
         $builder
             ->add('date', 'date', array(
                 'error_bubbling' => true,
-                'label' => 'Date de sortie du panier',
+                'label' => 'Date de livraison du panier',
             ))
             ->add('infos', null, array(
                 'error_bubbling' => true,
                 'label' => 'Contenu du panier',
-                'attr' => array('placeholder' => 'ex. 1kg d\'oignons')
+                'attr' => array('placeholder' => 'une ligne par fruit ou légume')
             ))
             ->add('prix', 'money', array(
                 'error_bubbling' => true,
@@ -35,11 +37,19 @@ class PanierType extends AbstractType
                         'value' => 3000,
                         'message' => 'Le prix du panier devrait pas être plus grand que 30€.'
                     )),
-                )
+                ),
+                'data' => '500'
             ))
             ->add('save', 'submit', array(
                 'label' => 'Ajouter',
             ))
+            ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
+                $panier = $event->getData();
+                if (isset($panier['infos'])) {
+                    $panier['infos'] = json_encode(preg_split("/\r\n|\n|\r/", $panier['infos']));
+                }
+                $event->setData($panier);
+            })
         ;
     }
 
