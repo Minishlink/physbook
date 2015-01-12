@@ -47,6 +47,7 @@ class PaniersDatatable extends AbstractDatatableView
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
             $line["prix"] = $ext->prixFilter($line["prix"]);
+            $line["infos"] = json_decode($line["infos"]);
             return $line;
         };
 

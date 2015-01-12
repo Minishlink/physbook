@@ -11,6 +11,7 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('moyenPaiement', array($this, 'moyenPaiementFilter')),
             new \Twig_SimpleFilter('nombre', array($this, 'nombreFilter')),
             new \Twig_SimpleFilter('validCommande', array($this, 'validCommandeFilter')),
+            new \Twig_SimpleFilter('json_decode', array($this, 'jsonDecodeFilter')),
         );
     }
 
@@ -59,6 +60,10 @@ class IntranetExtension extends \Twig_Extension
         return array_key_exists($string, $map)
             ? $map[$string]
             : $string;
+    }
+
+    public function jsonDecodeFilter($string) {
+        return json_decode($string);
     }
 
     public function getName()

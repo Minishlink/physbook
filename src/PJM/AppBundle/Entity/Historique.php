@@ -59,6 +59,7 @@ class Historique
     public function __construct()
     {
         $this->date = new \DateTime();
+        $this->setNombre(10);
     }
 
     public function setCommande(Commande $commande)
@@ -102,7 +103,7 @@ class Historique
     }
 
     /**
-     * Set nombre
+     * Set nombre (*10)
      *
      * @param integer $nombre
      * @return Historique
