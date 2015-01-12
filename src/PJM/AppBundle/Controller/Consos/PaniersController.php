@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 use PJM\AppBundle\Entity\Item;
+use PJM\AppBundle\Form\Consos\PanierType;
 
 class PaniersController extends BoquetteController
 {
@@ -20,8 +21,8 @@ class PaniersController extends BoquetteController
     public function indexAction(Request $request)
     {
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
+            'panier' => $this->getCurrentPanier(),
             'solde' => $this->getSolde(),
-            'prixPanier' => $this->getPrixPanier(),
         ));
     }
 
@@ -116,6 +117,17 @@ class PaniersController extends BoquetteController
             'form' => $form->createView(),
             'datatable' => $datatable
         ));
+    }
+
+    // action ajax de rendu de la liste des paniers
+    public function paniersResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.paniers.liste"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
+
+        return $datatable->getResponse();
     }
 
     // ajout et liste d'un crédit
