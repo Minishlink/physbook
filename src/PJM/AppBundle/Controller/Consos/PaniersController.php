@@ -245,6 +245,9 @@ class PaniersController extends BoquetteController
             $sheet
                 ->setCellValue('A1', "Total")
                 ->setCellValue('B1', count($tableau))
+                ->setCellValue('C1', "paniers")
+                ->setCellValue('D1', "soit")
+                ->setCellValue('E1', count($tableau)*$panier->getPrix()/100)
                 ->setCellValue('A3', "Bucque")
                 ->setCellValue('B3', "Fam's")
                 ->setCellValue('C3', "Tbk")
@@ -257,7 +260,13 @@ class PaniersController extends BoquetteController
             $boldStyle = array(
                 'font' => array(
                     'bold' => true
-                )
+                ),
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        'color' => array('argb' => '00000000'),
+                    ),
+                ),
             );
 
             $italicStyle = array(
@@ -266,9 +275,21 @@ class PaniersController extends BoquetteController
                 )
             );
 
-            $sheet->getStyle('A1:B1')->applyFromArray($italicStyle);
+            $borduresStyle = array(
+                'borders' => array(
+                    'outline' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                        'color' => array('argb' => '00000000'),
+                    ),
+                ),
+            );
+
+            $sheet->getStyle('E1')->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
+            $sheet->getStyle('A1')->applyFromArray($italicStyle);
             $sheet->getStyle('A3:E3')->applyFromArray($boldStyle);
+            $sheet->getStyle($rangeTab)->applyFromArray($borduresStyle);
             $sheet->getColumnDimension('A')->setWidth(13);
+            $sheet->getColumnDimension('E')->setWidth(15);
 
             // on met le curseur au dbéut du fichier
             $phpExcelObject->setActiveSheetIndex(0);
