@@ -82,7 +82,7 @@ class HistoriqueRepository extends EntityRepository
                     ->getQuery();
 
         try {
-            $res = $query->getArrayResult();
+            $res = $query->getResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
             $res = null;
         }

@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Historique;
@@ -205,26 +209,75 @@ class PaniersController extends BoquetteController
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Historique');
             $commandes = $repository->findByItem($panier);
-            dump($commandes);
 
-            // ask the service for a Excel5
+            if (empty($commandes)) {
+                $request->getSession()->getFlashBag()->add(
+                    'warning',
+                    "Il n'y a pas encore eu de commandes pour ce panier."
+                );
+
+                return $this->redirect($this->generateUrl('pjm_app_consos_paniers_admin_index'));
+            }
+
+            // on transforme tout ça en tableau lisible
+            $tableau = array();
+            foreach ($commandes as $commande) {
+                $row['bucque'] = $commande->getUser()->getBucque();
+                $row['fams'] = $commande->getUser()->getFams();
+                $row['tabagns'] = $commande->getUser()->getTabagns();
+                $row['proms'] = $commande->getUser()->getProms();
+                $row['kagib'] = $commande->getUser()->getAppartement();
+                $tableau[] = $row;
+            }
+
+            // on appelle le service PHPExcel
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()->setCreator("Phy'sboook")
+            // on définit le nom du fichier
+            $phpExcelObject->getProperties()->setCreator("Phy'sbook")
                 ->setLastModifiedBy("Phy'sbook")
                 ->setTitle("Commandes du panier du ".$panier->getDate()->format('d/m/Y'));
 
-            $phpExcelObject->setActiveSheetIndex(0)
-                ->fromArray($commandes, NULL, 'A1');
-            $phpExcelObject->getActiveSheet()->setTitle('Commandes');
+            // on crée le tableau à l'intérieur du fichier
+            $nbRows = count($tableau);
+            $rangeTab = "A3:E".(3+$nbRows);
+            $sheet = $phpExcelObject->setActiveSheetIndex(0);
+            $sheet
+                ->setCellValue('A1', "Total")
+                ->setCellValue('B1', count($tableau))
+                ->setCellValue('A3', "Bucque")
+                ->setCellValue('B3', "Fam's")
+                ->setCellValue('C3', "Tbk")
+                ->setCellValue('D3', "Prom's")
+                ->setCellValue('E3', "Kgib")
+                ->fromArray($tableau, NULL, 'A4')
+                ->setAutoFilter($rangeTab)
+                ->setTitle('Commandes');
 
-            // create the writer
-            $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
-            // create the response
+            $boldStyle = array(
+                'font' => array(
+                    'bold' => true
+                )
+            );
+
+            $italicStyle = array(
+                'font' => array(
+                    'italic' => true
+                )
+            );
+
+            $sheet->getStyle('A1:B1')->applyFromArray($italicStyle);
+            $sheet->getStyle('A3:E3')->applyFromArray($boldStyle);
+            $sheet->getColumnDimension('A')->setWidth(13);
+
+            // on met le curseur au dbéut du fichier
+            $phpExcelObject->setActiveSheetIndex(0);
+
+            // on fait télécharger le fichier
+            $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
             $response = $this->get('phpexcel')->createStreamedResponse($writer);
-            // adding headers
-            $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-            $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xls');
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
+            $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xlsx');
             $response->headers->set('Pragma', 'public');
             $response->headers->set('Cache-Control', 'maxage=1');
 
