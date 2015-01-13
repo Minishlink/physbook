@@ -73,8 +73,7 @@ class HistoriqueRepository extends EntityRepository
 
     public function findByItem($item)
     {
-        $query = $this->select('user')
-                    ->from('Historique', 'h')
+        $query = $this->createQueryBuilder('h')
                     ->where('h.item = :item')
                     ->setParameters(array(
                         'item'  => $item,
@@ -83,7 +82,7 @@ class HistoriqueRepository extends EntityRepository
                     ->getQuery();
 
         try {
-            $res = $query->getResult();
+            $res = $query->getArrayResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
             $res = null;
         }
