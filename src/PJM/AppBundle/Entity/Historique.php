@@ -51,7 +51,7 @@ class Historique
 
     /**
      * @var integer
-     *
+     * multiplié par 10
      * @ORM\Column(name="nombre", type="smallint")
      */
     private $nombre;
@@ -103,7 +103,7 @@ class Historique
     }
 
     /**
-     * Set nombre (*10)
+     * Set nombre
      *
      * @param integer $nombre
      * @return Historique
@@ -132,7 +132,7 @@ class Historique
      */
     public function getPrix()
     {
-        return $this->nombre*$this->item->prix;
+        return $this->getNombre()*$this->getItem()->getPrix()/10;
     }
 
     /**

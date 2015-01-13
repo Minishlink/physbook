@@ -296,14 +296,6 @@ class BragsController extends BoquetteController
                         // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
                         $em->remove($commande);
                     }
-
-                    // on vérifie que l'utilisateur a un compte, sinon on le crée
-                    $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $commande->getItem()->getBoquette());
-                    if (!isset($compte)) {
-                        // s'il n'existe pas
-                        $compte = new Compte($commande->getUser(), $commande->getItem()->getBoquette());
-                        $em->persist($compte);
-                    }
                 }
             }
 

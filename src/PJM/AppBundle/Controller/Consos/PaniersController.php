@@ -39,6 +39,10 @@ class PaniersController extends BoquetteController
             $achat->setUser($this->getUser());
             $achat->setItem($panier);
             $achat->setValid(true);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($achat);
+            $em->flush();
         }
 
         return $this->redirect($this->generateUrl('pjm_app_consos_paniers_index'));

@@ -32,7 +32,14 @@ services:
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
               notificationEmail: "notification@physbook.fr"
               notificationSender: "Phy'sbook"
-
+    pjm.listener.consos.historique:
+        class: PJM\AppBundle\Listener\Consos\HistoriqueListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+    pjm.listener.consos.transaction:
+        class: PJM\AppBundle\Listener\Consos\TransactionListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
     pjm.datatable.historique:
         class: PJM\AppBundle\Datatables\HistoriqueDatatable
         tags:
