@@ -49,4 +49,26 @@ class CompteRepository extends EntityRepository
 
         return $compte;
     }
+
+    // solde >=
+    public function findOneByUserAndBoquetteAndSolde(User $user, Boquette $boquette, $solde)
+    {
+        $query = $this->createQueryBuilder('c')
+                    ->where('c.user = :user')
+                    ->andWhere('c.boquette = :boquette')
+                    ->andWhere('c.solde >= :solde')
+                    ->setParameters(array(
+                        'user' => $user,
+                        'boquette'  => $boquette,
+                        'solde'  => $solde,
+                    ))
+                    ->getQuery();
+        try {
+            $compte = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $compte = null;
+        }
+
+        return $compte;
+    }
 }

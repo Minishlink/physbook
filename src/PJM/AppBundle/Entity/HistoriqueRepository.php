@@ -31,6 +31,27 @@ class HistoriqueRepository extends EntityRepository
         return $res;
     }
 
+    public function findByUserAndItem(User $user, Item $item)
+    {
+        $query = $this->createQueryBuilder('h')
+                    ->where('h.user = :user')
+                    ->andWhere('h.item = :item')
+                    ->setParameters(array(
+                        'user' => $user,
+                        'item'  => $item,
+                    ))
+                    ->orderBy('h.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function findByItemSlug($item_slug)
     {
         $query = $this->createQueryBuilder('h')

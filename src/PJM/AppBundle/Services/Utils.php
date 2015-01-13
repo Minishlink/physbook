@@ -203,6 +203,7 @@ class Utils
 
         // pour tous ceux qui ont été débité,
         // on check les comptes en negat'ss et envoit un mail
+        // TODO gérer abonnement
         foreach ($listeUsers as $user) {
             // TODO sql solde < 0...
             $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);

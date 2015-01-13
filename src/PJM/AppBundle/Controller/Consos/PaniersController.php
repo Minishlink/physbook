@@ -27,22 +27,42 @@ class PaniersController extends BoquetteController
         ));
     }
 
-    public function commanderAction()
+    public function commanderAction(Request $request)
     {
         // on va chercher le panier actif
         $panier = $this->getCurrentPanier();
 
         // on vérifie si l'utilisateur n'a pas déjà commandé un panier
-        if (true) {
-            // on enregistre dans l'historique
-            $achat = new Historique();
-            $achat->setUser($this->getUser());
-            $achat->setItem($panier);
-            $achat->setValid(true);
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        if (empty($repository->findByUserAndItem($this->getUser(), $panier))) {
+            // on vérifie que l'utilisateur ait assez d'argent
+            $repository = $em->getRepository('PJMAppBundle:Compte');
+            if (null !== $repository->findOneByUserAndBoquetteAndSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
+                // on enregistre dans l'historique
+                $achat = new Historique();
+                $achat->setUser($this->getUser());
+                $achat->setItem($panier);
+                $achat->setValid(true);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($achat);
-            $em->flush();
+                $em->persist($achat);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Le panier a été commandé.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Tu n\'as pas assez d\'argent sur ton compte.'
+                );
+            }
+        } else {
+            $request->getSession()->getFlashBag()->add(
+                'danger',
+                'Tu as déjà commandé ce panier.'
+            );
         }
 
         return $this->redirect($this->generateUrl('pjm_app_consos_paniers_index'));
