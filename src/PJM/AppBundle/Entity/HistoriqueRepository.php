@@ -71,6 +71,26 @@ class HistoriqueRepository extends EntityRepository
         return $res;
     }
 
+    public function findByItem($item)
+    {
+        $query = $this->select('user')
+                    ->from('Historique', 'h')
+                    ->where('h.item = :item')
+                    ->setParameters(array(
+                        'item'  => $item,
+                    ))
+                    ->orderBy('h.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function findLastValidByItemSlug($item_slug)
     {
         $query = $this->createQueryBuilder('h')

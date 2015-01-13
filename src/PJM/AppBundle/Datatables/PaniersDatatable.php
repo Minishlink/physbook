@@ -36,6 +36,25 @@ class PaniersDatatable extends AbstractDatatableView
             ))
             ->add('infos', 'column', array('title' => 'Infos',))
             ->add('prix', 'column', array('title' => 'Prix',))
+            ->add(null, "action", array(
+                "title" => "Actions",
+                "actions" => array(
+                    array(
+                        "route" => "pjm_app_consos_paniers_admin_voirCommandes",
+                        "route_parameters" => array(
+                            "panier" => "id"
+                        ),
+                        "label" => "Commandes",
+                        "icon" => "glyphicon glyphicon-save",
+                        "attributes" => array(
+                            "rel" => "tooltip",
+                            "title" => "Télécharger les commandes",
+                            "class" => "btn btn-default btn-xs",
+                            "role" => "button"
+                        ),
+                    )
+                )
+            ))
         ;
     }
 

@@ -87,13 +87,18 @@
                 <div id="commande" class="col-sm-7 text-center">
                     <h2 class="sr-only">Commande</h2>
                     <p class="text-larger">
+                        {% if not dejaCommande %}
                         <a href="{{ path('pjm_app_consos_paniers_commander') }}" title="Commander" class="text-blanc">
                             <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
                             Télécharge le panier dans ton k'gib
                         </a>
+                        {% else %}
+                            <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-ok-circle"></span><br>
+                            Panier téléchargé
+                        {% endif %}
                     </p>
                     <p class="text-mauve text-larger">
-                        Livré le {{ panier.date|localizeddate('full', 'none')|slice(0,-4) }}
+                        Livré le <span class="text-gris">{{ panier.date|localizeddate('full', 'none')|slice(0,-4) }}</span>
                     </p>
                 </div>
                 <div id="prix" class="col-sm-5 text-center">
