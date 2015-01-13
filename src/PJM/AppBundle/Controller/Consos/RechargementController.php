@@ -117,19 +117,6 @@ class RechargementController extends Controller
             if (isset($transaction)) {
                 if (null === $transaction->getStatus()) {
                     if ($status == "OK") {
-                        $repository = $em->getRepository('PJMAppBundle:Compte');
-                        $compte = $repository->findOneByUserAndBoquette(
-                            $transaction->getUser(),
-                            $transaction->getBoquette()
-                        );
-
-                        if ($compte === null) {
-                            $compte = new Compte($transaction->getUser(), $transaction->getBoquette());
-                        }
-
-                        $compte->setSolde($compte->getSolde() + $transaction->getMontant());
-                        $em->persist($compte);
-
                         $transaction->setStatus("OK");
                     } else {
                         if ($errorCode != null) {

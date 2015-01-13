@@ -60,13 +60,6 @@ class BoquetteController extends Controller
                 $credit->setStatus("OK");
                 $credit->setBoquette($this->getBoquette());
                 $em->persist($credit);
-
-                // on modifie le solde de l'utilisateur
-                $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
-                $compte = $repositoryCompte->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
-                $compte->crediter($credit->getMontant());
-                $em->persist($compte);
-
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add(

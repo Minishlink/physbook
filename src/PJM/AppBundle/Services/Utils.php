@@ -178,27 +178,15 @@ class Utils
                     );
 
                     foreach ($commandes as $commande) {
-                        // calculer prix (en cents, et le nombre est enregistré en déciunité)
-                        $prix = $commande->getItem()->getPrix()*$commande->getNombre()/10;
-
                         // bucquer dans l'historique
                         $historique = new Historique();
                         $historique->setCommande($commande);
                         $historique->setValid(true);
                         $this->em->persist($historique);
 
-                        // réduire le solde
-                        $compte = $repositoryCompte->findOneByUserAndBoquette($commande->getUser(), $boquette);
-                        if (!isset($compte)) {
-                            return 'Erreur : le compte de '.$commande->getUser()->getUsername().' n\'existe pas.';
-                        }
-
-                        $compte->debiter($prix);
-                        $this->em->persist($compte);
-
                         // on enregistre l'utilisateur comme "à regarder" pour le negat'ss
-                        if (!in_array($compte->getUser(), $listeUsers)) {
-                            $listeUsers[] = $compte->getUser();
+                        if (!in_array($historique->getUser(), $listeUsers)) {
+                            $listeUsers[] = $historique->getUser();
                         }
                     }
                 } else {
@@ -216,6 +204,7 @@ class Utils
         // pour tous ceux qui ont été débité,
         // on check les comptes en negat'ss et envoit un mail
         foreach ($listeUsers as $user) {
+            // TODO sql solde < 0...
             $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
             if ($compte->getSolde() < 0) {
                 $this->mailer->sendAlerteSolde($compte);
