@@ -45,5 +45,6 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/smoney/retour, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /brags/admin/, roles: ROLE_ZIBRAGS }
+        - { path: /paniers/admin/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_ADMIN }
