@@ -51,12 +51,34 @@ class CompteRepository extends EntityRepository
     }
 
     // solde >=
-    public function findOneByUserAndBoquetteAndSolde(User $user, Boquette $boquette, $solde)
+    public function findOneByUserAndBoquetteAndMinSolde(User $user, Boquette $boquette, $solde)
     {
         $query = $this->createQueryBuilder('c')
                     ->where('c.user = :user')
                     ->andWhere('c.boquette = :boquette')
                     ->andWhere('c.solde >= :solde')
+                    ->setParameters(array(
+                        'user' => $user,
+                        'boquette'  => $boquette,
+                        'solde'  => $solde,
+                    ))
+                    ->getQuery();
+        try {
+            $compte = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $compte = null;
+        }
+
+        return $compte;
+    }
+
+    // solde <
+    public function findOneByUserAndBoquetteAndMaxSolde(User $user, Boquette $boquette, $solde)
+    {
+        $query = $this->createQueryBuilder('c')
+                    ->where('c.user = :user')
+                    ->andWhere('c.boquette = :boquette')
+                    ->andWhere('c.solde < :solde')
                     ->setParameters(array(
                         'user' => $user,
                         'boquette'  => $boquette,
