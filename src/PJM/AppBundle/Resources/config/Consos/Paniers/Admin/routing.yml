@@ -17,3 +17,9 @@ pjm_app_consos_paniers_admin_listeCredits:
 pjm_app_consos_paniers_admin_creditsResults:
     path:     /listeCredits/results
     defaults: { _controller: PJMAppBundle:Consos/Paniers:creditsResults }
+
+pjm_app_consos_paniers_admin_voirCommandes:
+    path:     /voirCommandes/{panier}
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes }
+    options:
+        expose: true

@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,8 +22,16 @@ class PaniersController extends BoquetteController
 
     public function indexAction(Request $request)
     {
+        $panier = $this->getCurrentPanier();
+
+        // on vérifie si l'utilisateur n'a pas déjà commandé un panier
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $dejaCommande = (!empty($repository->findByUserAndItem($this->getUser(), $panier))) ? true : false;
+
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
-            'panier' => $this->getCurrentPanier(),
+            'panier' => $panier,
+            'dejaCommande' => $dejaCommande,
             'solde' => $this->getSolde(),
         ));
     }
@@ -50,7 +59,7 @@ class PaniersController extends BoquetteController
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    'Le panier a été commandé.'
+                    'Le panier a été commandé. Tu pourras le récupérer dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré.'
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
@@ -187,5 +196,41 @@ class PaniersController extends BoquetteController
     public function creditsResultsAction()
     {
         return $this->creditsResults();
+    }
+
+    public function voirCommandesAction(Request $request, Item $panier)
+    {
+        if ($panier->getSlug() == $this->itemSlug) {
+            // voir qui a pris les paniers
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commandes = $repository->findByItem($panier);
+            dump($commandes);
+
+            // ask the service for a Excel5
+            $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+            $phpExcelObject->getProperties()->setCreator("Phy'sboook")
+                ->setLastModifiedBy("Phy'sbook")
+                ->setTitle("Commandes du panier du ".$panier->getDate()->format('d/m/Y'));
+
+            $phpExcelObject->setActiveSheetIndex(0)
+                ->fromArray($commandes, NULL, 'A1');
+            $phpExcelObject->getActiveSheet()->setTitle('Commandes');
+
+            // create the writer
+            $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+            // create the response
+            $response = $this->get('phpexcel')->createStreamedResponse($writer);
+            // adding headers
+            $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+            $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xls');
+            $response->headers->set('Pragma', 'public');
+            $response->headers->set('Cache-Control', 'maxage=1');
+
+            return $response;
+        }
+
+        return new Response("Ce n'est pas un panier.", 404);
     }
 }

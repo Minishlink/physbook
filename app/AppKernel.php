@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Sg\DatatablesBundle\SgDatatablesBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );
