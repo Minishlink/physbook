@@ -38,7 +38,7 @@ class PaniersController extends BoquetteController
         if (empty($repository->findByUserAndItem($this->getUser(), $panier))) {
             // on vérifie que l'utilisateur ait assez d'argent
             $repository = $em->getRepository('PJMAppBundle:Compte');
-            if (null !== $repository->findOneByUserAndBoquetteAndSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
+            if (null !== $repository->findOneByUserAndBoquetteAndMinSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
                 // on enregistre dans l'historique
                 $achat = new Historique();
                 $achat->setUser($this->getUser());
