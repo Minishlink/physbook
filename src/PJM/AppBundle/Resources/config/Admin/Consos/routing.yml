@@ -6,6 +6,10 @@ pjm_app_admin_consos_creditsResults:
     path:     /{boquette_slug}/gestionCredits/results
     defaults: { _controller: PJMAppBundle:Consos/Boquette:creditsResults }
 
+pjm_app_admin_consos_gestionResponsables:
+    path:     /{slug}/gestionResponsables
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables }
+
 pjm_app_admin_consos_brags:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/Brags/routing.yml"
     prefix:   /brags
