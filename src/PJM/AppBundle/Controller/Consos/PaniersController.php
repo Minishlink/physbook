@@ -113,7 +113,7 @@ class PaniersController extends BoquetteController
     {
         // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
 
-        return $this->render('PJMAppBundle:Consos:Paniers/Admin/index.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Paniers/index.html.twig', array(
             'boquetteSlug' => $this->slug
         ));
     }
@@ -171,7 +171,7 @@ class PaniersController extends BoquetteController
         $datatable = $this->get("pjm.datatable.paniers.liste");
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Paniers/Admin/listePaniers.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Paniers/listePaniers.html.twig', array(
             'form' => $form->createView(),
             'datatable' => $datatable
         ));

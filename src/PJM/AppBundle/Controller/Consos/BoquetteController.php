@@ -4,9 +4,9 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
@@ -99,7 +99,7 @@ class BoquetteController extends Controller
         ));
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Admin/listeCredits.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/gestionCredits.html.twig', array(
             'form' => $form->createView(),
             'datatable' => $datatable
         ));
@@ -116,5 +116,97 @@ class BoquetteController extends Controller
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($boquette_slug));
 
         return $datatable->getResponse();
+    }
+
+    /**
+     * Gère la liste des responsables pour une boquette.
+     */
+    public function gestionResponsablesAction(Request $request, Boquette $boquette)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMUserBundle:User');
+
+        // TODO
+        $role = 'ROLE_ZIBRAGS';
+
+        $form = $this->createFormBuilder()
+            ->add('user', 'genemu_jqueryselect2_entity', array(
+                'error_bubbling' => true,
+                'label' => 'Utilisateur',
+                'class' => 'PJMUserBundle:User',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.username', 'ASC');
+                },
+                'constraints' => array(
+                    new Assert\NotBlank(),
+            )))
+            ->add('add', 'submit', array(
+                'label' => 'Ajout',
+            ))
+            ->add('delete', 'submit', array(
+                'label' => 'Supprimer',
+            ))
+            ->setMethod('POST')
+            ->setAction($this->generateUrl(
+                'pjm_app_admin_consos_gestionResponsables',
+                array('slug' => $boquette->getSlug())
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+        $data = $form->getData();
+        $user = $data['user'];
+
+        $userManager = $this->get('fos_user.user_manager');
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                if ($form->get('add')->isClicked()) {
+                    if (!$user->hasRole($role)) {
+                        $user->addRole($role);
+                        $userManager->updateUser($user);
+                    }
+
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        $user.' est maintenant responsable de cette boquette.'
+                    );
+                } else if($form->get('delete')->isClicked()) {
+                    if ($user->hasRole($role)) {
+                        $user->removeRole($role);
+                        $userManager->updateUser($user);
+
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            $user.' n\'est plus responsable de cette boquette.'
+                        );
+                    }
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de la modification du responsable. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
+        }
+
+        $listeResponsables = $repository->findByRole($role);
+
+        return $this->render('PJMAppBundle:Admin:Consos/gestionResponsables.html.twig', array(
+            'form'      => $form->createView(),
+            'listeResponsables' => $listeResponsables
+        ));
     }
 }

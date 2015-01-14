@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingResponsables" data-toggle="collapse" data-parent="#accordion" data-target="#collapseResponsables" aria-expanded="true" aria-controls="collapseResponsables">
+        <h2 class="panel-title">
+                Responsables
+        </h2>
+    </div>
+    <div id="collapseResponsables" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingResponsables">
+        <div class="panel-body">
+            <p>Ajoute ou supprime un responsable.</p>
+
+            <h3>Modification</h3>
+            {{ form_stylesheet(form) }}
+            {{ form_javascript(form) }}
+            {{ form(form) }}
+
+            <h3>Liste</h3>
+            {% if listeResponsables|length == 0 %}
+                Il n'y a pas de responsables actuellement.
+            {% else %}
+                Les responsables actuels sont :
+                <ul>
+                {% for responsable in listeResponsables %}
+                    <li>{{ responsable }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>

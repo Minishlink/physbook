@@ -238,7 +238,7 @@ class BragsController extends BoquetteController
     {
         // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Brags/index.html.twig', array(
             'boquetteSlug' => $this->slug
         ));
     }
@@ -248,7 +248,7 @@ class BragsController extends BoquetteController
         $datatable = $this->get("pjm.datatable.commandes");
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeCommandes.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Brags/listeCommandes.html.twig', array(
             'datatable' => $datatable
         ));
     }
@@ -344,7 +344,7 @@ class BragsController extends BoquetteController
         $datatable = $this->get("pjm.datatable.historiqueAdmin");
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeBucquages.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Brags/listeBucquages.html.twig', array(
             'datatable' => $datatable
         ));
     }
@@ -410,7 +410,7 @@ class BragsController extends BoquetteController
         $datatable = $this->get("pjm.datatable.vacances");
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeVacances.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Brags/listeVacances.html.twig', array(
             'form' => $form->createView(),
             'datatable' => $datatable
         ));
@@ -512,7 +512,7 @@ class BragsController extends BoquetteController
         $datatable = $this->get('pjm.datatable.prix');
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listePrix.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/Brags/listePrix.html.twig', array(
             'datatable' => $datatable,
             'prixActuel' => $this->getPrixBaguette(),
             'form'      => $form->createView()
@@ -527,96 +527,6 @@ class BragsController extends BoquetteController
         $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
 
         return $datatable->getResponse();
-    }
-
-    public function listeZiBragsAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
-        $role = 'ROLE_ZIBRAGS';
-
-        $form = $this->createFormBuilder()
-            ->add('user', 'genemu_jqueryselect2_entity', array(
-                'error_bubbling' => true,
-                'label' => 'Utilisateur',
-                'class' => 'PJMUserBundle:User',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');
-                },
-                'constraints' => array(
-                    new Assert\NotBlank(),
-            )))
-            ->add('save', 'submit', array(
-                'label' => 'Ajout',
-            ))
-            ->setMethod('POST')
-            ->setAction($this->generateUrl('pjm_app_admin_consos_brags_listeZiBrags'))
-            ->getForm();
-
-        $form->handleRequest($request);
-        $data = $form->getData();
-        $user = $data['user'];
-
-        $userManager = $this->get('fos_user.user_manager');
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                if (!$user->hasRole($role)) {
-                    $user->addRole($role);
-                    $userManager->updateUser($user);
-                }
-
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    $user.' est maintenant ZiBrag\'s.'
-                );
-
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de l\'ajout du ZiBrag\'s. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
-                );
-
-                $data = $form->getData();
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
-        }
-
-        $listeZiBrags = $repository->findByRole($role);
-
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/listeZiBrags.html.twig', array(
-            'form'      => $form->createView(),
-            'listeZiBrags' => $listeZiBrags
-        ));
-    }
-
-    public function removeZiBragsAction(Request $request, User $user)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
-        $role = 'ROLE_ZIBRAGS';
-        $userManager = $this->get('fos_user.user_manager');
-
-        if ($user->hasRole($role)) {
-            $user->removeRole($role);
-            $userManager->updateUser($user);
-
-            $request->getSession()->getFlashBag()->add(
-                'success',
-                $user.' est maintenant ZiBrag\'s.'
-            );
-        }
-
-        return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
     }
 
     public function bucquageCronAction()
