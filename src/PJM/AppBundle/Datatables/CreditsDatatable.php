@@ -12,11 +12,11 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class CreditsDatatable extends AbstractDatatableView
 {
-    protected $ajaxRoute;
+    protected $ajaxUrl;
 
-    public function setAjaxRoute($ajaxRoute)
+    public function setAjaxUrl($ajaxUrl)
     {
-        $this->ajaxRoute = $ajaxRoute;
+        $this->ajaxUrl = $ajaxUrl;
     }
 
     /**
@@ -33,7 +33,7 @@ class CreditsDatatable extends AbstractDatatableView
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate($this->ajaxRoute));
+        $this->getAjax()->setUrl($this->ajaxUrl);
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 

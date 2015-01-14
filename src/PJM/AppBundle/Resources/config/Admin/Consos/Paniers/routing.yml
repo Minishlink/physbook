@@ -1,0 +1,17 @@
+pjm_app_admin_consos_paniers_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:admin }
+
+pjm_app_admin_consos_paniers_listePaniers:
+    path:     /listePaniers
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:listePaniers }
+
+pjm_app_admin_consos_paniers_paniersResults:
+    path:     /listePaniers/results
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:paniersResults }
+
+pjm_app_admin_consos_paniers_voirCommandes:
+    path:     /voirCommandes/{panier}
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes }
+    options:
+        expose: true

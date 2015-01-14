@@ -24,15 +24,15 @@ class CommandesDatatable extends AbstractDatatableView
         $this->getOptions()
             ->setOrder(array("column" => 0, "direction" => "desc"));
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_commandesResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_consos_brags_commandesResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getMultiselect()
             ->setEnabled(true)
             ->setPosition("last")
-            ->addAction("Valider", "pjm_app_consos_brags_admin_validerCommandes")
-            ->addAction("Résilier", "pjm_app_consos_brags_admin_resilierCommandes")
+            ->addAction("Valider", "pjm_app_admin_consos_brags_validerCommandes")
+            ->addAction("Résilier", "pjm_app_admin_consos_brags_resilierCommandes")
             ->setWidth("20px")
         ;
 

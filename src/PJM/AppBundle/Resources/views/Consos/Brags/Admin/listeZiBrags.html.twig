@@ -18,7 +18,7 @@
                 Les ZiBrag's actuels sont :
                 <ul>
                 {% for ZiBrags in listeZiBrags %}
-                    <li>{{ ZiBrags }} (<a href="{{ path('pjm_app_consos_brags_admin_removeZiBrags', {'user': ZiBrags.id}) }}">supprimer</a>)</li>
+                    <li>{{ ZiBrags }} (<a href="{{ path('pjm_app_admin_consos_brags_removeZiBrags', {'user': ZiBrags.id}) }}">supprimer</a>)</li>
                 {% endfor %}
                 </ul>
             {% endif %}

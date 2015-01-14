@@ -238,7 +238,9 @@ class BragsController extends BoquetteController
     {
         // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
 
-        return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig');
+        return $this->render('PJMAppBundle:Consos:Brags/Admin/index.html.twig', array(
+            'boquetteSlug' => $this->slug
+        ));
     }
 
     public function listeCommandesAction()
@@ -336,23 +338,6 @@ class BragsController extends BoquetteController
         return new Response("This is not ajax.", 400);
     }
 
-    // ajout et liste d'un crédit
-    public function listeCreditsAction(Request $request)
-    {
-        return $this->gestionCredits(
-            $request,
-            'pjm_app_consos_brags_admin_listeCredits',
-            'pjm_app_consos_brags_admin_creditsResults',
-            'pjm_app_consos_brags_admin_index'
-        );
-    }
-
-    // action ajax de rendu de la liste des crédits
-    public function creditsResultsAction()
-    {
-        return $this->creditsResults();
-    }
-
     // liste des débits de baguettes
     public function listeBucquagesAction()
     {
@@ -383,7 +368,7 @@ class BragsController extends BoquetteController
 
         $form = $this->createForm(new VacancesType(), $vacances, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listeVacances'),
+            'action' => $this->generateUrl('pjm_app_admin_consos_brags_listeVacances'),
         ));
 
         $form->handleRequest($request);
@@ -419,7 +404,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
         }
 
         $datatable = $this->get("pjm.datatable.vacances");
@@ -455,7 +440,7 @@ class BragsController extends BoquetteController
                 'Les vacances du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').' ne peuvent pas être annulées.'
             );
         }
-        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
     }
 
     public function listePrixAction(Request $request)
@@ -469,7 +454,7 @@ class BragsController extends BoquetteController
         $nouveauPrix->setSlug($this->itemSlug);
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
-            'action' => $this->generateUrl('pjm_app_consos_brags_admin_listePrix'),
+            'action' => $this->generateUrl('pjm_app_admin_consos_brags_listePrix'),
             'method' => 'POST',
         ));
 
@@ -521,7 +506,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
         }
 
         $datatable = $this->get('pjm.datatable.prix');
@@ -566,7 +551,7 @@ class BragsController extends BoquetteController
                 'label' => 'Ajout',
             ))
             ->setMethod('POST')
-            ->setAction($this->generateUrl('pjm_app_consos_brags_admin_listeZiBrags'))
+            ->setAction($this->generateUrl('pjm_app_admin_consos_brags_listeZiBrags'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -603,7 +588,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
         }
 
         $listeZiBrags = $repository->findByRole($role);
@@ -631,7 +616,7 @@ class BragsController extends BoquetteController
             );
         }
 
-        return $this->redirect($this->generateUrl('pjm_app_consos_brags_admin_index'));
+        return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
     }
 
     public function bucquageCronAction()

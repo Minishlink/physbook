@@ -1,66 +1,58 @@
-pjm_app_consos_brags_admin_index:
+pjm_app_admin_consos_brags_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Consos/Brags:admin }
 
-pjm_app_consos_brags_admin_listeCommandes:
+pjm_app_admin_consos_brags_listeCommandes:
     path:     /listeCommandes
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
 
-pjm_app_consos_brags_admin_commandesResults:
+pjm_app_admin_consos_brags_commandesResults:
     path:     /listeCommandes/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:commandesResults }
 
-pjm_app_consos_brags_admin_validerCommandes:
+pjm_app_admin_consos_brags_validerCommandes:
     path:     /valider
     defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommandes }
 
-pjm_app_consos_brags_admin_resilierCommandes:
+pjm_app_admin_consos_brags_resilierCommandes:
     path:     /resilier
     defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommandes }
 
-pjm_app_consos_brags_admin_listeBucquages:
+pjm_app_admin_consos_brags_listeBucquages:
     path:     /listeBucquages
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
 
-pjm_app_consos_brags_admin_bucquagesResults:
+pjm_app_admin_consos_brags_bucquagesResults:
     path:     /listeBucquages/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:bucquagesResults }
 
-pjm_app_consos_brags_admin_listeCredits:
-    path:     /listeCredits
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listeCredits }
-
-pjm_app_consos_brags_admin_creditsResults:
-    path:     /listeCredits/results
-    defaults: { _controller: PJMAppBundle:Consos/Brags:creditsResults }
-
-pjm_app_consos_brags_admin_listeVacances:
+pjm_app_admin_consos_brags_listeVacances:
     path:     /listeVacances
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
 
-pjm_app_consos_brags_admin_vacancesResults:
+pjm_app_admin_consos_brags_vacancesResults:
     path:     /listeVacances/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:vacancesResults }
 
-pjm_app_consos_brags_admin_annulerVacances:
+pjm_app_admin_consos_brags_annulerVacances:
     path:     /annulerVacances/{vacances}
     defaults: { _controller: PJMAppBundle:Consos/Brags:annulerVacances }
     options:
         expose: true
 
-pjm_app_consos_brags_admin_listePrix:
+pjm_app_admin_consos_brags_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
 
-pjm_app_consos_brags_admin_prixResults:
+pjm_app_admin_consos_brags_prixResults:
     path:     /listePrix/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:prixResults }
 
-pjm_app_consos_brags_admin_listeZiBrags:
+pjm_app_admin_consos_brags_listeZiBrags:
     path:     /listeZiBrags
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeZiBrags }
 
-pjm_app_consos_brags_admin_removeZiBrags:
+pjm_app_admin_consos_brags_removeZiBrags:
     path:     /removeZiBrags/{user}
     defaults: { _controller: PJMAppBundle:Consos/Brags:removeZiBrags }
 

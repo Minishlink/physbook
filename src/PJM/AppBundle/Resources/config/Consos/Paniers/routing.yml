@@ -5,7 +5,3 @@ pjm_app_consos_paniers_index:
 pjm_app_consos_paniers_commander:
     path:     /commander
     defaults: { _controller: PJMAppBundle:Consos/Paniers:commander }
-
-pjm_app_consos_paniers_admin:
-    resource: "@PJMAppBundle/Resources/config/Consos/Paniers/Admin/routing.yml"
-    prefix:   /admin
