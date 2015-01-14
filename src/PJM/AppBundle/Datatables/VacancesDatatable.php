@@ -25,7 +25,7 @@ class VacancesDatatable extends AbstractDatatableView
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_brags_admin_vacancesResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_consos_brags_vacancesResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -48,7 +48,7 @@ class VacancesDatatable extends AbstractDatatableView
                 "title" => "Actions",
                 "actions" => array(
                     array(
-                        "route" => "pjm_app_consos_brags_admin_annulerVacances",
+                        "route" => "pjm_app_admin_consos_brags_annulerVacances",
                         "route_parameters" => array(
                             "vacances" => "id"
                         ),

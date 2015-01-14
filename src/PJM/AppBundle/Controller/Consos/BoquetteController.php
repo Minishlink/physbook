@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use PJM\AppBundle\Entity\Transaction;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Form\Consos\TransactionType;
 
 class BoquetteController extends Controller
@@ -40,8 +42,10 @@ class BoquetteController extends Controller
         return $baguette;
     }
 
-    // ajout et liste d'un crédit
-    public function gestionCredits(Request $request, $formRoute, $ajaxRoute, $pageRoute)
+    /**
+     * Gère la liste des crédits pour une boquette.
+     */
+    public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -49,7 +53,10 @@ class BoquetteController extends Controller
 
         $form = $this->createForm(new TransactionType(), $credit, array(
             'method' => 'POST',
-            'action' => $this->generateUrl($formRoute),
+            'action' => $this->generateUrl(
+                "pjm_app_admin_consos_gestionCredits",
+                array('slug' => $boquette->getSlug())
+            )
         ));
 
         $form->handleRequest($request);
@@ -58,7 +65,7 @@ class BoquetteController extends Controller
             if ($form->isValid()) {
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
-                $credit->setBoquette($this->getBoquette());
+                $credit->setBoquette($boquette);
                 $em->persist($credit);
                 $em->flush();
 
@@ -82,11 +89,14 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl($pageRoute));
+            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
         }
 
         $datatable = $this->get("pjm.datatable.credits");
-        $datatable->setAjaxRoute($ajaxRoute);
+        $datatable->setAjaxUrl($this->generateUrl(
+            "pjm_app_admin_consos_creditsResults",
+            array('boquette_slug' => $boquette->getSlug())
+        ));
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Admin/listeCredits.html.twig', array(
@@ -95,13 +105,15 @@ class BoquetteController extends Controller
         ));
     }
 
-    // action ajax de rendu de la liste des crédits
-    public function creditsResults()
+    /**
+     * Action ajax de rendu de la liste des crédits
+     */
+    public function creditsResultsAction($boquette_slug)
     {
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($this->slug));
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($boquette_slug));
 
         return $datatable->getResponse();
     }

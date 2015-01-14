@@ -113,7 +113,9 @@ class PaniersController extends BoquetteController
     {
         // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
 
-        return $this->render('PJMAppBundle:Consos:Paniers/Admin/index.html.twig');
+        return $this->render('PJMAppBundle:Consos:Paniers/Admin/index.html.twig', array(
+            'boquetteSlug' => $this->slug
+        ));
     }
 
     // ajout et liste paniers
@@ -128,7 +130,7 @@ class PaniersController extends BoquetteController
 
         $form = $this->createForm(new PanierType(), $panier, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_paniers_admin_listePaniers'),
+            'action' => $this->generateUrl('pjm_app_admin_consos_paniers_listePaniers'),
         ));
 
         $form->handleRequest($request);
@@ -163,7 +165,7 @@ class PaniersController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_paniers_admin_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_consos_paniers_index'));
         }
 
         $datatable = $this->get("pjm.datatable.paniers.liste");
@@ -186,23 +188,6 @@ class PaniersController extends BoquetteController
         return $datatable->getResponse();
     }
 
-    // ajout et liste d'un crédit
-    public function listeCreditsAction(Request $request)
-    {
-        return $this->gestionCredits(
-            $request,
-            'pjm_app_consos_paniers_admin_listeCredits',
-            'pjm_app_consos_paniers_admin_creditsResults',
-            'pjm_app_consos_paniers_admin_index'
-        );
-    }
-
-    // action ajax de rendu de la liste des crédits
-    public function creditsResultsAction()
-    {
-        return $this->creditsResults();
-    }
-
     public function voirCommandesAction(Request $request, Item $panier)
     {
         if ($panier->getSlug() == $this->itemSlug) {
@@ -217,7 +202,7 @@ class PaniersController extends BoquetteController
                     "Il n'y a pas encore eu de commandes pour ce panier."
                 );
 
-                return $this->redirect($this->generateUrl('pjm_app_consos_paniers_admin_index'));
+                return $this->redirect($this->generateUrl('pjm_app_admin_consos_paniers_index'));
             }
 
             // on transforme tout ça en tableau lisible

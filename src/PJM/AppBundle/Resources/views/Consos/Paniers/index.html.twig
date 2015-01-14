@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-md-12">
             <p>
-                {% if is_granted('ROLE_ZIPANIERS') %}<small><a href="{{ path('pjm_app_consos_paniers_admin_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+                {% if is_granted('ROLE_ZIPANIERS') %}<small><a href="{{ path('pjm_app_admin_consos_paniers_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
             </p>
             <p>Parce qu’ils sont riches en vitamines, en minéraux, en fibres et parce que leur effet favorable sur la santé a été démontré, il te faut manger {{ app.user.fams }} fruits et légumes par jour. De plus, ils offrent une incroyable variété de saveurs, tout ce qu’il faut pour conjuguer santé et plaisir. C’est pourquoi les Gadz ont inventé <strong><span class="text-larger">le panier de fruits et légumes</span></strong>.</p>
         </div>
