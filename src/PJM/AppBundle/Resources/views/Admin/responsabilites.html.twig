@@ -1,0 +1,30 @@
+{% extends "PJMAppBundle::Admin/layout.html.twig" %}
+
+{% block title %}
+	Responsabilités - {{ parent() }}
+{% endblock %}
+
+
+{% block pjm_app_body_content %}
+<h2>Responsabilités</h2>
+<p>
+    <a href="{{ path('pjm_app_admin_index') }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Retour
+    </a>
+</p>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <p>
+            Le <strong>rôle</strong> est facultatif : il ne sert que pour les boquettes qui ont une interface d'administration.
+        </p>
+        <p>
+            Le <strong>niveau</strong> est la donnée hiérarchique. 0 est le plus haut niveau hiérarchique.
+        </p>
+
+        {{ form_stylesheet(form) }}
+        {{ form_javascript(form) }}
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}

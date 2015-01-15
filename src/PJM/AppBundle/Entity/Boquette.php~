@@ -30,7 +30,7 @@ class Boquette
      * @Assert\NotBlank()
      */
     private $nom;
-    
+
     /**
      * @Gedmo\Slug(fields={"nom"})
      * @ORM\Column(length=128, unique=true)
@@ -43,6 +43,16 @@ class Boquette
      * @ORM\Column(name="caisseSMoney", type="string", length=255, nullable=true)
      */
     private $caisseSMoney;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Responsabilite", mappedBy="boquette")
+     **/
+    private $responsabilites;
+    
+    public function __construct() {
+        $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
 
     /**
      * Get id
