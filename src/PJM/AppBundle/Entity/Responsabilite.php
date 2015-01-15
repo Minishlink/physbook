@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Responsabilite
@@ -27,6 +28,7 @@ class Responsabilite
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $libelle;
 
@@ -43,9 +45,18 @@ class Responsabilite
      * @var integer
      *
      * @ORM\Column(name="niveau", type="smallint")
+     * @Assert\NotBlank()
      */
     private $niveau;
 
+    /**
+     * Si la responsabilité existe au tabagn'ss ou pas.
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
 
     /**
      * @ORM\OneToMany(targetEntity="Responsable", mappedBy="responsabilite")
@@ -54,6 +65,7 @@ class Responsabilite
 
     /**
      * @ORM\ManyToOne(targetEntity="Boquette", inversedBy="responsabilites")
+     * @Assert\NotBlank()
      **/
     private $boquette;
 
@@ -194,5 +206,28 @@ class Responsabilite
     public function getResponsables()
     {
         return $this->responsables;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Responsabilite
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
