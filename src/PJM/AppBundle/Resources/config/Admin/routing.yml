@@ -14,6 +14,10 @@ pjm_app_admin_users_inscriptionUnique:
     path:     /users/inscription/unique
     defaults: { _controller: PJMAppBundle:Admin:inscriptionUnique }
 
+pjm_app_admin_responsabilites:
+    path:     /responsabilites
+    defaults: { _controller: PJMAppBundle:Admin:responsabilites }
+
 pjm_app_admin_consos:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/routing.yml"
     prefix:   /consos

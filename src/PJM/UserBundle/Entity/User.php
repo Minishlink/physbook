@@ -108,6 +108,11 @@ class User extends BaseUser
      */
     private $anniversaire;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
+     **/
+    private $responsables;
+
     public function __toString()
     {
         $user = $this->username;
@@ -131,6 +136,10 @@ class User extends BaseUser
         }
 
         return $user;
+    }
+
+    public function __construct() {
+        $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -394,5 +403,38 @@ class User extends BaseUser
     public function getLastActivity()
     {
         return $this->lastActivity;
+    }
+
+    /**
+     * Add responsables
+     *
+     * @param \PJM\AppBundle\Entity\Responsable $responsables
+     * @return User
+     */
+    public function addResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
+    {
+        $this->responsables[] = $responsables;
+
+        return $this;
+    }
+
+    /**
+     * Remove responsables
+     *
+     * @param \PJM\AppBundle\Entity\Responsable $responsables
+     */
+    public function removeResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
+    {
+        $this->responsables->removeElement($responsables);
+    }
+
+    /**
+     * Get responsables
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResponsables()
+    {
+        return $this->responsables;
     }
 }

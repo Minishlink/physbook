@@ -45,6 +45,20 @@ class Boquette
     private $caisseSMoney;
 
     /**
+     * @ORM\OneToMany(targetEntity="Responsabilite", mappedBy="boquette")
+     **/
+    private $responsabilites;
+
+    public function __construct() {
+        $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->nom;
+    }
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -121,5 +135,38 @@ class Boquette
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add responsabilites
+     *
+     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
+     * @return Boquette
+     */
+    public function addResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
+    {
+        $this->responsabilites[] = $responsabilites;
+
+        return $this;
+    }
+
+    /**
+     * Remove responsabilites
+     *
+     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
+     */
+    public function removeResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
+    {
+        $this->responsabilites->removeElement($responsabilites);
+    }
+
+    /**
+     * Get responsabilites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResponsabilites()
+    {
+        return $this->responsabilites;
     }
 }

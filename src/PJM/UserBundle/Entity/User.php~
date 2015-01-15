@@ -22,7 +22,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @var datetime
      *
@@ -107,6 +107,40 @@ class User extends BaseUser
      * @Assert\Date()
      */
     private $anniversaire;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
+     **/
+    private $responsables;
+
+    public function __toString()
+    {
+        $user = $this->username;
+        if (!empty($this->bucque)) {
+            $user = $this->bucque." ".$user;
+        }
+
+        if (!empty($this->prenom) || !empty($this->nom)) {
+            $user .= " (";
+            if (!empty($this->prenom)) {
+                $user .= $this->prenom;
+            }
+            if (!empty($this->nom)) {
+                if (!empty($this->prenom)) {
+                    $user .= " ";
+                }
+
+                $user .= $this->nom;
+            }
+            $user .= ")";
+        }
+
+        return $user;
+    }
+    
+    public function __construct() {
+        $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -346,5 +380,94 @@ class User extends BaseUser
     public function getAnniversaire()
     {
         return $this->anniversaire;
+    }
+
+    /**
+     * Set lastActivity
+     *
+     * @param \DateTime $lastActivity
+     * @return User
+     */
+    public function setLastActivity($lastActivity)
+    {
+        $this->lastActivity = $lastActivity;
+
+        return $this;
+    }
+
+    /**
+     * Get lastActivity
+     *
+     * @return \DateTime
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * Add responsabilites
+     *
+     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
+     * @return User
+     */
+    public function addResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
+    {
+        $this->responsabilites[] = $responsabilites;
+
+        return $this;
+    }
+
+    /**
+     * Remove responsabilites
+     *
+     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
+     */
+    public function removeResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
+    {
+        $this->responsabilites->removeElement($responsabilites);
+    }
+
+    /**
+     * Get responsabilites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getResponsabilites()
+    {
+        return $this->responsabilites;
+    }
+
+    /**
+     * Add responsables
+     *
+     * @param \PJM\AppBundle\Entity\Responsables $responsables
+     * @return User
+     */
+    public function addResponsable(\PJM\AppBundle\Entity\Responsables $responsables)
+    {
+        $this->responsables[] = $responsables;
+
+        return $this;
+    }
+
+    /**
+     * Remove responsables
+     *
+     * @param \PJM\AppBundle\Entity\Responsables $responsables
+     */
+    public function removeResponsable(\PJM\AppBundle\Entity\Responsables $responsables)
+    {
+        $this->responsables->removeElement($responsables);
+    }
+
+    /**
+     * Get responsables
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getResponsables()
+    {
+        return $this->responsables;
     }
 }

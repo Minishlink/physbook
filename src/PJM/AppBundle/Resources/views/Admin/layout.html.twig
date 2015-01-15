@@ -1,0 +1,30 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "admin" %}
+{% block pageName %}admin{% endblock %}
+
+{% block title %}
+	Administration | {{ parent() }}
+{% endblock %}
+
+{% block pjm_app_body_title %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1><span class="glyphicon glyphicon-cog"></span> Administration</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                {% block pjm_app_body_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

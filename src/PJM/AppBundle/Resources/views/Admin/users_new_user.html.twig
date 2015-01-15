@@ -1,88 +1,81 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
-
-{% set section = "admin" %}
-{% block pageName %}admin{% endblock %}
+{% extends "PJMAppBundle::Admin/layout.html.twig" %}
 
 {% block title %}
-	Ajout d'un utilisateur | {{ parent() }}
+	Ajout d'un utilisateur - {{ parent() }}
 {% endblock %}
 
-{% block pjm_app_body_title %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Administration</h1>
-{% endblock %}
+{% block pjm_app_body_content %}
+<h2>Ajout d'un utilisateur</h2>
+<p>
+    <a href="{{ path('pjm_app_admin_index') }}" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Retour
+    </a>
+</p>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
 
-{% block pjm_app_body %}
-            <h2>Ajout d'un utilisateur</h2>
-
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>
-                        {{ form_errors(form) }}
-
-                        <div class="form-group">
-                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
-                            {{ form_errors(form.email) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.fams, {'attr': {'class': 'form-control', 'placeholder': 'Fam\'s'}}) }}
-                            {{ form_errors(form.fams) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.tabagns, {'attr': {'class': 'form-control', 'placeholder': 'Tabagn\'s'}}) }}
-                            {{ form_errors(form.tabagns) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.proms, {'attr': {'class': 'form-control', 'placeholder': 'Prom\'s'}}) }}
-                            {{ form_errors(form.proms) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.bucque, {'attr': {'class': 'form-control', 'placeholder': 'Bucque'}}) }}
-                            {{ form_errors(form.bucque) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
-                            {{ form_errors(form.prenom) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
-                            {{ form_errors(form.nom) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder': 'Téléphone'}}) }}
-                            {{ form_errors(form.telephone) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.appartement, {'attr': {'class': 'form-control', 'placeholder': 'Appartement'}}) }}
-                            {{ form_errors(form.appartement) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.classe, {'attr': {'class': 'form-control', 'placeholder': 'Classe'}}) }}
-                            {{ form_errors(form.classe) }}
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_widget(form.anniversaire, {'attr': {'class': 'form-control', 'placeholder': 'Anniversaire'}}) }}
-                            {{ form_errors(form.anniversaire) }}
-                        </div>
-
-                        {{ form_rest(form) }}
-
-                        <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
-                    </form>
-                </div>
+            <div class="form-group">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
+                {{ form_errors(form.email) }}
             </div>
-        </div>
-    </div>
 
+            <div class="form-group">
+                {{ form_widget(form.fams, {'attr': {'class': 'form-control', 'placeholder': 'Fam\'s'}}) }}
+                {{ form_errors(form.fams) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.tabagns, {'attr': {'class': 'form-control', 'placeholder': 'Tabagn\'s'}}) }}
+                {{ form_errors(form.tabagns) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.proms, {'attr': {'class': 'form-control', 'placeholder': 'Prom\'s'}}) }}
+                {{ form_errors(form.proms) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.bucque, {'attr': {'class': 'form-control', 'placeholder': 'Bucque'}}) }}
+                {{ form_errors(form.bucque) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+                {{ form_errors(form.prenom) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder': 'Téléphone'}}) }}
+                {{ form_errors(form.telephone) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.appartement, {'attr': {'class': 'form-control', 'placeholder': 'Appartement'}}) }}
+                {{ form_errors(form.appartement) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.classe, {'attr': {'class': 'form-control', 'placeholder': 'Classe'}}) }}
+                {{ form_errors(form.classe) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_widget(form.anniversaire, {'attr': {'class': 'form-control', 'placeholder': 'Anniversaire'}}) }}
+                {{ form_errors(form.anniversaire) }}
+            </div>
+
+            {{ form_rest(form) }}
+
+            <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

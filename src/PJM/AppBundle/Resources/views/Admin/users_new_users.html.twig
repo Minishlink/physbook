@@ -1,39 +1,31 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
-
-{% set section = "admin" %}
-{% block pageName %}admin{% endblock %}
+{% extends "PJMAppBundle::Admin/layout.html.twig" %}
 
 {% block title %}
-	Ajout d'une liste d'utilisateurs | {{ parent() }}
+	Ajout d'une liste d'utilisateurs - {{ parent() }}
 {% endblock %}
 
-{% block pjm_app_body_title %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Administration</h1>
-{% endblock %}
+{% block pjm_app_body_content %}
+<h2>Ajout d'une liste d'utilisateurs</h2>
+<p>
+    <a href="{{ path('pjm_app_admin_index') }}" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Retour
+    </a>
+</p>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
 
-{% block pjm_app_body %}
-            <h2>Ajout d'une liste d'utilisateurs</h2>
-
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>
-                        {{ form_errors(form) }}
-
-                        <div class="form-group">
-                            {{ form_widget(form.liste, {'attr': {'class': 'form-control', 'placeholder': 'Liste'}}) }}
-                            {{ form_errors(form.liste) }}
-                        </div>
-
-                        {{ form_rest(form) }}
-
-                        <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
-                    </form>
-                </div>
+            <div class="form-group">
+                {{ form_widget(form.liste, {'attr': {'class': 'form-control', 'placeholder': 'Liste'}}) }}
+                {{ form_errors(form.liste) }}
             </div>
 
-        </div>
-    </div>
+            {{ form_rest(form) }}
 
+            <button class="btn btn-primary" id="_submit" name="_submit" type="submit"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
