@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityRepository;
@@ -127,7 +128,22 @@ class BoquetteController extends Controller
         $repository = $em->getRepository('PJMUserBundle:User');
 
         // TODO
-        $role = 'ROLE_ZIBRAGS';
+        switch ($boquette->getSlug()) {
+            case "brags":
+                $role = 'ROLE_ZIBRAGS';
+                break;
+            case "pians":
+                $role = 'ROLE_ZIPIANS';
+                break;
+            case "cvis":
+                $role = 'ROLE_ZICVIS';
+                break;
+            case "paniers":
+                $role = 'ROLE_ZIPANIERS';
+                break;
+            default:
+                return new Response("Boquette non valide.", 404);
+        }
 
         $form = $this->createFormBuilder()
             ->add('user', 'genemu_jqueryselect2_entity', array(
