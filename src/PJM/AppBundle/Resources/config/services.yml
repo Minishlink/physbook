@@ -68,3 +68,7 @@ services:
         class: PJM\AppBundle\Datatables\PaniersDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.admin.responsabilites:
+        class: PJM\AppBundle\Datatables\ResponsabilitesDatatable
+        tags:
+            - { name: sg.datatable.view }

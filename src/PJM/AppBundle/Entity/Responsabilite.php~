@@ -3,12 +3,15 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Responsabilite
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ResponsabiliteRepository")
+ * @UniqueEntity("libelle")
  */
 class Responsabilite
 {
@@ -24,7 +27,8 @@ class Responsabilite
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $libelle;
 
@@ -37,32 +41,43 @@ class Responsabilite
 
     /**
      * Niveau hiérarchique de la responsabilité, 0 étant le plus important.
-     * 
+     *
      * @var integer
      *
      * @ORM\Column(name="niveau", type="smallint")
+     * @Assert\NotBlank()
      */
     private $niveau;
     
-    
+    /**
+     * Si la responsabilité existe au tabagn'ss ou pas.
+     * 
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     * @Assert\NotBlank()
+     */
+    private $active;
+
     /**
      * @ORM\OneToMany(targetEntity="Responsable", mappedBy="responsabilite")
      **/
     private $responsables;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Boquette", inversedBy="responsabilites")
+     * @Assert\NotBlank()
      **/
     private $boquette;
-    
+
     public function __construct() {
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +100,7 @@ class Responsabilite
     /**
      * Get libelle
      *
-     * @return string 
+     * @return string
      */
     public function getLibelle()
     {
@@ -108,7 +123,7 @@ class Responsabilite
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
     public function getRole()
     {
@@ -131,7 +146,7 @@ class Responsabilite
     /**
      * Get niveau
      *
-     * @return integer 
+     * @return integer
      */
     public function getNiveau()
     {
@@ -154,7 +169,7 @@ class Responsabilite
     /**
      * Get boquette
      *
-     * @return \PJM\AppBundle\Entity\Boquette 
+     * @return \PJM\AppBundle\Entity\Boquette
      */
     public function getBoquette()
     {
@@ -187,7 +202,7 @@ class Responsabilite
     /**
      * Get responsables
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getResponsables()
     {

@@ -25,30 +25,35 @@ class AdminController extends Controller
      * Gère les responsabilités
      * @param object Request $request Requête
      */
-    public function responsabilitesAction(Request $request)
+    public function responsabilitesAction(Request $request, Responsabilite $responsabilite = null)
     {
-        $em = $this->getDoctrine()->getManager();
+        $ajout = ($responsabilite === null);
+        if($ajout) {
+            $responsabilite = new Responsabilite();
+            $urlAction = $this->generateUrl('pjm_app_admin_responsabilites');
+        } else {
+            $urlAction = $this->generateUrl('pjm_app_admin_responsabilites', array(
+                'responsabilite' => $responsabilite->getId()
+            ));
+        }
 
-        $resp = new Responsabilite();
-
-        $form = $this->createForm(new ResponsabiliteType(), $resp, array(
+        $form = $this->createForm(new ResponsabiliteType(), $responsabilite, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_admin_responsabilites'),
+            'action' => $urlAction,
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em->persist($resp);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($responsabilite);
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
                     'La responsabilité a bien été ajoutée ou modifiée.'
                 );
-
-                return $this->redirect($this->generateUrl('pjm_app_admin_index'));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -66,13 +71,26 @@ class AdminController extends Controller
             }
         }
 
-        /*$datatable = $this->get("pjm.datatable.admin.responsabilites");
-        $datatable->buildDatatableView();*/
+        $datatable = $this->get("pjm.datatable.admin.responsabilites");
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:responsabilites.html.twig', array(
+            'ajout' => $ajout,
             'form' => $form->createView(),
-            //'datatable' => $datatable
+            'datatable' => $datatable
         ));
+    }
+
+    /**
+     * Va chercher toutes les entités Responsabilite.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function responsabilitesResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsabilites"));
+
+        return $datatable->getResponse();
     }
 
     // TODO gérer promos à l'ec'ss ou pas

@@ -14,7 +14,8 @@
     </a>
 </p>
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-4">
+        <h3>{% if ajout %}Ajout{% else %}Modification{% endif %}</h3>
         <p>
             Le <strong>rôle</strong> est facultatif : il ne sert que pour les boquettes qui ont une interface d'administration.
         </p>
@@ -25,6 +26,10 @@
         {{ form_stylesheet(form) }}
         {{ form_javascript(form) }}
         {{ form(form) }}
+    </div>
+    <div class="col-md-8">
+        <h3>Liste</h3>
+        {{ datatable_render(datatable) }}
     </div>
 </div>
 {% endblock %}

@@ -31,7 +31,10 @@ class ResponsabiliteType extends AbstractType
                 'label' => 'Rôle',
             ))
             ->add('niveau', null, array(
-                'data' => 0
+                'attr' => array('placeholder' => "ex. 0")
+            ))
+            ->add('active', null, array(
+                'required' => false
             ))
             ->add('save', 'submit', array(
                 'label' => 'Envoyer',
