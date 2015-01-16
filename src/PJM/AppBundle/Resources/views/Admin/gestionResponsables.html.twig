@@ -14,16 +14,7 @@
             {{ form(form) }}
 
             <h3>Liste</h3>
-            {% if listeResponsables|length == 0 %}
-                Il n'y a pas de responsables actuellement.
-            {% else %}
-                Les responsables actuels sont :
-                <ul>
-                {% for responsable in listeResponsables %}
-                    <li>{{ responsable }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
+            {{ datatable_render(datatable) }}
         </div>
     </div>
 </div>

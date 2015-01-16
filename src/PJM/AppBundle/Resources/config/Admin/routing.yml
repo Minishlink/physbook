@@ -25,8 +25,12 @@ pjm_app_admin_responsabilites:
         expose: true
 
 pjm_app_admin_gestionResponsables:
-    path:     /{slug}/gestionResponsables/{responsable}
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables, responsable: null }
+    path:     /{slug}/responsables
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables }
+
+pjm_app_admin_responsablesResults:
+    path:     /{boquette_slug}/responsables/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:responsablesResults }
 
 pjm_app_admin_consos:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/routing.yml"
