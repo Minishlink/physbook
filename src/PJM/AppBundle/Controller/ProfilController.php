@@ -26,6 +26,18 @@ class ProfilController extends Controller
         ));
     }
 
+    public function encartAction(Request $request, User $user)
+    {
+        $online = $this->getDoctrine()->getManager()
+            ->getRepository('PJMUserBundle:User')
+            ->getOneActive($user);
+
+        return $this->render('PJMAppBundle:Profil:encart.html.twig', array(
+            'user' => $user,
+            'online' => isset($online)
+        ));
+    }
+
     public function modifierAction(Request $request)
     {
         $user = $this->getUser();
