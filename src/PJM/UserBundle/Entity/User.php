@@ -109,7 +109,7 @@ class User extends BaseUser
     private $anniversaire;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
      **/
     private $responsables;
 
