@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Responsable
@@ -32,19 +33,25 @@ class Responsable
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+     * @Assert\NotBlank()
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="Responsabilite", inversedBy="responsables")
+     * @Assert\NotBlank()
      **/
     private $responsabilite;
 
     /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="responsables")
+     * @Assert\NotBlank()
      **/
     private $user;
 
+    public function __construct() {
+        $this->date = new \DateTime();
+    }
 
     /**
      * Get id

@@ -73,6 +73,10 @@ class Responsabilite
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->libelle;
+    }
+
     /**
      * Get id
      *
