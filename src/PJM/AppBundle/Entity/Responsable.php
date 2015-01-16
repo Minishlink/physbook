@@ -79,6 +79,19 @@ class Responsable
         return $this;
     }
 
+
+    /**
+     * Toggle active
+     *
+     * @return Responsable
+     */
+    public function toggleActive()
+    {
+        $this->active = !$this->active;
+
+        return $this;
+    }
+
     /**
      * Get active
      *

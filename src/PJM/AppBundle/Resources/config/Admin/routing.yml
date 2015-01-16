@@ -24,6 +24,10 @@ pjm_app_admin_responsabilites:
     options:
         expose: true
 
+pjm_app_admin_toggleResponsables:
+    path:     /responsables/toggle
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:toggleResponsables }
+
 pjm_app_admin_gestionResponsables:
     path:     /{slug}/responsables
     defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables }
