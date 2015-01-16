@@ -109,7 +109,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des crédits
+     * Action ajax de rendu de la liste des crédits d'une boquette.
      */
     public function creditsResultsAction($boquette_slug)
     {
@@ -122,22 +122,18 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Gère la liste des responsables pour une boquette.
+     * Gère la liste des responsables pour une boquette. (ajout et liste)
      */
-    public function gestionResponsablesAction(Request $request, Boquette $boquette, Responsable $responsable = null)
+    public function gestionResponsablesAction(Request $request, Boquette $boquette)
     {
-        $ajout = ($responsable === null);
-        if($ajout) {
-            $responsable = new Responsable();
-        }
+        $responsable = new Responsable();
 
         $form = $this->createForm(new ResponsableType(), $responsable, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
                 'pjm_app_admin_gestionResponsables',
                 array(
-                    'slug' => $boquette->getSlug(),
-                    'responsable' => $responsable->getId()
+                    'slug' => $boquette->getSlug()
                 )
             ),
             'boquette' => $boquette
@@ -157,23 +153,27 @@ class BoquetteController extends Controller
                 if ($responsable->getActive()) {
                     if (!$user->hasRole($role)) {
                         $user->addRole($role);
-                        $userManager->updateUser($user);
+                        $userManager->updateUser($user, false);
                     }
+
+                    $em->flush();
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        $user.' est maintenant responsable de '.$boquette.'.'
+                        $user.' est maintenant '.$responsable->getResponsabilite().' dans '.$boquette.'.'
                     );
                 } else {
                     if ($user->hasRole($role)) {
                         $user->removeRole($role);
-                        $userManager->updateUser($user);
-
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            $user.' n\'est plus responsable de '.$boquette.'.'
-                        );
+                        $userManager->updateUser($user, false);
                     }
+
+                    $em->flush();
+
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        $user.' n\'est plus '.$responsable->getResponsabilite().' dans '.$boquette.'.'
+                    );
                 }
             } else {
                 $request->getSession()->getFlashBag()->add(
@@ -194,11 +194,34 @@ class BoquetteController extends Controller
             return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
         }
 
-        //$listeResponsables = $repository->findByRole($role);
+        $datatable = $this->get("pjm.datatable.admin.responsable");
+        $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:gestionResponsables.html.twig', array(
             'form'      => $form->createView(),
-            'listeResponsables' => null
+            'datatable' => $datatable
         ));
+    }
+
+    /**
+     * Action ajax de rendu de la liste des responsables d'une boquette.
+     */
+    public function responsablesResultsAction($boquette_slug)
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsable"));
+
+        $datatable->addWhereBuilderCallback(
+            function($qb) use ($boquette_slug)
+            {
+                $qb
+                    ->join('Responsable.responsabilite', 're')
+                    ->join('re.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                    ->setParameter(":boquette_slug", $boquette_slug)
+                ;
+            }
+        );
+
+        return $datatable->getResponse();
     }
 }

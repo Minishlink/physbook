@@ -5,12 +5,19 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class ResponsablesDatatable
+ * Class ResponsableDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class ResponsablesDatatable extends AbstractDatatableView
+class ResponsableDatatable extends AbstractDatatableView
 {
+    protected $boquetteSlug;
+
+    public function setBoquetteSlug($boquetteSlug)
+    {
+        $this->boquetteSlug = $boquetteSlug;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -22,51 +29,42 @@ class ResponsablesDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array("column" => 3, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_responsablesResults'));
+        $this->getAjax()->setUrl(
+            $this->getRouter()->generate('pjm_app_admin_responsablesResults', array(
+                'boquette_slug' => $this->boquetteSlug
+            ))
+        );
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
+        $this->getMultiselect()
+            ->setEnabled(true)
+            ->setPosition("last")
+            ->addAction("Activer/Désactiver", "pjm_app_admin_toggleResponsables")
+            ->setWidth("20px")
+        ;
+
         $this->getColumnBuilder()
-            ->add('libelle', 'column', array(
-                'title' => 'Libellé',
+            ->add("user.bucque", "column", array("visible" => false))
+            ->add('user.username', 'column', array(
+                'title' => 'Utilisateur',
             ))
-            ->add('boquette.nom', 'column', array(
-                'title' => 'Boquette',
-            ))
-            ->add('niveau', 'column', array(
-                "title" => "Niveau",
-            ))
-            ->add('role', 'column', array(
+            ->add('responsabilite.libelle', 'column', array(
                 "title" => "Rôle",
             ))
             ->add("active", "boolean", array(
-                "title" => "Active",
+                "title" => "Actif",
                 "true_icon" => "glyphicon glyphicon-ok",
                 "false_icon" => "glyphicon glyphicon-remove",
                 "true_label" => "Oui",
                 "false_label" => "Non"
             ))
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
-                    array(
-                        "route" => "pjm_app_admin_responsabilites",
-                        "route_parameters" => array(
-                            "responsabilite" => "id"
-                        ),
-                        "label" => "Modifier",
-                        "icon" => "glyphicon glyphicon-edit",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Modifier",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
-                        ),
-                    ),
-                )
+            ->add("date", "datetime", array(
+                "title" => "Créé",
+                "format" => "ll"
             ))
         ;
     }
@@ -74,9 +72,23 @@ class ResponsablesDatatable extends AbstractDatatableView
     /**
      * {@inheritdoc}
      */
+    public function getLineFormatter()
+    {
+        $formatter = function($line){
+            $line["user"]["username"] = $line["user"]["bucque"]." ".$line["user"]["username"];
+
+            return $line;
+        };
+
+        return $formatter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getEntity()
     {
-        return 'PJM\AppBundle\Entity\Responsables';
+        return 'PJM\AppBundle\Entity\Responsable';
     }
 
     /**

@@ -72,3 +72,7 @@ services:
         class: PJM\AppBundle\Datatables\ResponsabilitesDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.admin.responsable:
+        class: PJM\AppBundle\Datatables\ResponsableDatatable
+        tags:
+            - { name: sg.datatable.view }

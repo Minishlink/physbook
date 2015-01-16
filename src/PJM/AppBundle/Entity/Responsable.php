@@ -4,12 +4,14 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Responsable
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity({"user", "responsabilite"})
  */
 class Responsable
 {
@@ -34,6 +36,7 @@ class Responsable
      *
      * @ORM\Column(name="date", type="date")
      * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $date;
 
