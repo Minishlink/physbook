@@ -1,5 +1,5 @@
 {% if responsables|length %}
-<ul class="list-unstyled">
+<ul id="listResponsables" class="list-unstyled">
     {% for responsable in responsables %}
     <li>{{ responsable.responsabilite }} : {{ responsable.user }}</li>
     {% endfor %}
