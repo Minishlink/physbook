@@ -7,6 +7,9 @@ fos_user_profile_show:
     defaults:   { _controller: PJMAppBundle:Profil:voir }
 
 pjm_profil_voir:
-    path:       /{username}
+    path:       /voir/{username}
     defaults:   { _controller: PJMAppBundle:Profil:voir }
 
+pjm_profil_encart:
+    path:       /encart/{username}
+    defaults:   { _controller: PJMAppBundle:Profil:encart }

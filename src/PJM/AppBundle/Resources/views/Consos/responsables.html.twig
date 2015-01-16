@@ -1,7 +1,7 @@
 {% if responsables|length %}
 <ul id="listResponsables" class="list-unstyled">
     {% for responsable in responsables %}
-    <li>{{ responsable.responsabilite }} : {{ responsable.user }}</li>
+    <li>{{ responsable.responsabilite }} : {% render(url('pjm_profil_encart', {'username': responsable.user.username})) %}</li>
     {% endfor %}
 </ul>
 {% else %}
