@@ -11,7 +11,9 @@ use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Responsable;
 use PJM\AppBundle\Form\Consos\TransactionType;
+use PJM\AppBundle\Form\Admin\ResponsableType;
 
 class BoquetteController extends Controller
 {
@@ -122,63 +124,37 @@ class BoquetteController extends Controller
     /**
      * Gère la liste des responsables pour une boquette.
      */
-    public function gestionResponsablesAction(Request $request, Boquette $boquette)
+    public function gestionResponsablesAction(Request $request, Boquette $boquette, Responsable $responsable = null)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
-
-        // TODO
-        switch ($boquette->getSlug()) {
-            case "brags":
-                $role = 'ROLE_ZIBRAGS';
-                break;
-            case "pians":
-                $role = 'ROLE_ZIPIANS';
-                break;
-            case "cvis":
-                $role = 'ROLE_ZICVIS';
-                break;
-            case "paniers":
-                $role = 'ROLE_ZIPANIERS';
-                break;
-            default:
-                return new Response("Boquette non valide.", 404);
+        $ajout = ($responsable === null);
+        if($ajout) {
+            $responsable = new Responsable();
         }
 
-        $form = $this->createFormBuilder()
-            ->add('user', 'genemu_jqueryselect2_entity', array(
-                'error_bubbling' => true,
-                'label' => 'Utilisateur',
-                'class' => 'PJMUserBundle:User',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');
-                },
-                'constraints' => array(
-                    new Assert\NotBlank(),
-            )))
-            ->add('add', 'submit', array(
-                'label' => 'Ajout',
-            ))
-            ->add('delete', 'submit', array(
-                'label' => 'Supprimer',
-            ))
-            ->setMethod('POST')
-            ->setAction($this->generateUrl(
-                'pjm_app_admin_consos_gestionResponsables',
-                array('slug' => $boquette->getSlug())
-            ))
-            ->getForm();
+        $form = $this->createForm(new ResponsableType(), $responsable, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl(
+                'pjm_app_admin_gestionResponsables',
+                array(
+                    'slug' => $boquette->getSlug(),
+                    'responsable' => $responsable->getId()
+                )
+            ),
+            'boquette' => $boquette
+        ));
 
         $form->handleRequest($request);
-        $data = $form->getData();
-        $user = $data['user'];
-
-        $userManager = $this->get('fos_user.user_manager');
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($form->get('add')->isClicked()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($responsable);
+
+                $userManager = $this->get('fos_user.user_manager');
+                $user = $responsable->getUser();
+                $role = $responsable->getResponsabilite()->getRole();
+
+                if ($responsable->getActive()) {
                     if (!$user->hasRole($role)) {
                         $user->addRole($role);
                         $userManager->updateUser($user);
@@ -186,16 +162,16 @@ class BoquetteController extends Controller
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        $user.' est maintenant responsable de cette boquette.'
+                        $user.' est maintenant responsable de '.$boquette.'.'
                     );
-                } else if($form->get('delete')->isClicked()) {
+                } else {
                     if ($user->hasRole($role)) {
                         $user->removeRole($role);
                         $userManager->updateUser($user);
 
                         $request->getSession()->getFlashBag()->add(
                             'success',
-                            $user.' n\'est plus responsable de cette boquette.'
+                            $user.' n\'est plus responsable de '.$boquette.'.'
                         );
                     }
                 }
@@ -218,11 +194,11 @@ class BoquetteController extends Controller
             return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
         }
 
-        $listeResponsables = $repository->findByRole($role);
+        //$listeResponsables = $repository->findByRole($role);
 
-        return $this->render('PJMAppBundle:Admin:Consos/gestionResponsables.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:gestionResponsables.html.twig', array(
             'form'      => $form->createView(),
-            'listeResponsables' => $listeResponsables
+            'listeResponsables' => null
         ));
     }
 }
