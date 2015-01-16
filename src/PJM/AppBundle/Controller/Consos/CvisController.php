@@ -17,6 +17,7 @@ class CvisController extends BoquetteController
     public function indexAction(Request $request)
     {
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
+            'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
         ));
     }

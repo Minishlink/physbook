@@ -110,7 +110,11 @@
             </div>
             <div class="row">
                 <div id="infos" class="col-sm-7 text-center">
-                    ZiPaniers
+                    <p>
+                        Récupère ton panier au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>
+                        Un problème ? Contacte :
+                    </p>
+                    {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
                 </div>
                 <div id="com3pom" class="col-sm-5 text-center">
                     <p><a href="http://www.com3pom.fr" target="_blank" alt=""><img src="{{ asset('images/consos/paniers/Com3Pom.png') }}" alt="Com3Pom"></a></p>

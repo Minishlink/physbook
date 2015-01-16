@@ -34,6 +34,7 @@ class PaniersController extends BoquetteController
         $commandes = $repository->findByUserAndItem($this->getUser(), $panier);
 
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
+            'boquetteSlug' => $this->slug,
             'panier' => $panier,
             'dejaCommande' => (!empty($commandes)),
             'solde' => $this->getSolde(),

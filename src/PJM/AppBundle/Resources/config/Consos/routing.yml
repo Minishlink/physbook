@@ -6,6 +6,10 @@ pjm_app_consos_historiqueResults:
     path:     /historique/results
     defaults: { _controller: PJMAppBundle:Consos:historiqueResults }
 
+pjm_app_consos_voirResponsables:
+    path:     /{slug}/responsables
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }
+
 pjm_app_consos_pians:
     resource: "@PJMAppBundle/Resources/config/Consos/Pians/routing.yml"
     prefix:   /pians

@@ -39,7 +39,7 @@ class BragsController extends BoquetteController
     public function indexAction(Request $request)
     {
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
-            'ZiBrags' => $this->getZiBrags(),
+            'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'prixBaguette' => $this->getPrixBaguette(),
             'commande' => $this->getCommande()

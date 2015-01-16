@@ -10,7 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Responsable
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ResponsableRepository")
+ *
  * @UniqueEntity({"user", "responsabilite"})
  */
 class Responsable
