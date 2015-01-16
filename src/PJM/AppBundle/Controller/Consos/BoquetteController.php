@@ -224,4 +224,27 @@ class BoquetteController extends Controller
 
         return $datatable->getResponse();
     }
+
+    /**
+     * Action ajax d'activation ou désactivation des responsables.
+     */
+    public function toggleResponsablesAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $listeResponsables = $request->request->get("data");
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($listeResponsables as $responsable) {
+                $responsable->toggleActive();
+                $em->persist($responsable);
+            }
+
+            $em->flush();
+
+            return new Response("Responsables toggled.");
+        }
+
+        return new Response("This is not ajax.", 400);
+    }
 }
