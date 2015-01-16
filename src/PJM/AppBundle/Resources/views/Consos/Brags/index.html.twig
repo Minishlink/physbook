@@ -90,16 +90,9 @@
             Le brag's, c'est tous les matins à 10h.
         </div>
         <div class="col-md-5 text-center">
-            {% if ZiBrags is not null %}
             <h2>S.O.S. Brag's</h2>
-            <a class="disable-fade" href="mailto:{{ ZiBrags.email }}"><img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/consos/brags/Contact.png') }}"></a>
-            <p class="text-blanc">
-                une question pratique,<br>
-                un problème de biroüte ?<br>
-                <a class="disable-fade" href="mailto:{{ ZiBrags.email }}">contacte ton ZiBrag’s<br>
-                {{ ZiBrags.bucque }} {{ ZiBrags.username }}</a>
-            </p>
-            {% endif %}
+<img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/general/Contact.png') }}">
+            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
         </div>
     </div>
 </div>

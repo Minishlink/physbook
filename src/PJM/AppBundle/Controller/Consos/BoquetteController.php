@@ -247,4 +247,15 @@ class BoquetteController extends Controller
 
         return new Response("This is not ajax.", 400);
     }
+
+    public function voirResponsablesAction(Boquette $boquette)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Responsable');
+        $responsables = $repository->findByBoquette($boquette);
+
+        return $this->render('PJMAppBundle:Consos:responsables.html.twig', array(
+            'responsables' => $responsables,
+        ));
+    }
 }

@@ -20,6 +20,7 @@ class PiansController extends BoquetteController
         $historique = $utils->getHistoriqueComplet($this->getUser(), $this->slug, 5);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
+            'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'listeHistorique' => $historique,
         ));
