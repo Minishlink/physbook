@@ -14,6 +14,7 @@ use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Responsable;
 use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Admin\ResponsableType;
+use PJM\AppBundle\Form\Consos\MontantType;
 
 class BoquetteController extends Controller
 {
@@ -212,8 +213,7 @@ class BoquetteController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsable"));
 
         $datatable->addWhereBuilderCallback(
-            function($qb) use ($boquette_slug)
-            {
+            function($qb) use ($boquette_slug) {
                 $qb
                     ->join('Responsable.responsabilite', 're')
                     ->join('re.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
@@ -256,6 +256,80 @@ class BoquetteController extends Controller
 
         return $this->render('PJMAppBundle:Consos:responsables.html.twig', array(
             'responsables' => $responsables,
+        ));
+    }
+
+    /**
+     * Gère le rechargement d'une boquette.
+     */
+    public function rechargementAction(Request $request, Boquette $boquette)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $transaction = new Transaction();
+        $transaction->setMoyenPaiement('smoney');
+
+        $form = $this->createForm(new MontantType(), $transaction, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_consos_rechargement', array('slug' => $boquette->getSlug()))
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $transaction->setBoquette($boquette);
+                $transaction->setInfos($boquette->getCaisseSMoney());
+                $transaction->setUser($this->getUser());
+
+                // on redirige vers S-Money
+                $resRechargement = json_decode(
+                    $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
+                        'transaction' => $transaction,
+                    ))->getContent(),
+                    true
+                );
+
+                if ($resRechargement['valid'] === true) {
+                    // succès, on redirige vers l'URL de paiement
+                    return $this->redirect($resRechargement['url']);
+                } else {
+                    // erreur
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        'Il y a eu une erreur lors de la communication avec S-Money.'
+                    );
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de l\'envoi du formulaire de rechargement. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_consos_'.$boquette->getSlug().'_index'));
+        }
+
+        switch ($boquette->getSlug()) {
+            case 'brags':
+                $template = "PJMAppBundle:Consos/Brags:rechargement.html.twig";
+                break;
+            case 'paniers':
+                $template = "PJMAppBundle:Consos/Paniers:rechargement.html.twig";
+                break;
+        }
+
+        return $this->render($template, array(
+            'form' => $form->createView(),
         ));
     }
 }

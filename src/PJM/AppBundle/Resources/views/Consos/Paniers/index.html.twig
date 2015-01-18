@@ -130,12 +130,7 @@
                     %}
                 </div>
                 <div class="col-lg-5 text-center">
-                    <p class="text-larger">
-                        <a class="text-blanc" href="">
-                            <span style="font-size: 6em" class="glyphicon glyphicon-flash"></span><br>
-                            Recharger
-                        </a>
-                    </p>
+                    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
                 </div>
             </div>
         </div>
