@@ -37,4 +37,16 @@ class PiansController extends BoquetteController
             'boissonDuMois' => $boissonDuMois[0],
         ));
     }
+
+    /*
+    * ADMIN
+    */
+    public function adminAction()
+    {
+        // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
+
+        return $this->render('PJMAppBundle:Admin:Consos/Pians/index.html.twig', array(
+            'boquetteSlug' => $this->slug
+        ));
+    }
 }
