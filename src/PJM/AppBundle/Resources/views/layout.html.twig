@@ -41,6 +41,14 @@
 </div>
 {% endif %}
 
-{% block pjm_app_body %}{% endblock %}
+{% block pjm_app_body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% block pim_app_body_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
 
 {% endblock %}
