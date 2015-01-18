@@ -111,7 +111,7 @@
             <div class="row">
                 <div id="infos" class="col-sm-7 text-center">
                     <p>
-                        Récupère ton panier au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>
+                        {% if dejaCommande %}Récupère ton panier au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>{% endif %}
                         Un problème ? Contacte :
                     </p>
                     {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
@@ -140,25 +140,6 @@
             </div>
         </div>
     </div>
-
-    {# <div class="row">
-        <div class="col-md-7">
-            <h2>Informations</h2>
-            Le brag's, c'est tous les matins à 10h.
-        </div>
-        <div class="col-md-5 text-center">
-            {% if ZiBrags is not null %}
-            <h2>S.O.S. Brag's</h2>
-            <a class="disable-fade" href="mailto:{{ ZiBrags.email }}"><img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/consos/brags/Contact.png') }}"></a>
-            <p class="text-blanc">
-                une question pratique,<br>
-                un problème de biroüte ?<br>
-                <a class="disable-fade" href="mailto:{{ ZiBrags.email }}">contacte ton ZiBrag’s<br>
-                {{ ZiBrags.bucque }} {{ ZiBrags.username }}</a>
-            </p>
-            {% endif %}
-        </div>
-    </div> #}
 </div>
 
 {% endblock %}

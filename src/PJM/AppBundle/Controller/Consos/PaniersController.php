@@ -31,7 +31,11 @@ class PaniersController extends BoquetteController
         // on vérifie si l'utilisateur n'a pas déjà commandé un panier
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
-        $commandes = $repository->findByUserAndItem($this->getUser(), $panier);
+        $commandes = $repository->findBy(array(
+            'user' => $this->getUser(),
+            'item' => $panier,
+            'valid' => true,
+        ));
 
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
             'boquetteSlug' => $this->slug,
