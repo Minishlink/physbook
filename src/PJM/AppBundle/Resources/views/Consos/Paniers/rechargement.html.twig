@@ -1,0 +1,17 @@
+<button id="buttonRechargement" type="button" class="text-larger debuttonize" data-toggle="modal" data-target="#modalRechargement">
+    <span style="font-size: 6em" class="glyphicon glyphicon-flash"></span><br>
+    Recharger
+</button>
+<div class="modal fade" id="modalRechargement" tabindex="-1" role="dialog" aria-labelledby="rechargement" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                <h4 class="modal-title" id="rechargement">Rechargement</h4>
+            </div>
+            <div class="modal-body">
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+</div>

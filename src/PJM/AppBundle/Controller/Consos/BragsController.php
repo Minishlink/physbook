@@ -23,7 +23,6 @@ use PJM\AppBundle\Entity\Transaction;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
-use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsController extends BoquetteController
@@ -109,69 +108,6 @@ class BragsController extends BoquetteController
 
         return (isset($ZiBrags[0])) ? $ZiBrags[0] : null;
 
-    }
-
-    public function rechargementAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $transaction = new Transaction();
-        $transaction->setMoyenPaiement('smoney');
-
-        $form = $this->createForm(new MontantType(), $transaction, array(
-            'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_brags_rechargement'),
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $boquette = $this->getBoquette();
-                $transaction->setBoquette($boquette);
-                $transaction->setInfos($boquette->getCaisseSMoney());
-                $transaction->setUser($this->getUser());
-
-                // on redirige vers S-Money
-                $resRechargement = json_decode(
-                    $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
-                        'transaction' => $transaction,
-                    ))->getContent(),
-                    true
-                );
-
-                if ($resRechargement['valid'] === true) {
-                    // succès, on redirige vers l'URL de paiement
-                    return $this->redirect($resRechargement['url']);
-                } else {
-                    // erreur
-                    $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        'Il y a eu une erreur lors de la communication avec S-Money.'
-                    );
-                }
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de l\'envoi du formulaire de rechargement. Réessaye.'
-                );
-
-                $data = $form->getData();
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_index'));
-        }
-
-        return $this->render('PJMAppBundle:Consos:Brags/rechargement.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 
     public function commandeAction(Request $request)
