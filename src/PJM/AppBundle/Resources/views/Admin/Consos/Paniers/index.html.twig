@@ -1,45 +1,37 @@
-{% extends "PJMAppBundle:Consos/Paniers:index.html.twig" %}
+{% extends "PJMAppBundle:Consos/Paniers:layout.html.twig" %}
 
 {% block categorieName %}Gestion {{ parent() }}{% endblock %}
 
-{% block pjm_app_body %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
+{% block pjm_app_body_content %}
+<p>
+    <small><a href="{{ path('pjm_app_consos_paniers_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
+        <h2 class="panel-title">
+                Manuel
+        </h2>
+    </div>
+    <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
+        <div class="panel-body">
             <p>
-                <small><a href="{{ path('pjm_app_consos_paniers_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+                Dans le panneau <strong>"Paniers"</strong>, tu peux voir l'historique des paniers et en ajouter un nouveau. Pour chaque panier, tu peux télécharger un fichier qui te donnera le nombre total de commandes et les personnes qui l'ont commandé.
             </p>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
-                    <h2 class="panel-title">
-                            Manuel
-                    </h2>
-                </div>
-                <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
-                    <div class="panel-body">
-                        <p>
-                            Dans le panneau <strong>"Paniers"</strong>, tu peux voir l'historique des paniers et en ajouter un nouveau. Pour chaque panier, tu peux télécharger un fichier qui te donnera le nombre total de commandes et les personnes qui l'ont commandé.
-                        </p>
-                        <p>
-                            Si un PG te donne un chèque ou de la monnaie pour les paniers de fruits et légumes, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. S'il s'agit d'un chèque, renseigne son numéro (7 chiffres). Tu peux aussi y consulter la liste des crédits S-Money.
-                        </p>
-                        <p>
-                            Enfin, quand tu voudras passasser ton prochain, rends toi sur le panneau <strong>"Responsables"</strong>.
-                        </p>
-                        <p>
-                            Cette page est accessible par les ZiPaniers, ZiAsso, Harpag's Asso, et ZiPhy'sbook.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                {% render(url('pjm_app_admin_consos_paniers_listePaniers')) %}
-                {% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}
-                {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
-            </div>
+            <p>
+                Si un PG te donne un chèque ou de la monnaie pour les paniers de fruits et légumes, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. S'il s'agit d'un chèque, renseigne son numéro (7 chiffres). Tu peux aussi y consulter la liste des crédits S-Money.
+            </p>
+            <p>
+                Enfin, quand tu voudras passasser ton prochain, rends toi sur le panneau <strong>"Responsables"</strong>.
+            </p>
+            <p>
+                Cette page est accessible par les ZiPaniers, ZiAsso, Harpag's Asso, et ZiPhy'sbook.
+            </p>
         </div>
     </div>
 </div>
-
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% render(url('pjm_app_admin_consos_paniers_listePaniers')) %}
+    {% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}
+    {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
+</div>
 {% endblock %}
