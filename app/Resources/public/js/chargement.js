@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $('#content').fadeIn(400);
 
-    $('a').not(".disable-fade").not("[target='_blank']").click(function(e) {
+    $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").click(function(e) {
         if (e.ctrlKey === false && e.button === 0) {
             $('#content').fadeOut(200);
 
