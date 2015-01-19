@@ -35,30 +35,30 @@
 
     <div class="row">
         <div class="col-md-12">
-            <ul id="sous-menu" class="list-inline text-uppercase text-center">
+            <ul id="sous-menu">
                 <li>
-                    <a href="">
+                    <a href="#conteneurPanneaux">
                         <img src="{{ asset('images/consos/paniers/Sac-BV.png') }}"><br>
                         Le panier
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#commande">
                         <img src="{{ asset('images/consos/paniers/Caddie.png') }}"><br>
                         Commander
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#solde">
                         <img src="{{ asset('images/consos/paniers/Niveau-V.png') }}"><br>
                         Mon compte
                     </a>
                 </li>
                 <li>
-                    <button id="buttonHistorique" type="button" class="text-larger debuttonize" data-toggle="modal" data-target="#modalHistorique">
+                    <a id="buttonHistorique" type="button" data-toggle="modal" data-target="#modalHistorique">
                         <span class="glyphicon glyphicon-list"></span><br>
                         Historique
-                    </button>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -120,12 +120,14 @@
                 </div>
             </div>
             <div class="row">
-                <div id="infos" class="col-sm-7 text-center">
-                    <p>
-                        {% if dejaCommande %}Récupère ton panier au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>{% endif %}
-                        Un problème ? Contacte :
-                    </p>
-                    {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+                <div class="col-sm-7 text-center">
+                    <div id="infos">
+                        <p>
+                            {% if dejaCommande %}Récupère ton panier au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>{% endif %}
+                            Un problème ? Contacte :
+                        </p>
+                        {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+                    </div>
                 </div>
                 <div id="com3pom" class="col-sm-5 text-center">
                     <p><a href="http://www.com3pom.fr" target="_blank" alt=""><img src="{{ asset('images/consos/paniers/Com3Pom.png') }}" alt="Com3Pom"></a></p>
