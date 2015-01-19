@@ -3,19 +3,8 @@
 {% set section = "consos" %}
 {% block pageName %}boquette cvis{% endblock %}
 
-{% block title %}
-	C'vis | {{ parent() }}
-{% endblock %}
-
-{% block pjm_app_body_title %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1><img id="logoBoquette" src="{{ asset('images/consos/cvis/Cvis.png') }}"> C'vis</h1>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block categorieName %}C'vis{% endblock %}
+{% block categorieLogo %}{{ asset('images/consos/cvis/Cvis.png') }}{% endblock %}
 
 {% block pjm_app_body %}
 <div class="container">
