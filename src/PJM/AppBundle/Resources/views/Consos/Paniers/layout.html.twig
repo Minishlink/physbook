@@ -1,0 +1,9 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}boquette paniers{% endblock %}
+
+{% block categorieName %}Paniers de fruits &amp; légumes{% endblock %}
+{% block categorieLogo %}{{ asset('images/consos/paniers/Fruits-et-legumes-V.png') }}{% endblock %}
+
+{% block pjm_app_body %}{{ parent() }}{% endblock %}

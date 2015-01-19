@@ -23,7 +23,7 @@ class Utils
         $this->twigExt = $twigExt;
     }
 
-    public function getHistoriqueComplet(User $user, $boquetteSlug, $limit = null)
+    public function getHistorique(User $user, $boquetteSlug, $limit = null)
     {
         $debits = $this->em
             ->getRepository('PJMAppBundle:Historique')
