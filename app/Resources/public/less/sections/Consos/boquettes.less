@@ -6,16 +6,23 @@
 body {
     &.boquette {
         #sous-menu {
+            .list-inline();
+            .text-uppercase();
+            .text-center();
             margin-bottom: 2em;
 
-            @size: 3em;
-
-            img {
-                height: @size;
+            li {
+                cursor: pointer;
             }
 
-            .glyphicon {
-                font-size: @size;
+            @sizeIcon: 3em;
+
+            img {
+                height: @sizeIcon;
+            }
+
+            span.glyphicon {
+                font-size: @sizeIcon;
             }
         }
 

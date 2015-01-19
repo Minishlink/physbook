@@ -173,7 +173,7 @@ class PaniersController extends BoquetteController
             return $this->redirect($this->generateUrl('pjm_app_admin_consos_paniers_index'));
         }
 
-        $datatable = $this->get("pjm.datatable.paniers.liste");
+        $datatable = $this->get("pjm.datatable.admin.paniers.liste");
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:Consos/Paniers/listePaniers.html.twig', array(
