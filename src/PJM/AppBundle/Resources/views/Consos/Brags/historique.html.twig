@@ -6,6 +6,10 @@
     <p>
         <small><a href="{{ path('pjm_app_consos_brags_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
     </p>
-    {{ datatable_render(datatable) }}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ datatable_render(datatable) }}
+        </div>
+    </div>
 </div>
 {% endblock %}
