@@ -6,11 +6,11 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class PaniersDatatable
+ * Class HistoriqueBoquetteDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class PaniersDatatable extends AbstractDatatableView
+class HistoriqueBoquetteDatatable extends AbstractDatatableView
 {
     /**
      * {@inheritdoc}
@@ -69,6 +69,6 @@ class PaniersDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'historique_paniers_datatable';
+        return 'historique_boquette_datatable';
     }
 }

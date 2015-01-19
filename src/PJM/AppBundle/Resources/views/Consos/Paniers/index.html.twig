@@ -7,6 +7,11 @@
 	Paniers de fruits &amp; légumes | {{ parent() }}
 {% endblock %}
 
+{% block modals %}
+    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+    {% render(url('pjm_app_consos_boquette_historique', {'slug': boquetteSlug})) %}
+{% endblock %}
+
 {% block pjm_app_body_title %}
 <div class="container">
     <div class="row">
@@ -48,6 +53,12 @@
                         <img src="{{ asset('images/consos/paniers/Niveau-V.png') }}"><br>
                         Mon compte
                     </a>
+                </li>
+                <li>
+                    <button id="buttonHistorique" type="button" class="text-larger debuttonize" data-toggle="modal" data-target="#modalHistorique">
+                        <span class="glyphicon glyphicon-list"></span><br>
+                        Historique
+                    </button>
                 </li>
             </ul>
         </div>
@@ -130,14 +141,12 @@
                     %}
                 </div>
                 <div class="col-lg-5 text-center">
-                    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+                    <button id="buttonRechargement" type="button" class="text-larger debuttonize" data-toggle="modal" data-target="#modalRechargement">
+                        <span style="font-size: 6em" class="glyphicon glyphicon-flash"></span><br>
+                        Recharger
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div id="historique" class="col-md-12 bg-blanc">
-            {% render(url('pjm_app_consos_boquette_historique', {'slug': boquetteSlug})) %}
         </div>
     </div>
 </div>

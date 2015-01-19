@@ -20,5 +20,10 @@ $(document).ready(function () {
     $('.collapse').on('shown.bs.collapse', function () {
         var tables = $.fn.dataTable.tables(true);
         $(tables).DataTable().columns.adjust();
-    })
+    });
+
+    $('.modal').on('shown.bs.modal', function() {
+        var tables = $.fn.dataTable.tables(true);
+        $(tables).DataTable().columns.adjust();
+    });
 });

@@ -7,6 +7,10 @@
 	Brag's | {{ parent() }}
 {% endblock %}
 
+{% block modals %}
+    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+{% endblock %}
+
 {% block pjm_app_body_title %}
 <div class="container">
     <div class="row">
@@ -80,7 +84,9 @@
             %}
         </div>
         <div class="col-md-5 text-center">
-            {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+            <h2>Rechargement</h2>
+            <button id="buttonRechargement" type="button" class="debuttonize" data-toggle="modal" data-target="#modalRechargement">
+</button>
         </div>
     </div>
 

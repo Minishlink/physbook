@@ -64,8 +64,8 @@ services:
         class: PJM\AppBundle\Datatables\CreditsDatatable
         tags:
             - { name: sg.datatable.view }
-    pjm.datatable.paniers.liste:
-        class: PJM\AppBundle\Datatables\PaniersDatatable
+    pjm.datatable.boquette.historique:
+        class: PJM\AppBundle\Datatables\HistoriqueBoquetteDatatable
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.admin.paniers.liste:
