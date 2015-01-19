@@ -86,6 +86,9 @@ $(document).ready(function () {
         $('ul[id^="menu-"]:visible').slideUp(100);
     });
 
+    /*
+     * Coloration du logo en fonction de si on passe la souris sur le menu
+     */
     $('#menu').hover(function() {
         // on colore le logo phy'sbook en rouge
         $('.navbar-brand').addClass('active');
@@ -96,6 +99,20 @@ $(document).ready(function () {
 
         // on cache le sous-menu
         $('ul[id^="menu-"]').slideUp();
+    });
+
+    /*
+     * Les liens avec ancres sont atteints de façon progressive
+     */
+    $("a[href^='#']").on('click', function(e) {
+        e.preventDefault();
+
+        var hash = this.hash;
+        if (hash != "") {
+            $('html, body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 300);
+        }
     });
 });
 
