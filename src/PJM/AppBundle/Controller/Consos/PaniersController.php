@@ -37,15 +37,11 @@ class PaniersController extends BoquetteController
             'valid' => true,
         ));
 
-        $datatable = $this->get("pjm.datatable.paniers.liste");
-        $datatable->buildDatatableView();
-
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'panier' => $panier,
             'dejaCommande' => isset($commande),
             'solde' => $this->getSolde(),
-            'datatable' => $datatable,
         ));
     }
 

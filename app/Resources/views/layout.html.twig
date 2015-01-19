@@ -16,6 +16,11 @@
 
 {% block body %}
 
+{# modals #}
+<div id="modals">
+{% block modals %}{% endblock %}
+</div>
+
 {# menu #}
 {% include("::nav.html.twig") %}
 

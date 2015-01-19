@@ -65,11 +65,11 @@ class BoquetteController extends Controller
         );
 
         // on crée le tableau de données
-        $datatable = $this->get('pjm.datatable.paniers.liste');
+        $datatable = $this->get('pjm.datatable.boquette.historique');
         $datatable->buildDatatableView();
         $datatable->setData($serializer->serialize($historique, 'json'));
-        dump($datatable->getData());
-        return $this->render('PJMAppBundle:App:datatable.html.twig', array(
+
+        return $this->render('PJMAppBundle:Consos:historiqueBoquette.html.twig', array(
             'datatable' => $datatable
         ));
     }
@@ -352,16 +352,7 @@ class BoquetteController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_'.$boquette->getSlug().'_index'));
         }
 
-        switch ($boquette->getSlug()) {
-            case 'brags':
-                $template = "PJMAppBundle:Consos/Brags:rechargement.html.twig";
-                break;
-            case 'paniers':
-                $template = "PJMAppBundle:Consos/Paniers:rechargement.html.twig";
-                break;
-        }
-
-        return $this->render($template, array(
+        return $this->render("PJMAppBundle:Consos:rechargement.html.twig", array(
             'form' => $form->createView(),
         ));
     }
