@@ -8,16 +8,19 @@ use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Compte;
 use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Twig\IntranetExtension;
 
 class Utils
 {
     protected $em;
     protected $mailer;
+    protected $twigExt;
 
-    public function __construct(EntityManager $em, Mailer $mailer)
+    public function __construct(EntityManager $em, Mailer $mailer, IntranetExtension $twigExt)
     {
         $this->em = $em;
         $this->mailer = $mailer;
+        $this->twigExt = $twigExt;
     }
 
     public function getHistoriqueComplet(User $user, $boquetteSlug, $limit = null)
@@ -30,7 +33,7 @@ class Utils
         foreach ($debits as $k => $debit) {
             $debitsFormate[$k]['date'] = $debit->getDate();
             $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
-            $debitsFormate[$k]['montant'] = -$debit->getItem()->getPrix()*$debit->getNombre()/10;
+            $debitsFormate[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix()*$debit->getNombre()/10);
             $debitsFormate[$k]['infos'] = implode(", ", $debit->getItem()->getInfos());
         }
         unset($debits);
@@ -42,8 +45,8 @@ class Utils
 
         foreach ($credits as $k => $credit) {
             $creditsFormate[$k]['date'] = $credit->getDate();
-            $creditsFormate[$k]['nom'] = $credit->getMoyenPaiement();
-            $creditsFormate[$k]['montant'] = $credit->getMontant();
+            $creditsFormate[$k]['nom'] = $this->twigExt->moyenPaiementFilter($credit->getMoyenPaiement());
+            $creditsFormate[$k]['montant'] = '+'.$this->twigExt->prixFilter($credit->getMontant());
             $creditsFormate[$k]['infos'] = $credit->getInfos();
         }
         unset($credits);

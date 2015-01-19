@@ -28,7 +28,7 @@ class HistoriqueBoquetteDatatable extends AbstractDatatableView
         $this->getColumnBuilder()
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll'
+                'format' => 'lll'
             ))
             ->add('nom', 'column', array(
                 'title' => 'Nom',
@@ -40,20 +40,6 @@ class HistoriqueBoquetteDatatable extends AbstractDatatableView
                 'title' => 'Infos',
             ))
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLineFormatter()
-    {
-        $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            $line["montant"] = $ext->prixFilter($line["montant"]);
-            return $line;
-        };
-
-        return $formatter;
     }
 
     /**
