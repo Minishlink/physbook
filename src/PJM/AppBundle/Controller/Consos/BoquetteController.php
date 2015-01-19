@@ -46,6 +46,22 @@ class BoquetteController extends Controller
         return $baguette;
     }
 
+    /*
+     * Historique des crédits et débits
+     */
+    public function historiqueAction(Boquette $boquette)
+    {
+        $utils = $this->get('pjm.services.utils');
+        $historique = $utils->getHistoriqueComplet($this->getUser(), $boquette->getSlug());
+        //TODO
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.paniers.liste"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
+
+        return $datatable->getResponse();
+    }
+
     /**
      * Gère la liste des crédits pour une boquette.
      */

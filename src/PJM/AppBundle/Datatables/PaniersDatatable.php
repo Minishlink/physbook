@@ -17,15 +17,11 @@ class PaniersDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        $this->getFeatures()->setServerSide(false);
 
         $this->getOptions()
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
-
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_consos_paniers_paniersResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -34,27 +30,8 @@ class PaniersDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
-            ->add('infos', 'column', array('title' => 'Infos',))
+            ->add('infos', 'column', array('title' => 'Contenu',))
             ->add('prix', 'column', array('title' => 'Prix',))
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
-                    array(
-                        "route" => "pjm_app_admin_consos_paniers_voirCommandes",
-                        "route_parameters" => array(
-                            "panier" => "id"
-                        ),
-                        "label" => "Commandes",
-                        "icon" => "glyphicon glyphicon-save",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Télécharger les commandes",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
-                        ),
-                    )
-                )
-            ))
         ;
     }
 
@@ -78,7 +55,7 @@ class PaniersDatatable extends AbstractDatatableView
      */
     public function getEntity()
     {
-        return 'PJM\AppBundle\Entity\Item';
+        return 'PJM\AppBundle\Entity\Historique';
     }
 
     /**
@@ -86,6 +63,6 @@ class PaniersDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'historique_datatable';
+        return 'historique_paniers_datatable';
     }
 }
