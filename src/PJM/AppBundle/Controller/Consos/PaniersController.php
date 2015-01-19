@@ -37,11 +37,15 @@ class PaniersController extends BoquetteController
             'valid' => true,
         ));
 
+        $datatable = $this->get("pjm.datatable.paniers.liste");
+        $datatable->buildDatatableView();
+
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'panier' => $panier,
             'dejaCommande' => (!empty($commandes)),
             'solde' => $this->getSolde(),
+            'datatable' => $datatable,
         ));
     }
 
@@ -124,7 +128,7 @@ class PaniersController extends BoquetteController
     }
 
     // ajout et liste paniers
-    public function listePaniersAction(Request $request)
+    public function gestionPaniersAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -183,9 +187,9 @@ class PaniersController extends BoquetteController
     }
 
     // action ajax de rendu de la liste des paniers
-    public function paniersResultsAction()
+    public function paniersResultsAdminAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.paniers.liste"));
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.paniers.liste"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
         $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
