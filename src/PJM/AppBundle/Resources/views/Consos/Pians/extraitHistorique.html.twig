@@ -8,11 +8,9 @@
                 {% for historique in liste %}
                 <tr>
                     <td>{{ historique.date|date('d/m/y') }}</td>
-                    <td>{{ historique.nom|moyenPaiement }}</td>
+                    <td>{{ historique.nom }}</td>
                     <td>
-                        <span class="prix{% if historique.montant < 0 %} negats{% endif %}">
-                            {% if historique.montant >= 0 %}+{% endif %}{{ historique.montant|prix }}
-                        </span>
+                        <span class="prix{% if historique.montant < 0 %} negats{% endif %}">{{ historique.montant }}</span>
                     </td>
                 </tr>
                 {% endfor %}
@@ -24,7 +22,7 @@
     {% endif %}
 
     <p class="text-center">
-        <a href="">
+        <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
             <span class="glyphicon glyphicon-plus"></span>
             <em class="text-gris">Historique détaillé</em></a>
     </p>
