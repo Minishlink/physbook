@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
@@ -51,19 +54,28 @@ class BoquetteController extends Controller
      */
     public function historiqueAction(Boquette $boquette)
     {
+        // on récupère l'historique complet
         $utils = $this->get('pjm.services.utils');
         $historique = $utils->getHistoriqueComplet($this->getUser(), $boquette->getSlug());
-        //TODO
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.paniers.liste"));
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
-        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
 
-        return $datatable->getResponse();
+        // outil de sérialisation (conversion de la liste des objets Historique en tableau json)
+        $serializer = new Serializer(
+            array(new GetSetMethodNormalizer()),
+            array(new JsonEncoder())
+        );
+
+        // on crée le tableau de données
+        $datatable = $this->get('pjm.datatable.paniers.liste');
+        $datatable->buildDatatableView();
+        $datatable->setData($serializer->serialize($historique, 'json'));
+        dump($datatable->getData());
+        return $this->render('PJMAppBundle:App:datatable.html.twig', array(
+            'datatable' => $datatable
+        ));
     }
 
     /**
-     * Gère la liste des crédits pour une boquette.
+     * [ADMIN] Gère la liste des crédits pour une boquette.
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
@@ -126,7 +138,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des crédits d'une boquette.
+     * [ADMIN] Action ajax de rendu de la liste des crédits d'une boquette.
      */
     public function creditsResultsAction($boquette_slug)
     {
@@ -139,7 +151,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Gère la liste des responsables pour une boquette. (ajout et liste)
+     * [ADMIN] Gère la liste des responsables pour une boquette. (ajout et liste)
      */
     public function gestionResponsablesAction(Request $request, Boquette $boquette)
     {
@@ -222,7 +234,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des responsables d'une boquette.
+     * [ADMIN] Action ajax de rendu de la liste des responsables d'une boquette.
      */
     public function responsablesResultsAction($boquette_slug)
     {
@@ -264,6 +276,11 @@ class BoquetteController extends Controller
         return new Response("This is not ajax.", 400);
     }
 
+    /**
+     * Affiche la liste des responsables d'une boquette
+     * @param  object Boquette $boquette
+     * @return object Template
+     */
     public function voirResponsablesAction(Boquette $boquette)
     {
         $em = $this->getDoctrine()->getManager();

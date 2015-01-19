@@ -61,9 +61,9 @@ class Item
     private $date;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="infos", type="text", nullable=true)
+     * @ORM\Column(name="infos", type="json_array", nullable=true)
      */
     private $infos;
 
@@ -231,7 +231,7 @@ class Item
     /**
      * Set infos
      *
-     * @param string $infos
+     * @param array $infos
      * @return Item
      */
     public function setInfos($infos)
@@ -244,7 +244,7 @@ class Item
     /**
      * Get infos
      *
-     * @return string
+     * @return array
      */
     public function getInfos()
     {

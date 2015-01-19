@@ -30,8 +30,15 @@ class PaniersDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
-            ->add('infos', 'column', array('title' => 'Contenu',))
-            ->add('prix', 'column', array('title' => 'Prix',))
+            ->add('nom', 'column', array(
+                'title' => 'Nom',
+            ))
+            ->add('montant', 'column', array(
+                'title' => 'Montant',
+            ))
+            ->add('infos', 'column', array(
+                'title' => 'Infos',
+            ))
         ;
     }
 
@@ -42,8 +49,7 @@ class PaniersDatatable extends AbstractDatatableView
     {
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
-            $line["prix"] = $ext->prixFilter($line["prix"]);
-            $line["infos"] = json_decode($line["infos"]);
+            $line["montant"] = $ext->prixFilter($line["montant"]);
             return $line;
         };
 
