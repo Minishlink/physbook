@@ -272,7 +272,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax d'activation ou désactivation des responsables.
+     * [ADMIN] Action ajax d'activation ou désactivation des responsables.
      */
     public function toggleResponsablesAction(Request $request)
     {
@@ -280,8 +280,10 @@ class BoquetteController extends Controller
             $listeResponsables = $request->request->get("data");
 
             $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:Responsable");
 
-            foreach ($listeResponsables as $responsable) {
+            foreach ($listeResponsables as $responsableChoice) {
+                $responsable = $repository->find($responsableChoice["value"]);
                 $responsable->toggleActive();
                 $em->persist($responsable);
             }
