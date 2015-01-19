@@ -59,7 +59,7 @@
                     <div class="contenu">
                         <h3>Semaine {{ panier.date|date('W') }}</h3>
                         <ul class="list-unstyled text-larger">
-                        {% for legume in panier.infos|json_decode %}
+                        {% for legume in panier.infos %}
                             <li>{{ legume }}</li>
                         {% endfor %}
                         </ul>
@@ -72,7 +72,7 @@
                         <div style="visibility: hidden;">
                             <h3>Semaine XY</h3>
                             <ul class="list-unstyled text-larger">
-                            {% for legume in panier.infos|json_decode %}
+                            {% for legume in panier.infos %}
                                 <li>xy</li>
                             {% endfor %}
                             </ul>
@@ -133,6 +133,11 @@
                     {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="historique" class="col-md-12 bg-blanc">
+            {% render(url('pjm_app_consos_boquette_historique', {'slug': boquetteSlug})) %}
         </div>
     </div>
 </div>

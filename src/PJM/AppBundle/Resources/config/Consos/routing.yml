@@ -10,6 +10,10 @@ pjm_app_consos_voirResponsables:
     path:     /{slug}/responsables
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }
 
+pjm_app_consos_boquette_historique:
+    path:     /{slug}/historique
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:historique }
+
 pjm_app_consos_rechargement:
     path:     /{slug}/rechargement
     defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement }

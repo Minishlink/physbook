@@ -63,7 +63,7 @@ class Item
     /**
      * @var string
      *
-     * @ORM\Column(name="infos", type="text", nullable=true)
+     * @ORM\Column(name="infos", type="json_array", nullable=true)
      */
     private $infos;
 

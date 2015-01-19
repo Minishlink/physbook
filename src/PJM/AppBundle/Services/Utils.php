@@ -20,7 +20,7 @@ class Utils
         $this->mailer = $mailer;
     }
 
-    public function getHistoriqueComplet(User $user, $boquetteSlug, $limit)
+    public function getHistoriqueComplet(User $user, $boquetteSlug, $limit = null)
     {
         $debits = $this->em
             ->getRepository('PJMAppBundle:Historique')
@@ -31,6 +31,7 @@ class Utils
             $debitsFormate[$k]['date'] = $debit->getDate();
             $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
             $debitsFormate[$k]['montant'] = -$debit->getItem()->getPrix()*$debit->getNombre()/10;
+            $debitsFormate[$k]['infos'] = implode(", ", $debit->getItem()->getInfos());
         }
         unset($debits);
 
@@ -43,6 +44,7 @@ class Utils
             $creditsFormate[$k]['date'] = $credit->getDate();
             $creditsFormate[$k]['nom'] = $credit->getMoyenPaiement();
             $creditsFormate[$k]['montant'] = $credit->getMontant();
+            $creditsFormate[$k]['infos'] = $credit->getInfos();
         }
         unset($credits);
 
@@ -56,7 +58,11 @@ class Utils
         };
         usort($liste, $sort_function);
 
-        return array_slice($liste, 0, 5);
+        if (isset($limit)) {
+            return array_slice($liste, 0, $limit);
+        }
+
+        return $liste;
     }
 
     public function getBoquette($boquetteSlug)
