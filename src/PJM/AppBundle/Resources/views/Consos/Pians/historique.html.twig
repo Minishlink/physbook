@@ -1,31 +1,11 @@
-<div id="historique">
-    <h2>Historique</h2>
+{% extends "PJMAppBundle:Consos/Pians:layout.html.twig" %}
 
-    {% if liste|length != 0 %}
-    <div class="table-responsive">
-        <table class="table table-unstyle">
-            <tbody>
-                {% for historique in liste %}
-                <tr>
-                    <td>{{ historique.date|date('d/m/y') }}</td>
-                    <td>{{ historique.nom|moyenPaiement }}</td>
-                    <td>
-                        <span class="prix{% if historique.montant < 0 %} negats{% endif %}">
-                            {% if historique.montant >= 0 %}+{% endif %}{{ historique.montant|prix }}
-                        </span>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% else %}
-        Tu n'as pas encore d'historique.
-    {% endif %}
+{% block categorieName %}Historique {{ parent() }}{% endblock %}
 
-    <p class="text-center">
-        <a href="">
-            <span class="glyphicon glyphicon-plus"></span>
-            <em class="text-gris">Historique détaillé</em></a>
+{% block pjm_app_body_content %}
+    <p>
+        <small><a href="{{ path('pjm_app_consos_pians_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
     </p>
+    {{ datatable_render(datatable) }}
 </div>
+{% endblock %}

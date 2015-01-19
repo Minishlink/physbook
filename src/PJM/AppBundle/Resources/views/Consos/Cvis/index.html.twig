@@ -1,10 +1,4 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
-
-{% set section = "consos" %}
-{% block pageName %}boquette cvis{% endblock %}
-
-{% block categorieName %}C'vis{% endblock %}
-{% block categorieLogo %}{{ asset('images/consos/cvis/Cvis.png') }}{% endblock %}
+{% extends "PJMAppBundle:Consos/Cvis:layout.html.twig" %}
 
 {% block pjm_app_body %}
 <div class="container">
@@ -27,7 +21,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
                         <img src="{{ asset('images/consos/cvis/Historique-B.png') }}"><br>
                         Historique
                     </a>

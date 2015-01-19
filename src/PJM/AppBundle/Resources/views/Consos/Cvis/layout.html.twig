@@ -1,0 +1,9 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}boquette cvis{% endblock %}
+
+{% block categorieName %}C'vis{% endblock %}
+{% block categorieLogo %}{{ asset('images/consos/cvis/Cvis.png') }}{% endblock %}
+
+{% block pjm_app_body %}{{ parent() }}{% endblock %}

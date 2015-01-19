@@ -1,10 +1,4 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
-
-{% set section = "consos" %}
-{% block pageName %}boquette pians{% endblock %}
-
-{% block categorieName %}Pian's{% endblock %}
-{% block categorieLogo %}{{ asset('images/consos/pians/Pians-O.png') }}{% endblock %}
+{% extends "PJMAppBundle:Consos/Pians:layout.html.twig" %}
 
 {% block pjm_app_body %}
 <div class="container">
@@ -24,7 +18,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
                         <img src="{{ asset('images/consos/pians/Historique-RB.png') }}"><br>
                         Historique
                     </a>
@@ -54,7 +48,7 @@
     <div class="row">
         <div class="col-md-4">
             {%
-                include "PJMAppBundle:Consos:Pians/historique.html.twig"
+                include "PJMAppBundle:Consos:Pians/extraitHistorique.html.twig"
                 with {
                     'liste': listeHistorique,
                 }

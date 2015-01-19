@@ -1,10 +1,4 @@
-{% extends "PJMAppBundle::layout.html.twig" %}
-
-{% set section = "consos" %}
-{% block pageName %}boquette brags{% endblock %}
-
-{% block categorieName %}Brag's{% endblock %}
-{% block categorieLogo %}{{ asset('images/consos/brags/Brags-N.png') }}{% endblock %}
+{% extends "PJMAppBundle:Consos/Brags:layout.html.twig" %}
 
 {% block modals %}
     {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
@@ -42,6 +36,12 @@
                     <a href="">
                         <img src="{{ asset('images/consos/brags/SOS.png') }}"><br>
                         S.O.S.
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
+                        <span class="glyphicon glyphicon-list"></span><br>
+                        Historique
                     </a>
                 </li>
             </ul>

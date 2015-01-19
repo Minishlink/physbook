@@ -56,7 +56,7 @@ class BoquetteController extends Controller
     {
         // on récupère l'historique complet
         $utils = $this->get('pjm.services.utils');
-        $historique = $utils->getHistoriqueComplet($this->getUser(), $boquette->getSlug());
+        $historique = $utils->getHistorique($this->getUser(), $boquette->getSlug());
 
         // outil de sérialisation (conversion de la liste des objets Historique en tableau json)
         $serializer = new Serializer(
@@ -69,8 +69,26 @@ class BoquetteController extends Controller
         $datatable->buildDatatableView();
         $datatable->setData($serializer->serialize($historique, 'json'));
 
-        return $this->render('PJMAppBundle:Consos:historiqueBoquette.html.twig', array(
-            'datatable' => $datatable
+        switch ($boquette->getSlug()) {
+            case 'pians':
+                $template = 'PJMAppBundle:Consos/Pians:historique.html.twig';
+                break;
+            case 'cvis':
+                $template = 'PJMAppBundle:Consos/Cvis:historique.html.twig';
+                break;
+            case 'brags':
+                $template = 'PJMAppBundle:Consos/Brags:historique.html.twig';
+                break;
+            case 'paniers':
+                $template = 'PJMAppBundle:Consos/Paniers:historique.html.twig';
+                break;
+            default:
+                $template = 'PJMAppBundle:Consos:historique.html.twig';
+                break;
+        }
+
+        return $this->render($template, array(
+            'datatable' => $datatable,
         ));
     }
 
