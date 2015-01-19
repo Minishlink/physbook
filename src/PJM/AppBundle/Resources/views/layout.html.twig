@@ -1,15 +1,26 @@
 {% extends "::layout.html.twig" %}
 
-{% block pageName %}accueil{% endblock %}
+{% block pageName %}{% endblock %}
+{% block categorieName %}{% endblock %}
+{% block categorieLogo %}{% endblock %}
+
+{% block title %}
+	{{ block('categorieName') }} | {{ parent() }}
+{% endblock %}
 
 {% block content %}
 
-{% set block_pjm_app_body_title = block('pjm_app_body_title') %}
-{% if block_pjm_app_body_title is not empty %}
+{% block pjm_app_body_title %}
 <div class="container-fluid" id="bandeauTitre">
-     {{ block_pjm_app_body_title|raw }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><img id="logoPage" src="{{ block('categorieLogo') }}"> {{ block('categorieName') }}</h1>
+            </div>
+        </div>
+    </div>
 </div>
-{% endif %}
+{% endblock %}
 
 {% if app.session.flashbag.peekAll is not empty %}
 <div class="container">
@@ -45,7 +56,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            {% block pim_app_body_content %}{% endblock %}
+            {% block pjm_app_body_content %}{% endblock %}
         </div>
     </div>
 </div>

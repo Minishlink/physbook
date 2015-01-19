@@ -1,13 +1,15 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
 {% block pageName %}profil{% endblock %}
+{% block categorieName %}Profil{% endblock %}
+{% block pjm_app_body_title %}{% endblock %}
 
 {% block title %}
     {% if user == app.user %}Mon profil{% else %}
     Profil de {{ user.bucque }} {{ user.fams }}{{ user.tabagns }}{{ user.proms }}{% endif %} | {{ parent() }}
 {% endblock %}
 
-{% block pjm_app_body %}
+{% block pjm_app_body_content %}
 
 <div class="well">
 
