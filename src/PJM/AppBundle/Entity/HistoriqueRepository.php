@@ -71,15 +71,30 @@ class HistoriqueRepository extends EntityRepository
         return $res;
     }
 
-    public function findByItem($item)
+    public function findByItem($item, $valid = true, $orderByUser = false)
     {
-        $query = $this->createQueryBuilder('h')
-                    ->where('h.item = :item')
-                    ->setParameters(array(
-                        'item'  => $item,
-                    ))
-                    ->orderBy('h.date', 'desc')
-                    ->getQuery();
+        $qb = $this->createQueryBuilder('h')
+            ->where('h.item = :item')
+            ->setParameters(array(
+                'item'  => $item,
+            ))
+        ;
+
+        if (!isset($valid) || $valid) {
+            $qb->andWhere('h.valid = true');
+        }
+
+        if ($orderByUser) {
+            $qb
+                ->join('h.user', 'u')
+                ->addOrderBy('u.proms', 'asc')
+                ->addOrderBy('u.fams', 'desc')
+            ;
+        } else {
+            $qb->orderBy('h.date', 'desc');
+        }
+
+        $query = $qb->getQuery();
 
         try {
             $res = $query->getResult();
