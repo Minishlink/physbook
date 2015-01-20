@@ -47,40 +47,48 @@ class PaniersController extends BoquetteController
 
     public function commanderAction(Request $request)
     {
-        // on va chercher le panier actif
+        // on va chercher le dernier panier
         $panier = $this->getCurrentPanier();
 
-        // on vérifie si l'utilisateur n'a pas déjà commandé un panier
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
-        $commandes = $repository->findByUserAndItem($this->getUser(), $panier);
-        if (empty($commandes)) {
-            // on vérifie que l'utilisateur ait assez d'argent
-            $repository = $em->getRepository('PJMAppBundle:Compte');
-            if (null !== $repository->findOneByUserAndBoquetteAndMinSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
-                // on enregistre dans l'historique
-                $achat = new Historique();
-                $achat->setUser($this->getUser());
-                $achat->setItem($panier);
-                $achat->setValid(true);
+        // si le panier est bien actif
+        if ($panier->getValid()) {
+            // on vérifie si l'utilisateur n'a pas déjà commandé un panier
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('PJMAppBundle:Historique');
+            $commandes = $repository->findByUserAndItem($this->getUser(), $panier);
+            if (empty($commandes)) {
+                // on vérifie que l'utilisateur ait assez d'argent
+                $repository = $em->getRepository('PJMAppBundle:Compte');
+                if (null !== $repository->findOneByUserAndBoquetteAndMinSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
+                    // on enregistre dans l'historique
+                    $achat = new Historique();
+                    $achat->setUser($this->getUser());
+                    $achat->setItem($panier);
+                    $achat->setValid(true);
 
-                $em->persist($achat);
-                $em->flush();
+                    $em->persist($achat);
+                    $em->flush();
 
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'Le panier a été commandé. Tu pourras le récupérer dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré.'
-                );
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        'Le panier a été commandé. Tu pourras le récupérer dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré.'
+                    );
+                } else {
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        'Tu n\'as pas assez d\'argent sur ton compte.'
+                    );
+                }
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    'Tu n\'as pas assez d\'argent sur ton compte.'
+                    'Tu as déjà commandé ce panier.'
                 );
             }
         } else {
             $request->getSession()->getFlashBag()->add(
                 'danger',
-                'Tu as déjà commandé ce panier.'
+                "Désolé, c'est trop tard pour commander ce panier."
             );
         }
 
@@ -89,7 +97,7 @@ class PaniersController extends BoquetteController
 
     public function getCurrentPanier()
     {
-        $panier = $this->getItem($this->itemSlug);
+        $panier = $this->getLastItem($this->itemSlug, null);
 
         if (null === $panier) {
             $panier = new Item();
@@ -194,7 +202,7 @@ class PaniersController extends BoquetteController
         return $datatable->getResponse();
     }
 
-    public function voirCommandesAction(Request $request, Item $panier)
+    public function voirCommandesAction(Request $request, Item $panier, $download = false)
     {
         if ($panier->getSlug() == $this->itemSlug) {
             // voir qui a pris les paniers
@@ -222,110 +230,129 @@ class PaniersController extends BoquetteController
                 $tableau[] = $row;
             }
 
-            // on appelle le service PHPExcel
-            $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+            /*
+             * Si on veut télécharger le fichier Excel
+             * alors on arrête les commandes de ce panier
+             * et on fait télécharger le fichier
+             */
+            if ($download) {
+                // on arrête les commandes
+                if ($panier->getValid()) {
+                    $panier->setValid(false);
+                    $em->persist($panier);
+                    $em->flush();
+                }
 
-            // on définit le nom du fichier
-            $phpExcelObject->getProperties()->setCreator("Phy'sbook")
-                ->setLastModifiedBy("Phy'sbook")
-                ->setTitle("Commandes du panier du ".$panier->getDate()->format('d/m/Y'));
+                // on appelle le service PHPExcel
+                $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            // on crée le tableau à l'intérieur du fichier
-            $nbRows = count($tableau);
-            $rangeTab = "A3:F".(3+$nbRows);
-            $sheet = $phpExcelObject->setActiveSheetIndex(0);
-            $sheet
-                ->setCellValue('A1', "Total")
-                ->setCellValue('B1', count($tableau))
-                ->setCellValue('C1', "paniers")
-                ->setCellValue('D1', "soit")
-                ->setCellValue('E1', count($tableau)*$panier->getPrix()/100)
-                ->setCellValue('A3', "Bucque")
-                ->setCellValue('B3', "Fam's")
-                ->setCellValue('C3', "Tbk")
-                ->setCellValue('D3', "Prom's")
-                ->setCellValue('E3', "Kgib")
-                ->setCellValue('F3', "Signature")
-                ->fromArray($tableau, NULL, 'A4')
-                ->setAutoFilter($rangeTab)
-                ->setTitle('Commandes');
+                // on définit le nom du fichier
+                $phpExcelObject->getProperties()->setCreator("Phy'sbook")
+                    ->setLastModifiedBy("Phy'sbook")
+                    ->setTitle("Commandes du panier du ".$panier->getDate()->format('d/m/Y'));
 
-            $boldStyle = array(
-                'font' => array(
-                    'bold' => true
-                ),
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => \PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('argb' => '00000000'),
+                // on crée le tableau à l'intérieur du fichier
+                $nbRows = count($tableau);
+                $rangeTab = "A3:F".(3+$nbRows);
+                $sheet = $phpExcelObject->setActiveSheetIndex(0);
+                $sheet
+                    ->setCellValue('A1', "Total")
+                    ->setCellValue('B1', count($tableau))
+                    ->setCellValue('C1', "paniers")
+                    ->setCellValue('D1', "soit")
+                    ->setCellValue('E1', count($tableau)*$panier->getPrix()/100)
+                    ->setCellValue('A3', "Bucque")
+                    ->setCellValue('B3', "Fam's")
+                    ->setCellValue('C3', "Tbk")
+                    ->setCellValue('D3', "Prom's")
+                    ->setCellValue('E3', "Kgib")
+                    ->setCellValue('F3', "Signature")
+                    ->fromArray($tableau, NULL, 'A4')
+                    ->setAutoFilter($rangeTab)
+                    ->setTitle('Commandes');
+
+                $boldStyle = array(
+                    'font' => array(
+                        'bold' => true
                     ),
-                ),
-            );
-
-            $italicStyle = array(
-                'font' => array(
-                    'italic' => true
-                )
-            );
-
-            $borduresIntStyle = array(
-                'borders' => array(
-                    'allborders' => array(
-                        'style' => \PHPExcel_Style_Border::BORDER_THIN,
-                        'color' => array('rgb' => 'b0b0b0'),
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '00000000'),
+                        ),
                     ),
-                ),
-            );
+                );
 
-            $borduresStyle = array(
-                'borders' => array(
-                    'outline' => array(
-                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
-                        'color' => array('argb' => '00000000'),
+                $italicStyle = array(
+                    'font' => array(
+                        'italic' => true
+                    )
+                );
+
+                $borduresIntStyle = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('rgb' => 'b0b0b0'),
+                        ),
                     ),
-                ),
-            );
+                );
 
-            // on met en forme
-            $sheet->getStyle('E1')->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
-            $sheet->getStyle('A1')->applyFromArray($italicStyle);
-            $sheet->getStyle($rangeTab)->applyFromArray($borduresIntStyle);
-            $sheet->getStyle('A3:F3')->applyFromArray($boldStyle);
-            $sheet->getStyle($rangeTab)->applyFromArray($borduresStyle);
-            $sheet->getStyle($rangeTab)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            $sheet->getColumnDimension('A')->setWidth(13);
-            $sheet->getColumnDimension('E')->setWidth(15);
-            $sheet->getColumnDimension('F')->setWidth(15);
-            for ($r = 0; $r < $nbRows; $r++) {
-                $sheet->getRowDimension(4+$r)->setRowHeight(25);
+                $borduresStyle = array(
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                            'color' => array('argb' => '00000000'),
+                        ),
+                    ),
+                );
+
+                // on met en forme
+                $sheet->getStyle('E1')->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
+                $sheet->getStyle('A1')->applyFromArray($italicStyle);
+                $sheet->getStyle($rangeTab)->applyFromArray($borduresIntStyle);
+                $sheet->getStyle('A3:F3')->applyFromArray($boldStyle);
+                $sheet->getStyle($rangeTab)->applyFromArray($borduresStyle);
+                $sheet->getStyle($rangeTab)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getColumnDimension('A')->setWidth(13);
+                $sheet->getColumnDimension('E')->setWidth(15);
+                $sheet->getColumnDimension('F')->setWidth(15);
+                for ($r = 0; $r < $nbRows; $r++) {
+                    $sheet->getRowDimension(4+$r)->setRowHeight(25);
+                }
+
+                // on charge le logo de Phy'sbook
+                $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
+                $logo->setName("Phy'sbook logo");
+                $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
+                $logo->setPath($_SERVER['DOCUMENT_ROOT'].$urlLogo);
+                $logo->setHeight(40);
+                $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
+
+                // on met le titre et le logo
+                $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getLibelle());
+
+                // on met un petit message d'horodatage
+                $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.&Rphysbook.fr");
+
+                // on met le curseur au dbéut du fichier
+                $phpExcelObject->setActiveSheetIndex(0);
+
+                // on fait télécharger le fichier
+                $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+                $response = $this->get('phpexcel')->createStreamedResponse($writer);
+                $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
+                $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xlsx');
+                $response->headers->set('Pragma', 'public');
+                $response->headers->set('Cache-Control', 'maxage=1');
+
+                return $response;
             }
 
-            // on charge le logo de Phy'sbook
-            $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
-            $logo->setName("Phy'sbook logo");
-            $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
-            $logo->setPath($_SERVER['DOCUMENT_ROOT'].$urlLogo);
-            $logo->setHeight(40);
-            $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
-
-            // on met le titre et le logo
-            $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getLibelle());
-
-            // on met un petit message d'horodatage
-            $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.&Rphysbook.fr");
-
-            // on met le curseur au dbéut du fichier
-            $phpExcelObject->setActiveSheetIndex(0);
-
-            // on fait télécharger le fichier
-            $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
-            $response = $this->get('phpexcel')->createStreamedResponse($writer);
-            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-            $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xlsx');
-            $response->headers->set('Pragma', 'public');
-            $response->headers->set('Cache-Control', 'maxage=1');
-
-            return $response;
+            // sinon on veut juste voir l'avancement
+            return $this->render('PJMAppBundle:App:table.html.twig', array(
+                'table' => $tableau,
+            ));
         }
 
         return new Response("Ce n'est pas un panier.", 404);

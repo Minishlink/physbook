@@ -81,10 +81,15 @@
                     <h2 class="sr-only">Commande</h2>
                     <p class="text-larger">
                         {% if not dejaCommande %}
-                        <a href="{{ path('pjm_app_consos_paniers_commander') }}" title="Commander" class="text-blanc">
-                            <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
-                            Télécharge le panier dans ton k'gib
-                        </a>
+                            {% if panier.valid %}
+                            <a href="{{ path('pjm_app_consos_paniers_commander') }}" title="Commander" class="text-blanc">
+                                <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
+                                Télécharge le panier dans ton k'gib
+                            </a>
+                            {% else %}
+                                <span style="font-size: 6em" class="text-gris glyphicon glyphicon-ban-circle"></span><br>
+                                Trop tard pour commander...
+                            {% endif %}
                         {% else %}
                             <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-ok-circle"></span><br>
                             Panier téléchargé

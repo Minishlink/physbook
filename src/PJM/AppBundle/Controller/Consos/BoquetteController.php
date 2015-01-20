@@ -42,11 +42,21 @@ class BoquetteController extends Controller
     public function getItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
-        $baguette = $em
+        $item = $em
             ->getRepository('PJMAppBundle:Item')
             ->findOneBySlugAndValid($itemSlug, $valid);
 
-        return $baguette;
+        return $item;
+    }
+
+    public function getLastItem($itemSlug, $valid = true)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em
+            ->getRepository('PJMAppBundle:Item')
+            ->findLastOneBySlugAndValid($itemSlug, $valid);
+
+        return $item;
     }
 
     /*
