@@ -199,7 +199,7 @@ class PaniersController extends BoquetteController
             // voir qui a pris les paniers
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Historique');
-            $commandes = $repository->findByItem($panier);
+            $commandes = $repository->findByItem($panier, null, true);
 
             if (empty($commandes)) {
                 $request->getSession()->getFlashBag()->add(
@@ -267,6 +267,15 @@ class PaniersController extends BoquetteController
                 )
             );
 
+            $borduresIntStyle = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        'color' => array('rgb' => 'b0b0b0'),
+                    ),
+                ),
+            );
+
             $borduresStyle = array(
                 'borders' => array(
                     'outline' => array(
@@ -279,6 +288,7 @@ class PaniersController extends BoquetteController
             // on met en forme
             $sheet->getStyle('E1')->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
             $sheet->getStyle('A1')->applyFromArray($italicStyle);
+            $sheet->getStyle($rangeTab)->applyFromArray($borduresIntStyle);
             $sheet->getStyle('A3:F3')->applyFromArray($boldStyle);
             $sheet->getStyle($rangeTab)->applyFromArray($borduresStyle);
             $sheet->getStyle($rangeTab)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -289,15 +299,19 @@ class PaniersController extends BoquetteController
                 $sheet->getRowDimension(4+$r)->setRowHeight(25);
             }
 
-            // on met le logo de Phy'sbook
-            /*$logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
+            // on charge le logo de Phy'sbook
+            $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
             $logo->setName("Phy'sbook logo");
-            $logo->setPath('/images/general/physbook_bg-rouge.png', false);
-            $logo->setHeight(36);
-            $phpExcelObject->getActiveSheet()->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);*/
+            $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
+            $logo->setPath($_SERVER['DOCUMENT_ROOT'].$urlLogo);
+            $logo->setHeight(40);
+            $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
+
+            // on met le titre et le logo
+            $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getBoquette());
 
             // on met un petit message d'horodatage
-            $sheet->setCellValue('A'.(5+$nbRows), "Autogénéré par Phy'sbook le ".date("d/m/Y").".");
+            $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.");
 
             // on met le curseur au dbéut du fichier
             $phpExcelObject->setActiveSheetIndex(0);
