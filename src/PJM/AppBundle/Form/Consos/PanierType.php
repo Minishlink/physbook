@@ -23,7 +23,7 @@ class PanierType extends AbstractType
                 'error_bubbling' => true,
                 'label' => 'Date de livraison du panier',
             ))
-            ->add('infos', null, array(
+            ->add('infos', 'textarea', array(
                 'error_bubbling' => true,
                 'label' => 'Contenu du panier',
                 'attr' => array('placeholder' => 'une ligne par fruit ou légume')
@@ -46,7 +46,7 @@ class PanierType extends AbstractType
             ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
                 $panier = $event->getData();
                 if (isset($panier['infos'])) {
-                    $panier['infos'] = json_encode(preg_split("/\r\n|\n|\r/", $panier['infos']));
+                    $panier['infos'] = preg_split("/\r\n|\n|\r/", $panier['infos']);
                 }
                 $event->setData($panier);
             })
