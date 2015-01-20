@@ -11,7 +11,13 @@ pjm_app_admin_consos_paniers_paniersResults:
     defaults: { _controller: PJMAppBundle:Consos/Paniers:paniersResultsAdmin }
 
 pjm_app_admin_consos_paniers_voirCommandes:
-    path:     /voirCommandes/{panier}
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes }
+    path:     /commandes/voir/{panier}
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes, download: false}
+    options:
+        expose: true
+
+pjm_app_admin_consos_paniers_telechargerCommandes:
+    path:     /commandes/telecharger/{panier}
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes, download: true}
     options:
         expose: true

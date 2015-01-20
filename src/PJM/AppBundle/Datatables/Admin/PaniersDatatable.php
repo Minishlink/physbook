@@ -37,22 +37,36 @@ class PaniersDatatable extends AbstractDatatableView
             ->add('infos', 'column', array('title' => 'Infos',))
             ->add('prix', 'column', array('title' => 'Prix',))
             ->add(null, "action", array(
-                "title" => "Actions",
+                "title" => "Commandes",
                 "actions" => array(
                     array(
                         "route" => "pjm_app_admin_consos_paniers_voirCommandes",
                         "route_parameters" => array(
-                            "panier" => "id"
+                            "panier" => "id",
                         ),
-                        "label" => "Commandes",
-                        "icon" => "glyphicon glyphicon-save",
+                        "label" => "Voir l'état",
+                        "icon" => "glyphicon glyphicon-eye-open",
                         "attributes" => array(
                             "rel" => "tooltip",
-                            "title" => "Télécharger les commandes",
+                            "title" => "Voir l'état des commandes",
                             "class" => "btn btn-default btn-xs",
                             "role" => "button"
                         ),
-                    )
+                    ),
+                    array(
+                        "route" => "pjm_app_admin_consos_paniers_telechargerCommandes",
+                        "route_parameters" => array(
+                            "panier" => "id",
+                        ),
+                        "label" => "Stopper et télécharger",
+                        "icon" => "glyphicon glyphicon-save",
+                        "attributes" => array(
+                            "rel" => "tooltip",
+                            "title" => "Télécharger et arrêter les commandes (.xlsx)",
+                            "class" => "btn btn-default btn-xs",
+                            "role" => "button"
+                        ),
+                    ),
                 )
             ))
         ;

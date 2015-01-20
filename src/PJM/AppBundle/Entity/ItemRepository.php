@@ -50,6 +50,33 @@ class ItemRepository extends EntityRepository
         return $res;
     }
 
+    public function findLastOneBySlugAndValid($slug, $valid = true)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('i.date', 'desc')
+            ->setMaxResults(1)
+        ;
+
+        if (isset($valid)) {
+            $qb
+                ->andWhere('i.valid = :valid')
+                ->setParameter('valid', $valid)
+            ;
+        }
+
+        $query = $qb->getQuery();
+
+        try {
+            $res = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function callbackFindBySlug($slug)
     {
         return function($qb) use($slug) {
