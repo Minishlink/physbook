@@ -146,6 +146,7 @@ class PaniersController extends BoquetteController
                 $ancienPanier = $this->getCurrentPanier();
                 $ancienPanier->setValid(false);
                 $em->persist($ancienPanier);
+                $panier->setLibelle('Panier de fruits et légumes ('.$panier->getDate()->format('d/m').")");
                 $em->persist($panier);
 
                 $em->flush();
@@ -308,10 +309,10 @@ class PaniersController extends BoquetteController
             $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
 
             // on met le titre et le logo
-            $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getBoquette());
+            $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getLibelle());
 
             // on met un petit message d'horodatage
-            $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.");
+            $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.&Rphysbook.fr");
 
             // on met le curseur au dbéut du fichier
             $phpExcelObject->setActiveSheetIndex(0);
