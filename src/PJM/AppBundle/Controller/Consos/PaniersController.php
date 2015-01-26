@@ -325,7 +325,11 @@ class PaniersController extends BoquetteController
                 $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
                 $logo->setName("Phy'sbook logo");
                 $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
-                $logo->setPath($_SERVER['DOCUMENT_ROOT'].$urlLogo);
+                $basePath = $_SERVER['DOCUMENT_ROOT'];
+                if (!$this->get('kernel')->isDebug()) {
+                    $basePath .= "/web";
+                }
+                $logo->setPath($basePath.$urlLogo);
                 $logo->setHeight(40);
                 $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
 
