@@ -1,0 +1,17 @@
+<h2 class="sr-only">Solde</h2>
+<div id="soldeContainer">
+{% if solde >= 5000 %}
+    <img src="{{ asset('images/consos/pians/Biere-pleine.png') }}">
+{% elseif solde >= 3750 %}
+    <img src="{{ asset('images/consos/pians/Biere-34.png') }}">
+{% elseif solde >= 2500 %}
+    <img src="{{ asset('images/consos/pians/Biere-12.png') }}">
+{% elseif solde >= 1250 %}
+    <img src="{{ asset('images/consos/pians/Biere-14.png') }}">
+{% elseif solde == 0 %}
+    <img src="{{ asset('images/consos/pians/Biere-0.png') }}">
+{% else %}
+    <img src="{{ asset('images/consos/pians/Biere-neg.png') }}">
+{% endif %}
+    <span>{{ solde|prix }}</span>
+</div>

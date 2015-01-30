@@ -5,6 +5,9 @@
     <div class="row">
         <div class="col-md-12">
             <p>
+                {% if is_granted('ROLE_ZICVIS') %}<small><a href="{{ path('pjm_app_admin_consos_cvis_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+            </p>
+            <p>
                 Tu n’as plus rien dans ton frigo ? Tu ressens soudain une folle envie de saucisson, pizza ou barre chocolatée calorique ? Tu recherches désespérément des équipements de protection individuels afin de compléter ta garde-robe ? Tu souhaites customiser ta blouse traditionnelle ?<br>
                 Tu trouveras tout ce dont tu as besoin au <strong><span class="text-larger">C’Vis</span></strong> !
             </p>
