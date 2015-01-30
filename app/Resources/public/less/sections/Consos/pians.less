@@ -47,9 +47,15 @@ body {
         }
 
         #rechargement {
+            .help {
+                .text-uppercase();
+                text-align: center;
+            }
+
             button {
                 .pull-right();
-                img {
+
+                img, > img {
                     .img-responsive();
                     max-height: 12em;
                 }
@@ -57,17 +63,24 @@ body {
         }
 
         #solde {
-            img  {
+            #soldeContainer {
+                @taille: 20em;
                 .pull-right();
-                .img-responsive();
                 max-width: 80%;
-                max-height: 20em;
                 margin-right: 2.5em;
                 margin-top: 2em;
-            }
+                max-height: @taille;
 
-            span {
-                text-align: center;
+                img, > img  {
+                    .img-responsive();
+                    max-height: @taille;
+                }
+
+                span {
+                    display: block;
+                    text-align: center;
+                    font-size:2em;
+                }
             }
         }
     }

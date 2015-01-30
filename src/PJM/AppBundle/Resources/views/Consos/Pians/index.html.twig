@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block pjm_app_body %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
             <p>
                 {% if is_granted('ROLE_ZIPIANS') %}<small><a href="{{ path('pjm_app_admin_consos_pians_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
             </p>
@@ -53,7 +53,7 @@
     </div>
     <div class="space"></div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-1">
             {%
                 include "PJMAppBundle:Consos:Pians/extraitHistorique.html.twig"
                 with {
@@ -61,15 +61,20 @@
                 }
             %}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-1">
             {% render(url('pjm_app_consos_pians_boissonDuMois')) %}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-1">
             <div id="rechargement" class="row">
                 <h2 class="sr-only">Rechargement</h2>
-                <button id="buttonRechargement" type="button" class="text-larger debuttonize" title="Recharger" data-toggle="modal" data-target="#modalRechargement">
-                    <img src="{{ asset('images/consos/pians/Tireuse-Off-RB.png') }}" alt="Recharger" title="Recharger">
-                </button>
+                <div class="col-xs-6">
+                    <button type="button" class="text-larger debuttonize" title="Recharger" data-toggle="modal" data-target="#modalRechargement" class="help debuttonize text-larger"></button>Clique sur la tireuse pour <span class="text-rouge text-larger">recharger</span> ton compte</button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="buttonRechargement" type="button" class="text-larger debuttonize" title="Recharger" data-toggle="modal" data-target="#modalRechargement">
+                        <img src="{{ asset('images/consos/pians/Tireuse-Off-RB.png') }}" alt="Recharger" title="Recharger">
+                    </button>
+                </div>
             </div>
             <div id="solde" class="row">
             {%
