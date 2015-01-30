@@ -21,10 +21,11 @@ body {
                     width: @panierWidth;
                     transform: perspective(1200px);
                     outline: 1px solid transparent;
+                    @tailleBordure: 1.5em;
 
                     > .contenu {
                         width: @panierWidth;
-                        border: @gris-tres-clair 2em solid;
+                        border: @gris-tres-clair @tailleBordure solid;
                         background-color: @mauve;
                         text-align: center;
                         padding: 0 1em 2em 1em;
@@ -38,8 +39,8 @@ body {
                     > .bas {
                         width: @panierWidth;
                         height: 6em;
-                        border-left: @gris-tres-clair 2em solid;
-                        border-right: @gris-tres-clair 2em solid;
+                        border-left: @gris-tres-clair @tailleBordure solid;
+                        border-right: @gris-tres-clair @tailleBordure solid;
                     }
 
                     &.devant {
