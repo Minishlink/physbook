@@ -3,6 +3,9 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Evenement
@@ -29,7 +32,7 @@ class Evenement
     private $nom;
 
     /**
-    * @Gedmo\Slug(fields={"nom", "date_debut"})
+    * @Gedmo\Slug(fields={"nom", "dateDebut"})
     * @ORM\Column(length=128, unique=true)
     */
     private $slug;
