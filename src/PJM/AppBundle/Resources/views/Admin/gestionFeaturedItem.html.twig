@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingFeaturedItem" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFeaturedItem" aria-expanded="true" aria-controls="collapseFeaturedItem">
+        <h2 class="panel-title">
+            Mises en avant
+        </h2>
+    </div>
+    <div id="collapseFeaturedItem" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFeaturedItem">
+        <div class="panel-body">
+            <h3>Ajout</h3>
+            {{ form_stylesheet(form) }}
+            {{ form_javascript(form) }}
+            {{ form(form) }}
+
+            <h3>Historique</h3>
+            {{ datatable_render(datatable) }}
+        </div>
+    </div>
+</div>

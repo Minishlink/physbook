@@ -80,3 +80,7 @@ services:
         class: PJM\AppBundle\Datatables\ResponsableDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.admin.featuredItem:
+        class: PJM\AppBundle\Datatables\Admin\FeaturedItemDatatable
+        tags:
+            - { name: sg.datatable.view }
