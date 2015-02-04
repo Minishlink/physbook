@@ -1,21 +1,12 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingCredits" data-toggle="collapse" data-parent="#accordion" data-target="#collapseCredits" aria-expanded="true" aria-controls="collapseCredits">
-        <h2 class="panel-title">
-                Crédits
-        </h2>
-    </div>
-    <div id="collapseCredits" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCredits">
-        <div class="panel-body">
-            <p>
-                Les crédits sont effectués instantanément.
-            </p>
-            <h3>Ajout</h3>
-            {{ form_stylesheet(form) }}
-            {{ form_javascript(form) }}
-            {{ form(form) }}
+{% extends "PJMAppBundle:App:panel.html.twig" %}
 
-            <h3>Historique</h3>
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% set panel_title = "Crédits" %}
+{% set name = "Credits" %}
+
+{% block datatable_title %}Historique{% endblock %}
+
+{% block description %}
+<p>
+    Les crédits sont effectués instantanément.
+</p>
+{% endblock %}

@@ -1,12 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingCommandes" data-toggle="collapse" data-parent="#accordion" data-target="#collapseCommandes" aria-expanded="true" aria-controls="collapseParametres">
-        <h2 class="panel-title" >
-                Commandes
-        </h2>
-    </div>
-    <div id="collapseCommandes" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCommandes">
-        <div class="panel-body">
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% extends "PJMAppBundle:App:panel.html.twig" %}
+
+{% set panel_title = "Commandes" %}
+{% set name = "Commandes" %}
+{% set expanded = true %}

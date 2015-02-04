@@ -1,15 +1,11 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingBucquages" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBucquages" aria-expanded="true" aria-controls="collapseBucquages">
-        <h2 class="panel-title">
-                Débits
-        </h2>
-    </div>
-    <div id="collapseBucquages" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBucquages">
-        <div class="panel-body">
-            <p>
-                Les bucquages sont réalisés tous les jours de la semaine (sauf week-end et jours fériés/vacances indiqués dans le panel correspondant).
-            </p>
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% extends "PJMAppBundle:App:panel.html.twig" %}
+
+{% set panel_title = "Débits" %}
+{% set name = "Bucquages" %}
+
+{% block description %}
+<p>
+    Les bucquages sont réalisés tous les jours de la semaine (sauf week-end et jours fériés/vacances indiqués dans le panel correspondant).
+</p>
+{% endblock %}
+
