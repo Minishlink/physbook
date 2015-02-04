@@ -79,6 +79,10 @@ class Item
         $this->valid = true;
     }
 
+    public function __toString()
+    {
+        return $this->libelle;
+    }
 
     /**
      * Get id

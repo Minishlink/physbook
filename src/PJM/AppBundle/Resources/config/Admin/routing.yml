@@ -36,6 +36,14 @@ pjm_app_admin_responsablesResults:
     path:     /{boquette_slug}/responsables/results
     defaults: { _controller: PJMAppBundle:Consos/Boquette:responsablesResults }
 
+pjm_app_admin_gestionFeaturedItem:
+    path:     /{slug}/featuredItem
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionFeaturedItem }
+
+pjm_app_admin_featuredItemResults:
+    path:     /{boquette_slug}/featuredItem/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:featuredItemResults }
+
 pjm_app_admin_consos:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/routing.yml"
     prefix:   /consos

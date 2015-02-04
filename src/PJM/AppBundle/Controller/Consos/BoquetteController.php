@@ -15,9 +15,11 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Responsable;
+use PJM\AppBundle\Entity\FeaturedItem;
 use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Admin\ResponsableType;
 use PJM\AppBundle\Form\Consos\MontantType;
+use PJM\AppBundle\Form\Admin\FeaturedItemType;
 
 class BoquetteController extends Controller
 {
@@ -280,6 +282,84 @@ class BoquetteController extends Controller
 
         return $datatable->getResponse();
     }
+
+    /**
+     * [ADMIN] Gère la liste des produits mis en avant pour une boquette. (ajout et liste)
+     */
+    public function gestionFeaturedItemAction(Request $request, Boquette $boquette)
+    {
+        $featuredItem = new FeaturedItem();
+
+        $form = $this->createForm(new FeaturedItemType(), $featuredItem, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl(
+                'pjm_app_admin_gestionFeaturedItem',
+                array(
+                    'slug' => $boquette->getSlug()
+                )
+            ),
+            'boquette' => $boquette
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($featuredItem);
+
+                // TODO supprimer l'ancienne mise en avant
+
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    "L'item ".$featuredItem->getItem()." est maintenant mis en avant."
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Un problème est survenu lors de la mise en avant de l'item ".$featuredItem->getItem().". Réessaye."
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
+        }
+
+        $datatable = $this->get("pjm.datatable.admin.featuredItem");
+        $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:gestionFeaturedItem.html.twig', array(
+            'form'      => $form->createView(),
+            'datatable' => $datatable
+        ));
+    }
+
+    /**
+     * [ADMIN] Action ajax de rendu de la liste des produits mis en avant
+     */
+    public function featuredItemResultsAction($boquette_slug)
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.featuredItem"));
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:FeaturedItem');
+
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
+
+        return $datatable->getResponse();
+    }
+
 
     /**
      * [ADMIN] Action ajax d'activation ou désactivation des responsables.
