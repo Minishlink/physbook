@@ -1,19 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingVacances" data-toggle="collapse" data-parent="#accordion" data-target="#collapseVacances" aria-expanded="true" aria-controls="collapseVacances">
-        <h2 class="panel-title">
-                Gestion vacances/jours fériés
-        </h2>
-    </div>
-    <div id="collapseVacances" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingVacances">
-        <div class="panel-body">
-            <p>
-                Ce module sert à définir les vacances et jours fériés de façon à ce que les utilisateurs ne soient pas débités quand il n'y a pas de pain.
-            </p>
-            <h3>Ajout</h3>
-            {{ form(form) }}
+{% extends "PJMAppBundle:App:panel.html.twig" %}
 
-            <h3>Liste</h3>
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% set panel_title = "Gestion vacances/jours fériés" %}
+{% set name = "Vacances" %}
+
+{% block description %}
+<p>
+    Ce module sert à définir les vacances et jours fériés de façon à ce que les utilisateurs ne soient pas débités quand il n'y a pas de pain.
+</p>
+{% endblock %}

@@ -1,20 +1,13 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingResponsables" data-toggle="collapse" data-parent="#accordion" data-target="#collapseResponsables" aria-expanded="true" aria-controls="collapseResponsables">
-        <h2 class="panel-title">
-                Responsables
-        </h2>
-    </div>
-    <div id="collapseResponsables" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingResponsables">
-        <div class="panel-body">
-            <p>Ajoute un responsable. Seuls certains utilisateurs peuvent désactiver ou activer un responsable.</p>
+{% extends "PJMAppBundle:App:panel.html.twig" %}
 
-            <h3>Ajout</h3>
-            {{ form_stylesheet(form) }}
-            {{ form_javascript(form) }}
-            {{ form(form) }}
+{% set panel_title = "Responsables" %}
+{% set name = "Responsables" %}
+{% set accordion = "#accordion" %}
+{% set expanded = false %}
 
-            <h3>Liste</h3>
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% block form_title %}Ajout{% endblock %}
+{% block datatable_title %}Liste{% endblock %}
+
+{% block description %}
+<p>Ajoute un responsable. Seuls certains utilisateurs peuvent désactiver ou activer un responsable.</p>
+{% endblock %}

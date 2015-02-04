@@ -1,23 +1,17 @@
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingPrix" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePrix" aria-expanded="true" aria-controls="collapsePrix">
-        <h2 class="panel-title">
-                Prix de la baguette
-        </h2>
-    </div>
-    <div id="collapsePrix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPrix">
-        <div class="panel-body">
-            <p>
-                {% if prixActuel is not null %}
-                Le prix actuel est de {{ prixActuel|prix }}.
-                {% else %}
-                Afin d'utiliser ce module, il te faut indiquer le prix d'une la baguette de pain.
-                {% endif %}
-            </p>
-            <h3>Modification</h3>
-            {{ form(form) }}
+{% extends "PJMAppBundle:App:panel.html.twig" %}
 
-            <h3>Historique</h3>
-            {{ datatable_render(datatable) }}
-        </div>
-    </div>
-</div>
+{% set panel_title = "Prix de la baguette" %}
+{% set name = "Prix" %}
+
+{% block form_title %}Modification{% endblock %}
+{% block datatable_title %}Historique{% endblock %}
+
+{% block description %}
+<p>
+    {% if prixActuel is not null %}
+    Le prix actuel est de {{ prixActuel|prix }}.
+    {% else %}
+    Afin d'utiliser ce module, il te faut indiquer le prix d'une la baguette de pain.
+    {% endif %}
+</p>
+{% endblock %}
