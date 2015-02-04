@@ -306,9 +306,19 @@ class BoquetteController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($featuredItem);
 
-                // TODO supprimer l'ancienne mise en avant
+                // on désactive l'ancien FeaturedItem
+                $oldFeaturedItem = $em
+                    ->getRepository('PJMAppBundle:FeaturedItem')
+                    ->findByBoquetteSlug($boquette->getSlug(), true);
+
+                if (isset($oldFeaturedItem)) {
+                    $oldFeaturedItem->setActive(false);
+                    $em->persist($oldFeaturedItem);
+                }
+
+                // on active le nouveau
+                $em->persist($featuredItem);
 
                 $em->flush();
 
