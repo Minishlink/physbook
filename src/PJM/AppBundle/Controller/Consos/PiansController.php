@@ -22,7 +22,7 @@ class PiansController extends BoquetteController
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
-            'listeHistorique' => $historique,
+            'listeHistorique' => $historique
         ));
     }
 
@@ -30,11 +30,14 @@ class PiansController extends BoquetteController
     {
         // TODO on va chercher la boisson ayant le plus de bucquage ce mois-ci
         $em = $this->getDoctrine()->getEntityManager();
-        $repository = $em->getRepository('PJMAppBundle:Item');
-        $boissonDuMois = $repository->findBySlug('biere');
+        $boissonDuMois = $em
+            ->getRepository('PJMAppBundle:FeaturedItem')
+            ->findByBoquetteSlug($this->slug, true);
+
+        // TODO compteur HM
 
         return $this->render('PJMAppBundle:Consos:Pians/boissonDuMois.html.twig', array(
-            'boissonDuMois' => $boissonDuMois[0],
+            'boissonDuMois' => $boissonDuMois->getItem(),
         ));
     }
 
