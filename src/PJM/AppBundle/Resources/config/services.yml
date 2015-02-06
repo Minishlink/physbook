@@ -13,6 +13,7 @@ services:
             - { name: twig.extension }
     pjm.twig.intranet_extension:
         class: PJM\AppBundle\Twig\IntranetExtension
+        arguments: [@service_container]
         tags:
             - { name: twig.extension }
     pjm.services.utils:

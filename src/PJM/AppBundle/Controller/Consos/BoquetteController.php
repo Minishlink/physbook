@@ -302,14 +302,16 @@ class BoquetteController extends Controller
      */
     public function itemResultsAction($boquette_slug)
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.boquette.item"));
+        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
 
-        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
-        return $datatable->getResponse();
+        return $datatableData->getResponse();
     }
 
     /**

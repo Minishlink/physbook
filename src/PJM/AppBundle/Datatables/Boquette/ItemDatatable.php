@@ -13,10 +13,16 @@ use PJM\AppBundle\Twig\IntranetExtension;
 class ItemDatatable extends AbstractDatatableView
 {
     protected $boquetteSlug;
+    protected $twigExt;
 
     public function setBoquetteSlug($boquetteSlug)
     {
         $this->boquetteSlug = $boquetteSlug;
+    }
+
+    public function setTwigExt(IntranetExtension $twigExt)
+    {
+        $this->twigExt = $twigExt;
     }
 
     /**
@@ -42,6 +48,11 @@ class ItemDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
+            ->add("image.id", "column", array("visible" => false))
+            ->add('image.ext', "column", array("visible" => false))
+            ->add('image.alt', 'column', array(
+                'title' => 'Image',
+            ))
             ->add('libelle', 'column', array(
                 'title' => 'Nom'
             ))
@@ -59,9 +70,6 @@ class ItemDatatable extends AbstractDatatableView
                 "true_label" => "Oui",
                 "false_label" => "Non"
             ))
-            ->add('image.id', 'column', array(
-                'title' => 'Image',
-            ))
         ;
     }
 
@@ -70,10 +78,12 @@ class ItemDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
+        $ext = $this->twigExt;
         $formatter = function($line) use($ext) {
             $line["prix"] = $ext->prixFilter($line["prix"]);
-            $line["image"]["id"] = !empty($line["image"]["id"]) ? 'Oui' : 'Non';
+            $line["image"]["alt"] = !empty($line["image"]["id"]) ?
+                $ext->imageFunction($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]) :
+                "Pas d'image";
 
             return $line;
         };
