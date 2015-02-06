@@ -79,10 +79,20 @@ class Item
      */
     private $image;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="items_usersHm",
+     *      joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $usersHm;
+
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->valid = true;
+        $this->usersHm = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -259,5 +269,61 @@ class Item
     public function getInfos()
     {
         return $this->infos;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \PJM\AppBundle\Entity\Image $image
+     * @return Item
+     */
+    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PJM\AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add usersHm
+     *
+     * @param \PJM\UserBundle\Entity\User $usersHm
+     * @return Item
+     */
+    public function addUsersHm(\PJM\UserBundle\Entity\User $usersHm)
+    {
+        $this->usersHm[] = $usersHm;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersHm
+     *
+     * @param \PJM\UserBundle\Entity\User $usersHm
+     */
+    public function removeUsersHm(\PJM\UserBundle\Entity\User $usersHm)
+    {
+        $this->usersHm->removeElement($usersHm);
+    }
+
+    /**
+     * Get usersHm
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsersHm()
+    {
+        return $this->usersHm;
     }
 }

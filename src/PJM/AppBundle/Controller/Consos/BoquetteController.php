@@ -305,6 +305,7 @@ class BoquetteController extends Controller
     {
         $datatable = $this->get("pjm.datatable.boquette.item");
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatable->setBoquetteSlug($boquette_slug);
         $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
         $em = $this->getDoctrine()->getManager();
@@ -318,9 +319,9 @@ class BoquetteController extends Controller
     /**
      * [ADMIN] Modifier l'image d'un item
      */
-    public function modifierItemAction($boquette_slug, Item $item_id)
+    public function modifierItemAction(Boquette $slug, Item $id)
     {
-        return new Response($item_id);
+        return new Response($id);
     }
 
     /**

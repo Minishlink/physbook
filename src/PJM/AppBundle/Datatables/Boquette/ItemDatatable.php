@@ -48,6 +48,7 @@ class ItemDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
+            ->add("boquette.slug", "column", array("visible" => false))
             ->add("image.id", "column", array("visible" => false))
             ->add('image.ext', "column", array("visible" => false))
             ->add('image.alt', 'column', array(
@@ -76,8 +77,8 @@ class ItemDatatable extends AbstractDatatableView
                     array(
                         "route" => "pjm_app_admin_boquette_modifierImageItem",
                         "route_parameters" => array(
-                            "boquette_slug" => $this->boquetteSlug,
-                            "item_id" => "id"
+                            "slug" => "boquette.slug",
+                            "id" => "id"
                         ),
                         "label" => "Modifier l'image",
                         "icon" => "glyphicon glyphicon-picture",

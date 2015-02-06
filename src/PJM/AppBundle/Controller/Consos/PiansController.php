@@ -19,25 +19,16 @@ class PiansController extends BoquetteController
         $utils = $this->get('pjm.services.utils');
         $historique = $utils->getHistorique($this->getUser(), $this->slug, 5);
 
-        return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
-            'boquetteSlug' => $this->slug,
-            'solde' => $this->getSolde(),
-            'listeHistorique' => $historique
-        ));
-    }
-
-    public function boissonDuMoisAction(Request $request)
-    {
-        // TODO on va chercher la boisson ayant le plus de bucquage ce mois-ci
         $em = $this->getDoctrine()->getEntityManager();
         $boissonDuMois = $em
             ->getRepository('PJMAppBundle:FeaturedItem')
             ->findByBoquetteSlug($this->slug, true);
 
-        // TODO compteur HM
-
-        return $this->render('PJMAppBundle:Consos:Pians/boissonDuMois.html.twig', array(
-            'boissonDuMois' => $boissonDuMois->getItem(),
+        return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
+            'boquetteSlug' => $this->slug,
+            'solde' => $this->getSolde(),
+            'listeHistorique' => $historique,
+            'boissonDuMois' => (isset($boissonDuMois)) ? $boissonDuMois->getItem() : null,
         ));
     }
 
