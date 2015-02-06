@@ -70,7 +70,7 @@ class Article
     private $publication;
 
     /**
-    * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Actus\Image", cascade={"persist", "remove"})
+    * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist", "remove"})
     * @Assert\Valid()
     */
     private $image;
@@ -238,10 +238,10 @@ class Article
     /**
      * Set image
      *
-     * @param \PJM\AppBundle\Entity\Actus\Image $image
+     * @param \PJM\AppBundle\Entity\Image $image
      * @return Article
      */
-    public function setImage(\PJM\AppBundle\Entity\Actus\Image $image = null)
+    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
     {
         $this->image = $image;
 
@@ -251,7 +251,7 @@ class Article
     /**
      * Get image
      *
-     * @return \PJM\AppBundle\Entity\Actus\Image
+     * @return \PJM\AppBundle\Entity\Image
      */
     public function getImage()
     {

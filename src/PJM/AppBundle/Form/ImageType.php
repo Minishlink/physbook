@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Form\Actus;
+namespace PJM\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImageType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,7 +23,7 @@ class ImageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Actus\Image'
+            'data_class' => 'PJM\AppBundle\Entity\Image'
         ));
     }
 
@@ -32,6 +32,6 @@ class ImageType extends AbstractType
      */
     public function getName()
     {
-        return 'form_pjm_appbundle_actus_imagetype';
+        return 'form_pjm_appbundle_imagetype';
     }
 }
