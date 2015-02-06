@@ -21,6 +21,7 @@ use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Admin\ResponsableType;
 use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Admin\FeaturedItemType;
+use PJM\AppBundle\Form\Admin\ImageItemType;
 
 class BoquetteController extends Controller
 {
@@ -319,9 +320,58 @@ class BoquetteController extends Controller
     /**
      * [ADMIN] Modifier l'image d'un item
      */
-    public function modifierItemAction(Boquette $slug, Item $id)
+    public function modifierImageItemAction(Request $request, Boquette $boquette, Item $item)
     {
-        return new Response($id);
+        $routeRetour = "pjm_app_admin_consos_".$boquette->getSlug()."_index";
+
+        $form = $this->createForm(new ImageItemType(), $item, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl(
+                'pjm_app_admin_boquette_modifierImageItem',
+                array(
+                    // TODO mettre slug pour boquette
+                    'boquette' => $boquette->getId(),
+                    'item' => $item->getId()
+                )
+            )
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($item);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    "L'image de l'item ".$item." a été modifiée."
+                );
+
+                return $this->redirect($this->generateUrl($routeRetour));
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Un problème est survenu lors de la modification de l'image de l'item ".$item.". Réessaye."
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+        }
+
+        return $this->render('PJMAppBundle:Admin:imageItem.html.twig', array(
+            'form' => $form->createView(),
+            'item' => $item,
+            'routeRetour' => $routeRetour
+        ));
     }
 
     /**

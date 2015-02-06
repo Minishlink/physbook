@@ -77,8 +77,8 @@ class ItemDatatable extends AbstractDatatableView
                     array(
                         "route" => "pjm_app_admin_boquette_modifierImageItem",
                         "route_parameters" => array(
-                            "slug" => "boquette.slug",
-                            "id" => "id"
+                            "boquette" => "boquette.slug",
+                            "item" => "id"
                         ),
                         "label" => "Modifier l'image",
                         "icon" => "glyphicon glyphicon-picture",
