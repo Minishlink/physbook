@@ -70,6 +70,26 @@ class ItemDatatable extends AbstractDatatableView
                 "true_label" => "Oui",
                 "false_label" => "Non"
             ))
+            ->add(null, "action", array(
+                "title" => "Actions",
+                "actions" => array(
+                    array(
+                        "route" => "pjm_app_admin_boquette_modifierImageItem",
+                        "route_parameters" => array(
+                            "boquette_slug" => $this->boquetteSlug,
+                            "item_id" => "id"
+                        ),
+                        "label" => "Modifier l'image",
+                        "icon" => "glyphicon glyphicon-picture",
+                        "attributes" => array(
+                            "rel" => "tooltip",
+                            "title" => "Modifier",
+                            "class" => "btn btn-default btn-xs",
+                            "role" => "button"
+                        ),
+                    ),
+                )
+            ))
         ;
     }
 
