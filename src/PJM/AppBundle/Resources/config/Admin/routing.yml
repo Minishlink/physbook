@@ -45,8 +45,8 @@ pjm_app_admin_featuredItemResults:
     defaults: { _controller: PJMAppBundle:Consos/Boquette:featuredItemResults }
 
 pjm_app_admin_boquette_modifierImageItem:
-    path:     /{slug}/item/{id}/modifier
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:modifierItem }
+    path:     /{boquette}/item/{item}/modifier
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:modifierImageItem }
     options:
         expose: true
 
