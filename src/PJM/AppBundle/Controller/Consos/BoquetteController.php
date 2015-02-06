@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Responsable;
 use PJM\AppBundle\Entity\FeaturedItem;
 use PJM\AppBundle\Form\Consos\TransactionType;
@@ -312,6 +313,14 @@ class BoquetteController extends Controller
         $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $datatableData->getResponse();
+    }
+
+    /**
+     * [ADMIN] Modifier l'image d'un item
+     */
+    public function modifierItemAction($boquette_slug, Item $item_id)
+    {
+        return new Response($item_id);
     }
 
     /**
