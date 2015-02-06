@@ -61,7 +61,7 @@ class Item
     private $date;
 
     /**
-     * @var string
+     * @var array
      *
      * @ORM\Column(name="infos", type="json_array", nullable=true)
      */
@@ -73,12 +73,32 @@ class Item
      */
     private $boquette;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $image;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="items_usersHm",
+     *      joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $usersHm;
+
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->valid = true;
+        $this->usersHm = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->libelle;
+    }
 
     /**
      * Get id
@@ -226,5 +246,28 @@ class Item
     public function getValid()
     {
         return $this->valid;
+    }
+
+    /**
+     * Set infos
+     *
+     * @param array $infos
+     * @return Item
+     */
+    public function setInfos($infos)
+    {
+        $this->infos = $infos;
+
+        return $this;
+    }
+
+    /**
+     * Get infos
+     *
+     * @return array
+     */
+    public function getInfos()
+    {
+        return $this->infos;
     }
 }

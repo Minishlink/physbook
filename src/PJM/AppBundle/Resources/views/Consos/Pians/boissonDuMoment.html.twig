@@ -1,0 +1,10 @@
+<div id="boissonDuMoment">
+    <h2>Bière du moment</h2>
+
+    {% if boisson is not null %}
+        {{ boisson.libelle }}
+        {% if boisson.image is not null %}
+            <img src="{{ asset(boisson.image.webPath) }}" alt="{{ asset(boisson.image.alt) }}" />
+        {% endif %}
+    {% endif %}
+</div>

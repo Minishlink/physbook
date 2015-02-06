@@ -62,7 +62,12 @@
             %}
         </div>
         <div class="col-md-3 col-md-offset-1">
-            {% render(url('pjm_app_consos_pians_boissonDuMois')) %}
+            {%
+                include "PJMAppBundle:Consos:Pians/boissonDuMoment.html.twig"
+                with {
+                    'boisson': boissonDuMois,
+                }
+            %}
         </div>
         <div class="col-md-3 col-md-offset-1">
             <div id="rechargement" class="row">
