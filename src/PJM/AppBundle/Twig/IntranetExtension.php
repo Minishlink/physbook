@@ -2,8 +2,17 @@
 
 namespace PJM\AppBundle\Twig;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class IntranetExtension extends \Twig_Extension
 {
+    public function __construct(ContainerInterface $container = null)
+    {
+        if (isset($container)) {
+            $this->container = $container;
+        }
+    }
+
     public function getFilters()
     {
         return array(
@@ -12,6 +21,17 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('nombre', array($this, 'nombreFilter')),
             new \Twig_SimpleFilter('validCommande', array($this, 'validCommandeFilter')),
             new \Twig_SimpleFilter('json_decode', array($this, 'jsonDecodeFilter')),
+        );
+    }
+
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction(
+                'image',
+                array($this, 'imageFunction'),
+                array('is_safe' => array('html'))
+            ),
         );
     }
 
@@ -64,6 +84,14 @@ class IntranetExtension extends \Twig_Extension
 
     public function jsonDecodeFilter($string) {
         return json_decode($string);
+    }
+
+    public function imageFunction($id, $ext, $alt = '')
+    {
+        $uploadDir = 'uploads/img'; // apparait dans PJM\AppBundle\Entity\Image
+        $imgPath = $uploadDir.'/'.$id.'.'.$ext;
+        $path = $this->container->get('templating.helper.assets')->getUrl($imgPath);
+        return '<img src="'.$path.'" alt="'.$alt.'" />';
     }
 
     public function getName()
