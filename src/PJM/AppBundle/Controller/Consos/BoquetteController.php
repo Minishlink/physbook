@@ -284,6 +284,35 @@ class BoquetteController extends Controller
     }
 
     /**
+     * [ADMIN] Liste des items pour une boquette.
+     */
+    public function listeItemAction(Request $request, Boquette $boquette)
+    {
+        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:listeItem.html.twig', array(
+            'datatable' => $datatable
+        ));
+    }
+
+    /**
+     * [ADMIN] Action ajax de rendu de la liste des items
+     */
+    public function itemResultsAction($boquette_slug)
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.boquette.item"));
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Item');
+
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
+
+        return $datatable->getResponse();
+    }
+
+    /**
      * [ADMIN] Gère la liste des produits mis en avant pour une boquette. (ajout et liste)
      */
     public function gestionFeaturedItemAction(Request $request, Boquette $boquette)

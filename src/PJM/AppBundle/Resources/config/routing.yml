@@ -14,6 +14,10 @@ pjm_app_profil:
     resource: "@PJMAppBundle/Resources/config/Profil/routing.yml"
     prefix:   /profil
 
+pjm_app_boquette:
+    resource: "@PJMAppBundle/Resources/config/Boquette/routing.yml"
+    prefix:   /boquette
+
 pjm_app_smoney:
     resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
     prefix:   /smoney

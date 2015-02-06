@@ -86,4 +86,14 @@ class ItemRepository extends EntityRepository
             ;
         };
     }
+
+    public function callbackFindByBoquetteSlug($boquette_slug)
+    {
+        return function($qb) use($boquette_slug) {
+            $qb
+                ->join('Item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                ->setParameter('boquette_slug', $boquette_slug)
+            ;
+        };
+    }
 }

@@ -73,6 +73,12 @@ class Item
      */
     private $boquette;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $image;
+
     public function __construct()
     {
         $this->date = new \DateTime();

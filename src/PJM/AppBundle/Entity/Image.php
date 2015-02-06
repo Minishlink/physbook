@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Entity\Actus;
+namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Image
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Actus\ImageRepository")
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Image
@@ -82,6 +82,8 @@ class Image
             $this->getUploadRootDir(),
             $this->id.'.'.$this->ext
         );
+
+        unset($this->file);
     }
 
     /**
@@ -104,7 +106,7 @@ class Image
 
     public function getUploadDir() // pour le navigateur
     {
-        return 'uploads/img';
+        return 'uploads/img'; // apparait dans PJM\AppBundle\Twig\IntranetExtension
     }
 
     protected function getUploadRootDir() // pour le code PHP

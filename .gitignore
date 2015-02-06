@@ -3,6 +3,7 @@
 # Example .gitignore files: https://github.com/github/gitignore
 
 /web/bundles/
+/web/uploads/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*

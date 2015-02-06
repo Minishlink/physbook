@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Entity\Actus;
+namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
