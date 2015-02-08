@@ -319,6 +319,8 @@ class BoquetteController extends Controller
 
     /**
      * [ADMIN] Modifier l'image d'un item
+     *
+     * @ParamConverter("boquette", options={"mapping": {"boquette": "slug"}})
      */
     public function modifierImageItemAction(Request $request, Boquette $boquette, Item $item)
     {
