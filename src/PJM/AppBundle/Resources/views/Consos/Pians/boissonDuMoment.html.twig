@@ -2,9 +2,12 @@
     <h2>Bière du moment</h2>
 
     {% if boisson is not null %}
-        {{ boisson.libelle }}
         {% if boisson.image is not null %}
-            <img src="{{ asset(boisson.image.webPath) }}" alt="{{ asset(boisson.image.alt) }}" />
+            <p><img src="{{ asset(boisson.image.webPath) }}" alt="{{ asset(boisson.image.alt) }}" class="image" /></p>
         {% endif %}
+        <p>
+            <span class="nom">{{ boisson.libelle }}</span><br>
+            <span class="prix">{{ boisson.prix|prix }}</span>
+        </p>
     {% endif %}
 </div>
