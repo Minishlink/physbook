@@ -47,6 +47,8 @@ body {
         }
 
         #boissonDuMoment {
+            @taille: 30em;
+            min-height: @taille;
             text-align: center;
 
             h2 {
@@ -61,7 +63,7 @@ body {
             }
 
             .image {
-                max-height: 30em;
+                max-height: @taille;
             }
 
             .nom {
