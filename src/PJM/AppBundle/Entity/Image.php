@@ -46,6 +46,11 @@ class Image
 
     private $tempFilename;
 
+    public function __toString()
+    {
+        return "Image id:".$this->id."; alt:".$this->alt;
+    }
+
     /**
     * @ORM\PrePersist()
     * @ORM\PreUpdate()

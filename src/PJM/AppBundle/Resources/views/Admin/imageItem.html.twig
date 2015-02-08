@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-md-6">
         <h3>Image actuelle</h3>
-        <img src="{{ asset(item.image.webPath) }}" alt="{{ item.image.alt }}" />
+        {% if item.image is not null %}<img src="{{ asset(item.image.webPath) }}" alt="{{ item.image.alt }}" />{% else %}Aucune.{% endif %}
     </div>
     <div class="col-md-6">
         <h3>Modification</h3>

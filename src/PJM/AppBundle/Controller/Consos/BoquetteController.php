@@ -331,8 +331,7 @@ class BoquetteController extends Controller
             'action' => $this->generateUrl(
                 'pjm_app_admin_boquette_modifierImageItem',
                 array(
-                    // TODO mettre slug pour boquette
-                    'boquette' => $boquette->getId(),
+                    'boquette' => $boquette->getSlug(),
                     'item' => $item->getId()
                 )
             )
