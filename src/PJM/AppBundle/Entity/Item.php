@@ -74,9 +74,10 @@ class Item
     private $boquette;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
+    * @Assert\Valid()
+    */
     private $image;
 
     /**
