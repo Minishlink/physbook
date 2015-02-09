@@ -34,7 +34,7 @@ class Utils
             $debitsFormate[$k]['date'] = $debit->getDate();
             $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
             $debitsFormate[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix()*$debit->getNombre()/10);
-            $debitsFormate[$k]['infos'] = implode(", ", $debit->getItem()->getInfos());
+            $debitsFormate[$k]['infos'] = $debit->getItem()->getInfos();
         }
         unset($debits);
 
