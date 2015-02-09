@@ -23,20 +23,44 @@ class AnnuaireDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array("column" => 1, "direction" => "asc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_profil_annuaireResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_profil_annuaireResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date',
-                'format' => 'll'
+            ->add('bucque', 'column', array(
+                'title' => 'Bucque'
             ))
-            ->add('prix', 'column', array(
-                'title' => 'Prix',
+            ->add('fams', 'column', array(
+                'title' => "Fam's"
+            ))
+            ->add('tabagns', 'column', array(
+                'title' => "Tabagn's"
+            ))
+            ->add('proms', 'column', array(
+                'title' => "Prom's"
+            ))
+            ->add('prenom', 'column', array(
+                'title' => 'Prénom'
+            ))
+            ->add('nom', 'column', array(
+                'title' => 'Nom'
+            ))
+            ->add('telephone', 'column', array(
+                'title' => 'Téléphone'
+            ))
+            ->add('appartement', 'column', array(
+                'title' => "K'gib"
+            ))
+            ->add('classe', 'column', array(
+                'title' => 'Classe'
+            ))
+            ->add('anniversaire', 'datetime', array(
+                'title' => 'Anniversaire',
+                'format' => 'll'
             ))
         ;
     }
@@ -48,7 +72,8 @@ class AnnuaireDatatable extends AbstractDatatableView
     {
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
-            $line["prix"] = $ext->prixFilter($line["prix"]);
+            $line["tabagns"] = $ext->tabagnsFilter($line["tabagns"]);
+            $line["telephone"] = $ext->telephoneFilter($line["telephone"]);
 
             return $line;
         };

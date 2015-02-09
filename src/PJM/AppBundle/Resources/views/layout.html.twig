@@ -3,6 +3,7 @@
 {% block pageName %}{% endblock %}
 {% block categorieName %}{% endblock %}
 {% block categorieLogo %}{% endblock %}
+{% set categorieLogo = block('categorieLogo') %}
 
 {% block title %}
 	{{ block('categorieName') }} | {{ parent() }}
@@ -15,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><img id="logoPage" src="{{ block('categorieLogo') }}"> {{ block('categorieName') }}</h1>
+                <h1>{% if categorieLogo != '' %}<img id="logoPage" src="{{ block('categorieLogo') }}"> {% endif %}{{ block('categorieName') }}</h1>
             </div>
         </div>
     </div>
