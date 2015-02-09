@@ -74,8 +74,11 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('pjm_app_admin_index') }}" title="Gestion"><span class="glyphicon glyphicon-cog"></span><span class="visible-collapsed-inline"> Gestion</span></a></li>
+                    {% endif %}
                     <li><a href="#" title="Rechercher"><span class="glyphicon glyphicon-search"></span><span class="visible-collapsed-inline"> Rechercher</span></a></li>
-                    <li><a href="#" title="Mon profil"><span class="glyphicon glyphicon-user"></span><span class="visible-collapsed-inline"> Mon profil</span></a></li>
+                    <li><a href="{{ path('fos_user_profile_show') }}" title="Mon profil"><span class="glyphicon glyphicon-user"></span><span class="visible-collapsed-inline"> Mon profil</span></a></li>
                     <li><a href="#" title="Notifications"><span class="glyphicon glyphicon-bell"></span><span class="visible-collapsed-inline"> Notifications</span></a></li>
                     <li><a href="{{ path('fos_user_security_logout') }}" title="Déconnexion"><span class="glyphicon glyphicon-off"></span><span class="visible-collapsed-inline"> Déconnexion</span></a></li>
                 </ul>

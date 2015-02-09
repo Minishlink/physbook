@@ -93,9 +93,22 @@
             %}
         </div>
     </div>
-
-    {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
-
+    <div class="row">
+        <div class="col-md-4 text-center">
+            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+        </div>
+        <div class="col-md-4">
+            Calendrier
+        </div>
+        <div class="col-md-4">
+            Réserver pian's
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            Statistiques
+        </div>
+    </div>
 </div>
 
 {% endblock %}
