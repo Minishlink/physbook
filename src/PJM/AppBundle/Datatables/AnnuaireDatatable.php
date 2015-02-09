@@ -23,7 +23,9 @@ class AnnuaireDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 1, "direction" => "asc"))
+            ->setOrder(array("column" => 3, "direction" => "desc"))
+            ->setPageLength(25)
+            ->setResponsive(true)
         ;
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_profil_annuaireResults'));
