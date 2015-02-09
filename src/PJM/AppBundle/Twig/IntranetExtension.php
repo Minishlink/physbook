@@ -21,6 +21,8 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('nombre', array($this, 'nombreFilter')),
             new \Twig_SimpleFilter('validCommande', array($this, 'validCommandeFilter')),
             new \Twig_SimpleFilter('json_decode', array($this, 'jsonDecodeFilter')),
+            new \Twig_SimpleFilter('tabagns', array($this, 'tabagnsFilter')),
+            new \Twig_SimpleFilter('telephone', array($this, 'telephoneFilter')),
         );
     }
 
@@ -84,6 +86,35 @@ class IntranetExtension extends \Twig_Extension
 
     public function jsonDecodeFilter($string) {
         return json_decode($string);
+    }
+
+    public function tabagnsFilter($string)
+    {
+        $map = array(
+            'bo' => "Bordel's",
+            'li' => "Birse",
+            'an' => "Boquette",
+            'me' => "Siber's",
+            'ch' => "Chalon's",
+            'cl' => "Clun's",
+            'ai' => "KIN",
+            'ka' => "K'nak",
+            'pa' => "P2",
+            '' => ''
+        );
+
+        return array_key_exists($string, $map)
+            ? $map[$string]
+            : $string;
+    }
+
+    public function telephoneFilter($string)
+    {
+        if (strlen($string) == 10) {
+            $string = chunk_split($string, 2, ' ');
+        }
+
+        return $string;
     }
 
     public function imageFunction($id, $ext, $alt = '')
