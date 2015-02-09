@@ -367,7 +367,11 @@ class User extends BaseUser
      */
     public function setAnniversaire($anniversaire)
     {
-        $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+        if (gettype($anniversaire) == "string") {
+            $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+        } else {
+            $this->anniversaire = $anniversaire;
+        }
 
         return $this;
     }

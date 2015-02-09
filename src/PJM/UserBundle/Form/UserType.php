@@ -24,7 +24,10 @@ class UserType extends AbstractType
             ->add('telephone')
             ->add('appartement')
             ->add('classe')
-            ->add('anniversaire')
+            ->add('anniversaire', 'birthday')
+            ->add('save', 'submit', array(
+                'label' => 'Mettre à jour'
+            ))
         ;
     }
 
