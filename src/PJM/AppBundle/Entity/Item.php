@@ -296,26 +296,26 @@ class Item
     }
 
     /**
-     * Add usersHm
+     * Add userHm
      *
-     * @param \PJM\UserBundle\Entity\User $usersHm
+     * @param \PJM\UserBundle\Entity\User $userHm
      * @return Item
      */
-    public function addUsersHm(\PJM\UserBundle\Entity\User $usersHm)
+    public function addUserHm(\PJM\UserBundle\Entity\User $userHm)
     {
-        $this->usersHm[] = $usersHm;
+        $this->usersHm[] = $userHm;
 
         return $this;
     }
 
     /**
-     * Remove usersHm
+     * Remove userHm
      *
-     * @param \PJM\UserBundle\Entity\User $usersHm
+     * @param \PJM\UserBundle\Entity\User $userHm
      */
-    public function removeUsersHm(\PJM\UserBundle\Entity\User $usersHm)
+    public function removeUserHm(\PJM\UserBundle\Entity\User $userHm)
     {
-        $this->usersHm->removeElement($usersHm);
+        $this->usersHm->removeElement($userHm);
     }
 
     /**

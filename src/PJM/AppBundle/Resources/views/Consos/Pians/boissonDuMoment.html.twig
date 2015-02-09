@@ -9,5 +9,10 @@
             <span class="nom">{{ boisson.libelle }}</span><br>
             <span class="prix">{{ boisson.prix|prix }}</span>
         </p>
+
+        <div class="usersHM">
+            <span>{{ boisson.usersHM.count }} HM</span>
+            {% render(url('pjm_app_boquette_itemHM', {item: boisson.id})) %}
+        </div>
     {% endif %}
 </div>
