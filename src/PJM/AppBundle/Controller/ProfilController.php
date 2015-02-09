@@ -57,4 +57,26 @@ class ProfilController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    /*
+     * Annuaire
+     */
+    public function annuaireAction()
+    {
+        $datatable = $this->get("pjm.datatable.annuaire");
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Profil:annuaire.html.twig', array(
+            'datatable' => $datatable
+        ));
+    }
+
+    /**
+     * Action ajax de rendu de l'annuaire.
+     */
+    public function annuaireResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.annuaire"));
+        return $datatable->getResponse();
+    }
 }

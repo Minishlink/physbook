@@ -2,6 +2,10 @@ pjm_profil_modifier:
     path:       /modifier
     defaults:   { _controller: PJMAppBundle:Profil:modifier }
 
+pjm_profil_annuaire:
+    path:       /annuaire
+    defaults:   { _controller: PJMAppBundle:Profil:annuaire }
+
 fos_user_profile_show:
     path:       /
     defaults:   { _controller: PJMAppBundle:Profil:voir }

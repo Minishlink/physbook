@@ -1,0 +1,12 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}profil{% endblock %}
+{% block categorieName %}Annuaire{% endblock %}
+
+{% block title %}Annuaire{% endblock %}
+
+{% block pjm_app_body_content %}
+
+{{ datatable_render(datatable) }}
+
+{% endblock %}
