@@ -17,3 +17,7 @@ pjm_app_admin_consos_brags:
 pjm_app_admin_consos_paniers:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/Paniers/routing.yml"
     prefix:   /paniers
+
+pjm_app_admin_consos_cvis:
+    resource: "@PJMAppBundle/Resources/config/Admin/Consos/Cvis/routing.yml"
+    prefix:   /cvis

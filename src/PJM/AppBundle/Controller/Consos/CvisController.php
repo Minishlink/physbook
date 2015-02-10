@@ -21,4 +21,16 @@ class CvisController extends BoquetteController
             'solde' => $this->getSolde(),
         ));
     }
+
+    /*
+    * ADMIN
+    */
+    public function adminAction()
+    {
+        // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
+
+        return $this->render('PJMAppBundle:Admin:Consos/Cvis/index.html.twig', array(
+            'boquetteSlug' => $this->slug
+        ));
+    }
 }
