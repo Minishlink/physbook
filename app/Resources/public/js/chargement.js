@@ -18,12 +18,17 @@ $(document).ready(function () {
     });
 
     $('.collapse').on('shown.bs.collapse', function () {
-        var tables = $.fn.dataTable.tables(true);
-        $(tables).DataTable().columns.adjust();
+        resizeDataTables();
     });
 
     $('.modal').on('shown.bs.modal', function() {
-        var tables = $.fn.dataTable.tables(true);
-        $(tables).DataTable().columns.adjust();
+        resizeDataTables();
     });
 });
+
+function resizeDataTables() {
+    var tables = $.fn.dataTable.tables(true);
+    $(tables).DataTable().columns.adjust();
+    $('.dataTables_scrollHeadInner, .dataTable').css('width', '100%');
+    $(tables).css('width', '100%');
+}
