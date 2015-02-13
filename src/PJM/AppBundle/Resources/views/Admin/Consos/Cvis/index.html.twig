@@ -1,10 +1,11 @@
-{% extends "PJMAppBundle:Consos/Pians:layout.html.twig" %}
+
+{% extends "PJMAppBundle:Consos/Cvis:layout.html.twig" %}
 
 {% block categorieName %}Gestion {{ parent() }}{% endblock %}
 
 {% block pjm_app_body_content %}
 <p>
-    <small><a href="{{ path('pjm_app_consos_pians_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+    <small><a href="{{ path('pjm_app_consos_cvis_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
 </p>
 <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
@@ -15,10 +16,7 @@
     <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
         <div class="panel-body">
             <p>
-                Si un PG te donne un chèque ou de la monnaie pour les paniers de fruits et légumes, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. S'il s'agit d'un chèque, renseigne son numéro (7 chiffres). Tu peux aussi y consulter la liste des crédits S-Money.
-            </p>
-            <p>
-                Sur le panneau <strong>"Mises en avant"</strong>, tu peux spécifier quelle est la boisson du moment.
+                Sur le panneau <strong>"Mises en avant"</strong>, tu peux spécifier quel est le produit du moment.
             </p>
             <p>
                 Tu peux consulter la liste complète des produits affichés sur le panneau <strong>"Items"</strong>. Tu peux aussi modifier l'image de chaque produit.
@@ -27,13 +25,12 @@
                 Enfin, quand tu voudras passasser ton prochain, rends toi sur le panneau <strong>"Responsables"</strong>.
             </p>
             <p>
-                Cette page est accessible par les ZiPi, ZiAsso, Harpag's Asso, et ZiPhy'sbook.
+                Cette page est accessible par les ZiCvis, ZiAsso, Harpag's Asso, et ZiPhy'sbook.
             </p>
         </div>
     </div>
 </div>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
     {% render(url('pjm_app_admin_gestionFeaturedItem', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_boquette_listeItem', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
