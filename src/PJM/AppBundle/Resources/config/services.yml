@@ -31,14 +31,17 @@ services:
             - template:
                 layout: 'PJMAppBundle:Mail:layout.html.twig'
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
+                error: 'PJMAppBundle:Mail:error.html.twig'
               notificationEmail: "notification@physbook.fr"
               notificationSender: "Phy'sbook"
+              errorEmail: "error@physbook.fr"
     pjm.listener.consos.historique:
         class: PJM\AppBundle\Listener\Consos\HistoriqueListener
         tags:
             - { name: doctrine.event_listener, event: prePersist }
     pjm.listener.consos.transaction:
         class: PJM\AppBundle\Listener\Consos\TransactionListener
+        arguments: [@service_container]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
     pjm.datatable.historique:
