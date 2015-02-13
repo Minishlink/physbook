@@ -1,12 +1,14 @@
 {% extends "PJMAppBundle:Consos/Cvis:layout.html.twig" %}
 
 {% block pjm_app_body %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
+            {% if is_granted('ROLE_ZICVIS') %}
             <p>
-                {% if is_granted('ROLE_ZICVIS') %}<small><a href="{{ path('pjm_app_admin_consos_cvis_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+                <small><a href="{{ path('pjm_app_admin_consos_cvis_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
             </p>
+            {% endif %}
             <p>
                 Tu n’as plus rien dans ton frigo ? Tu ressens soudain une folle envie de saucisson, pizza ou barre chocolatée calorique ? Tu recherches désespérément des équipements de protection individuels afin de compléter ta garde-robe ? Tu souhaites customiser ta blouse traditionnelle ?<br>
                 Tu trouveras tout ce dont tu as besoin au <strong><span class="text-larger">C’Vis</span></strong> !
@@ -50,9 +52,41 @@
             </ul>
         </div>
     </div>
-
-    {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
-
+    <div class="space"></div>
+    <div class="row">
+        {# store #}
+    </div>
+    <div class="space"></div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            {# derunssage + ZiPi #}
+            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+        </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-6">
+                    {# ziconsommateurs #}
+                </div>
+                <div class="col-md-6">
+                    {# produit du moment #}
+                </div>
+            </div>
+            <div class="row">
+                {# liste items #}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            {# rechargement #}
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            {# historique #}
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            {# stats #}
+        </div>
+    </div>
 </div>
 
 {% endblock %}
