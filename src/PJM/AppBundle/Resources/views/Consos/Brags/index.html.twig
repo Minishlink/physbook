@@ -8,9 +8,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            {% if is_granted('ROLE_ZIBRAGS') %}
             <p>
-                {% if is_granted('ROLE_ZIBRAGS') %}<small><a href="{{ path('pjm_app_admin_consos_brags_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>{% endif %}
+                <small><a href="{{ path('pjm_app_admin_consos_brags_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
             </p>
+            {% endif %}
             <p>Vous rêvez chaque soir de la bonne odeur du pain moelleux qui sort tout juste du four, de la pâte fraiche
             pétrie avec amour et confectionnée pour votre seul plaisir. Vous vous léchez les babines à l’idée de
             déguster {{ random(['un pain au chocolat croustifondant', 'une chocolatine croustifondante']) }} ou un croissant pur beurre en regardant TFou. N’attendez pas une seconde de plus, <strong>le <span class="text-larger">brag’s</span> est là pour vous</strong>.</p>
