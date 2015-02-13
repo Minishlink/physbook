@@ -191,13 +191,21 @@ class BoquetteController extends Controller
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
                 $credit->setBoquette($boquette);
-                $em->persist($credit);
+                $em->persist($credit); // le compte est automatiquement mis à jour (TransactionListener)
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'La transaction a été enregistrée et le compte a été crédité.'
-                );
+                if ($credit->getStatus() == "OK") {
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        'La transaction a été enregistrée et le compte a été crédité.'
+                    );
+                } else {
+                    // si une erreur est survenue pendant le process de mise à jour du compte
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        'Un problème est survenu lors de la transaction, note bien le code d\'erreur : '.$credit->getStatus()
+                    );
+                }
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
