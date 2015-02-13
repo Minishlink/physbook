@@ -72,7 +72,7 @@ class Transaction
      * {errorCode} : erreur communiquée par S-Money
      * null : paiement non complété
      *
-     * @ORM\Column(name="status", type="string", length=5, nullable=true)
+     * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
     private $status;
 
