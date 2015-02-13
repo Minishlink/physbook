@@ -1,0 +1,71 @@
+{# src/PJM/AppBundle/Resources/views/Mail/error.html.twig #}
+
+{% extends "PJMAppBundle:Mail:layout.html.twig" %}
+
+{% block subject %}
+{{ parent() }}
+{% if errorCode == "LIAISON_REZAL_TRANSACTION" %}
+Echec du crédit de la transaction
+{% endif %}
+{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+Sal's {{ user.bucque }},
+
+une erreur est survenue lors de ta navigation sur Phy'sbook.
+
+{% if errorCode == "LIAISON_REZAL_TRANSACTION" %}
+Il y a eu un problème de communication entre le serveur Phy'sbook et le serveur R&amp;z@l. La conséquence est que ton compte n'a pas été crédité.{% if transaction.moyenPaiement == 'smoney' %} Cependant, ton compte S-Money a été débité, donc va voir un ZiPi pour te faire créditer la somme correspondante.{% endif %}
+Les possibles causes sont :
+- tu n'as pas de compte Rezal
+- ton nom d'utilisateur Phy'sbook ne correspond pas à celui du Rezal
+- serveur Rezal déconnecté d'Internet
+- IP du serveur Rezal a changé
+- structure de la BDD du Rezal a changé
+- serveur Rezal HS
+
+La transaction concernée est :
+ID : {{ transaction.id }}
+Date : {{ transaction.date|date }}
+Moyen de paiement : {{ transaction.moyenPaiement }}
+Infos : {{ transaction.infos }}
+Montant : {{ transaction.montant }}
+{% endif %}
+
+Phy'sbook
+error@physbook.fr
+{% endautoescape %}
+{% endblock %}
+
+{% block content_html %}
+<h3>Sal's {{ user.bucque }},</h3>
+
+<p>une erreur est survenue lors de ta navigation sur Phy'sbook.</p>
+
+{% if errorCode == "LIAISON_REZAL_TRANSACTION" %}
+<p>
+    Il y a eu un problème de communication entre le serveur Phy'sbook et le serveur R&amp;z@l. La conséquence est que ton compte n'a pas été crédité.{% if transaction.moyenPaiement == 'smoney' %} Cependant, ton compte S-Money a été débité, donc va voir un ZiPi pour te faire créditer la somme correspondante.{% endif %}<br><br>
+    Les possibles causes sont :</p>
+<ul>
+<li>tu n'as pas de compte Rezal</li>
+<li>ton nom d'utilisateur Phy'sbook ne correspond pas à celui du Rezal</li>
+<li>serveur Rezal déconnecté d'Internet</li>
+<li>IP du serveur Rezal a changé</li>
+<li>structure de la BDD du Rezal a changé</li>
+<li>serveur Rezal HS</li>
+</ul>
+<p>
+    La transaction concernée est :<br>
+    <strong>ID :</strong> {{ transaction.id }}<br>
+    <strong>Date :</strong> {{ transaction.date|date }}<br>
+    <strong>Moyen de paiement :</strong> {{ transaction.moyenPaiement }}<br>
+    <strong>Infos :</strong> {{ transaction.infos }}<br>
+    <strong>Montant :</strong> {{ transaction.montant }}
+</p>
+{% endif %}
+
+<p>Phy'sbook<br>
+<a href="mailto:error@physbook.fr" style="color:#ffba00">error@physbook.fr</a>
+</p>
+{% endblock %}
