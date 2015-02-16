@@ -81,7 +81,9 @@
             {# rechargement #}
         </div>
         <div class="col-md-3 col-md-offset-1">
-            {{ listeHistorique }}
+            {% for historique in listeHistorique %}
+            {{ dump(historique) }}
+            {% endfor %}
         </div>
         <div class="col-md-3 col-md-offset-1">
             {# stats #}
