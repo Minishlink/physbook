@@ -107,6 +107,20 @@ class Utils
         return $this->getCompte($user, $boquetteSlug)->getSolde();
     }
 
+    /**
+     * Retourne l'item du moment pour une boquette
+     * @param  string      $boquetteSlug Slug de la boquette
+     * @return object|null Item du moment ou null si introuvable
+     */
+    public function getFeaturedItem($boquetteSlug)
+    {
+        $featuredItem = $this->em
+            ->getRepository('PJMAppBundle:FeaturedItem')
+            ->findByBoquetteSlug($boquetteSlug, true);
+
+        return (isset($featuredItem)) ? $featuredItem->getItem() : null;
+    }
+
     public function bucquage($boquetteSlug, $itemSlug)
     {
         $boquette = $this->getBoquette($boquetteSlug);

@@ -18,6 +18,7 @@ class CvisController extends BoquetteController
     {
         $utils = $this->get('pjm.services.utils');
         $historique = $utils->getHistorique($this->getUser(), $this->slug, 5);
+        $produitMoment = $utils->getFeaturedItem($this->slug);
 
         $ziConsommateurs = array("Ak", "Im&ro");
 
@@ -26,6 +27,7 @@ class CvisController extends BoquetteController
             'solde' => $this->getSolde(),
             'listeHistorique' => $historique,
             'ziConsommateurs' => $ziConsommateurs,
+            'produitMoment' => $produitMoment,
         ));
     }
 
