@@ -18,17 +18,13 @@ class PiansController extends BoquetteController
     {
         $utils = $this->get('pjm.services.utils');
         $historique = $utils->getHistorique($this->getUser(), $this->slug, 5);
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $boissonDuMois = $em
-            ->getRepository('PJMAppBundle:FeaturedItem')
-            ->findByBoquetteSlug($this->slug, true);
+        $boissonDuMois = $utils->getFeaturedItem($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'listeHistorique' => $historique,
-            'boissonDuMois' => (isset($boissonDuMois)) ? $boissonDuMois->getItem() : null,
+            'boissonDuMois' => $boissonDuMois,
         ));
     }
 
