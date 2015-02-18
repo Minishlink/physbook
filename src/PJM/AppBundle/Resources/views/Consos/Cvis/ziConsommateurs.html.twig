@@ -1,0 +1,10 @@
+<div id="ziConsommateurs">
+    <img class="img-responsive center-block" src="{{ asset('images/consos/cvis/Zi-Conso.png') }}" alt="ZiConso" />
+    {% if ziConsommateurs|length > 0 %}
+        <ul>
+        {% for consommateur in ziConsommateurs %}
+            <li>{% if loop.first %}<span class="text-larger">{% endif %}<span class="text-bleu-clair">#{{ loop.index }}</span> {{ consommateur }}{% if loop.first %}</span>{% endif %}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>

@@ -20,31 +20,31 @@
         <div class="col-md-12">
             <ul id="sous-menu">
                 <li>
-                    <a href="">
+                    <a href="#solde">
                         <img src="{{ asset('images/consos/cvis/Niveau-B.png') }}"><br>
                         Mon compte
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
+                    <a href="#historique">
                         <img src="{{ asset('images/consos/cvis/Historique-B.png') }}"><br>
                         Historique
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#produitMoment">
                         <img src="{{ asset('images/consos/cvis/Jambon.png') }}"><br>
                         Produit du moment
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#catalogue">
                         <img src="{{ asset('images/consos/cvis/Catalogue.png') }}"><br>
                         Catalogue
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#ziConsommateurs">
                         <img src="{{ asset('images/consos/cvis/Coeur-B.png') }}"><br>
                         ZiConsommateurs
                     </a>
@@ -63,22 +63,15 @@
         </div>
         <div class="col-md-7">
             <div class="row">
-                <div id="ziConsommateurs" class="col-md-6">
-                    <img class="img-responsive center-block" src="{{ asset('images/consos/cvis/Zi-Conso.png') }}" alt="ZiConso" />
-                    {% if ziConsommateurs|length > 0 %}
-                    <ul>
-                    {% for consommateur in ziConsommateurs %}
-                        <li>{% if loop.first %}<span class="text-larger">{% endif %}<span class="text-bleu-clair">#{{ loop.index }}</span> {{ consommateur }}{% if loop.first %}</span>{% endif %}</li>
-                    {% endfor %}
-                    </ul>
-                    {% endif %}
+                <div class="col-md-6">
+                    {% include "PJMAppBundle:Consos:Cvis/ziConsommateurs.html.twig" %}
                 </div>
                 <div class="col-md-6">
-                    {# produit du moment #}
+                    {% include "PJMAppBundle:Consos:Cvis/produitMoment.html.twig" %}
                 </div>
             </div>
             <div class="row">
-                {# liste items #}
+                {% include "PJMAppBundle:Consos:Cvis/catalogue.html.twig" %}
             </div>
         </div>
     </div>
@@ -87,9 +80,7 @@
             {# rechargement #}
         </div>
         <div class="col-md-3 col-md-offset-1">
-            {% for historique in listeHistorique %}
-            {{ dump(historique) }}
-            {% endfor %}
+            {% include "PJMAppBundle:Consos:Cvis/extraitHistorique.html.twig" %}
         </div>
         <div class="col-md-3 col-md-offset-1">
             {# stats #}
