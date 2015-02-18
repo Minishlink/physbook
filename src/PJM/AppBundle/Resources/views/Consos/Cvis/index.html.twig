@@ -52,8 +52,7 @@
             </ul>
         </div>
     </div>
-    <div class="space"></div>
-    <div class="row">
+    <div class="row" id="store">
         {# store #}
     </div>
     <div class="space"></div>
@@ -64,8 +63,15 @@
         </div>
         <div class="col-md-7">
             <div class="row">
-                <div class="col-md-6">
-                    {# ziconsommateurs #}
+                <div id="ziConsommateurs" class="col-md-6">
+                    <img class="img-responsive center-block" src="{{ asset('images/consos/cvis/Zi-Conso.png') }}" alt="ZiConso" />
+                    {% if ziConsommateurs|length > 0 %}
+                    <ul>
+                    {% for consommateur in ziConsommateurs %}
+                        <li>{% if loop.first %}<span class="text-larger">{% endif %}<span class="text-bleu-clair">#{{ loop.index }}</span> {{ consommateur }}{% if loop.first %}</span>{% endif %}</li>
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
                 <div class="col-md-6">
                     {# produit du moment #}

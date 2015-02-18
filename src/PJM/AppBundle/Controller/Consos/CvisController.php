@@ -19,10 +19,13 @@ class CvisController extends BoquetteController
         $utils = $this->get('pjm.services.utils');
         $historique = $utils->getHistorique($this->getUser(), $this->slug, 5);
 
+        $ziConsommateurs = array("Ak", "Im&ro");
+
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'listeHistorique' => $historique,
+            'ziConsommateurs' => $ziConsommateurs,
         ));
     }
 
