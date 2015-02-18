@@ -1,11 +1,11 @@
 <div id="historique">
     <h2>Historique</h2>
 
-    {% if liste|length != 0 %}
+    {% if listeHistoriques|length != 0 %}
     <div class="table-responsive">
         <table class="table table-unstyle">
             <tbody>
-                {% for historique in liste %}
+                {% for historique in listeHistoriques %}
                 <tr>
                     <td>{{ historique.date|date('d/m/y') }}</td>
                     <td>{{ historique.nom }}</td>
