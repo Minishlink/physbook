@@ -17,13 +17,13 @@ class PiansController extends BoquetteController
     public function indexAction(Request $request)
     {
         $utils = $this->get('pjm.services.utils');
-        $historique = $utils->getHistorique($this->getUser(), $this->slug, 5);
+        $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
         $boissonDuMois = $utils->getFeaturedItem($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
-            'listeHistorique' => $historique,
+            'listeHistoriques' => $listeHistoriques,
             'boissonDuMois' => $boissonDuMois,
         ));
     }
