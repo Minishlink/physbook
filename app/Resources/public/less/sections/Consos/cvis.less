@@ -9,6 +9,10 @@ body {
             }
         }
 
+        a {
+            color: @orange;
+        }
+
         @hauteurImage: 10em;
 
         #store {
@@ -16,6 +20,52 @@ body {
             background-size: contain;
             min-height: @hauteurImage;
             margin-bottom: 2em;
+        }
+
+        #porte {
+            position: relative;
+            @tailleMinWidth: 15em;
+            @tailleWidth: 30vmin;
+            @ratio: 1.62;
+            min-width: @tailleMinWidth;
+            min-height: @ratio*@tailleMinWidth;
+            width: @tailleWidth;
+            height: @ratio*@tailleWidth;
+
+            border: 0.3em solid white;
+            border-bottom: 0;
+            margin: 0 auto;
+
+            .pancarte {
+                margin-top: 2em;
+                .center-block();
+                max-height: 8em;
+            }
+
+            .poignee {
+                @taille: 1.8em;
+                display: block;
+
+                border: 0.25em solid @bleu-clair;
+                border-radius: 50%;
+                background-color: white;
+
+                height: @taille;
+                width: @taille;
+
+                position: absolute;
+                top: 50%;
+                right: 10%;
+                z-index: -1;
+            }
+
+            #responsables {
+                position: absolute;
+                top: 55%;
+                .center-block;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         #produitMoment {
@@ -51,6 +101,10 @@ body {
                 .text-center();
                 .text-larger();
             }
+        }
+
+        .row.separation {
+            border-bottom: 0.4em solid white;
         }
     }
 }

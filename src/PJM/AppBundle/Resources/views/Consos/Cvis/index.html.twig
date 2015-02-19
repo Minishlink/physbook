@@ -56,10 +56,9 @@
         {# store #}
     </div>
     <div class="space"></div>
-    <div class="row">
+    <div class="row separation">
         <div class="col-md-3 col-md-offset-1">
-            {# derunssage + ZiPi #}
-            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+            {% include "PJMAppBundle:Consos:Cvis/porte.html.twig" %}
         </div>
         <div class="col-md-7">
             <div class="row">
