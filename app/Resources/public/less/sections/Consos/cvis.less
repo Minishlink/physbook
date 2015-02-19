@@ -9,13 +9,43 @@ body {
             }
         }
 
+        @hauteurImage: 10em;
+
         #store {
             background: url('images/consos/cvis/rideau.png') top left repeat-x;
             background-size: contain;
-            min-height: 10em;
+            min-height: @hauteurImage;
+            margin-bottom: 2em;
+        }
+
+        #produitMoment {
+            text-align: center;
+
+            h2 {
+                border-top: 0.2em solid @bleu-clair;
+                margin-top: 0.3em;
+            }
+
+            .nom {
+                .text-larger();
+                font-weight: bold;
+            }
+
+            .prix {
+                .text-x-large();
+            }
+
+            .image {
+                max-height: @hauteurImage;
+                margin-right: 2em;
+            }
         }
 
         #ziConsommateurs {
+            img {
+                max-height: @hauteurImage;
+            }
+
             ul {
                 .list-unstyled();
                 .text-center();
