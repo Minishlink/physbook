@@ -57,15 +57,12 @@
     </div>
     <div class="space"></div>
     <div class="row separation">
-        <div class="col-md-3 col-md-offset-1">
-            {% include "PJMAppBundle:Consos:Cvis/porte.html.twig" %}
-        </div>
-        <div class="col-md-7">
+        <div class="col-md-7 col-md-push-4">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     {% include "PJMAppBundle:Consos:Cvis/ziConsommateurs.html.twig" %}
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     {% include "PJMAppBundle:Consos:Cvis/produitMoment.html.twig" %}
                 </div>
             </div>
@@ -73,16 +70,19 @@
                 {% include "PJMAppBundle:Consos:Cvis/catalogue.html.twig" %}
             </div>
         </div>
+        <div class="col-md-3 col-md-offset-1 col-md-pull-7">
+            {% include "PJMAppBundle:Consos:Cvis/porte.html.twig" %}
+        </div>
     </div>
     <div class="space"></div>
     <div class="row">
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-4">
             {# rechargement #}
         </div>
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-4">
             {% include "PJMAppBundle:Consos:Cvis/extraitHistorique.html.twig" %}
         </div>
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-4">
             {# stats #}
         </div>
     </div>
