@@ -1,9 +1,14 @@
-{% if responsables|length %}
-<ul id="listResponsables" class="list-unstyled">
-    {% for responsable in responsables %}
-    <li>{{ responsable.responsabilite }} : {% render(url('pjm_profil_encart', {'username': responsable.user.username})) %}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>Aucun responsable actif trouvé.</p>
-{% endif %}
+<div id="responsables">
+    {% if responsables|length == 1 %}
+    <p>{{ responsables[0].responsabilite }} : {% render(url('pjm_profil_encart', {'username': responsables[0].user.username})) %}</p>
+    {% elseif responsables|length == 0 %}
+    <p>Aucun responsable actif trouvé.</p>
+    {% else %}
+    {% if uneResp %}<span>{{ responsables[0].responsabilite }} :</span>{% endif %}
+    <ul id="listResponsables" class="list-unstyled">
+        {% for responsable in responsables %}
+        <li>{% if not uneResp %}{{ responsable.responsabilite }} : {% endif %}{% render(url('pjm_profil_encart', {'username': responsable.user.username})) %}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
