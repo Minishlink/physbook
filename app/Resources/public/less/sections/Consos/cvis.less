@@ -107,6 +107,7 @@ body {
 
             .row.separation {
                 border-bottom: 0.4em solid white;
+                margin-bottom: 1.5em;
             }
 
             #historique {
@@ -133,17 +134,29 @@ body {
                     margin: 0 auto;
                 }
 
-                &:after {
+                @tailleZigZag: 1em;
+                &:after, &:before {
                     content: " ";
-                    display:block;
+                    display: block;
                     position: relative;
                     width: 100%;
-                    bottom:-30px;
-                    height:30px;
+                    height: @tailleZigZag;
+                }
+
+                &:before {
+                    background: linear-gradient(-135deg, transparent 75%, white 75%) 0 50%,
+                                linear-gradient( 135deg, transparent 75%, white 75%) 0 50%;
+                    background-repeat: repeat-x;
+                    background-size: @tailleZigZag @tailleZigZag, @tailleZigZag @tailleZigZag;
+                    top: -@tailleZigZag;
+                }
+
+                &:after {
                     background: linear-gradient(-45deg, transparent 75%, white 75%) 0 50%,
                                 linear-gradient( 45deg, transparent 75%, white 75%) 0 50%;
                     background-repeat: repeat-x;
-                    background-size:30px 30px, 30px 30px;
+                    background-size: @tailleZigZag @tailleZigZag, @tailleZigZag @tailleZigZag;
+                    bottom: -@tailleZigZag;
                 }
             }
         }
