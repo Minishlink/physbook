@@ -1,21 +1,25 @@
 <div id="produitMoment">
-    <h2>Produit du moment</h2>
     {% if produitMoment is not null %}
-        <p>
-        {% if produitMoment.image is not null %}
+    <div class="row">
+        <div class="col-xs-6">
+            {% if produitMoment.image is not null %}
             <img src="{{ asset(produitMoment.image.webPath) }}" alt="{{ asset(produitMoment.image.alt) }}" class="image" />
-        {% else %}
+            {% else %}
             <img src="{{ asset('images/consos/cvis/Produit.png') }}" alt="{{ produitMoment.libelle }}" class="image" />
-        {% endif %}
-        </p>
-        <p>
-            <span class="nom">{{ produitMoment.libelle }}</span><br>
-            <span class="prix">{{ produitMoment.prix|prix }}</span>
-        </p>
-
-        <div class="usersHM">
-            <span>{{ produitMoment.usersHM.count }} HM</span>
-            {% render(url('pjm_app_boquette_itemHM', {item: produitMoment.id})) %}
+            {% endif %}
         </div>
+        <div class="col-xs-6">
+            <p>
+                <span class="nom">{{ produitMoment.libelle }}</span><br>
+                <span class="prix">{{ produitMoment.prix|prix }}</span>
+            </p>
+
+            <div class="usersHM">
+                <span>{{ produitMoment.usersHM.count }} HM</span>
+                {% render(url('pjm_app_boquette_itemHM', {item: produitMoment.id})) %}
+            </div>
+        </div>
+    </div>
     {% endif %}
+    <h2>Produit du moment</h2>
 </div>
