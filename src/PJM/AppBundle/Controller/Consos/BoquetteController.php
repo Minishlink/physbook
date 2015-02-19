@@ -568,8 +568,17 @@ class BoquetteController extends Controller
         $repository = $em->getRepository('PJMAppBundle:Responsable');
         $responsables = $repository->findByBoquette($boquette);
 
+        $ok = 0;
+        foreach($responsables as $responsable) {
+            if(!isset($oldResponsabilite) || $oldResponsabilite == $responsable->getResponsabilite()) {
+                $ok++;
+                $oldResponsabilite = $responsable->getResponsabilite();
+            }
+        }
+
         return $this->render('PJMAppBundle:Consos:responsables.html.twig', array(
             'responsables' => $responsables,
+            'uneResp' => ($ok == count($responsables))
         ));
     }
 
