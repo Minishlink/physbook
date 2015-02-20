@@ -110,6 +110,41 @@ body {
                 margin-bottom: 1.5em;
             }
 
+            #solde {
+                width: 80%;
+                text-align: center;
+                .center-block();
+
+                @decalage: 1.5em;
+
+                h2 {
+                    .font-courier();
+                    color: black;
+                    font-size: large;
+
+                    position: absolute;
+                    left: 0;
+                    right: @decalage;
+                    margin: 1.5em auto;
+                }
+
+                img {
+                    .img-responsive();
+                    .center-block();
+                }
+
+                .montant {
+                    color: black;
+                    font-size: x-large;
+
+                    position: absolute;
+                    left: 0;
+                    right: @decalage;
+                    margin: 0 auto;
+                    bottom: 60%;
+                }
+            }
+
             #historique {
                 .font-courier();
                 .center-block();
