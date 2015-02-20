@@ -25,11 +25,6 @@ class Utils
 
     public function getHistorique(User $user, $boquetteSlug, $limit = null)
     {
-        // cvis appartient au pians pour les crédits
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
-        }
-
         $debits = $this->em
             ->getRepository('PJMAppBundle:Historique')
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, true)
@@ -42,6 +37,11 @@ class Utils
             $debitsFormate[$k]['infos'] = $debit->getItem()->getInfos();
         }
         unset($debits);
+
+        // cvis appartient au pians pour les crédits
+        if ($boquetteSlug == "cvis") {
+            $boquetteSlug = "pians";
+        }
 
         $credits = $this->em
             ->getRepository('PJMAppBundle:Transaction')
