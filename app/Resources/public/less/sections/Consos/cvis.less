@@ -116,10 +116,11 @@ body {
             }
 
             #catalogue {
+                @hauteurListe: 20vmin;
                 text-align: center;
 
                 .glyphicon-chevron-left, .glyphicon-chevron-right {
-                    font-size: @hauteurImage;
+                    font-size: @hauteurListe;
                     vertical-align: top;
                 }
 
@@ -130,7 +131,8 @@ body {
                     li.produit {
                         .image {
                             .img-responsive();
-                            max-height: @hauteurImage;
+                            max-height: @hauteurListe;
+                            margin: 0 auto;
                         }
 
                         .nom {
