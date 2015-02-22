@@ -63,6 +63,16 @@ class BoquetteController extends Controller
         return $item;
     }
 
+    public function getAllItems($valid = true)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $items = $em
+            ->getRepository('PJMAppBundle:Item')
+            ->findByBoquetteSlug($this->slug, $valid);
+
+        return $items;
+    }
+
     /*
      * Historique des crédits et débits
      */
