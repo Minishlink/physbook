@@ -87,6 +87,26 @@ class ItemRepository extends EntityRepository
         };
     }
 
+    public function findByBoquetteSlug($boquette_slug, $valid = null)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameter('boquette_slug', $boquette_slug)
+            ->orderBy('i.date', 'desc')
+        ;
+
+        if (isset($valid)) {
+            $qb
+                ->andWhere('i.valid = :valid')
+                ->setParameter('valid', $valid)
+            ;
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         return function($qb) use($boquette_slug) {

@@ -20,7 +20,10 @@ class CvisController extends BoquetteController
         $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
         $produitMoment = $utils->getFeaturedItem($this->slug);
 
+        // TODO
         $ziConsommateurs = array("Ak", "Im&ro");
+
+        $listeProduits = $this->getAllItems();
 
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
             'boquetteSlug' => $this->slug,
@@ -28,6 +31,7 @@ class CvisController extends BoquetteController
             'listeHistoriques' => $listeHistoriques,
             'ziConsommateurs' => $ziConsommateurs,
             'produitMoment' => $produitMoment,
+            'listeProduits' => $listeProduits,
         ));
     }
 

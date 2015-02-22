@@ -1,3 +1,20 @@
-<div id="catalogue">
-    Catalogue
+<div id="catalogue" class="row">
+    {% if listeProduits|length > 0 %}
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <ul>
+    {% for produit in listeProduits %}
+    <li class="produit{% if loop.index > 3 %} hidden{% endif %}">
+        {% if produit.image is not null %}
+        <img src="{{ asset(produit.image.webPath) }}" alt="{{ asset(produit.image.alt) }}" class="image" />
+        {% else %}
+        <img src="{{ asset('images/consos/cvis/Produit.png') }}" alt="{{ produit.libelle }}" class="image" />
+        {% endif %}
+
+        <span class="nom">{{ produit.libelle }}</span><br>
+        <span class="prix">{{ produit.prix|prix }}</span>
+    </li>
+    {% endfor %}
+    </ul>
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    {% endif %}
 </div>

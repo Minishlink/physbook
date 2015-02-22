@@ -24,6 +24,15 @@ body {
                 margin-bottom: 2em;
             }
 
+            @media @desktop {
+                #porteContainer {
+                    position: absolute;
+                    margin: 0 auto;
+                    left: 0;
+                    bottom: 0;
+                }
+            }
+
             #porte {
                 position: relative;
                 @tailleMinWidth: 15em;
@@ -105,7 +114,38 @@ body {
                 }
             }
 
+            #catalogue {
+                text-align: center;
+
+                .glyphicon {
+                    font-size: @hauteurImage;
+                    vertical-align: top;
+                }
+
+                ul {
+                    .list-inline();
+                    display: inline;
+
+                    li.produit {
+                        .image {
+                            .img-responsive();
+                            max-height: @hauteurImage;
+                        }
+
+                        .nom {
+                            .text-larger();
+                        }
+
+                        &.hidden {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
             .row.separation {
+                position: relative;
+
                 border-bottom: 0.4em solid white;
                 margin-bottom: 1.5em;
             }
