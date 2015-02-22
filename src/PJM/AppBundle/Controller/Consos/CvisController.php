@@ -25,6 +25,13 @@ class CvisController extends BoquetteController
 
         $listeProduits = $this->getAllItems();
 
+        // TODO
+        $stats = array(
+            'achats' => 213,
+            'saucisson' => 13,
+            'burgers' => 25
+        );
+
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
@@ -32,6 +39,7 @@ class CvisController extends BoquetteController
             'ziConsommateurs' => $ziConsommateurs,
             'produitMoment' => $produitMoment,
             'listeProduits' => $listeProduits,
+            'stats' => $stats
         ));
     }
 
