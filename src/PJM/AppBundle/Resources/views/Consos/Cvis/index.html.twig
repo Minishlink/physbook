@@ -1,5 +1,9 @@
 {% extends "PJMAppBundle:Consos/Cvis:layout.html.twig" %}
 
+{% block modals %}
+    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+{% endblock %}
+
 {% block pjm_app_body %}
 <div class="container-fluid">
     <div class="row">
@@ -78,7 +82,9 @@
     <div class="row">
         <div class="col-md-4">
             {% include "PJMAppBundle:Consos:Cvis/solde.html.twig" %}
+            {% include "PJMAppBundle:Consos:Cvis/rechargement.html.twig" %}
         </div>
+        <div class="space visible-xs-block visible-sm-block"></div>
         <div class="col-md-4">
             {% include "PJMAppBundle:Consos:Cvis/extraitHistorique.html.twig" %}
         </div>
