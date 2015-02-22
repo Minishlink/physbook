@@ -16,6 +16,7 @@ body {
             }
 
             @hauteurImage: 10em;
+            @hauteurBordure: 5px;
 
             #store {
                 background: url('images/consos/cvis/rideau.png') top left repeat-x;
@@ -83,7 +84,7 @@ body {
                 text-align: center;
 
                 h2 {
-                    border-top: 0.2em solid @bleu-clair;
+                    border-top: @hauteurBordure solid @bleu-clair;
                     margin-top: 0.3em;
                 }
 
@@ -117,7 +118,7 @@ body {
             #catalogue {
                 text-align: center;
 
-                .glyphicon {
+                .glyphicon-chevron-left, .glyphicon-chevron-right {
                     font-size: @hauteurImage;
                     vertical-align: top;
                 }
@@ -139,6 +140,27 @@ body {
                         &.hidden {
                             display: none;
                         }
+                    }
+                }
+
+                .separation {
+                    height: @hauteurBordure;
+                    background-color: @bleu-clair;
+                    margin-top: 1em;
+                    margin-bottom: 0.5em;
+                }
+
+                .lien-plus {
+                    .text-larger();
+                    text-align: right;
+                    padding-right: 25%;
+
+                    a {
+                        color: white;
+                    }
+
+                    .glyphicon-plus {
+                        color: @bleu-clair;
                     }
                 }
             }
