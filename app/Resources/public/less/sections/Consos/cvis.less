@@ -133,6 +133,11 @@ body {
                     display: inline;
 
                     li.produit {
+                        @media @tablet {
+                            margin-left: 5vmin;
+                            margin-right: 5vmin;
+                        }
+
                         .image {
                             .img-responsive();
                             max-height: @hauteurListe;
