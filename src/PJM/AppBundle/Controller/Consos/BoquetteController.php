@@ -80,12 +80,30 @@ class BoquetteController extends Controller
         return $item;
     }
 
+    public function compterAchatsItem($itemSlug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nb = $em->getRepository('PJMAppBundle:Historique')
+            ->countByItemSlug($itemSlug);
+
+        return $nb;
+    }
+
+    public function compterAchatsBoquette()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nb = $em->getRepository('PJMAppBundle:Historique')
+            ->countByBoquetteSlug($this->slug);
+
+        return $nb;
+    }
+
     public function getLastItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
         $item = $em
             ->getRepository('PJMAppBundle:Item')
-            ->findLastOneBySlugAndValid($itemSlug, $valid);
+            ->count($itemSlug, $valid);
 
         return $item;
     }

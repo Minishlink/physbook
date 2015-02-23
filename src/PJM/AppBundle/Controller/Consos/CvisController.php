@@ -25,11 +25,10 @@ class CvisController extends BoquetteController
 
         $listeProduits = $this->getItems(true, 3);
 
-        // TODO
         $stats = array(
-            'achats' => 213,
-            'saucisson' => 13,
-            'burgers' => 25
+            'achats' => $this->compterAchatsBoquette(),
+            'saucisson' => $this->compterAchatsItem('saucisson'),
+            'burgers' => $this->compterAchatsItem('burger')
         );
 
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(

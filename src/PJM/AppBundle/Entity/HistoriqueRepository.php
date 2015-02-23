@@ -153,6 +153,33 @@ class HistoriqueRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function countByItemSlug($itemSlug)
+    {
+        $qb = $this->createQueryBuilder('h')
+            ->select('sum(h.nombre)')
+            ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
+            ->setParameters(array(
+                'item_slug'  => $itemSlug
+            ))
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult()/10;
+    }
+
+    public function countByBoquetteSlug($boquetteSlug)
+    {
+        $qb = $this->createQueryBuilder('h')
+            ->select('sum(h.nombre)')
+            ->join('h.item', 'i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameters(array(
+                'boquette_slug'  => $boquetteSlug
+            ))
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult()/10;
+    }
+
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         return function($qb) use($boquette_slug) {
