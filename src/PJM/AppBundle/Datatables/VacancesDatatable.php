@@ -31,6 +31,11 @@ class VacancesDatatable extends AbstractDatatableView
 
         $this->getColumnBuilder()
             ->add('dateDebut', 'datetime', array(
+                'title' => 'Date ISO',
+                'format' => '',
+                'visible' => false
+            ))
+            ->add('dateDebut', 'datetime', array(
                 'title' => 'Début',
                 'format' => 'll'
             ))

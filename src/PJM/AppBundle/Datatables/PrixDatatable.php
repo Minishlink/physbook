@@ -32,6 +32,11 @@ class PrixDatatable extends AbstractDatatableView
 
         $this->getColumnBuilder()
             ->add('date', 'datetime', array(
+                'title' => 'Date ISO',
+                'format' => '',
+                'visible' => false
+            ))
+            ->add('date', 'datetime', array(
                 'title' => 'Date',
                 'format' => 'll'
             ))
