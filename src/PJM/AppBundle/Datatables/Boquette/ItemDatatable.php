@@ -71,14 +71,14 @@ class ItemDatatable extends AbstractDatatableView
             ->add('prix', 'column', array(
                 'title' => 'Prix',
             ))
+            ->add('date', 'datetime', array(
+                'title' => 'Date',
+                'format' => 'll'
+            ))
         ;
 
         if($this->admin) {
             $this->getColumnBuilder()
-                ->add('date', 'datetime', array(
-                    'title' => 'Date',
-                    'format' => 'll'
-                ))
                 ->add("valid", "boolean", array(
                     "title" => "Actif",
                     "true_icon" => "glyphicon glyphicon-ok",
