@@ -1,6 +1,6 @@
 <div id="catalogue" class="row">
     {% if listeProduits|length > 0 %}
-    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="glyphicon glyphicon-menu-left"></span>
     <ul>
     {% for produit in listeProduits %}
     <li class="produit{% if loop.index > 3 %} hidden{% endif %}">
@@ -15,7 +15,7 @@
     </li>
     {% endfor %}
     </ul>
-    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="glyphicon glyphicon-menu-right"></span>
     {% endif %}
 
     <div class="separation"></div>
