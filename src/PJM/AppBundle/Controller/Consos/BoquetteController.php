@@ -27,6 +27,33 @@ class BoquetteController extends Controller
 {
     protected $slug;
 
+    public function getTwigTemplatePath($boquetteSlug = null)
+    {
+        if (isset($boquetteSlug)) {
+            $this->slug = $boquetteSlug;
+        }
+
+        switch ($this->slug) {
+            case 'pians':
+                $templatePath = 'PJMAppBundle:Consos/Pians:';
+                break;
+            case 'cvis':
+                $templatePath = 'PJMAppBundle:Consos/Cvis:';
+                break;
+            case 'brags':
+                $templatePath = 'PJMAppBundle:Consos/Brags:';
+                break;
+            case 'paniers':
+                $templatePath = 'PJMAppBundle:Consos/Paniers:';
+                break;
+            default:
+                $templatePath = 'PJMAppBundle::';
+                break;
+        }
+
+        return $templatePath;
+    }
+
     public function getSolde($user = null)
     {
         if (!isset($user)) {
@@ -63,12 +90,12 @@ class BoquetteController extends Controller
         return $item;
     }
 
-    public function getAllItems($valid = true)
+    public function getItems($valid = true, $limit = null, $offset = null)
     {
         $em = $this->getDoctrine()->getManager();
         $items = $em
             ->getRepository('PJMAppBundle:Item')
-            ->findByBoquetteSlug($this->slug, $valid);
+            ->findByBoquetteSlug($this->slug, $valid, $limit, $offset);
 
         return $items;
     }
@@ -93,26 +120,14 @@ class BoquetteController extends Controller
         $datatable->buildDatatableView();
         $datatable->setData($serializer->serialize($historique, 'json'));
 
-        switch ($boquette->getSlug()) {
-            case 'pians':
-                $template = 'PJMAppBundle:Consos/Pians:historique.html.twig';
-                break;
-            case 'cvis':
-                $template = 'PJMAppBundle:Consos/Cvis:historique.html.twig';
-                break;
-            case 'brags':
-                $template = 'PJMAppBundle:Consos/Brags:historique.html.twig';
-                break;
-            case 'paniers':
-                $template = 'PJMAppBundle:Consos/Paniers:historique.html.twig';
-                break;
-            default:
-                $template = 'PJMAppBundle:Consos:historique.html.twig';
-                break;
-        }
+        $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
+        $routeRetour = 'pjm_app_consos_'.$boquette->getSlug().'_index';
 
-        return $this->render($template, array(
-            'datatable' => $datatable,
+        return $this->render('PJMAppBundle::datatable.html.twig', array(
+            'titre' => 'Historique',
+            'layout' => $layout,
+            'routeRetour' => $routeRetour,
+            'datatable' => $datatable
         ));
     }
 
@@ -365,21 +380,28 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Liste des items pour une boquette.
+     * Liste des items pour une boquette.
      */
     public function listeItemAction(Request $request, Boquette $boquette)
     {
         $datatable = $this->get("pjm.datatable.boquette.item");
         $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->setAdmin(false);
         $datatable->buildDatatableView();
 
-        return $this->render('PJMAppBundle:Admin:listeItem.html.twig', array(
+        $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
+        $routeRetour = 'pjm_app_consos_'.$boquette->getSlug().'_index';
+
+        return $this->render('PJMAppBundle::datatable.html.twig', array(
+            'titre' => 'Catalogue',
+            'layout' => $layout,
+            'routeRetour' => $routeRetour,
             'datatable' => $datatable
         ));
     }
 
     /**
-     * [ADMIN] Action ajax de rendu de la liste des items
+     * Action ajax de rendu de la liste des items
      */
     public function itemResultsAction($boquette_slug)
     {
@@ -394,6 +416,21 @@ class BoquetteController extends Controller
         $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $datatableData->getResponse();
+    }
+
+    /**
+     * [ADMIN] Gestion des items pour une boquette.
+     */
+    public function gestionItemAction(Request $request, Boquette $boquette)
+    {
+        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->setAdmin(true);
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:listeItem.html.twig', array(
+            'datatable' => $datatable
+        ));
     }
 
     /**

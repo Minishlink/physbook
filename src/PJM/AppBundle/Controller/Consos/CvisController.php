@@ -23,7 +23,7 @@ class CvisController extends BoquetteController
         // TODO
         $ziConsommateurs = array("Ak", "Im&ro");
 
-        $listeProduits = $this->getAllItems();
+        $listeProduits = $this->getItems(true, 3);
 
         // TODO
         $stats = array(

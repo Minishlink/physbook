@@ -1,5 +1,5 @@
 pjm_app_boquette_listeItem:
-    path:     /{slug}/item
+    path:     /{slug}/listeItem
     defaults: { _controller: PJMAppBundle:Consos/Boquette:listeItem }
 
 pjm_app_boquette_itemResults:

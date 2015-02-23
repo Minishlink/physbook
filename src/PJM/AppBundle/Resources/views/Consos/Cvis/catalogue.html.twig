@@ -3,21 +3,12 @@
     <span class="glyphicon glyphicon-menu-left"></span>
     <ul>
     {% for produit in listeProduits %}
-    <li class="produit{% if loop.index > 3 %} hidden{% endif %}">
-        {% if produit.image is not null %}
-        <img src="{{ asset(produit.image.webPath) }}" alt="{{ asset(produit.image.alt) }}" class="image" />
-        {% else %}
-        <img src="{{ asset('images/consos/cvis/Produit.png') }}" alt="{{ produit.libelle }}" class="image" />
-        {% endif %}
-
-        <span class="nom">{{ produit.libelle }}</span><br>
-        <span class="prix">{{ produit.prix|prix }}</span>
-    </li>
+    {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
     {% endfor %}
     </ul>
     <span class="glyphicon glyphicon-menu-right"></span>
     {% endif %}
 
     <div class="separation"></div>
-    <p class="lien-plus"><a href=""><span class="glyphicon glyphicon-plus"></span> Catalogue complet</a></p>
+    <p class="lien-plus"><a href="{{ path('pjm_app_boquette_listeItem', {'slug': boquetteSlug}) }}"><span class="glyphicon glyphicon-plus"></span> Catalogue complet</a></p>
 </div>
