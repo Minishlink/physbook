@@ -36,7 +36,7 @@ class ItemDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 3, "direction" => "desc"))
+            ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
         $this->getAjax()->setUrl(
@@ -48,6 +48,11 @@ class ItemDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
+            ->add('date', 'datetime', array(
+                'title' => 'Date ISO',
+                'format' => '',
+                'visible' => false
+            ))
             ->add("boquette.slug", "column", array("visible" => false))
             ->add("image.id", "column", array("visible" => false))
             ->add('image.ext', "column", array("visible" => false))
