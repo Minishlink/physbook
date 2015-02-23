@@ -7,4 +7,9 @@
 
     <span class="nom">{{ produit.libelle }}</span><br>
     <span class="prix">{{ produit.prix|prix }}</span>
+
+    <div class="usersHM">
+        <span>{{ produit.usersHM.count }} HM</span>
+        {% render(url('pjm_app_boquette_itemHM', {item: produit.id})) %}
+    </div>
 </li>
