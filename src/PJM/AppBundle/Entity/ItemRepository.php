@@ -87,7 +87,7 @@ class ItemRepository extends EntityRepository
         };
     }
 
-    public function findByBoquetteSlug($boquette_slug, $valid = null)
+    public function findByBoquetteSlug($boquette_slug, $valid = null, $limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('i')
             ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
@@ -99,6 +99,18 @@ class ItemRepository extends EntityRepository
             $qb
                 ->andWhere('i.valid = :valid')
                 ->setParameter('valid', $valid)
+            ;
+        }
+
+        if (isset($limit)) {
+            $qb
+                ->setMaxResults($limit)
+            ;
+        }
+
+        if (isset($offset)) {
+            $qb
+                ->setFirstResult($offset)
             ;
         }
 

@@ -14,6 +14,7 @@ class ItemDatatable extends AbstractDatatableView
 {
     protected $boquetteSlug;
     protected $twigExt;
+    protected $admin;
 
     public function setBoquetteSlug($boquetteSlug)
     {
@@ -23,6 +24,11 @@ class ItemDatatable extends AbstractDatatableView
     public function setTwigExt(IntranetExtension $twigExt)
     {
         $this->twigExt = $twigExt;
+    }
+
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
     }
 
     /**
@@ -65,38 +71,43 @@ class ItemDatatable extends AbstractDatatableView
             ->add('prix', 'column', array(
                 'title' => 'Prix',
             ))
-            ->add('date', 'datetime', array(
-                'title' => 'Date',
-                'format' => 'll'
-            ))
-            ->add("valid", "boolean", array(
-                "title" => "Actif",
-                "true_icon" => "glyphicon glyphicon-ok",
-                "false_icon" => "glyphicon glyphicon-remove",
-                "true_label" => "Oui",
-                "false_label" => "Non"
-            ))
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
-                    array(
-                        "route" => "pjm_app_admin_boquette_modifierImageItem",
-                        "route_parameters" => array(
-                            "boquette" => "boquette.slug",
-                            "item" => "id"
-                        ),
-                        "label" => "Modifier l'image",
-                        "icon" => "glyphicon glyphicon-picture",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Modifier",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
-                        ),
-                    ),
-                )
-            ))
         ;
+
+        if($this->admin) {
+            $this->getColumnBuilder()
+                ->add('date', 'datetime', array(
+                    'title' => 'Date',
+                    'format' => 'll'
+                ))
+                ->add("valid", "boolean", array(
+                    "title" => "Actif",
+                    "true_icon" => "glyphicon glyphicon-ok",
+                    "false_icon" => "glyphicon glyphicon-remove",
+                    "true_label" => "Oui",
+                    "false_label" => "Non"
+                ))
+                ->add(null, "action", array(
+                    "title" => "Actions",
+                    "actions" => array(
+                        array(
+                            "route" => "pjm_app_admin_boquette_modifierImageItem",
+                            "route_parameters" => array(
+                                "boquette" => "boquette.slug",
+                                "item" => "id"
+                            ),
+                            "label" => "Modifier l'image",
+                            "icon" => "glyphicon glyphicon-picture",
+                            "attributes" => array(
+                                "rel" => "tooltip",
+                                "title" => "Modifier",
+                                "class" => "btn btn-default btn-xs",
+                                "role" => "button"
+                            ),
+                        ),
+                    )
+                ))
+            ;
+        }
     }
 
     /**

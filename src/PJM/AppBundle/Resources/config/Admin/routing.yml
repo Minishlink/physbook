@@ -53,3 +53,7 @@ pjm_app_admin_boquette_modifierImageItem:
 pjm_app_admin_consos:
     resource: "@PJMAppBundle/Resources/config/Admin/Consos/routing.yml"
     prefix:   /consos
+
+pjm_app_admin_boquette:
+    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/routing.yml"
+    prefix:   /boquette
