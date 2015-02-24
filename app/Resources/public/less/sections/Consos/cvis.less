@@ -120,29 +120,55 @@ body {
             }
 
             #catalogue {
+                position: relative;
                 @hauteurListe: 20vmin;
                 text-align: center;
 
-                .glyphicon-menu-left, .glyphicon-menu-right {
-                    font-size: @hauteurListe;
-                    vertical-align: top;
+                #catalogueFleches {
+                    @media @tablet {
+                        position:absolute;
+                        top: 1em;
+                        left: 0;
+                        right: 0;
+                        margin: 0 auto;
+                        width: 90%;
+
+                        .glyphicon {
+                            height: @hauteurListe;
+                            line-height: @hauteurListe;
+                        }
+
+                        .glyphicon-menu-left {
+                            float: left;
+                        }
+
+                        .glyphicon-menu-right {
+                            float: right;
+                        }
+                    }
+
+                    .glyphicon {
+                        font-size: @hauteurListe/2;
+                        cursor: pointer;
+                    }
                 }
 
                 #catalogueContainer {
                     text-align: justify;
+                    width: 90%;
 
-                    > span, > div {
+                    @media @tablet {
+                        width: 80%;
+                    }
+
+                    margin: 0px auto;
+                    display: inline-block;
+
+                    > div {
                         display: inline-block;
                         vertical-align: top;
                         text-align: center;
-                    }
-
-                    > div {
-                        width: 20%;
-                    }
-
-                    > span {
-                        width: 17%;
+                        width: 32%;
                     }
 
                     .image {
