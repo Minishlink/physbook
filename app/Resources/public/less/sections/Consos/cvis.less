@@ -128,29 +128,35 @@ body {
                     vertical-align: top;
                 }
 
-                ul {
-                    .list-inline();
-                    display: inline;
+                #catalogueContainer {
+                    text-align: justify;
 
-                    li.produit {
-                        @media @tablet {
-                            margin-left: 5vmin;
-                            margin-right: 5vmin;
-                        }
+                    > span, > div {
+                        display: inline-block;
+                        vertical-align: top;
+                        text-align: center;
+                    }
 
-                        .image {
-                            .img-responsive();
-                            max-height: @hauteurListe;
-                            margin: 0 auto;
-                        }
+                    > div {
+                        width: 20%;
+                    }
 
-                        .nom {
-                            .text-larger();
-                        }
+                    > span {
+                        width: 17%;
+                    }
 
-                        &.hidden {
-                            display: none;
-                        }
+                    .image {
+                        max-height: @hauteurListe;
+                    }
+
+                    .nom {
+                        .text-larger();
+                    }
+
+                    &:after {
+                        content: '';
+                        width: 100%;
+                        display: inline-block;
                     }
                 }
 

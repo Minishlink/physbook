@@ -1,12 +1,12 @@
 <div id="catalogue" class="row">
     {% if listeProduits|length > 0 %}
-    <span class="glyphicon glyphicon-menu-left"></span>
-    <ul>
-    {% for produit in listeProduits %}
-    {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
-    {% endfor %}
-    </ul>
-    <span class="glyphicon glyphicon-menu-right"></span>
+    <div id="catalogueContainer">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        {% for produit in listeProduits %}
+        {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
+        {% endfor %}
+        <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
     {% endif %}
 
     <div class="separation"></div>
