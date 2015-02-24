@@ -1,10 +1,14 @@
 <div id="catalogue" class="row">
     {% if listeProduits|length > 0 %}
-    <div id="catalogueContainer">
-        <span class="glyphicon glyphicon-menu-left"></span>
+    <div id="catalogueContainer" class="row">
+
         {% for produit in listeProduits %}
         {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
         {% endfor %}
+
+    </div>
+    <div id="catalogueFleches" class="row">
+        <span class="glyphicon glyphicon-menu-left"></span>
         <span class="glyphicon glyphicon-menu-right"></span>
     </div>
     {% endif %}
