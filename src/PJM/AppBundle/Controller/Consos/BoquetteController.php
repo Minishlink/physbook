@@ -98,6 +98,22 @@ class BoquetteController extends Controller
         return $nb;
     }
 
+    public function getTopConsommateurs() {
+        $em = $this->getDoctrine()->getManager();
+        $res = $em->getRepository('PJMAppBundle:Historique')
+            ->getTopUsers($this->slug, 3);
+
+        $topConsommateurs = array();
+        foreach ($res as $row) {
+            $topConsommateurs[] = array(
+                'user' => $row[0]->getUser(),
+                'somme' => $row["somme"]/10
+            );
+        }
+
+        return $topConsommateurs;
+    }
+
     public function getLastItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();

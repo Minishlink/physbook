@@ -180,6 +180,28 @@ class HistoriqueRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
 
+    public function getTopUsers($boquetteSlug, $limit = null)
+    {
+        $qb = $this->createQueryBuilder('h')
+            ->addSelect('SUM(h.nombre) AS somme')
+            ->addSelect('u')
+            ->join('h.user', 'u')
+            ->join('h.item', 'i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->groupBy('u')
+            ->orderBy('somme', 'desc')
+            ->setParameters(array(
+                'boquette_slug'  => $boquetteSlug
+            ))
+        ;
+
+        if ($limit != null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         return function($qb) use($boquette_slug) {
