@@ -1,12 +1,27 @@
-
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: @hauteur_footer;
-    padding-top: 25px;
-    background-color: fade(black, 30%);
     color: darken(white, 10%);
+
+    height: @hauteur_footer/2;
+    line-height: @hauteur_footer/2;
+    .row {
+        background-color: fade(black, 30%);
+    }
+
+    @media @tablet {
+        height: @hauteur_footer;
+        line-height: @hauteur_footer;
+        background-color: fade(black, 30%);
+
+        .row {
+            background-color: transparent;
+        }
+    }
+
+    text-align: center;
+    text-transform: uppercase;
 
     a {
         color: white;
