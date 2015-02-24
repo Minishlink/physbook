@@ -1,15 +1,15 @@
-<li class="produit">
+<div class="produit">
     {% if produit.image is not null %}
     <img src="{{ asset(produit.image.webPath) }}" alt="{{ asset(produit.image.alt) }}" class="image" />
     {% else %}
     <img src="{{ asset('images/consos/cvis/Produit.png') }}" alt="{{ produit.libelle }}" class="image" />
     {% endif %}
 
-    <span class="nom">{{ produit.libelle }}</span><br>
-    <span class="prix">{{ produit.prix|prix }}</span>
+    <div class="nom">{{ produit.libelle }}</div>
+    <div class="prix">{{ produit.prix|prix }}</div>
 
     <div class="usersHM">
-        <span>{{ produit.usersHM.count }} HM</span>
         {% render(url('pjm_app_boquette_itemHM', {item: produit.id})) %}
+        <span>{{ produit.usersHM.count }} HM</span>
     </div>
-</li>
+</div>
