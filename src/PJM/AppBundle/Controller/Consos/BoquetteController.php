@@ -119,7 +119,7 @@ class BoquetteController extends Controller
         $em = $this->getDoctrine()->getManager();
         $item = $em
             ->getRepository('PJMAppBundle:Item')
-            ->count($itemSlug, $valid);
+            ->findLastOneBySlugAndValid($itemSlug, $valid);
 
         return $item;
     }
