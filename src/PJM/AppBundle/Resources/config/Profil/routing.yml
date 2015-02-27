@@ -21,3 +21,5 @@ pjm_profil_voir:
 pjm_profil_encart:
     path:       /encart/{username}
     defaults:   { _controller: PJMAppBundle:Profil:encart }
+    options:
+        expose: true

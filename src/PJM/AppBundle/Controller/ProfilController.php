@@ -28,13 +28,19 @@ class ProfilController extends Controller
 
     public function encartAction(Request $request, User $user)
     {
-        $online = $this->getDoctrine()->getManager()
-            ->getRepository('PJMUserBundle:User')
-            ->getOneActive($user);
+        if ($request->isXmlHttpRequest()) { // si on clique sur le lien d'encart
+            $online = $this->getDoctrine()->getManager()
+                ->getRepository('PJMUserBundle:User')
+                ->getOneActive($user);
+
+                return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(
+                    'user' => $user,
+                    'online' => isset($online)
+                ));
+        }
 
         return $this->render('PJMAppBundle:Profil:encart.html.twig', array(
-            'user' => $user,
-            'online' => isset($online)
+            'user' => $user
         ));
     }
 
