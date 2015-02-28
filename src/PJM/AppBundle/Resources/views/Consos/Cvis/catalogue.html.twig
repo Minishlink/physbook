@@ -1,18 +1,62 @@
 <div id="catalogue" class="row">
     {% if listeProduits|length > 0 %}
     <div id="catalogueContainer" class="row">
-
         {% for produit in listeProduits %}
         {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
         {% endfor %}
-
     </div>
     <div id="catalogueFleches" class="row">
-        <span class="glyphicon glyphicon-menu-left"></span>
-        <span class="glyphicon glyphicon-menu-right"></span>
+        <span class="glyphicon glyphicon-menu-left fleche fleche-gauche"></span>
+        <span class="glyphicon glyphicon-menu-right fleche fleche-droite"></span>
     </div>
     {% endif %}
 
     <div class="separation"></div>
     <p class="lien-plus"><a href="{{ path('pjm_app_boquette_listeItem', {'slug': boquetteSlug}) }}"><span class="glyphicon glyphicon-plus"></span> Catalogue complet</a></p>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    var catalogueActif = false;
+
+    $('.fleche').click(function() {
+        if (catalogueActif) {
+            return;
+        }
+        catalogueActif = true;
+
+        var gauche = $(this).is('.fleche-gauche');
+        var firstProduit = $('.produit:visible:first');
+        var lastProduit = $('.produit:visible:last');
+        var produit, produitToHide, nextProduit;
+
+        if (gauche) {
+            produitToHide = firstProduit;
+            nextProduit = $(lastProduit).next('.produit');
+
+            if (nextProduit.length == 1) {
+                produit = nextProduit;
+            } else {
+                // on charge les prochains produits
+                produit = produitToHide.clone().css('display', 'none');
+                $('#catalogueContainer').append(produit);
+            }
+        } else {
+            produitToHide = lastProduit;
+            nextProduit = $(firstProduit).prev('.produit');
+
+            if (nextProduit.length == 1) {
+                produit = nextProduit;
+            } else {
+                // on charge les prochains produits
+                produit = produitToHide.clone().css('display', 'none');
+                $('#catalogueContainer').prepend(produit);
+            }
+        }
+
+        produitToHide.hide(function() {
+            produit.show(function () { catalogueActif = false; });
+        });
+    });
+});
+</script>
