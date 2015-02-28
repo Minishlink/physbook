@@ -1,4 +1,5 @@
-<div class="produit">
+{% for produit in listeProduits %}
+<div class="produit"{% if ajoutCatalogue is defined %} style="display:none"{% endif %}>
     {% if produit.image is not null %}
     <img src="{{ asset(produit.image.webPath) }}" alt="{{ asset(produit.image.alt) }}" class="image" />
     {% else %}
@@ -13,3 +14,4 @@
         <span>{{ produit.usersHM.count }} HM</span>
     </div>
 </div>
+{% endfor %}

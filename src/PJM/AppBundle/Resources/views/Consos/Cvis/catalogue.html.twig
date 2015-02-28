@@ -1,9 +1,7 @@
 <div id="catalogue" class="row">
     {% if listeProduits|length > 0 %}
     <div id="catalogueContainer" class="row">
-        {% for produit in listeProduits %}
-        {% include "PJMAppBundle:Consos:Cvis/produit.html.twig" %}
-        {% endfor %}
+        {% include "PJMAppBundle:Consos:Cvis/produits.html.twig" %}
     </div>
     <div id="catalogueFleches" class="row">
         <span class="glyphicon glyphicon-menu-left fleche fleche-gauche"></span>
@@ -18,6 +16,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
     var catalogueActif = false;
+    var catalogueCharge = false;
 
     $('.fleche').click(function() {
         if (catalogueActif) {
@@ -25,38 +24,50 @@ $(document).ready(function () {
         }
         catalogueActif = true;
 
-        var gauche = $(this).is('.fleche-gauche');
+        var gauche = $(this).is('.fleche-gauche')
+
+        if (!catalogueCharge) {
+             // on charge les prochains produits
+            var req = $.ajax({
+                type: "GET",
+                url: Routing.generate('pjm_app_boquette_getItems', { boquette_slug: 'cvis', offset: 3 }),
+                cache: false
+            });
+
+            req.done(function (data) {
+                $('#catalogueContainer').append(data);
+                catalogueCharge = true;
+                majCatalogue(gauche);
+            });
+
+            req.fail(function (jqXHR, textStatus,errorThrown) {
+
+            });
+        } else {
+            majCatalogue(gauche);
+        }
+    });
+
+    function majCatalogue(gauche) {
         var firstProduit = $('.produit:visible:first');
         var lastProduit = $('.produit:visible:last');
-        var produit, produitToHide, nextProduit;
+        var produitToHide, nextProduit;
 
         if (gauche) {
             produitToHide = firstProduit;
             nextProduit = $(lastProduit).next('.produit');
-
-            if (nextProduit.length == 1) {
-                produit = nextProduit;
-            } else {
-                // on charge les prochains produits
-                produit = produitToHide.clone().css('display', 'none');
-                $('#catalogueContainer').append(produit);
-            }
         } else {
             produitToHide = lastProduit;
             nextProduit = $(firstProduit).prev('.produit');
-
-            if (nextProduit.length == 1) {
-                produit = nextProduit;
-            } else {
-                // on charge les prochains produits
-                produit = produitToHide.clone().css('display', 'none');
-                $('#catalogueContainer').prepend(produit);
-            }
         }
 
-        produitToHide.hide(function() {
-            produit.show(function () { catalogueActif = false; });
-        });
-    });
+        if (nextProduit.length == 1) {
+            produitToHide.hide(function() {
+                nextProduit.show(function () { catalogueActif = false; });
+            });
+        } else {
+            catalogueActif = false;
+        }
+    }
 });
 </script>
