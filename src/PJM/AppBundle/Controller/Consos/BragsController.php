@@ -40,7 +40,7 @@ class BragsController extends BoquetteController
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
-            'prixBaguette' => $this->getPrixBaguette(),
+            'prixBaguette' => $this->getCurrentBaguette()->getPrix(),
             'commande' => $this->getCommande()
         ));
     }
@@ -89,11 +89,6 @@ class BragsController extends BoquetteController
         }
 
         return $baguette;
-    }
-
-    public function getPrixBaguette()
-    {
-        return $this->getCurrentBaguette()->getPrix();
     }
 
     public function getZiBrags($tous = false)
@@ -450,7 +445,7 @@ class BragsController extends BoquetteController
 
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listePrix.html.twig', array(
             'datatable' => $datatable,
-            'prixActuel' => $this->getPrixBaguette(),
+            'prixActuel' => $this->getCurrentBaguette()->getPrix(),
             'form'      => $form->createView()
         ));
     }
