@@ -6,6 +6,12 @@ pjm_app_boquette_itemResults:
     path:     /{boquette_slug}/item/results
     defaults: { _controller: PJMAppBundle:Consos/Boquette:itemResults }
 
+pjm_app_boquette_getItems:
+    path:     /{boquette_slug}/item/liste/{offset}
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:getItems }
+    options:
+        expose: true
+
 pjm_app_boquette_itemHM:
     path:     /hm/{item}
     defaults: { _controller: PJMAppBundle:Consos/Boquette:itemHM }

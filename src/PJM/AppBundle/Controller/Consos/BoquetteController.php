@@ -445,7 +445,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des items
+     * Action ajax de rendu de la liste des items pour DataTables
      */
     public function itemResultsAction($boquette_slug)
     {
@@ -460,6 +460,22 @@ class BoquetteController extends Controller
         $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $datatableData->getResponse();
+    }
+
+    public function getItemsAction(Request $request, $boquette_slug, $offset = 0)
+    {
+        if ($request->isXmlHttpRequest()) {
+            if (!isset($this->slug)) {
+                $this->slug = $boquette_slug;
+            }
+
+            return $this->render('PJMAppBundle:Consos/Cvis:produits.html.twig', array(
+                'listeProduits' => $this->getItems(true, null, $offset),
+                'ajoutCatalogue' => true
+            ));
+        }
+
+        return new Response("This is not ajax.", 400);
     }
 
     /**
