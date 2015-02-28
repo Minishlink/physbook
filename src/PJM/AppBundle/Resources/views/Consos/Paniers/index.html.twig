@@ -52,12 +52,17 @@
             <div id="conteneurPanneaux">
                 <div class="conteneur devant center-block">
                     <div class="contenu">
+                        {% if panier is not null %}
                         <h3>Semaine {{ panier.date|date('W') }}</h3>
                         <ul class="list-unstyled text-larger">
                         {% for legume in panier.infos %}
                             <li>{{ legume }}</li>
                         {% endfor %}
                         </ul>
+                        {% else %}
+                        <h3>Semaine {{ "now"|date('W') }}</h3>
+                        <p>Pas de panier prévu cette semaine pour l'instant.</p>
+                        {% endif %}
                     </div>
                     <div class="bas"></div>
                 </div>
@@ -66,11 +71,15 @@
                     <div class="contenu">
                         <div style="visibility: hidden;">
                             <h3>Semaine XY</h3>
+                            {% if panier is not null %}
                             <ul class="list-unstyled text-larger">
                             {% for legume in panier.infos %}
                                 <li>xy</li>
                             {% endfor %}
                             </ul>
+                            {% else %}
+                             <p>xy</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="bas"></div>
@@ -81,30 +90,37 @@
             <div class="row">
                 <div id="commande" class="col-sm-7 text-center">
                     <h2 class="sr-only">Commande</h2>
+                    {% if panier is not null %}
                     <p class="text-larger">
-                        {% if not dejaCommande %}
-                            {% if panier.valid %}
-                            <a href="{{ path('pjm_app_consos_paniers_commander') }}" title="Commander" class="text-blanc">
-                                <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
-                                Télécharge le panier dans ton k'gib
-                            </a>
-                            {% else %}
-                                <span style="font-size: 6em" class="text-gris glyphicon glyphicon-ban-circle"></span><br>
-                                Trop tard pour commander...
-                            {% endif %}
+                    {% if not dejaCommande %}
+                        {% if panier.valid %}
+                        <a href="{{ path('pjm_app_consos_paniers_commander') }}" title="Commander" class="text-blanc">
+                            <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-download"></span><br>
+                            Télécharge le panier dans ton k'gib
+                        </a>
                         {% else %}
-                            <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-ok-circle"></span><br>
-                            Panier téléchargé
+                            <span style="font-size: 6em" class="text-gris glyphicon glyphicon-ban-circle"></span><br>
+                            Trop tard pour commander...
                         {% endif %}
+                    {% else %}
+                        <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-ok-circle"></span><br>
+                        Panier téléchargé
+                    {% endif %}
                     </p>
                     <p class="text-mauve text-larger">
                         Livré le <span class="text-gris">{{ panier.date|localizeddate('full', 'none')|slice(0,-4) }}</span>
                     </p>
+                    {% else %}
+                    <p>
+                        <span style="font-size: 6em" class="text-gris glyphicon glyphicon-ban-circle"></span><br>
+                        Panier non disponible
+                    </p>
+                    {% endif %}
                 </div>
                 <div id="prix" class="col-sm-5 text-center">
                     <h2 class="sr-only">Prix</h2>
                     <div id="prixPanierContainer">
-                        <div>{{ panier.prix|prix }}</div>
+                        <div>{% if panier is not null %}{{ panier.prix|prix }}{% else %}{{ 500|prix }}{% endif %}</div>
                     </div>
                 </div>
             </div>

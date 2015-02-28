@@ -51,7 +51,7 @@ class PaniersController extends BoquetteController
         $panier = $this->getCurrentPanier();
 
         // si le panier est bien actif
-        if ($panier->getValid()) {
+        if (isset($panier) && $panier->getValid()) {
             // on vérifie si l'utilisateur n'a pas déjà commandé un panier
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Historique');
@@ -97,26 +97,7 @@ class PaniersController extends BoquetteController
 
     public function getCurrentPanier()
     {
-        $panier = $this->getLastItem($this->itemSlug, null);
-
-        if (null === $panier) {
-            $panier = new Item();
-            $panier->setLibelle('Panier de fruits et légumes');
-            $panier->setPrix(500);
-            $panier->setSlug($this->itemSlug);
-            $panier->setBoquette($this->getBoquette());
-            $panier->setValid(true);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($panier);
-            $em->flush();
-        }
-
-        return $panier;
-    }
-
-    public function getPrixPanier()
-    {
-        return $this->getCurrentPanier()->getPrix();
+        return $this->getLastItem($this->itemSlug);
     }
 
     /*
@@ -152,8 +133,11 @@ class PaniersController extends BoquetteController
             if ($form->isValid()) {
                 // on enregistre le nouveau panier et on désactive l'ancien
                 $ancienPanier = $this->getCurrentPanier();
-                $ancienPanier->setValid(false);
-                $em->persist($ancienPanier);
+                if (isset($ancienPanier)) {
+                    $ancienPanier->setValid(false);
+                    $em->persist($ancienPanier);
+                }
+
                 $panier->setLibelle('Panier de fruits et légumes ('.$panier->getDate()->format('d/m').")");
                 $em->persist($panier);
 
