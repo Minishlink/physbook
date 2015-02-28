@@ -82,6 +82,34 @@ class BoquetteController extends Controller
         return $rep->findOneBy(array('slug' => $itemSlug, 'valid' => $valid));
     }
 
+    public function getLastItem($itemSlug, $valid = true)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('PJMAppBundle:Item');
+
+        if ($valid === 'any') {
+            $res = $repo->findBy(array('slug' => $itemSlug), array('date' => 'DESC'), 1);
+        } else {
+            $repo->findBy(array('slug' => $itemSlug, 'valid' => $valid), array('date' => 'DESC'), 1);
+        }
+
+        if (empty($res)) {
+            return null;
+        }
+
+        return $res[0];
+    }
+
+    public function getItems($valid = true, $limit = null, $offset = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $items = $em
+            ->getRepository('PJMAppBundle:Item')
+            ->findByBoquetteSlug($this->slug, $valid, $limit, $offset);
+
+        return $items;
+    }
+
     public function compterAchatsItem($itemSlug)
     {
         $em = $this->getDoctrine()->getManager();
@@ -114,34 +142,6 @@ class BoquetteController extends Controller
         }
 
         return $topConsommateurs;
-    }
-
-    public function getLastItem($itemSlug, $valid = true)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('PJMAppBundle:Item');
-
-        if ($valid === 'any') {
-            $res = $repo->findBy(array('slug' => $itemSlug), array('date' => 'DESC'), 1);
-        } else {
-            $repo->findBy(array('slug' => $itemSlug, 'valid' => $valid), array('date' => 'DESC'), 1);
-        }
-
-        if (empty($res)) {
-            return null;
-        }
-
-        return $res[0];
-    }
-
-    public function getItems($valid = true, $limit = null, $offset = null)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $items = $em
-            ->getRepository('PJMAppBundle:Item')
-            ->findByBoquetteSlug($this->slug, $valid, $limit, $offset);
-
-        return $items;
     }
 
     /*
