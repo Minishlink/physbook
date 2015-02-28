@@ -73,11 +73,13 @@ class BoquetteController extends Controller
     public function getItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
-        $item = $em
-            ->getRepository('PJMAppBundle:Item')
-            ->findOneBySlugAndValid($itemSlug, $valid);
+        $rep = $em->getRepository('PJMAppBundle:Item');
 
-        return $item;
+        if ($valid === 'any') {
+            return $rep->findOneBySlug($itemSlug);
+        }
+
+        return $rep->findOneBy(array('slug' => $itemSlug, 'valid' => $valid));
     }
 
     public function compterAchatsItem($itemSlug)
@@ -117,11 +119,15 @@ class BoquetteController extends Controller
     public function getLastItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
-        $res = $em
-            ->getRepository('PJMAppBundle:Item')
-            ->findBy(array('slug' => $itemSlug, 'valid' => $valid), array('date' => 'DESC'), 1);
+        $repo = $em->getRepository('PJMAppBundle:Item');
 
-        if(empty($res)) {
+        if ($valid === 'any') {
+            $res = $repo->findBy(array('slug' => $itemSlug), array('date' => 'DESC'), 1);
+        } else {
+            $repo->findBy(array('slug' => $itemSlug, 'valid' => $valid), array('date' => 'DESC'), 1);
+        }
+
+        if (empty($res)) {
             return null;
         }
 

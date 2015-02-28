@@ -97,7 +97,7 @@ class PaniersController extends BoquetteController
 
     public function getCurrentPanier()
     {
-        return $this->getLastItem($this->itemSlug);
+        return $this->getLastItem($this->itemSlug, 'any');
     }
 
     /*
