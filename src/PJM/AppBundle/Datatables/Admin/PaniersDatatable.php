@@ -41,6 +41,13 @@ class PaniersDatatable extends AbstractDatatableView
             ))
             ->add('infos', 'column', array('title' => 'Infos',))
             ->add('prix', 'column', array('title' => 'Prix',))
+            ->add("valid", "boolean", array(
+                "title" => "Actif",
+                "true_icon" => "glyphicon glyphicon-ok",
+                "false_icon" => "glyphicon glyphicon-remove",
+                "true_label" => "Oui",
+                "false_label" => "Non"
+            ))
             ->add(null, "action", array(
                 "title" => "Commandes",
                 "actions" => array(
