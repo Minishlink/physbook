@@ -117,11 +117,15 @@ class BoquetteController extends Controller
     public function getLastItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
-        $item = $em
+        $res = $em
             ->getRepository('PJMAppBundle:Item')
-            ->findLastOneBySlugAndValid($itemSlug, $valid);
+            ->findBy(array('slug' => $itemSlug, 'valid' => $valid), array('date' => 'DESC'), 1);
 
-        return $item;
+        if(empty($res)) {
+            return null;
+        }
+
+        return $res[0];
     }
 
     public function getItems($valid = true, $limit = null, $offset = null)
