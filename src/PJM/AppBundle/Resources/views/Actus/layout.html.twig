@@ -1,26 +1,10 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
 {% set section = "vie" %}
-{% block title %}
-	Actus | {{ parent() }}
-{% endblock %}
 
-{% block pjm_app_body_title %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Actus</h1>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block pageName %}actus{% endblock %}
+{% block categorieName %}Actualités{% endblock %}
 
-{% block pjm_app_body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            {% block pjm_app_body_actus %}{% endblock %}
-        </div>
-    </div>
-</div>
+{% block pjm_app_body_content %}
+{% block pjm_app_body_actus %}{% endblock %}
 {% endblock %}
