@@ -30,6 +30,8 @@ class Utils
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, true)
         ;
 
+        $debitsFormate = array();
+
         foreach ($debits as $k => $debit) {
             $debitsFormate[$k]['date'] = $debit->getDate();
             $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
@@ -47,6 +49,8 @@ class Utils
             ->getRepository('PJMAppBundle:Transaction')
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, 'OK')
         ;
+
+        $creditsFormate = array();
 
         foreach ($credits as $k => $credit) {
             $creditsFormate[$k]['date'] = $credit->getDate();
