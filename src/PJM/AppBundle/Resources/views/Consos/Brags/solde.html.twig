@@ -1,27 +1,29 @@
-<h2>Solde</h2>
-{% if solde >= 4000 %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-plein.png') }}">
-{% elseif solde >= 3000 %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-34.png') }}">
-{% elseif solde >= 2000 %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-12.png') }}">
-{% elseif solde >= 1000 %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-14.png') }}">
-{% elseif solde >= 0 %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-0.png') }}">
-{% else %}
-    <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-neg.png') }}">
-{% endif %}
-<p>
-    {% if solde > 0 %}
-        {% if commande.active != 0 %}
-            Il te reste {{ solde|prix }}, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/commande.active)|round(0, 'floor') }} jours.
-        {% else %}
-            Tu as {{ solde|prix }} sur ton compte Brag's.
-        {% endif %}
-    {% elseif solde == 0 %}
-        Tu n'as plus d'argent sur ton compte Brag's ! AQH tu recharges ?
+<div id="solde">
+    <h2>Solde</h2>
+    {% if solde >= 4000 %}
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-plein.png') }}">
+    {% elseif solde >= 3000 %}
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-34.png') }}">
+    {% elseif solde >= 2000 %}
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-12.png') }}">
+    {% elseif solde >= 1000 %}
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-14.png') }}">
+    {% elseif solde >= 0 %}
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-0.png') }}">
     {% else %}
-        Tu es en négat'ss ({{ solde|prix }}) ! Régularise au plus vite ta situation !!
+        <img style="width: 70%" class="img-responsive center-block" src="{{ asset('images/consos/brags/Pain-neg.png') }}">
     {% endif %}
-</p>
+    <p>
+        {% if solde > 0 %}
+            {% if commande.active != 0 %}
+                Il te reste {{ solde|prix }}, soit {{ (solde/prixBaguette)|round(0, 'floor') }} baguettes donc {{ (solde/prixBaguette/commande.active)|round(0, 'floor') }} jours.
+            {% else %}
+                Tu as {{ solde|prix }} sur ton compte Brag's.
+            {% endif %}
+        {% elseif solde == 0 %}
+            Tu n'as plus d'argent sur ton compte Brag's ! AQH tu recharges ?
+        {% else %}
+            Tu es en négat'ss ({{ solde|prix }}) ! Régularise au plus vite ta situation !!
+        {% endif %}
+    </p>
+</div>
