@@ -5,30 +5,20 @@
         <div class="timeline-block">
             <div class="timeline-img empty-circle"></div>
         </div>
+        {% for event in listeEvents %}
         <div class="timeline-block">
-            <div class="timeline-img bg-vert"></div>
+            <div class="timeline-img{% if event.couleur is not null%} bg-{{ event.couleur }}{% endif %}"></div>
 
             <div class="timeline-content">
-                <h2>Fin's de Nol's</h2>
-                <span class="organisateur"><strong>Restal</strong></span>
+                <h2>{{ event.titre }}</h2>
+                <span class="organisateur"><strong>{{ event.organisateur }}</strong></span>
                 <span class="date">
-                    <span class="dateDate">19/12</span><br>
-                    19h00
+                    <span class="dateDate">{{ event.date|date('d/m') }} </span><br>
+                    {{ event.date|date('H\\hi') }}
                 </span>
             </div>
         </div>
-        <div class="timeline-block">
-            <div class="timeline-img"></div>
-
-            <div class="timeline-content">
-                <h2>Nuit des Fignos</h2>
-                <span class="organisateur"><strong>CDF</strong></span>
-                <span class="date">
-                    <span class="dateDate">24/01</span><br>
-                    22h00
-                </span>
-            </div>
-        </div>
+        {% endfor %}
         <div class="timeline-block">
             <div class="timeline-img empty-circle"></div>
         </div>

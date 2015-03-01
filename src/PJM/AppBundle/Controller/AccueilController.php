@@ -13,7 +13,6 @@ class AccueilController extends Controller
         $solde['brags'] = $utils->getSolde($this->getUser(), 'brags');
         $solde['pians'] = $utils->getSolde($this->getUser(), 'pians');
         $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');
-        $solde['pians'] = -200;
         $mazoutage = ($solde['pians'] < 0);
 
         $photo = array(
@@ -26,11 +25,27 @@ class AccueilController extends Controller
         $repository = $em->getRepository('PJMUserBundle:User');
         $listeAnniv = $repository->findByAnniversaire(new \DateTime());
 
+        $listeEvents = array(
+            array(
+                'titre' => "Fin's de Nol's",
+                'organisateur' => "Restal",
+                'date' => new \DateTime('2014-12-19 19:00'),
+                'couleur' => 'vert'
+            ),
+            array(
+                'titre' => "Nuit des Fignos",
+                'organisateur' => "CDF",
+                'date' => new \DateTime('2015-01-24 22:00'),
+                'couleur' => null
+            ),
+        );
+
         return $this->render('PJMAppBundle:Accueil:index.html.twig', array(
             'solde' => $solde,
             'mazoutage' => $mazoutage,
             'photo' => $photo,
             'listeAnniv' => $listeAnniv,
+            'listeEvents' => $listeEvents,
         ));
     }
 }
