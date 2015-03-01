@@ -23,19 +23,19 @@
         <div class="col-md-12">
             <ul id="sous-menu">
                 <li>
-                    <a href="">
+                    <a href="#commande">
                         <img src="{{ asset('images/consos/brags/Croissant.png') }}"><br>
                         Ma commande
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#solde">
                         <img src="{{ asset('images/consos/brags/Niveau-N.png') }}"><br>
                         Mon compte
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#contact">
                         <img src="{{ asset('images/consos/brags/SOS.png') }}"><br>
                         S.O.S.
                     </a>
@@ -87,9 +87,11 @@
             Le brag's, c'est tous les matins à 10h.
         </div>
         <div class="col-md-5 text-center">
-            <h2>S.O.S. Brag's</h2>
-<img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/general/Contact.png') }}">
-            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+            <div id="contact">
+                <h2>S.O.S. Brag's</h2>
+    <img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/general/Contact.png') }}">
+                {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+            </div>
         </div>
     </div>
 </div>

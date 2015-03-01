@@ -1,25 +1,27 @@
-<h2>Ma commande</h2>
-<p class="text-blanc">
-    {% if commande.active != 0 %}
-    Tu reçois <strong>{{ commande.active }} baguette{% if commande.active > 1 %}s{% endif %}</strong> par jour.
-    {% else %}
-    Tu n'as pas encore de commande active.
-    {% endif %}
-    {% if commande.attente != null %}
-    <br>
-    Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette{% if commande.attente > 1 %}s{% endif %} par jour. Elle est en cours de traitement par le ZiBrag's et tu seras notifié quand elle sera validée.
-    {% endif %}
-</p>
+<div id="commande">
+    <h2>Ma commande</h2>
+    <p class="text-blanc">
+        {% if commande.active != 0 %}
+        Tu reçois <strong>{{ commande.active }} baguette{% if commande.active > 1 %}s{% endif %}</strong> par jour.
+        {% else %}
+        Tu n'as pas encore de commande active.
+        {% endif %}
+        {% if commande.attente != null %}
+        <br>
+        Tu as demandé à changer ta commande pour avoir {{ commande.attente }} baguette{% if commande.attente > 1 %}s{% endif %} par jour. Elle est en cours de traitement par le ZiBrag's et tu seras notifié quand elle sera validée.
+        {% endif %}
+    </p>
 
-<div class="panel-group" id="accordionCommande">
-    {# modifier commande #}
-    <div class="panel">
-        <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#modifierCommande">
-            <span class="panel-title">Modifier ma commande <span class="glyphicon glyphicon-pencil pull-right"></span></span>
-        </div>
-        <div id="modifierCommande" class="panel-collapse collapse">
-            <div class="panel-body">
-                {{ form(form) }}
+    <div class="panel-group" id="accordionCommande">
+        {# modifier commande #}
+        <div class="panel">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordionCommande" data-target="#modifierCommande">
+                <span class="panel-title">Modifier ma commande <span class="glyphicon glyphicon-pencil pull-right"></span></span>
+            </div>
+            <div id="modifierCommande" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {{ form(form) }}
+                </div>
             </div>
         </div>
     </div>
