@@ -41,10 +41,10 @@ $(document).ready(function () {
                         <img src="{{ asset('images/accueil/Cafe.png') }}">
                     </h1>
                     {% render(url('pjm_app_actus_extrait')) %}
-                    {% render(url('pjm_app_accueil_anniversaires')) %}
+                    {% include 'PJMAppBundle:Accueil:anniversaires.html.twig' %}
                 </div>
-                <div id="etatComptes" class="col-md-6">
-                    {% render(url('pjm_app_accueil_etatComptes')) %}
+                <div class="col-md-6">
+                    {% include 'PJMAppBundle:Accueil:etatComptes.html.twig' %}
                 </div>
             </div>
         </div>
@@ -53,11 +53,11 @@ $(document).ready(function () {
     <div id="bandeauBleu" class="row">
         <div class="col-md-offset-2 col-md-8">
             <div class="row">
-                <div id="aVenir" class="col-md-6">
-                    {% render(url('pjm_app_accueil_aVenir')) %}
+                <div class="col-md-6">
+                    {% include 'PJMAppBundle:Accueil:aVenir.html.twig' %}
                 </div>
-                <div id="bonjourGadzarts" class="col-md-6">
-                    {% render(url('pjm_app_accueil_bonjourGadzarts')) %}
+                <div class="col-md-6">
+                    {% include 'PJMAppBundle:Accueil:bonjourGadzarts.html.twig' %}
                 </div>
             </div>
         </div>

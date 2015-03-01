@@ -1,49 +1,51 @@
-<h1><a href="{{ path('pjm_app_consos_historique') }}">État des comptes</a></h1>
+<div id="etatComptes">
+    <h1><a href="{{ path('pjm_app_consos_historique') }}">État des comptes</a></h1>
 
-<div class="row">
-    <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
-        <div class="progress vertical bottom">
-            <div class="text-center prix">{{ solde.pians|prix }}</div>
-            <div class="progress-bar bg-rouge" role="progressbar" data-transitiongoal="{{ solde.pians }}" aria-valuenow="{{ solde.pians }}" aria-valuemin="0" aria-valuemax="5000"></div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
+            <div class="progress vertical bottom">
+                <div class="text-center prix">{{ solde.pians|prix }}</div>
+                <div class="progress-bar bg-rouge" role="progressbar" data-transitiongoal="{{ solde.pians }}" aria-valuenow="{{ solde.pians }}" aria-valuemin="0" aria-valuemax="5000"></div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="progress vertical bottom">
+                <div class="text-center prix">{{ solde.brags|prix }}</div>
+                <div class="progress-bar bg-jaune" role="progressbar" data-transitiongoal="{{ solde.brags }}" aria-valuenow="{{ solde.brags }}" aria-valuemin="0" aria-valuemax="5000"></div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="progress vertical bottom">
+                <div class="text-center prix">{{ solde.paniers|prix }}</div>
+                <div class="progress-bar bg-vert" role="progressbar" data-transitiongoal="{{ solde.paniers }}" aria-valuenow="{{ solde.paniers }}" aria-valuemin="0" aria-valuemax="2000"></div>
+            </div>
         </div>
     </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="progress vertical bottom">
-            <div class="text-center prix">{{ solde.brags|prix }}</div>
-            <div class="progress-bar bg-jaune" role="progressbar" data-transitiongoal="{{ solde.brags }}" aria-valuenow="{{ solde.brags }}" aria-valuemin="0" aria-valuemax="5000"></div>
+    <div class="row" id="comptesImgLabel">
+        <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
+            <div class="text-center boquette"><img src="{{ asset('images/consos/pians/Pians-O.png') }}"> <img src="{{ asset('images/consos/cvis/Cvis.png') }}"></div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="text-center boquette"><img src="{{ asset('images/consos/brags/Brags-N.png') }}"></div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="text-center boquette"><img src="{{ asset('images/consos/paniers/Fruits-et-legumes-V.png') }}"></div>
         </div>
     </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="progress vertical bottom">
-            <div class="text-center prix">{{ solde.paniers|prix }}</div>
-            <div class="progress-bar bg-vert" role="progressbar" data-transitiongoal="{{ solde.paniers }}" aria-valuenow="{{ solde.paniers }}" aria-valuemin="0" aria-valuemax="2000"></div>
+    <div class="row" id="comptesTextLabel">
+        <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
+            <div class="text-center boquette"><span class="text-orange">Pian's</span><br><span class="text-rouge">C'vis</span></div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="text-center boquette">Brag's</div>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
+            <div class="text-center boquette"><span class="text-mauve">Paniers</span></div>
         </div>
     </div>
-</div>
-<div class="row" id="comptesImgLabel">
-    <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
-        <div class="text-center boquette"><img src="{{ asset('images/consos/pians/Pians-O.png') }}"> <img src="{{ asset('images/consos/cvis/Cvis.png') }}"></div>
+    <div class="row">
+        <p id="plusDeDetails">
+            <a href="{{ path('pjm_app_consos_historique') }}"><span class="glyphicon glyphicon-plus"></span> de détails</a>
+        </p>
     </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="text-center boquette"><img src="{{ asset('images/consos/brags/Brags-N.png') }}"></div>
-    </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="text-center boquette"><img src="{{ asset('images/consos/paniers/Fruits-et-legumes-V.png') }}"></div>
-    </div>
-</div>
-<div class="row" id="comptesTextLabel">
-    <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-2">
-        <div class="text-center boquette"><span class="text-orange">Pian's</span><br><span class="text-rouge">C'vis</span></div>
-    </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="text-center boquette">Brag's</div>
-    </div>
-    <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <div class="text-center boquette"><span class="text-mauve">Paniers</span></div>
-    </div>
-</div>
-<div class="row">
-    <p id="plusDeDetails">
-        <a href="{{ path('pjm_app_consos_historique') }}"><span class="glyphicon glyphicon-plus"></span> de détails</a>
-    </p>
 </div>

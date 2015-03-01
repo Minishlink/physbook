@@ -1,27 +1,29 @@
-<h1><strong>Bonjour Gadz'Arts</strong></h1>
+<div id="bonjourGadzarts">
+    <h1><strong>Bonjour Gadz'Arts</strong></h1>
 
-<div id="photoContainer">
-    <div class="row">
-        <div id="photo" class="col-md-8 col-md-offset-2">
-            <img class="img-responsive" src="{{ asset(photo.url) }}">
+    <div id="photoContainer">
+        <div class="row">
+            <div id="photo" class="col-md-8 col-md-offset-2">
+                <img class="img-responsive" src="{{ asset(photo.url) }}">
+            </div>
+        </div>
+        <div class="row">
+            <div id="legende" class="col-md-8 col-md-offset-2">
+                <p>{{ photo.legende }}</p>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div id="legende" class="col-md-8 col-md-offset-2">
-            <p>{{ photo.legende }}</p>
+    <div id="hm" class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <p>
+                <img src="{{ asset('images/general/PhysHM-R.png') }}">
+                <strong>{{ photo.hm }}</strong> PG{{ photo.hm > 1 ? 's' : '' }} sont HM
+            </p>
         </div>
     </div>
-</div>
-<div id="hm" class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <p>
-            <img src="{{ asset('images/general/PhysHM-R.png') }}">
-            <strong>{{ photo.hm }}</strong> PG{{ photo.hm > 1 ? 's' : '' }} sont HM
-        </p>
-    </div>
-</div>
-<div id="enVoirPlus" class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <a href="{{ path('pjm_app_media_bonjourGadzart') }}">En voir <span class="glyphicon glyphicon-plus"></span></a>
+    <div id="enVoirPlus" class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <a href="{{ path('pjm_app_media_bonjourGadzart') }}">En voir <span class="glyphicon glyphicon-plus"></span></a>
+        </div>
     </div>
 </div>

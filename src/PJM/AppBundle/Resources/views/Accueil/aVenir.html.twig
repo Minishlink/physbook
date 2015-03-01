@@ -1,39 +1,41 @@
-<h1>A venir</h1>
+<div id="aVenir">
+    <h1>A venir</h1>
 
-<section id="timeline">
-    <div class="timeline-block">
-        <div class="timeline-img empty-circle"></div>
-    </div>
-    <div class="timeline-block">
-        <div class="timeline-img bg-vert"></div>
-
-        <div class="timeline-content">
-            <h2>Fin's de Nol's</h2>
-            <span class="organisateur"><strong>Restal</strong></span>
-            <span class="date">
-                <span class="dateDate">19/12</span><br>
-                19h00
-            </span>
+    <section id="timeline">
+        <div class="timeline-block">
+            <div class="timeline-img empty-circle"></div>
         </div>
-    </div>
-    <div class="timeline-block">
-        <div class="timeline-img"></div>
+        <div class="timeline-block">
+            <div class="timeline-img bg-vert"></div>
 
-        <div class="timeline-content">
-            <h2>Nuit des Fignos</h2>
-            <span class="organisateur"><strong>CDF</strong></span>
-            <span class="date">
-                <span class="dateDate">24/01</span><br>
-                22h00
-            </span>
+            <div class="timeline-content">
+                <h2>Fin's de Nol's</h2>
+                <span class="organisateur"><strong>Restal</strong></span>
+                <span class="date">
+                    <span class="dateDate">19/12</span><br>
+                    19h00
+                </span>
+            </div>
         </div>
+        <div class="timeline-block">
+            <div class="timeline-img"></div>
+
+            <div class="timeline-content">
+                <h2>Nuit des Fignos</h2>
+                <span class="organisateur"><strong>CDF</strong></span>
+                <span class="date">
+                    <span class="dateDate">24/01</span><br>
+                    22h00
+                </span>
+            </div>
+        </div>
+        <div class="timeline-block">
+            <div class="timeline-img empty-circle"></div>
+        </div>
+    </section>
+    <div id="plusDeDetails" class="row">
+        <a href="{{ path('pjm_app_event_index') }}">
+            <span class="glyphicon glyphicon-plus"></span> de détails
+        </a>
     </div>
-    <div class="timeline-block">
-        <div class="timeline-img empty-circle"></div>
-    </div>
-</section>
-<div id="plusDeDetails" class="row">
-    <a href="{{ path('pjm_app_event_index') }}">
-        <span class="glyphicon glyphicon-plus"></span> de détails
-    </a>
 </div>
