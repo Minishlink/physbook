@@ -15,3 +15,15 @@ pjm_app_boquette_getItems:
 pjm_app_boquette_itemHM:
     path:     /hm/{item}
     defaults: { _controller: PJMAppBundle:Consos/Boquette:itemHM }
+
+pjm_app_boquette_uai:
+    resource: "@PJMAppBundle/Resources/config/Boquette/UAI/routing.yml"
+    prefix:   /uai
+
+pjm_app_boquette_tuiss:
+    resource: "@PJMAppBundle/Resources/config/Boquette/Tuiss/routing.yml"
+    prefix:   /tuiss
+
+pjm_app_boquette_asso:
+    resource: "@PJMAppBundle/Resources/config/Boquette/Asso/routing.yml"
+    prefix:   /asso

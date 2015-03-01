@@ -1,0 +1,15 @@
+pjm_app_event_fins_index:
+    path:     /fins
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:en_construction.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+
+pjm_app_event_elections_index:
+    path:     /elections
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:en_construction.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400

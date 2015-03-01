@@ -23,10 +23,10 @@
                         </a>
                         {% if section == "vie" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-vie" class="sous-menu">
-                            <li><a href="" title="Fin's"><img src="{{ asset('images/header/Fins-B.png') }}" alt="Fin's"></a></li>
-                            <li><a href="" title="Élections"><img src="{{ asset('images/header/Elections-BR.png') }}" alt="Élections"></a></li>
-                            <li><a href="" title="Infos"><img src="{{ asset('images/header/Infos-B.png') }}" alt="Infos"></a></li>
-                            <li><a href="" title="Média"><img src="{{ asset('images/header/Media-B.png') }}" alt="Média"></a></li>
+                            <li><a href="{{ path('pjm_app_event_fins_index') }}" title="Fin's"><img src="{{ asset('images/header/Fins-B.png') }}" alt="Fin's"></a></li>
+                            <li><a href="{{ path('pjm_app_event_elections_index') }}" title="Élections"><img src="{{ asset('images/header/Elections-BR.png') }}" alt="Élections"></a></li>
+                            <li><a href="{{ path('pjm_app_actus_index') }}" title="Actus"><img src="{{ asset('images/header/Infos-B.png') }}" alt="Actus"></a></li>
+                            <li><a href="{{ path('pjm_app_media_index') }}" title="Média"><img src="{{ asset('images/header/Media-B.png') }}" alt="Média"></a></li>
                         </ul>
                     </li>
                     <li{% if section == "assos" %} class="active"{% endif %}>
@@ -38,8 +38,8 @@
                         {% if section == "assos" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-assos" class="sous-menu">
                             <li><a href="http://amje-bordeaux.fr/intranet/web" title="AMJE Bordeaux"><img src="{{ asset('images/header/AMJE-B.png') }}" alt="AMJE Bordeaux"></a></li>
-                            <li><a href="" title="Asso"><img src="{{ asset('images/header/AE-ENSAM-B.png') }}" alt="AE ENSAM"></a></li>
-                            <li><a href="" title="UAI"><img src="{{ asset('images/header/UAI-B.png') }}" alt="UAI"></a></li>
+                            <li><a href="{{ path('pjm_app_boquette_asso_index') }}" title="Asso"><img src="{{ asset('images/header/AE-ENSAM-B.png') }}" alt="AE ENSAM"></a></li>
+                            <li><a href="{{ path('pjm_app_boquette_uai_index') }}" title="UAI"><img src="{{ asset('images/header/UAI-B.png') }}" alt="UAI"></a></li>
                         </ul>
                     </li>
                     <li{% if section == "consos" %} class="active"{% endif %}>
@@ -57,15 +57,15 @@
                         </ul>
                     </li>
                     <li{% if section == "thuyss" %} class="active"{% endif %}>
-                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-thuyss">
+                        <a href="{{ path('pjm_app_boquette_tuiss_index') }}" data-toggle="sous-menu-collapse" data-target="#menu-thuyss">
                             <img class="height-large" src="{{ asset('images/header/Thuyss-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Thuyss-R.png') }}">
-                            Thuyss
+                            Tuiss
                         </a>
                         {% if section == "thuyss" %}<div id="nav-slider-active"></div>{% endif %}
                     </li>
                     <li{% if section == "tutos" %} class="active"{% endif %}>
-                        <a class="disable-fade" href="#" data-toggle="sous-menu-collapse" data-target="#menu-tutos">
+                        <a href="{{ path('pjm_app_tutos_index') }}" data-toggle="sous-menu-collapse" data-target="#menu-tutos">
                             <img class="height-large" src="{{ asset('images/header/Tuto-G.png') }}">
                             <img class="height-large active" src="{{ asset('images/header/Tuto-R.png') }}">
                             Tutos

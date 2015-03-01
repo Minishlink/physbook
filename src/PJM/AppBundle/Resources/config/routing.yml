@@ -18,6 +18,18 @@ pjm_app_boquette:
     resource: "@PJMAppBundle/Resources/config/Boquette/routing.yml"
     prefix:   /boquette
 
+pjm_app_tutos:
+    resource: "@PJMAppBundle/Resources/config/Tutos/routing.yml"
+    prefix:   /tutos
+
+pjm_app_event:
+    resource: "@PJMAppBundle/Resources/config/Event/routing.yml"
+    prefix:   /event
+
+pjm_app_media:
+    resource: "@PJMAppBundle/Resources/config/Media/routing.yml"
+    prefix:   /media
+
 pjm_app_smoney:
     resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
     prefix:   /smoney
