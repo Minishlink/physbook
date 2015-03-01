@@ -19,7 +19,7 @@ class CvisController extends BoquetteController
         $utils = $this->get('pjm.services.utils');
         $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
         $produitMoment = $utils->getFeaturedItem($this->slug);
-        $ziConsommateurs = $this->getTopConsommateurs();
+        $ziConsommateurs = $this->getTopConsommateurs(date('m')); // top du mois en cours
         $listeProduits = $this->getItems(true, 3);
         $stats = array(
             'achats' => $this->compterAchatsBoquette(),
