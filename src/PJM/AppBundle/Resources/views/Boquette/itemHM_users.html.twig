@@ -1,2 +1,1 @@
-{{ usersHM.count }} ({% for user in usersHM %}{% render(url('pjm_profil_encart', {'username': user.username})) %} {% endfor %})
-{# TODO popover liste #}
+{% if usersHM.count > 0 %}<a class="show_usersHM" data-content='{% for user in usersHM %}{% render(url('pjm_profil_encart', {'username': user.username})) %}{% if not loop.last %}, {% endif %}{% endfor %}'>{% endif %}{{ usersHM.count }}{% if usersHM.count > 0 %}</a>{% endif %}
