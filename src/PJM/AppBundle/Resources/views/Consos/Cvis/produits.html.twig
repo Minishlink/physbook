@@ -11,7 +11,7 @@
 
     <div class="usersHM">
         {% render(url('pjm_app_boquette_itemHM', {item: produit.id})) %}
-        <span>{{ produit.usersHM.count }} HM</span>
+        <span>{% include "PJMAppBundle:Boquette:itemHM_users.html.twig" with { 'usersHM': produit.usersHM } %} HM</span>
     </div>
 </div>
 {% endfor %}
