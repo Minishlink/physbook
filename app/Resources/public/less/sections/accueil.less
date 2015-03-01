@@ -7,6 +7,47 @@ body {
             padding-bottom: 2em;
         }
 
+        #mazoutage {
+            @tailleHeight: 25em;
+            position: fixed;
+            left: 0;
+            right: 0;
+            width: 90%;
+            @media @tablet {
+                width: 40%;
+            }
+            margin: 0 auto;
+            height: @tailleHeight;
+            line-height: @tailleHeight;
+            z-index: 100;
+
+            font-size: 1.5em;
+            text-align: center;
+            color: white;
+
+            background: transparent url('images/consos/Mazout-N.png') no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            div.contenu {
+                width: 40%;
+                vertical-align: middle;
+                display: inline-block;
+                line-height: normal;
+
+                p.fermer {
+                    text-align: right;
+                    font-size: x-small;
+
+                    a {
+                        color: @gris-clair;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+
         #etatComptes {
             h1 {
                 .text-center();

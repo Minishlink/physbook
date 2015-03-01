@@ -1,7 +1,7 @@
 {% extends "PJMAppBundle:Consos/Brags:layout.html.twig" %}
 
 {% block modals %}
-    {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
+    {% include "PJMAppBundle:Consos:rechargement.html.twig" %}
 {% endblock %}
 
 {% block pjm_app_body %}
