@@ -9,4 +9,9 @@ $(document).ready(function () {
             before: function(that, xhr) { that.setContent('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Chargement...'); },
         }
     });
+
+    $('a.show_usersHM').webuiPopover({
+        closeable: true,
+        animation: 'fade',
+    });
 });
