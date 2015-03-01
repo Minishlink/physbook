@@ -180,7 +180,7 @@ class HistoriqueRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
 
-    public function getTopUsers($boquetteSlug, $limit = null)
+    public function getTopUsers($boquetteSlug, $limit = null, $month = null, $year = null)
     {
         $qb = $this->createQueryBuilder('h')
             ->addSelect('SUM(h.nombre) AS somme')
@@ -197,6 +197,24 @@ class HistoriqueRepository extends EntityRepository
 
         if ($limit != null) {
             $qb->setMaxResults($limit);
+        }
+
+        if ($month != null) {
+            if ($year == null) {
+                $year = date('Y');
+            }
+
+            $qb
+                ->where('h.date BETWEEN :debut AND :fin')
+                ->setParameter('debut', $year.'-'.$month.'-01')
+                ->setParameter('fin', $year.'-'.$month.'-31')
+            ;
+        } else if ($year != null) {
+            $qb
+                ->where('h.date BETWEEN :debut AND :fin')
+                ->setParameter('debut', $year.'-01-01')
+                ->setParameter('fin', $year.'-12-31')
+            ;
         }
 
         return $qb->getQuery()->getResult();

@@ -128,10 +128,16 @@ class BoquetteController extends Controller
         return $nb;
     }
 
-    public function getTopConsommateurs() {
+    /**
+     * Cherche les utilisateurs avec le plus d'achats
+     * @param  integer [$month = null] Mois à chercher. Si $year null, mois de l'année en cours, sinon année $year. Si $month est null, se réferer à year.
+     * @param  integer [$year  = null]  Année à chercher. Si $year null, cherche depuis toujours.
+     * @return array   Matrice d'utilisateurs avec leur nombre d'achats associés, triés par ce nombre.
+     */
+    public function getTopConsommateurs($month = null, $year = null) {
         $em = $this->getDoctrine()->getManager();
         $res = $em->getRepository('PJMAppBundle:Historique')
-            ->getTopUsers($this->slug, 3);
+            ->getTopUsers($this->slug, 3, $month, $year);
 
         $topConsommateurs = array();
         foreach ($res as $row) {
