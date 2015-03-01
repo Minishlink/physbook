@@ -1,0 +1,7 @@
+pjm_app_tutos_index:
+    path:     /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:en_construction.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
