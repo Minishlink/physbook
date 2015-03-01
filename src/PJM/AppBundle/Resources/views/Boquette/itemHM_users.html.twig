@@ -1,0 +1,2 @@
+{{ usersHM.count }} ({% for user in usersHM %}{% render(url('pjm_profil_encart', {'username': user.username})) %} {% endfor %})
+{# TODO popover liste #}
