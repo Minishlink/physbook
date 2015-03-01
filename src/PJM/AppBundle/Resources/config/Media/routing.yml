@@ -5,3 +5,11 @@ pjm_app_media_index:
         template: 'PJMAppBundle:App:en_construction.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
+
+pjm_app_media_bonjourGadzart:
+    path:     /bonjourGadzart
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:en_construction.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
