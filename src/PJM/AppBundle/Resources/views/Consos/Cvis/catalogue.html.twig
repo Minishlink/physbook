@@ -36,7 +36,7 @@ $(document).ready(function () {
 
             var req = $.ajax({
                 type: "GET",
-                url: Routing.generate('pjm_app_boquette_getItems', { boquette_slug: 'cvis', offset: 3 }),
+                url: Routing.generate('pjm_app_boquette_getItems', { boquette_slug: 'cvis', offset: 5 }),
                 cache: false
             });
 
@@ -72,7 +72,27 @@ $(document).ready(function () {
 
         if (nextProduit.length == 1) {
             produitToHide.hide(function() {
-                nextProduit.show(function () { catalogueActif = false; });
+                nextProduit.show(function () {
+                    catalogueActif = false;
+
+                    if (gauche) {
+                        if($('.produit:visible:last').next('.produit').length == 0) {
+                            $('.fleche-gauche').addClass('disabled');
+                        }
+
+                        if ($('.fleche-droite').is('.disabled')) {
+                            $('.fleche-droite').removeClass('disabled');
+                        }
+                    } else {
+                        if($('.produit:visible:first').prev('.produit').length == 0) {
+                            $('.fleche-droite').addClass('disabled');
+                        }
+
+                        if ($('.fleche-gauche').is('.disabled')) {
+                            $('.fleche-gauche').removeClass('disabled');
+                        }
+                    }
+                });
             });
         } else {
             catalogueActif = false;
