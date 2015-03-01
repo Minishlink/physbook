@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="rechargement">Rechargement</h4>
             </div>
             <div class="modal-body">
-                {{ form(form) }}
+                {% render(url('pjm_app_consos_rechargement', {'slug': boquetteSlug})) %}
             </div>
         </div>
     </div>

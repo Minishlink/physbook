@@ -755,7 +755,7 @@ class BoquetteController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_consos_'.$boquette->getSlug().'_index'));
         }
 
-        return $this->render("PJMAppBundle:Consos:rechargement.html.twig", array(
+        return $this->render("PJMAppBundle::form_only.html.twig", array(
             'form' => $form->createView(),
         ));
     }

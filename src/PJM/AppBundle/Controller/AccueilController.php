@@ -13,6 +13,8 @@ class AccueilController extends Controller
         $solde['brags'] = $utils->getSolde($this->getUser(), 'brags');
         $solde['pians'] = $utils->getSolde($this->getUser(), 'pians');
         $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');
+        $solde['pians'] = -200;
+        $mazoutage = ($solde['pians'] < 0);
 
         $photo = array(
             'url' => 'images/accueil/Niatur.jpg',
@@ -26,6 +28,7 @@ class AccueilController extends Controller
 
         return $this->render('PJMAppBundle:Accueil:index.html.twig', array(
             'solde' => $solde,
+            'mazoutage' => $mazoutage,
             'photo' => $photo,
             'listeAnniv' => $listeAnniv,
         ));
