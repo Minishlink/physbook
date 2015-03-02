@@ -76,11 +76,6 @@ class Article
     private $categories;
 
     /**
-    * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Actus\Commentaire", mappedBy="article")
-    */
-    private $commentaires;
-
-    /**
     * @Gedmo\Slug(fields={"titre"})
     * @ORM\Column(length=128, unique=true)
     */
@@ -93,6 +88,7 @@ class Article
         $this->publication = false;
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->thread = new \PJM\AppBundle\Entity\Commentaires\Thread();
     }
 
 

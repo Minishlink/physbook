@@ -29,7 +29,8 @@
         "sg/datatablesbundle": "~0.6.1",
         "genemu/form-bundle": "~2.2",
         "liuggio/excelbundle": "~2.0",
-        "kms/froala-editor-bundle": "dev-master"
+        "kms/froala-editor-bundle": "dev-master",
+        "friendsofsymfony/comment-bundle": "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -14,3 +14,9 @@ fos_js_routing:
 kms_froala_editor:
     resource: "@KMSFroalaEditorBundle/Resources/config/routing.yml"
     prefix:   /froalaeditor
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api
+    defaults: { _format: html }

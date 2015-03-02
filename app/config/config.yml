@@ -37,7 +37,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ PJMAppBundle, PJMUserBundle ]
+    bundles:        [ PJMAppBundle, PJMUserBundle, "FOSCommentBundle" ]
     java: %java_path%
     filters:
         cssrewrite: ~
@@ -111,3 +111,37 @@ kms_froala_editor:
     language: "fr"
     imageUpload:
         folder: /uploads/froala
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: PJM\AppBundle\Entity\Commentaires\Comment
+            thread: PJM\AppBundle\Entity\Commentaires\Thread
+            vote: PJM\AppBundle\Entity\Commentaires\Vote
+    acl: true
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: fos_comment.acl.comment.roles
+            vote:    fos_comment.acl.vote.roles
+        manager:
+            thread:  fos_comment.manager.thread.acl
+            comment: fos_comment.manager.comment.acl
+            vote:    fos_comment.manager.vote.acl
+    acl_roles:
+        comment:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ASSO_COM
+        thread:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+        vote:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
