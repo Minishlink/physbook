@@ -26,9 +26,9 @@ class ProfilController extends Controller
         ));
     }
 
-    public function encartAction(Request $request, User $user)
+    public function encartAction(Request $request, User $user, $content = false)
     {
-        if ($request->isXmlHttpRequest()) { // si on clique sur le lien d'encart
+        if ($content) { // si on clique sur le lien d'encart
             $online = $this->getDoctrine()->getManager()
                 ->getRepository('PJMUserBundle:User')
                 ->getOneActive($user);

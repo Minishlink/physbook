@@ -19,7 +19,7 @@ pjm_profil_voir:
     defaults:   { _controller: PJMAppBundle:Profil:voir }
 
 pjm_profil_encart:
-    path:       /encart/{username}
-    defaults:   { _controller: PJMAppBundle:Profil:encart }
+    path:       /encart/{username}/{content}
+    defaults:   { _controller: PJMAppBundle:Profil:encart, content: false }
     options:
         expose: true
