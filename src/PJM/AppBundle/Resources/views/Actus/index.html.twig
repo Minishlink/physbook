@@ -13,18 +13,15 @@
         {% for article in articles %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
-                        {% if article.image is not null %}
-                            <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}" style="height:1.5em" />
-                        {% endif %}
-                        <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}">{{ article.titre }}</a>
-                    </h3>
+                    <h3 class="panel-title"><a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}">{{ article.titre }}</a></h3>
                     {% for categorie in article.categories %}
                         <span class="label label-info">{{ categorie.nom }}</span>
                     {% endfor %}
                 </div>
                 <div class="panel-body">
-                    {{ article.contenu|raw }}
+                    <div class="froala-view">
+                        {{ article.contenu|raw }}
+                    </div>
                 </div>
                 <div class="panel-footer"><small>
                     par <strong>{{ article.auteur }}</strong> le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i') }}

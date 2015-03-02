@@ -26,9 +26,10 @@
         "winzou/console-bundle": "dev-master",
         "sensio/buzz-bundle": "dev-master",
         "ircmaxell/password-compat": "~1.0",
-        "sg/datatablesbundle": "dev-master",
+        "sg/datatablesbundle": "~0.6.1",
         "genemu/form-bundle": "~2.2",
-        "liuggio/excelbundle": "~2.0"
+        "liuggio/excelbundle": "~2.0",
+        "kms/froala-editor-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

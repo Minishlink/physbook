@@ -1,5 +1,11 @@
 {% extends "PJMAppBundle::layout.html.twig" %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('bundles/kmsfroalaeditor/css/froala_content.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/kmsfroalaeditor/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% set section = "vie" %}
 
 {% block pageName %}actus{% endblock %}

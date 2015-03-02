@@ -22,8 +22,6 @@ class ArticleRepository extends EntityRepository
 
         $query = $this->createQueryBuilder('a')
                     ->andWhere('a.publication = '.$estPublie)
-                    ->leftJoin('a.image', 'i')
-                    ->addSelect('i')
                     ->leftJoin('a.categories', 'c')
                     ->addSelect('c')
                     ->orderBy('a.date', 'DESC')

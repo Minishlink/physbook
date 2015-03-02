@@ -70,12 +70,6 @@ class Article
     private $publication;
 
     /**
-    * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist", "remove"})
-    * @Assert\Valid()
-    */
-    private $image;
-
-    /**
     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Actus\Categorie", cascade={"persist"})
     * @Assert\Valid()
     */
@@ -233,29 +227,6 @@ class Article
     public function getPublication()
     {
         return $this->publication;
-    }
-
-    /**
-     * Set image
-     *
-     * @param \PJM\AppBundle\Entity\Image $image
-     * @return Article
-     */
-    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \PJM\AppBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 
     /**
