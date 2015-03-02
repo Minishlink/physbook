@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="panel-footer"><small>
-                    par <strong>{{ article.auteur }}</strong> le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i') }}
+                    par <strong>{% render(url('pjm_profil_encart', {'username': article.auteur.username})) %}</strong> le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i') }}
                     {% if article.dateEdition is not null %}
                         <br><small>dernière édition le {{ article.dateEdition|date('d/m/Y') }} à {{ article.dateEdition|date('H:i') }}</small>
                     {% endif %}
