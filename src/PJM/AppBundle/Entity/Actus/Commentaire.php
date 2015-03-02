@@ -22,9 +22,8 @@ class Commentaire
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="auteur", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $auteur;
 
@@ -68,10 +67,10 @@ class Commentaire
     /**
      * Set auteur
      *
-     * @param string $auteur
+     * @param \PJM\UserBundle\Entity\User $auteur
      * @return Commentaire
      */
-    public function setAuteur($auteur)
+    public function setAuteur(\PJM\UserBundle\Entity\User $auteur)
     {
         $this->auteur = $auteur;
 
@@ -81,7 +80,7 @@ class Commentaire
     /**
      * Get auteur
      *
-     * @return string
+     * @return \PJM\UserBundle\Entity\User
      */
     public function getAuteur()
     {
