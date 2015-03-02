@@ -5,20 +5,16 @@
 {% endblock %}
 
 {% block pjm_app_body_actus %}
-    <h2>
-        {# On vérifie qu'une image soit bien associée à l'article #}
-        {% if article.image is not null %}
-            <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}" style="height:1em" />
-        {% endif %}
-        {{ article.titre }}
-    </h2>
-	<i>Par {{ article.auteur }}, le {{ article.date|date('d/m/Y') }}</i>
+    <h2>{{ article.titre }}</h2>
+	<em>Par {{ article.auteur }}, le {{ article.date|date('d/m/Y') }}</em>
     {% for categorie in article.categories %}
         <span class="label label-info">{{ categorie.nom }}</span>
     {% endfor %}
 
 	<div class="well">
-		{{ article.contenu|raw }}
+        <div class="froala-view">
+            {{ article.contenu|raw }}
+        </div>
 	</div>
 
     <h3 class="">Commentaires</h3>
@@ -35,5 +31,4 @@
         {% if app.user == article.auteur %}<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>{% endif %}
 		{% if app.user == article.auteur or is_granted('ROLE_ASSO_COM') %}<a href="{{ path('pjm_app_actus_supprimer', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Supprimer l'article</a>{% endif %}
 	</p>
-
 {% endblock %}

@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Sg\DatatablesBundle\SgDatatablesBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );

@@ -106,3 +106,8 @@ fos_user:
     resetting:
         email:
             template: PJMUserBundle:Resetting:email.html.twig
+
+kms_froala_editor:
+    language: "fr"
+    imageUpload:
+        folder: /uploads/froala
