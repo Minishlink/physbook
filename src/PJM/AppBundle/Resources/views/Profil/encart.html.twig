@@ -1,2 +1,2 @@
-<a href="{{ path('pjm_profil_voir', {'username': user.username}) }}" class="show_user" data-url="{{ path('pjm_profil_encart', {'username': user.username}) }}" title="Profil de {{ user.bucque }}">{% if long is defined %}{{ user }}{% else %}{{ user.bucque }}{% endif %}</a>{# hack pour pas avoir de newline
+<a href="{{ path('pjm_profil_voir', {'username': user.username}) }}" class="show_user" data-url="{{ path('pjm_profil_encart', {'username': user.username, 'content': true}) }}" title="Profil de {{ user.bucque }}">{% if long is defined %}{{ user }}{% else %}{{ user.bucque }}{% endif %}</a>{# hack pour pas avoir de newline
 #}
