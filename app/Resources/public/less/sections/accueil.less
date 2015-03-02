@@ -12,25 +12,32 @@ body {
             position: fixed;
             left: 0;
             right: 0;
-            width: 90%;
-            @media @tablet {
-                width: 40%;
-            }
+            width: 100%;
             margin: 0 auto;
+            margin-top: 2em;
             height: @tailleHeight;
             line-height: @tailleHeight;
             z-index: 100;
 
-            font-size: 1.5em;
+            @media @tablet {
+                font-size: 1.5em;
+            }
+
             text-align: center;
             color: white;
 
             background: transparent url('images/consos/Mazout-N.png') no-repeat;
             background-position: center;
-            background-size: cover;
+            background-size: contain;
 
             div.contenu {
                 width: 40%;
+                @media @desktop {
+                    width: 30%;
+                }
+                @media @large {
+                    width: 20%;
+                }
                 vertical-align: middle;
                 display: inline-block;
                 line-height: normal;
