@@ -22,7 +22,7 @@
     {% for commentaire in article.commentaires %}
     <div class="panel panel-default">
         <div class="panel-body">{{ commentaire.contenu }}</div>
-        <div class="panel-footer">De {% render(url('pjm_profil_encart', {'username': commentaire.username})) %}<br><small>Le {{ commentaire.date|date('d/m/Y') }} à {{ commentaire.date|date('H:i') }}</small></div>
+        <div class="panel-footer">De {% render(url('pjm_profil_encart', {'username': commentaire.auteur.username})) %}<br><small>Le {{ commentaire.date|date('d/m/Y') }} à {{ commentaire.date|date('H:i') }}</small></div>
     </div>
     {% endfor %}
 
