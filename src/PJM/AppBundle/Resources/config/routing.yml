@@ -58,6 +58,6 @@ pjm_app_plan_du_site:
     path:     /plan-du-site
     defaults:
         _controller: FrameworkBundle:Template:template
-        template: 'PJMAppBundle:App:en_construction.html.twig'
+        template: 'PJMAppBundle:App:plan_du_site.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
