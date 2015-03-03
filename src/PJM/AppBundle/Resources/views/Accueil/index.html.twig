@@ -39,7 +39,6 @@ $(document).ready(function () {
                     {{ "now"|localizeddate('medium', 'short') }}
                     <h1 class="en-tete-actus">
                         A la une
-                        <img src="{{ asset('images/accueil/Cafe.png') }}">
                     </h1>
                     {% render(url('pjm_app_actus_extrait')) %}
                     {% include 'PJMAppBundle:Accueil:anniversaires.html.twig' %}
