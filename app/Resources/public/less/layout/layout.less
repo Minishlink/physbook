@@ -15,14 +15,27 @@ body {
     margin-bottom: 15em;
 
     #bandeauTitre {
-        font-size: floor((@font-size-base * 3.75));
         background-color: @gris-tres-clair;
         color: #505050;
         margin-bottom: 0.3em;
         padding-bottom: @line-height-computed/2;
 
+        @height: 3*@font-size-h1;
+
+        h1 {
+            .font-klavika();
+            font-size: 3em;
+
+            @media @tablet {
+                font-size: 4em;
+            }
+
+            text-align: right;
+        }
+
         #logoPage {
-            height: 3*@font-size-h1;
+            float: left;
+            height: @height;
         }
     }
 }
