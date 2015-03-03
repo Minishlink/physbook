@@ -132,24 +132,31 @@ body {
         }
 
         #actus {
+            background: transparent url('images/accueil/Cafe.png') no-repeat;
+            background-position: 90% top;
+            background-size: 30%;
+
+            @media @tablet {
+                background-position: 90% top;
+                background-size: 20%;
+            }
+
+            @media @desktop {
+                background-position: right top;
+                background-size: 30%;
+            }
+
+            @media @large {
+                background-position: right top;
+                background-size: 40%;
+            }
+
             .en-tete-actus {
                 .font-huitcentsix();
                 margin-top:0;
                 border-top: 2px solid;
                 border-bottom: 2px solid;
                 position:relative;
-
-                > img {
-                    position: absolute;
-                    top: -50%;
-                    right: 10%;
-                    height: 2em;
-
-                    @media @tablet {
-                        top: -130%;
-                        height: 4em;
-                    }
-                }
             }
 
             li {
