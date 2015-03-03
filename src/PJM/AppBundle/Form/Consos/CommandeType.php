@@ -21,6 +21,7 @@ class CommandeType extends AbstractType
         $builder
             ->add('nombre', 'choice', array(
                 'error_bubbling' => true,
+                'label' => 'Nombre par jour',
                 'choices' => $this->getRangeBaguettes(true),
                 'constraints' => array(
                     new NotBlank(),
