@@ -140,11 +140,15 @@ body {
                 position:relative;
 
                 > img {
-                    position:absolute;
-                    z-index:-1;
-                    top:-50%;
-                    right:10%;
-                    height:200%;
+                    position: absolute;
+                    top: -50%;
+                    right: 10%;
+                    height: 2em;
+
+                    @media @tablet {
+                        top: -130%;
+                        height: 4em;
+                    }
                 }
             }
 
