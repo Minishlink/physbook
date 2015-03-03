@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d668a37c57e20d6c75d061490b65dae",
+    "hash": "da3ab53c9887abe1385a67ddd77c2bf0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -870,38 +870,38 @@
         },
         {
             "name": "friendsofsymfony/comment-bundle",
-            "version": "v2.0.6",
+            "version": "dev-master",
             "target-dir": "FOS/CommentBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSCommentBundle.git",
-                "reference": "65552ea5142e296d18b3c5b098bf424794726993"
+                "reference": "052052767ea7cd83137e1dde2618e7244b380731"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/65552ea5142e296d18b3c5b098bf424794726993",
-                "reference": "65552ea5142e296d18b3c5b098bf424794726993",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/052052767ea7cd83137e1dde2618e7244b380731",
+                "reference": "052052767ea7cd83137e1dde2618e7244b380731",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/rest-bundle": "~1.0",
                 "jms/serializer-bundle": "~0.11",
                 "php": ">=5.3.2",
-                "symfony/form": "~2.1",
-                "symfony/framework-bundle": "~2.1",
-                "symfony/security-bundle": "~2.1",
-                "symfony/twig-bundle": "~2.1",
-                "symfony/validator": "~2.1",
-                "symfony/yaml": "~2.1"
+                "symfony/form": "~2.3",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/security-bundle": "~2.3",
+                "symfony/twig-bundle": "~2.3",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "~1.1",
                 "doctrine/orm": "~2.3",
                 "friendsofsymfony/user-bundle": "~1.1",
                 "ornicar/akismet-bundle": "dev-master",
-                "symfony/assetic-bundle": "~2.1",
-                "symfony/browser-kit": "~2.1",
-                "symfony/css-selector": "~2.1",
+                "symfony/assetic-bundle": "~2.3",
+                "symfony/browser-kit": "~2.3",
+                "symfony/css-selector": "~2.3",
                 "symfony/expression-language": "~2.4"
             },
             "suggest": {
@@ -933,9 +933,8 @@
                     "homepage": "https://github.com/friendsofsymfony/FOSCommentBundle/contributors"
                 },
                 {
-                    "name": "Alexander",
-                    "email": "iam.asm89@gmail.com",
-                    "homepage": "http://asm89.github.io/"
+                    "name": "Alexander Mols",
+                    "email": "iam.asm89@gmail.com"
                 }
             ],
             "description": "This Bundle provides threaded comment functionality for Symfony2 applications",
@@ -945,7 +944,7 @@
                 "forum",
                 "threads"
             ],
-            "time": "2014-07-09 00:21:03"
+            "time": "2015-02-23 10:36:20"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -3167,7 +3166,8 @@
         "friendsofsymfony/user-bundle": 20,
         "winzou/console-bundle": 20,
         "sensio/buzz-bundle": 20,
-        "kms/froala-editor-bundle": 20
+        "kms/froala-editor-bundle": 20,
+        "friendsofsymfony/comment-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -88,7 +88,6 @@ class Article
         $this->publication = false;
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->thread = new \PJM\AppBundle\Entity\Commentaires\Thread();
     }
 
 
@@ -335,5 +334,15 @@ class Article
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Get thread id (commentaires)
+     *
+     * @return string
+     */
+    public function getThread()
+    {
+        return "article_".$this->id;
     }
 }

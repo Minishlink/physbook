@@ -24,6 +24,25 @@ $(document).ready(function () {
     $('.modal').on('shown.bs.modal', function() {
         resizeDataTables();
     });
+
+    $('#fos_comment_thread').on('click', '.fos_comment_comment_vote', function() {
+        $(this)
+            .prop('disabled', true)
+            .addClass('disable')
+            .fadeTo(400, 0.1)
+        ;
+    });
+
+    $('#fos_comment_thread').on('fos_comment_vote_comment', function(e, data, form) {
+        $('.fos_comment_comment_vote.disable').fadeTo(400, 1, function() {
+            $(this)
+                .css("opacity", "")
+                .prop('disabled', false)
+                .removeClass('disable')
+            ;
+        });
+
+    });
 });
 
 function resizeDataTables() {

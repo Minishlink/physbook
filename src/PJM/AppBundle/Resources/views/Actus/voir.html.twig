@@ -17,11 +17,11 @@
         </div>
 	</div>
 
-    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'article_' ~ article.id} %}
-
 	<p>
 		<a href="{{ path('pjm_app_actus_index') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
         {% if app.user == article.auteur %}<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>{% endif %}
 		{% if app.user == article.auteur or is_granted('ROLE_ASSO_COM') %}<a href="{{ path('pjm_app_actus_supprimer', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Supprimer l'article</a>{% endif %}
 	</p>
+
+    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'article_' ~ article.id} %}
 {% endblock %}

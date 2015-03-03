@@ -77,6 +77,10 @@ class Utils
         return $liste;
     }
 
+    public function getThread($id) {
+
+    }
+
     public function getBoquette($boquetteSlug)
     {
         $boquette = $this->em
