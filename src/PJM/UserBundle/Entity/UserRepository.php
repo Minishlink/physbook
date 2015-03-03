@@ -53,4 +53,9 @@ class UserRepository extends EntityRepository
 
         return $res;
     }
+
+    public function getByDateAnniversaire($month, $year)
+    {
+        //DATEPART
+    }
 }
