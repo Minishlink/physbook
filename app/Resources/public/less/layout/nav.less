@@ -1,6 +1,7 @@
 #menu {
     .sous-menu {
         .list-inline();
+        text-align: center;
 
         &#menu-vie {
             background-color: rgba(182, 57, 56, 0.9);
@@ -22,10 +23,12 @@
             height: 4em;
         }
 
-        text-align: center;
-
         > li {
             margin: 1em;
+
+            @media @tablet {
+                margin-left: 5em;
+            }
         }
 
         display: none;
