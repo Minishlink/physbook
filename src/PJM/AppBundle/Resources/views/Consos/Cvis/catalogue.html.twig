@@ -31,26 +31,23 @@ $(document).ready(function () {
             $('#catalogueFleches').append('<span class="icon-chargement fleche-' + (gauche ? 'gauche' : 'droite') + '" style="display: none;"></span>');
 
             $(this).fadeOut(function() {
-                $('#catalogueFleches .icon-chargement').fadeIn();
-            });
+                $('#catalogueFleches .icon-chargement').fadeIn(function() {
+                    var req = $.ajax({
+                        type: "GET",
+                        url: Routing.generate('pjm_app_boquette_getItems', { boquette_slug: 'cvis', offset: 5 }),
+                        cache: false
+                    });
 
-            var req = $.ajax({
-                type: "GET",
-                url: Routing.generate('pjm_app_boquette_getItems', { boquette_slug: 'cvis', offset: 5 }),
-                cache: false
-            });
-
-            req.done(function (data) {
-                $('#catalogueContainer').append(data);
-                $('#catalogue .icon-chargement').fadeOut(function () {
-                    $('#catalogueFleches .fleche.fleche-' + (gauche ? 'gauche' : 'droite')).fadeIn();
+                    req.done(function (data) {
+                        $('#catalogueContainer').append(data);
+                        $('#catalogue .icon-chargement').fadeOut(function () {
+                            $('#catalogueFleches .fleche.fleche-' + (gauche ? 'gauche' : 'droite')).fadeIn(function () {
+                                catalogueCharge = true;
+                                majCatalogue(gauche);
+                            });
+                        });
+                    });
                 });
-                catalogueCharge = true;
-                majCatalogue(gauche);
-            });
-
-            req.fail(function (jqXHR, textStatus,errorThrown) {
-
             });
         } else {
             majCatalogue(gauche);
