@@ -109,8 +109,24 @@ $(document).ready(function () {
 
         var hash = this.hash;
         if (hash != "") {
+            var el = $(this.hash);
+            var elOffset = el.offset().top;
+            var elHeight = el.height();
+            var windowHeight = $(window).height();
+            var offset;
+
+            console.log(elHeight);
+            console.log(windowHeight);
+
+            if (elHeight < windowHeight) {
+                offset = elOffset - ((windowHeight / 2) - (elHeight / 2));
+            }
+            else {
+                offset = elOffset;
+            }
+
             $('html, body').animate({
-                scrollTop: $(this.hash).offset().top
+                scrollTop: offset
             }, 300);
         }
     });
