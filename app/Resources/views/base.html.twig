@@ -41,31 +41,7 @@
         <meta name="msapplication-TileColor" content="#2b5797">
         <meta name="msapplication-TileImage" content="{{ asset('images/favicon/mstile-144x144.png') }}">
         <meta name="application-name" content="Phy'sbook">
-        {% javascripts
-            'bundles/fosjsrouting/js/router.js'
-            'js/fos_js_routes.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment-with-locales.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/bootstrap-progressbar/bootstrap-progressbar.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
-            '%kernel.root_dir%/../app/Resources/public/js/ext/chosen.jquery.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/datatables/media/js/jquery.dataTables.min.js'
-            '%kernel.root_dir%/../app/Resources/public/js/ext/dataTables.bootstrap.min.js'
-            '%kernel.root_dir%/../app/Resources/public/js/datatables.conf.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
-            '%kernel.root_dir%/../app/Resources/public/lib/webui-popover/dist/jquery.webui-popover.min.js'
-            '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
-            '%kernel.root_dir%/../app/Resources/public/js/nav.js'
-            '%kernel.root_dir%/../app/Resources/public/js/chargement.js'
-            '%kernel.root_dir%/../app/Resources/public/js/show_user.js'
-            filter='?yui_js'
-            output='js/extra.js'
-        %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        {% if app.environment == 'dev' %}<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>{% endif %}
+        {% block base_javascripts %}{% endblock %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}
