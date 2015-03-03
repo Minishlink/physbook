@@ -27,16 +27,25 @@ class AccueilController extends Controller
 
         $listeEvents = array(
             array(
-                'titre' => "Fin's de Nol's",
-                'organisateur' => "Restal",
-                'date' => new \DateTime('2014-12-19 19:00'),
+                'titre' => "Election Asso 214",
+                'organisateur' => "CE",
+                'date' => new \DateTime('2014-03-17 19:00'),
+                'journee' => false,
                 'couleur' => 'vert'
             ),
             array(
-                'titre' => "Nuit des Fignos",
-                'organisateur' => "CDF",
-                'date' => new \DateTime('2015-01-24 22:00'),
+                'titre' => "Semaine SKZ",
+                'organisateur' => "UE",
+                'date' => new \DateTime('2015-04-18'),
+                'journee' => true,
                 'couleur' => null
+            ),
+            array(
+                'titre' => "Grandes UAI",
+                'organisateur' => "UAI",
+                'date' => new \DateTime('2015-05-14'),
+                'journee' => true,
+                'couleur' => 'bleu-clair'
             ),
         );
 

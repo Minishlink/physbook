@@ -7,15 +7,15 @@
         </div>
         {% for event in listeEvents %}
         <div class="timeline-block">
-            <div class="timeline-img{% if event.couleur is not null%} bg-{{ event.couleur }}{% endif %}"></div>
+            <div class="timeline-img{% if event.couleur is not null%} bg-{{ event.couleur }}{% endif %}" style="color: white !important;"></div>
 
             <div class="timeline-content">
                 <h2>{{ event.titre }}</h2>
                 <span class="organisateur"><strong>{{ event.organisateur }}</strong></span>
                 <span class="date">
-                    <span class="dateDate">{{ event.date|date('d/m') }} </span><br>
+                    <span class="dateDate">{{ event.date|date('d/m') }} </span>{% if not event.journee %}<br>
                     {{ event.date|date('H\\hi') }}
-                </span>
+                {% endif %}</span>
             </div>
         </div>
         {% endfor %}
