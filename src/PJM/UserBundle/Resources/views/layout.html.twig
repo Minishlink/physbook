@@ -10,10 +10,12 @@
 {% endstylesheets %}
 {% endblock %}
 
-{% block javascripts %}
-{{ parent() }}
+{% block base_javascripts %}
 {% javascripts
+    '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
+    '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
     '@PJMUserBundle/Resources/public/js/pingouin.js'
+    '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
     filter='?yui_js'
     output='js/connexion.js'
 %}
