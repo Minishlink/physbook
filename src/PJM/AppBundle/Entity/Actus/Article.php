@@ -258,39 +258,6 @@ class Article
     }
 
     /**
-     * Add commentaires
-     *
-     * @param \PJM\AppBundle\Entity\Actus\Commentaire $commentaires
-     * @return Article
-     */
-    public function addCommentaire(\PJM\AppBundle\Entity\Actus\Commentaire $commentaires)
-    {
-        $this->commentaires[] = $commentaires;
-        $commentaires->setArticle($this); // !!
-        return $this;
-    }
-
-    /**
-     * Remove commentaires
-     *
-     * @param \PJM\AppBundle\Entity\Actus\Commentaire $commentaires
-     */
-    public function removeCommentaire(\PJM\AppBundle\Entity\Actus\Commentaire $commentaires)
-    {
-        $this->commentaires->removeElement($commentaires);
-    }
-
-    /**
-     * Get commentaires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCommentaires()
-    {
-        return $this->commentaires;
-    }
-
-    /**
      * Set dateEdition
      *
      * @param \DateTime $dateEdition
@@ -341,7 +308,7 @@ class Article
      *
      * @return string
      */
-    public function getThread()
+    public function getThreadId()
     {
         return "article_".$this->id;
     }
