@@ -22,3 +22,25 @@ a.show_usersHM {
     color: white;
     border-bottom: 1px dotted white;
 }
+
+.f-video-editor {
+    position: relative;
+    @taille: 70%;
+
+    .iframe-ratio {
+        display: block;
+        width: @taille;
+        height: auto;
+        margin: 0px auto;
+    }
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: @taille;
+        height: 100%;
+        right: 0;
+        margin: 0 auto;
+    }
+}

@@ -6,6 +6,17 @@
 <link href="{{ asset('bundles/kmsfroalaeditor/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function () {
+    var image = '<img class="iframe-ratio" src="data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7"/>';
+    $('.f-video-editor').prepend(image);
+});
+</script>
+
+{% endblock %}
+
 {% set section = "vie" %}
 
 {% block pageName %}actus{% endblock %}
