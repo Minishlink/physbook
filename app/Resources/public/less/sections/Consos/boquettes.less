@@ -9,13 +9,46 @@ body {
             .list-inline();
             .text-uppercase();
             .text-center();
-            margin-bottom: 2em;
+            margin: 1em auto;
+
+
+            @media @desktop {
+                width: 60%;
+                text-align: justify;
+
+                li {
+                    display: inline;
+
+                    a {
+                        display: inline-block;
+                        text-align: center;
+                    }
+                }
+
+                &:after {
+                    content: "";
+                    width: 100%;
+                    display: inline-block;
+
+                    // IE hack
+                    *display: inline;
+                    zoom: 1;
+                }
+            }
+
+            @media @large {
+                width: 50%;
+            }
+
 
             li {
                 cursor: pointer;
 
-                img {
-                    margin-bottom: 0.4em;
+                a {
+                    img {
+                        margin-bottom: 0.4em;
+                        margin-top: 0.5em;
+                    }
                 }
             }
 
