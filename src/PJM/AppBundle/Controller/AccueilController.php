@@ -19,8 +19,6 @@ class AccueilController extends Controller
         $repository = $em->getRepository('PJMUserBundle:User');
         $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
 
-        dump($listeAnniv);
-
         $photo = array(
             'url' => 'images/accueil/Niatur.jpg',
             'legende' => 'Niatur aime la bonne wave',
