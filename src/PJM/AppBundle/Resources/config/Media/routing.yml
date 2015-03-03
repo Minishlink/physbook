@@ -10,6 +10,6 @@ pjm_app_media_bonjourGadzart:
     path:     /bonjourGadzart
     defaults:
         _controller: FrameworkBundle:Template:template
-        template: 'PJMAppBundle:App:en_construction.html.twig'
+        template: 'TwigBundle:Exception:error403.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
