@@ -1,4 +1,6 @@
-{% if listeAnniv|length != 0 %}
-<span class="text-x-large"><span class="text-rouge font-lobster">Happy</span> <strong>birthday</strong></span><br>
-<span class="text-large">to {% for user in listeAnniv %}{{ user.bucque }}{% if not loop.last %} + {% endif %}{% endfor %}</span>
-{% endif %}
+<div id="anniversaires">
+    {% if listeAnniv|length != 0 %}
+    <h1><span class="text-rouge font-lobster">Happy</span> <strong>birthday</strong></h1>
+    <span class="text-large">to {% for user in listeAnniv %}{{ user.bucque }}{% if not loop.last %} + {% endif %}{% endfor %}</span>
+    {% endif %}
+</div>
