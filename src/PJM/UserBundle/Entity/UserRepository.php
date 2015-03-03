@@ -54,8 +54,15 @@ class UserRepository extends EntityRepository
         return $res;
     }
 
-    public function getByDateAnniversaire($month, $year)
+    public function getByDateAnniversaire(\DateTime $date)
     {
-        //DATEPART
+        $qb = $this->createQueryBuilder('u')
+            ->where('MONTH(u.anniversaire) = :mois')
+            ->andWhere('DAY(u.anniversaire) = :jour')
+            ->setParameter('mois', $date->format('m'))
+            ->setParameter('jour', $date->format('d'))
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

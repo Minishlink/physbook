@@ -73,6 +73,8 @@ doctrine:
         dql:
             numeric_functions:
                 regexp: PJM\AppBundle\DoctrineFunctions\RegexpFunction
+                month: PJM\AppBundle\DoctrineFunctions\Month
+                day: PJM\AppBundle\DoctrineFunctions\Day
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -15,15 +15,17 @@ class AccueilController extends Controller
         $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');
         $mazoutage = ($solde['pians'] < 0);
 
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMUserBundle:User');
+        $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
+
+        dump($listeAnniv);
+
         $photo = array(
             'url' => 'images/accueil/Niatur.jpg',
             'legende' => 'Niatur aime la bonne wave',
             'hm' => 123
         );
-
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
-        $listeAnniv = $repository->findByAnniversaire(new \DateTime());
 
         $listeEvents = array(
             array(
