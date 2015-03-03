@@ -3,6 +3,8 @@ $(document).ready(function () {
     $('ul.enable-slider').append('<div id="nav-slider" class="hidden-collapsed"></div>');
 
     initSlider();
+    // timer pour l'affichage du sous-menu
+    nav_timer = false;
 
     $('ul.enable-slider > li > a').hover(
         function() {
@@ -70,6 +72,11 @@ $(document).ready(function () {
         var cible = $(this).attr('data-target');
         // si un sous-menu est visible
         if($('ul[id^="menu-"]').is(":visible")) {
+            // si un sous-menu est en passe d'être remonté (l'utilisateur a enlevé sa souris du menu)
+            if(nav_timer) {
+                clearTimeout(nav_timer);
+            }
+
             // on cache tous les sous-menus visibles autres que la cible
             $('ul[id^="menu-"]:visible').not(cible).slideUp(200, function() {
                 // on affiche la cible
@@ -87,7 +94,7 @@ $(document).ready(function () {
     });
 
     /*
-     * Coloration du logo en fonction de si on passe la souris sur le menu
+     * Coloration du logo en fonction de si on passe la souris sur le menu et on cache les sous-menus quand on part
      */
     $('#menu').hover(function() {
         // on colore le logo phy'sbook en rouge
@@ -97,8 +104,13 @@ $(document).ready(function () {
         // on décolore le logo phy'sbook
         $('.navbar-brand').removeClass('active');
 
-        // on cache le sous-menu
-        $('ul[id^="menu-"]').slideUp();
+        // on cache le sous-menu au bout de 1s si on est pas revenu sur le menu
+        nav_timer = setTimeout(function(){
+            if (!$('#menu').is(':hover')) {
+                $('ul[id^="menu-"]').slideUp()
+            }
+        }, 1000);
+        ;
     });
 
     /*
