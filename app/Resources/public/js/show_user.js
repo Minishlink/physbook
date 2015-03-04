@@ -1,7 +1,7 @@
 $(document).ready(function () {
     popover_show_user(true);
 
-    $('a.show_usersHM').webuiPopover({
+    $('a.show_users').webuiPopover({
         closeable: true,
         animation: 'fade',
     });
@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('#fos_comment_thread').on('fos_comment_new_comment fos_comment_load_thread', function(e, data) {
         popover_show_user(false);
     });
-    $('.usersHM').on('shown.webui.popover', function(e, data) {
+    $('a.show_users').on('shown.webui.popover', function(e, data) {
         popover_show_user(false);
     });
 });
