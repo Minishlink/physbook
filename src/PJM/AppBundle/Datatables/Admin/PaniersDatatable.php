@@ -25,7 +25,7 @@ class PaniersDatatable extends AbstractDatatableView
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_consos_paniers_paniersResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_paniers_paniersResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -52,7 +52,7 @@ class PaniersDatatable extends AbstractDatatableView
                 "title" => "Commandes",
                 "actions" => array(
                     array(
-                        "route" => "pjm_app_admin_consos_paniers_voirCommandes",
+                        "route" => "pjm_app_admin_boquette_paniers_voirCommandes",
                         "route_parameters" => array(
                             "panier" => "id",
                         ),
@@ -66,7 +66,7 @@ class PaniersDatatable extends AbstractDatatableView
                         ),
                     ),
                     array(
-                        "route" => "pjm_app_admin_consos_paniers_telechargerCommandes",
+                        "route" => "pjm_app_admin_boquette_paniers_telechargerCommandes",
                         "route_parameters" => array(
                             "panier" => "id",
                         ),

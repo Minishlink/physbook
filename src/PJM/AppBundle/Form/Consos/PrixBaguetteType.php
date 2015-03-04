@@ -49,6 +49,6 @@ class PrixBaguetteType extends AbstractType
      */
     public function getName()
     {
-        return 'pjm_appbundle_consos_brags_prixBaguette';
+        return 'pjm_appbundle_boquette_brags_prixBaguette';
     }
 }

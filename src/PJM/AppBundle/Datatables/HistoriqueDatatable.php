@@ -25,7 +25,7 @@ class HistoriqueDatatable extends AbstractDatatableView
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_consos_historiqueResults'));
+        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_boquette_historiqueResults'));
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 

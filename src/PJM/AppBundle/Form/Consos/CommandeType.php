@@ -68,6 +68,6 @@ class CommandeType extends AbstractType
      */
     public function getName()
     {
-        return 'pjm_appbundle_consos_brags_commande';
+        return 'pjm_appbundle_boquette_brags_commande';
     }
 }

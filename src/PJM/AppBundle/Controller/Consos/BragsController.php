@@ -113,7 +113,7 @@ class BragsController extends BoquetteController
 
         $form = $this->createForm(new CommandeType(), $commande, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_brags_commande'),
+            'action' => $this->generateUrl('pjm_app_boquette_brags_commande'),
         ));
 
         $form->handleRequest($request);
@@ -153,7 +153,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_brags_index'));
+            return $this->redirect($this->generateUrl('pjm_app_boquette_brags_index'));
         }
 
         return $this->render('PJMAppBundle:Consos:Brags/commande.html.twig', array(
@@ -299,7 +299,7 @@ class BragsController extends BoquetteController
 
         $form = $this->createForm(new VacancesType(), $vacances, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_admin_consos_brags_listeVacances'),
+            'action' => $this->generateUrl('pjm_app_admin_boquette_brags_listeVacances'),
         ));
 
         $form->handleRequest($request);
@@ -335,7 +335,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_brags_index'));
         }
 
         $datatable = $this->get("pjm.datatable.vacances");
@@ -371,7 +371,7 @@ class BragsController extends BoquetteController
                 'Les vacances du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').' ne peuvent pas être annulées.'
             );
         }
-        return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
+        return $this->redirect($this->generateUrl('pjm_app_admin_boquette_brags_index'));
     }
 
     public function listePrixAction(Request $request)
@@ -385,7 +385,7 @@ class BragsController extends BoquetteController
         $nouveauPrix->setSlug($this->itemSlug);
 
         $form = $this->createForm(new PrixBaguetteType(), $nouveauPrix, array(
-            'action' => $this->generateUrl('pjm_app_admin_consos_brags_listePrix'),
+            'action' => $this->generateUrl('pjm_app_admin_boquette_brags_listePrix'),
             'method' => 'POST',
         ));
 
@@ -437,7 +437,7 @@ class BragsController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_admin_consos_brags_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_brags_index'));
         }
 
         $datatable = $this->get('pjm.datatable.prix');

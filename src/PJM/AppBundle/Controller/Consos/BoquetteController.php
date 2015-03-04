@@ -172,7 +172,7 @@ class BoquetteController extends Controller
         $datatable->setData($serializer->serialize($historique, 'json'));
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
-        $routeRetour = 'pjm_app_consos_'.$boquette->getSlug().'_index';
+        $routeRetour = 'pjm_app_boquette_'.$boquette->getSlug().'_index';
 
         return $this->render('PJMAppBundle::datatable.html.twig', array(
             'titre' => 'Historique',
@@ -234,7 +234,7 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_consos_".$item->getBoquette()->getSlug()."_index"));
+            return $this->redirect($this->generateUrl("pjm_app_boquette_".$item->getBoquette()->getSlug()."_index"));
         }
 
 
@@ -300,7 +300,7 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
         }
 
         $datatable = $this->get("pjm.datatable.credits");
@@ -399,7 +399,7 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
         }
 
         $datatable = $this->get("pjm.datatable.admin.responsable");
@@ -443,7 +443,7 @@ class BoquetteController extends Controller
         $datatable->buildDatatableView();
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
-        $routeRetour = 'pjm_app_consos_'.$boquette->getSlug().'_index';
+        $routeRetour = 'pjm_app_boquette_'.$boquette->getSlug().'_index';
 
         return $this->render('PJMAppBundle::datatable.html.twig', array(
             'titre' => 'Catalogue',
@@ -509,7 +509,7 @@ class BoquetteController extends Controller
      */
     public function modifierImageItemAction(Request $request, Boquette $boquette, Item $item)
     {
-        $routeRetour = "pjm_app_admin_consos_".$boquette->getSlug()."_index";
+        $routeRetour = "pjm_app_admin_boquette_".$boquette->getSlug()."_index";
 
         $form = $this->createForm(new ImageItemType(), $item, array(
             'method' => 'POST',
@@ -619,7 +619,7 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_consos_".$boquette->getSlug()."_index"));
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
         }
 
         $datatable = $this->get("pjm.datatable.admin.featuredItem");
@@ -710,7 +710,7 @@ class BoquetteController extends Controller
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_consos_rechargement', array('slug' => $boquette->getSlug()))
+            'action' => $this->generateUrl('pjm_app_boquette_rechargement', array('slug' => $boquette->getSlug()))
         ));
 
         $form->handleRequest($request);
@@ -755,7 +755,7 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_consos_'.$boquette->getSlug().'_index'));
+            return $this->redirect($this->generateUrl('pjm_app_boquette_'.$boquette->getSlug().'_index'));
         }
 
         return $this->render("PJMAppBundle::form_only.html.twig", array(

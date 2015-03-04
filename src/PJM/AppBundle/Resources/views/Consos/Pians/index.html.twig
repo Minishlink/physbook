@@ -10,7 +10,7 @@
         <div class="col-md-8 col-md-offset-2">
             {% if is_granted('ROLE_ZIPIANS') %}
             <p>
-                <small><a href="{{ path('pjm_app_admin_consos_pians_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
+                <small><a href="{{ path('pjm_app_admin_boquette_pians_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
             </p>
             {% endif %}
             <p>Le <strong><span class="text-larger">Pian’s</span></strong>, c’est un endroit vraiment sympa où on peut s’assoir dans des canapés molletonés, boire une bière entre amis, siroter un café, défier des extés au bière-pong, valider la Strass, prendre une râclée au baby-foot ou tout simplement se mettre une chiée. Alors viens, on est bien !</p>
@@ -87,7 +87,7 @@
     </div>
     <div class="row">
         <div class="col-md-4 text-center">
-            {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+            {% render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) %}
         </div>
         <div class="col-md-4">
             {# Calendrier #}
