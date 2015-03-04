@@ -18,7 +18,7 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getActive()
+    public function getActive(User $excludedUser = null)
     {
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime('2 minutes ago'));
@@ -27,6 +27,13 @@ class UserRepository extends EntityRepository
             ->where('u.lastActivity > :delay')
             ->setParameter('delay', $delay)
         ;
+
+        if ($excludedUser !== null) {
+            $qb
+                ->andWhere('u != :excludedUser')
+                ->setParameter('excludedUser', $excludedUser)
+            ;
+        }
 
         return $qb->getQuery()->getResult();
     }

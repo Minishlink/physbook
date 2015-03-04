@@ -131,6 +131,38 @@ body {
             }
         }
 
+        #connectedPeople {
+            @height: 6em;
+            height: @height;
+            white-space: nowrap;
+            margin-bottom: 1em;
+
+            a.show_users {
+                color: @rouge;
+            }
+
+            div {
+                vertical-align: middle;
+                display: inline-block;
+                line-height: normal;
+                font-size: 1.1em;
+
+                @media @tablet {
+                    font-size: 1.2em;
+                }
+
+                span {
+                    font-size: 1.5em;
+                }
+            }
+
+            img {
+                display: inline;
+                margin-right: 1em;
+                max-height: 100%;
+            }
+        }
+
         #actus {
             background: transparent url('images/accueil/Cafe.png') no-repeat;
             background-position: 90% top;

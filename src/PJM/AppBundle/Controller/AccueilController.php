@@ -18,6 +18,7 @@ class AccueilController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMUserBundle:User');
         $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
+        $listeConnectes = $repository->getActive($this->getUser());
 
         $photo = array(
             'url' => 'images/accueil/Niatur.jpg',
@@ -54,6 +55,7 @@ class AccueilController extends Controller
             'mazoutage' => $mazoutage,
             'photo' => $photo,
             'listeAnniv' => $listeAnniv,
+            'listeConnectes' => $listeConnectes,
             'listeEvents' => $listeEvents,
         ));
     }

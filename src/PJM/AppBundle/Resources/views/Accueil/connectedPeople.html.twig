@@ -1,0 +1,9 @@
+<div id="connectedPeople">
+    <img src="{{ asset('images/accueil/Reseau.png') }}">
+    <div>
+        <p>
+            <span class="text-rouge"><strong>{% if listeConnectes is not null %}{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': listeConnectes } %}{% else %}N/A{% endif %}</strong> chicop's</span><br>
+            {% if listeConnectes|length == 1 %}est actuellement connecté.{% else %}sont actuellement connectés.{% endif %}
+        </p>
+    </div>
+</div>

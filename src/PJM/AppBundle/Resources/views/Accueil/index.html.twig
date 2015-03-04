@@ -35,16 +35,13 @@ $(document).ready(function () {
                 Sal's <span class="text-rouge">{{ app.user.bucque }}</span>
             </p>
             <div class="row">
-                <div id="actus" class="col-md-6">
-                    {{ "now"|localizeddate('medium', 'short') }}
-                    <h1 class="en-tete-actus">
-                        A la une
-                    </h1>
-                    {% render(url('pjm_app_actus_extrait')) %}
-                    {% include 'PJMAppBundle:Accueil:anniversaires.html.twig' %}
+                <div  class="col-md-6">
+                    {% include 'PJMAppBundle:Accueil:connectedPeople.html.twig' %}
+                    {% include 'PJMAppBundle:Accueil:actus.html.twig' %}
                 </div>
                 <div class="col-md-6">
                     {% include 'PJMAppBundle:Accueil:etatComptes.html.twig' %}
+                    {% include 'PJMAppBundle:Accueil:anniversaires.html.twig' %}
                 </div>
             </div>
         </div>
