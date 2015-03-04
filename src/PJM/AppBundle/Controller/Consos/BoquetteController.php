@@ -257,7 +257,7 @@ class BoquetteController extends Controller
         $form = $this->createForm(new TransactionType(), $credit, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
-                "pjm_app_admin_consos_gestionCredits",
+                "pjm_app_admin_boquette_gestionCredits",
                 array('slug' => $boquette->getSlug())
             )
         ));
@@ -305,7 +305,7 @@ class BoquetteController extends Controller
 
         $datatable = $this->get("pjm.datatable.credits");
         $datatable->setAjaxUrl($this->generateUrl(
-            "pjm_app_admin_consos_creditsResults",
+            "pjm_app_admin_boquette_creditsResults",
             array('boquette_slug' => $boquette->getSlug())
         ));
         $datatable->buildDatatableView();
@@ -339,7 +339,7 @@ class BoquetteController extends Controller
         $form = $this->createForm(new ResponsableType(), $responsable, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
-                'pjm_app_admin_gestionResponsables',
+                'pjm_app_admin_boquette_gestionResponsables',
                 array(
                     'slug' => $boquette->getSlug()
                 )
@@ -570,7 +570,7 @@ class BoquetteController extends Controller
         $form = $this->createForm(new FeaturedItemType(), $featuredItem, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
-                'pjm_app_admin_gestionFeaturedItem',
+                'pjm_app_admin_boquette_gestionFeaturedItem',
                 array(
                     'slug' => $boquette->getSlug()
                 )

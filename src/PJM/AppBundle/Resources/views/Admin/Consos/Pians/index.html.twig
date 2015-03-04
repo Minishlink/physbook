@@ -33,9 +33,9 @@
     </div>
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {% if is_granted('ROLE_HARPAGS') %}{% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}{% endif %}
-    {% render(url('pjm_app_admin_gestionFeaturedItem', {slug: boquetteSlug})) %}
+    {% if is_granted('ROLE_HARPAGS') %}{% render(url('pjm_app_admin_boquette_gestionCredits', {slug: boquetteSlug})) %}{% endif %}
+    {% render(url('pjm_app_admin_boquette_gestionFeaturedItem', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_admin_boquette_gestionItem', {slug: boquetteSlug})) %}
-    {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
+    {% render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) %}
 </div>
 {% endblock %}
