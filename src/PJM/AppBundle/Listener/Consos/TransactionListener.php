@@ -4,7 +4,8 @@ namespace PJM\AppBundle\Listener\Consos;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreFlushEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Compte;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -25,17 +26,23 @@ class TransactionListener implements EventSubscriber
         return array(
             'preUpdate',
             'prePersist',
-            'preFlush',
+            'onFlush',
         );
     }
 
     public function prePersist(LifecycleEventArgs $args) {
-        $this->preUpdate($args);
+        $this->persistOrUpdate($args);
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        $this->persistOrUpdate($args);
+    }
+
+    private function persistOrUpdate($args)
     {
         $transaction = $args->getEntity();
+        $logger = $this->container->get('logger');
 
         if ($transaction instanceof Transaction) {
             if ($transaction->getStatus() == "OK") {
@@ -50,7 +57,8 @@ class TransactionListener implements EventSubscriber
                 }
 
                 $compte->crediter($transaction->getMontant());
-                $em->persist($compte);
+
+                $logger->info('persistOrUpdate - compte solde après: '.$compte->getSolde());
 
                 // si la transaction concerne la BDD R&z@l
                 if (in_array(
@@ -79,18 +87,24 @@ class TransactionListener implements EventSubscriber
                         }
                         // on annule la transaction
                         $compte->debiter($transaction->getMontant());
-                        $em->persist($compte);
                         $transaction->setStatus($status);
                     }
                 }
 
+                $logger->info('persistOrUpdate - fin');
+
                 $this->comptes[] = $compte;
+
+                $logger->info('persistOrUpdate - comptes'.implode($this->comptes));
             }
         }
     }
 
-    public function preFlush(PreFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args)
     {
+        $logger = $this->container->get('logger');
+        $logger->info('OnFlush - comptes'.implode($this->comptes));
+
         if(!empty($this->comptes)) {
             $em = $args->getEntityManager();
 
