@@ -1,29 +1,34 @@
-{% block subject %}[Phy'sbook] Modification de ton mot de passe{% endblock %}
+{# src/PJM/UserBundle/Resources/views/Resetting/email.html.twig #}
 
-{% block body_text %}
+{% extends "PJMAppBundle:Mail:layout.html.twig" %}
+
+{% block subject %}{{ parent() }} Modification de ton mot de passe{% endblock %}
+
+{% block content_text %}
 {% autoescape false %}
 Sal's {{ user.bucque }} {{ user.username }},
 
-Réinitialise ton mot de passe en allant là :
+Pour réinitialiser ton mot de passe, c'est par là :
 {{ confirmationUrl }}
 
 Fratern's,
 les ZiPhy'sbook
+admin@physbook.fr
 {% endautoescape %}
 {% endblock %}
 
-{% block body_html %}
-<div style="color: #b63938;">
-<p style="text-align:center"><a href="physbook.fr"><img style="" src="http://physbook.fr/brand_small.png" alt="Phy'sbook"></a></p>
-<h2>Sal's {{ user.bucque }} {{ user.username }},</h2>
+{% block content_html %}
+<h2>Réinitialisation du mot de passe</h2>
+
+<h3>Sal's {{ user.bucque }},</h3>
 
 <p>
-    Réinitialise ton mot de passe en cliquant <a style="color: #555" href="{{ confirmationUrl }}">ici</a>.
+    Réinitialise ton mot de passe en cliquant <a style="color: #ffba00" href="{{ confirmationUrl }}">ici</a>.
 </p>
 
 <p>
     Fratern's,<br>
-    les ZiPhy'sbook
+    les ZiPhy'sbook<br>
+    <a href="mailto:admin@physbook.fr" style="color:#ffba00">admin@physbook.fr</a>
 </p>
-</div>
 {% endblock %}
