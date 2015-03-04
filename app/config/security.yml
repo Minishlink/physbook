@@ -3,6 +3,8 @@ security:
         PJM\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
+        ROLE_EXT:             [ROLE_USER]
+
         ROLE_ZIBRAGS:         [ROLE_USER, ROLE_HARPAGS]
         ROLE_ZICVIS:          [ROLE_USER]
         ROLE_ZIPIANS:         [ROLE_USER]
@@ -20,7 +22,7 @@ security:
 
         ROLE_ASSO:            [ROLE_ASSO_ZI, ROLE_ASSO_COM, ROLE_ASSO_TRESORS]
 
-        ROLE_ADMIN:           [ROLE_ASSO]
+        ROLE_ADMIN:           [ROLE_ASSO, ROLE_EXT]
         ROLE_SUPER_ADMIN:     [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -57,4 +59,4 @@ security:
         - { path: ^/admin/boquette/pians/, roles: ROLE_ZIPIANS }
         - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_EXT }
