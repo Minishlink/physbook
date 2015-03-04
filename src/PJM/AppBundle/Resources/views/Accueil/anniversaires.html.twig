@@ -1,6 +1,8 @@
+{% if listeAnniv|length != 0 %}
 <div id="anniversaires">
-    {% if listeAnniv|length != 0 %}
-    <h1><span class="text-rouge font-lobster">Happy</span> <strong>birthday</strong></h1>
-    <span class="text-large">to {% for user in listeAnniv %}{% render(url('pjm_profil_encart', {'username': user.username})) %}{% if not loop.last %} + {% endif %}{% endfor %}</span>
-    {% endif %}
+    <div>
+        <h1><span class="text-rouge font-lobster">Happy</span> <strong>birthday</strong></h1>
+        <span class="text-large">to {% for user in listeAnniv %}{% render(url('pjm_profil_encart', {'username': user.username})) %}{% if not loop.last %} + {% endif %}{% endfor %}</span>
+    </div>
 </div>
+{% endif %}
