@@ -23,7 +23,10 @@ http://physbook.fr
             <tr>
                 <td>
                     <a href="{{ url('pjm_app_homepage') }}" style="color:#ffba00">
-                        <img src="{{ asset('images/general/physbook_bg-transp-small.png') }}" style="text-align:center" alt="Phy'sbook" />
+                        {# FUTURE à partir de Symfony 2.7
+                        <img src="{{ absolute_url(asset('images/general/physbook_bg-transp-small.png')) }}" style="text-align:center" alt="Phy'sbook" />
+                        #}
+                        <img src="{{ asset('images/general/physbook_bg-transp-small.png', absolute=true) }}" style="text-align:center" alt="Phy'sbook" />
                     </a>
                     <br><small>pour de meilleurs échanges et des paiements faciles au tabagn's</small>
                 </td>

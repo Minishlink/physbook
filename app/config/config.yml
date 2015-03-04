@@ -13,9 +13,6 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_base_urls:
-            http: [http://%assets_base_url%]
-            ssl: [https://%assets_base_url%]
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
