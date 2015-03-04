@@ -1,0 +1,7 @@
+<div id="actus">
+    <span>{{ "now"|localizeddate('medium', 'short') }}</span>
+    <h1 class="en-tete-actus">
+        A la une
+    </h1>
+    {% render(url('pjm_app_actus_extrait')) %}
+</div>
