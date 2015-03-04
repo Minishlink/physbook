@@ -3,19 +3,20 @@ security:
         PJM\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
-        ROLE_ZIBRAGS:         [ROLE_USER]
+        ROLE_ZIBRAGS:         [ROLE_USER, ROLE_HARPAGS]
         ROLE_ZICVIS:          [ROLE_USER]
         ROLE_ZIPIANS:         [ROLE_USER]
-        ROLE_ZIPANIERS:       [ROLE_USER]
+        ROLE_ZIPANIERS:       [ROLE_USER, ROLE_HARPAGS]
         ROLE_ZI:              [ROLE_ZIBRAGS, ROLE_ZICVIS, ROLE_ZIPIANS, ROLE_ZIPANIERS]
 
-        ROLE_ZIPIANS_HARPAGS: [ROLE_ZIPIANS]
-        ROLE_ZICVIS_HARPAGS:  [ROLE_ZICVIS]
-        ROLE_HARPAGS:         [ROLE_ZICVIS_HARPAGS, ROLE_ZIPIANS_HARPAGS]
+        ROLE_HARPAGS:         [ROLE_USER]
+        ROLE_ZIPIANS_HARPAGS: [ROLE_ZIPIANS, ROLE_HARPAGS]
+        ROLE_ZICVIS_HARPAGS:  [ROLE_ZICVIS, ROLE_HARPAGS]
+        ROLE_LISTE_HARPAGS:   [ROLE_ZICVIS_HARPAGS, ROLE_ZIPIANS_HARPAGS]
 
         ROLE_ASSO_COM:        [ROLE_USER]
         ROLE_ASSO_ZI:         [ROLE_ZI]
-        ROLE_ASSO_TRESORS:    [ROLE_HARPAGS]
+        ROLE_ASSO_TRESORS:    [ROLE_LISTE_HARPAGS]
 
         ROLE_ASSO:            [ROLE_ASSO_ZI, ROLE_ASSO_COM, ROLE_ASSO_TRESORS]
 
@@ -51,9 +52,9 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/smoney/retour, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/consos/brags/, roles: ROLE_ZIBRAGS }
-        - { path: ^/admin/consos/cvis/, roles: ROLE_ZICVIS }
-        - { path: ^/admin/consos/pians/, roles: ROLE_ZIPIANS }
-        - { path: ^/admin/consos/paniers/, roles: ROLE_ZIPANIERS }
+        - { path: ^/admin/boquette/brags/, roles: ROLE_ZIBRAGS }
+        - { path: ^/admin/boquette/cvis/, roles: ROLE_ZICVIS }
+        - { path: ^/admin/boquette/pians/, roles: ROLE_ZIPIANS }
+        - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_ADMIN }
+        - { path: ^/, roles: ROLE_USER }

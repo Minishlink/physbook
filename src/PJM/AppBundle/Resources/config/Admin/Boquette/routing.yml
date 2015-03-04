@@ -1,3 +1,49 @@
 pjm_app_admin_boquette_gestionItem:
     path:     /{slug}/gestionItem
     defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionItem }
+
+pjm_app_admin_gestionResponsables:
+    path:     /{slug}/responsables
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables }
+
+pjm_app_admin_responsablesResults:
+    path:     /{boquette_slug}/responsables/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:responsablesResults }
+
+pjm_app_admin_gestionFeaturedItem:
+    path:     /{slug}/featuredItem
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionFeaturedItem }
+
+pjm_app_admin_featuredItemResults:
+    path:     /{boquette_slug}/featuredItem/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:featuredItemResults }
+
+pjm_app_admin_boquette_modifierImageItem:
+    path:     /{boquette}/item/{item}/modifier
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:modifierImageItem }
+    options:
+        expose: true
+
+pjm_app_admin_consos_gestionCredits:
+    path:     /{slug}/gestionCredits
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionCredits }
+
+pjm_app_admin_consos_creditsResults:
+    path:     /{boquette_slug}/gestionCredits/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:creditsResults }
+
+pjm_app_admin_boquette_pians:
+    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Pians/routing.yml"
+    prefix:   /pians
+
+pjm_app_admin_boquette_brags:
+    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Brags/routing.yml"
+    prefix:   /brags
+
+pjm_app_admin_boquette_paniers:
+    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Paniers/routing.yml"
+    prefix:   /paniers
+
+pjm_app_admin_boquette_cvis:
+    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Cvis/routing.yml"
+    prefix:   /cvis

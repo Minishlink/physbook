@@ -22,9 +22,9 @@
             <p>
                 Tu peux consulter la liste des débits (bucquages) sur le panneau <strong>"Débits"</strong>.
             </p>
-            <p>
+            {% if is_granted('ROLE_HARPAGS') %}<p>
                 Si un PG te donne un chèque ou de la monnaie pour le brag's, tu peux l'indiquer sur le panneau <strong>"Crédits"</strong>. S'il s'agit d'un chèque, renseigne son numéro (7 chiffres). Tu peux aussi y consulter la liste des crédits S-Money.
-            </p>
+            </p>{% endif %}
             <p>
                 Pour les petites vacances et les jours fériés, comme il n'y a pas de brag's, tu peux empêcher le débit quotidien à tout le monde sur le panneau <strong>"Vacances/jours fériés"</strong>.<br>
                 Pour le stage 1A ou toute autre absence d'une partie des PGs, tu peux leur dire de faire une demande de résiliation, mais le plus simple c'est sans doute que tu résilies leur commande pour ce laps de temps. Il faudra qu'ils fassent une nouvelle demande de commande ensuite.
@@ -45,7 +45,7 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     {% render(url('pjm_app_admin_consos_brags_listeCommandes')) %}
     {% render(url('pjm_app_admin_consos_brags_listeBucquages')) %}
-    {% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}
+    {% if is_granted('ROLE_HARPAGS') %}{% render(url('pjm_app_admin_consos_gestionCredits', {slug: boquetteSlug})) %}{% endif %}
     {% render(url('pjm_app_admin_consos_brags_listeVacances')) %}
     {% render(url('pjm_app_admin_consos_brags_listePrix')) %}
     {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
