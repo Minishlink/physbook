@@ -1,7 +1,7 @@
-pjm_app_consos_brags_index:
+pjm_app_boquette_brags_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Consos/Brags:index }
 
-pjm_app_consos_brags_commande:
+pjm_app_boquette_brags_commande:
     path:     /commande
     defaults: { _controller: PJMAppBundle:Consos/Brags:commande }

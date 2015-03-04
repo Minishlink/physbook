@@ -31,8 +31,8 @@
     </div>
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {% render(url('pjm_app_admin_gestionFeaturedItem', {slug: boquetteSlug})) %}
+    {% render(url('pjm_app_admin_boquette_gestionFeaturedItem', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_admin_boquette_gestionItem', {slug: boquetteSlug})) %}
-    {% render(url('pjm_app_admin_gestionResponsables', {slug: boquetteSlug})) %}
+    {% render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) %}
 </div>
 {% endblock %}

@@ -33,7 +33,7 @@ class ResponsableDatatable extends AbstractDatatableView
         ;
 
         $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_admin_responsablesResults', array(
+            $this->getRouter()->generate('pjm_app_admin_boquette_responsablesResults', array(
                 'boquette_slug' => $this->boquetteSlug
             ))
         );
