@@ -1,0 +1,1 @@
+{% if users|length > 0 %}<a class="show_users" data-content='{% for user in users %}{% render(url('pjm_profil_encart', {'username': user.username})) %}{% if not loop.last %}, {% endif %}{% endfor %}'>{% endif %}{{ users|length }}{% if users|length > 0 %}</a>{% endif %}

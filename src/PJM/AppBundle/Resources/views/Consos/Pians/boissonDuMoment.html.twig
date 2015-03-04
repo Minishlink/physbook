@@ -11,7 +11,7 @@
         </p>
 
         <div class="usersHM">
-            <span>{% include "PJMAppBundle:Boquette:itemHM_users.html.twig" with { 'usersHM': boisson.usersHM } %} HM</span>
+            <span>{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': boisson.usersHM } %} HM</span>
             {% render(url('pjm_app_boquette_itemHM', {item: boisson.id})) %}
         </div>
     {% endif %}

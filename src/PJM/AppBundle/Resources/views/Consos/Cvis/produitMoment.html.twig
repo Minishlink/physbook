@@ -15,7 +15,7 @@
             </p>
 
             <div class="usersHM">
-                <span>{% include "PJMAppBundle:Boquette:itemHM_users.html.twig" with { 'usersHM': produitMoment.usersHM } %} HM</span>
+                <span>{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': produitMoment.usersHM } %} HM</span>
                 {% render(url('pjm_app_boquette_itemHM', {item: produitMoment.id})) %}
             </div>
         </div>
