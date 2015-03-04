@@ -47,6 +47,11 @@ class Compte
         $this->boquette = $boquette;
     }
 
+    public function __toString()
+    {
+        return 'Compte [User : '.$this->user.'; Boquette : '.$this->boquette.'; Solde : '.$this->solde.']';
+    }
+
     public function debiter($montant)
     {
         $this->solde -= $montant;
