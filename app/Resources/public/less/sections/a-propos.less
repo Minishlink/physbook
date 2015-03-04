@@ -2,5 +2,37 @@ body {
     &.a-propos {
         background-color: @rouge;
         color: white;
+
+        h1 {
+            font-size: 4em;
+            margin-top: 0.7em;
+        }
+
+        h2 {
+            .font-klavika();
+        }
+
+        p {
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        .logo {
+            height: 4em;
+            text-align: center;
+
+            @media @tablet {
+                height: 8em;
+            }
+
+            @media @desktop {
+                height: 12em;
+            }
+
+            img {
+                height: 100%;
+                display: inline;
+            }
+        }
     }
 }
