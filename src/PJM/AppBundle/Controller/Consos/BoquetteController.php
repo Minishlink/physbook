@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
@@ -243,7 +244,9 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Gère la liste des crédits pour une boquette.
+     * [ADMIN] Gère la liste des crédits pour une boquette. (accessible qu'aux harpag'ss)
+     *
+     * @Security("has_role('ROLE_HARPAGS')")
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
