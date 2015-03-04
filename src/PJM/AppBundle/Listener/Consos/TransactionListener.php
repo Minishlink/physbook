@@ -2,21 +2,38 @@
 
 namespace PJM\AppBundle\Listener\Consos;
 
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Compte;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class TransactionListener
+class TransactionListener implements EventSubscriber
 {
     protected $container;
+    protected $comptes;
 
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
+        $this->comptes = [];
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function getSubscribedEvents()
+    {
+        return array(
+            'preUpdate',
+            'prePersist',
+            'preFlush',
+        );
+    }
+
+    public function prePersist(LifecycleEventArgs $args) {
+        $this->preUpdate($args);
+    }
+
+    public function preUpdate(LifecycleEventArgs $args)
     {
         $transaction = $args->getEntity();
 
@@ -66,7 +83,23 @@ class TransactionListener
                         $transaction->setStatus($status);
                     }
                 }
+
+                $this->comptes[] = $compte;
             }
+        }
+    }
+
+    public function preFlush(PreFlushEventArgs $args)
+    {
+        if(!empty($this->comptes)) {
+            $em = $args->getEntityManager();
+
+            foreach ($this->comptes as $compte) {
+                $em->persist($compte);
+            }
+
+            $this->comptes = [];
+            $em->flush();
         }
     }
 }

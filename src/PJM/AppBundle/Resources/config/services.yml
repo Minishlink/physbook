@@ -45,7 +45,7 @@ services:
         class: PJM\AppBundle\Listener\Consos\TransactionListener
         arguments: [@service_container]
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_subscriber }
     pjm.datatable.historique:
         class: PJM\AppBundle\Datatables\HistoriqueDatatable
         tags:
