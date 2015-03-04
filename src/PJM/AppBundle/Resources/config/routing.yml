@@ -2,10 +2,6 @@ pjm_app_accueil:
     resource: "@PJMAppBundle/Resources/config/Accueil/routing.yml"
     prefix:   /
 
-pjm_app_consos:
-    resource: "@PJMAppBundle/Resources/config/Consos/routing.yml"
-    prefix:   /consos
-
 pjm_app_actus:
     resource: "@PJMAppBundle/Resources/config/Actus/routing.yml"
     prefix:   /actus
