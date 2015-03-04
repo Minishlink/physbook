@@ -92,7 +92,7 @@ class PaniersController extends BoquetteController
             );
         }
 
-        return $this->redirect($this->generateUrl('pjm_app_consos_paniers_index'));
+        return $this->redirect($this->generateUrl('pjm_app_boquette_paniers_index'));
     }
 
     public function getCurrentPanier()
@@ -124,7 +124,7 @@ class PaniersController extends BoquetteController
 
         $form = $this->createForm(new PanierType(), $panier, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_admin_consos_paniers_listePaniers'),
+            'action' => $this->generateUrl('pjm_app_admin_boquette_paniers_listePaniers'),
         ));
 
         $form->handleRequest($request);
@@ -163,7 +163,7 @@ class PaniersController extends BoquetteController
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_admin_consos_paniers_index'));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_paniers_index'));
         }
 
         $datatable = $this->get("pjm.datatable.admin.paniers.liste");
@@ -200,7 +200,7 @@ class PaniersController extends BoquetteController
                     "Il n'y a pas encore eu de commandes pour ce panier."
                 );
 
-                return $this->redirect($this->generateUrl('pjm_app_admin_consos_paniers_index'));
+                return $this->redirect($this->generateUrl('pjm_app_admin_boquette_paniers_index'));
             }
 
             // on transforme tout ça en tableau lisible

@@ -195,7 +195,7 @@ class RechargementController extends Controller
 
                 switch ($transaction->getBoquette()->getSlug()) {
                     case 'brags':
-                        $action = "pjm_app_consos_brags_index";
+                        $action = "pjm_app_boquette_brags_index";
                         break;
                     default:
                         throw new HttpException(

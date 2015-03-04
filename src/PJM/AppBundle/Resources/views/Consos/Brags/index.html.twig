@@ -10,7 +10,7 @@
         <div class="col-md-12">
             {% if is_granted('ROLE_ZIBRAGS') %}
             <p>
-                <small><a href="{{ path('pjm_app_admin_consos_brags_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
+                <small><a href="{{ path('pjm_app_admin_boquette_brags_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
             </p>
             {% endif %}
             <p>Vous rêvez chaque soir de la bonne odeur du pain moelleux qui sort tout juste du four, de la pâte fraiche
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('pjm_app_consos_boquette_historique', {'slug': boquetteSlug}) }}">
+                    <a href="{{ path('pjm_app_boquette_boquette_historique', {'slug': boquetteSlug}) }}">
                         <img src="{{ asset('images/consos/brags/Historique-NB.png') }}"><br>
                         Historique
                     </a>
@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-7">
-            {% render(url('pjm_app_consos_brags_commande')) %}
+            {% render(url('pjm_app_boquette_brags_commande')) %}
         </div>
         <div class="col-md-5 text-center">
             <h2>Prix</h2>
@@ -90,7 +90,7 @@
             <div id="contact">
                 <h2>S.O.S. Brag's</h2>
     <img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/general/Contact.png') }}">
-                {% render(url('pjm_app_consos_voirResponsables', {'slug': boquetteSlug})) %}
+                {% render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) %}
             </div>
         </div>
     </div>

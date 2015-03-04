@@ -68,6 +68,6 @@ class PanierType extends AbstractType
      */
     public function getName()
     {
-        return 'pjm_appbundle_consos_paniers_listePaniers';
+        return 'pjm_appbundle_boquette_paniers_listePaniers';
     }
 }

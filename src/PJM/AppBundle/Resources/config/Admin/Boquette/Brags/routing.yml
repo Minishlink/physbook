@@ -1,61 +1,61 @@
-pjm_app_admin_consos_brags_index:
+pjm_app_admin_boquette_brags_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Consos/Brags:admin }
 
-pjm_app_admin_consos_brags_listeCommandes:
+pjm_app_admin_boquette_brags_listeCommandes:
     path:     /listeCommandes
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
 
-pjm_app_admin_consos_brags_commandesResults:
+pjm_app_admin_boquette_brags_commandesResults:
     path:     /listeCommandes/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:commandesResults }
 
-pjm_app_admin_consos_brags_validerCommandes:
+pjm_app_admin_boquette_brags_validerCommandes:
     path:     /valider
     defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommandes }
 
-pjm_app_admin_consos_brags_resilierCommandes:
+pjm_app_admin_boquette_brags_resilierCommandes:
     path:     /resilier
     defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommandes }
 
-pjm_app_admin_consos_brags_listeBucquages:
+pjm_app_admin_boquette_brags_listeBucquages:
     path:     /listeBucquages
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
 
-pjm_app_admin_consos_brags_bucquagesResults:
+pjm_app_admin_boquette_brags_bucquagesResults:
     path:     /listeBucquages/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:bucquagesResults }
 
-pjm_app_admin_consos_brags_listeVacances:
+pjm_app_admin_boquette_brags_listeVacances:
     path:     /listeVacances
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
 
-pjm_app_admin_consos_brags_vacancesResults:
+pjm_app_admin_boquette_brags_vacancesResults:
     path:     /listeVacances/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:vacancesResults }
 
-pjm_app_admin_consos_brags_annulerVacances:
+pjm_app_admin_boquette_brags_annulerVacances:
     path:     /annulerVacances/{vacances}
     defaults: { _controller: PJMAppBundle:Consos/Brags:annulerVacances }
     options:
         expose: true
 
-pjm_app_admin_consos_brags_listePrix:
+pjm_app_admin_boquette_brags_listePrix:
     path:     /listePrix
     defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
 
-pjm_app_admin_consos_brags_prixResults:
+pjm_app_admin_boquette_brags_prixResults:
     path:     /listePrix/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:prixResults }
 
-pjm_app_admin_consos_brags_listeZiBrags:
+pjm_app_admin_boquette_brags_listeZiBrags:
     path:     /listeZiBrags
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeZiBrags }
 
-pjm_app_admin_consos_brags_removeZiBrags:
+pjm_app_admin_boquette_brags_removeZiBrags:
     path:     /removeZiBrags/{user}
     defaults: { _controller: PJMAppBundle:Consos/Brags:removeZiBrags }
 
-pjm_app_consos_brags_bucquage:
+pjm_app_boquette_brags_bucquage:
     path:     /bucquage
     defaults: { _controller: PJMAppBundle:Consos/Brags:bucquageCron }
