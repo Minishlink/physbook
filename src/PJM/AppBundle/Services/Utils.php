@@ -347,6 +347,8 @@ class Utils
                                 $nvProduit = clone $produitPhysbook;
                                 $nvProduit->setPrix($produitRezal['prix']*100);
                                 $msg[] = "UPDATE: ".$nvProduit->getLibelle();
+                                $produitPhysbook->setValid(false);
+                                $this->em->persist($produitPhysbook);
                                 $this->em->persist($nvProduit);
                             }
                         }
@@ -365,8 +367,51 @@ class Utils
         return "Boquette non valide";
     }
 
-    public function syncRezalHistorique()
+    public function syncRezalHistorique($boquetteSlug)
     {
-        return "ok";
+        if ($boquetteSlug == "pians" || $boquetteSlug == "cvis") {
+            $repository = $this->em->getRepository('PJMAppBundle:Historique');
+            $repositoryItem = $this->em->getRepository('PJMAppBundle:Item');
+            $repositoryUser = $this->em->getRepository('PJMUserBundle:User');
+            $msg = [];
+
+            // on va chercher le dernier historique rentré dans la BDD Phy'sbook
+            $last = $repository->findLastValidByBoquetteSlug($boquetteSlug);
+            $date = ($last !== null) ? $last->getDate()->format('Y-m-d H:i') : null;
+
+            // on récupère tous les nouveaux historiques sur la BDD R&z@l
+            $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, $date);
+            foreach ($listeHistRezal as $historique) {
+                $nvHistorique = new Historique();
+                $item = $repositoryItem->findOneBy(array(
+                    'slug' => $historique['objet'],
+                    'valid' => true
+                ));
+                if ($item === null) {
+                    $msg[] = "ERREUR : Item non trouve ".$historique['objet'];
+                    //$logger->error("SYNC_REZAL_HISTORIQUE_ERROR_ITEM_NOT_FOUND (".$historique['objet'].")");
+                    continue;
+                }
+                $nvHistorique->setItem($item);
+                $username = $historique['fams'].strtolower($historique['tbk']).$historique['proms'];
+                $user = $repositoryUser->findOneByUsername($username);
+                if ($user === null) {
+                    $msg[] = "ERREUR : User non trouve ".$username." (".$historique['date'].")";
+                    //$logger->error("SYNC_REZAL_HISTORIQUE_ERROR_USER_NOT_FOUND (".$username.")");
+                    continue;
+                }
+                $nvHistorique->setUser($user);
+                $nvHistorique->setDate($historique['date']);
+                $nvHistorique->setNombre($historique['qte']*10);
+                $nvHistorique->setValid(true);
+                $this->em->persist($nvHistorique);
+            }
+
+            // on les ajoute à la BDD Phy'sbook
+            $this->em->flush();
+            return $msg;
+        }
+
+        return "Boquette non valide";
     }
 }

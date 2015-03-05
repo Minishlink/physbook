@@ -16,11 +16,6 @@ class RezalSyncCommand extends ContainerAwareCommand
         $this
             ->setName('rezal:sync')
             ->setDescription("Synchronise la BDD Phy'sbook avec celle du Rezal")
-            ->addArgument(
-                'boquetteSlug',
-                null,
-                'Boquette à synchroniser ? (pians|cvis)'
-            )
         ;
     }
 
@@ -39,10 +34,14 @@ class RezalSyncCommand extends ContainerAwareCommand
         $msg = $utils->syncRezalProduits('cvis');
         $output->writeln($msg);
         $output->writeln("FIN syncRezalProduits Cvis");
-        $output->writeln("DEBUT syncRezalHistorique");
-        $msg = $utils->syncRezalHistorique();
+        $output->writeln("DEBUT syncRezalHistorique Pians");
+        $msg = $utils->syncRezalHistorique('pians');
+        $output->writeln("FIN syncRezalHistorique Pians");
+        $output->writeln("DEBUT syncRezalHistorique Cvis");
+        $msg = $utils->syncRezalHistorique('cvis');
+        $output->writeln("FIN syncRezalHistorique Cvis");
         $output->writeln($msg);
-        $output->writeln("FIN syncRezalProduits Historique");
+        $output->writeln("FIN syncRezalHistorique");
         $output->writeln("FIN rezal:sync");
     }
 }
