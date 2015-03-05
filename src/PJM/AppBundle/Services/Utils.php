@@ -291,7 +291,7 @@ class Utils
         // TODO gérer abonnement
         foreach ($listeUsers as $user) {
             // TODO sql solde < 0...
-            $compte = $repositoryCompte->findOneByUserAndBoquette($user, $boquette);
+            $compte = $repositoryCompte->findOneByUserAndBoquetteSlug($user, $boquette->getSlug());
             if ($compte->getSolde() < 0) {
                 $this->mailer->sendAlerteSolde($compte);
             }
