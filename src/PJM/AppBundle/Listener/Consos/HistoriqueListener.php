@@ -17,7 +17,7 @@ class HistoriqueListener
             $historique = $entity;
             if ($historique->getValid()) {
                 $repository = $em->getRepository('PJMAppBundle:Compte');
-                $compte = $repository->findOneByUserAndBoquette($historique->getUser(), $historique->getItem()->getBoquette());
+                $compte = $repository->findOneByUserAndBoquetteSlug($historique->getUser(), $historique->getItem()->getBoquette()->getSlug());
 
                 if (!isset($compte)) {
                     $compte = new Compte($historique->getUser(), $historique->getItem()->getBoquette());
