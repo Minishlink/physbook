@@ -300,12 +300,8 @@ class Utils
         return $nbJours.' jours bucques a partir du '.$startDate->format('d/m/y').'.';
     }
 
-    public function syncRezal($boquetteSlug)
+    public function syncRezalProduits($boquetteSlug)
     {
-        if ($boquetteSlug == '') {
-            return "Argument boquetteSlug manquant.";
-        }
-
         if ($boquetteSlug == "pians" || $boquetteSlug == "cvis") {
             $repository = $this->em->getRepository('PJMAppBundle:Item');
             // ?? pb de prendre que les actifs
@@ -323,13 +319,30 @@ class Utils
             $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
 
             // on les ajoute sur Phy'sbook
+            foreach($listeNvProduitsRezal as $produit) {
+                $nvProduit = new Item();
+                $nvProduit->setLibelle($produit['intitule']);
+                $nvProduit->setPrix($produit['prix']);
+                $nvProduit->setSlug($produit['id']);
+                $nvProduit->setBoquette($this->getBoquette($produit['boquette']));
+                $em->persist($nvProduit);
+            }
 
             // on va chercher les autres produits déjà existants et dont le prix a changé
             $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
 
             // on les ajoute (avec le même slug)
+            foreach($listeNvPrixProduitsRezal as $produit) {
+                $nvProduit = new Item();
+                $nvProduit->setLibelle($produit['intitule']);
+                $nvProduit->setPrix($produit['prix']);
+                $nvProduit->setSlug($produit['id']);
+                $nvProduit->setBoquette($this->getBoquette($produit['boquette']));
+                $em->persist($nvProduit);
+            }
 
-
+            // on commit
+            $em->flush();
 
             $liste = $listeNvPrixProduitsRezal;
             if (count($liste) > 0) {
@@ -341,5 +354,10 @@ class Utils
         }
 
         return "Boquette non valide";
+    }
+
+    public function syncRezalHistorique()
+    {
+        return "ok";
     }
 }
