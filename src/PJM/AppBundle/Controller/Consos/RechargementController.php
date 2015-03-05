@@ -97,10 +97,10 @@ class RechargementController extends Controller
 
     public function retourSMoneyAction(Request $request)
     {
-        if ($request->query->get('transactionId')) {
-            $transactionId = $request->query->get('transactionId');
-            $status = $request->query->get('status');
-            $errorCode = $request->query->get('errorCode');
+        if ($request->request->get('transactionId')) {
+            $transactionId = $request->request->get('transactionId');
+            $status = $request->request->get('status');
+            $errorCode = $request->request->get('errorCode');
 
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Transaction');
