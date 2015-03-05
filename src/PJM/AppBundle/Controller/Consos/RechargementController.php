@@ -123,7 +123,7 @@ class RechargementController extends Controller
                     $em->persist($transaction);
                     $em->flush();
 
-                    return new Response('OK');
+                    return new Response($transaction->getStatus() === "OK" ? "OK" : "NOK");
                 } else {
                     return new Response('Cette transaction a deja ete traitee.', 403);
                 }
@@ -172,6 +172,15 @@ class RechargementController extends Controller
                             default:
                                 $source = "inconnue";
                                 break;
+                        }
+
+                        if (substr($transaction->getStatus(), 0, 5) == "REZAL") {
+                            $source = "Serveur R&z@l";
+
+                            $this->get('session')->getFlashBag()->add(
+                                'danger',
+                                "Attention, l'erreur vient du serveur du R&z@l. Par conséquent, tu as été débité sur ton compte S-Money, mais pas crédité sur le serveur du R&z@l (reliés aux bucqueurs au Pian's et au C'vis). Va voir l'harpag's pour te faire créditer ou rembourser."
+                            );
                         }
 
                         $this->get('session')->getFlashBag()->add(
