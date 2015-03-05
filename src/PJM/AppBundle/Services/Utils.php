@@ -319,30 +319,34 @@ class Utils
             $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
 
             // on les ajoute sur Phy'sbook
-            foreach($listeNvProduitsRezal as $produit) {
-                $nvProduit = new Item();
-                $nvProduit->setLibelle($produit['intitule']);
-                $nvProduit->setPrix($produit['prix']);
-                $nvProduit->setSlug($produit['id']);
-                $nvProduit->setBoquette($this->getBoquette($produit['boquette']));
-                $em->persist($nvProduit);
+            if ($listeNvProduitsRezal !== null) {
+                foreach($listeNvProduitsRezal as $produit) {
+                    $nvProduit = new Item();
+                    $nvProduit->setSlug($produit['idObjet']);
+                    $nvProduit->setLibelle($produit['intituleObjet']);
+                    $nvProduit->setPrix($produit['prix']*100);
+                    $nvProduit->setBoquette($this->getBoquette($boquetteSlug));
+                    $this->em->persist($nvProduit);
+                }
             }
 
             // on va chercher les autres produits déjà existants et dont le prix a changé
             $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
 
             // on les ajoute (avec le même slug)
-            foreach($listeNvPrixProduitsRezal as $produit) {
-                $nvProduit = new Item();
-                $nvProduit->setLibelle($produit['intitule']);
-                $nvProduit->setPrix($produit['prix']);
-                $nvProduit->setSlug($produit['id']);
-                $nvProduit->setBoquette($this->getBoquette($produit['boquette']));
-                $em->persist($nvProduit);
+            if ($listeNvPrixProduitsRezal !== null) {
+                foreach($listeNvPrixProduitsRezal as $produit) {
+                    $nvProduit = new Item();
+                    $nvProduit->setSlug($produit['idObjet']);
+                    $nvProduit->setLibelle($produit['intituleObjet']);
+                    $nvProduit->setPrix($produit['prix']*100);
+                    $nvProduit->setBoquette($this->getBoquette($boquetteSlug));
+                    $this->em->persist($nvProduit);
+                }
             }
 
             // on commit
-            $em->flush();
+            $this->em->flush();
 
             $liste = $listeNvPrixProduitsRezal;
             if (count($liste) > 0) {
