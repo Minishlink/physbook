@@ -29,7 +29,20 @@ class RezalSyncCommand extends ContainerAwareCommand
         $utils = $this->getContainer()->get('pjm.services.utils');
         $this->getContainer()->enterScope('request');
         $this->getContainer()->set('request', new Request(), 'request');
-        $msg = $utils->syncRezal($input->getArgument('boquetteSlug'));
+
+        $output->writeln("DEBUT rezal:sync");
+        $output->writeln("DEBUT syncRezalProduits Pians");
+        $msg = $utils->syncRezalProduits('pians');
         $output->writeln($msg);
+        $output->writeln("FIN syncRezalProduits Pians");
+        $output->writeln("DEBUT syncRezalProduits Cvis");
+        $msg = $utils->syncRezalProduits('cvis');
+        $output->writeln($msg);
+        $output->writeln("FIN syncRezalProduits Cvis");
+        $output->writeln("DEBUT syncRezalHistorique");
+        $msg = $utils->syncRezalHistorique();
+        $output->writeln($msg);
+        $output->writeln("FIN syncRezalProduits Historique");
+        $output->writeln("FIN rezal:sync");
     }
 }
