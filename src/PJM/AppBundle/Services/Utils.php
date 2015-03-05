@@ -292,7 +292,7 @@ class Utils
         foreach ($listeUsers as $user) {
             // TODO sql solde < 0...
             $compte = $repositoryCompte->findOneByUserAndBoquetteSlug($user, $boquette->getSlug());
-            if ($compte->getSolde() < 0) {
+            if ($compte->getSolde() < -500) {
                 $this->mailer->sendAlerteSolde($compte);
             }
         }
@@ -311,11 +311,13 @@ class Utils
             // on va chercher les produits existants sur Phy'sbook
             $listeProduitsPhysbook = $repository->findByBoquetteSlug($boquetteSlug, true);
             $existants = "";
-            foreach ($listeProduitsPhysbook as $k => $p) {
-                if ($k > 0) {
-                    $existants .= ", ";
+            if ($listeProduitsPhysbook !== null) {
+                foreach ($listeProduitsPhysbook as $k => $p) {
+                    if ($k > 0) {
+                        $existants .= ", ";
+                    }
+                    $existants .= "'".$p->getSlug()."'";
                 }
-                $existants .= "'".$p->getSlug()."'";
             }
 
             // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
