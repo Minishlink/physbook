@@ -298,4 +298,13 @@ class Utils
 
         return $nbJours.' jours bucques a partir du '.$startDate->format('d/m/y').'.';
     }
+
+    public function syncRezal()
+    {
+        $listeProduitsRezal = $this->rezal->listeConsosPi();
+        foreach ($listeProduitsRezal as $p) {
+            $msg[] = $p['intituleObjet'];
+        }
+        return $msg;
+    }
 }
