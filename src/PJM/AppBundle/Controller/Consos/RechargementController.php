@@ -187,19 +187,7 @@ class RechargementController extends Controller
                     );
                 }
 
-                switch ($transaction->getCompte()->getBoquette()->getSlug()) {
-                    case 'brags':
-                        $action = "pjm_app_boquette_brags_index";
-                        break;
-                    default:
-                        throw new HttpException(
-                            404,
-                            "La boquette concernée (".$transaction->getCompte()->getBoquette()->getNom().") n'a pas de page."
-                        );
-                        break;
-                }
-
-                return $this->redirect($this->generateUrl($action));
+                return $this->redirect($this->generateUrl("pjm_app_boquette_".$transaction->getCompte()->getBoquette()->getSlug()."_index"));
             } else {
                 throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
             }
