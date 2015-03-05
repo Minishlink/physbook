@@ -302,13 +302,16 @@ class Utils
 
     public function syncRezalProduits($boquetteSlug)
     {
+        // TODO Catégories
+
         if ($boquetteSlug == "pians" || $boquetteSlug == "cvis") {
             $repository = $this->em->getRepository('PJMAppBundle:Item');
-            // ?? pb de prendre que les actifs
+            $msg = [];
+
             // on va chercher les produits existants sur Phy'sbook
-            $produitsPh = $repository->findByBoquetteSlug($boquetteSlug, true);
+            $listeProduitsPhysbook = $repository->findByBoquetteSlug($boquetteSlug, true);
             $existants = "";
-            foreach ($produitsPh as $k => $p) {
+            foreach ($listeProduitsPhysbook as $k => $p) {
                 if ($k > 0) {
                     $existants .= ", ";
                 }
@@ -316,7 +319,7 @@ class Utils
             }
 
             // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
-            $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
+            $listeNvProduitsRezal = $this->rezal->listeConsos($boquetteSlug, $existants, false);
 
             // on les ajoute sur Phy'sbook
             if ($listeNvProduitsRezal !== null) {
@@ -326,34 +329,34 @@ class Utils
                     $nvProduit->setLibelle($produit['intituleObjet']);
                     $nvProduit->setPrix($produit['prix']*100);
                     $nvProduit->setBoquette($this->getBoquette($boquetteSlug));
+                    $msg[] = "NEW: ".$nvProduit->getLibelle();
                     $this->em->persist($nvProduit);
                 }
             }
 
-            // on va chercher les autres produits déjà existants et dont le prix a changé
-            $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
-
-            // on les ajoute (avec le même slug)
-            if ($listeNvPrixProduitsRezal !== null) {
-                foreach($listeNvPrixProduitsRezal as $produit) {
-                    $nvProduit = new Item();
-                    $nvProduit->setSlug($produit['idObjet']);
-                    $nvProduit->setLibelle($produit['intituleObjet']);
-                    $nvProduit->setPrix($produit['prix']*100);
-                    $nvProduit->setBoquette($this->getBoquette($boquetteSlug));
-                    $this->em->persist($nvProduit);
+            // on va chercher les autres produits déjà existants
+            $listeProduitsRezal = $this->rezal->listeConsos($boquetteSlug, $existants, true);
+            // on filtre par ceux dont le prix a changé et on les ajoute sur Phy'sbook
+            if ($listeProduitsRezal !== null) {
+                foreach($listeProduitsRezal as $produitRezal) {
+                    foreach($listeProduitsPhysbook as $produitPhysbook) {
+                        if ($produitRezal['idObjet'] == $produitPhysbook->getSlug()) {
+                            if (round($produitRezal['prix']*100, 2) != $produitPhysbook->getPrix()) {
+                                $nvProduit = clone $produitPhysbook;
+                                $nvProduit->setPrix($produitRezal['prix']*100);
+                                $msg[] = "UPDATE: ".$nvProduit->getLibelle();
+                                $this->em->persist($nvProduit);
+                            }
+                        }
+                    }
                 }
             }
+
+            // TODO les produits de Phy'sbook qui sont encore actifs alors qu'ils ont disparu du Rézal sont désactivés
 
             // on commit
             $this->em->flush();
 
-            $liste = $listeNvPrixProduitsRezal;
-            if (count($liste) > 0) {
-                foreach ($liste as $p) {
-                    $msg[] = $p['intituleObjet'];
-                }
-            } else { $msg = "nope"; }
             return $msg;
         }
 
