@@ -11,6 +11,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\TransactionRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Transaction
 {
@@ -54,6 +55,12 @@ class Transaction
     private $boquette;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Compte", inversedBy="transactions", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     **/
+    private $compte;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="montant", type="smallint")
@@ -87,6 +94,16 @@ class Transaction
     public function __construct()
     {
         $this->date = new \DateTime();
+    }
+
+    public function finaliser($erreur = null)
+    {
+        if ($erreur !== null) {
+            $this->compte->debiter($this->montant);
+            $this->setStatus($erreur);
+        } else {
+            $this->compte->crediter($this->montant);
+        }
     }
 
     /**
@@ -317,5 +334,28 @@ class Transaction
     public function getInfos()
     {
         return $this->infos;
+    }
+
+    /**
+     * Set compte
+     *
+     * @param \PJM\AppBundle\Entity\Compte $compte
+     * @return Transaction
+     */
+    public function setCompte(\PJM\AppBundle\Entity\Compte $compte)
+    {
+        $this->compte = $compte;
+
+        return $this;
+    }
+
+    /**
+     * Get compte
+     *
+     * @return \PJM\AppBundle\Entity\Compte
+     */
+    public function getCompte()
+    {
+        return $this->compte;
     }
 }

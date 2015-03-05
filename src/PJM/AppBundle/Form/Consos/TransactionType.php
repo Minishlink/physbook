@@ -44,7 +44,7 @@ class TransactionType extends AbstractType
                 'error_bubbling' => true,
                 'divisor' => 100,
                 'constraints' => array(
-                    new Assert\LessThan(array(
+                    new Assert\LessThanOrEqual(array(
                         'value' => 200*100,
                         'message' => 'Pas plus de 200€ par crédit. Fais en plusieurs.'
                     )),
