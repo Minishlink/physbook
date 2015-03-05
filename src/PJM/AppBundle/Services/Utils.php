@@ -150,11 +150,9 @@ class Utils
                 // TODO vérifier qu'on est pas en mode synchro avec la base R&z@l
                 // TODO prendre username car fam'ss modifiable, donc problème de doublon de transaction lors de la synchro avec la base Rezal...
                 // TODO enregistrement dans l'historique
-                $rezal = $this->rezal;
-                $status = $rezal->crediteSolde(
-                    $transaction->getCompte()->getUser()->getFams(),
-                    $transaction->getCompte()->getUser()->getTabagns(),
-                    $transaction->getCompte()->getUser()->getProms(),
+
+                $status = $this->rezal->crediteSolde(
+                    $this->getTrueID($transaction->getCompte()->getUser()),
                     $transaction->getMontant(),
                     $transaction->getDate()->format('Y-m-d H:i:s')
                 );
@@ -169,6 +167,14 @@ class Utils
                 }
             }
         }
+    }
+
+    public function getTrueID(User $user)
+    {
+        $keys = array('fams', 'tabagns', 'proms');
+        $values = preg_split("/([a-z]+)/", $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
+
+        return array_combine($keys, $values);
     }
 
     public function bucquage($boquetteSlug, $itemSlug)
