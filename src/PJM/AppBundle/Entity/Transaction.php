@@ -49,12 +49,6 @@ class Transaction
     private $infos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $boquette;
-
-    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Compte", inversedBy="transactions", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      **/
@@ -82,13 +76,6 @@ class Transaction
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
     private $status;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
 
 
     public function __construct()
@@ -242,52 +229,6 @@ class Transaction
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \PJM\UserBundle\Entity\User $user
-     * @return Transaction
-     */
-    public function setUser(\PJM\UserBundle\Entity\User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \PJM\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set boquette
-     *
-     * @param \PJM\AppBundle\Entity\Boquette $boquette
-     * @return Transaction
-     */
-    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
-    {
-        $this->boquette = $boquette;
-
-        return $this;
-    }
-
-    /**
-     * Get boquette
-     *
-     * @return \PJM\AppBundle\Entity\Boquette
-     */
-    public function getBoquette()
-    {
-        return $this->boquette;
     }
 
     /**

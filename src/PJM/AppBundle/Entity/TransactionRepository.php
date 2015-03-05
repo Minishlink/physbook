@@ -16,13 +16,11 @@ class TransactionRepository extends EntityRepository
     public function findByUserAndBoquetteSlug(User $user, $boquetteSlug, $limit = null, $status = null)
     {
         $qb = $this->createQueryBuilder('t')
-            ->where('t.user = :user')
-            ->andWhere('t.status = \'OK\'')
-            ->join('t.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
-            ->setParameters(array(
-                'user' => $user,
-                'boquette_slug'  => $boquetteSlug
-            ))
+            ->where('t.status = \'OK\'')
+            ->join('t.compte', 'c', 'WITH', 'c.user = :user')
+            ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameter('user', $user)
+            ->setParameter('boquette_slug', $boquetteSlug)
             ->orderBy('t.date', 'desc')
         ;
 
@@ -45,7 +43,8 @@ class TransactionRepository extends EntityRepository
         $status = $valid ? "OK" : "NOK";
         $query = $this->createQueryBuilder('t')
                     ->where('t.status = :status')
-                    ->join('t.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                    ->join('t.compte', 'c')
+                    ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                     ->setParameters(array(
                         'boquette_slug'  => $boquette_slug,
                         'status' => $status
@@ -69,7 +68,8 @@ class TransactionRepository extends EntityRepository
         return function($qb) use($boquette_slug, $status) {
             $qb
                 ->andWhere('Transaction.status = :status')
-                ->join('Transaction.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                ->join('Transaction.compte', 'c')
+                ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
                 ->setParameter('status', $status)
             ;
