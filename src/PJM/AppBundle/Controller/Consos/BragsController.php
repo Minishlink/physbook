@@ -129,12 +129,12 @@ class BragsController extends BoquetteController
                 if ($commande->getNombre() > 0) {
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        'Ta commande a été passée. Elle sera validée par le ZiBrag\'s le jour où tu commenceras à pouvoir prendre ton pain. Tu seras notifié.'
+                        'Ta commande a été passée. Tu pourras commencer à prendre ton pain le jour où un ZiBrag\'s valide ta demande de commande.'
                     );
                 } else {
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        'Tu ne recevras plus de pain bientôt. Tant que ta résiliation n\'a pas été validée par le ZiBrag\'s, tu peux continuer à prendre ton pain et tu seras débité. Tu seras notifié quand il aura validé  ta résiliation.'
+                        'Tu ne recevras plus de pain bientôt. Tant que ta résiliation n\'a pas été validée par le ZiBrag\'s, tu peux continuer à prendre ton pain et tu seras débité.'
                     );
                 }
             } else {

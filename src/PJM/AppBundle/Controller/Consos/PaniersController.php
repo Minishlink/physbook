@@ -71,7 +71,7 @@ class PaniersController extends BoquetteController
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        'Le panier a été commandé. Tu pourras le récupérer dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré.'
+                        'Le panier a été commandé. Tu pourras le récupérer chez le ZiPaniers ou dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré en signant la feuille de reçu.'
                     );
                 } else {
                     $request->getSession()->getFlashBag()->add(
