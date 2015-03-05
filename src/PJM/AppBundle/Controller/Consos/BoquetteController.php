@@ -719,7 +719,7 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquette($this->getUser(), $boquette);
+                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug());
                 $transaction->setCompte($compte);
                 $transaction->setInfos($boquette->getCaisseSMoney());
 

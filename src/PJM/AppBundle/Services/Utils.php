@@ -300,40 +300,46 @@ class Utils
         return $nbJours.' jours bucques a partir du '.$startDate->format('d/m/y').'.';
     }
 
-    public function syncRezal($boquetteSlug = null)
+    public function syncRezal($boquetteSlug)
     {
-        $repository = $this->em->getRepository('PJMAppBundle:Item');
-
-        // ?? pb de prendre que les actifs
-        // on va chercher les produits existants sur Phy'sbook
-        $produitsPh = $repository->findByBoquetteSlug('pians', true);
-        $existants = "";
-
-        foreach ($produitsPh as $k => $p) {
-            if ($k > 0) {
-                $existants .= ", ";
-            }
-            $existants .= "'".$p->getSlug()."'";
+        if ($boquetteSlug == '') {
+            return "Argument boquetteSlug manquant.";
         }
 
-        // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
-        $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
-
-        // on les ajoute sur Phy'sbook
-
-        // on va chercher les autres produits déjà existants et dont le prix a changé
-        $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
-
-        // on les ajoute (avec le même slug)
-
-
-
-        $liste = $listeNvPrixProduitsRezal;
-        if (count($liste) > 0) {
-            foreach ($liste as $p) {
-                $msg[] = $p['intituleObjet'];
+        if ($boquetteSlug == "pians" || $boquetteSlug == "cvis") {
+            $repository = $this->em->getRepository('PJMAppBundle:Item');
+            // ?? pb de prendre que les actifs
+            // on va chercher les produits existants sur Phy'sbook
+            $produitsPh = $repository->findByBoquetteSlug($boquetteSlug, true);
+            $existants = "";
+            foreach ($produitsPh as $k => $p) {
+                if ($k > 0) {
+                    $existants .= ", ";
+                }
+                $existants .= "'".$p->getSlug()."'";
             }
-        } else { $msg = "nope"; }
-        return $msg;
+
+            // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
+            $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
+
+            // on les ajoute sur Phy'sbook
+
+            // on va chercher les autres produits déjà existants et dont le prix a changé
+            $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
+
+            // on les ajoute (avec le même slug)
+
+
+
+            $liste = $listeNvPrixProduitsRezal;
+            if (count($liste) > 0) {
+                foreach ($liste as $p) {
+                    $msg[] = $p['intituleObjet'];
+                }
+            } else { $msg = "nope"; }
+            return $msg;
+        }
+
+        return "Boquette non valide";
     }
 }
