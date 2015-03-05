@@ -8,6 +8,7 @@ use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Compte;
+use PJM\AppBundle\Entity\Item;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Twig\IntranetExtension;
 
@@ -299,12 +300,40 @@ class Utils
         return $nbJours.' jours bucques a partir du '.$startDate->format('d/m/y').'.';
     }
 
-    public function syncRezal()
+    public function syncRezal($boquetteSlug = null)
     {
-        $listeProduitsRezal = $this->rezal->listeConsosPi();
-        foreach ($listeProduitsRezal as $p) {
-            $msg[] = $p['intituleObjet'];
+        $repository = $this->em->getRepository('PJMAppBundle:Item');
+
+        // ?? pb de prendre que les actifs
+        // on va chercher les produits existants sur Phy'sbook
+        $produitsPh = $repository->findByBoquetteSlug('pians', true);
+        $existants = "";
+
+        foreach ($produitsPh as $k => $p) {
+            if ($k > 0) {
+                $existants .= ", ";
+            }
+            $existants .= "'".$p->getSlug()."'";
         }
+
+        // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
+        $listeNvProduitsRezal = $this->rezal->listeConsosPi($existants, false);
+
+        // on les ajoute sur Phy'sbook
+
+        // on va chercher les autres produits déjà existants et dont le prix a changé
+        $listeNvPrixProduitsRezal = $this->rezal->listeConsosPi($existants, true);
+
+        // on les ajoute (avec le même slug)
+
+
+
+        $liste = $listeNvPrixProduitsRezal;
+        if (count($liste) > 0) {
+            foreach ($liste as $p) {
+                $msg[] = $p['intituleObjet'];
+            }
+        } else { $msg = "nope"; }
         return $msg;
     }
 }
