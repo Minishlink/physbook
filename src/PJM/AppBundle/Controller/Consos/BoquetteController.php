@@ -269,7 +269,11 @@ class BoquetteController extends Controller
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
                 $credit->setBoquette($boquette);
-                $em->persist($credit); // le compte est automatiquement mis à jour (TransactionListener)
+                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquette($credit->getUser(), $credit->getBoquette());
+                $credit->setCompte($compte);
+                $utils = $this->get('pjm.services.utils');
+                $utils->traiterTransaction($credit);
+                $em->persist($credit); // le compte est automatiquement mis à jour (listeners)
                 $em->flush();
 
                 if ($credit->getStatus() == "OK") {
@@ -720,6 +724,8 @@ class BoquetteController extends Controller
                 $transaction->setBoquette($boquette);
                 $transaction->setInfos($boquette->getCaisseSMoney());
                 $transaction->setUser($this->getUser());
+                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquette($transaction->getUser(), $transaction->getBoquette());
+                $transaction->setCompte($compte);
 
                 // on redirige vers S-Money
                 $resRechargement = json_decode(

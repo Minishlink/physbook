@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
+use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Compte;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Twig\IntranetExtension;
@@ -15,12 +16,14 @@ class Utils
     protected $em;
     protected $mailer;
     protected $twigExt;
+    protected $rezal;
 
-    public function __construct(EntityManager $em, Mailer $mailer, IntranetExtension $twigExt)
+    public function __construct(EntityManager $em, Mailer $mailer, IntranetExtension $twigExt, Rezal $rezal)
     {
         $this->em = $em;
         $this->mailer = $mailer;
         $this->twigExt = $twigExt;
+        $this->rezal = $rezal;
     }
 
     public function getHistorique(User $user, $boquetteSlug, $limit = null)
@@ -127,6 +130,45 @@ class Utils
             ->findByBoquetteSlug($boquetteSlug, true);
 
         return (isset($featuredItem)) ? $featuredItem->getItem() : null;
+    }
+
+    public function traiterTransaction(Transaction $transaction)
+    {
+        if ($transaction->getStatus() == "OK") {
+            // si la transaction est bonne
+            // on met à jour le solde du compte associé sur la base Phy'sbook
+            $transaction->finaliser();
+
+            // si la transaction concerne la BDD R&z@l
+            if (in_array(
+                $transaction->getCompte()->getBoquette()->getSlug(), array(
+                    'cvis',
+                    'pians'
+                )
+            )) {
+                // on met à jour le solde du compte associé sur la base R&z@l
+                // TODO vérifier qu'on est pas en mode synchro avec la base R&z@l
+                // TODO prendre username car fam'ss modifiable, donc problème de doublon de transaction lors de la synchro avec la base Rezal...
+                // TODO enregistrement dans l'historique
+                $rezal = $this->rezal;
+                $status = $rezal->crediteSolde(
+                    $transaction->getCompte()->getUser()->getFams(),
+                    $transaction->getCompte()->getUser()->getTabagns(),
+                    $transaction->getCompte()->getUser()->getProms(),
+                    $transaction->getMontant(),
+                    $transaction->getDate()->format('Y-m-d H:i:s')
+                );
+
+                // si une erreur survient
+                if ($status !== true) {
+                    if ($status === false) {
+                        $status = 'REZAL_LIAISON_TRANSACTION';
+                    }
+                    // on annule la transaction
+                    $transaction->finaliser($status);
+                }
+            }
+        }
     }
 
     public function bucquage($boquetteSlug, $itemSlug)

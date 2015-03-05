@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Compte
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\CompteRepository")
  */
 class Compte
 {
@@ -27,19 +27,46 @@ class Compte
      * @ORM\Column(name="solde", type="smallint")
      */
     private $solde;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=false)
      */
     private $boquette;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Boquette", mappedBy="compte")
+     **/
+    private $transactions;
 
+    public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
+    {
+        $this->solde = 0;
+        $this->user = $user;
+        $this->boquette = $boquette;
+        $this->transactions = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return 'Compte [User : '.$this->user.'; Boquette : '.$this->boquette.'; Solde : '.$this->solde.']';
+    }
+
+    public function debiter($montant)
+    {
+        $this->solde -= $montant;
+    }
+
+    public function crediter($montant)
+    {
+        $this->solde += $montant;
+    }
 
     /**
      * Get id
@@ -52,7 +79,7 @@ class Compte
     }
 
     /**
-     * Set solde
+     * Set solde (en centimes)
      *
      * @param integer $solde
      * @return Compte
@@ -65,7 +92,7 @@ class Compte
     }
 
     /**
-     * Get solde
+     * Get solde (en centimes)
      *
      * @return integer
      */

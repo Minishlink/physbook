@@ -40,11 +40,17 @@ class Compte
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Boquette", mappedBy="compte")
+     **/
+    private $transactions;
+
     public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
     {
         $this->solde = 0;
         $this->user = $user;
         $this->boquette = $boquette;
+        $this->transactions = new ArrayCollection();
     }
 
     public function __toString()
@@ -139,5 +145,38 @@ class Compte
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add transactions
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $transactions
+     * @return Compte
+     */
+    public function addTransaction(\PJM\AppBundle\Entity\Boquette $transactions)
+    {
+        $this->transactions[] = $transactions;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $transactions
+     */
+    public function removeTransaction(\PJM\AppBundle\Entity\Boquette $transactions)
+    {
+        $this->transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 }
