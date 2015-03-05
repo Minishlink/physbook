@@ -48,14 +48,14 @@ class RechargementController extends Controller
         );
         $content = array(
             "amount" => $transaction->getMontant(),
-            "receiver" => $transaction->getBoquette()->getCaisseSMoney(),
+            "receiver" => $transaction->getCompte()->getBoquette()->getCaisseSMoney(),
             "transactionId" => substr(uniqid(), 0, 6)."_".$transaction->getId(),
             "amountEditable" => false,
             "receiverEditable" => false,
             "agent" => $agent,
             "source" => "web",
             "identifier" => "",
-            "message" => "[Phy'sbook] ".$transaction->getUser()->getUsername()." - ".$transaction->getBoquette()->getNom()." (".$transaction->getId().")"
+            "message" => "[Phy'sbook] ".$transaction->getCompte()->getUser()->getUsername()." - ".$transaction->getCompte()->getBoquette()->getNom()
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -144,7 +144,7 @@ class RechargementController extends Controller
         $transaction = $repository->findOneById(substr($transactionId, 7));
 
         if (isset($transaction)) {
-            if ($this->getUser() == $transaction->getUser()) {
+            if ($this->getUser() == $transaction->getCompte()->getUser()) {
                 if (null !== $transaction->getStatus()) {
                     if ($transaction->getStatus() == "OK") {
                         // si le paiement a été complété
@@ -187,14 +187,14 @@ class RechargementController extends Controller
                     );
                 }
 
-                switch ($transaction->getBoquette()->getSlug()) {
+                switch ($transaction->getCompte()->getBoquette()->getSlug()) {
                     case 'brags':
                         $action = "pjm_app_boquette_brags_index";
                         break;
                     default:
                         throw new HttpException(
                             404,
-                            "La boquette concernée (".$transaction->getBoquette()->getNom().") n'a pas de page."
+                            "La boquette concernée (".$transaction->getCompte()->getBoquette()->getNom().") n'a pas de page."
                         );
                         break;
                 }

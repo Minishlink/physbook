@@ -47,7 +47,7 @@ class CreditsDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
-            ->add('user.username', 'column', array(
+            ->add('compte.user.username', 'column', array(
                 'title' => 'PG',
             ))
             ->add('moyenPaiement', 'column', array(

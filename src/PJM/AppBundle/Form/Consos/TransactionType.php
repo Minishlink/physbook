@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\EntityRepository;
 
 class TransactionType extends AbstractType
 {
@@ -19,10 +20,18 @@ class TransactionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', 'genemu_jqueryselect2_entity', array(
+            ->add('compte', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataire',
-                'class'    => 'PJMUserBundle:User',
+                'class'    => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
+                'query_builder' => function(EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.boquette = :boquette')
+                        ->orderBy('c.user', 'DESC')
+                        ->setParameter(':boquette', $options['boquette'])
+                    ;
+                },
+                'property' => 'user'
             ))
             ->add('moyenPaiement', 'choice', array(
                 'label' => 'Moyen de paiement',
@@ -74,7 +83,8 @@ class TransactionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Transaction'
+            'data_class' => 'PJM\AppBundle\Entity\Transaction',
+            'boquette' => null
         ));
     }
 
