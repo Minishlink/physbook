@@ -25,3 +25,6 @@ parameters:
     router.request_context.host: physbook.fr
     router.request_context.base_url: ""
     assets_base_url: "%router.request_context.host%%router.request_context.base_url%"
+    
+    paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
+    paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
