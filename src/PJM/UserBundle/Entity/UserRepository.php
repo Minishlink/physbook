@@ -9,6 +9,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        // default order
+        $orderBy = $orderBy === null ? array('fams' => 'asc', 'proms' => 'desc') : $orderBy;
+
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
+
     public function findByRole($role)
     {
         $query = $this->createQueryBuilder('u')
