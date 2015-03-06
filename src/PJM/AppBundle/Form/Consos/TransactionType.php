@@ -27,7 +27,9 @@ class TransactionType extends AbstractType
                 'query_builder' => function(EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('c')
                         ->where('c.boquette = :boquette')
-                        ->orderBy('c.user', 'DESC')
+                        ->join('c.user', 'u')
+                        ->orderBy('u.fams', 'ASC')
+                        ->addOrderBy('u.proms', 'DESC')
                         ->setParameter(':boquette', $options['boquette'])
                     ;
                 },
