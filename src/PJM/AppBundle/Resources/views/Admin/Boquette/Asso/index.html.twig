@@ -1,0 +1,29 @@
+{% extends "PJMAppBundle:Boquette/Asso:layout.html.twig" %}
+
+{% block categorieName %}Gestion {{ parent() }}{% endblock %}
+
+{% block pjm_app_body_content %}
+<p>
+    <small><a href="{{ path('pjm_app_boquette_asso_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
+        <h2 class="panel-title">
+                Manuel
+        </h2>
+    </div>
+    <div id="collapseManuel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingManuel">
+        <div class="panel-body">
+            <p>
+                Quand tu voudras passasser ton prochain, rends toi sur le panneau <strong>"Responsables"</strong>.
+            </p>
+            <p>
+                Cette page est accessible par les ZiAsso, Harpag's Asso, et ZiPhy'sbook.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) %}
+</div>
+{% endblock %}
