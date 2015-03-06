@@ -59,4 +59,4 @@ security:
         - { path: ^/admin/boquette/pians/, roles: ROLE_ZIPIANS }
         - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_EXT }
+        - { path: ^/, roles: ROLE_USER }
