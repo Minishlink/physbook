@@ -22,6 +22,37 @@ class AdminController extends Controller
     }
 
     /**
+     * Refresh comptes
+     * @param object Request $request Requête
+     */
+    public function creationComptesAction(Request $request)
+    {
+        $em = $this->getEntityManager();
+        $repository = $em->getRepository('PJMUserBundle:User');
+        $usersComptesACreer = $repository->findUsersNoAccounts();
+        $utils = $this->get('pjm.services.utils');
+
+        $boquettes = array(
+            $utils->getBoquette('pians'),
+            $utils->getBoquette('brags'),
+            $utils->getBoquette('paniers')
+        );
+
+        if ($usersComptesACreer != null) {
+            foreach ($usersComptesACreer as $user) {
+                foreach ($boquettes as $boquette) {
+                    $compte = new Compte($user, $boquette);
+                    $em->persist($compte);
+                }
+            }
+
+            $em->flush();
+        }
+
+        return new Response('OK');
+    }
+
+    /**
      * Gère les responsabilités
      * @param object Request $request Requête
      */
