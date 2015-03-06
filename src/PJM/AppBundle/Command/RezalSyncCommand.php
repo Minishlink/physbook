@@ -180,18 +180,31 @@ class RezalSyncCommand extends ContainerAwareCommand
         $repository = $this->em->getRepository('PJMAppBundle:Compte');
 
         // on récupère tous les comptes du R&z@l
-        $listeComptes = $this->rezal->listeComptes();
+        $exclureFams = "'0'";
+        $ignoreUsernames = array(
+            '300bo213',
+            '213bo213',
+            '200bo213',
+            '201bo213',
+            '208bo213',
+            '209bo213',
+            '210bo213'
+        );
+        $listeComptes = $this->rezal->listeComptes($exclureFams);
         if ($listeComptes !== null) {
             foreach ($listeComptes as $compte) {
                 // pour chaque compte on update le compte Phy'sbook
                 $username = $compte['fams'].strtolower($compte['tbk']).$compte['proms'];
-                $upCompte = $repository->findOneByUsernameAndBoquetteSlug($username, 'pians');
-                if ($upCompte === null) {
-                    $this->logger->error("Compte non trouve ".$username);
-                    continue;
+
+                if (!in_array(trim($username), $ignoreUsernames)) {
+                    $upCompte = $repository->findOneByUsernameAndBoquetteSlug($username, 'pians');
+                    if ($upCompte === null) {
+                        $this->logger->error("Compte non trouve ".$username);
+                        continue;
+                    }
+                    $upCompte->setSolde($compte['montant']);
+                    $this->em->persist($upCompte);
                 }
-                $upCompte->setSolde($compte['montant']);
-                $this->em->persist($upCompte);
             }
 
             // on les ajoute à la BDD Phy'sbook
