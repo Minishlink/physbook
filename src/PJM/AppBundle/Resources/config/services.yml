@@ -1,9 +1,3 @@
-parameters:
-    paiement.smoney.url: ***REMOVED***
-    paiement.smoney.auth: Bearer ***REMOVED***
-    paiement.smoney.url.dev: ***REMOVED***
-    paiement.smoney.auth.dev: Bearer ***REMOVED***
-
 services:
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
