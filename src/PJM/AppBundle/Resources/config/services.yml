@@ -29,6 +29,7 @@ services:
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
                 error: 'PJMAppBundle:Mail:error.html.twig'
               notificationEmail: "notification@physbook.fr"
+              contactEmail: "contact@physbook.fr"
               notificationSender: "Phy'sbook"
               errorEmail: "error@physbook.fr"
     pjm.listener.consos.historique:

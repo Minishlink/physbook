@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use PJM\AppBundle\Form\Admin\NewUserType;
 use PJM\AppBundle\Form\Admin\ResponsabiliteType;
 use PJM\AppBundle\Entity\Responsabilite;
+use PJM\AppBundle\Entity\Compte;
+use PJM\UserBundle\Entity\User;
 
 class AdminController extends Controller
 {
@@ -19,37 +21,6 @@ class AdminController extends Controller
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:index.html.twig');
-    }
-
-    /**
-     * Refresh comptes
-     * @param object Request $request Requête
-     */
-    public function creationComptesAction(Request $request)
-    {
-        $em = $this->getEntityManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
-        $usersComptesACreer = $repository->findUsersNoAccounts();
-        $utils = $this->get('pjm.services.utils');
-
-        $boquettes = array(
-            $utils->getBoquette('pians'),
-            $utils->getBoquette('brags'),
-            $utils->getBoquette('paniers')
-        );
-
-        if ($usersComptesACreer != null) {
-            foreach ($usersComptesACreer as $user) {
-                foreach ($boquettes as $boquette) {
-                    $compte = new Compte($user, $boquette);
-                    $em->persist($compte);
-                }
-            }
-
-            $em->flush();
-        }
-
-        return new Response('OK');
     }
 
     /**
@@ -138,6 +109,7 @@ class AdminController extends Controller
     // TODO confirmation (check accents)
     public function inscriptionListeAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
 
@@ -157,6 +129,14 @@ class AdminController extends Controller
                 $handle = fopen($file, "r");
                 $nbUsers = 0;
                 $problem = 0;
+
+                // les boquettes concernées pour l'ouverture de compte :
+                $repository = $em->getRepository('PJMAppBundle:Boquette');
+                $boquettes = array(
+                    $repository->findOneBySlug('pians'),
+                    $repository->findOneBySlug('paniers'),
+                    $repository->findOneBySlug('brags'),
+                );
 
                 while (($data = fgetcsv($handle, 0, "\t")) !== false) {
                     if (count($data) >= 6) {
@@ -193,6 +173,12 @@ class AdminController extends Controller
 
                         $user->setEnabled(true);
                         $userManager->updateUser($user, false);
+
+                        // on crée les comptes
+                        foreach ($boquettes as $boquette) {
+                            $nvCompte = new Compte($user, $boquette);
+                            $em->persist($nvCompte);
+                        }
                     } else {
                         $problem++;
                     }
@@ -206,7 +192,7 @@ class AdminController extends Controller
                         $success = true;
 
                         try {
-                            $this->getDoctrine()->getManager()->flush();
+                            $em->flush();
                         } catch (\Doctrine\DBAL\DBALException $e) {
                             if ($e->getPrevious()->getCode() === '23000') {
                                 $success = false;
@@ -248,6 +234,7 @@ class AdminController extends Controller
 
     public function inscriptionUniqueAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
 
@@ -259,18 +246,53 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = uniqid();
-            $user->setPassword($password);
+            $password = substr(uniqid(), 0, 8);
+            $user->setPlainPassword($password);
             $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
+            $userManager->updateUser($user, false);
 
-            // TODO envoyer password par mail
+            // les boquettes concernées pour l'ouverture de compte :
+            $repository = $em->getRepository('PJMAppBundle:Boquette');
+            $boquettes = array(
+                $repository->findOneBySlug('pians'),
+                $repository->findOneBySlug('paniers'),
+                $repository->findOneBySlug('brags'),
+            );
 
-            $userManager->updateUser($user);
+            // on crée les comptes
+            foreach ($boquettes as $boquette) {
+                $nvCompte = new Compte($user, $boquette);
+                $em->persist($nvCompte);
+            }
+
+            try {
+                $em->flush();
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if ($e->getPrevious()->getCode() === '23000') {
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        'Erreur : l\'utilisateur existe déjà !'
+                    );
+
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $e->getMessage()
+                    );
+
+                    return $this->render('PJMAppBundle:Admin:users_new_user.html.twig', array(
+                        'form' => $form->createView(),
+                    ));
+                } else {
+                    throw $e;
+                }
+            }
 
             $request->getSession()->getFlashBag()->add(
                 'success',
                 'Utilisateur ajouté.'
             );
+
+            $this->envoiMailInscription($user, $password);
 
             return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionUnique'));
         }
@@ -278,5 +300,19 @@ class AdminController extends Controller
         return $this->render('PJMAppBundle:Admin:users_new_user.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function envoiMailInscription(User $user, $password)
+    {
+        $utils = $this->get('pjm.services.mailer');
+
+        $context = array(
+            "user" => $user,
+            "password" => $password,
+        );
+
+        $template = 'PJMAppBundle:Mail:inscription.html.twig';
+
+        $utils->send($user, $context, $template);
     }
 }
