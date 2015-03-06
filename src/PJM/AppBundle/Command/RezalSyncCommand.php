@@ -159,7 +159,7 @@ class RezalSyncCommand extends ContainerAwareCommand
                     $username = $historique['fams'].strtolower($historique['tbk']).$historique['proms'];
                     $user = $repositoryUser->findOneByUsername($username);
                     if ($user === null) {
-                        $this->logger->error("User non trouve ".$username." (".$historique['date'].")");
+                        $this->logger->error("User non trouve ".$username);
                         continue;
                     }
                     $nvHistorique->setUser($user);
