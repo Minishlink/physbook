@@ -15,6 +15,10 @@ class NewUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('enabled', 'checkbox', array(
+                'label' => 'Activé',
+                'required' => false
+            ))
             ->add('email', 'email')
             ->add('fams', 'text')
             ->add('tabagns', 'choice', array(

@@ -74,6 +74,28 @@ class Mailer
     }
 
     /**
+     * Envoie un mail de admin@physbook.fr
+     * @param object User       $user         L'utilisateur inscrit
+     * @param array  $context   Un tableau des variables utilisées dans le template
+     * @param string [$template = null] Un template autre que le layout par défaut
+     */
+    public function send(User $user, $context, $template = null)
+    {
+        if (!isset($template)) {
+            $template = $this->parameters['template']['layout'];
+        }
+
+        $from = array(
+            $this->parameters['contactEmail'] => $this->parameters['notificationSender']
+        );
+        $to = array(
+            $user->getEmail() => $user
+        );
+
+        $this->sendMessage($template, $context, $from, $to);
+    }
+
+    /**
     * @param string $templateName
     * @param array $context
     * @param string $fromEmail

@@ -1,0 +1,49 @@
+{# src/PJM/AppBundle/Resources/views/Mail/inscription.html.twig #}
+
+{% extends "PJMAppBundle:Mail:layout.html.twig" %}
+
+{% block subject %}{{ parent() }} Tu es inscrit !{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+Sal's {{ user.bucque }},
+
+tu es maintenant inscrit sur Phy'sbook !
+
+Tu peux te connecter soit avec ton e-mail ({{ user.email }}), soit avec ton nom d'utilisateur ({{ user.username }}).
+
+Ton mot de passe temporaire est : {{ password }}
+Tu peux le modifier sur la page de ton profil. (l'icône en haut à droite de la barre du menu)
+
+A tout de suite :
+http://www.physbook.fr
+
+Fratern's,
+Les ZiPhy'sbook
+admin@physbook.fr
+{% endautoescape %}
+{% endblock %}
+
+{% block content_html %}
+<h2>Tu es inscrit !</h2>
+
+<h3>Sal's {{ user.bucque }},</h3>
+
+<p>
+    tu es maintenant inscrit sur Phy'sbook !<br>
+
+    Tu peux te connecter soit avec ton e-mail (<em style="color:#ffba00">{{ user.email }}</em>), soit avec ton nom d'utilisateur (<em>{{ user.username }}</em>).<br>
+
+    Ton mot de passe temporaire est : <strong>{{ password }}</strong><br>
+    Tu peux le modifier sur la page de ton profil. (l'icône en haut à droite de la barre du menu)
+</p>
+<p>
+    A tout de suite sur <a href="http://physbook.fr" style="color:#ffba00" title="Phy'sbook">physbook.fr</a> !
+</p>
+
+<p>
+    Fratern's,<br>
+    Les ZiPhy'sbook<br>
+    <a href="mailto:admin@physbook.fr" style="color:#ffba00">admin@physbook.fr</a>
+</p>
+{% endblock %}
