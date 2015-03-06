@@ -6,10 +6,7 @@
                 <h4 class="modal-title" id="rechargement">Rechargement</h4>
             </div>
             <div class="modal-body">
-                <p>
-                    Petit contretemps de dernière minute avec la mise en production du serveur S-Money. La fonctionnalité sera disponible demain matin. Désolé, nous en sommes les premiers déçus.
-                </p>
-                {#{% render(url('pjm_app_boquette_rechargement', {'slug': boquetteSlug})) %}#}
+                {% render(url('pjm_app_boquette_rechargement', {'slug': boquetteSlug})) %}
             </div>
         </div>
     </div>
