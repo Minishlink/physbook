@@ -15,16 +15,18 @@ class HistoriqueListener
 
         if ($entity instanceof Historique) {
             $historique = $entity;
-            if ($historique->getValid()) {
-                $repository = $em->getRepository('PJMAppBundle:Compte');
-                $compte = $repository->findOneByUserAndBoquetteSlug($historique->getUser(), $historique->getItem()->getBoquette()->getSlug());
+            if ($historique->getItem()->getBoquette()->getSlug() != 'cvis' && $historique->getItem()->getBoquette()->getSlug() != 'pians') {
+                if ($historique->getValid()) {
+                    $repository = $em->getRepository('PJMAppBundle:Compte');
+                    $compte = $repository->findOneByUserAndBoquetteSlug($historique->getUser(), $historique->getItem()->getBoquette()->getSlug());
 
-                if (!isset($compte)) {
-                    $compte = new Compte($historique->getUser(), $historique->getItem()->getBoquette());
+                    if (!isset($compte)) {
+                        $compte = new Compte($historique->getUser(), $historique->getItem()->getBoquette());
+                    }
+
+                    $compte->debiter($historique->getPrix());
+                    $em->persist($compte);
                 }
-
-                $compte->debiter($historique->getPrix());
-                $em->persist($compte);
             }
         }
     }

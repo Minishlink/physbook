@@ -376,13 +376,13 @@ class Utils
             $msg = [];
 
             // on va chercher le dernier historique rentré dans la BDD Phy'sbook
-            $last = $repository->findLastValidByBoquetteSlug($boquetteSlug);
+            $lastHistorique = $repository->findLastValidByBoquetteSlug($boquetteSlug);
             $listeHistRezal = null;
-            if ($last !== null) {
-                print_r($last->getDate());
-                $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, $last->getDate()->format('Y-m-d H:i'));
+            if ($lastHistorique !== null) {
+                $date = $lastHistorique->getDate()->format('Y-m-d H:i');
+                $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, $date);
             } else {
-                $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, null);
+                $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug);
             }
 
             // on récupère tous les nouveaux historiques sur la BDD R&z@l
@@ -407,7 +407,7 @@ class Utils
                         continue;
                     }
                     $nvHistorique->setUser($user);
-                    $nvHistorique->setDate($historique['date']);
+                    $nvHistorique->setDate(new \DateTime($historique['date']));
                     $nvHistorique->setNombre($historique['qte']*10);
                     $nvHistorique->setValid(true);
                     $this->em->persist($nvHistorique);

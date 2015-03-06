@@ -34,10 +34,9 @@ class RezalSyncCommand extends ContainerAwareCommand
         $msg = $utils->syncRezalProduits('cvis');
         $output->writeln($msg);
         $output->writeln("FIN syncRezalProduits Cvis");
-        /* TODO
         $output->writeln("DEBUT syncRezalHistorique Pians");
         $msg = $utils->syncRezalHistorique('pians');
-        $output->writeln("FIN syncRezalHistorique Pians");*/
+        $output->writeln("FIN syncRezalHistorique Pians");
         $output->writeln("DEBUT syncRezalHistorique Cvis");
         $msg = $utils->syncRezalHistorique('cvis');
         $output->writeln("FIN syncRezalHistorique Cvis");
