@@ -89,7 +89,7 @@ class Mailer
             $this->parameters['contactEmail'] => $this->parameters['notificationSender']
         );
         $to = array(
-            $user->getEmail() => $user
+            $user->getEmail() => $user->getPrenom()." ".$user->getNom()
         );
 
         $this->sendMessage($template, $context, $from, $to);
