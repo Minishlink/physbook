@@ -1,5 +1,5 @@
 {% for produit in listeProduits %}
-<div class="produit"{% if ajoutCatalogue is defined or (ajoutCatalogue is not defined and (loop.index == 1 or loop.index == 5)) %} style="display:none"{% endif %}>
+<div class="produit"{% if ajoutCatalogue is defined or (ajoutCatalogue is not defined and loop.index > 3) %} style="display:none"{% endif %}>
     {% if produit.image is not null %}
     <img src="{{ asset(produit.image.webPath) }}" alt="{{ asset(produit.image.alt) }}" class="image" />
     {% else %}
