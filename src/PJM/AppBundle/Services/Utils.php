@@ -149,7 +149,6 @@ class Utils
             )) {
                 // on met à jour le solde du compte associé sur la base R&z@l
                 // TODO vérifier qu'on est pas en mode synchro avec la base R&z@l
-                // TODO prendre username car fam'ss modifiable, donc problème de doublon de transaction lors de la synchro avec la base Rezal...
                 // TODO enregistrement dans l'historique
 
                 $status = $this->rezal->crediteSolde(

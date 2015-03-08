@@ -159,7 +159,7 @@ class RezalSyncCommand extends ContainerAwareCommand
                     $username = $historique['fams'].strtolower($historique['tbk']).$historique['proms'];
                     $user = $repositoryUser->findOneByUsername($username);
                     if ($user === null) {
-                        $this->logger->error("User non trouve ".$username);
+                        $this->logger->notice("User non trouve ".$username);
                         continue;
                     }
                     $nvHistorique->setUser($user);
@@ -199,7 +199,7 @@ class RezalSyncCommand extends ContainerAwareCommand
                 if (!in_array(trim($username), $ignoreUsernames)) {
                     $upCompte = $repository->findOneByUsernameAndBoquetteSlug($username, 'pians');
                     if ($upCompte === null) {
-                        $this->logger->error("Compte non trouve ".$username);
+                        $this->logger->notice("Compte non trouve ".$username);
                         continue;
                     }
                     $upCompte->setSolde($compte['montant']);
