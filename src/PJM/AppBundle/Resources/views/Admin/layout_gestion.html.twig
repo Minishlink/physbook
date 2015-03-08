@@ -1,0 +1,27 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}admin{% endblock %}
+{% block categorieName %}Administration{% endblock %}
+
+{% block pjm_app_body_content %}
+<h2>{% block titrePageAdmin %}{% endblock %}</h2>
+<p>
+    <a href="{{ path('pjm_app_admin_index') }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Retour
+    </a>
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <h3>{% if ajout %}Ajout{% else %}Modification{% endif %}</h3>
+        {% block explication %}{% endblock %}
+        {{ form_stylesheet(form) }}
+        {{ form_javascript(form) }}
+        {{ form(form) }}
+    </div>
+    <div class="col-md-8">
+        <h3>Liste</h3>
+        {{ datatable_render(datatable) }}
+    </div>
+</div>
+{% endblock %}
