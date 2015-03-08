@@ -1,34 +1,11 @@
-{% extends "PJMAppBundle::Admin/layout.html.twig" %}
+{% extends "PJMAppBundle:Admin:layout_gestion.html.twig" %}
 
-{% block title %}
-	Responsabilités - {{ parent() }}
-{% endblock %}
-
-{% block pjm_app_body_content %}
-<h2>Responsabilités</h2>
+{% block titrePageAdmin %}Responsabilités{% endblock %}
+{% block explication %}
 <p>
-    <a href="{{ path('pjm_app_admin_index') }}" class="btn btn-primary">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        Retour
-    </a>
+    Le <strong>rôle</strong> est facultatif : il ne sert que pour les boquettes qui ont une interface d'administration.
 </p>
-<div class="row">
-    <div class="col-md-4">
-        <h3>{% if ajout %}Ajout{% else %}Modification{% endif %}</h3>
-        <p>
-            Le <strong>rôle</strong> est facultatif : il ne sert que pour les boquettes qui ont une interface d'administration.
-        </p>
-        <p>
-            Le <strong>niveau</strong> est la donnée hiérarchique. 0 est le plus haut niveau hiérarchique.
-        </p>
-
-        {{ form_stylesheet(form) }}
-        {{ form_javascript(form) }}
-        {{ form(form) }}
-    </div>
-    <div class="col-md-8">
-        <h3>Liste</h3>
-        {{ datatable_render(datatable) }}
-    </div>
-</div>
+<p>
+    Le <strong>niveau</strong> est la donnée hiérarchique. 0 est le plus haut niveau hiérarchique.
+</p>
 {% endblock %}

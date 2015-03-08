@@ -28,6 +28,10 @@ pjm_app_admin_toggleResponsables:
     path:     /responsables/toggle
     defaults: { _controller: PJMAppBundle:Consos/Boquette:toggleResponsables }
 
+pjm_app_admin_gestionBoquettes:
+    path:     /gestionBoquettes/{boquette}
+    defaults: { _controller: PJMAppBundle:Admin:gestionBoquettes, boquette: null }
+
 pjm_app_admin_boquette:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/routing.yml"
     prefix:   /boquette
