@@ -49,6 +49,13 @@ class Boquette
      **/
     private $responsabilites;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
+    * @Assert\Valid()
+    */
+    private $image;
+
     public function __construct() {
         $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
     }
