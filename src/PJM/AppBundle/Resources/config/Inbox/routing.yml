@@ -1,0 +1,7 @@
+pjm_app_inbox_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Inbox:index }
+
+pjm_app_inbox_nouveau:
+    path:     /nouveau
+    defaults: { _controller: PJMAppBundle:Inbox:nouveau }

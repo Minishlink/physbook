@@ -22,6 +22,10 @@ pjm_app_event:
     resource: "@PJMAppBundle/Resources/config/Event/routing.yml"
     prefix:   /event
 
+pjm_app_inbox:
+    resource: "@PJMAppBundle/Resources/config/Inbox/routing.yml"
+    prefix:   /inbox
+
 pjm_app_media:
     resource: "@PJMAppBundle/Resources/config/Media/routing.yml"
     prefix:   /media

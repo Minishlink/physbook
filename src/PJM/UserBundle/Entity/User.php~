@@ -107,11 +107,16 @@ class User extends BaseUser
      * @Assert\Date()
      */
     private $anniversaire;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
      **/
     private $responsables;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="user")
+     **/
+    private $inbox;
 
     public function __toString()
     {
@@ -137,8 +142,10 @@ class User extends BaseUser
 
         return $user;
     }
-    
+
     public function __construct() {
+        parent::__construct();
+
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -367,7 +374,11 @@ class User extends BaseUser
      */
     public function setAnniversaire($anniversaire)
     {
-        $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+        if (gettype($anniversaire) == "string") {
+            $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
+        } else {
+            $this->anniversaire = $anniversaire;
+        }
 
         return $this;
     }
@@ -406,45 +417,12 @@ class User extends BaseUser
     }
 
     /**
-     * Add responsabilites
-     *
-     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
-     * @return User
-     */
-    public function addResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
-    {
-        $this->responsabilites[] = $responsabilites;
-
-        return $this;
-    }
-
-    /**
-     * Remove responsabilites
-     *
-     * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
-     */
-    public function removeResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
-    {
-        $this->responsabilites->removeElement($responsabilites);
-    }
-
-    /**
-     * Get responsabilites
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getResponsabilites()
-    {
-        return $this->responsabilites;
-    }
-
-    /**
      * Add responsables
      *
-     * @param \PJM\AppBundle\Entity\Responsables $responsables
+     * @param \PJM\AppBundle\Entity\Responsable $responsables
      * @return User
      */
-    public function addResponsable(\PJM\AppBundle\Entity\Responsables $responsables)
+    public function addResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
     {
         $this->responsables[] = $responsables;
 
@@ -454,9 +432,9 @@ class User extends BaseUser
     /**
      * Remove responsables
      *
-     * @param \PJM\AppBundle\Entity\Responsables $responsables
+     * @param \PJM\AppBundle\Entity\Responsable $responsables
      */
-    public function removeResponsable(\PJM\AppBundle\Entity\Responsables $responsables)
+    public function removeResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
     {
         $this->responsables->removeElement($responsables);
     }
@@ -464,7 +442,7 @@ class User extends BaseUser
     /**
      * Get responsables
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getResponsables()
     {
