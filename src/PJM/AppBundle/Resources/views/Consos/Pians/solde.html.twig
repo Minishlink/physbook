@@ -1,15 +1,15 @@
 <div id="solde">
     <h2 class="sr-only">Solde</h2>
     <div id="soldeContainer">
-    {% if solde >= 5000 %}
+    {% if solde >= 1500 %}
         <img src="{{ asset('images/consos/pians/Biere-pleine.png') }}">
-    {% elseif solde >= 3750 %}
+    {% elseif solde >= 1000 %}
         <img src="{{ asset('images/consos/pians/Biere-34.png') }}">
-    {% elseif solde >= 2500 %}
+    {% elseif solde >= 500 %}
         <img src="{{ asset('images/consos/pians/Biere-12.png') }}">
-    {% elseif solde >= 1250 %}
+    {% elseif solde >= 90 %}
         <img src="{{ asset('images/consos/pians/Biere-14.png') }}">
-    {% elseif solde == 0 %}
+    {% elseif solde >= 0 %}
         <img src="{{ asset('images/consos/pians/Biere-0.png') }}">
     {% else %}
         <img src="{{ asset('images/consos/pians/Biere-neg.png') }}">
