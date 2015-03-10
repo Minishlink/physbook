@@ -151,6 +151,17 @@ class BoquetteController extends Controller
         return $topConsommateurs;
     }
 
+    /**
+     * Page par défaut des boquettes
+     * @param  object   Boquette $boquette
+     */
+    public function defaultAction(Boquette $boquette)
+    {
+        return $this->render('PJMAppBundle:Boquette:default.html.twig', array(
+            'boquette' => $boquette,
+        ));
+    }
+
     /*
      * Historique des crédits et débits
      */
@@ -697,6 +708,30 @@ class BoquetteController extends Controller
         return $this->render('PJMAppBundle:Consos:responsables.html.twig', array(
             'responsables' => $responsables,
             'uneResp' => ($ok == count($responsables))
+        ));
+    }
+
+    /**
+     * Affiche l'historique des responsables d'une boquette
+     * @param  object Boquette $boquette
+     * @return object Template
+     */
+    public function voirHistoriqueResponsablesAction(Boquette $boquette)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Responsable');
+        $responsables = $repository->findByBoquette($boquette);
+
+        $proms = array();
+        foreach($responsables as $responsable) {
+            if (!in_array($responsable->getUser()->getProms(), $proms)) {
+                $proms[] = $responsable->getUser()->getProms();
+            }
+        }
+
+        return $this->render('PJMAppBundle:Boquette:historiqueResponsables.html.twig', array(
+            'responsables' => $responsables,
+            'listeProms' => $proms
         ));
     }
 

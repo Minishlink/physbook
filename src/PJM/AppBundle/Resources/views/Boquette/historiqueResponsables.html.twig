@@ -1,0 +1,26 @@
+<div id="historiqueResponsables">
+{% if responsables|length > 0 %}
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            {% for proms in listeProms %}
+                <li role="presentation"{% if loop.first %} class="active"{% endif %}><a data-target="#{{ proms }}" aria-controls="{{ proms }}" role="tab" data-toggle="tab">{{ proms }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for proms in listeProms %}
+            <div role="tabpanel" class="tab-pane fade{% if loop.first %} in active{% endif %}" id="{{ proms }}">
+                <ul class="list-unstyled">
+                    {% for responsable in responsables %}
+                    {% if responsable.user.proms == proms %}
+                    <li>{{ responsable.responsabilite }} : {% render(url('pjm_profil_encart', {'username': responsable.user.username})) %}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p>Aucun responsable trouvé.</p>
+{% endif %}
+</div>
