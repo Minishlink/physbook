@@ -412,7 +412,11 @@ class BoquetteController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
+            $router = $this->get('router');
+            $route = "pjm_app_admin_boquette_".$boquette->getSlug()."_index";
+            if (null !== $router->getRouteCollection()->get($route)) {
+                return $this->redirect($this->generateUrl($route));
+            }
         }
 
         $datatable = $this->get("pjm.datatable.admin.responsable");
