@@ -26,8 +26,8 @@ class RechargementController extends Controller
 
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
-        $curl->setOption(CURLOPT_SSL_VERIFYHOST, false);
-        $curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
+        $curl->setVerifyPeer(false);
+        $curl->setTimeout(10);
 
         $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
