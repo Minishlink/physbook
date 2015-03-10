@@ -1,3 +1,7 @@
+pjm_app_boquette_default:
+    path:     /{slug}
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:default }
+
 pjm_app_boquette_listeItem:
     path:     /{slug}/listeItem
     defaults: { _controller: PJMAppBundle:Consos/Boquette:listeItem }
@@ -23,6 +27,10 @@ pjm_app_boquette_historiqueResults:
 pjm_app_boquette_voirResponsables:
     path:     /{slug}/responsables
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }
+
+pjm_app_boquette_voirHistoriqueResponsables:
+    path:     /{slug}/responsables/historique
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirHistoriqueResponsables }
 
 pjm_app_boquette_boquette_historique:
     path:     /{slug}/historique
