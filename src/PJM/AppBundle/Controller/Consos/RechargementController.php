@@ -27,12 +27,12 @@ class RechargementController extends Controller
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
         $curl->setVerifyPeer(false);
-        $curl->setTimeout(10);
+        $curl->setTimeout(30);
 
         $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
 
-        $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+        /*$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
         $ua_checker = array(
           'android' => preg_match('/android/', $ua),
           'ios' => preg_match('/iphone|ipod|ipad/', $ua),
@@ -41,7 +41,9 @@ class RechargementController extends Controller
         $agent = "web";
         if ($ua_checker['ios']) {
             $agent = "iphoneweb";
-        }
+        }*/
+
+        $agent = "web";
 
         $headers = array(
             "Authorization" => $authToken,
