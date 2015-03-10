@@ -32,7 +32,7 @@ class InboxController extends Controller
          if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $message->setExpediteur($this->getUser());
+                $message->setExpediteur($this->getUser()->getInbox());
                 $em->persist($message);
                 $em->flush();
 
