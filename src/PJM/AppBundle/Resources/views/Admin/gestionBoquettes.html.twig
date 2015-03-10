@@ -1,4 +1,14 @@
 {% extends "PJMAppBundle:Admin:layout_gestion.html.twig" %}
 
-{% block categorieName %}{% endblock %}
-{% block explication %}{% endblock %}
+{% block titrePageAdmin %}Responsabilités{% endblock %}
+{% block explication %}
+<p>
+    Le <strong>slug</strong> est un identifiant unique pour chaque boquette et apparaîtra dans les URL associées. Attention, pour les boquettes ayant des fonctionnalités programmées exprès pour elles, il ne faut surtout pas changer le slug !
+</p>
+<p>
+    Le <strong>logo</strong> apparaîtra dans les pages associées aux boquettes, dans les actus des boquettes...
+</p>
+<p>
+    La <strong>caisse S-Money</strong> est facultative et ne concerne que les boquettes ayant des fonctionnalités financières.
+</p>
+{% endblock %}
