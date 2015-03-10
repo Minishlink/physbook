@@ -42,7 +42,7 @@ class Compte
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Boquette", mappedBy="compte")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Transaction", mappedBy="compte")
      **/
     private $transactions;
 
