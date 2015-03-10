@@ -9,6 +9,10 @@ body {
             }
         }
 
+        a {
+            color: @mauve;
+        }
+
         #panneauPanier {
             @panierWidth: 90%;
 
@@ -29,6 +33,11 @@ body {
                         background-color: @mauve;
                         text-align: center;
                         padding: 0 1em 2em 1em;
+                        min-height: 18em;
+
+                        @media @desktop {
+                            min-height: 30em;
+                        }
 
                         ul {
                             margin-top: 2em;
@@ -85,7 +94,7 @@ body {
                 height: @taillePrixPanier*(@taillePrixPanier - 1);
 
                 border-radius: 50% 50%;
-                background-color: lighten(@vert, 10%);
+                background-color: @vert-clair;
 
                 > div {
                     font-size: @taillePrixPanier;
