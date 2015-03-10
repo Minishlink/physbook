@@ -113,6 +113,11 @@ class User extends BaseUser
      **/
     private $responsables;
 
+    /**
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="user", cascade={"persist", "remove"})
+     **/
+    private $inbox;
+
     public function __toString()
     {
         $user = $this->username;
@@ -442,5 +447,28 @@ class User extends BaseUser
     public function getResponsables()
     {
         return $this->responsables;
+    }
+
+    /**
+     * Set inbox
+     *
+     * @param \PJM\AppBundle\Entity\Inbox $inbox
+     * @return User
+     */
+    public function setInbox(\PJM\AppBundle\Entity\Inbox $inbox)
+    {
+        $this->inbox = $inbox;
+
+        return $this;
+    }
+
+    /**
+     * Get inbox
+     *
+     * @return \PJM\AppBundle\Entity\Inbox
+     */
+    public function getInbox()
+    {
+        return $this->inbox;
     }
 }

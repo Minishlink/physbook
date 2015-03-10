@@ -1,0 +1,21 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "vie" %}
+{% block pageName %}inbox{% endblock %}
+
+{% block categorieName %}Messages{% endblock %}
+
+{% block pjm_app_body_content %}
+<a href="{{ path('pjm_app_inbox_nouveau') }}">Envoyer un message</a>
+
+<h2>Messages reçus</h2>
+<div id="received">
+    {% include 'PJMAppBundle:Inbox:messages.html.twig' with {'messages': inbox.received } %}
+</div>
+
+<h2>Messages envoyés</h2>
+<div id="sent">
+    {% include 'PJMAppBundle:Inbox:messages.html.twig' with {'messages': inbox.sent } %}
+</div>
+
+{% endblock %}

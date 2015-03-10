@@ -1,0 +1,12 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "vie" %}
+{% block pageName %}inbox{% endblock %}
+
+{% block categorieName %}Envoi d'un message{% endblock %}
+
+{% block pjm_app_body_content %}
+<p><a href="{{ path('pjm_app_inbox_index') }}">Retour</a></p>
+
+{{ form(form) }}
+{% endblock %}

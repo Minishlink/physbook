@@ -11,19 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Compte;
+use PJM\AppBundle\Entity\Inbox;
 use PJM\UserBundle\Entity\User;
 
 class CreerComptesCommand extends ContainerAwareCommand
 {
     protected $em;
-    protected $rezal;
     protected $logger;
 
     protected function configure()
     {
         $this
             ->setName('users:create:compte')
-            ->setDescription("Synchronise la BDD Phy'sbook avec celle du Rezal")
+            ->setDescription("Créer les comptes et l'inbox des PGs qui n'en n'ont pas")
         ;
     }
 
@@ -33,7 +33,6 @@ class CreerComptesCommand extends ContainerAwareCommand
         $this->getContainer()->set('request', new Request(), 'request');
 
         $this->em = $this->getContainer()->get('doctrine')->getManager();
-        $this->rezal = $this->getContainer()->get('pjm.services.rezal');
         $this->logger = $this->getContainer()->get('logger');
 
         // les boquettes concernées :
@@ -60,6 +59,14 @@ class CreerComptesCommand extends ContainerAwareCommand
                         $this->em->persist($nvCompte);
                         $this->logger->info('NEW Nouveau compte : '.$nvCompte);
                     }
+                }
+
+                $inbox = $user->getInbox();
+                if($inbox == null) {
+                    //on crée l'inbox
+                    $inbox = new Inbox();
+                    $user->setInbox($inbox);
+                    $this->em->persist($user);
                 }
             }
 
