@@ -1,7 +1,3 @@
-pjm_app_boquette_default:
-    path:     /{slug}
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:default }
-
 pjm_app_boquette_listeItem:
     path:     /{slug}/listeItem
     defaults: { _controller: PJMAppBundle:Consos/Boquette:listeItem }
@@ -71,3 +67,7 @@ pjm_app_boquette_tuiss:
 pjm_app_boquette_asso:
     resource: "@PJMAppBundle/Resources/config/Boquette/Asso/routing.yml"
     prefix:   /asso
+
+pjm_app_boquette_default:
+    path:     /{slug}
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:default }
