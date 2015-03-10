@@ -32,7 +32,6 @@ class Boquette
     private $nom;
 
     /**
-     * @Gedmo\Slug(fields={"nom"})
      * @ORM\Column(length=128, unique=true)
      */
     private $slug;
@@ -175,5 +174,28 @@ class Boquette
     public function getResponsabilites()
     {
         return $this->responsabilites;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \PJM\AppBundle\Entity\Image $image
+     * @return Boquette
+     */
+    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PJM\AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

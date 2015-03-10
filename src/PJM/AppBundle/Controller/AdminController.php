@@ -8,8 +8,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use PJM\AppBundle\Form\Admin\NewUserType;
 use PJM\AppBundle\Form\Admin\ResponsabiliteType;
+use PJM\AppBundle\Form\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\Compte;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\UserBundle\Entity\User;
 
 class AdminController extends Controller
@@ -93,6 +95,82 @@ class AdminController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsabilites"));
 
         return $datatable->getResponse();
+    }
+
+    /**
+     * Gère les boquettes
+     * @param object Request $request Requête
+     */
+    public function gestionBoquettesAction(Request $request, Boquette $boquette = null)
+    {
+        $ajout = ($boquette === null);
+        if($ajout) {
+            $boquette = new Boquette();
+            $urlAction = $this->generateUrl('pjm_app_admin_gestionBoquettes');
+        } else {
+            $urlAction = $this->generateUrl('pjm_app_admin_gestionBoquettes', array(
+                'boquette' => $boquette->getId()
+            ));
+        }
+
+        $form = $this->createForm(new BoquetteType(), $boquette, array(
+            'method' => 'POST',
+            'action' => $urlAction,
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($boquette);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'La boquette a bien été ajoutée ou modifiée.'
+                );
+
+                return $this->gestionBoquettesAction(new Request());
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu lors de l\'ajout ou de la modification de la boquette. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+        }
+
+        $datatable = $this->get("pjm.datatable.admin.boquettes");
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:gestionBoquettes.html.twig', array(
+            'ajout' => $ajout,
+            'form' => $form->createView(),
+            'datatable' => $datatable
+        ));
+    }
+
+    /**
+     * Va chercher toutes les entités Boquette.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function boquettesResultsAction()
+    {
+        $datatable = $this->get("pjm.datatable.admin.boquettes");
+        $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+
+        return $datatableData->getResponse();
     }
 
     // TODO gérer promos à l'ec'ss ou pas
