@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use PJM\AppBundle\Form\ImageType;
 
+use Doctrine\ORM\EntityRepository;
+
 class MessageType extends AbstractType
 {
     /**
@@ -21,6 +23,9 @@ class MessageType extends AbstractType
             ->add('destinataires', 'collection', array(
                 'label' => 'Destinataires',
                 'type' => 'genemu_jqueryselect2_entity',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
                 'options' => array(
                     'class'    => 'PJMAppBundle:Inbox',
                     'error_bubbling' => true,
