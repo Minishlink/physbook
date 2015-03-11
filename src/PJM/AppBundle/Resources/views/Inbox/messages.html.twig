@@ -4,7 +4,9 @@
         <div class="panel-body">
             {{ message.contenu }}
         </div>
-        <div class="panel-footer">de {% render(url('pjm_profil_encart', {'username': message.user.username})) %}, le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}, pour {% for destinataire in message.destinataires %}{{ destinataire.user }}{% endfor %}</div>
+        <div class="panel-footer">
+            {% if type == 'recus' %}de {% render(url('pjm_profil_encart', {'username': message.user.username})) %}, {% endif %}le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}{% if message.destinataires|length > 0 %}{% if not (message.destinataires|length == 1 and message.destinataires[0].user == app.user) %}, pour {% for destinataire in message.destinataires %}{% if destinataire.user != app.user %}{% render(url('pjm_profil_encart', {'username': destinataire.user.username})) %}{% else %}phy's{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}
+        </div>
     </div>
 </div>
 {% endfor %}
