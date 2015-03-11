@@ -20,24 +20,19 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('destinataires', 'collection', array(
+            ->add('destinataires', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataires',
-                'type' => 'genemu_jqueryselect2_entity',
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'options' => array(
-                    'class'    => 'PJMAppBundle:Inbox',
-                    'error_bubbling' => true,
-                    'query_builder' => function(EntityRepository $er) use ($options) {
-                        return $er->createQueryBuilder('i')
-                            ->join('i.user', 'u')
-                            ->orderBy('u.fams', 'ASC')
-                            ->addOrderBy('u.proms', 'DESC')
-                        ;
-                    },
-                    'property' => 'user'
-                )
+                'class'    => 'PJMAppBundle:Inbox',
+                'error_bubbling' => true,
+                'query_builder' => function(EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.user', 'u')
+                        ->orderBy('u.fams', 'ASC')
+                        ->addOrderBy('u.proms', 'DESC')
+                    ;
+                },
+                'multiple' => true,
+                'property' => 'user'
             ))
             ->add('contenu', "text")
             ->add('save', 'submit', array(
