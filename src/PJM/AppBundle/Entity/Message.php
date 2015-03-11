@@ -36,6 +36,13 @@ class Message
     private $date;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="variables", type="json_array", nullable=true)
+     */
+    private $variables;
+
+    /**
      * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Inbox", mappedBy="received")
      **/
     private $destinataires;
@@ -180,5 +187,28 @@ class Message
     public function getUser()
     {
         return $this->expediteur->getUser();
+    }
+
+    /**
+     * Set variables
+     *
+     * @param array $variables
+     * @return Message
+     */
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
+     * Get variables
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
     }
 }
