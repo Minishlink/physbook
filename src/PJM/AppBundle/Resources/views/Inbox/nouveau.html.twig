@@ -7,6 +7,31 @@
 
 {% block pjm_app_body_content %}
 <p><a href="{{ path('pjm_app_inbox_index') }}">Retour</a></p>
-
+{{ form_javascript(form) }}
+{{ form_stylesheet(form) }}
 {{ form(form) }}
 {% endblock %}
+
+{#{% block javascripts %}
+<script type="text/javascript">
+// Récupère le div qui contient la collection
+var collectionHolder = $('#form_pjm_appbundle_inbox_messagetype_destinataires');
+
+// ajoute un lien « add a tag »
+var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un tag</a>');
+var $newLinkLi = $('<li></li>').append($addTagLink);
+
+jQuery(document).ready(function() {
+    // ajoute l'ancre « ajouter un tag » et li à la balise ul
+    collectionHolder.append($newLinkLi);
+
+    $addTagLink.on('click', function(e) {
+        // empêche le lien de créer un « # » dans l'URL
+        e.preventDefault();
+
+        // ajoute un nouveau formulaire tag (voir le prochain bloc de code)
+        addTagForm(collectionHolder, $newLinkLi);
+    });
+});
+</script>
+{% endblock %}#}
