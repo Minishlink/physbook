@@ -76,8 +76,10 @@ class PaniersDatatable extends AbstractDatatableView
                             "rel" => "tooltip",
                             "title" => "Télécharger et arrêter les commandes (.xlsx)",
                             "class" => "btn btn-default btn-xs",
-                            "role" => "button"
+                            "role" => "button",
                         ),
+                        "confirm" => true,
+                        "confirm_message" => "Attention, cela va stopper les prises de commandes pour ce panier si elles ne le sont pas encore. Es-tu sûr ?",
                     ),
                 )
             ))
