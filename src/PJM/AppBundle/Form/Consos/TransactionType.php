@@ -45,7 +45,7 @@ class TransactionType extends AbstractType
                 'error_bubbling' => true,
                 'constraints' => array(
                     new Assert\Length(array(
-                        'min' => 3,
+                        'min' => 1,
                         'max' => 10
                     ))
                 )
