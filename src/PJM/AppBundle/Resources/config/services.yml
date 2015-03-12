@@ -80,6 +80,10 @@ services:
         class: PJM\AppBundle\Datatables\ResponsableDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.admin.consos.comptes:
+        class: PJM\AppBundle\Datatables\Admin\ComptesDatatable
+        tags:
+            - { name: sg.datatable.view }
     pjm.datatable.boquette.item:
         class: PJM\AppBundle\Datatables\Boquette\ItemDatatable
         tags:

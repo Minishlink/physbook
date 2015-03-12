@@ -450,6 +450,39 @@ class BoquetteController extends Controller
     }
 
     /**
+     * [ADMIN] Affiche la liste des comptes des PGs d'une boquette
+     */
+    public function voirComptesAction(Boquette $boquette)
+    {
+        $datatable = $this->get("pjm.datatable.admin.consos.comptes");
+        $datatable->setBoquetteSlug($boquette->getSlug());
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:Consos/comptes.html.twig', array(
+            'datatable' => $datatable,
+            'boquette' => $boquette,
+        ));
+    }
+
+    /**
+     * [ADMIN] Action ajax de rendu de la liste des comptes des PGs d'une boquette.
+     */
+    public function comptesResultsAction($boquette_slug)
+    {
+        $datatable = $this->get("pjm.datatable.admin.consos.comptes");
+        $datatable->setBoquetteSlug($boquette_slug);
+        $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Compte');
+
+        $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
+
+        return $datatableData->getResponse();
+    }
+
+    /**
      * Liste des items pour une boquette.
      */
     public function listeItemAction(Request $request, Boquette $boquette)
