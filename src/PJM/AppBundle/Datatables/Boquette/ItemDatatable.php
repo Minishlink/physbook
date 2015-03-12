@@ -75,17 +75,17 @@ class ItemDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'll'
             ))
+            ->add("valid", "boolean", array(
+                "title" => "Actif",
+                "true_icon" => "glyphicon glyphicon-ok",
+                "false_icon" => "glyphicon glyphicon-remove",
+                "true_label" => "Oui",
+                "false_label" => "Non"
+            ))
         ;
 
         if($this->admin) {
             $this->getColumnBuilder()
-                ->add("valid", "boolean", array(
-                    "title" => "Actif",
-                    "true_icon" => "glyphicon glyphicon-ok",
-                    "false_icon" => "glyphicon glyphicon-remove",
-                    "true_label" => "Oui",
-                    "false_label" => "Non"
-                ))
                 ->add(null, "action", array(
                     "title" => "Actions",
                     "actions" => array(
