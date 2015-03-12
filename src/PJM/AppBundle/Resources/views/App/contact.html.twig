@@ -23,8 +23,8 @@
                 </div>
 
                 {{ form_rest(form) }}
-
-                <button class="debuttonize text-rouge text-larger pull-right"><span class="font-blackout_sunrise">Envoyer <span class="glyphicon glyphicon-chevron-right"></span></span></button>
+                <button onclick="return confirm('Es-tu sûr de vouloir effacer ce que tu as marqué ?');" type="reset" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Effacer</button>
+                <button type="submit" class="btn btn-primary pull-right"><span class="font-blackout_sunrise text-large">Envoyer <span class="glyphicon glyphicon-chevron-right"></span></span></button>
             </form>
         </div>
     </div>
