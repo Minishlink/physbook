@@ -39,7 +39,8 @@ class RezalSyncCommand extends ContainerAwareCommand
         $this->rezal = $this->getContainer()->get('pjm.services.rezal');
         $this->logger = $this->getContainer()->get('logger');
 
-        $output->writeln("DEBUT rezal:sync");
+        $debut = new \DateTime();
+        $output->writeln("[".$debut->format('Y-m-d H:i:s')."] DEBUT rezal:sync");
 
         $output->writeln("DEBUT syncRezalProduits Pians");
         $this->syncRezalProduits('pians');
@@ -88,12 +89,14 @@ class RezalSyncCommand extends ContainerAwareCommand
 
             // on les ajoute sur Phy'sbook
             if ($listeNvProduitsRezal !== null) {
+                $boquette = $this->em->getRepository('PJMAppBundle:Boquette')->findOneBySlug($boquetteSlug);
+
                 foreach($listeNvProduitsRezal as $produit) {
                     $nvProduit = new Item();
                     $nvProduit->setSlug($produit['idObjet']);
                     $nvProduit->setLibelle($produit['intituleObjet']);
                     $nvProduit->setPrix($produit['prix']*100);
-                    $nvProduit->setBoquette($this->getBoquette($boquetteSlug));
+                    $nvProduit->setBoquette($boquette);
                     $this->logger->info("NEW: ".$nvProduit->getLibelle());
                     $this->em->persist($nvProduit);
                 }
@@ -109,6 +112,7 @@ class RezalSyncCommand extends ContainerAwareCommand
                             if (round($produitRezal['prix']*100, 2) != $produitPhysbook->getPrix()) {
                                 $nvProduit = clone $produitPhysbook;
                                 $nvProduit->setPrix($produitRezal['prix']*100);
+                                $nvProduit->setDate(new \DateTime());
                                 $this->logger->info("UPDATE: ".$nvProduit->getLibelle());
                                 $produitPhysbook->setValid(false);
                                 $this->em->persist($produitPhysbook);
