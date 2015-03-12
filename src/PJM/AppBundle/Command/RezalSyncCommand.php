@@ -131,7 +131,6 @@ class RezalSyncCommand extends ContainerAwareCommand
             }
 
             // à partir du tableau des produits toujours présents sur le serveur du rézal, on en déduit le tableau des produits qui ont été supprimés et on les désactive sur Phy'sbook
-            //var_dump(explode(", ", $existants));
             $aDesactiver = array_diff($idExistantsArray, $toujoursPresents);
             foreach($listeProduitsPhysbook as $produitPhysbook) {
                 foreach($aDesactiver as $idProduitRezal) {
