@@ -1,0 +1,12 @@
+{% extends "PJMAppBundle:App:panel.html.twig" %}
+
+{% set panel_title = "Comptes" %}
+{% set name = "Comptes" %}
+
+{% block datatable_title %}État des comptes{% endblock %}
+
+{% block description %}
+<p>
+    {% if boquette.slug == 'pians' %}Les soldes sont synchronisés avec le serveur du R&amp;z@l toutes les heures.{% endif %}
+</p>
+{% endblock %}

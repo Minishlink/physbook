@@ -32,6 +32,14 @@ pjm_app_admin_boquette_creditsResults:
     path:     /{boquette_slug}/gestionCredits/results
     defaults: { _controller: PJMAppBundle:Consos/Boquette:creditsResults }
 
+pjm_app_admin_boquette_voirComptes:
+    path:     /{slug}/comptes
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirComptes }
+
+pjm_app_admin_boquette_comptesResults:
+    path:     /{boquette_slug}/comptes/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:comptesResults }
+
 pjm_app_admin_boquette_pians:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Pians/routing.yml"
     prefix:   /pians

@@ -36,6 +36,7 @@
     {% render(url('pjm_app_admin_boquette_gestionCredits', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_admin_boquette_gestionFeaturedItem', {slug: boquetteSlug})) %}
     {% render(url('pjm_app_admin_boquette_gestionItem', {slug: boquetteSlug})) %}
+    {% if is_granted('ROLE_HARPAGS') %}{% render(url('pjm_app_admin_boquette_voirComptes', {slug: boquetteSlug})) %}{% endif %}
     {% render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) %}
 </div>
 {% endblock %}

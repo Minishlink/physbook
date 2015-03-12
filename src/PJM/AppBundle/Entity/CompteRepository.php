@@ -100,4 +100,14 @@ class CompteRepository extends EntityRepository
 
         return $compte;
     }
+
+    public function callbackFindByBoquetteSlug($slug)
+    {
+        return function($qb) use($slug) {
+            $qb
+                ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
+                ->setParameter('slug', $slug)
+            ;
+        };
+    }
 }
