@@ -75,11 +75,13 @@ class RezalSyncCommand extends ContainerAwareCommand
             // on va chercher les produits existants sur Phy'sbook
             $listeProduitsPhysbook = $repository->findByBoquetteSlug($boquetteSlug, true);
             $existants = "";
+            $idExistantsArray = array();
             if ($listeProduitsPhysbook !== null) {
                 foreach ($listeProduitsPhysbook as $k => $p) {
                     if ($k > 0) {
                         $existants .= ", ";
                     }
+                    $idExistantsArray[] = $p->getSlug();
                     $existants .= "'".$p->getSlug()."'";
                 }
             }
@@ -104,11 +106,16 @@ class RezalSyncCommand extends ContainerAwareCommand
 
             // on va chercher les autres produits déjà existants
             $listeProduitsRezal = $this->rezal->listeConsos($boquetteSlug, $existants, true);
+            $toujoursPresents = array();
             // on filtre par ceux dont le prix a changé et on les ajoute sur Phy'sbook
             if ($listeProduitsRezal !== null) {
                 foreach($listeProduitsRezal as $produitRezal) {
+                    // si le produit existe toujours au Rézal, on l'ajoute à un tableau de produits toujours présents
+                    $toujoursPresents[] = $produitRezal['idObjet'];
+
                     foreach($listeProduitsPhysbook as $produitPhysbook) {
                         if ($produitRezal['idObjet'] == $produitPhysbook->getSlug()) {
+                            // si le prix a changé :
                             if (round($produitRezal['prix']*100, 2) != $produitPhysbook->getPrix()) {
                                 $nvProduit = clone $produitPhysbook;
                                 $nvProduit->setPrix($produitRezal['prix']*100);
@@ -123,7 +130,18 @@ class RezalSyncCommand extends ContainerAwareCommand
                 }
             }
 
-            // TODO les produits de Phy'sbook qui sont encore actifs alors qu'ils ont disparu du Rézal sont désactivés
+            // à partir du tableau des produits toujours présents sur le serveur du rézal, on en déduit le tableau des produits qui ont été supprimés et on les désactive sur Phy'sbook
+            //var_dump(explode(", ", $existants));
+            $aDesactiver = array_diff($idExistantsArray, $toujoursPresents);
+            foreach($listeProduitsPhysbook as $produitPhysbook) {
+                foreach($aDesactiver as $idProduitRezal) {
+                    if ($idProduitRezal == $produitPhysbook->getSlug()) {
+                        $produitPhysbook->setValid(false);
+                        $this->logger->info("DEACTIVATE: ".$produitPhysbook->getLibelle());
+                        $this->em->persist($produitPhysbook);
+                    }
+                }
+            }
 
             // on commit
             $this->em->flush();
