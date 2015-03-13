@@ -22,7 +22,7 @@ class MessageType extends AbstractType
         $builder
             ->add('destinations', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataires',
-                'class'    => 'PJMAppBundle:Inbox',
+                'class'    => 'PJMAppBundle:Inbox\Inbox',
                 'error_bubbling' => true,
                 'query_builder' => function(EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('i')
@@ -47,7 +47,7 @@ class MessageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Message',
+            'data_class' => 'PJM\AppBundle\Entity\Inbox\Message',
         ));
     }
 

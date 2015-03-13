@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Entity;
+namespace PJM\AppBundle\Entity\Inbox;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -43,12 +43,12 @@ class Message
     private $variables;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="received", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Inbox", inversedBy="received", cascade={"persist"})
      **/
     private $destinations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="sent", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="sent", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      **/
     private $expedition;
@@ -149,10 +149,10 @@ class Message
     /**
      * Add destination
      *
-     * @param \PJM\AppBundle\Entity\Inbox $destination
+     * @param Inbox $destination
      * @return Message
      */
-    public function addDestination(\PJM\AppBundle\Entity\Inbox $destination)
+    public function addDestination(Inbox $destination)
     {
         $destination->addReceived($this);
         $this->destinations[] = $destination;
@@ -161,14 +161,14 @@ class Message
     }
 
     /**
-     * Remove destinations
+     * Remove destination
      *
-     * @param \PJM\AppBundle\Entity\Inbox $destinations
+     * @param Inbox $destination
      */
-    public function removeDestination(\PJM\AppBundle\Entity\Inbox $destinations)
+    public function removeDestination(Inbox $destination)
     {
         $destination->removeReceived($this);
-        $this->destinations->removeElement($destinations);
+        $this->destinations->removeElement($destination);
     }
 
     /**
@@ -184,10 +184,10 @@ class Message
     /**
      * Set expedition
      *
-     * @param \PJM\AppBundle\Entity\Inbox $expedition
+     * @param Inbox $expedition
      * @return Message
      */
-    public function setExpedition(\PJM\AppBundle\Entity\Inbox $expedition)
+    public function setExpedition(Inbox $expedition)
     {
         $this->expedition = $expedition;
 
@@ -197,7 +197,7 @@ class Message
     /**
      * Get expedition
      *
-     * @return \PJM\AppBundle\Entity\Inbox
+     * @return Inbox
      */
     public function getExpedition()
     {
@@ -212,5 +212,20 @@ class Message
     public function getExpediteur()
     {
         return $this->expedition->getUser();
+    }
+
+    /**
+     * Get destinataires
+     *
+     * @return array \PJM\UserBundle\Entity\User
+     */
+    public function getDestinataires()
+    {
+        $destinataires = array();
+        foreach($this->destinations as $destination) {
+            $destinataires[] = $destination->getUser();
+        }
+
+        return $destinataires;
     }
 }

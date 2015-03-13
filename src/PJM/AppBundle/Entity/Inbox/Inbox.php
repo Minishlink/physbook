@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Entity;
+namespace PJM\AppBundle\Entity\Inbox;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,12 +35,12 @@ class Inbox
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Message", mappedBy="destinations")
+     * @ORM\ManyToMany(targetEntity="Message", mappedBy="destinations")
      **/
     private $received;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Message", mappedBy="expedition")
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="expedition")
      **/
     private $sent;
 
@@ -110,10 +110,10 @@ class Inbox
     /**
      * Add received
      *
-     * @param \PJM\AppBundle\Entity\Message $received
+     * @param Message $received
      * @return Inbox
      */
-    public function addReceived(\PJM\AppBundle\Entity\Message $received)
+    public function addReceived(Message $received)
     {
         $this->received[] = $received;
 
@@ -123,9 +123,9 @@ class Inbox
     /**
      * Remove received
      *
-     * @param \PJM\AppBundle\Entity\Message $received
+     * @param Message $received
      */
-    public function removeReceived(\PJM\AppBundle\Entity\Message $received)
+    public function removeReceived(Message $received)
     {
         $this->received->removeElement($received);
     }
@@ -143,10 +143,10 @@ class Inbox
     /**
      * Add sent
      *
-     * @param \PJM\AppBundle\Entity\Message $sent
+     * @param Message $sent
      * @return Inbox
      */
-    public function addSent(\PJM\AppBundle\Entity\Message $sent)
+    public function addSent(Message $sent)
     {
         $this->sent[] = $sent;
 
@@ -156,9 +156,9 @@ class Inbox
     /**
      * Remove sent
      *
-     * @param \PJM\AppBundle\Entity\Message $sent
+     * @param Message $sent
      */
-    public function removeSent(\PJM\AppBundle\Entity\Message $sent)
+    public function removeSent(Message $sent)
     {
         $this->sent->removeElement($sent);
     }
