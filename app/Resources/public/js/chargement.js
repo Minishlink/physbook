@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    $('#chargement').fadeTo(200, 0, function() {
-        $('#chargement').css('visibility', 'hidden');
-    });
+    chargement(false);
 
     $('#content').fadeIn(400);
 
@@ -12,8 +10,7 @@ $(document).ready(function () {
             $('ul[id^="menu-"]:visible').slideUp(100);
             $('.collapse.in:visible').toggle('hide');
 
-            $('#chargement').css('visibility', 'visible');
-            $('#chargement').fadeTo(200, 1);
+            chargement(true);
         }
     });
 
@@ -44,6 +41,17 @@ $(document).ready(function () {
 
     });
 });
+
+function chargement(commencer) {
+    if (commencer) {
+        $('#chargement').css('visibility', 'visible');
+        $('#chargement').fadeTo(200, 1);
+    } else {
+        $('#chargement').fadeTo(200, 0, function() {
+            $('#chargement').css('visibility', 'hidden');
+        });
+    }
+}
 
 function resizeDataTables() {
     var tables = $.fn.dataTable.tables(true);
