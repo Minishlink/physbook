@@ -12,6 +12,10 @@ use PJM\AppBundle\Form\Inbox\MessageType;
 
 class InboxController extends Controller
 {
+    /**
+     * Accueil de la messagerie
+     * @return object HTML Response
+     */
     public function indexAction()
     {
         $inbox = $this->getUser()->getInbox();
@@ -21,6 +25,10 @@ class InboxController extends Controller
         ));
     }
 
+    /**
+     * Action de nouveau message
+     * @return object HTML Response
+     */
     public function nouveauAction(Request $request)
     {
         $message = new Message();
@@ -52,6 +60,11 @@ class InboxController extends Controller
         ));
     }
 
+    /**
+     * Marque comme lu un message reçu
+     * @param  object Reception $reception Message reçu à marquer comme lu
+     * @return object   HTTP Response
+     */
     public function luAction(Request $request, Reception $reception)
     {
         if ($request->isXmlHttpRequest()) {
@@ -62,6 +75,47 @@ class InboxController extends Controller
                     $em->persist($reception);
                     $em->flush();
                 }
+
+                return new Response('Ok');
+            }
+        }
+
+        return new Response('Pas Ajax', 400);
+    }
+
+
+    /**
+     * Supprime un message reçu
+     * @param  object Reception $reception Message reçu à supprimer
+     * @return object   HTTP Response
+     */
+    public function supprimerAction(Request $request, Reception $reception)
+    {
+        if ($request->isXmlHttpRequest()) {
+            if ($reception->getInbox()->getUser() == $this->getUser()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($reception);
+                $em->flush();
+
+                return new Response('Ok');
+            }
+        }
+
+        return new Response('Pas Ajax', 400);
+    }
+
+    /**
+     * Annule l'envoi d'un message, supprime pour tous les destinataires
+     * @param  object Message $message Message à supprimer
+     * @return object   HTTP Response
+     */
+    public function annulerAction(Request $request, Message $message)
+    {
+        if ($request->isXmlHttpRequest()) {
+            if ($message->getExpediteur() == $this->getUser()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($message);
+                $em->flush();
 
                 return new Response('Ok');
             }
