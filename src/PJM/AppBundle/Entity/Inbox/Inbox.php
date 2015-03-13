@@ -36,11 +36,13 @@ class Inbox
 
     /**
      * @ORM\OneToMany(targetEntity="Reception", mappedBy="inbox", cascade={"all"})
+     * @ORM\OrderBy({"lu" = "asc", "message" = "desc"})
      **/
     private $receptions;
 
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="expedition")
+     * @ORM\OrderBy({"date" = "desc"})
      **/
     private $sent;
 

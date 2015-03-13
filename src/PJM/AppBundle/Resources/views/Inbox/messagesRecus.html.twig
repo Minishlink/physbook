@@ -1,8 +1,8 @@
 {% for reception in receptions %}
-<div class="message {% if not reception.lu %}surbrillance{% endif %}">
+<div id="reception_{{ reception.id }}" class="message {% if not reception.lu %}surbrillance{% endif %}">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ reception.message.contenu }}
+            {{ reception.message.contenu|nl2br }}
         </div>
         <div class="panel-footer">
             {% spaceless %}
@@ -25,3 +25,29 @@
     </div>
 </div>
 {% endfor %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.message.surbrillance').hover(function() {
+        if ($(this).is('.surbrillance')) {
+            chargement(true);
+            $(this).removeClass('surbrillance');
+            $(this).addClass('processing');
+
+            var message = $(this);
+            var id = message.attr('id').substr(10);
+
+            $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }))
+            .fail(function() {
+                message.addClass('surbrillance');
+            })
+            .always(function() {
+                message.removeClass('processing');
+                chargement(false);
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

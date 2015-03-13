@@ -1,8 +1,14 @@
 body {
     &.inbox {
         .message {
+            transition: box-shadow 0.4s ease-in-out 0s;
+
             &.surbrillance {
-                box-shadow:inset 10px 10px 5px 1px yellow;
+                box-shadow: 1px 1px 0.5em @rouge;
+            }
+
+            &.processing {
+                box-shadow: 1px 1px 0.5em fadeout(@rouge, 50%);
             }
         }
     }
