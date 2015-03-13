@@ -4,8 +4,10 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use PJM\AppBundle\Entity\Inbox\Message;
+use PJM\AppBundle\Entity\Inbox\Reception;
 use PJM\AppBundle\Form\Inbox\MessageType;
 
 class InboxController extends Controller
@@ -50,8 +52,21 @@ class InboxController extends Controller
         ));
     }
 
-    public function luAction(Request $request, Message $message)
+    public function luAction(Request $request, Reception $reception)
     {
+        if ($request->isXmlHttpRequest()) {
+            if ($reception->getInbox()->getUser() == $this->getUser()) {
+                if (!$reception->getLu()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $reception->setLu(true);
+                    $em->persist($reception);
+                    $em->flush();
+                }
 
+                return new Response('Ok');
+            }
+        }
+
+        return new Response('Pas Ajax', 400);
     }
 }

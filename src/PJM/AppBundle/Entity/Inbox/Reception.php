@@ -37,6 +37,7 @@ class Reception
     /**
      * @ORM\ManyToOne(targetEntity="Message", inversedBy="receptions")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\OrderBy({"date" = "desc"})
      **/
     private $message;
 
