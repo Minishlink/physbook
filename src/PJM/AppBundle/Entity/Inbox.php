@@ -35,12 +35,12 @@ class Inbox
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Message", inversedBy="destinataires")
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Message", mappedBy="destinations")
      **/
     private $received;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Message", mappedBy="expediteur")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Message", mappedBy="expedition")
      **/
     private $sent;
 
