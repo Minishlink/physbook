@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Entity\Message;
+use PJM\AppBundle\Entity\Inbox\Message;
 use PJM\AppBundle\Form\Inbox\MessageType;
 
 class InboxController extends Controller

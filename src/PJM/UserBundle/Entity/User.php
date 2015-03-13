@@ -114,7 +114,7 @@ class User extends BaseUser
     private $responsables;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox\Inbox", inversedBy="user", cascade={"persist", "remove"})
      **/
     private $inbox;
 
@@ -452,10 +452,10 @@ class User extends BaseUser
     /**
      * Set inbox
      *
-     * @param \PJM\AppBundle\Entity\Inbox $inbox
+     * @param \PJM\AppBundle\Entity\Inbox\Inbox $inbox
      * @return User
      */
-    public function setInbox(\PJM\AppBundle\Entity\Inbox $inbox)
+    public function setInbox(\PJM\AppBundle\Entity\Inbox\Inbox $inbox)
     {
         $this->inbox = $inbox;
 
@@ -465,7 +465,7 @@ class User extends BaseUser
     /**
      * Get inbox
      *
-     * @return \PJM\AppBundle\Entity\Inbox
+     * @return \PJM\AppBundle\Entity\Inbox\Inbox
      */
     public function getInbox()
     {
