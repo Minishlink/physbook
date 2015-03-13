@@ -1,3 +1,4 @@
+{% if receptions|length > 0 %}
 {% for reception in receptions %}
 <div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
     <div class="panel panel-default">
@@ -77,3 +78,6 @@ $(document).ready(function() {
     });
 });
 </script>
+{% else %}
+<p>Pas de messages reçus.</p>
+{% endif %}
