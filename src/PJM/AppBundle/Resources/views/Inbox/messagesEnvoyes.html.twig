@@ -1,8 +1,11 @@
 {% for message in messages %}
-<div class="message">
+<div class="message" data-message="{{ message.id }}">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ message.contenu }}
+            <p>
+                <a class="btn btn-default btn-xs cancel" title="Supprime pour tous les destinataires" data-message="{{ message.id }}"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
+                {{ message.contenu|nl2br }}
+            </p>
         </div>
         <div class="panel-footer">
             {% spaceless %}
@@ -24,3 +27,34 @@
     </div>
 </div>
 {% endfor %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.message a.cancel').click(function() {
+        if (!$(this).is('.processing')) {
+            $(this).addClass('processing');
+
+            if (!confirm('Es-tu sûr de vouloir supprimer ce message, pour toi et tes destinataires ? Ils ne pourront plus lire le message ensuite, et toi non plus.')) {
+                $(this).removeClass('processing');
+                return;
+            }
+
+            chargement(true);
+
+            var el = $(this);
+            var id = el.attr('data-message');
+            var message = $('.message[data-message=' + id +']');
+
+            $.post(Routing.generate('pjm_app_inbox_annuler', {message: id }), function() {
+                message.slideUp(function() {
+                    $(this).remove();
+                });
+            })
+            .always(function() {
+                el.removeClass('processing');
+                chargement(false);
+            });
+        }
+    });
+});
+</script>

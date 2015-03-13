@@ -1,8 +1,11 @@
 {% for reception in receptions %}
-<div id="reception_{{ reception.id }}" class="message {% if not reception.lu %}surbrillance{% endif %}">
+<div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ reception.message.contenu|nl2br }}
+            <p>
+                <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                {{ reception.message.contenu|nl2br }}
+            </p>
         </div>
         <div class="panel-footer">
             {% spaceless %}
@@ -26,21 +29,18 @@
 </div>
 {% endfor %}
 
-{% block javascripts %}
 <script type="text/javascript">
 $(document).ready(function() {
     $('.message.surbrillance').hover(function() {
-        if ($(this).is('.surbrillance')) {
+        if ($(this).is('.surbrillance') && !$(this).is('.processing')) {
             chargement(true);
-            $(this).removeClass('surbrillance');
             $(this).addClass('processing');
 
             var message = $(this);
-            var id = message.attr('id').substr(10);
+            var id = message.attr('data-reception');
 
-            $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }))
-            .fail(function() {
-                message.addClass('surbrillance');
+            $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }), function() {
+                message.removeClass('surbrillance');
             })
             .always(function() {
                 message.removeClass('processing');
@@ -48,6 +48,32 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('.message a.remove').click(function() {
+        if (!$(this).is('.processing')) {
+            $(this).addClass('processing');
+
+            if (!confirm('Es-tu sûr de vouloir supprimer ce message ? Tu ne pourras plus le retrouver ensuite.')) {
+                $(this).removeClass('processing');
+                return;
+            }
+
+            chargement(true);
+
+            var el = $(this);
+            var id = el.attr('data-reception');
+            var message = $('.message[data-reception=' + id +']');
+
+            $.post(Routing.generate('pjm_app_inbox_supprimer', {reception: id }), function() {
+                message.slideUp(function() {
+                    $(this).remove();
+                });
+            })
+            .always(function() {
+                el.removeClass('processing');
+                chargement(false);
+            });
+        }
+    });
 });
 </script>
-{% endblock %}
