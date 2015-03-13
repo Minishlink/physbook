@@ -36,7 +36,6 @@ class InboxController extends Controller
                 $em->persist($message);
                 $em->flush();
 
-
                 return $this->redirect($this->generateUrl('pjm_app_inbox_index'));
             }
 
