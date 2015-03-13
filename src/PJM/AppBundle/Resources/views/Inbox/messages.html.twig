@@ -5,7 +5,7 @@
             {{ message.contenu }}
         </div>
         <div class="panel-footer">
-            {% if type == 'recus' %}de {% render(url('pjm_profil_encart', {'username': message.user.username})) %}, {% endif %}le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}{% if message.destinataires|length > 0 %}{% if not (message.destinataires|length == 1 and message.destinataires[0].user == app.user) %}, pour {% for destinataire in message.destinataires %}{% if destinataire.user != app.user %}{% render(url('pjm_profil_encart', {'username': destinataire.user.username})) %}{% else %}phy's{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}
+            {% if type == 'recus' %}de {% render(url('pjm_profil_encart', {'username': message.expediteur.username})) %}, {% endif %}le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}{% if message.destinations|length > 0 %}{% if not (message.destinations|length == 1 and message.destinations[0].user == app.user) %}, pour {% for destinataire in message.destinations %}{% if destinataire.user != app.user %}{% render(url('pjm_profil_encart', {'username': destinataire.user.username})) %}{% else %}phy's{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}
         </div>
     </div>
 </div>

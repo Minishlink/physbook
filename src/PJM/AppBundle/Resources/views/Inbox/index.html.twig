@@ -6,7 +6,8 @@
 {% block categorieName %}Messages{% endblock %}
 
 {% block pjm_app_body_content %}
-<a href="{{ path('pjm_app_inbox_nouveau') }}">Envoyer un message</a>
+<a class="btn btn-primary" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-send"></span> Envoyer un message</a>
+<a class="btn btn-default" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-bullhorn"></span> Faire une annonce</a>
 
 <h2>Messages reçus</h2>
 <div id="received">

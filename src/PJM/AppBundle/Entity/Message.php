@@ -43,28 +43,28 @@ class Message
     private $variables;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Inbox", mappedBy="received")
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="received", cascade={"persist"})
      **/
-    private $destinataires;
+    private $destinations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="sent")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="sent", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      **/
-    private $expediteur;
+    private $expedition;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->destinataires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
 
     public function __toString()
     {
-        return $this->getUser();
+        return $this->contenu;
     }
 
     /**
@@ -124,72 +124,6 @@ class Message
     }
 
     /**
-     * Add destinataires
-     *
-     * @param \PJM\AppBundle\Entity\Inbox $destinataires
-     * @return Message
-     */
-    public function addDestinataire(\PJM\AppBundle\Entity\Inbox $destinataires)
-    {
-        $this->destinataires[] = $destinataires;
-
-        return $this;
-    }
-
-    /**
-     * Remove destinataires
-     *
-     * @param \PJM\AppBundle\Entity\Inbox $destinataires
-     */
-    public function removeDestinataire(\PJM\AppBundle\Entity\Inbox $destinataires)
-    {
-        $this->destinataires->removeElement($destinataires);
-    }
-
-    /**
-     * Get destinataires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDestinataires()
-    {
-        return $this->destinataires;
-    }
-
-    /**
-     * Set expediteur
-     *
-     * @param \PJM\AppBundle\Entity\Inbox $expediteur
-     * @return Message
-     */
-    public function setExpediteur(\PJM\AppBundle\Entity\Inbox $expediteur = null)
-    {
-        $this->expediteur = $expediteur;
-
-        return $this;
-    }
-
-    /**
-     * Get expediteur
-     *
-     * @return \PJM\AppBundle\Entity\Inbox
-     */
-    public function getExpediteur()
-    {
-        return $this->expediteur;
-    }
-
-     /**
-     * Get user
-     *
-     * @return \PJM\AppBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->expediteur->getUser();
-    }
-
-    /**
      * Set variables
      *
      * @param array $variables
@@ -210,5 +144,73 @@ class Message
     public function getVariables()
     {
         return $this->variables;
+    }
+
+    /**
+     * Add destination
+     *
+     * @param \PJM\AppBundle\Entity\Inbox $destination
+     * @return Message
+     */
+    public function addDestination(\PJM\AppBundle\Entity\Inbox $destination)
+    {
+        $destination->addReceived($this);
+        $this->destinations[] = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Remove destinations
+     *
+     * @param \PJM\AppBundle\Entity\Inbox $destinations
+     */
+    public function removeDestination(\PJM\AppBundle\Entity\Inbox $destinations)
+    {
+        $destination->removeReceived($this);
+        $this->destinations->removeElement($destinations);
+    }
+
+    /**
+     * Get destinations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDestinations()
+    {
+        return $this->destinations;
+    }
+
+    /**
+     * Set expedition
+     *
+     * @param \PJM\AppBundle\Entity\Inbox $expedition
+     * @return Message
+     */
+    public function setExpedition(\PJM\AppBundle\Entity\Inbox $expedition)
+    {
+        $this->expedition = $expedition;
+
+        return $this;
+    }
+
+    /**
+     * Get expedition
+     *
+     * @return \PJM\AppBundle\Entity\Inbox
+     */
+    public function getExpedition()
+    {
+        return $this->expedition;
+    }
+
+    /**
+     * Get expediteur
+     *
+     * @return \PJM\UserBundle\Entity\User
+     */
+    public function getExpediteur()
+    {
+        return $this->expedition->getUser();
     }
 }
