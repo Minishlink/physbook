@@ -1,0 +1,27 @@
+{% for reception in receptions %}
+<div class="message {% if not reception.lu %}surbrillance{% endif %}">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ reception.message.contenu }}
+        </div>
+        <div class="panel-footer">
+            {% spaceless %}
+            de {% render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) %},
+            le {{ reception.message.date|date('d/m/Y') }} à {{ reception.message.date|date('H:i') }}
+            {%- if reception.message.destinations|length > 0 -%}
+                , pour
+                {% if reception.message.destinations|length != 1 %}
+                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': reception.message.destinataires } %} personnes
+                {% else %}
+                    {% if reception.message.destinations[0].user != app.user %}
+                        {% render(url('pjm_profil_encart', {'username': reception.message.destinations[0].user.username})) %}
+                    {% else %}
+                        phy's
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% endspaceless %}
+        </div>
+    </div>
+</div>
+{% endfor %}

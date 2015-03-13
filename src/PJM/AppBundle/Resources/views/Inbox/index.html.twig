@@ -11,12 +11,12 @@
 
 <h2>Messages reçus</h2>
 <div id="received">
-    {% include 'PJMAppBundle:Inbox:messages.html.twig' with {'messages': inbox.received, 'type': 'recus' } %}
+    {% include 'PJMAppBundle:Inbox:messagesRecus.html.twig' with {'receptions': inbox.receptions } %}
 </div>
 
 <h2>Messages envoyés</h2>
 <div id="sent">
-    {% include 'PJMAppBundle:Inbox:messages.html.twig' with {'messages': inbox.sent, 'type': 'envoyes' } %}
+    {% include 'PJMAppBundle:Inbox:messagesEnvoyes.html.twig' with {'messages': inbox.sent } %}
 </div>
 
 {% endblock %}
