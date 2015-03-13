@@ -5,7 +5,24 @@
             {{ message.contenu }}
         </div>
         <div class="panel-footer">
-            {% if type == 'recus' %}de {% render(url('pjm_profil_encart', {'username': message.expediteur.username})) %}, {% endif %}le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}{% if message.destinations|length > 0 %}{% if not (message.destinations|length == 1 and message.destinations[0].user == app.user) %}, pour {% for destinataire in message.destinations %}{% if destinataire.user != app.user %}{% render(url('pjm_profil_encart', {'username': destinataire.user.username})) %}{% else %}phy's{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}
+            {% spaceless %}
+            {% if type == 'recus' %}
+                de {% render(url('pjm_profil_encart', {'username': message.expediteur.username})) %},
+            {% endif %}
+            le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}
+            {%- if message.destinations|length > 0 -%}
+                , pour
+                {% if message.destinations|length != 1 %}
+                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': message.destinataires } %} personnes
+                {% else %}
+                    {% if message.destinations[0].user != app.user %}
+                        {% render(url('pjm_profil_encart', {'username': message.destinations[0].user.username})) %}
+                    {% else %}
+                        phy's
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% endspaceless %}
         </div>
     </div>
 </div>
