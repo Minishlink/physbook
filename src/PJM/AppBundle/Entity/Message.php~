@@ -34,22 +34,43 @@ class Message
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-    
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="variables", type="json_array", nullable=true)
+     */
+    private $variables;
+
     /**
      * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Inbox", mappedBy="received")
      **/
-    private $destinataires;
-    
+    private $destinations;
+
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="sent")
+     * @ORM\JoinColumn(nullable=false)
      **/
-    private $expediteur;
+    private $expedition;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->date = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->contenu;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,7 +93,7 @@ class Message
     /**
      * Get contenu
      *
-     * @return string 
+     * @return string
      */
     public function getContenu()
     {
@@ -95,10 +116,33 @@ class Message
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set variables
+     *
+     * @param array $variables
+     * @return Message
+     */
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
+     * Get variables
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
     }
 }

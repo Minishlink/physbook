@@ -32,9 +32,10 @@ class InboxController extends Controller
          if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $message->setExpediteur($this->getUser()->getInbox());
+                $message->setExpedition($this->getUser()->getInbox());
                 $em->persist($message);
                 $em->flush();
+
 
                 return $this->redirect($this->generateUrl('pjm_app_inbox_index'));
             }
