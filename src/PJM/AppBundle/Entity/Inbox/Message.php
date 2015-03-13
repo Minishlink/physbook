@@ -43,7 +43,7 @@ class Message
     private $variables;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Inbox", inversedBy="received", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MessagesInbox", mappedBy="message")
      **/
     private $destinations;
 
@@ -149,10 +149,10 @@ class Message
     /**
      * Add destination
      *
-     * @param Inbox $destination
+     * @param MessagesInbox $destination
      * @return Message
      */
-    public function addDestination(Inbox $destination)
+    public function addDestination(MessagesInbox $destination)
     {
         $destination->addReceived($this);
         $this->destinations[] = $destination;
@@ -163,9 +163,9 @@ class Message
     /**
      * Remove destination
      *
-     * @param Inbox $destination
+     * @param MessagesInbox $destination
      */
-    public function removeDestination(Inbox $destination)
+    public function removeDestination(MessagesInbox $destination)
     {
         $destination->removeReceived($this);
         $this->destinations->removeElement($destination);
@@ -223,7 +223,7 @@ class Message
     {
         $destinataires = array();
         foreach($this->destinations as $destination) {
-            $destinataires[] = $destination->getUser();
+            $destinataires[] = $destination->getInbox()->getUser();
         }
 
         return $destinataires;
