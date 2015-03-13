@@ -49,4 +49,9 @@ class InboxController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function luAction(Request $request, Message $message)
+    {
+
+    }
 }
