@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity\Inbox;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Message
@@ -25,6 +26,12 @@ class Message
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\Length(
+     *  min = 2,
+     *  max = 1000,
+     *  minMessage = "Ton message est trop court.",
+     *  maxMessage = "Ton message est trop long ! Fais en plusieurs."
+     * )
      */
     private $contenu;
 
