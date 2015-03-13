@@ -1,3 +1,4 @@
+{% if messages|length > 0 %}
 {% for message in messages %}
 <div class="message" data-message="{{ message.id }}">
     <div class="panel panel-default">
@@ -58,3 +59,6 @@ $(document).ready(function() {
     });
 });
 </script>
+{% else %}
+<p>Pas de messages envoyés.</p>
+{% endif %}
