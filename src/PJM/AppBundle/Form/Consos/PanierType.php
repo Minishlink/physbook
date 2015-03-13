@@ -43,7 +43,7 @@ class PanierType extends AbstractType
             ->add('save', 'submit', array(
                 'label' => 'Ajouter',
             ))
-            ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $panier = $event->getData();
                 if (isset($panier['infos'])) {
                     $panier['infos'] = preg_split("/\r\n|\n|\r/", $panier['infos']);
