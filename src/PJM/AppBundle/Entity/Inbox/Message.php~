@@ -36,10 +36,17 @@ class Message
     private $date;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="variables", type="json_array", nullable=true)
+     */
+    private $variables;
+
+    /**
      * @ORM\OneToMany(targetEntity="Reception", mappedBy="message", cascade={"all"})
      **/
     private $receptions;
-
+    
     private $destinations;
 
     /**
@@ -53,7 +60,7 @@ class Message
      */
     public function __construct()
     {
-        $this->receptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->destinationsMessages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
@@ -120,6 +127,29 @@ class Message
     }
 
     /**
+     * Set variables
+     *
+     * @param array $variables
+     * @return Message
+     */
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
+     * Get variables
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
+    }
+
+    /**
      * Set expedition
      *
      * @param Inbox $expedition
@@ -150,77 +180,5 @@ class Message
     public function getExpediteur()
     {
         return $this->expedition->getUser();
-    }
-
-    /**
-     * Add receptions
-     *
-     * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
-     * @return Message
-     */
-    public function addReception(\PJM\AppBundle\Entity\Inbox\Reception $receptions)
-    {
-        $this->receptions[] = $receptions;
-
-        return $this;
-    }
-
-    /**
-     * Remove receptions
-     *
-     * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
-     */
-    public function removeReception(\PJM\AppBundle\Entity\Inbox\Reception $receptions)
-    {
-        $this->receptions->removeElement($receptions);
-    }
-
-    /**
-     * Get receptions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReceptions()
-    {
-        return $this->receptions;
-    }
-
-    public function getDestinataires()
-    {
-        $destinataires = new \Doctrine\Common\Collections\ArrayCollection();
-
-        foreach($this->receptions as $reception)
-        {
-            $destinataires[] = $reception->getInbox()->getUser();
-        }
-
-        return $destinataires;
-    }
-
-    public function getDestinations()
-    {
-        $destinations = new \Doctrine\Common\Collections\ArrayCollection();
-
-        foreach($this->receptions as $reception)
-        {
-            $destinations[] = $reception->getInbox();
-        }
-
-        return $destinations;
-    }
-
-    public function setDestinations($destinations)
-    {
-        foreach($destinations as $destination)
-        {
-            $reception = new Reception();
-
-            $reception->setMessage($this);
-            $reception->setInbox($destination);
-
-            $this->addReception($reception);
-        }
-
-        return $this;
     }
 }

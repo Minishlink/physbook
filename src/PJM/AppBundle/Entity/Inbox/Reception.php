@@ -5,12 +5,12 @@ namespace PJM\AppBundle\Entity\Inbox;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MessagesInbox
+ * Reception
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class MessagesInbox
+class Reception
 {
     /**
      * @var integer
@@ -29,17 +29,28 @@ class MessagesInbox
     private $lu;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="received")
+     * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="receptions")
      * @ORM\JoinColumn(nullable=false)
      **/
     private $inbox;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Message", inversedBy="destinations")
+     * @ORM\ManyToOne(targetEntity="Message", inversedBy="receptions")
      * @ORM\JoinColumn(nullable=false)
      **/
     private $message;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="variables", type="json_array", nullable=true)
+     */
+    private $variables;
+
+    public function __construct()
+    {
+        $this->lu = false;
+    }
 
     /**
      * Get id
@@ -118,5 +129,28 @@ class MessagesInbox
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set variables
+     *
+     * @param array $variables
+     * @return Reception
+     */
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
+     * Get variables
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
     }
 }
