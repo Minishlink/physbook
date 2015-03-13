@@ -35,7 +35,7 @@ class Inbox
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Message", mappedBy="destinations")
+     * @ORM\OneToMany(targetEntity="MessagesInbox", mappedBy="inbox")
      **/
     private $received;
 
@@ -110,10 +110,10 @@ class Inbox
     /**
      * Add received
      *
-     * @param Message $received
+     * @param MessagesInbox $received
      * @return Inbox
      */
-    public function addReceived(Message $received)
+    public function addReceived(MessagesInbox $received)
     {
         $this->received[] = $received;
 
@@ -123,9 +123,9 @@ class Inbox
     /**
      * Remove received
      *
-     * @param Message $received
+     * @param MessagesInbox $received
      */
-    public function removeReceived(Message $received)
+    public function removeReceived(MessagesInbox $received)
     {
         $this->received->removeElement($received);
     }

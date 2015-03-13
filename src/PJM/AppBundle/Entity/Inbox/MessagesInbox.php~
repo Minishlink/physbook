@@ -1,0 +1,76 @@
+<?php
+
+namespace PJM\AppBundle\Entity\Inbox;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * MessagesInbox
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class MessagesInbox
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="lu", type="boolean")
+     */
+    private $lu;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="received")
+     * @ORM\JoinColumn(nullable=false)
+     **/
+    private $inbox;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Message", inversedBy="destinations")
+     * @ORM\JoinColumn(nullable=false)
+     **/
+    private $message;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set lu
+     *
+     * @param boolean $lu
+     * @return MessageInbox
+     */
+    public function setLu($lu)
+    {
+        $this->lu = $lu;
+
+        return $this;
+    }
+
+    /**
+     * Get lu
+     *
+     * @return boolean
+     */
+    public function getLu()
+    {
+        return $this->lu;
+    }
+}
