@@ -2,10 +2,12 @@
 <span class="glyphicon glyphicon-signal text-vert"></span> {{ user.bucque }} est connecté.
 {% else %}
 <span class="glyphicon glyphicon-off text-rouge"></span> {{ user.bucque }} n'est pas connecté.
-{% endif %}<br>
+{% endif %}<br><br>
+{% if user.prenom is not null and user.nom is not null %}<em>dit</em> {{ user.prenom }} {{ user.nom }}{% endif %}<br>
 <strong>Fam's :</strong> {{ user.fams }}<br>
 <strong>Tabagn's :</strong> {{ user.tabagns|tabagns }}<br>
 <strong>Prom's :</strong> {{ user.proms }}<br>
 <br>
-<a href="mailto:{{ user.email }}" title="Envoyer un e-mail à {{ user.bucque }}"><span class="glyphicon glyphicon-send"></span> {{ user.email }}</a><br>
+<a href="{{ path('pjm_app_inbox_nouveau', {'user': user.username}) }}" title="Envoyer un message à {{ user.bucque }}"><span class="glyphicon glyphicon-comment"></span> Envoyer un message</a><br>
+<a href="mailto:{{ user.email }}" title="Envoyer un e-mail à {{ user.bucque }}"><span class="glyphicon glyphicon-envelope"></span> {{ user.email }}</a><br>
 <a href="{{ path('pjm_profil_voir', {'username': user.username}) }}" title="Voir le profil complet de {{ user.bucque }}"><span class="glyphicon glyphicon-user"></span> Voir le profil complet</a>
