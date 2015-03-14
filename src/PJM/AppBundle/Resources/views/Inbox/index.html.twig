@@ -11,10 +11,30 @@
     <a class="btn btn-default" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-bullhorn"></span> Faire une annonce</a>
 </p>
 
-<h2>Messages reçus</h2>
-{% include 'PJMAppBundle:Inbox:messagesRecus.html.twig' with {'receptions': inbox.receptions } %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h2><a data-toggle="collapse" href="#collapseReceived" aria-expanded="true" aria-controls="collapseReceived" class="text-blanc">Messages reçus</a></h2>
+        </div>
+    </div>
+    <div id="collapseReceived" class="panel-collapse collapse in">
+        <div class="panel-body">
+            {% include 'PJMAppBundle:Inbox:messagesRecus.html.twig' with {'receptions': inbox.receptions } %}
+        </div>
+    </div>
+</div>
 
-<h2>Messages envoyés</h2>
-{% include 'PJMAppBundle:Inbox:messagesEnvoyes.html.twig' with {'messages': inbox.sent } %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h2><a data-toggle="collapse" href="#collapseSent" aria-expanded="true" aria-controls="collapseSent">Messages envoyés</a></h2>
+        </div>
+    </div>
+    <div id="collapseSent" class="panel-collapse collapse">
+        <div class="panel-body">
+            {% include 'PJMAppBundle:Inbox:messagesEnvoyes.html.twig' with {'messages': inbox.sent } %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
