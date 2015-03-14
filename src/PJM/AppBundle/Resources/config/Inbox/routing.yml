@@ -3,8 +3,8 @@ pjm_app_inbox_index:
     defaults: { _controller: PJMAppBundle:Inbox:index }
 
 pjm_app_inbox_nouveau:
-    path:     /nouveau
-    defaults: { _controller: PJMAppBundle:Inbox:nouveau }
+    path:     /nouveau/{user}
+    defaults: { _controller: PJMAppBundle:Inbox:nouveau, user: null }
 
 pjm_app_inbox_lu:
     path:     /lu/{reception}
