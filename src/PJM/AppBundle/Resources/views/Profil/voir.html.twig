@@ -18,6 +18,8 @@
         <li><a href="{{ path('pjm_profil_modifier') }}">Modifier mon profil</a></li>
         <li><a href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a></li>
     </ul>
+    {% else %}
+    <p><a href="{{ path('pjm_app_inbox_nouveau', {'user': user.username}) }}" title="Envoyer un message à {{ user.bucque }}"><span class="glyphicon glyphicon-comment"></span> Envoyer un message</a></p>
     {% endif %}
 </div>
 
