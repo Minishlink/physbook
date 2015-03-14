@@ -21,6 +21,11 @@
                     {% else %}
                         phy's
                     {% endif %}
+                {%- endif -%}
+                {% if message.destinatairesLus|length > 0 %}
+                    {% if message.receptions|length == 1 %}(lu){% else %}
+                    (lu par {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinatairesLus } %} personne{% if message.destinatairesLus|length > 1 %}s{% endif %})
+                    {% endif %}
                 {% endif %}
             {% endif %}
             {% endspaceless %}
