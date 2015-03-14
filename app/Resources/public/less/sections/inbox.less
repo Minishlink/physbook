@@ -1,4 +1,20 @@
 body {
+    #navMessage {
+        .nouveau {
+            color: @rouge;
+            animation: ease-in-out alternate redtonormal 1s infinite;
+        }
+    }
+
+    @keyframes redtonormal {
+        0% {
+            color: @rouge;
+        }
+        100% {
+            color: @navbar-default-link-color;
+        }
+    }
+
     &.inbox {
         .message {
             transition: box-shadow 0.4s ease-in-out 0s;
