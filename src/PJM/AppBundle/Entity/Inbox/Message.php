@@ -28,7 +28,7 @@ class Message
      * @ORM\Column(name="contenu", type="text")
      * @Assert\Length(
      *  min = 2,
-     *  max = 1000,
+     *  max = 10000,
      *  minMessage = "Ton message est trop court.",
      *  maxMessage = "Ton message est trop long ! Fais en plusieurs."
      * )
