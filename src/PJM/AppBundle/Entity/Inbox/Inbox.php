@@ -76,6 +76,13 @@ class Inbox
         return $this;
     }
 
+    public function incrementNbNonLus($val = 1)
+    {
+        $this->nbNonLus += $val;
+
+        return $this;
+    }
+
     /**
      * Get nbNonLus
      *

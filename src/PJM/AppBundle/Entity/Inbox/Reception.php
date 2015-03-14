@@ -71,7 +71,13 @@ class Reception
      */
     public function setLu($lu)
     {
-        $this->lu = $lu;
+        if ($this->lu != $lu) {
+            $this->lu = $lu;
+
+            if ($this->lu) {
+                $this->inbox->incrementNbNonLus(-1);
+            }
+        }
 
         return $this;
     }
@@ -95,6 +101,10 @@ class Reception
     public function setInbox(\PJM\AppBundle\Entity\Inbox\Inbox $inbox)
     {
         $this->inbox = $inbox;
+
+        if (!$this->lu) {
+            $this->inbox->incrementNbNonLus();
+        }
 
         return $this;
     }

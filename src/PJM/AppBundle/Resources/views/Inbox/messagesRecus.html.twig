@@ -1,83 +1,101 @@
-{% if receptions|length > 0 %}
-{% for reception in receptions %}
-<div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p>
-                <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
-                {{ reception.message.contenu|nl2br }}
-            </p>
-        </div>
-        <div class="panel-footer">
-            {% spaceless %}
-            de {% render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) %},
-            le {{ reception.message.date|date('d/m/Y') }} à {{ reception.message.date|date('H:i') }}
-            {%- if reception.message.destinataires|length > 0 -%}
-                , pour
-                {% if reception.message.destinataires|length != 1 %}
-                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': reception.message.destinataires } %} personnes
-                {% else %}
-                    {% if reception.message.destinataires[0] != app.user %}
-                        {% render(url('pjm_profil_encart', {'username': reception.message.destinataires[0]})) %}
+<div id="received">
+    {% if receptions|length > 0 %}
+    {% if inbox.nbNonLus > 0 %}<p id="nbNonLus">Tu as <span class="counterMsgNonLus">{{ inbox.nbNonLus }}</span> message{% if inbox.nbNonLus > 1 %}s{% endif %} non lu{% if inbox.nbNonLus > 1 %}s{% endif %}.<br><small>Passe ta souris ou ton doigt sur un message pour le marquer comme lu.</small></p>{% endif %}
+    {% for reception in receptions %}
+    <div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>
+                    <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                    {{ reception.message.contenu|nl2br }}
+                </p>
+            </div>
+            <div class="panel-footer">
+                {% spaceless %}
+                de {% render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) %},
+                le {{ reception.message.date|date('d/m/Y') }} à {{ reception.message.date|date('H:i') }}
+                {%- if reception.message.destinataires|length > 0 -%}
+                    , pour
+                    {% if reception.message.destinataires|length != 1 %}
+                        {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': reception.message.destinataires } %} personnes
                     {% else %}
-                        phy's
+                        {% if reception.message.destinataires[0] != app.user %}
+                            {% render(url('pjm_profil_encart', {'username': reception.message.destinataires[0]})) %}
+                        {% else %}
+                            phy's
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
-            {% endspaceless %}
+                {% endspaceless %}
+            </div>
         </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.message.surbrillance').hover(function() {
-        if ($(this).is('.surbrillance') && !$(this).is('.processing')) {
-            chargement(true);
-            $(this).addClass('processing');
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.message.surbrillance').hover(function() {
+            if ($(this).is('.surbrillance') && !$(this).is('.processing')) {
+                chargement(true);
+                $(this).addClass('processing');
+                decrementCounterNbNonLus(1);
 
-            var message = $(this);
-            var id = message.attr('data-reception');
+                var message = $(this);
+                var id = message.attr('data-reception');
 
-            $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }), function() {
-                message.removeClass('surbrillance');
-            })
-            .always(function() {
-                message.removeClass('processing');
-                chargement(false);
-            });
-        }
-    });
-
-    $('.message a.remove').click(function() {
-        if (!$(this).is('.processing')) {
-            $(this).addClass('processing');
-
-            if (!confirm('Es-tu sûr de vouloir supprimer ce message ? Tu ne pourras plus le retrouver ensuite.')) {
-                $(this).removeClass('processing');
-                return;
-            }
-
-            chargement(true);
-
-            var el = $(this);
-            var id = el.attr('data-reception');
-            var message = $('.message[data-reception=' + id +']');
-
-            $.post(Routing.generate('pjm_app_inbox_supprimer', {reception: id }), function() {
-                message.slideUp(function() {
-                    $(this).remove();
+                $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }), function() {
+                    message.removeClass('surbrillance');
+                })
+                .fail(function() {
+                    decrementCounterNbNonLus(-1);
+                })
+                .always(function() {
+                    message.removeClass('processing');
+                    chargement(false);
                 });
-            })
-            .always(function() {
-                el.removeClass('processing');
-                chargement(false);
+            }
+        });
+
+        $('.message a.remove').click(function() {
+            if (!$(this).is('.processing')) {
+                $(this).addClass('processing');
+
+                if (!confirm('Es-tu sûr de vouloir supprimer ce message ? Tu ne pourras plus le retrouver ensuite.')) {
+                    $(this).removeClass('processing');
+                    return;
+                }
+
+                chargement(true);
+
+                var el = $(this);
+                var id = el.attr('data-reception');
+                var message = $('.message[data-reception=' + id +']');
+
+                $.post(Routing.generate('pjm_app_inbox_supprimer', {reception: id }), function() {
+                    message.slideUp(function() {
+                        $(this).remove();
+                    });
+                })
+                .always(function() {
+                    el.removeClass('processing');
+                    chargement(false);
+                });
+            }
+        });
+
+        function decrementCounterNbNonLus(number) {
+            $('.counterMsgNonLus').html(function(i, val) {
+                var res = +val-number;
+                if (res == 0) {
+                    $('#nbNonLus').slideUp();
+                }
+
+                return res;
             });
         }
     });
-});
-</script>
-{% else %}
-<p>Pas de messages reçus.</p>
-{% endif %}
+    </script>
+    {% else %}
+    <p>Pas de messages reçus.</p>
+    {% endif %}
+</div>
