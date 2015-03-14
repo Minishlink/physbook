@@ -50,6 +50,14 @@ class Message
     private $destinations;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $destinataires;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="sent", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      **/
@@ -192,7 +200,7 @@ class Message
         return $this->receptions;
     }
 
-    public function getDestinataires()
+    public function getDestinatairesUsers()
     {
         $destinataires = new \Doctrine\Common\Collections\ArrayCollection();
 
@@ -229,5 +237,28 @@ class Message
         }
 
         return $this;
+    }
+
+    /**
+     * Set destinataires
+     *
+     * @param array $destinataires
+     * @return Message
+     */
+    public function setDestinataires($destinataires)
+    {
+        $this->destinataires = $destinataires;
+
+        return $this;
+    }
+
+    /**
+     * Get destinataires
+     *
+     * @return array
+     */
+    public function getDestinataires()
+    {
+        return $this->destinataires;
     }
 }

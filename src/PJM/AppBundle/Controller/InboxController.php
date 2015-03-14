@@ -42,7 +42,15 @@ class InboxController extends Controller
          if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+
                 $message->setExpedition($this->getUser()->getInbox());
+
+                $destinataires = array();
+                foreach($message->getReceptions() as $reception) {
+                    $destinataires[] = $reception->getInbox()->getUser()->getUsername();
+                }
+                $message->setDestinataires($destinataires);
+
                 $em->persist($message);
                 $em->flush();
 
