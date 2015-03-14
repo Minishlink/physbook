@@ -21,6 +21,13 @@
         </div>
     </div>
 </div>
+{% if betatest is defined %}
+<div class="container">
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="alert alert-warning">Cette page est en beta-test.</div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% if app.session.flashbag.peekAll is not empty %}
