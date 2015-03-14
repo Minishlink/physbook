@@ -11,13 +11,13 @@
         <div class="panel-footer">
             {% spaceless %}
             le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}
-            {%- if message.destinations|length > 0 -%}
+            {%- if message.destinataires|length > 0 -%}
                 , pour
-                {% if message.destinations|length != 1 %}
-                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': message.destinataires } %} personnes
+                {% if message.destinataires|length != 1 %}
+                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinataires } %} personnes
                 {% else %}
-                    {% if message.destinations[0].user != app.user %}
-                        {% render(url('pjm_profil_encart', {'username': message.destinations[0].user.username})) %}
+                    {% if message.destinataires[0] != app.user %}
+                        {% render(url('pjm_profil_encart', {'username': message.destinataires[0]})) %}
                     {% else %}
                         phy's
                     {% endif %}

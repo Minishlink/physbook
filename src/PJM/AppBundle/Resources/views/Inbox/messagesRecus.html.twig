@@ -12,13 +12,13 @@
             {% spaceless %}
             de {% render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) %},
             le {{ reception.message.date|date('d/m/Y') }} à {{ reception.message.date|date('H:i') }}
-            {%- if reception.message.destinations|length > 0 -%}
+            {%- if reception.message.destinataires|length > 0 -%}
                 , pour
-                {% if reception.message.destinations|length != 1 %}
-                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': reception.message.destinataires } %} personnes
+                {% if reception.message.destinataires|length != 1 %}
+                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': reception.message.destinataires } %} personnes
                 {% else %}
-                    {% if reception.message.destinations[0].user != app.user %}
-                        {% render(url('pjm_profil_encart', {'username': reception.message.destinations[0].user.username})) %}
+                    {% if reception.message.destinataires[0] != app.user %}
+                        {% render(url('pjm_profil_encart', {'username': reception.message.destinataires[0]})) %}
                     {% else %}
                         phy's
                     {% endif %}
