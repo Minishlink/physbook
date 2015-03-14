@@ -1,1 +1,15 @@
-{% if users|length > 0 %}<a class="show_users" data-content='{% for user in users %}{% render(url('pjm_profil_encart', {'username': user.username})) %}{% if not loop.last %}, {% endif %}{% endfor %}'>{% endif %}{{ users|length }}{% if users|length > 0 %}</a>{% endif %}
+{% spaceless %}
+{% if usernames is defined %}{% set users = usernames %}{% endif %}
+{%- if users|length > 0 -%}
+    <a class="show_users" data-content='
+        {%- for user in users -%}
+            {% if usernames is not defined %}{% set username = user.username %}{% else %}{% set username = user %}{% endif %}
+            {% render(url('pjm_profil_encart', {'username': username})) %}
+            {%- if not loop.last -%}, {% endif %}
+        {% endfor %}'>
+{% endif %}
+{{ users|length }}
+{%- if users|length > 0 -%}
+    </a>
+{% endif %}
+{% endspaceless %}
