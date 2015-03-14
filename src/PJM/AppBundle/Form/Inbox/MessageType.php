@@ -34,7 +34,9 @@ class MessageType extends AbstractType
                 'multiple' => true,
                 'property' => 'user'
             ))
-            ->add('contenu', "textarea")
+            ->add('contenu', "textarea", array(
+                'attr'=> array('style' => 'min-height: 20em;')
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Envoi',
             ))
