@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Entity\Inbox;
+use PJM\AppBundle\Entity\Inbox\Inbox;
 use PJM\UserBundle\Entity\User;
 
 class CreerInboxCommand extends ContainerAwareCommand
