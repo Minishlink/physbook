@@ -4,6 +4,7 @@ security:
 
     role_hierarchy:
         ROLE_EXT:             [ROLE_USER]
+        ROLE_BETA:            [ROLE_USER]
 
         ROLE_ZIBRAGS:         [ROLE_USER, ROLE_HARPAGS]
         ROLE_ZICVIS:          [ROLE_USER]
@@ -22,7 +23,7 @@ security:
 
         ROLE_LISTE_ASSO:      [ROLE_ASSO_ZI, ROLE_ASSO_COM, ROLE_ASSO_TRESORS]
 
-        ROLE_ADMIN:           [ROLE_LISTE_ASSO, ROLE_EXT]
+        ROLE_ADMIN:           [ROLE_LISTE_ASSO, ROLE_EXT, ROLE_BETA]
         ROLE_SUPER_ADMIN:     [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -60,4 +61,5 @@ security:
         - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/boquette/asso/, roles: ROLE_ASSO }
         - { path: ^/admin/, roles: ROLE_ADMIN }
+        - { path: ^/inbox/, roles: ROLE_BETA }
         - { path: ^/, roles: ROLE_USER }
