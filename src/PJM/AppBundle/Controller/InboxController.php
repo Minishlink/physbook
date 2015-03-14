@@ -102,6 +102,7 @@ class InboxController extends Controller
         if ($request->isXmlHttpRequest()) {
             if ($reception->getInbox()->getUser() == $this->getUser()) {
                 $em = $this->getDoctrine()->getManager();
+                $reception->setLu(true);
                 $em->remove($reception);
                 $em->flush();
 
@@ -122,6 +123,9 @@ class InboxController extends Controller
         if ($request->isXmlHttpRequest()) {
             if ($message->getExpediteur() == $this->getUser()) {
                 $em = $this->getDoctrine()->getManager();
+                foreach ($message->getReceptions() as $reception) {
+                    $reception->setLu(true);
+                }
                 $em->remove($message);
                 $em->flush();
 

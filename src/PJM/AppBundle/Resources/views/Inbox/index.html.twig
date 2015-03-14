@@ -6,17 +6,15 @@
 {% block categorieName %}Messages{% endblock %}
 
 {% block pjm_app_body_content %}
-<a class="btn btn-primary" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-send"></span> Envoyer un message</a>
-<a class="btn btn-default" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-bullhorn"></span> Faire une annonce</a>
+<p>
+    <a class="btn btn-primary" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-send"></span> Envoyer un message</a>
+    <a class="btn btn-default" href="{{ path('pjm_app_inbox_nouveau') }}"><span class="glyphicon glyphicon-bullhorn"></span> Faire une annonce</a>
+</p>
 
 <h2>Messages reçus</h2>
-<div id="received">
-    {% include 'PJMAppBundle:Inbox:messagesRecus.html.twig' with {'receptions': inbox.receptions } %}
-</div>
+{% include 'PJMAppBundle:Inbox:messagesRecus.html.twig' with {'receptions': inbox.receptions } %}
 
 <h2>Messages envoyés</h2>
-<div id="sent">
-    {% include 'PJMAppBundle:Inbox:messagesEnvoyes.html.twig' with {'messages': inbox.sent } %}
-</div>
+{% include 'PJMAppBundle:Inbox:messagesEnvoyes.html.twig' with {'messages': inbox.sent } %}
 
 {% endblock %}

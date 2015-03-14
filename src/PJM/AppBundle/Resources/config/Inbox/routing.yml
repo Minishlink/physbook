@@ -18,7 +18,7 @@ pjm_app_inbox_supprimer:
     path:     /supprimer/{reception}
     defaults: { _controller: PJMAppBundle:Inbox:supprimer }
     requirements:
-        method: POST
+        _method: POST
     options:
         expose: true
 
@@ -26,6 +26,6 @@ pjm_app_inbox_annuler:
     path:     /annuler/{message}
     defaults: { _controller: PJMAppBundle:Inbox:annuler }
     requirements:
-        method: POST
+        _method: POST
     options:
         expose: true

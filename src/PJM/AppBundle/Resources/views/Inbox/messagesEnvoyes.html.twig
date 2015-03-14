@@ -1,69 +1,71 @@
-{% if messages|length > 0 %}
-{% for message in messages %}
-<div class="message" data-message="{{ message.id }}">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p>
-                <a class="btn btn-default btn-xs cancel" title="Supprime pour tous les destinataires" data-message="{{ message.id }}"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
-                {{ message.contenu|nl2br }}
-            </p>
-        </div>
-        <div class="panel-footer">
-            {% spaceless %}
-            le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}
-            {%- if message.destinataires|length > 0 -%}
-                , pour
-                {% if message.destinataires|length != 1 %}
-                    {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinataires } %} personnes
-                {% else %}
-                    {% if message.destinataires[0] != app.user %}
-                        {% render(url('pjm_profil_encart', {'username': message.destinataires[0]})) %}
+<div id="sent">
+    {% if messages|length > 0 %}
+    {% for message in messages %}
+    <div class="message" data-message="{{ message.id }}">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>
+                    <a class="btn btn-default btn-xs cancel" title="Supprime pour tous les destinataires" data-message="{{ message.id }}"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
+                    {{ message.contenu|nl2br }}
+                </p>
+            </div>
+            <div class="panel-footer">
+                {% spaceless %}
+                le {{ message.date|date('d/m/Y') }} à {{ message.date|date('H:i') }}
+                {%- if message.destinataires|length > 0 -%}
+                    , pour
+                    {% if message.destinataires|length != 1 %}
+                        {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinataires } %} personnes
                     {% else %}
-                        phy's
-                    {% endif %}
-                {%- endif -%}
-                {% if message.destinatairesLus|length > 0 %}
-                    {% if message.receptions|length == 1 %}(lu){% else %}
-                    (lu par {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinatairesLus } %} personne{% if message.destinatairesLus|length > 1 %}s{% endif %})
+                        {% if message.destinataires[0] != app.user %}
+                            {% render(url('pjm_profil_encart', {'username': message.destinataires[0]})) %}
+                        {% else %}
+                            phy's
+                        {% endif %}
+                    {%- endif -%}
+                    {% if message.destinatairesLus|length > 0 %}
+                        {% if message.receptions|length == 1 %}(lu){% else %}
+                        (lu par {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinatairesLus } %} personne{% if message.destinatairesLus|length > 1 %}s{% endif %})
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
-            {% endspaceless %}
+                {% endspaceless %}
+            </div>
         </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.message a.cancel').click(function() {
-        if (!$(this).is('.processing')) {
-            $(this).addClass('processing');
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.message a.cancel').click(function() {
+            if (!$(this).is('.processing')) {
+                $(this).addClass('processing');
 
-            if (!confirm('Es-tu sûr de vouloir supprimer ce message, pour toi et tes destinataires ? Ils ne pourront plus lire le message ensuite, et toi non plus.')) {
-                $(this).removeClass('processing');
-                return;
-            }
+                if (!confirm('Es-tu sûr de vouloir supprimer ce message, pour toi et tes destinataires ? Ils ne pourront plus lire le message ensuite, et toi non plus.')) {
+                    $(this).removeClass('processing');
+                    return;
+                }
 
-            chargement(true);
+                chargement(true);
 
-            var el = $(this);
-            var id = el.attr('data-message');
-            var message = $('.message[data-message=' + id +']');
+                var el = $(this);
+                var id = el.attr('data-message');
+                var message = $('.message[data-message=' + id +']');
 
-            $.post(Routing.generate('pjm_app_inbox_annuler', {message: id }), function() {
-                message.slideUp(function() {
-                    $(this).remove();
+                $.post(Routing.generate('pjm_app_inbox_annuler', {message: id }), function() {
+                    message.slideUp(function() {
+                        $(this).remove();
+                    });
+                })
+                .always(function() {
+                    el.removeClass('processing');
+                    chargement(false);
                 });
-            })
-            .always(function() {
-                el.removeClass('processing');
-                chargement(false);
-            });
-        }
+            }
+        });
     });
-});
-</script>
-{% else %}
-<p>Pas de messages envoyés.</p>
-{% endif %}
+    </script>
+    {% else %}
+    <p>Pas de messages envoyés.</p>
+    {% endif %}
+</div>
