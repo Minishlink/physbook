@@ -12,6 +12,7 @@ use PJM\AppBundle\Form\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Inbox;
 use PJM\UserBundle\Entity\User;
 
 class AdminController extends Controller
@@ -250,6 +251,11 @@ class AdminController extends Controller
                         }
 
                         $user->setEnabled(true);
+
+                        //on crée l'inbox
+                        $inbox = new Inbox();
+                        $user->setInbox($inbox);
+
                         $userManager->updateUser($user, false);
 
                         // on crée les comptes
@@ -327,6 +333,11 @@ class AdminController extends Controller
             $password = substr(uniqid(), 0, 8);
             $user->setPlainPassword($password);
             $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
+
+            //on crée l'inbox
+            $inbox = new Inbox();
+            $user->setInbox($inbox);
+
             $userManager->updateUser($user, false);
 
             // les boquettes concernées pour l'ouverture de compte :
