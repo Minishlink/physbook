@@ -5,9 +5,11 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use PJM\AppBundle\Entity\Inbox\Message;
 use PJM\AppBundle\Entity\Inbox\Reception;
+use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\Inbox\MessageType;
 
 class InboxController extends Controller
@@ -28,14 +30,21 @@ class InboxController extends Controller
     /**
      * Action de nouveau message
      * @return object HTML Response
+     * @ParamConverter("user", options={"mapping": {"user": "username"}})
      */
-    public function nouveauAction(Request $request)
+    public function nouveauAction(Request $request, User $user = null)
     {
         $message = new Message();
         $form = $this->createForm(new MessageType(), $message, array(
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_inbox_nouveau'),
         ));
+
+        if ($user !== null) {
+            $destinations = new \Doctrine\Common\Collections\ArrayCollection();
+            $destinations->add($user->getInbox());
+            $form->get('destinations')->setData($destinations);
+        }
 
         $form->handleRequest($request);
 
@@ -65,6 +74,7 @@ class InboxController extends Controller
 
         return $this->render('PJMAppBundle:Inbox:nouveau.html.twig', array(
             'form' => $form->createView(),
+            'destinataire' => isset($user) ? $user : null,
         ));
     }
 

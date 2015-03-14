@@ -1,6 +1,6 @@
 {% extends "PJMAppBundle:Inbox:layout.html.twig" %}
 
-{% block categorieName %}Envoi d'un message{% endblock %}
+{% block categorieName %}{% if destinataire is null %}Envoi d'un message{% else %}Message à {{ destinataire.bucque }}{% endif %}{% endblock %}
 
 {% block pjm_app_body_content %}
 <p><a href="{{ path('pjm_app_inbox_index') }}" class="btn btn-default">Retour</a></p>
