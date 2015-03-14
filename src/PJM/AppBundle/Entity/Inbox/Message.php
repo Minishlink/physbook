@@ -212,6 +212,20 @@ class Message
         return $destinataires;
     }
 
+    public function getDestinatairesLus()
+    {
+        $lus = array();
+
+        foreach($this->receptions as $reception)
+        {
+            if ($reception->getLu()) {
+                $lus[] = $reception->getInbox()->getUser()->getUsername();
+            }
+        }
+
+        return $lus;
+    }
+
     public function getDestinations()
     {
         $destinations = new \Doctrine\Common\Collections\ArrayCollection();
