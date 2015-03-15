@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
+            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );

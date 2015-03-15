@@ -30,7 +30,8 @@
         "genemu/form-bundle": "~2.2",
         "liuggio/excelbundle": "~2.0",
         "kms/froala-editor-bundle": "dev-master",
-        "friendsofsymfony/comment-bundle": "dev-master"
+        "friendsofsymfony/comment-bundle": "dev-master",
+        "richsage/rms-push-notifications-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
