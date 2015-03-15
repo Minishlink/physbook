@@ -21,6 +21,7 @@
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
         {% endblock %}
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicon/apple-touch-icon-57x57.png') }}">
@@ -41,6 +42,7 @@
         <meta name="msapplication-TileColor" content="#2b5797">
         <meta name="msapplication-TileImage" content="{{ asset('images/favicon/mstile-144x144.png') }}">
         <meta name="application-name" content="Phy'sbook">
+        <meta name="theme-color" content="#b63938">
         {% block base_javascripts %}{% endblock %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
