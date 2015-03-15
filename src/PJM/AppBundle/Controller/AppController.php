@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use PJM\AppBundle\Entity\UsersHM;
 
 class AppController extends Controller
 {
@@ -55,5 +58,71 @@ class AppController extends Controller
     {
         return $this->render('PJMAppBundle:App:en_construction.html.twig');
         //return $this->render('PJMAppBundle:App:support_technique.html.twig');
+    }
+
+    /**
+     * Affiche et gère un bouton Phy's HM
+     * @param  object   UsersHM $usersHM Le lien usersHM entre les users et l'article, item etc...
+     */
+    public function physHMAction(Request $request, UsersHM $usersHM)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createFormBuilder($usersHM)
+            ->setAction($this->generateUrl(
+                "pjm_app_physHM",
+                array('usersHM' => $usersHM->getId())
+            ))
+            ->setMethod('POST')
+            ->add('save', 'submit', array(
+                'label' => "Phy's HM",
+                'attr' => array(
+                    'class' => 'physHM',
+                    'title' => "Phy's HM"
+                ),
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $json = array();
+
+            if ($form->isValid()) {
+                if (!$usersHM->getUsers()->contains($this->getUser())) {
+                    $usersHM->addUser($this->getUser());
+                    $em->persist($usersHM);
+                    $em->flush();
+
+                    $json = array(
+                        'success' => true
+                    );
+                } else {
+                    $json = array(
+                        'success' => false,
+                        'reason' => 'Déjà HM'
+                    );
+                }
+            } else {
+                // erreur dans le formulaire
+                $data = $form->getData();
+                foreach ($form->getErrors() as $error) {
+                    $reason[] = $error->getMessage();
+                }
+
+                $json = array(
+                    'success' => false,
+                    'reason' => $reason
+                );
+            }
+
+            $response = new JsonResponse();
+            $response->setData($json);
+            return $response;
+        }
+
+        return $this->render('PJMAppBundle::form_standard.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

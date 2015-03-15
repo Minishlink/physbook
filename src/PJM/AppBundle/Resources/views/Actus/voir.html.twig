@@ -6,17 +6,19 @@
 
 {% block pjm_app_body_actus %}
     <h2>{{ article.titre }}</h2>
-	<em>Par {% render(url('pjm_profil_encart', {'username': article.auteur.username})) %}, le {{ article.date|date('d/m/Y') }}</em>
-    {% for categorie in article.categories %}
+	<span>
+        <em>Par {% render(url('pjm_profil_encart', {'username': article.auteur.username})) %}, le {{ article.date|date('d/m/Y') }}</em>
+        {% for categorie in article.categories %}
         <span class="label label-info">{{ categorie.nom }}</span>
-    {% endfor %}
-
-	<div class="well">
+        {% endfor %}
+        {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': article.usersHM } %}
+    </span>
+    <div class="space"></div>
+    <div class="well">
         <div class="froala-view">
             {{ article.contenu|raw }}
         </div>
-	</div>
-
+    </div>
 	<p>
 		<a href="{{ path('pjm_app_actus_index') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
         {% if app.user == article.auteur %}<a href="{{ path('pjm_app_actus_modifier', {'slug': article.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier l'article</a>{% endif %}

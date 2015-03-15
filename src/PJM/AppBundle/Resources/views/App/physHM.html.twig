@@ -1,0 +1,8 @@
+<div class="physHMcontainer">
+    {% if usersHM is not null %}
+    <div class="counterHM">
+        {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': usersHM.users } %} HM
+    </div>
+    {% render(url('pjm_app_physHM', {usersHM: usersHM.id})) %}
+    {% endif %}
+</div>

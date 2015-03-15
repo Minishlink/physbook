@@ -17,6 +17,7 @@
                     {% for categorie in article.categories %}
                         <span class="label label-info">{{ categorie.nom }}</span>
                     {% endfor %}
+                    {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': article.usersHM } %}
                 </div>
                 <div class="panel-body">
                     <div class="froala-view">

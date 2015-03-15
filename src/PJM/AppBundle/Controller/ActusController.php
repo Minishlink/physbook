@@ -36,10 +36,10 @@ class ActusController extends Controller
 
     public function voirAction(Article $article)
     {
-            // on retourne le template
-            return $this->render('PJMAppBundle:Actus:voir.html.twig', array(
-                'article' => $article
-            ));
+        // on retourne le template
+        return $this->render('PJMAppBundle:Actus:voir.html.twig', array(
+            'article' => $article
+        ));
     }
 
     public function ajouterAction(Request $request)

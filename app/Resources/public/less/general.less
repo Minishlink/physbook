@@ -85,7 +85,18 @@ body {
     }
 }
 
+.counterHM {
+    color: black;
+
+    a {
+        color: black;
+    }
+}
+
 button.physHM {
+    position: relative;
+    z-index: 1;
+
     @ratio: 401/95; // depuis l'image source
     @height: 1.5em;
     @width: @ratio*@height;
@@ -96,18 +107,27 @@ button.physHM {
     height: @height;
 
     background: url('images/general/PhysHM-R.png') no-repeat center center / @width @height;
-    background-size: ;
 
     text-indent: -9000px;
     line-height: -9999px;
     overflow: hidden;
 
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
     &.barre {
         background: url('images/general/PhysHM-barre-R.png') no-repeat center center / @width @height;
     }
 
-    &:hover {
-        opacity: 0.7;
+    &.disabled {
+        opacity: 0.2;
+
+        &:hover {
+            opacity: 0.2;
+        }
     }
 }
 
