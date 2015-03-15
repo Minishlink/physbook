@@ -1,5 +1,5 @@
 var OFFLINE_CACHE = 'offline';
-var OFFLINE_URL = 'offline.html';
+var OFFLINE_URL = window.assetsDir + window.PJMAppBundlePath + 'html/offline.html';
 
 self.addEventListener('install', function(event) {
     console.log('install');
