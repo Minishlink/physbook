@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
-    var PJMAppBundleDir = "bundles/pjmapp/js/";
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register(window.assetsDir + PJMAppBundleDir + "service-worker.js", { scope: window.assetsDir + PJMAppBundleDir })
+        var path = window.assetsDir + window.PJMAppBundlePath + "js/";
+        navigator.serviceWorker.register(path + "service-worker.js", { scope: path })
         .then(function(sw) {
             console.log('Service worker enregistré');
         }, function (e) {
