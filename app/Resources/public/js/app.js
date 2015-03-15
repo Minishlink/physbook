@@ -1,6 +1,6 @@
 window.addEventListener('load', function() {
     if ('serviceWorker' in navigator) {
-        var path = window.assetsDir + window.PJMAppBundlePath + "js/";
+        var path = window.assetsDir;
         navigator.serviceWorker.register(path + "service-worker.js", { scope: path })
         .then(function(sw) {
             console.log('Service worker enregistré');
