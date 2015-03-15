@@ -80,7 +80,7 @@ class Article
     * @ORM\Column(length=128, unique=true)
     */
     private $slug;
-
+    
     /**
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM")
      **/
@@ -316,28 +316,5 @@ class Article
     public function getThreadId()
     {
         return "article_".$this->id;
-    }
-
-    /**
-     * Set usersHM
-     *
-     * @param \PJM\AppBundle\Entity\UsersHM $usersHM
-     * @return Article
-     */
-    public function setUsersHM(\PJM\AppBundle\Entity\UsersHM $usersHM = null)
-    {
-        $this->usersHM = $usersHM;
-
-        return $this;
-    }
-
-    /**
-     * Get usersHM
-     *
-     * @return \PJM\AppBundle\Entity\UsersHM
-     */
-    public function getUsersHM()
-    {
-        return $this->usersHM;
     }
 }

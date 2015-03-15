@@ -61,3 +61,7 @@ pjm_app_plan_du_site:
         template: 'PJMAppBundle:App:plan_du_site.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
+
+pjm_app_physHM:
+    path:     /hm/{usersHM}
+    defaults: { _controller: PJMAppBundle:App:physHM }
