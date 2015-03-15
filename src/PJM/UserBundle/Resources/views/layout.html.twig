@@ -11,7 +11,9 @@
 {% endblock %}
 
 {% block base_javascripts %}
+{{ parent() }}
 {% javascripts
+    '%kernel.root_dir%/../app/Resources/public/js/app.js'
     '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
     '@PJMUserBundle/Resources/public/js/pingouin.js'
