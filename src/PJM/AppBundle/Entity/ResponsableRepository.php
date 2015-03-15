@@ -17,8 +17,8 @@ class ResponsableRepository extends EntityRepository
                     ->join('r.user', 'u')
                     ->setParameter('boquette', $boquette)
                     ->setParameter('active', $active)
-                    ->orderBy('r.date', 'asc')
-                    ->orderBy('u.username', 'asc')
+                    ->addOrderBy('re.niveau', 'asc')
+                    ->addOrderBy('u.bucque', 'asc')
                     ->getQuery();
 
         try {
