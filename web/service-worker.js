@@ -1,5 +1,5 @@
 var OFFLINE_CACHE = 'offline';
-var OFFLINE_URL = window.assetsDir + window.PJMAppBundlePath + 'html/offline.html';
+var OFFLINE_URL = 'html/offline.html';
 
 self.addEventListener('install', function(event) {
     console.log('install');
@@ -14,6 +14,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+    console.log('fetch');
   // We only want to call event.respondWith() if this is a GET request for an HTML document.
   if (event.request.method === 'GET' &&
       event.request.headers.get('accept').indexOf('text/html') !== -1) {
