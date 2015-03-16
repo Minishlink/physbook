@@ -1,0 +1,9 @@
+pjm_app_admin_media_gestionPhotos:
+    path:     /photos/gestion/{photo}
+    defaults: { _controller: PJMAppBundle:Media:gestionPhotos, photo: null }
+    options:
+        expose: true
+
+pjm_app_admin_media_photosResults:
+    path:     /photos/results
+    defaults: { _controller: PJMAppBundle:Media:photosResults }

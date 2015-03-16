@@ -23,6 +23,7 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('json_decode', array($this, 'jsonDecodeFilter')),
             new \Twig_SimpleFilter('tabagns', array($this, 'tabagnsFilter')),
             new \Twig_SimpleFilter('telephone', array($this, 'telephoneFilter')),
+            new \Twig_SimpleFilter('etatPublicationPhoto', array($this, 'etatPublicationPhotoFilter')),
         );
     }
 
@@ -123,6 +124,20 @@ class IntranetExtension extends \Twig_Extension
         $imgPath = $uploadDir.'/'.$id.'.'.$ext;
         $path = $this->container->get('templating.helper.assets')->getUrl($imgPath);
         return '<img src="'.$path.'" alt="'.$alt.'" />';
+    }
+
+    public function etatPublicationPhotoFilter($string)
+    {
+        $map = array(
+            '0' => "En attente de validation",
+            '1' => "Pas autorisée",
+            '2' => "Autorisée",
+            '3' => "Affichée"
+        );
+
+        return array_key_exists($string, $map)
+            ? $map[$string]
+            : $string;
     }
 
     public function getName()

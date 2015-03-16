@@ -10,18 +10,26 @@
         <span class="glyphicon glyphicon-chevron-left"></span>
         Retour
     </a>
+    {% if not ajout %}
+    <a href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        Ajouter
+    </a>
+    {% endif %}
 </p>
 <div class="row">
     <div class="col-md-4">
         <h3>{% if ajout %}Ajout{% else %}Modification{% endif %}</h3>
         {% block explication %}{% endblock %}
+        {% if form is defined %}
         {{ form_stylesheet(form) }}
         {{ form_javascript(form) }}
         {{ form(form) }}
+        {% endif %}
     </div>
     <div class="col-md-8">
         <h3>Liste</h3>
-        {{ datatable_render(datatable) }}
+        {% if datatable is defined %}{{ datatable_render(datatable) }}{% endif %}
     </div>
 </div>
 {% endblock %}
