@@ -40,7 +40,7 @@ class Image
 
 
     /**
-    * @Assert\Image(maxSize="500k")
+    * @Assert\Image(maxSize="500k", maxWidth=2000, maxHeight=1500)
     */
     private $file;
 
