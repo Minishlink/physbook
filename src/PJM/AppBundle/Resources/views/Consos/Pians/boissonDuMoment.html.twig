@@ -10,9 +10,6 @@
             <span class="prix">{{ boisson.prix|prix }}</span>
         </p>
 
-        <div class="usersHM">
-            <span>{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': boisson.usersHM } %} HM</span>
-            {% render(url('pjm_app_boquette_itemHM', {item: boisson.id})) %}
-        </div>
+        {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': boisson.usersHM } %}
     {% endif %}
 </div>

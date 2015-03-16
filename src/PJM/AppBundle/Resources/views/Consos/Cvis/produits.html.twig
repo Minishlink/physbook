@@ -9,9 +9,6 @@
     <div class="nom">{{ produit.libelle }}</div>
     <div class="prix">{{ produit.prix|prix }}</div>
 
-    <div class="usersHM">
-        {% render(url('pjm_app_boquette_itemHM', {item: produit.id})) %}
-        <span>{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': produit.usersHM } %} HM</span>
-    </div>
+    {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': produit.usersHM } %}
 </div>
 {% endfor %}

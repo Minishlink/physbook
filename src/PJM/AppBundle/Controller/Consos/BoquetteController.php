@@ -194,67 +194,6 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Affiche un bouton Phy's HM pour un item donné
-     */
-    public function itemHMAction(Request $request, Item $item)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createFormBuilder($item)
-            ->setAction($this->generateUrl(
-                "pjm_app_boquette_itemHM",
-                array('item' => $item->getId())
-            ))
-            ->setMethod('POST')
-            ->add('save', 'submit', array(
-                'label' => "Phy's HM",
-                'attr' => array(
-                    'class' => 'physHM',
-                    'title' => "Phy's HM"
-                ),
-            ))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                if (!$item->getUsersHM()->contains($this->getUser())) {
-                    $item->addUserHM($this->getUser());
-                    $em->persist($item);
-                    $em->flush();
-                } else {
-                     $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        'Tu as déjà été déclaré "Phy\'s HM" sur cet item.'
-                    );
-                }
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de ton "Phy\'s HM". Réessaye.'
-                );
-
-                $data = $form->getData();
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            return $this->redirect($this->generateUrl("pjm_app_boquette_".$item->getBoquette()->getSlug()."_index"));
-        }
-
-
-        return $this->render('PJMAppBundle:Boquette:itemHM.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * [ADMIN] Gère la liste des crédits pour une boquette. (accessible qu'aux harpag'ss)
      *
      * @Security("has_role('ROLE_HARPAGS')")
