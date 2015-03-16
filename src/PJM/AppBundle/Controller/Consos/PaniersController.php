@@ -305,17 +305,17 @@ class PaniersController extends BoquetteController
                     $sheet->getRowDimension(4+$r)->setRowHeight(25);
                 }
 
-                // on charge le logo de Phy'sbook
-                $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
-                $logo->setName("Phy'sbook logo");
-                $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
-                $basePath = $_SERVER['DOCUMENT_ROOT'];
+                // on charge le logo de Phy'sbook si on est pas en mode debut (à faire si du temps à perdre...)
                 if (!$this->get('kernel')->isDebug()) {
+                    $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
+                    $logo->setName("Phy'sbook logo");
+                    $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
+                    $basePath = $_SERVER['DOCUMENT_ROOT'];
                     $basePath .= "/web";
+                    $logo->setPath($basePath.$urlLogo);
+                    $logo->setHeight(40);
+                    $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
                 }
-                $logo->setPath($basePath.$urlLogo);
-                $logo->setHeight(40);
-                $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
 
                 // on met le titre et le logo
                 $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getLibelle());
