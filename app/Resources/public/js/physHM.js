@@ -17,8 +17,7 @@ $(document).ready(function () {
                     if(json.success) {
                         $this
                             .parent('.physHMcontainer')
-                            .children('.counterHM')
-                            .children('.counter')
+                            .find('.counter')
                             .html(function(i, val) {
                             return +val+1;
                         });
