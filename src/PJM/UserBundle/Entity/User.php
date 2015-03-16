@@ -118,6 +118,18 @@ class User extends BaseUser
      **/
     private $inbox;
 
+    /**
+     * Photo de profil
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Media\Photo")
+     **/
+    private $photo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire")
+     **/
+    private $photosCreated;
+
     public function __toString()
     {
         $user = $this->username;
@@ -147,6 +159,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

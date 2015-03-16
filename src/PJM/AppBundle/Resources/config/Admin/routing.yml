@@ -41,3 +41,7 @@ pjm_app_admin_gestionBoquettes:
 pjm_app_admin_boquette:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/routing.yml"
     prefix:   /boquette
+
+pjm_app_admin_media:
+    resource: "@PJMAppBundle/Resources/config/Admin/Media/routing.yml"
+    prefix:   /media
