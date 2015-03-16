@@ -107,6 +107,14 @@ class User extends BaseUser
      * @Assert\Date()
      */
     private $anniversaire;
+    
+    /**
+     * @var boolean
+     * 1 si féminin
+     *
+     * @ORM\Column(name="genre", type="boolean")
+     */
+    private $genre;
 
     /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
@@ -121,7 +129,7 @@ class User extends BaseUser
     /**
      * Photo de profil
      *
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Media\Photo")
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Media\Photo", cascade={"persist", "remove"})
      **/
     private $photo;
 
@@ -483,5 +491,65 @@ class User extends BaseUser
     public function getInbox()
     {
         return $this->inbox;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photo
+     * @return User
+     */
+    public function setPhoto(\PJM\AppBundle\Entity\Media\Photo $photo = null)
+    {
+        $this->photo = $photo;
+
+        if ($photo !== null) {
+            $this->addPhotoCreated($photo);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \PJM\AppBundle\Entity\Media\Photo
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Add photoCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     * @return User
+     */
+    public function addPhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    {
+        $this->photosCreated[] = $photoCreated;
+
+        return $this;
+    }
+
+    /**
+     * Remove photoCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     */
+    public function removePhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    {
+        $this->photosCreated->removeElement($photoCreated);
+    }
+
+    /**
+     * Get photosCreated
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotosCreated()
+    {
+        return $this->photosCreated;
     }
 }

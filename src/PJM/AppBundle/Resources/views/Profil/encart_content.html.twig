@@ -1,4 +1,4 @@
-<img style="float: right; max-width: 33%; max-height: 6em;" src="{% if user.photo is not null %}{{ asset(user.photo.image.webPath) }}{% else %}{{ asset('images/accueil/bg.png') }}{% endif %}" alt="Photo de profil" />
+<img style="float: right; max-width: 33%; max-height: 6em;" src="{% if user.photo is not null %}{{ asset(user.photo.image.webPath) }}{% else %}{% if user.genre %}{{ asset('images/profil/Placeholder-F.png') }}{% else %}{{ asset('images/profil/Placeholder-M.png') }}{% endif %}{% endif %}" alt="Photo de profil" />
 {% if online %}
 <span class="glyphicon glyphicon-signal text-vert"></span> {{ user.bucque }} est connecté.
 {% else %}

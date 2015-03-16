@@ -109,6 +109,14 @@ class User extends BaseUser
     private $anniversaire;
 
     /**
+     * @var boolean
+     * 1 si féminin
+     *
+     * @ORM\Column(name="genre", type="boolean")
+     */
+    private $genre;
+
+    /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
      **/
     private $responsables;
@@ -496,7 +504,7 @@ class User extends BaseUser
         $this->photo = $photo;
 
         if ($photo !== null) {
-            $this->addPhotoCreated($photo);
+            $this->addPhotosCreated($photo);
         }
 
         return $this;
@@ -513,26 +521,49 @@ class User extends BaseUser
     }
 
     /**
-     * Add photoCreated
+     * Set genre
      *
-     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     * @param boolean $genre
      * @return User
      */
-    public function addPhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    public function setGenre($genre)
     {
-        $this->photosCreated[] = $photoCreated;
+        $this->genre = $genre;
 
         return $this;
     }
 
     /**
-     * Remove photoCreated
+     * Get genre
      *
-     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     * @return boolean
      */
-    public function removePhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    public function getGenre()
     {
-        $this->photosCreated->removeElement($photoCreated);
+        return $this->genre;
+    }
+
+    /**
+     * Add photosCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
+     * @return User
+     */
+    public function addPhotosCreated(\PJM\AppBundle\Entity\Media\Photo $photosCreated)
+    {
+        $this->photosCreated[] = $photosCreated;
+
+        return $this;
+    }
+
+    /**
+     * Remove photosCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
+     */
+    public function removePhotosCreated(\PJM\AppBundle\Entity\Media\Photo $photosCreated)
+    {
+        $this->photosCreated->removeElement($photosCreated);
     }
 
     /**
