@@ -16,22 +16,29 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($options['ajout'] || $options['proprietaire'] == 'admin') {
+            $builder->add('image', new ImageType(), array(
+                'required' => $options['ajout']
+            ));
+        }
+
         $builder
             ->add('legende', null, array(
                 'label' => 'Légende'
             ))
-            ->add('publication', 'choice', array(
-                'label' => "Publication sur Bonjour Gadz'Arts",
-                'choices' => array(
-                    '1' => "Pas autorisée",
-                    '2' => "Autorisée",
-                    '3' => "Affichée"
-                )
-            ))
         ;
 
-        if ($options['ajout'] || $options['proprietaire'] == 'admin') {
-            $builder->add('image', new ImageType());
+        if ($options['admin']) {
+            $builder
+                ->add('publication', 'choice', array(
+                    'label' => "Publication sur Bonjour Gadz'Arts",
+                    'choices' => array(
+                        '1' => "Pas autorisée",
+                        '2' => "Autorisée",
+                        '3' => "Affichée"
+                    )
+                ))
+            ;
         }
 
         $builder->add('save', 'submit', array(
@@ -47,6 +54,7 @@ class PhotoType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Media\Photo',
             'ajout' => true,
+            'admin' => false,
             'proprietaire' => null
         ));
     }

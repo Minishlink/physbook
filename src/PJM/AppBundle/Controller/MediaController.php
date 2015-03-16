@@ -33,7 +33,9 @@ class MediaController extends Controller
         $form = $this->createForm(new PhotoType(), $photo, array(
             'method' => 'POST',
             'action' => $urlAction,
-            'ajout' => $ajout
+            'ajout' => $ajout,
+            'proprietaire' => ($photo->getProprietaire() === null) ? 'admin' : null,
+            'admin' => true
         ));
 
         $form->handleRequest($request);
@@ -41,6 +43,17 @@ class MediaController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+
+                if ($photo->getPublication() == 3) {
+                    // si on veut forcer l'affichage sur bonjour gadz'arts
+                    $photoAChanger = $em->getRepository('PJMAppBundle:Media\Photo')
+                        ->findOneByPublication(3);
+                    if ($photoAChanger !== null && $photoAChanger != $photo) {
+                        $photoAChanger->setPublication(2);
+                        $em->persist($photoAChanger);
+                    }
+                }
+
                 $em->persist($photo);
                 $em->flush();
 
@@ -87,5 +100,58 @@ class MediaController extends Controller
         $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
         return $datatableData->getResponse();
+    }
+
+    /**
+     * [ADMIN] Action ajax d'autorisation de publication de photos
+     */
+    public function togglePublicationPhotosAction(Request $request, $autoriser)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $liste = $request->request->get("data");
+
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:Media\Photo");
+
+            foreach ($liste as $choice) {
+                $photo = $repository->find($choice["value"]);
+                if ($autoriser) {
+                    $photo->setPublication(2);
+                } else {
+                    $photo->setPublication(1);
+                }
+                $em->persist($photo);
+            }
+
+            $em->flush();
+
+            return new Response("Photos toggled.");
+        }
+
+        return new Response("This is not ajax.", 400);
+    }
+
+    /**
+     * [ADMIN] Action ajax de suppression de photos
+     */
+    public function supprimerPhotosAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $liste = $request->request->get("data");
+
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:Media\Photo");
+
+            foreach ($liste as $choice) {
+                $photo = $repository->find($choice["value"]);
+                $em->remove($photo);
+            }
+
+            $em->flush();
+
+            return new Response("Photos removed.");
+        }
+
+        return new Response("This is not ajax.", 400);
     }
 }

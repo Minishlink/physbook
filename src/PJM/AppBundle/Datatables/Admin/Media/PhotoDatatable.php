@@ -39,6 +39,15 @@ class PhotoDatatable extends AbstractDatatableView
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
+         $this->getMultiselect()
+            ->setEnabled(true)
+            ->setPosition("last")
+            ->addAction("Autoriser", "pjm_app_admin_media_autoriserPhotos")
+            ->addAction("Ne pas autoriser", "pjm_app_admin_media_pasAutoriserPhotos")
+            ->addAction("Supprimer", "pjm_app_admin_media_supprimerPhotos")
+            ->setWidth("20px")
+        ;
+
         $this->getColumnBuilder()
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
@@ -83,10 +92,6 @@ class PhotoDatatable extends AbstractDatatableView
                 )
             ))
         ;
-
-        //TODO supprimer image
-        //TODO valider image
-        //TODO forcer bonjour gadzart
     }
 
     /**

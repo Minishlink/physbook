@@ -7,3 +7,15 @@ pjm_app_admin_media_gestionPhotos:
 pjm_app_admin_media_photosResults:
     path:     /photos/results
     defaults: { _controller: PJMAppBundle:Media:photosResults }
+
+pjm_app_admin_media_autoriserPhotos:
+    path:     /photos/autoriser
+    defaults: { _controller: PJMAppBundle:Media:togglePublicationPhotos, autoriser: true }
+
+pjm_app_admin_media_pasAutoriserPhotos:
+    path:     /photos/non-autoriser
+    defaults: { _controller: PJMAppBundle:Media:togglePublicationPhotos, autoriser: false }
+
+pjm_app_admin_media_supprimerPhotos:
+    path:     /photos/supprimer
+    defaults: { _controller: PJMAppBundle:Media:supprimerPhotos }
