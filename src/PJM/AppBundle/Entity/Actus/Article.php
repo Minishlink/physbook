@@ -82,7 +82,7 @@ class Article
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM")
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist"})
      **/
     private $usersHM;
 

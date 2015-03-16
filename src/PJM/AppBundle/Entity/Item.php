@@ -81,19 +81,14 @@ class Item
     private $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
-     * @ORM\JoinTable(name="items_usersHm",
-     *      joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist"})
      **/
-    private $usersHm;
+    private $usersHM;
 
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->valid = true;
-        $this->usersHm = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -296,35 +291,25 @@ class Item
     }
 
     /**
-     * Add userHm
+     * Set usersHM
      *
-     * @param \PJM\UserBundle\Entity\User $userHm
+     * @param \PJM\AppBundle\Entity\UsersHM $usersHM
      * @return Item
      */
-    public function addUserHm(\PJM\UserBundle\Entity\User $userHm)
+    public function setUsersHM(\PJM\AppBundle\Entity\UsersHM $usersHM = null)
     {
-        $this->usersHm[] = $userHm;
+        $this->usersHM = $usersHM;
 
         return $this;
     }
 
     /**
-     * Remove userHm
+     * Get usersHM
      *
-     * @param \PJM\UserBundle\Entity\User $userHm
+     * @return \PJM\AppBundle\Entity\UsersHM
      */
-    public function removeUserHm(\PJM\UserBundle\Entity\User $userHm)
+    public function getUsersHM()
     {
-        $this->usersHm->removeElement($userHm);
-    }
-
-    /**
-     * Get usersHm
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsersHm()
-    {
-        return $this->usersHm;
+        return $this->usersHM;
     }
 }
