@@ -13,7 +13,7 @@ class AccueilController extends Controller
         $solde['brags'] = $utils->getSolde($this->getUser(), 'brags');
         $solde['pians'] = $utils->getSolde($this->getUser(), 'pians');
         $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');
-        $mazoutage = ($solde['pians'] < 0);
+        $mazoutage = ($solde['pians'] < -300);
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMUserBundle:User');
