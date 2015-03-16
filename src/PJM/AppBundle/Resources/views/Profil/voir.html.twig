@@ -12,7 +12,7 @@
     </h4>
 
     <p id="photo">
-        {% if user.photo is not null %}<img src="{{ asset(user.photo.image.webPath) }}" alt="{{ user.photo.image.alt }}">{% else %}<img src="{{ asset('images/accueil/bg.png') }}" alt="Pas de photo">{% endif %}
+        {% if user.photo is not null %}<img src="{{ asset(user.photo.image.webPath) }}" alt="{{ user.photo.image.alt }}">{% else %}<img src="{% if user.genre %}{{ asset('images/profil/Placeholder-F.png') }}{% else %}{{ asset('images/profil/Placeholder-M.png') }}{% endif %}" alt="Pas de photo">{% endif %}
     </p>
 
     {% if online %}<p>En ligne</p>{% endif %}
