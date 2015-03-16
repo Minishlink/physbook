@@ -230,7 +230,12 @@ body {
                 color: white;
                 text-transform: none !important;
                 display: inline-block;
+                max-width: 100%;
                 white-space: nowrap;
+
+                @media @miniphone {
+                    font-size: 2.1em;
+                }
             }
 
             #photoContainer {
