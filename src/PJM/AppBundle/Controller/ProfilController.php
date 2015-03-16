@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\Media\Photo;
 use PJM\UserBundle\Form\UserType;
+use PJM\AppBundle\Form\Media\PhotoType;
 
 class ProfilController extends Controller
 {
@@ -61,6 +63,47 @@ class ProfilController extends Controller
 
         return $this->render('PJMAppBundle:Profil:modifier.html.twig', array(
             'form' => $form->createView()
+        ));
+    }
+
+    public function modifierPhotoAction(Request $request, $nouvelle)
+    {
+        $user = $this->getUser();
+
+        $photo = $user->getPhoto();
+        if ($nouvelle) {
+            $photo = new Photo();
+        } else {
+            if ($photo === null) {
+                return $this->redirect($this->generateUrl('pjm_profil_changerPhoto'));
+            }
+        }
+
+        $form = $this->createForm(new PhotoType(), $photo, array(
+            'ajout' => $nouvelle
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            if ($nouvelle) {
+                $user->setPhoto($photo);
+                $em->persist($user);
+            } else {
+                $em->persist($photo);
+            }
+
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('fos_user_profile_show'));
+        }
+
+        return $this->render('PJMAppBundle:Profil:modifierPhoto.html.twig', array(
+            'form' => $form->createView(),
+            'nouvelle' => $nouvelle,
+            'photo' => $photo
         ));
     }
 

@@ -28,18 +28,20 @@ class PhotoType extends AbstractType
             ))
         ;
 
+        $choices = array(
+            '1' => "Pas autorisée",
+            '2' => "Autorisée",
+        );
         if ($options['admin']) {
-            $builder
-                ->add('publication', 'choice', array(
-                    'label' => "Publication sur Bonjour Gadz'Arts",
-                    'choices' => array(
-                        '1' => "Pas autorisée",
-                        '2' => "Autorisée",
-                        '3' => "Affichée"
-                    )
-                ))
-            ;
+            $choices['3'] = "Affichée";
         }
+
+        $builder
+            ->add('publication', 'choice', array(
+                'label' => "Publication sur Bonjour Gadz'Arts",
+                'choices' => $choices
+            ))
+        ;
 
         $builder->add('save', 'submit', array(
             'label' => 'Sauvegarder'

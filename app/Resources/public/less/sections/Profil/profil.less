@@ -1,0 +1,23 @@
+
+body {
+    &.profil {
+        @photoMaxHeight: 10em;
+
+        h4 {
+            display: inline-block;
+        }
+
+        .well {
+            min-height: @photoMaxHeight + 5em;
+        }
+
+        #photo {
+            float: left;
+            margin-right: 3em;
+
+            img {
+                max-height: @photoMaxHeight;
+            }
+        }
+    }
+}

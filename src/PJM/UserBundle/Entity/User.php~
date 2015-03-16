@@ -112,11 +112,23 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Responsable", mappedBy="user")
      **/
     private $responsables;
-    
+
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Inbox\Inbox", inversedBy="user", cascade={"persist", "remove"})
      **/
     private $inbox;
+
+    /**
+     * Photo de profil
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Media\Photo")
+     **/
+    private $photo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire")
+     **/
+    private $photosCreated;
 
     public function __toString()
     {
@@ -147,6 +159,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -447,5 +460,28 @@ class User extends BaseUser
     public function getResponsables()
     {
         return $this->responsables;
+    }
+
+    /**
+     * Set inbox
+     *
+     * @param \PJM\AppBundle\Entity\Inbox\Inbox $inbox
+     * @return User
+     */
+    public function setInbox(\PJM\AppBundle\Entity\Inbox\Inbox $inbox)
+    {
+        $this->inbox = $inbox;
+
+        return $this;
+    }
+
+    /**
+     * Get inbox
+     *
+     * @return \PJM\AppBundle\Entity\Inbox\Inbox
+     */
+    public function getInbox()
+    {
+        return $this->inbox;
     }
 }

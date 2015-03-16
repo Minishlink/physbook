@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use PJM\AppBundle\Form\Media\PhotoType;
+
 class UserType extends AbstractType
 {
     /**
@@ -15,10 +17,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
             ->add('bucque')
             ->add('fams')
-            ->add('bucque')
+            ->add('email')
             ->add('prenom')
             ->add('nom')
             ->add('telephone')

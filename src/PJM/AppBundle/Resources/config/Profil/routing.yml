@@ -2,6 +2,14 @@ pjm_profil_modifier:
     path:       /modifier
     defaults:   { _controller: PJMAppBundle:Profil:modifier }
 
+pjm_profil_changerPhoto:
+    path:       /changer/photo
+    defaults:   { _controller: PJMAppBundle:Profil:modifierPhoto, nouvelle: true }
+
+pjm_profil_modifierPhoto:
+    path:       /modifier/photo
+    defaults:   { _controller: PJMAppBundle:Profil:modifierPhoto, nouvelle: false }
+
 pjm_profil_annuaire:
     path:       /annuaire
     defaults:   { _controller: PJMAppBundle:Profil:annuaire }

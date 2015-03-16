@@ -1,0 +1,20 @@
+{% extends "PJMAppBundle:Profil:layout.html.twig" %}
+
+{% block categorieName %}{% if nouvelle %}Changer{% else %}Modifier{% endif %} ma photo{% endblock %}
+
+{% block pjm_app_body_content %}
+<p>
+    <a href="{{ path('fos_user_profile_show') }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Retour
+    </a>
+</p>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h3>{% if nouvelle %}Nouvelle photo{% else %}Photo actuelle{% endif %}</h3>
+        {% if photo.image is not null %}<img style="max-width: 100%; margin-bottom: 2em;" src="{{ asset(photo.image.webPath) }}" alt="{{ photo.image.alt }}" />{% endif %}
+
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}
