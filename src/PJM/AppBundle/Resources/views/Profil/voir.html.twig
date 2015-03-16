@@ -11,12 +11,18 @@
         {% if user.prenom != "" %}<br><small>dit <em>{{ user.prenom|capitalize }} {{ user.nom|capitalize }}</em></small>{% endif %}
     </h4>
 
+    <p id="photo">
+        {% if user.photo is not null %}<img src="{{ asset(user.photo.image.webPath) }}" alt="{{ user.photo.image.alt }}">{% else %}<img src="{{ asset('images/accueil/bg.png') }}" alt="Pas de photo">{% endif %}
+    </p>
+
     {% if online %}<p>En ligne</p>{% endif %}
 
     {% if user == app.user %}
     <ul>
         <li><a href="{{ path('pjm_profil_modifier') }}">Modifier mon profil</a></li>
         <li><a href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a></li>
+        {% if app.user.photo is not null %}<li><a href="{{ path('pjm_profil_modifierPhoto') }}">Régler les options de ma photo actuelle</a></li>{% endif %}
+        <li><a href="{{ path('pjm_profil_changerPhoto') }}">Changer ma photo de profil</a></li>
     </ul>
     {% else %}
     <p><a href="{{ path('pjm_app_inbox_nouveau', {'user': user.username}) }}" title="Envoyer un message à {{ user.bucque }}"><span class="glyphicon glyphicon-comment"></span> Envoyer un message</a></p>
