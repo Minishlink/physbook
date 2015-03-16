@@ -49,6 +49,7 @@ class Photo
 
     /**
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      **/
     private $image;
 
