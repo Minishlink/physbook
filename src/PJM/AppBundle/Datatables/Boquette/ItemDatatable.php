@@ -90,13 +90,13 @@ class ItemDatatable extends AbstractDatatableView
                     "title" => "Actions",
                     "actions" => array(
                         array(
-                            "route" => "pjm_app_admin_boquette_modifierImageItem",
+                            "route" => "pjm_app_admin_boquette_modifierItem",
                             "route_parameters" => array(
                                 "boquette" => "boquette.slug",
                                 "item" => "id"
                             ),
-                            "label" => "Modifier l'image",
-                            "icon" => "glyphicon glyphicon-picture",
+                            "label" => "Modifier",
+                            "icon" => "glyphicon glyphicon-edit",
                             "attributes" => array(
                                 "rel" => "tooltip",
                                 "title" => "Modifier",
