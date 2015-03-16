@@ -22,7 +22,7 @@ use PJM\AppBundle\Form\Consos\TransactionType;
 use PJM\AppBundle\Form\Admin\ResponsableType;
 use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Admin\FeaturedItemType;
-use PJM\AppBundle\Form\Admin\ImageItemType;
+use PJM\AppBundle\Form\Admin\ItemType;
 
 class BoquetteController extends Controller
 {
@@ -553,18 +553,18 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Modifier l'image d'un item
+     * [ADMIN] Modifier un item
      *
      * @ParamConverter("boquette", options={"mapping": {"boquette": "slug"}})
      */
-    public function modifierImageItemAction(Request $request, Boquette $boquette, Item $item)
+    public function modifierItemAction(Request $request, Boquette $boquette, Item $item)
     {
         $routeRetour = "pjm_app_admin_boquette_".$boquette->getSlug()."_index";
 
-        $form = $this->createForm(new ImageItemType(), $item, array(
+        $form = $this->createForm(new ItemType(), $item, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
-                'pjm_app_admin_boquette_modifierImageItem',
+                'pjm_app_admin_boquette_modifierItem',
                 array(
                     'boquette' => $boquette->getSlug(),
                     'item' => $item->getId()

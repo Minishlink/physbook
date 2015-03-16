@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use PJM\AppBundle\Form\ImageType;
 
-class ImageItemType extends AbstractType
+class ItemType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,10 @@ class ImageItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', new ImageType())
+            ->add('libelle')
+            ->add('image', new ImageType(), array(
+                'required' => false
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Modifier'
             ))
@@ -38,6 +41,6 @@ class ImageItemType extends AbstractType
      */
     public function getName()
     {
-        return 'pjm_appbundle_imageitem';
+        return 'pjm_appbundle_item';
     }
 }
