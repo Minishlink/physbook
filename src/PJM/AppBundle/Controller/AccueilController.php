@@ -20,11 +20,8 @@ class AccueilController extends Controller
         $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
         $listeConnectes = $repository->getActive($this->getUser());
 
-        $photo = array(
-            'url' => 'images/accueil/Niatur.jpg',
-            'legende' => 'Niatur aime la bonne wave',
-            'hm' => 123
-        );
+        $photo = $em->getRepository('PJMAppBundle:Media\Photo')
+                        ->findOneByPublication(3);
 
         $listeEvents = array(
             array(

@@ -4,21 +4,18 @@
     <div id="photoContainer">
         <div class="row">
             <div id="photo" class="col-md-8 col-md-offset-2">
-                <img class="img-responsive" src="{{ asset(photo.url) }}">
+                <img class="img-responsive" src="{% if photo is not null %}{{ asset(photo.image.webPath) }}{% else %}{{ asset('images/accueil/bg.png') }}{% endif %}" alt="Photo Bonjour Gadz'Arts">
             </div>
         </div>
         <div class="row">
             <div id="legende" class="col-md-8 col-md-offset-2">
-                <p>{{ photo.legende }}</p>
+                <p>{% if photo is not null %}{{ photo.legende }}{% else %}Pas encore de photo !{% endif %}</p>
             </div>
         </div>
     </div>
     <div id="hm" class="row">
         <div class="col-md-8 col-md-offset-2">
-            <p>
-                <img src="{{ asset('images/general/PhysHM-R.png') }}">
-                <strong>{{ photo.hm }}</strong> PG{{ photo.hm > 1 ? 's' : '' }} sont HM
-            </p>
+            {% if photo is not null %}{% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': photo.usersHM } %}{% endif %}
         </div>
     </div>
     <div id="enVoirPlus" class="row">
