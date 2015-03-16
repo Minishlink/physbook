@@ -33,7 +33,7 @@ class Photo
     /**
      * @var string
      *
-     * @ORM\Column(name="legende", type="string", length=160)
+     * @ORM\Column(name="legende", type="string", length=160, nullable=true)
      */
     private $legende;
 
@@ -67,6 +67,7 @@ class Photo
 
     public function __construct()
     {
+        $this->legende = "";
         $this->date = new \DateTime();
         $this->usersHM = new \PJM\AppBundle\Entity\UsersHM();
         $this->publication = 0;
@@ -90,6 +91,7 @@ class Photo
      */
     public function setLegende($legende)
     {
+        if ($legende === null) { $legende = ""; }
         $this->legende = $legende;
 
         return $this;

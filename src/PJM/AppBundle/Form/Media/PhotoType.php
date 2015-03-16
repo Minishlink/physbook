@@ -24,7 +24,8 @@ class PhotoType extends AbstractType
 
         $builder
             ->add('legende', null, array(
-                'label' => 'Légende'
+                'label' => 'Légende',
+                'required' => false
             ))
         ;
 
