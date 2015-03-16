@@ -14,10 +14,7 @@
                 <span class="prix">{{ produitMoment.prix|prix }}</span>
             </p>
 
-            <div class="usersHM">
-                <span>{% include "PJMAppBundle:Profil:show_users.html.twig" with { 'users': produitMoment.usersHM } %} HM</span>
-                {% render(url('pjm_app_boquette_itemHM', {item: produitMoment.id})) %}
-            </div>
+            {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': produitMoment.usersHM } %}
         </div>
     </div>
     {% endif %}

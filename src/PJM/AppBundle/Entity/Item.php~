@@ -74,19 +74,16 @@ class Item
     private $boquette;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
+    * @Assert\Valid()
+    */
     private $image;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
-     * @ORM\JoinTable(name="items_usersHm",
-     *      joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM")
      **/
-    private $usersHm;
+    private $usersHM;
 
     public function __construct()
     {
@@ -269,5 +266,28 @@ class Item
     public function getInfos()
     {
         return $this->infos;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \PJM\AppBundle\Entity\Image $image
+     * @return Item
+     */
+    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PJM\AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
