@@ -67,6 +67,7 @@ class Photo
     public function __construct()
     {
         $this->date = new \DateTime();
+        $this->usersHM = new \PJM\AppBundle\Entity\UsersHM();
         $this->publication = 0;
     }
 
