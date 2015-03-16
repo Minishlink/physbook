@@ -1,10 +1,6 @@
 $(document).ready(function () {
     popover_show_user(true);
-
-    $('a.show_users').webuiPopover({
-        closeable: true,
-        animation: 'fade',
-    });
+    init_show_users();
 
     // pour initialiser les popover dont les éléments associés ne sont pas dans le DOM au départ
     $('#fos_comment_thread').on('fos_comment_new_comment fos_comment_load_thread', function(e, data) {
@@ -14,6 +10,13 @@ $(document).ready(function () {
         popover_show_user(false);
     });
 });
+
+function init_show_users() {
+    $('a.show_users').webuiPopover({
+        closeable: true,
+        animation: 'fade',
+    });
+}
 
 function popover_show_user(first) {
     $('a.show_user').webuiPopover({
