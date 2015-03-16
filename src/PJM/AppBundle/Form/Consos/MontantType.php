@@ -32,6 +32,9 @@ class MontantType extends AbstractType
             ))
             ->add('save', 'submit', array(
                 'label' => 'Recharger',
+                'attr' => array(
+                    'class' => 'btn-primary',
+                )
             ))
         ;
     }
