@@ -38,6 +38,14 @@ pjm_app_admin:
     resource: "@PJMAppBundle/Resources/config/Admin/routing.yml"
     prefix:   /admin
 
+pjm_app_logo:
+    path:     /logo
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:App:logo.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+
 pjm_app_a_propos:
     path:     /a-propos
     defaults:

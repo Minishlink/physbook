@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block pageName %}{% endblock %}
+{% block categorieName %}{% endblock %}
+{% block pjm_app_body_title %}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background-color: #b63938;
+        text-align: center;
+    }
+
+    #logo {
+        background-color: #b63938;
+        max-width:100%;
+    }
+</style>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+{% block base_javascripts %}{% endblock %}
+
+{% block body %}
+<p>
+    <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook">
+        <img id="logo" src="{{ asset('images/general/logo+banniere.png') }}" alt="Phy'sbook" title="Phy'sbook"></a>
+</p>
+{% endblock %}
