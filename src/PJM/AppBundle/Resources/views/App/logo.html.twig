@@ -19,7 +19,9 @@
 {% endblock %}
 
 {% block javascripts %}
-
+<script type="text/javascript">
+    window.location.replace("{{ path('pjm_app_homepage') }}");
+</script>
 {% endblock %}
 {% block base_javascripts %}{% endblock %}
 
