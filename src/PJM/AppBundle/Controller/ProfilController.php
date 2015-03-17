@@ -89,6 +89,7 @@ class ProfilController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             if ($nouvelle) {
+                $photo->setProprietaire($user);
                 $user->setPhoto($photo);
                 $em->persist($user);
             } else {
