@@ -20,7 +20,18 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-    window.location.replace("{{ path('pjm_app_homepage') }}");
+var _paq = _paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+var u="//physbook.fr/web/piwik/";
+_paq.push(['setTrackerUrl', u+'piwik.php']);
+_paq.push(['setSiteId', 1]);
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+})();
+
+window.location.replace("{{ path('pjm_app_homepage') }}");
 </script>
 {% endblock %}
 {% block base_javascripts %}{% endblock %}
