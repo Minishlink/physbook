@@ -7,6 +7,8 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use PJM\AppBundle\Entity\UsersHM;
+
 /**
  * Article
  *
@@ -82,7 +84,7 @@ class Article
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist", "remove"})
      **/
     private $usersHM;
 
@@ -93,6 +95,7 @@ class Article
         $this->publication = false;
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->usersHM = new UsersHM();
     }
 
 
