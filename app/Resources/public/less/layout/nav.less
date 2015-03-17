@@ -37,17 +37,19 @@
             }
         }
 
-        display: none;
         position: fixed;
         top: @navbar-height;
         left: 0;
         width: 100%;
         z-index: 1;
         margin-left: 0px;
-        transition: all 2s ease-in-out;
 
-        &.pullDown {
-            display: block;
+        transition: all 0.4s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+
+        &.afficher {
+            max-height: 20em;
         }
     }
 

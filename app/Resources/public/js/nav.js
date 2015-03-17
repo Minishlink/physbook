@@ -70,27 +70,26 @@ $(document).ready(function () {
 
         // on cache tous les sous-menus et on affiche celui qui est cliqué
         var cible = $(this).attr('data-target');
+
         // si un sous-menu est visible
-        if($('ul[id^="menu-"]').is(":visible")) {
+        if($('ul[id^="menu-"]').is(".afficher")) {
+            console.log('test');
+            // on cache tous les sous-menus visibles autres que la cible
+            $('ul[id^="menu-"].afficher').not(cible).removeClass('afficher');
+
             // si un sous-menu est en passe d'être remonté (l'utilisateur a enlevé sa souris du menu)
             if(nav_timer) {
                 clearTimeout(nav_timer);
             }
-
-            // on cache tous les sous-menus visibles autres que la cible
-            $('ul[id^="menu-"]:visible').not(cible).slideUp(200, function() {
-                // on affiche la cible
-                $(cible).slideDown();
-            });
-        } else {
-            // si aucun sous-menu n'est visible on affiche directement la cible
-            $(cible).slideDown();
         }
+
+        // on affiche la cible
+        $(cible).addClass('afficher');
     });
 
     // si on clique sur le bouton navbar-toggle on cache les menus visibles
     $('.navbar-toggle, .navbar-header').click(function () {
-        $('ul[id^="menu-"]:visible').slideUp(100);
+        $('ul[id^="menu-"].afficher').removeClass('afficher');
     });
 
     /*
@@ -105,9 +104,13 @@ $(document).ready(function () {
         $('.navbar-brand').removeClass('active');
 
         // on cache le sous-menu au bout de 1s si on est pas revenu sur le menu
+        if(nav_timer) {
+            clearTimeout(nav_timer);
+        }
+
         nav_timer = setTimeout(function(){
             if (!$('#menu').is(':hover')) {
-                $('ul[id^="menu-"]').slideUp()
+                $('ul[id^="menu-"]').removeClass('afficher');
             }
         }, 1000);
         ;
