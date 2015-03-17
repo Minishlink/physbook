@@ -34,7 +34,13 @@ class NewUserType extends AbstractType
                     "pa" => "Paris",
                 )))
             ->add('proms', 'text')
+            ->add('genre', 'choice', array(
+                'choices' => array(
+                    "0" => "Masculin",
+                    "1" => "Féminin",
+                )))
             ->add('bucque', 'text')
+            ->add('genre', 'text')
             ->add('prenom', 'text')
             ->add('nom', 'text')
             ->add('telephone', 'text', array('required' => false))

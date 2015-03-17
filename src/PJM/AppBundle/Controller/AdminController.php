@@ -12,7 +12,7 @@ use PJM\AppBundle\Form\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Inbox;
+use PJM\AppBundle\Entity\Inbox\Inbox;
 use PJM\UserBundle\Entity\User;
 
 class AdminController extends Controller
@@ -221,6 +221,9 @@ class AdminController extends Controller
                     if (count($data) >= 6) {
                         // si il y a au moins le nombre de paramètres requis
                         $user = $userManager->createUser();
+
+                        // TODO faire genre
+                        $user->setGenre(0);
 
                         $user->setFams($data[0]);
                         $user->setTabagns(strtolower($data[1]));
