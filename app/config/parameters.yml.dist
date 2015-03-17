@@ -28,3 +28,5 @@ parameters:
     
     paiement.smoney.url: ***REMOVED***
     paiement.smoney.auth: Bearer ***REMOVED***
+    
+    canal: https
