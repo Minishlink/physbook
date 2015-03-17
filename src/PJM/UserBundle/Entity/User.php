@@ -134,7 +134,7 @@ class User extends BaseUser
     private $photo;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire", cascade={"persist", "remove"})
      **/
     private $photosCreated;
 
