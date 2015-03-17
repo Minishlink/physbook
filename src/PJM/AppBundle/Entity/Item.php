@@ -81,7 +81,7 @@ class Item
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist", "remove"})
      **/
     private $usersHM;
 
@@ -89,6 +89,7 @@ class Item
     {
         $this->date = new \DateTime();
         $this->valid = true;
+        $this->usersHM = new UsersHM();
     }
 
     public function __toString()
