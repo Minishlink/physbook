@@ -22,15 +22,24 @@
         {% endstylesheets %}
         {% endblock %}
 
+        <!-- WebApp Manifest -->
         <link rel="manifest" href="{{ asset('manifest.json') }}">
+
         <meta name="application-name" content="Phy'sbook">
+        <meta name="mobile-web-app-capable" content="yes">
         <meta name="theme-color" content="#b63938">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Phy'sbook">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="msapplication-navbutton-color" content="#b63938">
+        <meta name="msapplication-TileColor" content="#b63938">
+        <meta name="msapplication-tooltip" content="Démarrer Phy'sbook">
+        <meta name="msapplication-starturl" content="./">
 
         {% include '::favicon.html.twig' %}
         {% include '::startup.html.twig' %}
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-title" content="Phy'sbook">
-        <meta name="msapplication-TileColor" content="#2b5797">
 
         {% block base_javascripts %}
         <script type="text/javascript">
