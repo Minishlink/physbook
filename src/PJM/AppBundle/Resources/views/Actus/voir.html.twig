@@ -27,6 +27,7 @@
         </span>
         {% include "PJMAppBundle:App:physHM.html.twig" with { 'usersHM': article.usersHM } %}
 	</div>
-
-    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'article_' ~ article.id} %}
+    <div id="commentaires">
+        {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'article_' ~ article.id} %}
+    </div>
 {% endblock %}
