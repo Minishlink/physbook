@@ -220,7 +220,7 @@ class RezalSyncCommand extends ContainerAwareCommand
                 if (!in_array(trim($username), $ignoreUsernames)) {
                     $upCompte = $repository->findOneByUsernameAndBoquetteSlug($username, 'pians');
                     if ($upCompte === null) {
-                        $this->logger->notice("Compte non trouve ".$username);
+                        $this->logger->info("Compte non trouve ".$username);
                         continue;
                     }
                     $upCompte->setSolde($compte['montant']);
