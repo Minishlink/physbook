@@ -42,11 +42,13 @@ security:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
                 csrf_provider: form.csrf_provider
+                post_only: false
             logout:
                 path:   fos_user_security_logout
                 target: /
             remember_me:
                 key: %secret%
+                lifetime: 31536000
             anonymous: true
 
 
