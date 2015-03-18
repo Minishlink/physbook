@@ -147,6 +147,14 @@ class MediaController extends Controller
             foreach ($liste as $choice) {
                 $photo = $repository->find($choice["value"]);
                 if ($photo !== null) {
+                    $user = $photo->getProprietaire();
+                    if ($user !== null) {
+                        if ($user->getPhoto() == $photo) {
+                            $user->setPhoto(null);
+                            $em->persist($user);
+                        }
+                    }
+
                     $em->remove($photo);
                 }
             }
