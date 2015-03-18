@@ -4,7 +4,12 @@
     <div id="photoContainer">
         <div class="row">
             <div id="photo" class="col-md-8 col-md-offset-2">
-                <img class="img-responsive" src="{% if photo is not null %}{{ asset(photo.image.webPath) }}{% else %}{{ asset('images/accueil/bg.png') }}{% endif %}" alt="Photo Bonjour Gadz'Arts">
+                {% if photo is not null %}
+                {% set photoUrl = asset(photo.image.webPath) %}
+                {% else %}
+                {% set photoUrl = asset('images/accueil/bg.png') %}
+                {% endif %}
+                <a href="{{ photoUrl }}" target="_blank"><img class="img-responsive" src="{{ photoUrl }}" alt="Photo Bonjour Gadz'Arts"></a>
             </div>
         </div>
         <div class="row">
