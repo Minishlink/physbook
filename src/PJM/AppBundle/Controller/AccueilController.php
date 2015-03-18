@@ -25,9 +25,9 @@ class AccueilController extends Controller
 
         $listeEvents = array(
             array(
-                'titre' => "Election Asso 214",
-                'organisateur' => "CE",
-                'date' => new \DateTime('2014-03-17 19:00'),
+                'titre' => "Manip Quadriprom's",
+                'organisateur' => "Archis",
+                'date' => new \DateTime('2014-03-28'),
                 'journee' => false,
                 'couleur' => 'vert'
             ),
