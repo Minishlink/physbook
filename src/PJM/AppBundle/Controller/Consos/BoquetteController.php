@@ -194,9 +194,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Gère la liste des crédits pour une boquette. (accessible qu'aux harpag'ss)
-     *
-     * @Security("has_role('ROLE_HARPAGS')")
+     * [ADMIN] Gère la liste des crédits pour une boquette.
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
