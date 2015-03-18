@@ -115,12 +115,14 @@ class MediaController extends Controller
 
             foreach ($liste as $choice) {
                 $photo = $repository->find($choice["value"]);
-                if ($autoriser) {
-                    $photo->setPublication(2);
-                } else {
-                    $photo->setPublication(1);
+                if ($photo !== null) {
+                    if ($autoriser) {
+                        $photo->setPublication(2);
+                    } else {
+                        $photo->setPublication(1);
+                    }
+                    $em->persist($photo);
                 }
-                $em->persist($photo);
             }
 
             $em->flush();
@@ -144,7 +146,9 @@ class MediaController extends Controller
 
             foreach ($liste as $choice) {
                 $photo = $repository->find($choice["value"]);
-                $em->remove($photo);
+                if ($photo !== null) {
+                    $em->remove($photo);
+                }
             }
 
             $em->flush();
