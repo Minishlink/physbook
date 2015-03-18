@@ -15,10 +15,6 @@ class NewUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enabled', 'checkbox', array(
-                'label' => 'Activé',
-                'required' => false
-            ))
             ->add('email', 'email')
             ->add('fams', 'text')
             ->add('tabagns', 'choice', array(
@@ -36,17 +32,24 @@ class NewUserType extends AbstractType
             ->add('proms', 'text')
             ->add('genre', 'choice', array(
                 'choices' => array(
-                    "0" => "Masculin",
-                    "1" => "Féminin",
-                )))
+                    '0' => "Masculin",
+                    '1' => "Féminin",
+                )
+            ))
             ->add('bucque', 'text')
-            ->add('genre', 'text')
             ->add('prenom', 'text')
             ->add('nom', 'text')
             ->add('telephone', 'text', array('required' => false))
             ->add('appartement', 'text', array('required' => false))
             ->add('classe', 'text', array('required' => false))
             ->add('anniversaire', 'text', array('required' => false))
+            ->add('enabled', 'checkbox', array(
+                'label' => 'Activé',
+                'required' => false
+            ))
+            ->add('save', 'submit', array(
+                'label' => 'Ajouter'
+            ))
         ;
     }
 
