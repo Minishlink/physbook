@@ -1,1 +1,2 @@
-<a href="{{ path('pjm_profil_voir', {'username': user.username}) }}" class="show_user" data-url="{{ path('pjm_profil_encart', {'username': user.username, 'content': true}) }}" title="Profil de {{ user.bucque }}">{% if long is defined %}{{ user }}{% else %}{{ user.bucque }}{% endif %}</a>
+{% spaceless %}<a href="{{ path('pjm_profil_voir', {'username': user.username}) }}" class="show_user" data-url="{{ path('pjm_profil_encart', {'username': user.username, 'content': true}) }}" title="Profil de {{ user.bucque }}">{% if long is defined %}{{ user }}{% else %}{{ user.bucque }}{% endif %}</a>
+{% endspaceless %}
