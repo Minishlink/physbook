@@ -5,7 +5,7 @@
         {%- for user in users -%}
             {% if usernames is not defined %}{% set username = user.username %}{% else %}{% set username = user %}{% endif %}
             {% render(url('pjm_profil_encart', {'username': username})) %}
-            {%- if not loop.last -%}, {% endif %}
+            {%- if not loop.last -%}<span>, </span>{% endif %}
         {% endfor %}'>
 {% endif %}
 <span class="counter">{{ users|length }}</span>
