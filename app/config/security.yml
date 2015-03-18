@@ -63,6 +63,5 @@ security:
         - { path: ^/admin/boquette/asso/, roles: ROLE_ASSO }
         - { path: ^/admin/, roles: ROLE_ADMIN }
         - { path: ^/inbox/, roles: ROLE_BETA }
-        - { path: ^/event/, roles: ROLE_BETA }
         - { path: ^/, roles: ROLE_USER, requires_channel: %canal% }
 
