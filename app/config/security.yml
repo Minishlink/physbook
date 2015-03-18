@@ -42,7 +42,6 @@ security:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
                 csrf_provider: form.csrf_provider
-                post_only: false
             logout:
                 path:   fos_user_security_logout
                 target: /
@@ -54,7 +53,7 @@ security:
 
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: %canal% }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/smoney/retour, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logo, role: IS_AUTHENTICATED_ANONYMOUSLY }
