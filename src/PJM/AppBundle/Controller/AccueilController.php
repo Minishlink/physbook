@@ -28,7 +28,7 @@ class AccueilController extends Controller
                 'titre' => "Manip Quadriprom's",
                 'organisateur' => "Archis",
                 'date' => new \DateTime('2014-03-28'),
-                'journee' => false,
+                'journee' => true,
                 'couleur' => 'vert'
             ),
             array(
