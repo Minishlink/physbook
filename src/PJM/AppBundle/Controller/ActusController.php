@@ -162,7 +162,7 @@ class ActusController extends Controller
                         ->getManager()
                         ->getRepository('PJMAppBundle:Actus\Article')
                         ->findBy(
-                            array('publication' => true), // pas de critère
+                            array('publication' => true),
                             array('date' => 'desc'), // on trie par date décroissante
                             $nombre, // on sélectionne $nombre articles
                             0 // à partir du premier

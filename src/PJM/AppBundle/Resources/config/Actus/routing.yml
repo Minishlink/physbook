@@ -6,7 +6,7 @@ pjm_app_actus_index:
 
 pjm_app_actus_extrait:
     path:     /extrait/{nombre}
-    defaults: { _controller: PJMAppBundle:Actus:extrait, nombre: 3 }
+    defaults: { _controller: PJMAppBundle:Actus:extrait, nombre: 4 }
     requirements:
         nombre:  \d*
 
