@@ -38,6 +38,7 @@ class InboxController extends Controller
         $form = $this->createForm(new MessageType(), $message, array(
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_inbox_nouveau'),
+            'user' => $this->getUser()
         ));
 
         if ($user !== null) {

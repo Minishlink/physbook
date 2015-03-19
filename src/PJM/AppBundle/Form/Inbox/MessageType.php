@@ -37,6 +37,24 @@ class MessageType extends AbstractType
             ->add('contenu', "textarea", array(
                 'attr'=> array('style' => 'min-height: 20em;')
             ))
+            ->add('boquette', 'entity', array(
+                'label' => 'De la part d\'une boquette ?',
+                'class'    => 'PJMAppBundle:Boquette',
+                'error_bubbling' => true,
+                'query_builder' => function(EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('b')
+                        ->join('b.responsabilites', 'r')
+                        ->join('r.responsables', 're')
+                        ->where('re.user = :user')
+                        ->andWhere('re.active = true')
+                        ->setParameter(':user', $options['user'])
+                    ;
+                },
+                'property' => 'nom',
+                'empty_value' => 'Non',
+                'empty_data'  => null,
+                'required' => false
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Envoi',
             ))
@@ -50,6 +68,7 @@ class MessageType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Inbox\Message',
+            'user' => null,
         ));
     }
 
