@@ -32,13 +32,13 @@ class InboxController extends Controller
      * @return object HTML Response
      * @ParamConverter("user", options={"mapping": {"user": "username"}})
      */
-    public function nouveauAction(Request $request, User $user = null)
+    public function nouveauAction(Request $request, User $user = null, $annonce = false)
     {
         $message = new Message();
         $form = $this->createForm(new MessageType(), $message, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_inbox_nouveau'),
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'annonce' => $annonce
         ));
 
         if ($user !== null) {
@@ -54,6 +54,13 @@ class InboxController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $message->setExpedition($this->getUser()->getInbox());
+                $message->setIsAnnonce($annonce);
+
+                if($annonce) {
+                    if ($message->getBoquette() !== null) {
+                        throw $this->createAccessDeniedException('Il faut être responsable de boquette.');
+                    }
+                }
 
                 $destinataires = array();
                 foreach($message->getReceptions() as $reception) {
@@ -76,6 +83,7 @@ class InboxController extends Controller
         return $this->render('PJMAppBundle:Inbox:nouveau.html.twig', array(
             'form' => $form->createView(),
             'destinataire' => isset($user) ? $user : null,
+            'annonce' => $annonce,
         ));
     }
 

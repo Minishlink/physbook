@@ -1,10 +1,27 @@
 {% extends "PJMAppBundle:Inbox:layout.html.twig" %}
 
-{% block categorieName %}{% if destinataire is null %}Envoi d'un message{% else %}Message à {{ destinataire.bucque }}{% endif %}{% endblock %}
+{% block categorieName %}{% if destinataire is null %}Envoi {% if not annonce %}d'un message{% else %}d'une annonce{% endif %}{% else %}{% if not annonce %}Message{% else %}Annonce{% endif %} à {{ destinataire.bucque }}{% endif %}{% endblock %}
 
 {% block pjm_app_body_content %}
-<p><a href="{{ path('pjm_app_inbox_index') }}" class="btn btn-default">Retour</a></p>
+<p>
+    <a href="{{ path('pjm_app_inbox_index') }}" class="btn btn-default">Retour</a>
+</p>
+
+{% if annonce and app.user.responsables is null %}
+<div class="alert alert-warning">Cette page n'est accessible qu'aux responsables de boquettes.</div>
+<div class="alert alert-info">Si ta boquette n'est pas sur Phy'sbook, envoie un mail à <a href="{{ path('pjm_app_contact') }}">zi@physbook.fr</a> !</div>
+{% else %}
+
+<p>
+    Les annonces servent à envoyer un message important, en tant que responsable de boquette, souvent à une grande partie de personne. Elle apparaîtra sur la page d'accueil des destinataires.
+</p>
+<p>
+    La modération n'est pas activée. Cela signifie que l'annonce sera diffusée instantanément sans contrôle. En cas d'abus, de flood, de message non ciblé, la modération sera activée.
+</p>
+
 {{ form_javascript(form) }}
 {{ form_stylesheet(form) }}
 {{ form(form) }}
+
+{% endif %}
 {% endblock %}

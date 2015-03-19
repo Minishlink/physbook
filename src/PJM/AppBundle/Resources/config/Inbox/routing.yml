@@ -2,9 +2,14 @@ pjm_app_inbox_index:
     path:     /
     defaults: { _controller: PJMAppBundle:Inbox:index }
 
-pjm_app_inbox_nouveau:
-    path:     /nouveau/{user}
-    defaults: { _controller: PJMAppBundle:Inbox:nouveau, user: null }
+pjm_app_inbox_nouveauMessage:
+    path:     /nouveau-message/{user}
+    defaults: { _controller: PJMAppBundle:Inbox:nouveau, user: null, annonce: false }
+
+pjm_app_inbox_nouvelleAnnonce:
+    path:     /nouvelle-annonce/{user}
+    defaults: { _controller: PJMAppBundle:Inbox:nouveau, user: null, annonce: true }
+
 
 pjm_app_inbox_lu:
     path:     /lu/{reception}
