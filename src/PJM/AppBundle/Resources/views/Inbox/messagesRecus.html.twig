@@ -4,6 +4,11 @@
     {% for reception in receptions %}
     <div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
         <div class="panel panel-default">
+            {% if reception.message.boquette is not null %}
+            <div class="panel-heading">
+                <div class="panel-title">{{ reception.message.boquette }}</div>
+            </div>
+            {% endif %}
             <div class="panel-body">
                 <p>
                     <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>

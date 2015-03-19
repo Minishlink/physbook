@@ -65,6 +65,14 @@ class Message
     private $expedition;
 
     /**
+     * Si de la part d'une boquette, laquelle
+     *
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $boquette;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -275,5 +283,28 @@ class Message
     public function getDestinataires()
     {
         return $this->destinataires;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Message
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
     }
 }
