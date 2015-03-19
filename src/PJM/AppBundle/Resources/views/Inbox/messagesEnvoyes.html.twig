@@ -2,7 +2,7 @@
     {% if messages|length > 0 %}
     {% for message in messages %}
     <div class="message" data-message="{{ message.id }}">
-        <div class="panel panel-default">
+        <div class="panel panel-{% if not message.isAnnonce %}default{% else %}info{% endif %}">
             {% if message.boquette is not null %}
             <div class="panel-heading">
                 <div class="panel-title">{{ message.boquette }}</div>
