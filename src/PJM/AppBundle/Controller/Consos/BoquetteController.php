@@ -267,6 +267,18 @@ class BoquetteController extends Controller
     }
 
     /**
+     * [ADMIN] Page par défaut des boquettes
+     * @param  object   Boquette $boquette
+     */
+    public function defaultAdminAction(Boquette $boquette)
+    {
+        return $this->render('PJMAppBundle:Admin:Boquette/default.html.twig', array(
+            'boquette' => $boquette,
+        ));
+    }
+
+
+    /**
      * [ADMIN] Action ajax de rendu de la liste des crédits d'une boquette.
      */
     public function creditsResultsAction($boquette_slug)
