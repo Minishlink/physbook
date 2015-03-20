@@ -4,8 +4,8 @@
         {% include "PJMAppBundle:Consos:Cvis/produits.html.twig" %}
     </div>
     <div id="catalogueFleches" class="row">
-        <span class="glyphicon glyphicon-menu-left fleche fleche-gauche"></span>
-        <span class="glyphicon glyphicon-menu-right fleche fleche-droite disabled"></span>
+        <span class="glyphicon glyphicon-menu-left fleche fleche-gauche disabled"></span>
+        <span class="glyphicon glyphicon-menu-right fleche fleche-droite"></span>
     </div>
     {% endif %}
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
         var lastProduit = $('.produit:visible:last');
         var produitToHide, nextProduit;
 
-        if (gauche) {
+        if (!gauche) {
             produitToHide = firstProduit;
             nextProduit = $(lastProduit).next('.produit');
         } else {
@@ -73,22 +73,17 @@ $(document).ready(function () {
                     init_show_users();
                     catalogueActif = false;
 
-                    if (gauche) {
-                        if($('.produit:visible:last').next('.produit').length == 0) {
-                            $('.fleche-gauche').addClass('disabled');
-                        }
+                    var fleche = $('.fleche-' + (gauche ? 'gauche' : 'droite'));
+                    var flecheOpposee = $('.fleche-' + (!gauche ? 'gauche' : 'droite'));
 
-                        if ($('.fleche-droite').is('.disabled')) {
-                            $('.fleche-droite').removeClass('disabled');
-                        }
-                    } else {
-                        if($('.produit:visible:first').prev('.produit').length == 0) {
-                            $('.fleche-droite').addClass('disabled');
-                        }
+                    if($('.produit:visible:last').next('.produit').length == 0 && gauche) {
+                        fleche.addClass('disabled');
+                    } else if($('.produit:visible:first').prev('.produit').length == 0 && !gauche) {
+                        fleche.addClass('disabled');
+                    }
 
-                        if ($('.fleche-gauche').is('.disabled')) {
-                            $('.fleche-gauche').removeClass('disabled');
-                        }
+                    if (flecheOpposee.is('.disabled')) {
+                        flecheOpposee.removeClass('disabled');
                     }
                 });
             });
