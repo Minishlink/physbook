@@ -28,7 +28,11 @@ $(document).ready(function () {
 
         if (!catalogueCharge) {
              // on charge les prochains produits
-            $('#catalogueFleches').append('<span class="icon-chargement fleche-' + (gauche ? 'gauche' : 'droite') + '" style="display: none;"></span>');
+            if (gauche) {
+                $('#catalogueFleches').prepend('<span class="icon-chargement" style="display: none;"></span>');
+            } else {
+                $('#catalogueFleches').append('<span class="icon-chargement" style="display: none;"></span>');
+            }
 
             $(this).fadeOut(function() {
                 $('#catalogueFleches .icon-chargement').fadeIn(function() {
@@ -41,6 +45,7 @@ $(document).ready(function () {
                     req.done(function (data) {
                         $('#catalogueContainer').append(data);
                         $('#catalogue .icon-chargement').fadeOut(function () {
+                            $(this).remove();
                             $('#catalogueFleches .fleche.fleche-' + (gauche ? 'gauche' : 'droite')).fadeIn(function () {
                                 catalogueCharge = true;
                                 majCatalogue(gauche);
