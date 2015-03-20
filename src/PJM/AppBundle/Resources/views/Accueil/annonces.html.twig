@@ -1,0 +1,17 @@
+{% if annonces|length > 0 %}
+<div id="annonces" class="container">
+    <div class="col-md-4 col-md-offset-4">
+{% for annonce in annonces %}
+        <div class="alert alert-info">
+            <p>
+                [{{ annonce.message.boquette }}] {{ annonce.message.contenu }}
+            </p>
+            <p>
+                <a href="">Marquer comme lu</a>
+            </p>
+            {# TODO afficher date si > 3 jours #}
+        </div>
+{% endfor %}
+    </div>
+</div>
+{% endif %}
