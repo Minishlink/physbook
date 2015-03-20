@@ -25,6 +25,8 @@ fos_user_profile_show:
 pjm_profil_voir:
     path:       /voir/{username}
     defaults:   { _controller: PJMAppBundle:Profil:voir }
+    options:
+        expose: true
 
 pjm_profil_encart:
     path:       /encart/{username}/{content}
