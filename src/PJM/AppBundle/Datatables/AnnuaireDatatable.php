@@ -23,7 +23,7 @@ class AnnuaireDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 5, "direction" => "desc"))
+            ->setOrder(array("column" => 2, "direction" => "asc"))
             ->setPageLength(25)
         ;
 
