@@ -111,20 +111,20 @@ class BoquetteController extends Controller
         return $items;
     }
 
-    public function compterAchatsItem($itemSlug)
+    public function compterAchatsItem($itemSlug, $month = null, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('PJMAppBundle:Historique')
-            ->countByItemSlug($itemSlug);
+            ->countByItemSlug($itemSlug, $month, $year);
 
         return $nb;
     }
 
-    public function compterAchatsBoquette()
+    public function compterAchatsBoquette($month = null, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('PJMAppBundle:Historique')
-            ->countByBoquetteSlug($this->slug);
+            ->countByBoquetteSlug($this->slug, $month, $year);
 
         return $nb;
     }
