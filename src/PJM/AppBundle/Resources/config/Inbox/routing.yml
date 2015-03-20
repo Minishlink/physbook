@@ -5,6 +5,8 @@ pjm_app_inbox_index:
 pjm_app_inbox_nouveauMessage:
     path:     /nouveau-message/{user}
     defaults: { _controller: PJMAppBundle:Inbox:nouveau, user: null, annonce: false }
+    options:
+        expose: true
 
 pjm_app_inbox_nouvelleAnnonce:
     path:     /nouvelle-annonce/{user}

@@ -23,7 +23,7 @@ class AnnuaireDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 4, "direction" => "desc"))
+            ->setOrder(array("column" => 5, "direction" => "desc"))
             ->setPageLength(25)
         ;
 
@@ -32,6 +32,39 @@ class AnnuaireDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
+            ->add(null, "action", array(
+                "title" => "Actions",
+                "actions" => array(
+                    array(
+                        "route" => "pjm_profil_voir",
+                        "route_parameters" => array(
+                            "username" => "username"
+                        ),
+                        "label" => "",
+                        "icon" => "glyphicon glyphicon-user",
+                        "attributes" => array(
+                            "rel" => "tooltip",
+                            "title" => "Voir son profil",
+                            "class" => "btn btn-default btn-xs",
+                            "role" => "button"
+                        ),
+                    ),
+                    array(
+                        "route" => "pjm_app_inbox_nouveauMessage",
+                        "route_parameters" => array(
+                            "user" => "username"
+                        ),
+                        "label" => "",
+                        "icon" => "glyphicon glyphicon-comment",
+                        "attributes" => array(
+                            "rel" => "tooltip",
+                            "title" => "Lui envoyer un message",
+                            "class" => "btn btn-default btn-xs",
+                            "role" => "button"
+                        ),
+                    ),
+                )
+            ))
             ->add('username', 'column', array(
                 'title' => 'Username',
                 'visible' => false
