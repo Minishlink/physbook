@@ -173,20 +173,22 @@ class HistoriqueRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function countByItemSlug($itemSlug)
+    public function countByItemSlug($item, $month, $year)
     {
         $qb = $this->createQueryBuilder('h')
             ->select('sum(h.nombre)')
-            ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
+            ->join('h.item', 'i', 'WITH', 'i.slug = :item OR i.libelle = :item')
             ->setParameters(array(
-                'item_slug'  => $itemSlug
+                'item'  => $item
             ))
         ;
+
+        $qb = $this->triParDate($qb, $month, $year);
 
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
 
-    public function countByBoquetteSlug($boquetteSlug)
+    public function countByBoquetteSlug($boquetteSlug, $month, $year)
     {
         $qb = $this->createQueryBuilder('h')
             ->select('sum(h.nombre)')
@@ -196,6 +198,8 @@ class HistoriqueRepository extends EntityRepository
                 'boquette_slug'  => $boquetteSlug
             ))
         ;
+
+        $qb = $this->triParDate($qb, $month, $year);
 
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
@@ -219,6 +223,13 @@ class HistoriqueRepository extends EntityRepository
             $qb->setMaxResults($limit);
         }
 
+        $qb = $this->triParDate($qb, $month, $year);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function triParDate($qb, $month, $year)
+    {
         if ($month != null) {
             if ($year == null) {
                 $year = date('Y');
@@ -237,7 +248,7 @@ class HistoriqueRepository extends EntityRepository
             ;
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 
     public function callbackFindByBoquetteSlug($boquette_slug)
