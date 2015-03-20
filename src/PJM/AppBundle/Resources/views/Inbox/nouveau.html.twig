@@ -12,12 +12,14 @@
 <div class="alert alert-info">Si ta boquette n'est pas sur Phy'sbook, envoie un mail à <a href="{{ path('pjm_app_contact') }}">zi@physbook.fr</a> !</div>
 {% else %}
 
+{% if annonce %}
 <p>
     Les annonces servent à envoyer un message important, en tant que responsable de boquette, souvent à une grande partie de personne. Elle apparaîtra sur la page d'accueil des destinataires.
 </p>
 <p>
     La modération n'est pas activée. Cela signifie que l'annonce sera diffusée instantanément sans contrôle. En cas d'abus, de flood, de message non ciblé, la modération sera activée.
 </p>
+{% endif %}
 
 {{ form_javascript(form) }}
 {{ form_stylesheet(form) }}
