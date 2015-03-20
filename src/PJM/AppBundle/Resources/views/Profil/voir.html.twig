@@ -25,7 +25,7 @@
         <li><a href="{{ path('pjm_profil_changerPhoto') }}">Changer ma photo de profil</a></li>
     </ul>
     {% else %}
-    <p><a href="{{ path('pjm_app_inbox_nouveau', {'user': user.username}) }}" title="Envoyer un message à {{ user.bucque }}"><span class="glyphicon glyphicon-comment"></span> Envoyer un message</a></p>
+    <p><a href="{{ path('pjm_app_inbox_nouveauMessage', {'user': user.username}) }}" title="Envoyer un message à {{ user.bucque }}"><span class="glyphicon glyphicon-comment"></span> Envoyer un message</a></p>
     {% endif %}
 </div>
 
