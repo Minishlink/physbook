@@ -78,7 +78,7 @@ class Article
     private $categories;
 
     /**
-    * @Gedmo\Slug(fields={"titre"})
+    * @Gedmo\Slug(fields={"titre"}, updatable=false)
     * @ORM\Column(length=128, unique=true)
     */
     private $slug;
