@@ -6,7 +6,7 @@
         <div class="panel panel-{% if not reception.message.isAnnonce %}default{% else %}info{% endif %}">
             {% if reception.message.boquette is not null %}
             <div class="panel-heading">
-                <div class="panel-title">{{ reception.message.boquette }}</div>
+                <div class="panel-title">{% if reception.message.isAnnonce %}<span class="glyphicon glyphicon-bullhorn"></span> {% endif %}{{ reception.message.boquette }}</div>
             </div>
             {% endif %}
             <div class="panel-body">
