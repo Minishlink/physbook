@@ -1,17 +1,42 @@
 {% if annonces|length > 0 %}
 <div id="annonces" class="container">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-6 col-md-offset-3">
 {% for annonce in annonces %}
-        <div class="alert alert-info">
-            <p>
-                [{{ annonce.message.boquette }}] {{ annonce.message.contenu }}
+        <div class="annonce annonce-{{ annonce.id }} transition alert alert-info expandOpen">
+            <span class="pull-right"><a class="btn btn-default btn-xs" data-reception="{{ annonce.id }}" title="Marquer comme lu"><span class="glyphicon glyphicon-ok"></span></a></span>
+            <p class="text-center">
+                <strong>{{ annonce.message.boquette }}</strong><br>
+                <small>{{ annonce.message.date|date('d/m') }}</small>
             </p>
             <p>
-                <a href="">Marquer comme lu</a>
+                {{ annonce.message.contenu }}
             </p>
-            {# TODO afficher date si > 3 jours #}
         </div>
 {% endfor %}
     </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.annonce a[data-reception]').click(function() {
+            var id = $(this).attr('data-reception');
+            var message = $('.annonce.annonce-' + id);
+
+            if (!message.is('.processing')) {
+                chargement(true);
+                message.addClass('processing');
+
+                $.post(Routing.generate('pjm_app_inbox_lu', {reception: id }), function() {
+                    message.slideUp();
+                })
+                .fail(function() {
+                    message.removeClass('processing');
+                })
+                .always(function() {
+                    chargement(false);
+                });
+            }
+        });
+    });
+    </script>
 </div>
 {% endif %}
