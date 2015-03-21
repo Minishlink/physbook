@@ -91,18 +91,9 @@ class IntranetExtension extends \Twig_Extension
 
     public function tabagnsFilter($string)
     {
-        $map = array(
-            'bo' => "Bordel's",
-            'li' => "Birse",
-            'an' => "Boquette",
-            'me' => "Siber's",
-            'ch' => "Chalon's",
-            'cl' => "Clun's",
-            'ai' => "KIN",
-            'ka' => "K'nak",
-            'pa' => "P2",
-            '' => ''
-        );
+        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+        $map = $userEnum->getTabagnsChoices(true);
+        $map[''] = '';
 
         return array_key_exists($string, $map)
             ? $map[$string]
