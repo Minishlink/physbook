@@ -252,6 +252,17 @@ class HistoriqueRepository extends EntityRepository
         return $qb;
     }
 
+    public function findByBoquetteSlug($boquette_slug)
+    {
+        $qb = $this->createQueryBuilder('Historique')
+            ->join('Historique.item', 'i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameter('boquette_slug', $boquette_slug)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         return function($qb) use($boquette_slug) {
