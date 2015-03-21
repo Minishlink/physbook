@@ -57,7 +57,7 @@ class InboxController extends Controller
                 $message->setIsAnnonce($annonce);
 
                 if($annonce) {
-                    if ($message->getBoquette() !== null) {
+                    if ($message->getBoquette() === null) {
                         throw $this->createAccessDeniedException('Il faut être responsable de boquette.');
                     }
                 }
