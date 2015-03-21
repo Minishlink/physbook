@@ -24,10 +24,7 @@ class NewUserType extends AbstractType
             ))
             ->add('proms', 'text')
             ->add('genre', 'choice', array(
-                'choices' => array(
-                    '0' => "Masculin",
-                    '1' => "Féminin",
-                )
+                'choices' => array_reverse($userEnum->getGenreChoices(true)) // plus fréquent d'inscrire des hommes
             ))
             ->add('bucque', 'text')
             ->add('prenom', 'text')
