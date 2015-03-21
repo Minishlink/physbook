@@ -34,6 +34,7 @@ class UserRepository extends EntityRepository
         $qb = $this->createQueryBuilder('u')
             ->where('u.lastActivity > :delay')
             ->setParameter('delay', $delay)
+            ->orderBy('u.lastActivity', 'desc')
         ;
 
         if ($excludedUser !== null) {
