@@ -26,4 +26,17 @@ class UserEnum
 
         return array_keys($choices);
     }
+
+    public static function getGenreChoices($withValues = false) {
+        $choices = array(
+            1 => 'Féminin',
+            0 => 'Masculin',
+        );
+
+        if ($withValues) {
+            return $choices;
+        }
+
+        return array_keys($choices);
+    }
 }
