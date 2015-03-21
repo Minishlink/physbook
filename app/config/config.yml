@@ -28,7 +28,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form:
-        resources: ['bootstrap_3_layout.html.twig']
+        resources:
+            - 'bootstrap_3_layout.html.twig'
+            - LexikFormFilterBundle:Form:form_div_layout.html.twig
 
 # Assetic Configuration
 assetic:
