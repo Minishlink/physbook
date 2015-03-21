@@ -134,6 +134,7 @@ class HistoriqueRepository extends EntityRepository
                     ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                     ->setParameter('boquette_slug', $boquetteSlug)
                     ->orderBy('h.date', 'desc')
+                    ->addOrderBy('h.id', 'desc')
                     ->setMaxResults(1)
                     ->getQuery();
 
