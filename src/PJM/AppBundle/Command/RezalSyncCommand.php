@@ -173,7 +173,7 @@ class RezalSyncCommand extends ContainerAwareCommand
             $lastHistorique = $repository->findLastValidByBoquetteSlug($boquetteSlug);
             $listeHistRezal = null;
             if ($lastHistorique !== null) {
-                $date = $lastHistorique->getDate()->format('Y-m-d H:i');
+                $date = $lastHistorique->getDate()->format('Y-m-d H:i:s');
                 $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, $date);
             } else {
                 $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug);
