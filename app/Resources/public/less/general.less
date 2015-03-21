@@ -132,6 +132,23 @@ button.physHM {
     }
 }
 
+.processing {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.transition {
+    transition: all 0.4s ease-in-out;
+
+    &.transition-rapide {
+        transition-duration: 0.2s;
+    }
+
+    &.transition-lente {
+        transition-duration: 0.8s;
+    }
+}
+
 .glyphicon-refresh-animate {
     .animation-name(spin);
     .animation-duration(4000ms);
