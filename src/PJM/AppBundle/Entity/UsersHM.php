@@ -23,6 +23,7 @@ class UsersHM
 
     /**
      * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\OrderBy({"bucque" = "ASC"})
      **/
     private $users;
 
