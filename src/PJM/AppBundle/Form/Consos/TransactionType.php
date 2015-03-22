@@ -21,6 +21,7 @@ class TransactionType extends AbstractType
     {
         $enum = new \PJM\AppBundle\Enum\TransactionEnum();
         $moyenPaiementsChoices = $enum->getMoyenPaiementChoices(true);
+        unset($moyenPaiementsChoices['smoney']);
         unset($moyenPaiementsChoices['initial']);
 
         $builder
