@@ -51,9 +51,6 @@ class BragsForceCommand extends ContainerAwareCommand
             );
         }
 
-        //debug
-        $url = 'C:\Users\Louis\Documents\Programmation\Sites\pjm-intranet\web\test.xlsx';
-
         if (!file_exists($url)) {
             $this->logger->warn("Le fichier '".$url."' n'existe pas !");
             return;
