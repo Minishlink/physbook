@@ -13,7 +13,7 @@ class ResponsableFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('responsabilite', 'genemu_jqueryselect2_entity', array(
+            ->add('responsabilite', 'filter_entity', array(
                 'label' => 'Responsabilité',
                 'class' => 'PJMAppBundle:Responsabilite',
                 'query_builder' => function(EntityRepository $er) use ($options) {
