@@ -264,6 +264,7 @@ class Utils
                     foreach ($commandes as $commande) {
                         // bucquer dans l'historique
                         $historique = new Historique();
+                        $historique->setDate($date);
                         $historique->setCommande($commande);
                         $historique->setValid(true);
                         $this->em->persist($historique);
@@ -292,7 +293,7 @@ class Utils
             // TODO sql solde < 0...
             $compte = $repositoryCompte->findOneByUserAndBoquetteSlug($user, $boquette->getSlug());
             if ($compte->getSolde() < -500) {
-                $this->mailer->sendAlerteSolde($compte);
+                //$this->mailer->sendAlerteSolde($compte);
             }
         }
 
