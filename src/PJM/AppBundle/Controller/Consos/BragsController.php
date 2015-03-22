@@ -120,6 +120,18 @@ class BragsController extends BoquetteController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                $kagib = $this->getUser()->getAppartement();
+                if ($kagib === null || !preg_match("/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/", substr($kagib,0,2))) {
+                    print('nope');
+                    die();
+                    $request->getSession()->getFlashBag()->add(
+                        'danger',
+                        "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons\" (SFK)."
+                    );
+
+                    return $this->redirect($this->generateUrl('pjm_app_boquette_brags_index'));
+                }
+
                 $commande->setItem($this->getCurrentBaguette());
                 $commande->setUser($this->getUser());
                 $commande->setNombre($commande->getNombre()*10);
