@@ -1,4 +1,17 @@
 $(document).ready(function () {
+    // fix safari ios web app
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    if (window.navigator.standalone && /iphone|ipod|ipad/.test(userAgent)) {
+        console.warn('iOS standalone webapp fix');
+        $('a').on('click', function(e) {
+            e.preventDefault();
+            var new_location = $(this).attr('href');
+            if (new_location != undefined && new_location.substr(0, 1) != '#' && $(this).attr('data-method') == undefined) {
+                window.location = new_location;
+            }
+        });
+    }
+
     // slider
     $('ul.enable-slider').append('<div id="nav-slider" class="hidden-collapsed"></div>');
 
