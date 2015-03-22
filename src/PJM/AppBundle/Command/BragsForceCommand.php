@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Commande;
+use PJM\AppBundle\Entity\Transaction;
 
 class BragsForceCommand extends ContainerAwareCommand
 {
@@ -136,8 +137,13 @@ class BragsForceCommand extends ContainerAwareCommand
 
                             // on modifie le solde
                             $compte = $compte_repo->findOneByUserAndBoquetteSlug($user, $slug);
-                            $compte->crediter($solde);
-                            $this->em->persist($compte);
+                            $transaction = new Transaction();
+                            $transaction->setMoyenPaiement('initial');
+                            $transaction->setCompte($compte);
+                            $transaction->setMontant($solde);
+                            $transaction->setStatus("OK");
+                            $transaction->finaliser();
+                            $this->em->persist($transaction);
 
                             $ok = true;
                         }
