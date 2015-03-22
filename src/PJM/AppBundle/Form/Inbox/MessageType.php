@@ -29,6 +29,7 @@ class MessageType extends AbstractType
                     ->join('r.responsables', 're')
                     ->where('re.user = :user')
                     ->andWhere('re.active = true')
+                    ->andWhere('r.niveau <= 1')
                     ->setParameter(':user', $options['user'])
                 ;
             },

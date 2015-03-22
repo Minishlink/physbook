@@ -296,6 +296,7 @@ class BoquetteController extends Controller
      */
     public function gestionResponsablesAction(Request $request, Boquette $boquette)
     {
+        $utils = $this->get('pjm.services.utils');
         $responsable = new Responsable();
 
         $form = $this->createForm(new ResponsableType(), $responsable, array(
@@ -312,52 +313,59 @@ class BoquetteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($responsable);
-
-                $userManager = $this->get('fos_user.user_manager');
-                $user = $responsable->getUser();
-                $role = $responsable->getResponsabilite()->getRole();
-
-                if ($responsable->getActive()) {
-                    if (!$user->hasRole($role)) {
-                        $user->addRole($role);
-                        $userManager->updateUser($user, false);
-                    }
-
-                    $em->flush();
-
-                    $request->getSession()->getFlashBag()->add(
-                        'success',
-                        $user.' est maintenant '.$responsable->getResponsabilite().' dans '.$boquette.'.'
-                    );
-                } else {
-                    if ($user->hasRole($role)) {
-                        $user->removeRole($role);
-                        $userManager->updateUser($user, false);
-                    }
-
-                    $em->flush();
-
-                    $request->getSession()->getFlashBag()->add(
-                        'success',
-                        $user.' n\'est plus '.$responsable->getResponsabilite().' dans '.$boquette.'.'
-                    );
-                }
-            } else {
+            if (!$utils->estNiveauUn($this->getUser(), $boquette)) {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    'Un problème est survenu lors de la modification du responsable. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
+                    'Il faut que tu ait un niveau hiérarchique plus haut pour faire cette action.'
                 );
+            } else {
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($responsable);
 
-                $data = $form->getData();
+                    $userManager = $this->get('fos_user.user_manager');
+                    $user = $responsable->getUser();
+                    $role = $responsable->getResponsabilite()->getRole();
 
-                foreach ($form->getErrors() as $error) {
+                    if ($responsable->getActive()) {
+                        if (!$user->hasRole($role)) {
+                            $user->addRole($role);
+                            $userManager->updateUser($user, false);
+                        }
+
+                        $em->flush();
+
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            $user.' est maintenant '.$responsable->getResponsabilite().' dans '.$boquette.'.'
+                        );
+                    } else {
+                        if ($user->hasRole($role)) {
+                            $user->removeRole($role);
+                            $userManager->updateUser($user, false);
+                        }
+
+                        $em->flush();
+
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            $user.' n\'est plus '.$responsable->getResponsabilite().' dans '.$boquette.'.'
+                        );
+                    }
+                } else {
                     $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
+                        'danger',
+                        'Un problème est survenu lors de la modification du responsable. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
                     );
+
+                    $data = $form->getData();
+
+                    foreach ($form->getErrors() as $error) {
+                        $request->getSession()->getFlashBag()->add(
+                            'warning',
+                            $error->getMessage()
+                        );
+                    }
                 }
             }
 
