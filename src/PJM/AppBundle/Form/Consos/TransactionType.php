@@ -19,6 +19,10 @@ class TransactionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $enum = new \PJM\AppBundle\Enum\TransactionEnum();
+        $moyenPaiementsChoices = $enum->getMoyenPaiementChoices(true);
+        unset($moyenPaiementsChoices['initial']);
+
         $builder
             ->add('compte', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataire',
@@ -38,7 +42,7 @@ class TransactionType extends AbstractType
             ->add('moyenPaiement', 'choice', array(
                 'label' => 'Moyen de paiement',
                 'error_bubbling' => true,
-                'choices' => $this->getMoyensPaiements()
+                'choices' => $moyenPaiementsChoices
             ))
             ->add('infos', null, array(
                 'label' => 'N° de chèque',

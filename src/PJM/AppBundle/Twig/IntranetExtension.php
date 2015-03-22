@@ -74,11 +74,8 @@ class IntranetExtension extends \Twig_Extension
 
     public function moyenPaiementFilter($string)
     {
-        $map = array(
-            'smoney' => "S-Money",
-            'cheque' => "Chèque",
-            'monnaie' => "Monnaie"
-        );
+        $enum = new \PJM\AppBundle\Enum\TransactionEnum();
+        $map = $enum->getMoyenPaiementChoices(true);
 
         return array_key_exists($string, $map)
             ? $map[$string]
