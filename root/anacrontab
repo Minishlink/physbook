@@ -2,7 +2,7 @@
 #
 # uncomment to purge files older than 7days in TMP
 #1@daily 0 purgetmp find /srv/data/tmp -type f -mtime +7 -delete > /dev/null
-@daily 0 bucquage_brags php -f /srv/data/web/vhosts/physbook.fr/htdocs/app/console bucquage:brags --env=prod
+@daily 0 brags_bucquage php -f /srv/data/web/vhosts/physbook.fr/htdocs/app/console brags:bucquage --env=prod
 @hourly 0 rezal_sync php -f /srv/data/web/vhosts/physbook.fr/htdocs/app/console rezal:sync --env=prod
 echo $(date +`%Y-%m-%d %H:%i`) && " [START] ExportSQL"
 @daily 0 purgedump_day find /srv/data/tmp/backupSQL -name "backupSQL_daily_*.sql.gz" -type f -ctime 1 -delete > /dev/null
