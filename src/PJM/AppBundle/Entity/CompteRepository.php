@@ -34,6 +34,27 @@ class CompteRepository extends EntityRepository
         return $compte;
     }
 
+    public function findByBoquetteSlug($boquetteSlug)
+    {
+        if ($boquetteSlug == "cvis") {
+            $boquetteSlug = "pians";
+        }
+
+        $query = $this->createQueryBuilder('c')
+                    ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquetteSlug')
+                    ->setParameters(array(
+                        'boquetteSlug'  => $boquetteSlug,
+                    ))
+                    ->getQuery();
+        try {
+            $comptes = $query->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $comptes = null;
+        }
+
+        return $comptes;
+    }
+
     public function findOneByUsernameAndBoquetteSlug($username, $boquetteSlug)
     {
         if ($boquetteSlug == "cvis") {
