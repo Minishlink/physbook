@@ -129,7 +129,7 @@ class BragsController extends BoquetteController
                 if ($kagib === null || !preg_match("/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/", substr($kagib,0,2))) {
                     $request->getSession()->getFlashBag()->add(
                         'danger',
-                        "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons\" (SFK)."
+                        "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons (SFK)\"."
                     );
 
                     return $this->redirect($this->generateUrl('pjm_app_boquette_brags_index'));

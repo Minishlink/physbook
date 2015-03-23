@@ -19,7 +19,7 @@
             <tbody>
                 {% for commande in commandes %}
                 <tr>
-                    <td>{{ commande.etage }}</td>
+                    <td>{% if commande.etage is not null %}{{ commande.etage }}{% else %}N/C{% endif %}</td>
                     <td>{{ commande.nombre|nombre }}</td>
                 </tr>
                 {% endfor %}
