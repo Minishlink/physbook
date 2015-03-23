@@ -26,7 +26,7 @@ class BragsForceCommand extends ContainerAwareCommand
             ->setName('brags:force')
             ->setDescription("Lit url et ajoute les commandes/soldes en fonction de l'user puis supprime url. ATTENTION, vérifier que les commandes en cours de ces utilisateurs sont en attente ou résiliées.")
             ->addArgument('url', InputArgument::OPTIONAL, 'Où est le .xlsx ?')
-            ->addOption('test', null, InputOption::VALUE_NONE, 'Si défini, la réponse est affichée en majuscules')
+            ->addOption('test', null, InputOption::VALUE_NONE, 'Si défini, pas de flush')
         ;
     }
 

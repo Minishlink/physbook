@@ -61,6 +61,29 @@ class TransactionRepository extends EntityRepository
         return $res;
     }
 
+    public function findByCompteAndValid(Compte $compte, $valid = "OK")
+    {
+        $status = $valid ? "OK" : "NOK";
+        $query = $this->createQueryBuilder('t')
+                    ->select('SUM(t.montant) AS somme')
+                    ->where('t.status = :status')
+                    ->andWhere('t.compte = :compte')
+                    ->setParameters(array(
+                        'compte'  => $compte,
+                        'status' => $status
+                    ))
+                    ->orderBy('t.date', 'desc')
+                    ->getQuery();
+
+        try {
+            $res = $query->getSingleScalarResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function callbackFindByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
     {
         $status = $valid ? "OK" : "NOK";
