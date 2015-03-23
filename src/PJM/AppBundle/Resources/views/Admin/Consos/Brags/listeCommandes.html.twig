@@ -3,3 +3,31 @@
 {% set panel_title = "Commandes" %}
 {% set name = "Commandes" %}
 {% set expanded = true %}
+
+{% block description %}
+{% if commandes is not null %}
+<p>Le commande de pain journalière se répartit comme suit :</p>
+<div class="row">
+    <div class="table-responsive col-md-6 col-md-offset-3">
+        <table class="table table-condensed table-responsive table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Étage</th>
+                    <th>Nombre /j</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.etage }}</td>
+                    <td>{{ commande.nombre|nombre }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<p>Il n'y a pas l'air d'avoir de commandes actives en ce moment !</p>
+{% endif %}
+{% endblock %}

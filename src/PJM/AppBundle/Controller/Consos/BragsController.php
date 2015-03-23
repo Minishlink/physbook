@@ -122,8 +122,6 @@ class BragsController extends BoquetteController
             if ($form->isValid()) {
                 $kagib = $this->getUser()->getAppartement();
                 if ($kagib === null || !preg_match("/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/", substr($kagib,0,2))) {
-                    print('nope');
-                    die();
                     $request->getSession()->getFlashBag()->add(
                         'danger',
                         "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons\" (SFK)."
@@ -191,8 +189,13 @@ class BragsController extends BoquetteController
         $datatable = $this->get("pjm.datatable.commandes");
         $datatable->buildDatatableView();
 
+        $commandes = $this->getDoctrine()->getManager()
+            ->getRepository('PJMAppBundle:Commande')
+            ->getCommandesParEtages();
+
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listeCommandes.html.twig', array(
-            'datatable' => $datatable
+            'datatable' => $datatable,
+            'commandes' => $commandes
         ));
     }
 
