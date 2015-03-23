@@ -55,6 +55,7 @@ class CommandesDatatable extends AbstractDatatableView
                 'format' => 'll'
             ))
             ->add('user.username', 'column', array('title' => 'PG',))
+            ->add('user.appartement', 'column', array('title' => 'Kagib',))
             ->add('nombre', 'column', array('title' => 'Nombre',))
             ->add('item.prix', 'column', array('title' => 'P.U.',))
             ->add('valid', 'column', array('title' => 'État',))
