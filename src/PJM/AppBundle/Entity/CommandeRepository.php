@@ -106,6 +106,24 @@ class CommandeRepository extends EntityRepository
         return $res;
     }
 
+    public function getCommandesParEtages()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('SUBSTRING(u.appartement, 1, 2) AS etage, SUM(c.nombre) AS nombre')
+            ->join('c.user', 'u')
+            ->groupBy('etage')
+            ->where('c.valid = true')
+        ;
+
+        try {
+            $res = $qb->getQuery()->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function callbackFindByItemSlug($item_slug)
     {
         return function($qb) use($item_slug) {
