@@ -43,7 +43,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
      * @Assert\NotBlank()
-     * @Assert\Choice(choices = {"bo", "li", "an", "me", "ch", "cl", "ai", "ka", "pa"})
+     * @Assert\Choice(callback = {"PJM\UserBundle\Enum\UserEnum", "getTabagnsChoices"})
      */
     private $tabagns;
 
@@ -90,6 +90,11 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="appartement", type="string", length=10, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/",
+     *     match=true,
+     *     message="Le kagib doit être de la forme A123."
+     * ))
      */
     private $appartement;
 

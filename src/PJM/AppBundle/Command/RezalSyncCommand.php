@@ -42,6 +42,15 @@ class RezalSyncCommand extends ContainerAwareCommand
         $debut = new \DateTime();
         $output->writeln("[".$debut->format('Y-m-d H:i:s')."] DEBUT rezal:sync");
 
+        $output->writeln("Verification de la connexion au serveur Rezal");
+        // on vérifie qu'il n'y ait pas eu d'erreur de connexion
+        $e = $this->rezal->connexion();
+        if ($e instanceof \PDOException) {
+            $this->logger->warn($e->getMessage());
+            $this->rezal->deconnexion();
+            return;
+        }
+
         $output->writeln("DEBUT syncRezalProduits Pians");
         $this->syncRezalProduits('pians');
         $output->writeln("FIN syncRezalProduits Pians");
@@ -88,6 +97,12 @@ class RezalSyncCommand extends ContainerAwareCommand
 
             // on va chercher les produits du Rézal qui ne sont pas sur Phy'sbook
             $listeNvProduitsRezal = $this->rezal->listeConsos($boquetteSlug, $existants, false);
+
+            // on vérifie qu'il n'y ait pas eu d'erreur de connexion
+            if ($listeNvProduitsRezal instanceof \PDOException) {
+                $this->logger->warn($listeNvProduitsRezal->getMessage());
+                return;
+            }
 
             // on les ajoute sur Phy'sbook
             if ($listeNvProduitsRezal !== null) {
@@ -158,10 +173,16 @@ class RezalSyncCommand extends ContainerAwareCommand
             $lastHistorique = $repository->findLastValidByBoquetteSlug($boquetteSlug);
             $listeHistRezal = null;
             if ($lastHistorique !== null) {
-                $date = $lastHistorique->getDate()->format('Y-m-d H:i');
+                $date = $lastHistorique->getDate()->format('Y-m-d H:i:s');
                 $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug, $date);
             } else {
                 $listeHistRezal = $this->rezal->listeHistoriques($boquetteSlug);
+            }
+
+            // on vérifie qu'il n'y ait pas eu d'erreur de connexion
+            if ($listeHistRezal instanceof \PDOException) {
+                $this->logger->warn($listeHistRezal->getMessage());
+                return;
             }
 
             // on récupère tous les nouveaux historiques sur la BDD R&z@l
@@ -212,6 +233,13 @@ class RezalSyncCommand extends ContainerAwareCommand
             '210bo213'
         );
         $listeComptes = $this->rezal->listeComptes($exclureFams);
+
+        // on vérifie qu'il n'y ait pas eu d'erreur de connexion
+        if ($listeComptes instanceof \PDOException) {
+            $this->logger->warn($listeComptes->getMessage());
+            return;
+        }
+
         if ($listeComptes !== null) {
             foreach ($listeComptes as $compte) {
                 // pour chaque compte on update le compte Phy'sbook

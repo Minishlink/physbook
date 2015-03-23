@@ -59,3 +59,7 @@ pjm_app_admin_boquette_cvis:
 pjm_app_admin_boquette_asso:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Asso/routing.yml"
     prefix:   /asso
+
+pjm_app_admin_boquette_default:
+    path:     /{slug}
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:defaultAdmin }

@@ -9,12 +9,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class BucquageBragsCommand extends ContainerAwareCommand
+class BragsBucquageCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('bucquage:brags')
+            ->setName('brags:bucquage')
             ->setDescription('Débite les comptes brags en fonction des commandes et des vacances.')
         ;
     }

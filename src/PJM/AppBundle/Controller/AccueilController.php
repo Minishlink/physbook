@@ -5,6 +5,8 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use PJM\AppBundle\Entity\Inbox\Reception;
+
 class AccueilController extends Controller
 {
     public function indexAction()
@@ -22,6 +24,9 @@ class AccueilController extends Controller
 
         $photo = $em->getRepository('PJMAppBundle:Media\Photo')
                         ->findOneByPublication(3);
+
+        $annonces = $em->getRepository('PJMAppBundle:Inbox\Reception')
+                        ->getAnnoncesByInbox($this->getUser()->getInbox(), false, 3);
 
         $listeEvents = array(
             array(
@@ -54,6 +59,7 @@ class AccueilController extends Controller
             'listeAnniv' => $listeAnniv,
             'listeConnectes' => $listeConnectes,
             'listeEvents' => $listeEvents,
+            'annonces' => $annonces,
         ));
     }
 }

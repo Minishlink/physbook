@@ -3,7 +3,12 @@
     {% if inbox.nbNonLus > 0 %}<p id="nbNonLus">Tu as <span class="counterMsgNonLus">{{ inbox.nbNonLus }}</span> message{% if inbox.nbNonLus > 1 %}s{% endif %} non lu{% if inbox.nbNonLus > 1 %}s{% endif %}.<br><small>Passe ta souris ou ton doigt sur un message pour le marquer comme lu.</small></p>{% endif %}
     {% for reception in receptions %}
     <div class="message{% if not reception.lu %} surbrillance{% endif %}" data-message="{{ reception.message.id }}" data-reception="{{ reception.id }}">
-        <div class="panel panel-default">
+        <div class="panel panel-{% if not reception.message.isAnnonce %}default{% else %}info{% endif %}">
+            {% if reception.message.boquette is not null %}
+            <div class="panel-heading">
+                <div class="panel-title">{% if reception.message.isAnnonce %}<span class="glyphicon glyphicon-bullhorn"></span> {% endif %}{{ reception.message.boquette }}</div>
+            </div>
+            {% endif %}
             <div class="panel-body">
                 <p>
                     <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>

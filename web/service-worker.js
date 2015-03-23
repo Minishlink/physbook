@@ -13,6 +13,11 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+    // fix pour le bug dans Chrome M40
+    if (parseInt(navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 41) {
+        return;
+    }
+
     if (event.request.method === 'GET' &&
         event.request.headers.get('accept').indexOf('text/html') !== -1) {
 

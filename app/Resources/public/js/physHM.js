@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.physHMcontainer form').on('submit', function(e) {
+    $('#content').on('submit', '.physHMcontainer form', function(e) {
         e.preventDefault();
         var $this = $(this);
 

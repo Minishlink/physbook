@@ -14,27 +14,17 @@ class NewUserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+
         $builder
             ->add('email', 'email')
             ->add('fams', 'text')
             ->add('tabagns', 'choice', array(
-                'choices' => array(
-                    "bo" => "Bordel's",
-                    "li" => "Birse",
-                    "an" => "Boquette",
-                    "me" => "Siber's",
-                    "ch" => "Chalon's",
-                    "cl" => "Clun's",
-                    "ai" => "KIN",
-                    "ka" => "Kanak",
-                    "pa" => "Paris",
-                )))
+                'choices' => $userEnum->getTabagnsChoices(true)
+            ))
             ->add('proms', 'text')
             ->add('genre', 'choice', array(
-                'choices' => array(
-                    '0' => "Masculin",
-                    '1' => "Féminin",
-                )
+                'choices' => array_reverse($userEnum->getGenreChoices(true)) // plus fréquent d'inscrire des hommes
             ))
             ->add('bucque', 'text')
             ->add('prenom', 'text')

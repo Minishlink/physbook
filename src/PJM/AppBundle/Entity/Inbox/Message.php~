@@ -28,7 +28,7 @@ class Message
      * @ORM\Column(name="contenu", type="text")
      * @Assert\Length(
      *  min = 2,
-     *  max = 1000,
+     *  max = 10000,
      *  minMessage = "Ton message est trop court.",
      *  maxMessage = "Ton message est trop long ! Fais en plusieurs."
      * )
@@ -39,6 +39,7 @@ class Message
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -48,7 +49,7 @@ class Message
     private $receptions;
 
     private $destinations;
-    
+
     /**
      * @var array
      *
@@ -64,10 +65,26 @@ class Message
     private $expedition;
 
     /**
+     * Si de la part d'une boquette, laquelle
+     *
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $boquette;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isAnnonce;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
+        $this->isAnnonce = false;
         $this->receptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
@@ -212,6 +229,20 @@ class Message
         return $destinataires;
     }
 
+    public function getDestinatairesLus()
+    {
+        $lus = array();
+
+        foreach($this->receptions as $reception)
+        {
+            if ($reception->getLu()) {
+                $lus[] = $reception->getInbox()->getUser()->getUsername();
+            }
+        }
+
+        return $lus;
+    }
+
     public function getDestinations()
     {
         $destinations = new \Doctrine\Common\Collections\ArrayCollection();
@@ -237,5 +268,51 @@ class Message
         }
 
         return $this;
+    }
+
+    /**
+     * Set destinataires
+     *
+     * @param array $destinataires
+     * @return Message
+     */
+    public function setDestinataires($destinataires)
+    {
+        $this->destinataires = $destinataires;
+
+        return $this;
+    }
+
+    /**
+     * Get destinataires
+     *
+     * @return array
+     */
+    public function getDestinataires()
+    {
+        return $this->destinataires;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Message
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
     }
 }

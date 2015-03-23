@@ -65,10 +65,26 @@ class Message
     private $expedition;
 
     /**
+     * Si de la part d'une boquette, laquelle
+     *
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $boquette;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isAnnonce;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
+        $this->isAnnonce = false;
         $this->receptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
@@ -275,5 +291,51 @@ class Message
     public function getDestinataires()
     {
         return $this->destinataires;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     * @return Message
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
+    }
+
+    /**
+     * Set isAnnonce
+     *
+     * @param boolean $isAnnonce
+     * @return Message
+     */
+    public function setIsAnnonce($isAnnonce)
+    {
+        $this->isAnnonce = $isAnnonce;
+
+        return $this;
+    }
+
+    /**
+     * Get isAnnonce
+     *
+     * @return boolean
+     */
+    public function getIsAnnonce()
+    {
+        return $this->isAnnonce;
     }
 }

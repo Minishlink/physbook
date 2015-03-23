@@ -134,6 +134,7 @@ class HistoriqueRepository extends EntityRepository
                     ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                     ->setParameter('boquette_slug', $boquetteSlug)
                     ->orderBy('h.date', 'desc')
+                    ->addOrderBy('h.id', 'desc')
                     ->setMaxResults(1)
                     ->getQuery();
 
@@ -173,20 +174,22 @@ class HistoriqueRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function countByItemSlug($itemSlug)
+    public function countByItemSlug($item, $month, $year)
     {
         $qb = $this->createQueryBuilder('h')
             ->select('sum(h.nombre)')
-            ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
+            ->join('h.item', 'i', 'WITH', 'i.slug = :item OR i.libelle = :item')
             ->setParameters(array(
-                'item_slug'  => $itemSlug
+                'item'  => $item
             ))
         ;
+
+        $qb = $this->triParDate($qb, $month, $year);
 
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
 
-    public function countByBoquetteSlug($boquetteSlug)
+    public function countByBoquetteSlug($boquetteSlug, $month, $year)
     {
         $qb = $this->createQueryBuilder('h')
             ->select('sum(h.nombre)')
@@ -196,6 +199,8 @@ class HistoriqueRepository extends EntityRepository
                 'boquette_slug'  => $boquetteSlug
             ))
         ;
+
+        $qb = $this->triParDate($qb, $month, $year);
 
         return $qb->getQuery()->getSingleScalarResult()/10;
     }
@@ -219,6 +224,13 @@ class HistoriqueRepository extends EntityRepository
             $qb->setMaxResults($limit);
         }
 
+        $qb = $this->triParDate($qb, $month, $year);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function triParDate($qb, $month, $year)
+    {
         if ($month != null) {
             if ($year == null) {
                 $year = date('Y');
@@ -236,6 +248,17 @@ class HistoriqueRepository extends EntityRepository
                 ->setParameter('fin', $year.'-12-31')
             ;
         }
+
+        return $qb;
+    }
+
+    public function findByBoquetteSlug($boquette_slug)
+    {
+        $qb = $this->createQueryBuilder('Historique')
+            ->join('Historique.item', 'i')
+            ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+            ->setParameter('boquette_slug', $boquette_slug)
+        ;
 
         return $qb->getQuery()->getResult();
     }
