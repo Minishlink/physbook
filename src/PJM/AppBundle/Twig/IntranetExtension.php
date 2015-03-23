@@ -65,7 +65,7 @@ class IntranetExtension extends \Twig_Extension
                 $string = "Résiliée";
                 break;
             default:
-                $string = "En attente";
+                $string = "<strong>En attente</strong>";
                 break;
         }
 

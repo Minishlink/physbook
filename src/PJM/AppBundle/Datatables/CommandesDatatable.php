@@ -22,7 +22,7 @@ class CommandesDatatable extends AbstractDatatableView
             ->setProcessing(true);
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"));
+            ->setOrder(array("column" => 8, "direction" => "asc"));
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_commandesResults'));
 
