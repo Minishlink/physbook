@@ -124,6 +124,22 @@ class CommandeRepository extends EntityRepository
         return $res;
     }
 
+    public function getTotalCommandes()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('SUM(c.nombre) AS total')
+            ->where('c.valid = true')
+        ;
+
+        try {
+            $res = $qb->getQuery()->getSingleScalarResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     public function callbackFindByItemSlug($item_slug)
     {
         return function($qb) use($item_slug) {
