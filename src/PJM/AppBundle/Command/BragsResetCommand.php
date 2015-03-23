@@ -46,10 +46,13 @@ class BragsResetCommand extends ContainerAwareCommand
         $repo_historique = $this->em->getRepository('PJMAppBundle:Historique');
 
         // on supprime tous les historiques du brags
-        // TODO
+        $historiques = $repo_historique->findByBoquetteSlug($slug);
+        foreach ($historiques as $historique) {
+            $this->em->remove($historique);
+        }
 
         // on va chercher les comptes brags
-        $comptes = $repo_compte->findByBoquetteSlug('brags');
+        $comptes = $repo_compte->findByBoquetteSlug($slug);
 
         if ($comptes !== null) {
             foreach ($comptes as $compte) {
