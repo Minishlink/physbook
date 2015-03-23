@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Reception
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Inbox\ReceptionRepository")
  */
 class Reception
 {

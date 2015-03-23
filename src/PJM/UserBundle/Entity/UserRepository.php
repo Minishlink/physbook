@@ -29,11 +29,12 @@ class UserRepository extends EntityRepository
     public function getActive(User $excludedUser = null)
     {
         $delay = new \DateTime();
-        $delay->setTimestamp(strtotime('2 minutes ago'));
+        $delay->setTimestamp(strtotime('5 minutes ago'));
 
         $qb = $this->createQueryBuilder('u')
             ->where('u.lastActivity > :delay')
             ->setParameter('delay', $delay)
+            ->orderBy('u.lastActivity', 'desc')
         ;
 
         if ($excludedUser !== null) {
@@ -49,7 +50,7 @@ class UserRepository extends EntityRepository
     public function getOneActive(User $user)
     {
         $delay = new \DateTime();
-        $delay->setTimestamp(strtotime('2 minutes ago'));
+        $delay->setTimestamp(strtotime('5 minutes ago'));
 
         $query = $this->createQueryBuilder('u')
             ->where('u = :user')

@@ -11,6 +11,7 @@ use PJM\AppBundle\Entity\Inbox\Message;
 use PJM\AppBundle\Entity\Inbox\Reception;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\Inbox\MessageType;
+use PJM\AppBundle\Form\Filter\UserFilterType;
 
 class InboxController extends Controller
 {
@@ -32,12 +33,13 @@ class InboxController extends Controller
      * @return object HTML Response
      * @ParamConverter("user", options={"mapping": {"user": "username"}})
      */
-    public function nouveauAction(Request $request, User $user = null)
+    public function nouveauAction(Request $request, User $user = null, $annonce = false)
     {
         $message = new Message();
         $form = $this->createForm(new MessageType(), $message, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_inbox_nouveau'),
+            'user' => $this->getUser(),
+            'annonce' => $annonce
         ));
 
         if ($user !== null) {
@@ -46,13 +48,44 @@ class InboxController extends Controller
             $form->get('destinations')->setData($destinations);
         }
 
+        $filterForm = $this->get('form.factory')->create(new UserFilterType());
+        $filterForm->handleRequest($request);
+
         $form->handleRequest($request);
 
-         if ($form->isSubmitted()) {
+        if ($filterForm->isSubmitted()) {
+            if ($filterForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $user_repo = $em->getRepository('PJMUserBundle:User');
+
+                $filterBuilder = $user_repo->createQueryBuilder('u');
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $filterBuilder);
+
+                $users = $filterBuilder->getQuery()->getResult();
+
+                if ($users !== null) {
+                    $destinations = new \Doctrine\Common\Collections\ArrayCollection();
+                    foreach ($users as $user) {
+                        $destinations->add($user->getInbox());
+                    }
+                    $form->get('destinations')->setData($destinations);
+                    $user = null;
+                }
+            }
+        }
+
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
                 $message->setExpedition($this->getUser()->getInbox());
+                $message->setIsAnnonce($annonce);
+
+                if($annonce) {
+                    if ($message->getBoquette() === null) {
+                        throw $this->createAccessDeniedException('Il faut être responsable de boquette.');
+                    }
+                }
 
                 $destinataires = array();
                 foreach($message->getReceptions() as $reception) {
@@ -70,11 +103,13 @@ class InboxController extends Controller
                 'danger',
                 'Un problème est survenu lors de l\'envoi. Réessaye.'
             );
-         }
+        }
 
         return $this->render('PJMAppBundle:Inbox:nouveau.html.twig', array(
             'form' => $form->createView(),
+            'formFilter' => $filterForm->createView(),
             'destinataire' => isset($user) ? $user : null,
+            'annonce' => $annonce,
         ));
     }
 

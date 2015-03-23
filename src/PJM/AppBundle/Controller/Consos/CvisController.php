@@ -21,10 +21,11 @@ class CvisController extends BoquetteController
         $produitMoment = $utils->getFeaturedItem($this->slug);
         $ziConsommateurs = $this->getTopConsommateurs(date('m')); // top du mois en cours
         $listeProduits = $this->getItems(true, 5);
+
         $stats = array(
-            'achats' => $this->compterAchatsBoquette(),
-            'saucisson' => $this->compterAchatsItem('saucisson'),
-            'burgers' => $this->compterAchatsItem('burger')
+            'achats' => $this->compterAchatsBoquette(date('m')),
+            'saucisson' => $this->compterAchatsItem('Saucisson', date('m')),
+            'burgers' => $this->compterAchatsItem('Cheese Burger', date('m'))
         );
 
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(

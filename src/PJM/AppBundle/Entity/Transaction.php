@@ -37,7 +37,7 @@ class Transaction
      *
      * @ORM\Column(name="moyenPaiement", type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Choice(choices = {"smoney", "cheque", "monnaie"})
+     * @Assert\Choice(callback = {"PJM\AppBundle\Enum\TransactionEnum", "getMoyenPaiementChoices"})
      */
     private $moyenPaiement;
 

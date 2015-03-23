@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );

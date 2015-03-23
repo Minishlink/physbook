@@ -1,10 +1,71 @@
 {% extends "PJMAppBundle:Inbox:layout.html.twig" %}
 
-{% block categorieName %}{% if destinataire is null %}Envoi d'un message{% else %}Message à {{ destinataire.bucque }}{% endif %}{% endblock %}
+{% block categorieName %}{% if destinataire is null %}Envoi {% if not annonce %}d'un message{% else %}d'une annonce{% endif %}{% else %}{% if not annonce %}Message{% else %}Annonce{% endif %} à {{ destinataire.bucque }}{% endif %}{% endblock %}
 
 {% block pjm_app_body_content %}
-<p><a href="{{ path('pjm_app_inbox_index') }}" class="btn btn-default">Retour</a></p>
+<p>
+    <a href="{{ path('pjm_app_inbox_index') }}" class="btn btn-default">Retour</a>
+</p>
+
+{% if annonce and app.user.responsables is null %}
+<div class="alert alert-warning">Cette page n'est accessible qu'aux responsables de boquettes.</div>
+<div class="alert alert-info">Si ta boquette n'est pas sur Phy'sbook, envoie un mail à <a href="{{ path('pjm_app_contact') }}">zi@physbook.fr</a> !</div>
+{% else %}
+
+{% if annonce %}
+<p>
+    Les annonces servent à envoyer un message important, en tant que responsable de boquette, souvent à une grande partie de personne. Elle apparaîtra sur la page d'accueil des destinataires.
+</p>
+<p>
+    La modération n'est pas activée. Cela signifie que l'annonce sera diffusée instantanément sans contrôle. En cas d'abus, de flood, de message non ciblé, la modération sera activée.
+</p>
+{% endif %}
+
+<div class="modal fade" id="filtreModal" tabindex="-1" role="dialog" aria-labelledby="labelFilterModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{ form_javascript(formFilter) }}
+            {{ form_stylesheet(formFilter) }}
+            {{ form_start(formFilter) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="labelFilterModal">Ajouter par filtre</h4>
+            </div>
+            <div class="modal-body">
+                    {{ form_errors(formFilter) }}
+                    {{ form_rest(formFilter) }}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary">Ajout</button>
+            </div>
+            {{ form_rest(formFilter) }}
+            {{ form_end(formFilter) }}
+        </div>
+    </div>
+</div>
+<div id="envoi">
 {{ form_javascript(form) }}
 {{ form_stylesheet(form) }}
-{{ form(form) }}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+    {{ form_label(form.destinations) }}
+        <span class="help-block">
+            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#filtreModal">
+                Ajouter par filtre
+            </button>
+            (attention cela va recharger la page donc copie ton message si tu as commencé à le rédiger)
+        </span>
+    {{ form_errors(form.destinations) }}
+    {{ form_widget(form.destinations) }}
+    </div>
+
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+</div>
+
+{% endif %}
 {% endblock %}

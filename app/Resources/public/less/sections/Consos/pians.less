@@ -52,18 +52,29 @@ body {
             text-align: center;
 
             h2 {
+                -webkit-transform-origin: 0px 50%;
+                -webkit-transform: rotate(-90deg) translate(-50%, 50%);
                 transform-origin: 0px 50%;
                 transform: rotate(-90deg) translate(-50%, 50%);
                 position: absolute;
                 display: block;
                 top: 30%;
-                left: 20%;
+                left: 5%;
                 margin:0;
                 width: 100%;
+
+                @media @tablet {
+                    left: 20%;
+                }
+
+                @media @desktop {
+                    left: 10%;
+                }
             }
 
             .image {
                 max-height: @taille;
+                max-width: 50%;
             }
 
             .nom {
@@ -123,7 +134,6 @@ body {
                 max-width: 80%;
                 margin-right: 2.5em;
                 margin-top: 2em;
-                max-height: @taille;
 
                 img, > img  {
                     .img-responsive();
