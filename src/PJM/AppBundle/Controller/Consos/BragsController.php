@@ -37,11 +37,16 @@ class BragsController extends BoquetteController
 
     public function indexAction(Request $request)
     {
+        $nbCommandes = $this->getDoctrine()->getManager()
+            ->getRepository('PJMAppBundle:Commande')
+            ->getTotalCommandes();
+
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'prixBaguette' => $this->getCurrentBaguette()->getPrix(),
-            'commande' => $this->getCommande()
+            'commande' => $this->getCommande(),
+            'nbCommandes' => $nbCommandes
         ));
     }
 
