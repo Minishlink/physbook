@@ -15,9 +15,12 @@ body {
         }
 
         .physHMcontainer {
-            display: inline-block;
-            float: right;
             font-size: 1.2em;
+
+            @media @tablet {
+                display: inline-block;
+                float: right;
+            }
 
             .counterHM, form {
                 display: inline-block;
