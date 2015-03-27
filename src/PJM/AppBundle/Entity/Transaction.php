@@ -109,10 +109,10 @@ class Transaction
             );
         }
 
-        if ($moyenPaiement == "monnaie" && !empty($infos)) {
+        if ($moyenPaiement == "autre" && empty($infos)) {
             $context->addViolationAt(
                 'infos',
-                'Le champ de n° de chèque doit être vide pour de la monnaie.',
+                'Merci de préciser la raison.',
                 array(),
                 null
             );

@@ -12,7 +12,8 @@ class TransactionEnum
             'smoney' => "S-Money",
             'cheque' => "Chèque",
             'monnaie' => "Monnaie",
-            'initial' => "Solde initial"
+            'initial' => "Solde initial",
+            'autre' => "Autre"
         );
 
         if ($withValues) {
