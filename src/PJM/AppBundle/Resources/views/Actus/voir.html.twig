@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block pjm_app_body_actus %}
-    <h2>{{ article.titre }}</h2>
+    <h2>{% if not article.publication %}[Brouillon] {% endif %}{{ article.titre }}</h2>
 	<span>
         <em>Par {% render(url('pjm_profil_encart', {'username': article.auteur.username})) %}, le {{ article.date|date('d/m/Y') }}</em>
         {% for categorie in article.categories %}

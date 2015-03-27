@@ -5,6 +5,8 @@ namespace PJM\AppBundle\Entity\Actus;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
+use PJM\UserBundle\Entity\User;
+
 /**
  * ArticleRepository
  *
@@ -20,17 +22,37 @@ class ArticleRepository extends EntityRepository
                 \InvalidArgumentException('L\'argument $page ne peut être inférieur à 1 (valeur : "'.$page.'").');
         }
 
-        $query = $this->createQueryBuilder('a')
-                    ->andWhere('a.publication = '.$estPublie)
-                    ->leftJoin('a.categories', 'c')
-                    ->addSelect('c')
-                    ->orderBy('a.date', 'DESC')
-                    ->getQuery();
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.categories', 'c')
+            ->addSelect('c')
+            ->orderBy('a.date', 'DESC')
+        ;
 
+        if ($estPublie !== null) {
+            $qb->andWhere('a.publication = '.$estPublie);
+        }
+
+        $query = $qb->getQuery();
 
         $query->setFirstResult(($page-1) * $nombreParPage) // on définit l'article à partir duquel commencer la liste
               ->setMaxResults($nombreParPage); // ainsi que le nombre d'articles à afficher
 
         return new Paginator($query);
+    }
+
+    public function getBrouillons(User $user)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.categories', 'c')
+            ->addSelect('c')
+            ->orderBy('a.date', 'DESC')
+            ->andWhere('a.publication = false')
+            ->andWhere('a.auteur = :user')
+            ->setParameter('user', $user)
+        ;
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
     }
 }

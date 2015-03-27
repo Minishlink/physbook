@@ -21,40 +21,20 @@ class ArticleType extends AbstractType
             ->add('titre', 'text')
             ->add('contenu', "froala")
             ->add('categories', 'genemu_jqueryselect2_entity', array(
+                'label' => 'Catégories',
                 'class'    => 'PJMAppBundle:Actus\Categorie',
                 'property' => 'nom',
                 'multiple' => true,
+                'required' => false
+            ))
+            ->add('publication', 'checkbox', array(
+                'label' => 'Décocher pour enregistrer en tant que brouillon',
                 'required' => false
             ))
             ->add('save', 'submit', array(
                 'label' => $options['ajout'] ? 'Ajouter' : 'Modifier',
             ))
         ;
-
-        $factory = $builder->getFormFactory();
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function(FormEvent $event) use ($factory) {
-                $article = $event->getData();
-                if (null === $article) {
-                    return;
-                }
-
-                if (false === $article->getPublication()) {
-                    $event->getForm()->add(
-                        $factory->createNamed(
-                            'publication',
-                            'checkbox',
-                            null,
-                            array('required' => false, 'auto_initialize' => false)
-                        )
-                    );
-                } else {
-                    $event->getForm()->remove('publication');
-                }
-            }
-        );
     }
 
     /**
