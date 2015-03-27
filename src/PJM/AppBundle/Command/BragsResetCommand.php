@@ -24,7 +24,7 @@ class BragsResetCommand extends ContainerAwareCommand
     {
         $this
             ->setName('brags:reset')
-            ->setDescription("Supprime les débits, mets le solde à la somme des crédits. ATTENTION, il faut que les commandes et prix de la baguette soient bien définis.")
+                        ->setDescription("Supprime les débits, mets le solde à la somme des crédits. ATTENTION, il faut que les commandes, les vacances (fait=0) et le prix de la baguette soient bien définis.")
             ->addOption('test', null, InputOption::VALUE_NONE, 'Si défini, pas de flush')
         ;
     }

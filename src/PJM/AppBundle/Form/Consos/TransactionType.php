@@ -46,12 +46,12 @@ class TransactionType extends AbstractType
                 'choices' => $moyenPaiementsChoices
             ))
             ->add('infos', null, array(
-                'label' => 'N° de chèque',
+                'label' => 'Infos (n° de chèque/raison)',
                 'error_bubbling' => true,
                 'constraints' => array(
                     new Assert\Length(array(
                         'min' => 1,
-                        'max' => 10
+                        'max' => 250
                     ))
                 )
             ))
@@ -70,18 +70,6 @@ class TransactionType extends AbstractType
                 'label' => 'Créditer',
             ))
         ;
-    }
-
-    /** Get nombre de baguettes par jour possibles
-     *
-     * @return array
-     */
-    public static function getMoyensPaiements()
-    {
-        return array_combine(
-            array("cheque", "monnaie"),
-            array("Chèque", "Monnaie")
-        );
     }
 
     /**
