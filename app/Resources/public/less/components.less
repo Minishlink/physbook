@@ -56,22 +56,22 @@ a.show_users {
 
 .f-video-editor {
     position: relative;
-    @taille: 70%;
-
-    .iframe-ratio {
-        display: block;
-        width: @taille;
-        height: auto;
-        margin: 0px auto;
-    }
 
     iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: @taille;
-        height: 100%;
-        right: 0;
+        width: 320px;
+        height: 160px;
+        max-width: 100%;
         margin: 0 auto;
+
+        @media @tablet {
+            width: 640px;
+            height: 320px;
+        }
+    }
+}
+
+.froala-view {
+    > img, img {
+        max-width: 100%;
     }
 }
