@@ -57,7 +57,7 @@ class RechargementController extends Controller
             "agent" => $agent,
             "source" => "web",
             "identifier" => "",
-            "message" => "[Phy'sbook] ".$transaction->getCompte()->getUser()->getUsername()." - ".$transaction->getCompte()->getBoquette()->getNom()
+            "message" => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom()." - ".$transaction->getCompte()->getUser()->getUsername()
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
