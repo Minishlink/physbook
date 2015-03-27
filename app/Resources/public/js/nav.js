@@ -105,6 +105,14 @@ $(document).ready(function () {
         $('ul[id^="menu-"].afficher').removeClass('afficher');
     });
 
+    // si on clique sur une zone pas du menu quand le menu est ouvert
+    $('#content').click(function() {
+        if($('#liste-menu').is('.in')) {
+            $('ul[id^="menu-"]').removeClass('afficher');
+            $('#liste-menu').collapse('hide');
+        }
+    });
+
     /*
      * Coloration du logo en fonction de si on passe la souris sur le menu et on cache les sous-menus quand on part
      */
