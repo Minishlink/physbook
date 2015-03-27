@@ -9,8 +9,10 @@
             Ajouter un article
         </a>
     </p>
-    {% include "PJMAppBundle:Actus:articles.html.twig" with {'articles': brouillons} %}
-    {% include "PJMAppBundle:Actus:articles.html.twig" %}
+    <div id="liste-articles">
+        {% include "PJMAppBundle:Actus:articles.html.twig" with {'articles': brouillons} %}
+        {% include "PJMAppBundle:Actus:articles.html.twig" %}
+    </div>
     {% if articles|length > 0 %}
     <ul class="pagination">
         {% for p in range(1, nombrePages) %}
