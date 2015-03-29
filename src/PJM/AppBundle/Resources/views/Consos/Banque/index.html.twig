@@ -1,0 +1,16 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% set section = "consos" %}
+{% block pageName %}banque{% endblock %}
+
+{% block title %}Banque | Phy'sbook{% endblock %}
+{% block categorieName %}B<span class="icon-zagots zagots-AM"></span>k{% endblock %}
+{% block categorieLogo %}{{ asset('images/consos/banque/Tirelire.png') }}{% endblock %}
+
+{% block pjm_app_body_content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {% render(url('pjm_app_banque_transfert')) %}
+    </div>
+</div>
+{% endblock %}

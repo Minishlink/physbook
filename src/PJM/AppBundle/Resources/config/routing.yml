@@ -34,6 +34,10 @@ pjm_app_smoney:
     resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
     prefix:   /smoney
 
+pjm_app_banque:
+    resource: "@PJMAppBundle/Resources/config/Banque/routing.yml"
+    prefix:   /banque
+
 pjm_app_admin:
     resource: "@PJMAppBundle/Resources/config/Admin/routing.yml"
     prefix:   /admin
