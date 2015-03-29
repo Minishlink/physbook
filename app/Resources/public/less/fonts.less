@@ -45,3 +45,25 @@
 .font-klavika {
     font-family : "klavika" !important;
 }
+
+@font-face {
+    font-family: "zagots";
+    src: url('fonts/zagots.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-zagots {
+    font-family: "zagots" !important;
+}
+
+.icon-zagots {
+    .font-zagots();
+
+    text-transform: none !important;
+    display: inline-block;
+
+    &.zagots-AM::before {
+        content: "ÿ" !important;
+    }
+}
