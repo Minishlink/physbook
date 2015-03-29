@@ -29,6 +29,11 @@ class Utils
 
     public function getHistorique(User $user, $boquetteSlug, $limit = null)
     {
+        $compte = $this->em
+            ->getRepository('PJMAppBundle:Compte')
+            ->findOneByUserAndBoquetteSlug($user, $boquetteSlug)
+        ;
+
         $debits = $this->em
             ->getRepository('PJMAppBundle:Historique')
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, true)
@@ -59,20 +64,23 @@ class Utils
         foreach ($credits as $k => $credit) {
             $creditsFormates[$k]['date'] = $credit->getDate();
             $creditsFormates[$k]['nom'] = $this->twigExt->moyenPaiementFilter($credit->getMoyenPaiement());
-            $creditsFormates[$k]['montant'] = '+'.$this->twigExt->prixFilter($credit->getMontant());
+
+            $creditsFormates[$k]['montant'] = ($credit->getMontant() >= 0) ? '+' : '';
+            $creditsFormates[$k]['montant'] .= $this->twigExt->prixFilter($credit->getMontant());
+
             $creditsFormates[$k]['infos'] = $credit->getInfos();
         }
         unset($credits);
 
         $transferts = $this->em
             ->getRepository('PJMAppBundle:Consos\Transfert')
-            ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit);
+            ->findByCompte($compte, $limit);
         ;
 
         $transfertsFormates = array();
 
         foreach ($transferts as $k => $transfert) {
-            $recu = ($transfert->getReceveur()->getUser() === $user);
+            $recu = ($transfert->getReceveur() === $compte);
             $dest = $recu ? $transfert->getEmetteur()->getUser() : $transfert->getReceveur()->getUser();
 
             $transfertsFormates[$k]['date'] = $transfert->getDate();

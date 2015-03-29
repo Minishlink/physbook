@@ -9,15 +9,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class TransfertRepository extends EntityRepository
 {
-    public function findByUserAndBoquetteSlug(\PJM\UserBundle\Entity\User $user, $boquetteSlug, $limit = null)
+    public function findByCompte(\PJM\AppBundle\Entity\Compte $compte, $limit = null)
     {
         $qb = $this->createQueryBuilder('t')
-            ->leftJoin('t.receveur', 'r', 'WITH', 'r.user = :user')
-            ->leftJoin('t.emetteur', 'e', 'WITH', 'e.user = :user')
-            ->leftJoin('r.boquette', 'br', 'WITH', 'br.slug = :boquette_slug')
-            ->leftJoin('e.boquette', 'be', 'WITH', 'be.slug = :boquette_slug')
-            ->setParameter('user', $user)
-            ->setParameter('boquette_slug', $boquetteSlug)
+            ->where('t.receveur = :compte')
+            ->orWhere('t.emetteur = :compte')
+            ->setParameter('compte', $compte)
             ->orderBy('t.date', 'desc')
         ;
 
