@@ -35,7 +35,7 @@ class TransactionType extends AbstractType
                         ->join('c.user', 'u')
                         ->orderBy('u.fams', 'ASC')
                         ->addOrderBy('u.proms', 'DESC')
-                        ->setParameter(':boquette', $options['boquette'])
+                        ->setParameter('boquette', $options['boquette'])
                     ;
                 },
                 'property' => 'user'
