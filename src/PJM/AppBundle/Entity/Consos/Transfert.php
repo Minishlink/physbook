@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * à cause de contraintes de transferts bancaires nécessaires dans l'autre cas.
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Consos\TransfertRepository")
  */
 class Transfert
 {
@@ -201,5 +201,28 @@ class Transfert
     public function getEmetteur()
     {
         return $this->emetteur;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Transfert
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }
