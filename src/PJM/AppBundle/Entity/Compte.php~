@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Compte
@@ -39,11 +40,21 @@ class Compte
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Boquette", mappedBy="compte")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Transaction", mappedBy="compte")
      **/
     private $transactions;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Consos\Transfert", mappedBy="emetteur")
+     **/
+    private $envois;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Consos\Transfert", mappedBy="receveur")
+     **/
+    private $receptions;
 
     public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
     {
@@ -51,6 +62,8 @@ class Compte
         $this->user = $user;
         $this->boquette = $boquette;
         $this->transactions = new ArrayCollection();
+        $this->$envois = new ArrayCollection();
+        $this->$receptions = new ArrayCollection();
     }
 
     public function __toString()
@@ -145,5 +158,38 @@ class Compte
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add transactions
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $transactions
+     * @return Compte
+     */
+    public function addTransaction(\PJM\AppBundle\Entity\Boquette $transactions)
+    {
+        $this->transactions[] = $transactions;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $transactions
+     */
+    public function removeTransaction(\PJM\AppBundle\Entity\Boquette $transactions)
+    {
+        $this->transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 }

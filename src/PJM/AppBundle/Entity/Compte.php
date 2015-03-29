@@ -46,12 +46,24 @@ class Compte
      **/
     private $transactions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Consos\Transfert", mappedBy="emetteur")
+     **/
+    private $envois;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Consos\Transfert", mappedBy="receveur")
+     **/
+    private $receptions;
+
     public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
     {
         $this->solde = 0;
         $this->user = $user;
         $this->boquette = $boquette;
         $this->transactions = new ArrayCollection();
+        $this->$envois = new ArrayCollection();
+        $this->$receptions = new ArrayCollection();
     }
 
     public function __toString()
@@ -179,5 +191,71 @@ class Compte
     public function getTransactions()
     {
         return $this->transactions;
+    }
+
+    /**
+     * Add envois
+     *
+     * @param \PJM\AppBundle\Entity\Consos\Transfert $envois
+     * @return Compte
+     */
+    public function addEnvois(\PJM\AppBundle\Entity\Consos\Transfert $envois)
+    {
+        $this->envois[] = $envois;
+
+        return $this;
+    }
+
+    /**
+     * Remove envois
+     *
+     * @param \PJM\AppBundle\Entity\Consos\Transfert $envois
+     */
+    public function removeEnvois(\PJM\AppBundle\Entity\Consos\Transfert $envois)
+    {
+        $this->envois->removeElement($envois);
+    }
+
+    /**
+     * Get envois
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnvois()
+    {
+        return $this->envois;
+    }
+
+    /**
+     * Add receptions
+     *
+     * @param \PJM\AppBundle\Entity\Consos\Transfert $receptions
+     * @return Compte
+     */
+    public function addReception(\PJM\AppBundle\Entity\Consos\Transfert $receptions)
+    {
+        $this->receptions[] = $receptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove receptions
+     *
+     * @param \PJM\AppBundle\Entity\Consos\Transfert $receptions
+     */
+    public function removeReception(\PJM\AppBundle\Entity\Consos\Transfert $receptions)
+    {
+        $this->receptions->removeElement($receptions);
+    }
+
+    /**
+     * Get receptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceptions()
+    {
+        return $this->receptions;
     }
 }
