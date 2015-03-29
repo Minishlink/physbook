@@ -20,14 +20,15 @@ class ActusController extends Controller
         $nbArticlesParPage = 5;
 
         // on récupère la liste des articles
-        $articles = $this->getDoctrine()
-                        ->getManager()
-                        ->getRepository('PJMAppBundle:Actus\Article')
-                        ->getArticles($nbArticlesParPage, $page);
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('PJMAppBundle:Actus\Article');
+        $articles = $repo->getArticles($nbArticlesParPage, $page);
+        $brouillons = $repo->getBrouillons($this->getUser());
 
         // on retourne le template
         return $this->render('PJMAppBundle:Actus:index.html.twig', array(
             'articles'   => $articles,
+            'brouillons' => $brouillons,
             'page'       => $page,
             'nombrePages'=> ceil(count($articles)/$nbArticlesParPage)
         ));
