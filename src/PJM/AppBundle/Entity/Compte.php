@@ -68,7 +68,7 @@ class Compte
 
     public function __toString()
     {
-        return 'Compte [User : '.$this->user.'; Boquette : '.$this->boquette.'; Solde : '.$this->solde.']';
+        return '['.$this->boquette.'] '.$this->user;
     }
 
     public function debiter($montant)
