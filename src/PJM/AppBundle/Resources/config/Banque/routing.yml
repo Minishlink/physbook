@@ -1,0 +1,7 @@
+pjm_app_banque_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Consos/Banque:index }
+
+pjm_app_banque_transfert:
+    path:     /transfert
+    defaults: { _controller: PJMAppBundle:Consos/Banque:transfert }

@@ -25,9 +25,23 @@ class Transfert
     private $id;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $date;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="montant", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 20000,
+     *      minMessage = "Le montant minimum est de 1 centime.",
+     *      maxMessage = "Le montant maximum est de 200€."
+     * )
      */
     private $montant;
 
@@ -36,6 +50,8 @@ class Transfert
      * @ORM\JoinColumn(nullable=false)
      **/
     private $receveur;
+
+    private $receveurUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Compte", inversedBy="envois", cascade={"persist"})
@@ -51,6 +67,16 @@ class Transfert
      */
     private $raison;
 
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
+    public function finaliser()
+    {
+        $this->receveur->crediter($this->montant);
+        $this->emetteur->debiter($this->montant);
+    }
 
     /**
      * Get id
@@ -129,6 +155,29 @@ class Transfert
     public function getReceveur()
     {
         return $this->receveur;
+    }
+
+    /**
+     * Set receveurUser
+     *
+     * @param \PJM\UserBundle\Entity\User $receveurUser
+     * @return Transfert
+     */
+    public function setReceveurUser(\PJM\UserBundle\Entity\User $receveurUser)
+    {
+        $this->receveurUser = $receveurUser;
+
+        return $this;
+    }
+
+    /**
+     * Get receveurUser
+     *
+     * @return \PJM\UserBundle\Entity\User
+     */
+    public function getReceveurUser()
+    {
+        return $this->receveurUser;
     }
 
     /**
