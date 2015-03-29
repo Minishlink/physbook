@@ -34,13 +34,13 @@ class Utils
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, true)
         ;
 
-        $debitsFormate = array();
+        $debitsFormates = array();
 
         foreach ($debits as $k => $debit) {
-            $debitsFormate[$k]['date'] = $debit->getDate();
-            $debitsFormate[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
-            $debitsFormate[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix()*$debit->getNombre()/10);
-            $debitsFormate[$k]['infos'] = $debit->getItem()->getInfos();
+            $debitsFormates[$k]['date'] = $debit->getDate();
+            $debitsFormates[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
+            $debitsFormates[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix()*$debit->getNombre()/10);
+            $debitsFormates[$k]['infos'] = $debit->getItem()->getInfos();
         }
         unset($debits);
 
@@ -54,19 +54,45 @@ class Utils
             ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit, 'OK')
         ;
 
-        $creditsFormate = array();
+        $creditsFormates = array();
 
         foreach ($credits as $k => $credit) {
-            $creditsFormate[$k]['date'] = $credit->getDate();
-            $creditsFormate[$k]['nom'] = $this->twigExt->moyenPaiementFilter($credit->getMoyenPaiement());
-            $creditsFormate[$k]['montant'] = '+'.$this->twigExt->prixFilter($credit->getMontant());
-            $creditsFormate[$k]['infos'] = $credit->getInfos();
+            $creditsFormates[$k]['date'] = $credit->getDate();
+            $creditsFormates[$k]['nom'] = $this->twigExt->moyenPaiementFilter($credit->getMoyenPaiement());
+            $creditsFormates[$k]['montant'] = '+'.$this->twigExt->prixFilter($credit->getMontant());
+            $creditsFormates[$k]['infos'] = $credit->getInfos();
         }
         unset($credits);
 
-        $liste = array_merge($debitsFormate, $creditsFormate);
-        unset($debitsFormate);
-        unset($creditsFormate);
+        $transferts = $this->em
+            ->getRepository('PJMAppBundle:Consos\Transfert')
+            ->findByUserAndBoquetteSlug($user, $boquetteSlug, $limit);
+        ;
+
+        $transfertsFormates = array();
+
+        foreach ($transferts as $k => $transfert) {
+            $recu = ($transfert->getReceveur()->getUser() === $user);
+            $dest = $recu ? $transfert->getEmetteur()->getUser() : $transfert->getReceveur()->getUser();
+
+            $transfertsFormates[$k]['date'] = $transfert->getDate();
+
+            $transfertsFormates[$k]['nom'] = "Transfert ";
+            $transfertsFormates[$k]['nom'] .= $recu ? 'de ' : 'à ';
+            $transfertsFormates[$k]['nom'] .= $dest->getBucque()." ".$dest->getUsername();
+
+            $transfertsFormates[$k]['montant'] = $recu ? '+' : '-';
+            $transfertsFormates[$k]['montant'] .= $this->twigExt->prixFilter($transfert->getMontant());
+
+            $transfertsFormates[$k]['infos'] = $transfert->getRaison();
+        }
+        unset($transferts);
+
+
+        $liste = array_merge($debitsFormates, $creditsFormates, $transfertsFormates);
+        unset($debitsFormates);
+        unset($creditsFormates);
+        unset($transfertsFormates);
 
         $sort_function = function($a, $b) {
             $diff = $a["date"]->diff($b["date"]);
