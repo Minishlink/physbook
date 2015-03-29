@@ -8,10 +8,20 @@ body {
             }
         }
 
+        #liste-articles {
+            .panel-body {
+                max-height: 75vh;
+                overflow-y: auto;
+            }
+        }
+
         .physHMcontainer {
-            display: inline-block;
-            float: right;
             font-size: 1.2em;
+
+            @media @tablet {
+                display: inline-block;
+                float: right;
+            }
 
             .counterHM, form {
                 display: inline-block;
