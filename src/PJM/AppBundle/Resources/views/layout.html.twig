@@ -30,35 +30,9 @@
 {% endif %}
 {% endblock %}
 
-{% if app.session.flashbag.peekAll is not empty %}
-<div class="container">
-    {% block pjm_app_body_flashbag %}
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-
-        {% for flashMessage in app.session.flashbag.get('info') %}
-            <div class="alert alert-info">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-
-        {% for flashMessage in app.session.flashbag.get('danger') %}
-            <div class="alert alert-danger">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-
-        {% for flashMessage in app.session.flashbag.get('warning') %}
-            <div class="alert alert-warning">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-    {% endblock %}
+<div id="flashBag" class="container">
+{% include 'PJMAppBundle:App:flashBag.html.twig' %}
 </div>
-{% endif %}
 
 {% block pjm_app_body %}
 <div class="container">
