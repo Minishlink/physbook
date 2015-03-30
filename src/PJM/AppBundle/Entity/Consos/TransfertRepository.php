@@ -19,7 +19,10 @@ class TransfertRepository extends EntityRepository
         ;
 
         if ($limit != null) {
-            $qb->setMaxResults($limit);
+            $qb
+                ->andWhere("t.status = 'OK'")
+                ->setMaxResults($limit)
+            ;
         }
 
         return $qb->getQuery()->getResult();

@@ -83,6 +83,7 @@ class Utils
         foreach ($transferts as $k => $transfert) {
             $recu = ($transfert->getReceveur() === $compte);
             $dest = $recu ? $transfert->getEmetteur()->getUser() : $transfert->getReceveur()->getUser();
+            $annule = ($transfert->getStatus() != "OK");
 
             $transfertsFormates[$k]['date'] = $transfert->getDate();
 
@@ -93,7 +94,14 @@ class Utils
             $transfertsFormates[$k]['montant'] = $recu ? '+' : '-';
             $transfertsFormates[$k]['montant'] .= $this->twigExt->prixFilter($transfert->getMontant());
 
-            $transfertsFormates[$k]['infos'] = $transfert->getRaison();
+            if ($annule) {
+                if (substr($transfert->getStatus(), 0, 1) != "3") {
+                    $transfertsFormates[$k]['nom'] .= " (annulé)";
+                }
+                $transfertsFormates[$k]['infos'] =  'Erreur : '.$transfert->getStatus();
+            } else {
+                $transfertsFormates[$k]['infos'] = $transfert->getRaison();
+            }
         }
         unset($transferts);
 
