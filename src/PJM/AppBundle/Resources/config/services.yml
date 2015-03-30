@@ -18,6 +18,9 @@ services:
     pjm.services.rezal:
         class:  PJM\AppBundle\Services\Rezal
         arguments: [@doctrine.orm.entity_manager, %kernel.environment%]
+    pjm.services.excel:
+        class:  PJM\AppBundle\Services\Excel
+        arguments: [@phpexcel, @logger]
     pjm.services.mailer:
         class:  PJM\AppBundle\Services\Mailer
         arguments:
