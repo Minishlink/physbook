@@ -194,6 +194,17 @@ class BoquetteController extends Controller
     }
 
     /**
+     * [ADMIN] Page par défaut des boquettes
+     * @param  object   Boquette $boquette
+     */
+    public function defaultAdminAction(Boquette $boquette)
+    {
+        return $this->render('PJMAppBundle:Admin:Boquette/default.html.twig', array(
+            'boquette' => $boquette,
+        ));
+    }
+
+    /**
      * [ADMIN] Gère la liste des crédits pour une boquette.
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
@@ -267,16 +278,42 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Page par défaut des boquettes
-     * @param  object   Boquette $boquette
+     * [ADMIN] Exporte un Excel de crédits
+     * @param object Boquette $boquette La boquette en question
      */
-    public function defaultAdminAction(Boquette $boquette)
+    public function exportCreditsAction(Request $request, Boquette $boquette)
     {
-        return $this->render('PJMAppBundle:Admin:Boquette/default.html.twig', array(
-            'boquette' => $boquette,
-        ));
-    }
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Transaction');
+        $credits = $repository->findByBoquette($boquette, null, "null");
 
+        $tableau = array();
+        foreach ($credits as $credit) {
+            $tableau[] = $credit->toArray();
+        }
+
+        $excel = $this->get('pjm.services.excel');
+        $phpExcelObject = $excel->create(
+            "[".$boquette->getNomCourt()."] Crédits au ".date('d/m/Y')
+        );
+
+        $entetes = array(
+            'Date',
+            'Username',
+            'Prénom',
+            'Nom',
+            'Montant',
+            'Type',
+            'Infos',
+            'Statut'
+        );
+
+        $excel->setData($entetes, $tableau, 'A', '3', 'Crédits');
+
+        return $excel->download(
+            'credits-'.$boquette->getSlug().'-'.date('d/m/Y')
+        );
+    }
 
     /**
      * [ADMIN] Action ajax de rendu de la liste des crédits d'une boquette.

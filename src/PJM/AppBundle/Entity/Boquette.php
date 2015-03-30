@@ -98,6 +98,16 @@ class Boquette
     }
 
     /**
+     * Get nom au format court
+     *
+     * @return string
+     */
+    public function getNomCourt()
+    {
+        return strtok($this->nom, " ");
+    }
+
+    /**
      * Set caisseSMoney
      *
      * @param string $caisseSMoney
