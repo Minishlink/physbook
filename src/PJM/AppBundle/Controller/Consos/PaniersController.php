@@ -228,12 +228,8 @@ class PaniersController extends BoquetteController
                 }
 
                 // on appelle le service PHPExcel
-                $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
-
-                // on définit le nom du fichier
-                $phpExcelObject->getProperties()->setCreator("Phy'sbook")
-                    ->setLastModifiedBy("Phy'sbook")
-                    ->setTitle("Commandes du panier du ".$panier->getDate()->format('d/m/Y'));
+                $excel = $this->get('pjm.services.excel');
+                $phpExcelObject = $excel->create($panier->getLibelle());
 
                 // on crée le tableau à l'intérieur du fichier
                 $nbRows = count($tableau);
@@ -305,36 +301,10 @@ class PaniersController extends BoquetteController
                     $sheet->getRowDimension(4+$r)->setRowHeight(25);
                 }
 
-                // on charge le logo de Phy'sbook si on est pas en mode debut (à faire si du temps à perdre...)
-                if (!$this->get('kernel')->isDebug()) {
-                    $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
-                    $logo->setName("Phy'sbook logo");
-                    $urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/physbook_bg-rouge.png'), PHP_URL_PATH);
-                    $basePath = $_SERVER['DOCUMENT_ROOT'];
-                    $basePath .= "/web";
-                    $logo->setPath($basePath.$urlLogo);
-                    $logo->setHeight(40);
-                    $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
-                }
-
-                // on met le titre et le logo
-                $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$panier->getLibelle());
-
-                // on met un petit message d'horodatage
-                $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré par Phy'sbook le &D à &T.&Rphysbook.fr");
-
-                // on met le curseur au dbéut du fichier
-                $phpExcelObject->setActiveSheetIndex(0);
-
-                // on fait télécharger le fichier
-                $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
-                $response = $this->get('phpexcel')->createStreamedResponse($writer);
-                $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-                $response->headers->set('Content-Disposition', 'attachment;filename=commandes-'.$panier->getDate()->format('d-m-Y').'.xlsx');
-                $response->headers->set('Pragma', 'public');
-                $response->headers->set('Cache-Control', 'maxage=1');
-
-                return $response;
+                return $excel->download(
+                    $phpExcelObject,
+                    'commandes-'.$panier->getDate()->format('d-m-Y')
+                );
             }
 
             // sinon on veut juste voir l'avancement
