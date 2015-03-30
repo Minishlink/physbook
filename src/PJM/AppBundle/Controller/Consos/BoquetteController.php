@@ -23,6 +23,7 @@ use PJM\AppBundle\Form\Admin\ResponsableType;
 use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Admin\FeaturedItemType;
 use PJM\AppBundle\Form\Admin\ItemType;
+use PJM\AppBundle\Form\Filter\TransactionFilterType;
 
 class BoquetteController extends Controller
 {
@@ -273,7 +274,8 @@ class BoquetteController extends Controller
 
         return $this->render('PJMAppBundle:Admin:Consos/gestionCredits.html.twig', array(
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
+            'boquetteSlug' => $boquette->getSlug()
         ));
     }
 
@@ -283,36 +285,58 @@ class BoquetteController extends Controller
      */
     public function exportCreditsAction(Request $request, Boquette $boquette)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $credits = $repository->findByBoquette($boquette, null, "null");
+        $filterForm = $this->createForm(new TransactionFilterType(), null, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_admin_boquette_exportCredits', array(
+                'slug' => $boquette->getSlug()
+            )),
+        ));
+        $filterForm->handleRequest($request);
 
-        $tableau = array();
-        foreach ($credits as $credit) {
-            $tableau[] = $credit->toArray();
+        if ($filterForm->isSubmitted()) {
+            if ($filterForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $repository = $em->getRepository('PJMAppBundle:Transaction');
+
+                $filterBuilder = $repository->buildFindByBoquette($boquette, null, "notNull");
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $filterBuilder);
+
+                $credits = $filterBuilder->getQuery()->getResult();
+
+                if ($credits !== null) {
+                    $tableau = array();
+                    foreach ($credits as $credit) {
+                        $tableau[] = $credit->toArray();
+                    }
+
+                    $excel = $this->get('pjm.services.excel');
+                    $phpExcelObject = $excel->create(
+                        "[".$boquette->getNomCourt()."] Crédits au ".date('d/m/Y')
+                    );
+
+                    $entetes = array(
+                        'Date',
+                        'Username',
+                        'Prénom',
+                        'Nom',
+                        'Montant',
+                        'Type',
+                        'Infos',
+                        'Statut'
+                    );
+
+                    $excel->setData($entetes, $tableau, 'A', '1', 'Crédits');
+
+                    return $excel->download(
+                        'credits-'.$boquette->getSlug().'-'.date('d/m/Y')
+                    );
+                }
+            }
         }
 
-        $excel = $this->get('pjm.services.excel');
-        $phpExcelObject = $excel->create(
-            "[".$boquette->getNomCourt()."] Crédits au ".date('d/m/Y')
-        );
-
-        $entetes = array(
-            'Date',
-            'Username',
-            'Prénom',
-            'Nom',
-            'Montant',
-            'Type',
-            'Infos',
-            'Statut'
-        );
-
-        $excel->setData($entetes, $tableau, 'A', '3', 'Crédits');
-
-        return $excel->download(
-            'credits-'.$boquette->getSlug().'-'.date('d/m/Y')
-        );
+        return $this->render('PJMAppBundle:Admin:Consos/exportCredits.html.twig', array(
+            'formFilter' => $filterForm->createView(),
+        ));
     }
 
     /**

@@ -38,7 +38,7 @@ class TransactionRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findByBoquette(Boquette $boquette, $limit = null, $status = null)
+    public function buildFindByBoquette(Boquette $boquette, $limit = null, $status = null)
     {
         $qb = $this->createQueryBuilder('t')
             ->join('t.compte', 'c', 'WITH', 'c.boquette = :boquette')
@@ -51,7 +51,7 @@ class TransactionRepository extends EntityRepository
         }
 
         if ($status != null) {
-            if ($status == "null") {
+            if ($status == "notNull") {
                 $qb->andWhere('t.status IS NOT NULL');
             } else {
                 $qb
@@ -61,7 +61,7 @@ class TransactionRepository extends EntityRepository
             }
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 
     public function findByCompteAndValid(Compte $compte, $valid = "OK")
