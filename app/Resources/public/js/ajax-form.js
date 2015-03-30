@@ -2,10 +2,9 @@ $(document).ready(function () {
     $('#content').on('submit', '.ajax-form form', function(e) {
         e.preventDefault();
         var $this = $(this);
+        var button = $(this).find('button');
 
-        if(!$this.hasClass('disabled')) {
-            var button = $(this).find('button');
-
+        if(!button.hasClass('disabled')) {
             button.addClass('disabled');
             chargement(true);
 
@@ -20,7 +19,8 @@ $(document).ready(function () {
                     }
 
                     $this.parent().html(json.formView);
-                    $('#flashBag').html(json.flashBagView);
+                    $('#'+ $this.attr('name')).find('button').parent().before(json.flashBagView)
+                    //$('#flashBag').html(json.flashBagView);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert('Erreur : ' + errorThrown);
