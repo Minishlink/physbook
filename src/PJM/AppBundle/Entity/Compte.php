@@ -62,8 +62,8 @@ class Compte
         $this->user = $user;
         $this->boquette = $boquette;
         $this->transactions = new ArrayCollection();
-        $this->$envois = new ArrayCollection();
-        $this->$receptions = new ArrayCollection();
+        $this->envois = new ArrayCollection();
+        $this->receptions = new ArrayCollection();
     }
 
     public function __toString()
