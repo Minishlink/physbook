@@ -83,6 +83,21 @@ class Transaction
         $this->date = new \DateTime();
     }
 
+    public function toArray()
+    {
+        $user = $this->compte->getUser();
+        return array(
+            'date' => $this->date->format('d/m/Y H:i:s'),
+            'username' => $user->getUsername(),
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
+            'montant' => $this->montant/100,
+            'moyenPaiement' => $this->moyenPaiement,
+            'infos' => $this->infos,
+            'status' => $this->status
+        );
+    }
+
     public function finaliser($erreur = null)
     {
         if ($erreur !== null) {
