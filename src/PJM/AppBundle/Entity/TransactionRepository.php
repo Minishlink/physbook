@@ -38,29 +38,6 @@ class TransactionRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
-    {
-        $status = $valid ? "OK" : "NOK";
-        $query = $this->createQueryBuilder('t')
-                    ->where('t.status = :status')
-                    ->join('t.compte', 'c')
-                    ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
-                    ->setParameters(array(
-                        'boquette_slug'  => $boquette_slug,
-                        'status' => $status
-                    ))
-                    ->orderBy('t.date', 'desc')
-                    ->getQuery();
-
-        try {
-            $res = $query->getResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
-            $res = null;
-        }
-
-        return $res;
-    }
-
     public function findByCompteAndValid(Compte $compte, $valid = "OK")
     {
         $status = $valid ? "OK" : "NOK";
@@ -84,17 +61,14 @@ class TransactionRepository extends EntityRepository
         return $res;
     }
 
-    public function callbackFindByBoquetteSlugAndValid($boquette_slug, $valid = "OK")
+    public function callbackFindByBoquetteSlug($boquette_slug)
     {
-        $status = $valid ? "OK" : "NOK";
-
-        return function($qb) use($boquette_slug, $status) {
+        return function($qb) use($boquette_slug) {
             $qb
-                ->andWhere('Transaction.status = :status')
+                ->andWhere('Transaction.status IS NOT NULL')
                 ->join('Transaction.compte', 'c')
                 ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
-                ->setParameter('status', $status)
             ;
         };
     }
