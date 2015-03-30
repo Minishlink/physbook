@@ -210,7 +210,6 @@ class PaniersController extends BoquetteController
                 $row['fams'] = $commande->getUser()->getFams();
                 $row['tabagns'] = $commande->getUser()->getTabagns();
                 $row['proms'] = $commande->getUser()->getProms();
-                $row['kagib'] = $commande->getUser()->getAppartement();
                 $tableau[] = $row;
             }
 
@@ -231,25 +230,26 @@ class PaniersController extends BoquetteController
                 $excel = $this->get('pjm.services.excel');
                 $phpExcelObject = $excel->create($panier->getLibelle());
 
-                // on crée le tableau à l'intérieur du fichier
+                $entetes = array(
+                    'Bucque',
+                    "Fam's",
+                    "Tbk",
+                    "Prom's",
+                    "Signature"
+                );
+
+                $sheet = $excel->setData($entetes, $tableau, 'A', '3', 'Commandes');
+
+                // on met en forme
                 $nbRows = count($tableau);
-                $rangeTab = "A3:F".(3+$nbRows);
-                $sheet = $phpExcelObject->setActiveSheetIndex(0);
+                $rangeTab = $excel->getRangeString();
                 $sheet
                     ->setCellValue('A1', "Total")
                     ->setCellValue('B1', count($tableau))
                     ->setCellValue('C1', "paniers")
                     ->setCellValue('D1', "soit")
                     ->setCellValue('E1', count($tableau)*$panier->getPrix()/100)
-                    ->setCellValue('A3', "Bucque")
-                    ->setCellValue('B3', "Fam's")
-                    ->setCellValue('C3', "Tbk")
-                    ->setCellValue('D3', "Prom's")
-                    ->setCellValue('E3', "Kgib")
-                    ->setCellValue('F3', "Signature")
-                    ->fromArray($tableau, NULL, 'A4')
-                    ->setAutoFilter($rangeTab)
-                    ->setTitle('Commandes');
+                ;
 
                 $boldStyle = array(
                     'font' => array(
@@ -287,22 +287,20 @@ class PaniersController extends BoquetteController
                     ),
                 );
 
-                // on met en forme
                 $sheet->getStyle('E1')->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
                 $sheet->getStyle('A1')->applyFromArray($italicStyle);
                 $sheet->getStyle($rangeTab)->applyFromArray($borduresIntStyle);
-                $sheet->getStyle('A3:F3')->applyFromArray($boldStyle);
+                $sheet->getStyle('A3:E3')->applyFromArray($boldStyle);
                 $sheet->getStyle($rangeTab)->applyFromArray($borduresStyle);
                 $sheet->getStyle($rangeTab)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
                 $sheet->getColumnDimension('A')->setWidth(13);
                 $sheet->getColumnDimension('E')->setWidth(15);
-                $sheet->getColumnDimension('F')->setWidth(15);
                 for ($r = 0; $r < $nbRows; $r++) {
                     $sheet->getRowDimension(4+$r)->setRowHeight(25);
                 }
 
+                // on télécharge
                 return $excel->download(
-                    $phpExcelObject,
                     'commandes-'.$panier->getDate()->format('d-m-Y')
                 );
             }
