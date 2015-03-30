@@ -50,7 +50,8 @@ security:
                 lifetime: 31536000
             anonymous: true
 
-
+    access_decision_manager:
+        strategy: unanimous
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: %canal% }
@@ -62,7 +63,8 @@ security:
         - { path: ^/admin/boquette/pians/, roles: ROLE_ZIPIANS }
         - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/boquette/asso/, roles: ROLE_ASSO }
-        - { path: ^/admin/, roles: ROLE_ADMIN }
+        - { path: ^/admin/, roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/banque/, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/inbox/, roles: ROLE_BETA }
         - { path: ^/, roles: ROLE_USER, requires_channel: %canal% }
 
