@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Transaction;
+use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Item;
 use PJM\UserBundle\Entity\User;
@@ -196,8 +197,6 @@ class Utils
                 )
             )) {
                 // on met à jour le solde du compte associé sur la base R&z@l
-                // TODO vérifier qu'on est pas en mode synchro avec la base R&z@l
-                // TODO enregistrement dans l'historique
 
                 $status = $this->rezal->crediteSolde(
                     $this->getTrueID($transaction->getCompte()->getUser()),
@@ -212,6 +211,67 @@ class Utils
                     }
                     // on annule la transaction
                     $transaction->finaliser($status);
+                }
+            }
+        }
+    }
+
+    public function traiterTransfert(Transfert $transfert)
+    {
+        // on met à jour le solde des comptes associés sur la base Phy'sbook
+        $transfert->finaliser();
+
+        // si le transfert concerne la BDD R&z@l
+        if (in_array(
+            $transfert->getReceveur()->getBoquette()->getSlug(), array(
+                'cvis',
+                'pians'
+            )
+        )) {
+            // on met à jour le solde des comptes associés sur la base R&z@l
+            $status = $this->rezal->debiteSolde(
+                $this->getTrueID($transfert->getEmetteur()->getUser()),
+                $transfert->getMontant(),
+                $transfert->getDate()->format('Y-m-d H:i:s')
+            );
+
+            // si une erreur survient
+            if ($status !== true) {
+                if ($status === false) {
+                    $status = 'REZAL_LIAISON_TRANSACTION';
+                }
+
+                // on annule la transaction
+                $transfert->finaliser("1. ".$status);
+            } else {
+                $status = $this->rezal->crediteSolde(
+                    $this->getTrueID($transfert->getReceveur()->getUser()),
+                    $transfert->getMontant(),
+                    $transfert->getDate()->format('Y-m-d H:i:s')
+                );
+
+                // si une erreur survient
+                if ($status !== true) {
+                    if ($status === false) {
+                        $status = 'REZAL_LIAISON_TRANSACTION';
+                    }
+                    // on annule la transaction
+                    $transfert->finaliser("2. ".$status);
+
+                    // on recrédite l'émetteur sur le pians
+                    $status = $this->rezal->crediteSolde(
+                        $this->getTrueID($transfert->getEmetteur()->getUser()),
+                        $transfert->getMontant(),
+                        $transfert->getDate()->format('Y-m-d H:i:s')
+                    );
+
+                    if ($status !== true) {
+                        if ($status === false) {
+                            $status = 'REZAL_LIAISON_TRANSACTION';
+                        }
+
+                        $transfert->setStatus("3. ".$status);
+                    }
                 }
             }
         }

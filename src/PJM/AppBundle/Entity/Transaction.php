@@ -67,7 +67,7 @@ class Transaction
     private $montant;
 
     /**
-     * @var boolean
+     * @var string
      * "OK" : paiement validé et enregistré
      * "NOK" : paiement non validé
      * {errorCode} : erreur communiquée par S-Money

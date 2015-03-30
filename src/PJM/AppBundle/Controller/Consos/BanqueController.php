@@ -41,31 +41,38 @@ class BanqueController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $repo_compte = $em->getRepository('PJMAppBundle:Compte');
-                $receveur = $repo_compte->findOneBy(array(
-                    'boquette' => $transfert->getEmetteur()->getBoquette(),
-                    'user' => $transfert->getReceveurUser()
-                ));
-                $transfert->setReceveur($receveur);
-                $transfert->finaliser();
-
-                if ($transfert->getEmetteur()->getSolde() < 0) {
+                if ($transfert->getEmetteur()->getSolde() < $transfert->getMontant()) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',
                         "Tu ne peux pas faire le transfert car tu serais en négat's après l'opération."
                     );
                 } else {
-                    // si pians on crédite sur le serveur Pi
+                    $repo_compte = $em->getRepository('PJMAppBundle:Compte');
+                    $receveur = $repo_compte->findOneBy(array(
+                        'boquette' => $transfert->getEmetteur()->getBoquette(),
+                        'user' => $transfert->getReceveurUser()
+                    ));
+                    $transfert->setReceveur($receveur);
+
+                    $utils = $this->get('pjm.services.utils');
+                    $utils->traiterTransfert($transfert);
 
                     $em->persist($transfert);
                     $em->flush();
 
-                    $success = true;
+                    if ($transfert->getStatus() == "OK") {
+                        $success = true;
 
-                    $request->getSession()->getFlashBag()->add(
-                        'success',
-                        'Tu as bien transféré '.($transfert->getMontant()/100).'€ de ton compte '.$transfert->getEmetteur()->getBoquette().' à '.$transfert->getReceveur()->getUser().'.'
-                    );
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            'Tu as bien transféré '.($transfert->getMontant()/100).'€ de ton compte '.$transfert->getEmetteur()->getBoquette().' à '.$transfert->getReceveur()->getUser().'.'
+                        );
+                    } else {
+                        $request->getSession()->getFlashBag()->add(
+                            'danger',
+                            "Erreur : '".$transfert->getStatus()."'. Contacte un ZiPhy'sbook en lui communiquant cette erreur."
+                        );
+                    }
                 }
             } else {
                 $request->getSession()->getFlashBag()->add(
