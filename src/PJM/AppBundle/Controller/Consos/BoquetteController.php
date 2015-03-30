@@ -286,7 +286,7 @@ class BoquetteController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlugAndValid($boquette_slug));
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $datatable->getResponse();
     }

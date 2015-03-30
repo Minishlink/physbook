@@ -59,6 +59,10 @@ class CreditsDatatable extends AbstractDatatableView
             ->add('montant', 'column', array(
                 'title' => 'Montant',
             ))
+            ->add('status', 'column', array(
+                'title' => 'Statut',
+                'visible' => false
+            ))
         ;
     }
 
@@ -71,6 +75,9 @@ class CreditsDatatable extends AbstractDatatableView
         $formatter = function($line) use($ext) {
             $line["montant"] = $ext->prixFilter($line["montant"]);
             $line["moyenPaiement"] = $ext->moyenPaiementFilter($line["moyenPaiement"]);
+            if ($line['status'] != "OK") {
+                $line["infos"] = "Annulé ! Erreur : ".$line['status']." / ".$line["infos"];
+            }
             return $line;
         };
 
