@@ -2,13 +2,13 @@
 
 {% extends "PJMAppBundle:Mail:layout.html.twig" %}
 
-{% block subject %}{{ parent() }} Tu es inscrit !{% endblock %}
+{% block subject %}{{ parent() }} Tu es inscrit{{ e(user.genre) }} !{% endblock %}
 
 {% block content_text %}
 {% autoescape false %}
 Sal's {{ user.bucque }},
 
-tu es maintenant inscrit sur Phy'sbook !
+tu es maintenant inscrit{{ e(user.genre) }} sur Phy'sbook !
 
 Tu peux te connecter soit avec ton e-mail ({{ user.email }}), soit avec ton nom d'utilisateur ({{ user.username }}).
 
@@ -25,12 +25,12 @@ admin@physbook.fr
 {% endblock %}
 
 {% block content_html %}
-<h2>Tu es inscrit !</h2>
+<h2>Tu es inscrit{{ e(user.genre) }} !</h2>
 
 <h3>Sal's {{ user.bucque }},</h3>
 
 <p>
-    tu es maintenant inscrit sur Phy'sbook !<br>
+    tu es maintenant inscrit{{ e(user.genre) }} sur Phy'sbook !<br>
 
     Tu peux te connecter soit avec ton e-mail (<em style="color:#ffba00">{{ user.email }}</em>), soit avec ton nom d'utilisateur (<em>{{ user.username }}</em>).<br>
 
