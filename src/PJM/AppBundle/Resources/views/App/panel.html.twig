@@ -23,6 +23,8 @@
                     <h3>{% block datatable_title %}Liste{% endblock %}</h3>
                     {{ datatable_render(datatable) }}
                 {% endif %}
+
+                {% block autre %}{% endblock %}
             {% endblock %}
         </div>
     </div>

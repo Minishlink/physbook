@@ -146,3 +146,6 @@ fos_comment:
             view: ROLE_USER
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
+
+lexik_form_filter:
+    where_method: and
