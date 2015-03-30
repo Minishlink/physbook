@@ -35,6 +35,10 @@ class IntranetExtension extends \Twig_Extension
                 array($this, 'imageFunction'),
                 array('is_safe' => array('html'))
             ),
+            new \Twig_SimpleFunction(
+                'e',
+                array($this, 'eFunction')
+            ),
         );
     }
 
@@ -112,6 +116,11 @@ class IntranetExtension extends \Twig_Extension
         $imgPath = $uploadDir.'/'.$id.'.'.$ext;
         $path = $this->container->get('templating.helper.assets')->getUrl($imgPath);
         return '<img src="'.$path.'" alt="'.$alt.'" />';
+    }
+
+    public function eFunction($feminin = false)
+    {
+        return $feminin ? "e" : "";
     }
 
     public function etatPublicationPhotoFilter($string)
