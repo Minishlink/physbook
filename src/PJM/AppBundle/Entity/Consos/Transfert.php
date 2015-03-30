@@ -67,15 +67,33 @@ class Transfert
      */
     private $raison;
 
+    /**
+     * @var string
+     * "OK" : paiement validé et enregistré
+     * "NOK" : paiement non validé
+     * {chaine} : erreur
+     * null : paiement non complété
+     *
+     * @ORM\Column(name="status", type="string", length=100, nullable=true)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->date = new \DateTime();
     }
 
-    public function finaliser()
+    public function finaliser($erreur = null)
     {
-        $this->receveur->crediter($this->montant);
-        $this->emetteur->debiter($this->montant);
+        if ($erreur !== null) {
+            $this->receveur->debiter($this->montant);
+            $this->emetteur->crediter($this->montant);
+            $this->status = $erreur;
+        } else {
+            $this->receveur->crediter($this->montant);
+            $this->emetteur->debiter($this->montant);
+            $this->status = "OK";
+        }
     }
 
     /**
@@ -224,5 +242,28 @@ class Transfert
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return Transfert
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

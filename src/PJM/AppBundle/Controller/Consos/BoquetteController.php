@@ -219,7 +219,7 @@ class BoquetteController extends Controller
                 $credit->setStatus("OK");
                 $utils = $this->get('pjm.services.utils');
                 $utils->traiterTransaction($credit);
-                $em->persist($credit); // le compte est automatiquement mis à jour (listeners)
+                $em->persist($credit);
                 $em->flush();
 
                 if ($credit->getStatus() == "OK") {
