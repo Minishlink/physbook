@@ -40,7 +40,7 @@ class AppController extends Controller
             $message = \Swift_Message::newInstance()
                 ->setSubject("[Physbook] [Contact] ".$data['sujet'])
                 ->setFrom(array($user->getEmail() => $user->getUsername()))
-                ->setTo(array('contact@physbook.fr' => 'Louis Lagrange'))
+                ->setTo(array('contact@physbook.fr' => "ZiPhy'sbook"))
                 ->setBody($data['contenu'])
             ;
             $this->get('mailer')->send($message);
