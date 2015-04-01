@@ -110,6 +110,12 @@ class AnnuaireDatatable extends AbstractDatatableView
     {
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
+            foreach($line as &$l) {
+                if (gettype($l) == 'string') {
+                    $l = htmlentities($l);
+                }
+            }
+
             $line["tabagns"] = $ext->tabagnsFilter($line["tabagns"]);
 
             if ($line["telephone"] != "") {
