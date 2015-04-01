@@ -288,7 +288,7 @@ class Utils
     public function getTrueID(User $user)
     {
         $keys = array('fams', 'tabagns', 'proms');
-        $values = preg_split("/([a-z]+)/", $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
+        $values = preg_split("/(bo|li|an|me|ch|cl|ai|ka|pa)/", $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
 
         return array_combine($keys, $values);
     }
