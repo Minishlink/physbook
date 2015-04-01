@@ -12,9 +12,26 @@ class UserRepository extends EntityRepository
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         // default order
-        $orderBy = $orderBy === null ? array('fams' => 'asc', 'proms' => 'desc') : $orderBy;
+        $orderBy = $orderBy === null ? $this->defaultOrder() : $orderBy;
 
         return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    public function defaultOrder($qb = null, $alias = "")
+    {
+        if ($qb !== null) {
+            foreach($this->defaultOrder(null, 'u') as $order => $sort) {
+                return $qb->orderBy($order, $sort);
+            }
+
+            return $qb;
+        }
+
+        if ($alias != "") {
+            $alias .= ".";
+        }
+
+        return array($alias.'fams' => 'asc', $alias.'proms' => 'desc');
     }
 
     public function findByRole($role)
@@ -26,7 +43,19 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getActive(User $excludedUser = null)
+    public function getQbAllButUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u != :user')
+            ->setParameter('user', $user)
+        ;
+
+        $this->defaultOrder($qb);
+
+        return $qb;
+    }
+
+    function getActive(User $excludedUser = null)
     {
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime('5 minutes ago'));
