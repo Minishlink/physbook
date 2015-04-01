@@ -32,10 +32,7 @@ class TransfertType extends AbstractType
                 'label' => 'A qui ?',
                 'class' => 'PJMUserBundle:User',
                 'query_builder' => function(EntityRepository $er) use ($options) {
-                   return $er->createQueryBuilder('u')
-                        ->where('u != :user')
-                        ->setParameter('user', $options['user'])
-                    ;
+                   return $er->getQbAllButUser($options['user']);
                 },
             ))
             ->add('montant', 'money', array(
