@@ -20,12 +20,12 @@ $(document).ready(function () {
     {% if mazoutage %}{% include 'PJMAppBundle:Accueil:mazoutage.html.twig' %}{% endif %}
     <div class="row text-center text-rouge">
         <div class="col-md-offset-3 col-md-6">
-            <p class="text-xx-large slideRight">Bienvenue sur</p>
+            <p id="bienvenueSur" class="text-xx-large">Bienvenue sur</p>
         </div>
     </div>
     <div class="row text-center bg-rouge">
         <div class="col-md-offset-4 col-md-4">
-            <img id="brand" class="bigEntrance" src="{{ asset('images/general/brand-text.svg') }}" onerror="this.src='{{ asset('images/general/physbook_bg-transp.png') }}'" />
+            <img id="brand" class="expandOpen" src="{{ asset('images/general/brand-text.svg') }}" onerror="this.src='{{ asset('images/general/physbook_bg-transp.png') }}'" />
         </div>
     </div>
     <div class="space"></div>
