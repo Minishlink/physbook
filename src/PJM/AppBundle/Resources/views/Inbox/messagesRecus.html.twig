@@ -93,7 +93,8 @@
                 var res = +val-number;
                 if (res == 0) {
                     $('#nbNonLus').slideUp();
-                    $('#navMessage .glyphicon').removeClass('nouveau');
+                    $('#navMessage').removeClass('nouveau');
+                    $('#menu-principal .navbar-toggle').removeClass('nouveau-message');
                 }
 
                 return res;
