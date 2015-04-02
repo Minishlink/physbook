@@ -75,15 +75,17 @@ body {
                     box-shadow: 1px 1px 0.5em fadeout(@rouge, 50%);
                 }
             }
-        }
 
-        #received, #sent {
             .panel-body {
                 max-height: 15em;
                 overflow-y: auto;
 
-                .remove, .cancel {
+                .btn-group {
                     float: right;
+
+                    a.btn {
+                        color: #555 !important;
+                    }
                 }
             }
         }
