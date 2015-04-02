@@ -15,10 +15,20 @@ body {
 }
 
 #logo {
-    padding: 1em 0 1.5em;
+    padding: 1em 0 0.1em;
 
-    img {
-        width: 30%;
+    a {
+        color: white;
+        font-size: 4em;
+
+        &:hover {
+            color: #eee;
+        }
+    }
+
+    .glyphicon-refresh {
+        font-size: 2em;
+        margin-bottom: 0.5em;
     }
 }
 
@@ -85,4 +95,27 @@ body {
 .btn {
     background-color: orange;
 }
+
+.glyphicon-refresh-animate {
+    .animation-name(spin);
+    .animation-duration(4000ms);
+    .animation-iteration-count(infinite);
+    .animation-timing-function(linear);
+
+    @-webkit-keyframes spin {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+        from {transform:rotate(0deg);}
+        to {transform:rotate(360deg);}
+    }
+}
+
+.icon-chargement {
+    .glyphicon();
+    .glyphicon-refresh();
+    .glyphicon-refresh-animate();
+}
+
 
