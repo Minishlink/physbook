@@ -1,8 +1,35 @@
 body {
     #navMessage {
-        .nouveau {
-            color: @rouge;
-            animation: ease-in-out alternate redtonormal 1s infinite;
+        &.nouveau {
+            .nouveau-anim-couleur {
+                color: @rouge;
+                animation: ease-in-out alternate redtonormal 0.75s 0s infinite;
+            }
+
+            .nouveau-anim-pulse {
+                animation: pulse 1.5s infinite;
+            }
+
+            .nouveau-anim-expandOpen {
+                animation-name: expandOpen;
+                animation-duration: 1.2s;
+                animation-timing-function: ease-out;
+                visibility: visible !important;
+            }
+        }
+    }
+
+    #menu-principal {
+        .navbar-toggle {
+            &.nouveau-message {
+                background-color: @rouge;
+                animation: ease-in-out alternate bg_redtotransparent 1.5s 0s infinite;
+
+                .icon-bar {
+                    background-color:white;
+                    animation: ease-in-out alternate bg_whitetonormal 1.5s 0s infinite;
+                }
+            }
         }
     }
 
@@ -12,6 +39,24 @@ body {
         }
         100% {
             color: @navbar-default-link-color;
+        }
+    }
+
+    @keyframes bg_redtotransparent {
+        0% {
+            background-color: @rouge;
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    @keyframes bg_whitetonormal {
+        0% {
+            background-color: white;
+        }
+        100% {
+            background-color: @navbar-default-toggle-icon-bar-bg;
         }
     }
 
