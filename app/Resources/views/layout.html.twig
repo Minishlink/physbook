@@ -4,21 +4,40 @@
 
 {% block base_javascripts %}
 {{ parent() }}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+{% javascripts
+    '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
+    output='js/bootstrap.js'
+%}
+    <script>$.fn.modal || document.write('<script src="{{ asset_url }}"><\/script>');</script>
+{% endjavascripts %}
+
+<script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+{% javascripts
+    '%kernel.root_dir%/../app/Resources/public/lib/datatables/media/js/jquery.dataTables.min.js'
+    output='js/dataTables.js'
+%}
+    <script>$.fn.dataTable || document.write('<script src="{{ asset_url }}"><\/script>');</script>
+{% endjavascripts %}
+
+<script src="//cdn.jsdelivr.net/select2/3.5.2/select2.min.js"></script>
+{% javascripts
+    '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
+    output='js/select2.js'
+%}
+    <script>$.fn.select2 || document.write('<script src="{{ asset_url }}"><\/script>');</script>
+{% endjavascripts %}
+
 {% javascripts
     'bundles/fosjsrouting/js/router.js'
     'js/fos_js_routes.js'
     '%kernel.root_dir%/../app/Resources/public/js/app.js'
-    '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/moment/locale/fr.js'
-    '%kernel.root_dir%/../app/Resources/public/lib/bootstrap/dist/js/bootstrap.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/bootstrap-progressbar/bootstrap-progressbar.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
-    '%kernel.root_dir%/../app/Resources/public/lib/datatables/media/js/jquery.dataTables.min.js'
     '%kernel.root_dir%/../app/Resources/public/js/ext/dataTables.bootstrap.min.js'
     '%kernel.root_dir%/../app/Resources/public/js/datatables.conf.js'
-    '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
-    '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/webui-popover/dist/jquery.webui-popover.min.js'
     '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
     '%kernel.root_dir%/../app/Resources/public/js/nav.js'
@@ -31,7 +50,9 @@
 %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-{% if app.environment == 'dev' %}<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>{% endif %}
+{% if app.environment == 'dev' %}
+<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
