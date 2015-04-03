@@ -1,1 +1,13 @@
-{% if is_granted('ROLE_BETA') %}<li id="navMessage"><a href="{{ path('pjm_app_inbox_index') }}" title="Messages"><span class="glyphicon glyphicon-comment{% if app.user.inbox.nbNonLus > 0%} nouveau{% endif %}"></span><span class="visible-collapsed-inline"> Messages{% if app.user.inbox.nbNonLus > 0%} (<span class="counterMsgNonLus">{{ app.user.inbox.nbNonLus }}</span>){% endif %}</span></a></li>{% endif %}
+{% if is_granted('ROLE_BETA') %}
+<li id="navMessage"{% if app.user.inbox.nbNonLus > 0%} class="nouveau"{% endif %}>
+    <a href="{{ path('pjm_app_inbox_index') }}" title="Messages"{% if app.user.inbox.nbNonLus > 0%} class="nouveau-anim-expandOpen"{% endif %}>
+        {% if app.user.inbox.nbNonLus > 0%}<span class="nouveau-anim-couleur">{% endif %}
+        <span class="glyphicon glyphicon-comment{% if app.user.inbox.nbNonLus > 0%} nouveau-anim-pulse{% endif %}"></span>
+        <span class="visible-collapsed-inline">
+            Messages
+            {% if app.user.inbox.nbNonLus > 0%} (<span class="counterMsgNonLus">{{ app.user.inbox.nbNonLus }}</span>){% endif %}
+        </span>
+        {% if app.user.inbox.nbNonLus > 0%}</span>{% endif %}
+    </a>
+</li>
+{% endif %}

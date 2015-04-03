@@ -56,18 +56,11 @@
         {% include '::favicon.html.twig' %}
         {% include '::startup.html.twig' %}
 
-        {% block base_javascripts %}
-        <script type="text/javascript">
-            var assetsDir = "{{ asset('') }}";
-            var PJMAppBundlePath = "bundles/pjmapp/";
-        </script>
-        {% endblock %}
+        {% block base_javascripts %}{% endblock %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}
+        <!-- Piwik --><noscript><p><img src="//physbook.fr/web/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript><!-- End Piwik Code -->
         {% block javascripts %}{% endblock %}
-        <!-- Piwik -->
-            <noscript><p><img src="//physbook.fr/web/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-        <!-- End Piwik Code -->
     </body>
 </html>
