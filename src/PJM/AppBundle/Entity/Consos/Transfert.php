@@ -5,6 +5,8 @@ namespace PJM\AppBundle\Entity\Consos;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use PJM\AppBundle\Entity\Transaction;
+
 /**
  * Transfert
  * Transfert d'argent entre deux comptes de même nature (Pian's à Pian's)
@@ -78,9 +80,21 @@ class Transfert
      */
     private $status;
 
-    public function __construct()
+    public function __construct(Transaction $transaction = null)
     {
         $this->date = new \DateTime();
+
+        if ($transaction !== null) {
+            $this->emetteur = $transaction->getCompte();
+            $this->receveur = $transaction->getCompteLie();
+            $this->montant = $transaction->getMontant();
+            $this->raison = "Via ".$transaction->getMoyenPaiement();
+            if ($transaction->getMoyenPaiement() != "cheque") {
+                if (null !== $transaction->getInfos()) {
+                    $this->raison .= " : ".$transaction->getInfos();
+                }
+            }
+        }
     }
 
     public function finaliser($erreur = null)

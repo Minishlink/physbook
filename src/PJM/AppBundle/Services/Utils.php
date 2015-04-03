@@ -221,6 +221,18 @@ class Utils
                     $transaction->finaliser($status);
                 }
             }
+
+            if (null !== $transaction->getCompteLie()) {
+                // si on fait un crédit pour quelqu'un d'autre
+                // le compte lie et le compte sont déjà inversés (voir Entité)
+                if ($transaction->getStatus() == "OK") {
+                    // s'il n'y a pas eu d'erreur avant
+                    // on effectue le transfert vers compteLie
+                    $transfert = new Transfert($transaction);
+                    $this->traiterTransfert($transfert);
+                    $this->em->persist($transfert);
+                }
+            }
         }
     }
 

@@ -77,6 +77,8 @@ class Transaction
      */
     private $status;
 
+    private $compteLie;
+
 
     public function __construct()
     {
@@ -313,5 +315,29 @@ class Transaction
     public function getCompte()
     {
         return $this->compte;
+    }
+
+    /**
+     * Set compteLie
+     *
+     * @param \PJM\AppBundle\Entity\Compte $compteLie
+     * @return Transaction
+     */
+    public function setCompteLie(\PJM\AppBundle\Entity\Compte $compteLie)
+    {
+        $this->compteLie = $this->compte;
+        $this->compte = $compteLie;
+
+        return $this;
+    }
+
+    /**
+     * Get compteLie
+     *
+     * @return \PJM\AppBundle\Entity\Compte
+     */
+    public function getCompteLie()
+    {
+        return $this->compteLie;
     }
 }

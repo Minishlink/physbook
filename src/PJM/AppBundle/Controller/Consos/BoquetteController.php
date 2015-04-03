@@ -227,6 +227,17 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                if (null !== $credit->getCompteLie()) {
+                    if ($credit->getCompteLie() === $credit->getCompte()) {
+                        $request->getSession()->getFlashBag()->add(
+                            'danger',
+                            "Le traitement n'a pas été effectué. Le compte de destination et le compte créditeur sont les mêmes."
+                        );
+
+                        return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
+                    }
+                }
+
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
                 $utils = $this->get('pjm.services.utils');

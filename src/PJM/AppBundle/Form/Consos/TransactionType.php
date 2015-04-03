@@ -40,6 +40,22 @@ class TransactionType extends AbstractType
                 },
                 'property' => 'user'
             ))
+            ->add('compteLie', 'genemu_jqueryselect2_entity', array(
+                'label' => 'De la part de',
+                'class'    => 'PJMAppBundle:Compte',
+                'error_bubbling' => true,
+                'query_builder' => function(EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.boquette = :boquette')
+                        ->join('c.user', 'u')
+                        ->orderBy('u.fams', 'ASC')
+                        ->addOrderBy('u.proms', 'DESC')
+                        ->setParameter('boquette', $options['boquette'])
+                    ;
+                },
+                'property' => 'user',
+                'required' => false
+            ))
             ->add('moyenPaiement', 'choice', array(
                 'label' => 'Moyen de paiement',
                 'error_bubbling' => true,
