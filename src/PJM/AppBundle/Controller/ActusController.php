@@ -25,6 +25,11 @@ class ActusController extends Controller
         $articles = $repo->getArticles($nbArticlesParPage, $page);
         $brouillons = $repo->getBrouillons($this->getUser());
 
+        // on remplace les @username par des liens
+        $citation = $this->get('pjm.services.citation');
+        $articles = $citation->parseArticles($articles);
+        $brouillons = $citation->parseArticles($brouillons);
+
         // on retourne le template
         return $this->render('PJMAppBundle:Actus:index.html.twig', array(
             'articles'   => $articles,
@@ -37,6 +42,9 @@ class ActusController extends Controller
 
     public function voirAction(Article $article)
     {
+        $citation = $this->get('pjm.services.citation');
+        $article = $citation->parseArticle($article);
+
         // on retourne le template
         return $this->render('PJMAppBundle:Actus:voir.html.twig', array(
             'article' => $article
