@@ -1,0 +1,7 @@
+<div id="transfert">
+    <h2>Historiques</h2>
+
+{% for compte in app.user.comptes %}
+    <a href="{{ url('pjm_app_boquette_boquette_historique', {'slug': compte.boquette.slug}) }}">Historique de {{ compte.boquette }}</a><br>
+{% endfor %}
+</div>

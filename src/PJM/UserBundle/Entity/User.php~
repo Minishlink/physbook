@@ -43,7 +43,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
      * @Assert\NotBlank()
-     * @Assert\Choice(choices = {"bo", "li", "an", "me", "ch", "cl", "ai", "ka", "pa"})
+     * @Assert\Choice(callback = {"PJM\UserBundle\Enum\UserEnum", "getTabagnsChoices"})
      */
     private $tabagns;
 
@@ -82,7 +82,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
+     * @ORM\Column(name="telephone", type="string", length=16, nullable=true)
      */
     private $telephone;
 
@@ -90,6 +90,11 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="appartement", type="string", length=10, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/",
+     *     match=true,
+     *     message="Le kagib doit être de la forme A123."
+     * ))
      */
     private $appartement;
 
@@ -107,7 +112,7 @@ class User extends BaseUser
      * @Assert\Date()
      */
     private $anniversaire;
-    
+
     /**
      * @var boolean
      * 1 si féminin
@@ -134,9 +139,14 @@ class User extends BaseUser
     private $photo;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire", cascade={"persist", "remove"})
      **/
     private $photosCreated;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Compte", mappedBy="user")
+     **/
+    private $comptes;
 
     public function __toString()
     {
@@ -168,6 +178,7 @@ class User extends BaseUser
 
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comptes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -504,7 +515,7 @@ class User extends BaseUser
         $this->photo = $photo;
 
         if ($photo !== null) {
-            $this->addPhotoCreated($photo);
+            $this->addPhotosCreated($photo);
         }
 
         return $this;
@@ -521,26 +532,49 @@ class User extends BaseUser
     }
 
     /**
-     * Add photoCreated
+     * Set genre
      *
-     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     * @param boolean $genre
      * @return User
      */
-    public function addPhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    public function setGenre($genre)
     {
-        $this->photosCreated[] = $photoCreated;
+        $this->genre = $genre;
 
         return $this;
     }
 
     /**
-     * Remove photoCreated
+     * Get genre
      *
-     * @param \PJM\AppBundle\Entity\Media\Photo $photoCreated
+     * @return boolean
      */
-    public function removePhotoCreated(\PJM\AppBundle\Entity\Media\Photo $photoCreated)
+    public function getGenre()
     {
-        $this->photosCreated->removeElement($photoCreated);
+        return $this->genre;
+    }
+
+    /**
+     * Add photosCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
+     * @return User
+     */
+    public function addPhotosCreated(\PJM\AppBundle\Entity\Media\Photo $photosCreated)
+    {
+        $this->photosCreated[] = $photosCreated;
+
+        return $this;
+    }
+
+    /**
+     * Remove photosCreated
+     *
+     * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
+     */
+    public function removePhotosCreated(\PJM\AppBundle\Entity\Media\Photo $photosCreated)
+    {
+        $this->photosCreated->removeElement($photosCreated);
     }
 
     /**
