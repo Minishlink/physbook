@@ -56,7 +56,12 @@
         {% include '::favicon.html.twig' %}
         {% include '::startup.html.twig' %}
 
-        {% block base_javascripts %}{% endblock %}
+        {% block base_javascripts %}
+        <script type="text/javascript">
+            var assetsDir = "{{ asset('', 'noVersion') }}";
+            var PJMAppBundlePath = "bundles/pjmapp/";
+        </script>
+        {% endblock %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
         {% block body %}{% endblock %}
