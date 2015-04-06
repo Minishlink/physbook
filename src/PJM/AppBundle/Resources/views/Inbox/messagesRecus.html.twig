@@ -15,7 +15,7 @@
                         <a class="btn btn-default btn-xs" href="{{ path('pjm_app_inbox_nouveauMessage', {'user': reception.message.expediteur.username}) }}"><span class="glyphicon glyphicon-comment"></span> Répondre</a>
                         <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
                     </div>
-                    {{ reception.message.contenu|nl2br }}
+                    {{ reception.message.contenu|nl2br|citationUsers|raw }}
                 </p>
             </div>
             <div class="panel-footer">
