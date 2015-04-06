@@ -86,7 +86,6 @@ $(document).ready(function () {
 
         // si un sous-menu est visible
         if($('ul[id^="menu-"]').is(".afficher")) {
-            console.log('test');
             // on cache tous les sous-menus visibles autres que la cible
             $('ul[id^="menu-"].afficher').not(cible).removeClass('afficher');
 
@@ -150,9 +149,6 @@ $(document).ready(function () {
             var elHeight = el.height();
             var windowHeight = $(window).height();
             var offset;
-
-            console.log(elHeight);
-            console.log(windowHeight);
 
             if (elHeight < windowHeight) {
                 offset = elOffset - ((windowHeight / 2) - (elHeight / 2));
