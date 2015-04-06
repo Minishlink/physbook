@@ -24,6 +24,7 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('tabagns', array($this, 'tabagnsFilter')),
             new \Twig_SimpleFilter('telephone', array($this, 'telephoneFilter')),
             new \Twig_SimpleFilter('etatPublicationPhoto', array($this, 'etatPublicationPhotoFilter')),
+            new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter')),
         );
     }
 
@@ -135,6 +136,12 @@ class IntranetExtension extends \Twig_Extension
         return array_key_exists($string, $map)
             ? $map[$string]
             : $string;
+    }
+
+    public function citationUsersFilter($string)
+    {
+        $citation = $this->container->get('pjm.services.citation');
+        return $citation->parseCitationUsers($string);
     }
 
     public function getName()
