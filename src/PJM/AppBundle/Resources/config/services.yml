@@ -15,6 +15,9 @@ services:
     pjm.services.utils:
         class:  PJM\AppBundle\Services\Utils
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer, @pjm.twig.intranet_extension, @pjm.services.rezal]
+    pjm.services.citation:
+        class:  PJM\AppBundle\Services\Citation
+        arguments: [@doctrine.orm.entity_manager, @templating]
     pjm.services.rezal:
         class:  PJM\AppBundle\Services\Rezal
         arguments: [@doctrine.orm.entity_manager, %kernel.environment%]

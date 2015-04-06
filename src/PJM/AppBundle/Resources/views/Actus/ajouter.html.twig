@@ -20,6 +20,11 @@
 
 {% block pjm_app_body_actus %}
     <h2>Ajouter un article</h2>
-    <p><em>Astuce</em> : l'extrait de l'article sur la page d'accueil est limité à 140 caractères, prends-le en compte.</p>
+<span><em>Astuces</em></span>
+<ul>
+    <li>l'extrait de l'article sur la page d'accueil est limité à 140 caractères, prends-le en compte</li>
+    <li>cite les utilisateurs en tapant un arobase devant leur ID (ex. @0bo163)</li>
+</ul>
+
     {{ form(form) }}
 {% endblock %}
