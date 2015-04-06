@@ -143,6 +143,11 @@ class User extends BaseUser
      **/
     private $photosCreated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Compte", mappedBy="user")
+     **/
+    private $comptes;
+
     public function __toString()
     {
         $user = $this->username;
@@ -173,6 +178,7 @@ class User extends BaseUser
 
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comptes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -579,5 +585,38 @@ class User extends BaseUser
     public function getPhotosCreated()
     {
         return $this->photosCreated;
+    }
+
+    /**
+     * Add comptes
+     *
+     * @param \PJM\AppBundle\Entity\Compte $comptes
+     * @return User
+     */
+    public function addCompte(\PJM\AppBundle\Entity\Compte $comptes)
+    {
+        $this->comptes[] = $comptes;
+
+        return $this;
+    }
+
+    /**
+     * Remove comptes
+     *
+     * @param \PJM\AppBundle\Entity\Compte $comptes
+     */
+    public function removeCompte(\PJM\AppBundle\Entity\Compte $comptes)
+    {
+        $this->comptes->removeElement($comptes);
+    }
+
+    /**
+     * Get comptes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComptes()
+    {
+        return $this->comptes;
     }
 }

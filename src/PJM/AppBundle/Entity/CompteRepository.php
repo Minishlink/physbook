@@ -131,4 +131,16 @@ class CompteRepository extends EntityRepository
             ;
         };
     }
+
+    public function callbackFindByUserAndBoquetteSlug(User $user, $slug)
+    {
+        return function($qb) use($slug, $user) {
+            $qb
+                ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
+                ->join('Compte.user', 'u', 'WITH', 'u = :user')
+                ->setParameter('slug', $slug)
+                ->setParameter('user', $user)
+            ;
+        };
+    }
 }

@@ -36,7 +36,7 @@ class Compte
     private $boquette;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
