@@ -5,3 +5,7 @@ pjm_app_boquette_paniers_index:
 pjm_app_boquette_paniers_commander:
     path:     /commander
     defaults: { _controller: PJMAppBundle:Consos/Paniers:commander }
+
+pjm_app_boquette_paniers_annuler:
+    path:     /annuler
+    defaults: { _controller: PJMAppBundle:Consos/Paniers:annuler }

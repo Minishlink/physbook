@@ -105,6 +105,7 @@
                     {% else %}
                         <span style="font-size: 6em" class="text-mauve glyphicon glyphicon-ok-circle"></span><br>
                         Panier téléchargé
+                        {% if panier.valid %}<br><span style="font-size:0.8em"><a href="{{ path('pjm_app_boquette_paniers_annuler') }}" title="Annuler et se faire rembourser">(annuler)</a></span>{% endif %}
                     {% endif %}
                     </p>
                     <p class="text-mauve text-larger">
@@ -140,12 +141,7 @@
             </div>
             <div class="row">
                 <div id="solde" class="col-lg-7">
-                    {%
-                        include "PJMAppBundle:Consos:Paniers/solde.html.twig"
-                        with {
-                            'solde': solde
-                        }
-                    %}
+                    {% include "PJMAppBundle:Consos:Paniers/solde.html.twig" %}
                 </div>
                 <div class="col-lg-5 text-center">
                     <button id="buttonRechargement" type="button" class="text-larger debuttonize" data-toggle="modal" data-target="#modalRechargement">
