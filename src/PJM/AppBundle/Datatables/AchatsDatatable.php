@@ -6,12 +6,25 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class HistoriqueDatatable
+ * Class AchatsDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class HistoriqueDatatable extends AbstractDatatableView
+class AchatsDatatable extends AbstractDatatableView
 {
+    protected $ajaxUrl;
+    protected $admin;
+
+    public function setAjaxUrl($ajaxUrl)
+    {
+        $this->ajaxUrl = $ajaxUrl;
+    }
+
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -25,7 +38,7 @@ class HistoriqueDatatable extends AbstractDatatableView
             ->setOrder(array("column" => 0, "direction" => "desc"))
         ;
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_boquette_historiqueResults'));
+        $this->getAjax()->setUrl($this->ajaxUrl);
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
@@ -37,12 +50,13 @@ class HistoriqueDatatable extends AbstractDatatableView
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll'
+                'format' => 'lll'
             ))
-            ->add('nombre', 'column', array('title' => 'Nombre',))
-            ->add('item.libelle', 'column', array('title' => 'Item',))
-            ->add('item.prix', 'column', array('title' => 'Prix',))
             ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+            ->add('item.libelle', 'column', array('title' => 'Item',))
+            ->add('nombre', 'column', array('title' => 'Nombre',))
+            ->add('item.prix', 'column', array('title' => 'Prix',))
+
         ;
     }
 
@@ -74,6 +88,6 @@ class HistoriqueDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'historique_datatable';
+        return 'achats_datatable';
     }
 }

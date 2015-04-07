@@ -98,4 +98,16 @@ class TransactionRepository extends EntityRepository
             ;
         };
     }
+
+    public function callbackFindByUser(User $user)
+    {
+        return function($qb) use($user) {
+            $qb
+                ->andWhere('Transaction.status IS NOT NULL')
+                ->join('Transaction.compte', 'c')
+                ->join('c.user', 'u', 'WITH', 'u = :user')
+                ->setParameter('user', $user)
+            ;
+        };
+    }
 }
