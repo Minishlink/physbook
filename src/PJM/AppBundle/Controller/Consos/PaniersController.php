@@ -27,7 +27,7 @@ class PaniersController extends BoquetteController
     public function indexAction(Request $request)
     {
         $panier = $this->getCurrentPanier();
-        $commande = $this->commande($panier);
+        $commande = $this->getCommande($panier);
 
         return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
             'boquetteSlug' => $this->slug,
@@ -37,7 +37,7 @@ class PaniersController extends BoquetteController
         ));
     }
 
-    public function commande(Item $panier)
+    public function getCommande(Item $panier)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
@@ -106,7 +106,7 @@ class PaniersController extends BoquetteController
         $panier = $this->getCurrentPanier();
 
         if (isset($panier)) {
-            $commande = $this->commande($panier);
+            $commande = $this->getCommande($panier);
             // si on a commandé le panier et que le panier est actif
             if (isset($commande) && $panier->getValid()) {
                 $em = $this->getDoctrine()->getManager();
