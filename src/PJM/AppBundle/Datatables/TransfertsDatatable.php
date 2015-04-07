@@ -6,11 +6,11 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class CreditsDatatable
+ * Class TransfertsDatatable
  *
  * @package PJM\AppBundle\Datatables
  */
-class CreditsDatatable extends AbstractDatatableView
+class TransfertsDatatable extends AbstractDatatableView
 {
     protected $ajaxUrl;
     protected $admin;
@@ -53,31 +53,20 @@ class CreditsDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'lll'
             ))
-        ;
-
-        if ($this->admin) {
-            $this->getColumnBuilder()
-                ->add('compte.user.username', 'column', array(
-                    'title' => 'PG',
-                ))
-            ;
-        } else {
-            $this->getColumnBuilder()
-                ->add('compte.boquette.nom', 'column', array(
-                    'title' => 'Boquette',
-                ))
-            ;
-        }
-
-        $this->getColumnBuilder()
-            ->add('moyenPaiement', 'column', array(
-                'title' => 'Moyen',
+            ->add('emetteur.boquette.nom', 'column', array(
+                'title' => 'Boquette',
             ))
-            ->add('infos', 'column', array(
-                'title' => 'Infos',
+            ->add('emetteur.user.username', 'column', array(
+                'title' => 'Emetteur',
+            ))
+            ->add('receveur.user.username', 'column', array(
+                'title' => 'Receveur',
             ))
             ->add('montant', 'column', array(
                 'title' => 'Montant',
+            ))
+            ->add('raison', 'column', array(
+                'title' => 'Infos',
             ))
             ->add('status', 'column', array(
                 'title' => 'Statut',
@@ -94,10 +83,10 @@ class CreditsDatatable extends AbstractDatatableView
         $ext = new IntranetExtension();
         $formatter = function($line) use($ext) {
             $line["montant"] = $ext->prixFilter($line["montant"]);
-            $line["moyenPaiement"] = $ext->moyenPaiementFilter($line["moyenPaiement"]);
             if ($line['status'] != "OK") {
-                $line["infos"] = "Annulé ! Erreur : ".$line['status']." / ".$line["infos"];
+                $line["raison"] = "Annulé ! Erreur : ".$line['status']." / ".$line["raison"];
             }
+            $line["raison"] = htmlentities($line["raison"]);
             return $line;
         };
 
@@ -109,7 +98,7 @@ class CreditsDatatable extends AbstractDatatableView
      */
     public function getEntity()
     {
-        return 'PJM\AppBundle\Entity\Transaction';
+        return 'PJM\AppBundle\Entity\Consos\Transfert';
     }
 
     /**
@@ -117,6 +106,6 @@ class CreditsDatatable extends AbstractDatatableView
      */
     public function getName()
     {
-        return 'credits_datatable';
+        return 'transferts_datatable';
     }
 }

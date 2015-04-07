@@ -12,14 +12,6 @@ pjm_app_boquette_getItems:
     options:
         expose: true
 
-pjm_app_boquette_historique:
-    path:     /historique
-    defaults: { _controller: PJMAppBundle:Consos:historique }
-
-pjm_app_boquette_historiqueResults:
-    path:     /historique/results
-    defaults: { _controller: PJMAppBundle:Consos:historiqueResults }
-
 pjm_app_boquette_voirResponsables:
     path:     /{slug}/responsables
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }

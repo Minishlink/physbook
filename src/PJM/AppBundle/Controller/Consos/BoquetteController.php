@@ -277,6 +277,7 @@ class BoquetteController extends Controller
         }
 
         $datatable = $this->get("pjm.datatable.credits");
+        $datatable->setAdmin(true);
         $datatable->setAjaxUrl($this->generateUrl(
             "pjm_app_admin_boquette_creditsResults",
             array('boquette_slug' => $boquette->getSlug())
