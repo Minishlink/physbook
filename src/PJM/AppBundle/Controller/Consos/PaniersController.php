@@ -27,8 +27,18 @@ class PaniersController extends BoquetteController
     public function indexAction(Request $request)
     {
         $panier = $this->getCurrentPanier();
+        $commande = $this->commande($panier);
 
-        // on vérifie si l'utilisateur n'a pas déjà commandé un panier
+        return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
+            'boquetteSlug' => $this->slug,
+            'panier' => $panier,
+            'dejaCommande' => isset($commande),
+            'solde' => $this->getSolde(),
+        ));
+    }
+
+    public function commande(Item $panier)
+    {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $commande = $repository->findOneBy(array(
@@ -37,12 +47,7 @@ class PaniersController extends BoquetteController
             'valid' => true,
         ));
 
-        return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
-            'boquetteSlug' => $this->slug,
-            'panier' => $panier,
-            'dejaCommande' => isset($commande),
-            'solde' => $this->getSolde(),
-        ));
+        return $commande;
     }
 
     public function commanderAction(Request $request)
@@ -89,6 +94,39 @@ class PaniersController extends BoquetteController
             $request->getSession()->getFlashBag()->add(
                 'danger',
                 "Désolé, c'est trop tard pour commander ce panier."
+            );
+        }
+
+        return $this->redirect($this->generateUrl('pjm_app_boquette_paniers_index'));
+    }
+
+    public function annulerAction(Request $request)
+    {
+        // on va chercher le dernier panier
+        $panier = $this->getCurrentPanier();
+
+        if (isset($panier)) {
+            $commande = $this->commande($panier);
+            // si on a commandé le panier et que le panier est actif
+            if (isset($commande) && $panier->getValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($commande);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Ta commande de panier a été annulée et tu as été remboursé.'
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Tu n'as pas commandé ce panier ou ce panier n'est plus annulable automatiquement car les commandes sont déjà prises au prestataire. Contacte le ZiPaniers."
+                );
+            }
+        } else {
+            $request->getSession()->getFlashBag()->add(
+                'danger',
+                "Il n'y a pas de panier disponible actuellement."
             );
         }
 
