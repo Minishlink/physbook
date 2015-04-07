@@ -1,5 +1,13 @@
 <div id="transfert">
     <h2>Historiques</h2>
+    <p>Tu peux aussi voir tout l'historique d'une boquette en particulier en cliquant sur "Historique" dans chaque page de Consos (Pian's etc).</p>
+
+    {% include "PJMAppBundle:App:panel.html.twig" with {
+        'panel_title': 'Achats',
+        'name': 'Achats',
+        'datatable': datatable_achats,
+        'expanded': true
+    } %}
 
     {% include "PJMAppBundle:App:panel.html.twig" with {
         'panel_title': 'Transactions',
@@ -7,15 +15,11 @@
         'datatable': datatable_transactions
     } %}
 
-    {% include "PJMAppBundle:App:panel.html.twig" with {
-        'panel_title': 'Achats',
-        'name': 'Achats',
-        'datatable': datatable_achats
-    } %}
-
+    {# TODO fix bug pour l'instant
     {% include "PJMAppBundle:App:panel.html.twig" with {
         'panel_title': 'Transferts',
         'name': 'Transferts',
         'datatable': datatable_transferts
     } %}
+    #}
 </div>
