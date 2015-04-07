@@ -18,6 +18,10 @@ framework:
             noVersion:
                 version:
                 version_format: ""
+            js:
+                version: v1r20150407
+            css:
+                version: v1r20150407
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~

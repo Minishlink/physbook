@@ -7,6 +7,7 @@
     '%kernel.root_dir%/../app/Resources/public/css/font-physbook.css'
     filter='less,cssrewrite,?yui_css'
     output='css/design-connexion.css'
+    package='css'
 %}
     <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
@@ -58,6 +59,7 @@
     '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
     filter='?yui_js'
     output='js/connexion.js'
+    package='js'
 %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
