@@ -41,13 +41,54 @@ class BragsController extends BoquetteController
             ->getRepository('PJMAppBundle:Commande')
             ->getTotalCommandes();
 
+        $finAnnee = new \DateTime(date('Y').'-06-12');
+
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'boquetteSlug' => $this->slug,
             'solde' => $this->getSolde(),
             'prixBaguette' => $this->getCurrentBaguette()->getPrix(),
             'commande' => $this->getCommande(),
-            'nbCommandes' => $nbCommandes
+            'nbCommandes' => $nbCommandes,
+            'finAnnee' => $finAnnee,
+            'resteNbJoursOuvres' => $this->getNbJoursOuvres($finAnnee)
         ));
+    }
+
+    public function getNbJoursOuvres(\DateTime $dateFin)
+    {
+        // on va chercher les vacances
+        $em = $this->getDoctrine()->getManager();
+        $repositoryVacances = $em->getRepository('PJMAppBundle:Vacances');
+        $listeVacances = $repositoryVacances->findByFait(false);
+
+        //période entre aujourd'hui et la fin
+        $now = new \DateTime("now");
+        $now->setTime(0, 0, 0);
+        $dateFin->setTime(0, 0, 0);
+        $period = new \DatePeriod(
+            $now,
+            new \DateInterval('P1D'),
+            $dateFin
+        );
+
+        $nbJoursOuvres = 0;
+
+        // pour tous les jours jusqu'à aujourd'hui, on débite
+        foreach ($period as $date) {
+            // si le jour n'est pas un samedi/dimanche
+            if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
+                // pour chaque vacances pas encore finies
+                foreach ($listeVacances as $vacances) {
+                    if ($date <= $vacances->getDateFin() && $date >= $vacances->getDateDebut()) {
+                        $nbJoursOuvres--;
+                    }
+                }
+
+                $nbJoursOuvres++;
+            }
+        }
+
+        return $nbJoursOuvres;
     }
 
     public function getCommande()
