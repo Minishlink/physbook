@@ -25,5 +25,8 @@
         {% else %}
             Tu es en négat'ss ({{ solde|prix }}) ! Régularise au plus vite ta situation !!
         {% endif %}
+        {% if commande.active != 0 %}
+        <br>Ta commande actuelle correspond à un montant d'environ {{ (resteNbJoursOuvres*prixBaguette*commande.active)|prix }} jusqu'à la fin de l'année ({{ finAnnee|date('d/m') }}).
+        {% endif %}
     </p>
 </div>
