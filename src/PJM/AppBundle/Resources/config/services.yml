@@ -41,7 +41,7 @@ services:
     pjm.listener.consos.historique:
         class: PJM\AppBundle\Listener\Consos\HistoriqueListener
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_subscriber }
     pjm.datatable.achats:
         class: PJM\AppBundle\Datatables\AchatsDatatable
         tags:
