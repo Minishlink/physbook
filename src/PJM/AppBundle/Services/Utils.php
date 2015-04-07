@@ -231,9 +231,13 @@ class Utils
                     $transfert = new Transfert($transaction);
                     $this->traiterTransfert($transfert);
                     $this->em->persist($transfert);
+
+                    return $transfert;
                 }
             }
         }
+
+        return $transaction;
     }
 
     public function traiterTransfert(Transfert $transfert)
@@ -295,6 +299,8 @@ class Utils
                 }
             }
         }
+
+        return $transfert;
     }
 
     public function getTrueID(User $user)

@@ -24,6 +24,7 @@ use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Admin\FeaturedItemType;
 use PJM\AppBundle\Form\Admin\ItemType;
 use PJM\AppBundle\Form\Filter\TransactionFilterType;
+use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteController extends Controller
 {
@@ -241,7 +242,7 @@ class BoquetteController extends Controller
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
                 $utils = $this->get('pjm.services.utils');
-                $utils->traiterTransaction($credit);
+                $retour = $utils->traiterTransaction($credit);
                 $em->persist($credit);
                 $em->flush();
 
@@ -256,6 +257,21 @@ class BoquetteController extends Controller
                         'danger',
                         'Un problème est survenu lors de la transaction, note bien le code d\'erreur : '.$credit->getStatus()
                     );
+                }
+
+                if ($retour instanceof Transfert) {
+                    if ($retour->getStatus() == "OK") {
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            'Le transfert a été effectué.'
+                        );
+                    } else {
+                        // si une erreur est survenue pendant le process de mise à jour du compte
+                        $request->getSession()->getFlashBag()->add(
+                            'warning',
+                            'Le transfert n\'a pas été effectué (code d\'erreur : '.$retour->getStatus().').'
+                        );
+                    }
                 }
             } else {
                 $request->getSession()->getFlashBag()->add(
