@@ -26,7 +26,7 @@ class Citation
     {
         $count = 0;
 
-        preg_match_all("/@[a-zA-Z0-9\-]+[bo|li|an|me|ch|cl|ai|ka|pa][0-9]+/", $texte, $usernames);
+        preg_match_all("/@[a-zA-Z0-9\-!#]+[bo|li|an|me|ch|cl|ai|ka|pa][0-9]+/", $texte, $usernames);
 
         $repo_user = $this->em->getRepository('PJMUserBundle:User');
 
