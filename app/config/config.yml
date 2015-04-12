@@ -122,6 +122,8 @@ kms_froala_editor:
         folder: /uploads/froala
     includeJQuery: false
     inlineMode: false
+    plugins:
+        mediaManager: true
 
 fos_comment:
     db_driver: orm
