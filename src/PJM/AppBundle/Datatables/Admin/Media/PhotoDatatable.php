@@ -13,10 +13,16 @@ use PJM\AppBundle\Twig\IntranetExtension;
 class PhotoDatatable extends AbstractDatatableView
 {
     protected $twigExt;
+    protected $totalHM;
 
     public function setTwigExt(IntranetExtension $twigExt)
     {
         $this->twigExt = $twigExt;
+    }
+
+    public function setTotalHM($totalHM)
+    {
+        $this->totalHM = $totalHM;
     }
 
     /**
@@ -72,6 +78,14 @@ class PhotoDatatable extends AbstractDatatableView
             ->add("publication", "column", array(
                 'title' => 'Publication',
             ))
+            ->add("usersHM.users.username", "array", array(
+                'title' => "Phy's HM Users",
+                "read_as" => "usersHM.users[, ].username",
+                'visible' => false
+            ))
+            ->add("usersHM.id", "column", array(
+                'title' => "Phy's HM",
+            ))
             ->add(null, "action", array(
                 "title" => "Actions",
                 "actions" => array(
@@ -103,6 +117,7 @@ class PhotoDatatable extends AbstractDatatableView
         $formatter = function($line) use($ext) {
             $line["image"]["alt"] = $ext->imageFunction($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]);
             $line["publication"] = $ext->etatPublicationPhotoFilter($line["publication"]);
+            $line["usersHM"]["id"] = round(count($line["usersHM"]["users"])/$this->totalHM*100)."%";
 
             return $line;
         };
