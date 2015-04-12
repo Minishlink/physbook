@@ -42,8 +42,8 @@ class Photo
      *
      * @ORM\Column(name="publication", type="smallint")
      * @Assert\NotBlank()
-     * @Assert\Choice(choices = {"0", "1", "2", "3"},
-        message = "Choisissez un état de publication valide.")
+     * @Assert\Choice(callback = {"PJM\AppBundle\Enum\Media\PhotoEnum", "getPublicationChoices"},
+     * message = "Choisissez un état de publication valide.")
      */
     private $publication;
 

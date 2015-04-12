@@ -29,18 +29,17 @@ class PhotoType extends AbstractType
             ))
         ;
 
-        $choices = array(
-            '1' => "Pas autorisée",
-            '2' => "Autorisée",
-        );
-        if ($options['admin']) {
-            $choices['3'] = "Affichée";
+        $enum = new \PJM\AppBundle\Enum\Media\PhotoEnum();
+        $publicationChoices = $enum->getPublicationChoices(true);
+        unset($publicationChoices['0']);
+        if (!$options['admin']) {
+            unset($publicationChoices['3']);
         }
 
         $builder
             ->add('publication', 'choice', array(
                 'label' => "Publication sur Bonjour Gadz'Arts",
-                'choices' => $choices
+                'choices' => $publicationChoices
             ))
         ;
 
