@@ -126,12 +126,8 @@ class IntranetExtension extends \Twig_Extension
 
     public function etatPublicationPhotoFilter($string)
     {
-        $map = array(
-            '0' => "En attente de validation",
-            '1' => "Pas autorisée",
-            '2' => "Autorisée",
-            '3' => "Affichée"
-        );
+        $enum = new \PJM\AppBundle\Enum\Media\PhotoEnum();
+        $map = $enum->getPublicationChoices(true);
 
         return array_key_exists($string, $map)
             ? $map[$string]
