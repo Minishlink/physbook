@@ -95,9 +95,7 @@ class MediaController extends Controller
      */
     public function photosResultsAction()
     {
-        $photo_repo = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Media\Photo');
         $datatable = $this->get("pjm.datatable.admin.media.photos");
-        $datatable->setTotalHM($photo_repo->getTotalHM());
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
         $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
