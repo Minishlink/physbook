@@ -64,6 +64,7 @@ security:
         - { path: ^/admin/boquette/paniers/, roles: ROLE_ZIPANIERS }
         - { path: ^/admin/boquette/asso/, roles: ROLE_ASSO }
         - { path: ^/admin/, roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/froalaeditor/delete_image, roles: [ROLE_ADMIN] }
         - { path: ^/banque/, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/inbox/, roles: ROLE_BETA }
         - { path: ^/, roles: ROLE_USER, requires_channel: %canal% }
