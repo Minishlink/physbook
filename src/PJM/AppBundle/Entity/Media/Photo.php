@@ -200,6 +200,16 @@ class Photo
     }
 
     /**
+     * Get nbUsersHM
+     *
+     * @return integer
+     */
+    public function getNbUsersHM()
+    {
+        return count($this->usersHM->getUsers());
+    }
+
+    /**
      * Set proprietaire
      *
      * @param \PJM\UserBundle\Entity\User $proprietaire
