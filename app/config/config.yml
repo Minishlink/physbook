@@ -120,6 +120,8 @@ kms_froala_editor:
     language: "fr"
     imageUpload:
         folder: /uploads/froala
+    includeJQuery: false
+    inlineMode: false
 
 fos_comment:
     db_driver: orm
