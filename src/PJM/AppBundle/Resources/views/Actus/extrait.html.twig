@@ -3,7 +3,7 @@
 {% for article in liste_articles %}
     <li>
         <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}" class="titreArticle"><span>{{ article.titre|slice(0,1) }}</span>{{ article.titre|slice(1,null) }}</a><br>
-        {{ article.contenu|striptags|replace({'&nbsp;': ' '})|truncate(140,true) }} <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}"><em>Lire la suite</em></a>
+        {{ article.contenu|striptags|replace({'&nbsp;': ' ', '&amp;': '&'})|truncate(140,true) }} <a href="{{ path('pjm_app_actus_voir', {'slug': article.slug}) }}"><em>Lire la suite</em></a>
     </li>
 {% endfor %}
 </ul>
