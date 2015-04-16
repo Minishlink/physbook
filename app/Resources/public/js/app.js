@@ -66,7 +66,7 @@ function push_initialiseState() {
             }
 
             // Keep your server in sync with the latest subscriptionId
-            sendSubscriptionToServer(subscription);
+            push_sendSubscriptionToServer(subscription);
 
             // Set your UI to show they have subscribed for push messages
             if (pushButton) {
@@ -81,42 +81,40 @@ function push_initialiseState() {
 }
 
 function push_subscribe() {
-  // Disable the button so it can't be changed while
-  // we process the permission request
-  var pushButton = document.querySelector('.js-push-button');
-  pushButton.disabled = true;
+    // Disable the button so it can't be changed while
+    // we process the permission request
+    var pushButton = document.querySelector('.js-push-button');
+    pushButton.disabled = true;
 
-  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    serviceWorkerRegistration.pushManager.subscribe()
-      .then(function(subscription) {
-        // The subscription was successful
-        isPushEnabled = true;
-        pushButton.textContent = 'Désactiver les notifications';
-        pushButton.disabled = false;
+    navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+        serviceWorkerRegistration.pushManager.subscribe()
+        .then(function(subscription) {
+            // The subscription was successful
+            isPushEnabled = true;
+            pushButton.textContent = 'Désactiver les notifications';
+            pushButton.disabled = false;
 
-        // TODO: Send the subscription.subscriptionId and
-        // subscription.endpoint to your server
-        // and save it to send a push message at a later date
-        return sendSubscriptionToServer(subscription);
-      })
-      .catch(function(e) {
-        if (Notification.permission === 'denied') {
-          // The user denied the notification permission which
-          // means we failed to subscribe and the user will need
-          // to manually change the notification permission to
-          // subscribe to push messages
-          console.warn('[SW] Les notifications ne sont pas autorisées par l\'utilisateur.');
-          pushButton.disabled = true;
-        } else {
-          // A problem occurred with the subscription; common reasons
-          // include network errors, and lacking gcm_sender_id and/or
-          // gcm_user_visible_only in the manifest.
-          console.error('[SW] Impossible de souscrire aux notifications.', e);
-          pushButton.disabled = false;
-          pushButton.textContent = 'S\'abonner aux notifications';
-        }
-      });
-  });
+            // on a la subscription, il faut l'enregistrer en BDD
+            return push_sendSubscriptionToServer(subscription);
+        })
+        .catch(function(e) {
+            if (Notification.permission === 'denied') {
+                // The user denied the notification permission which
+                // means we failed to subscribe and the user will need
+                // to manually change the notification permission to
+                // subscribe to push messages
+                console.warn('[SW] Les notifications ne sont pas autorisées par l\'utilisateur.');
+                pushButton.disabled = true;
+            } else {
+                // A problem occurred with the subscription; common reasons
+                // include network errors, and lacking gcm_sender_id and/or
+                // gcm_user_visible_only in the manifest.
+                console.error('[SW] Impossible de souscrire aux notifications.', e);
+                pushButton.disabled = false;
+                pushButton.textContent = 'S\'abonner aux notifications';
+            }
+        });
+    });
 }
 
 function push_unsubscribe() {
@@ -162,4 +160,29 @@ function push_unsubscribe() {
         console.error('[SW] Erreur pendant le désabonnement aux notifications.', e);
       });
   });
+}
+
+function push_sendSubscriptionToServer(subscription) {
+    /*$.ajax({
+        url: Routing.generate('pjm_app_push_receiveSubscription'),
+        type: 'GET',
+        data: subscription,
+        dataType: 'json',
+        success: function(json) {
+            if (!json.success) {
+                var pushButton = document.querySelector('.js-push-button');
+                pushButton.disabled = false;
+                pushButton.textContent = 'S\'abonner aux notifications';
+                isPushEnabled = false;
+            }
+
+            //$('#flashBag').html(json.flashBagView);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('[SW] Erreur : ' + errorThrown);
+        }
+    });*/
+    console.log(subscription);
+
+    return true;
 }

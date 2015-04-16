@@ -29,4 +29,6 @@ parameters:
     paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
     paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
     
+    android_gcm_api_key: AIzaSyCCyyGyPINOp8fG19IhA2giCUc0Iabbcuo #clef serveur dev
+    
     canal: https

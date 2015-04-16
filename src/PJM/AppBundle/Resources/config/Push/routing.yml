@@ -1,0 +1,9 @@
+pjm_app_push_receiveSubscription:
+    path:     /subscription/receive
+    defaults: { _controller: PJMAppBundle:Push:receiveSubscription }
+    options:
+        expose: true
+
+pjm_app_push_sendNotification:
+    path:     /notification/send
+    defaults: { _controller: PJMAppBundle:Push:sendNotification }
