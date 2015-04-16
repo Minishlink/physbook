@@ -52,11 +52,22 @@ class AchatsDatatable extends AbstractDatatableView
                 'title' => 'Date',
                 'format' => 'lll'
             ))
-            ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+        ;
+
+        if (!$this->admin) {
+            $this->getColumnBuilder()
+                ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+            ;
+        } else {
+            $this->getColumnBuilder()
+                ->add('user.username', 'column', array('title' => 'PG',))
+            ;
+        }
+
+        $this->getColumnBuilder()
             ->add('item.libelle', 'column', array('title' => 'Item',))
             ->add('nombre', 'column', array('title' => 'Nombre',))
             ->add('item.prix', 'column', array('title' => 'Prix',))
-
         ;
     }
 

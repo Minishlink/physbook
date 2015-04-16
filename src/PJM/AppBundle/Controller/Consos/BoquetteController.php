@@ -743,6 +743,39 @@ class BoquetteController extends Controller
         return $datatable->getResponse();
     }
 
+    /**
+     * [ADMIN] Affiche la liste des achats
+     * @param  object Boquette $boquette
+     * @return object Template
+     */
+    public function voirAchatsAction(Boquette $boquette)
+    {
+        $datatable = $this->get("pjm.datatable.achats");
+        $datatable->setAjaxUrl($this->generateUrl(
+            "pjm_app_admin_boquette_achatsResults",
+            array('boquette_slug' => $boquette->getSlug())
+        ));
+        $datatable->setAdmin(true);
+        $datatable->buildDatatableView();
+
+        return $this->render('PJMAppBundle:Admin:Consos/achats.html.twig', array(
+            'datatable' => $datatable,
+            'boquette' => $boquette,
+        ));
+    }
+
+    /**
+     * [ADMIN] Action ajax de rendu de la liste des achats d'une boquette
+     */
+    public function achatsResultsAction($boquette_slug)
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.achats"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:Historique');
+        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
+
+        return $datatable->getResponse();
+    }
 
     /**
      * [ADMIN] Action ajax d'activation ou désactivation des responsables.

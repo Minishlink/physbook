@@ -330,28 +330,6 @@ class BragsController extends BoquetteController
         return new Response("This is not ajax.", 400);
     }
 
-    // liste des débits de baguettes
-    public function listeBucquagesAction()
-    {
-        $datatable = $this->get("pjm.datatable.historiqueAdmin");
-        $datatable->buildDatatableView();
-
-        return $this->render('PJMAppBundle:Admin:Consos/Brags/listeBucquages.html.twig', array(
-            'datatable' => $datatable
-        ));
-    }
-
-    // action ajax de rendu de la liste des bucquages
-    public function bucquagesResultsAction()
-    {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.historiqueAdmin"));
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Historique');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($this->slug));
-
-        return $datatable->getResponse();
-    }
-
     public function listeVacancesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
