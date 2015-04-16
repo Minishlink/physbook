@@ -36,6 +36,14 @@ pjm_app_admin_boquette_exportCredits:
     path:     /{slug}/exportCredits
     defaults: { _controller: PJMAppBundle:Consos/Boquette:exportCredits }
 
+pjm_app_admin_boquette_voirAchats:
+    path:     /{slug}/achats
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirAchats }
+
+pjm_app_admin_boquette_achatsResults:
+    path:     /{boquette_slug}/achats/results
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:achatsResults }
+
 pjm_app_admin_boquette_voirComptes:
     path:     /{slug}/comptes
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirComptes }

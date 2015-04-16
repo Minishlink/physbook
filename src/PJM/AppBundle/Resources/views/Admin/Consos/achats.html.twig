@@ -1,11 +1,13 @@
 {% extends "PJMAppBundle:App:panel.html.twig" %}
 
-{% set panel_title = "Débits" %}
-{% set name = "Bucquages" %}
+{% set panel_title = "Achats" %}
+{% set name = "Achats" %}
 
 {% block description %}
+{% if boquette.slug == "brags" %}
 <p>
     Les bucquages sont réalisés tous les jours de la semaine (sauf week-end et jours fériés/vacances indiqués dans le panel correspondant).
 </p>
+{% endif %}
 {% endblock %}
 

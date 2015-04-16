@@ -60,10 +60,6 @@ services:
         class: PJM\AppBundle\Datatables\PrixDatatable
         tags:
             - { name: sg.datatable.view }
-    pjm.datatable.historiqueAdmin:
-        class: PJM\AppBundle\Datatables\HistoriqueAdminDatatable
-        tags:
-            - { name: sg.datatable.view }
     pjm.datatable.commandes:
         class: PJM\AppBundle\Datatables\CommandesDatatable
         tags:

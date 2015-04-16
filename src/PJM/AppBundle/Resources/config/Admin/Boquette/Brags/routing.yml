@@ -18,14 +18,6 @@ pjm_app_admin_boquette_brags_resilierCommandes:
     path:     /resilier
     defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommandes }
 
-pjm_app_admin_boquette_brags_listeBucquages:
-    path:     /listeBucquages
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listeBucquages }
-
-pjm_app_admin_boquette_brags_bucquagesResults:
-    path:     /listeBucquages/results
-    defaults: { _controller: PJMAppBundle:Consos/Brags:bucquagesResults }
-
 pjm_app_admin_boquette_brags_listeVacances:
     path:     /listeVacances
     defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
