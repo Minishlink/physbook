@@ -35,7 +35,13 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('push', function(event) {
     console.log('Notification reçue.', event);
 
-    var data = event.data.json();
+    var data = {};
+    if (event.data) {
+        data = event.data.json();
+    }
+
+    console.log(data);
+
     var title = data.title || "Phy'sbook";
     var body = data.message || 'Il y a du neuf !';
     var icon = '/images/favicon/favicon-192x192.png';
