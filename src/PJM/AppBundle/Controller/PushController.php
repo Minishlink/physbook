@@ -10,11 +10,17 @@ use RMS\PushNotificationsBundle\Message\AndroidMessage;
 
 class PushController extends Controller
 {
-    public function receiveSubscriptionAction(Request $request)
+    public function manageSubscriptionAction(Request $request, $annuler = false)
     {
+        $subscription = array(
+            'id' => $request->request->get('id'),
+            'endpoint' => $request->request->get('endpoint')
+        );
+
         $json = array(
             'success' => true,
-            'subscription' => $request->get('subscription')
+            'done' => $annuler,
+            'subscription' => $subscription
         );
 
         $response = new JsonResponse();
@@ -28,7 +34,7 @@ class PushController extends Controller
         $message->setGCM(true);
 
         $message->setMessage('Test notification');
-        $message->setDeviceIdentifier('#AREMPLACER');
+        $message->setDeviceIdentifier('subscriptionId');
 
         $this->container->get('rms_push_notifications')->send($message);
 
