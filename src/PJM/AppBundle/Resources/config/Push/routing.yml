@@ -1,0 +1,9 @@
+pjm_app_push_manageSubscription:
+    path:     /subscription/manage/{annuler}
+    defaults: { _controller: PJMAppBundle:Push:manageSubscription, annuler: false }
+    options:
+        expose: true
+
+pjm_app_push_sendNotification:
+    path:     /notification/send
+    defaults: { _controller: PJMAppBundle:Push:sendNotification }
