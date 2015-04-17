@@ -66,7 +66,7 @@ function push_initialiseState() {
             }
 
             // Keep your server in sync with the latest subscriptionId
-            push_sendSubscriptionToServer(subscription);
+            push_sendSubscriptionToServer(subscription, 'maj');
 
             // Set your UI to show they have subscribed for push messages
             if (pushButton) {
@@ -95,7 +95,7 @@ function push_subscribe() {
             pushButton.disabled = false;
 
             // on a la subscription, il faut l'enregistrer en BDD
-            return push_sendSubscriptionToServer(subscription);
+            return push_sendSubscriptionToServer(subscription, 'maj');
         })
         .catch(function(e) {
             if (Notification.permission === 'denied') {
@@ -136,10 +136,7 @@ function push_unsubscribe() {
           return;
         }
 
-        var subscriptionId = pushSubscription.subscriptionId;
-        // TODO: Make a request to your server to remove
-        // the subscriptionId from your data store so you
-        // don't attempt to send them push messages anymore
+        push_sendSubscriptionToServer(pushSubscription, 'annuler');
 
         // We have a subscription, so call unsubscribe on it
         pushSubscription.unsubscribe().then(function(successful) {
@@ -162,27 +159,25 @@ function push_unsubscribe() {
   });
 }
 
-function push_sendSubscriptionToServer(subscription) {
-    /*$.ajax({
-        url: Routing.generate('pjm_app_push_receiveSubscription'),
-        type: 'GET',
-        data: subscription,
-        dataType: 'json',
-        success: function(json) {
-            if (!json.success) {
-                var pushButton = document.querySelector('.js-push-button');
-                pushButton.disabled = false;
-                pushButton.textContent = 'S\'abonner aux notifications';
-                isPushEnabled = false;
+function push_sendSubscriptionToServer(subscription, annuler) {
+    var req = new XMLHttpRequest();
+    var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
+    var url = Routing.generate('pjm_app_push_manageSubscription', {
+        'annuler': annuler
+    });
+    req.open('POST', url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.onreadystatechange = function (e) {
+        if (req.readyState == 4) {
+            if(req.status != 200) {
+                console.error("[SW] Erreur :" + e.target.status);
             }
-
-            //$('#flashBag').html(json.flashBagView);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('[SW] Erreur : ' + errorThrown);
         }
-    });*/
-    console.log(subscription);
+    };
+    req.onerror = function (e) {
+        console.error("[SW] Erreur :" + e.target.status);
+    };
+    req.send(params);
 
     return true;
 }

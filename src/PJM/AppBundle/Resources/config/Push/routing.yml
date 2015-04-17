@@ -1,6 +1,6 @@
-pjm_app_push_receiveSubscription:
-    path:     /subscription/receive
-    defaults: { _controller: PJMAppBundle:Push:receiveSubscription }
+pjm_app_push_manageSubscription:
+    path:     /subscription/manage/{annuler}
+    defaults: { _controller: PJMAppBundle:Push:manageSubscription, annuler: false }
     options:
         expose: true
 
