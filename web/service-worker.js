@@ -31,3 +31,49 @@ self.addEventListener('fetch', function(event) {
         );
     }
 });
+
+self.addEventListener('push', function(event) {
+    console.log('Notification reçue.', event);
+
+    var data = {};
+    if (event.data) {
+        data = event.data.json();
+    }
+
+    console.log(data);
+
+    var title = data.title || "Phy'sbook";
+    var body = data.message || 'Il y a du neuf !';
+    var icon = '/images/favicon/favicon-192x192.png';
+    var tag = 'general';
+
+    event.waitUntil(
+    self.registration.showNotification(title, {
+        body: body,
+        icon: icon,
+        tag: tag
+        })
+    );
+});
+
+self.addEventListener('notificationclick', function(event) {
+    console.log('On notification click: ', event.notification.tag);
+    // fix http://crbug.com/463146
+    event.notification.close();
+
+    event.waitUntil(
+        clients.matchAll({
+            type: "window"
+        })
+        .then(function(clientList) {
+            for (var i = 0; i < clientList.length; i++) {
+                var client = clientList[i];
+                if (client.url == '/' && 'focus' in client)
+                    return client.focus();
+            }
+            if (clients.openWindow) {
+                return clients.openWindow('/');
+            }
+        })
+    );
+});
