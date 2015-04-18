@@ -40,6 +40,9 @@ services:
               contactEmail: "contact@physbook.fr"
               notificationSender: "Phy'sbook"
               errorEmail: "error@physbook.fr"
+    pjm.services.push:
+        class: PJM\AppBundle\Services\Push
+        arguments: [@doctrine.orm.entity_manager, @rms_push_notifications]
     pjm.listener.consos.historique:
         class: PJM\AppBundle\Listener\Consos\HistoriqueListener
         tags:
