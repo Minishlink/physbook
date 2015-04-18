@@ -17,6 +17,18 @@ class PushController extends Controller
             'endpoint' => $request->request->get('endpoint')
         );
 
+        $subscriptions = $this->getUser()->getPushSubscriptions();
+
+        if ($annuler) {
+            // on va chercher la pushsubscription avec le même subscriptionId
+            // on annule
+        } else {
+            // on va chercher les subscirptions de l'utilisateur
+            // on vérifie que le subscription est déjà enregistré
+            // si oui, on met à jour le lastSubscribed
+            // si non, on l'ajoute
+        }
+
         $json = array(
             'success' => true,
             'done' => $annuler,
@@ -30,13 +42,9 @@ class PushController extends Controller
 
     public function sendNotificationAction(Request $request)
     {
-        $message = new AndroidMessage();
-        $message->setGCM(true);
-
-        $message->setMessage('Test notification');
-        $message->setDeviceIdentifier('subscriptionId');
-
-        $this->container->get('rms_push_notifications')->send($message);
+        $push = $this->get('pjm.services.push');
+        //$push->sendNotificationToUser($this->getUser(), 'test');
+        $push->sendNotificationToSubscriptionId('', 'test');
 
         return new Response('OK');
     }
