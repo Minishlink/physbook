@@ -48,6 +48,11 @@ class PushSubscription
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->lastSubscribed = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -104,6 +109,18 @@ class PushSubscription
     public function getLastSubscribed()
     {
         return $this->lastSubscribed;
+    }
+
+    /**
+     * Refresh lastSubscribed
+     *
+     * @return PushSubscription
+     */
+    public function refreshLastSubscribed()
+    {
+        $this->lastSubscribed = new \DateTime();
+
+        return $this;
     }
 
     /**
