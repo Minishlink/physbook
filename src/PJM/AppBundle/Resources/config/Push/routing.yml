@@ -1,6 +1,6 @@
 pjm_app_push_manageSubscription:
-    path:     /subscription/manage/{annuler}
-    defaults: { _controller: PJMAppBundle:Push:manageSubscription, annuler: false }
+    path:     /subscription/manage/{action}
+    defaults: { _controller: PJMAppBundle:Push:manageSubscription, action: false }
     options:
         expose: true
 
