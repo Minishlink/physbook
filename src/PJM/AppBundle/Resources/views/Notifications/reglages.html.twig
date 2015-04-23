@@ -1,0 +1,15 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}notifications{% endblock %}
+{% block categorieName %}Notifications{% endblock %}
+
+{% block pjm_app_body_content %}
+<h2>Push</h2>
+<p>Les notifications Push sont des notifications qui apparaissent dans ton navigateur (mobile ou non) même quand Phy'sbook n'est pas ouvert.</p>
+<p>Pour l'instant, cela ne fonctionne que sur Chrome pour ordinateurs et Chrome pour Android.</p>
+<button type="button" class="js-push-button btn btn-default btn-md" disabled><span class="glyphicon glyphicon-bell"></span> S'abonner aux notifications Push</button>
+
+<h2>Liste des abonnements Push</h2>
+{# {{ datatable_render(datatable) }} #}
+
+{% endblock %}
