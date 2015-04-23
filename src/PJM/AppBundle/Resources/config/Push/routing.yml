@@ -1,3 +1,7 @@
+pjm_app_push_reglages:
+    path:     /reglages
+    defaults: { _controller: PJMAppBundle:Push:reglages }
+
 pjm_app_push_manageSubscription:
     path:     /subscription/manage/{action}
     defaults: { _controller: PJMAppBundle:Push:manageSubscription, action: false }

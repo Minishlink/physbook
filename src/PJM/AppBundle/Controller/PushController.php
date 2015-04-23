@@ -11,6 +11,12 @@ use PJM\AppBundle\Entity\PushSubscription;
 
 class PushController extends Controller
 {
+    public function reglagesAction(Request $request)
+    {
+        return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
+        ));
+    }
+
     public function manageSubscriptionAction(Request $request, $action = false)
     {
         $annuler = ($action == 'annuler') ? true : false;

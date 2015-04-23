@@ -175,7 +175,6 @@ function push_sendSubscriptionToServer(subscription, action) {
             if(req.status != 200) {
                 console.error("[SW] Erreur :" + e.target.status);
             }
-            console.log(e);
         }
     };
     req.onerror = function (e) {
