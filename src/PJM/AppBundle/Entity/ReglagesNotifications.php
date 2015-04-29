@@ -53,6 +53,21 @@ class ReglagesNotifications
 
 
     /**
+     * Set defaults
+     *
+     * @return ReglagesNotifications
+     */
+    public function setDefaults()
+    {
+        $enum = new \PJM\AppBundle\Enum\ReglagesNotificationsEnum();
+        $this->actus = $enum->getActusChoices();
+        $this->banque = $enum->getBanqueChoices();
+        $this->messages = true;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -108,6 +123,18 @@ class ReglagesNotifications
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Has setting by type
+     *
+     * @return boolean
+     */
+    public function has($type)
+    {
+        return (($type == 'message' && $this->messages) ||
+            in_array($type, $this->actus) ||
+            in_array($type, $this->banque));
     }
 
     /**

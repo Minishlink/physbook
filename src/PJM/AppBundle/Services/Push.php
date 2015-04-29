@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Entity\PushSubscription;
@@ -22,8 +23,29 @@ class Push
         $this->rms_push_notifications = $rms_push_notifications;
     }
 
-    public function sendNotificationToUser(User $user, $message)
+    public function sendNotificationToUsers(ArrayCollection $users, $message, $type = null)
     {
+        foreach ($users as $user) {
+            $this->sendNotificationToUser($user, $message, $type);
+        }
+    }
+
+    /**
+     * Envoit une Notification Push à l'utilisateur en vérifiant que l'utilisateur a accepté ce type de notification
+     * @param object User     $user L'utilisateur destinataire
+     * @param string $message Le message "body" de la notification
+     * @param string $type    Le type de notification
+     */
+    public function sendNotificationToUser(User $user, $message, $type = null)
+    {
+        if ($type !== null) {
+            // on vérifie que l'utilisateur accepte ce type de notification
+            $reglages = $user->getReglagesNotifications();
+            if (!$reglages->has($type)) {
+                return;
+            }
+        }
+
         // aller chercher tous les subscriptionId de l''utilisateur
         $subscriptions = $user->getPushSubscriptions();
 
