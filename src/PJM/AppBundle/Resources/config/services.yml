@@ -111,6 +111,10 @@ services:
         class: PJM\AppBundle\Datatables\Admin\Media\PhotoDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.datatable.pushsubscription:
+        class: PJM\AppBundle\Datatables\PushSubscriptionDatatable
+        tags:
+            - { name: sg.datatable.view }
     pjm.datatable.annuaire:
         class: PJM\AppBundle\Datatables\AnnuaireDatatable
         tags:

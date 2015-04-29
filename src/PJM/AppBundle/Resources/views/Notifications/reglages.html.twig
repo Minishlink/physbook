@@ -38,13 +38,14 @@
     Tu peux définir quels sont les notifications que tu veux être sûr de ne pas rater ci-dessous. De cette façon, tu peux éviter de recevoir certaines notifications de bureau/mobile. De plus, elles ne seront pas mises en avant dans l'onglet Notifications de Phy'sbook. Tu recevras dans tous les cas les annonces.
 </p>
 
-{# {{ datatable_render(datatable_notifications) }} #}
+{# {{ form(form_reglages) }} #}
 
 <h2>Liste des abonnements Push</h2>
 <p>
-    Si tu n'utilises plus un appareil ou que tu veuilles complètement supprimer tes notifications Push, tu peux supprimer un abonnement ici. Tu pourras toujours te réabonner grâce au bouton ci-dessus.
+    Si tu n'utilises plus un appareil ou que tu veuilles complètement supprimer tes notifications Push, tu peux supprimer un abonnement ici. Tu pourras toujours te réabonner grâce au bouton ci-dessus.<br>
+    Il est préférable que tu cliques sur le bouton "Désactiver les notifications" sur ton appareil, mais si tu n'as plus accès à ton appareil, désactive-le ici.
 </p>
 
-{# {{ datatable_render(datatable_push) }} #}
+{{ datatable_render(datatable_push) }}
 
 {% endblock %}

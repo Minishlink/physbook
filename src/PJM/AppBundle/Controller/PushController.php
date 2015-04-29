@@ -7,18 +7,75 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
+
 use PJM\AppBundle\Entity\PushSubscription;
 
 class PushController extends Controller
 {
+    /**
+     * Action d'affichage de la page des réglages des notifications
+     */
     public function reglagesAction(Request $request)
     {
+        $datatable_push = $this->get("pjm.datatable.pushsubscription");
+        $datatable_push->buildDatatableView();
+
         return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
+            'datatable_push' => $datatable_push,
         ));
     }
 
+    /**
+     * Action ajax de rendu de la liste des pushSubscriptions.
+     */
+    public function subscriptionResultsAction()
+    {
+        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.pushsubscription"));
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('PJMAppBundle:PushSubscription');
+        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($this->getUser()));
+
+        return $datatable->getResponse();
+    }
+
+    /**
+     * Action ajax de suppression de pushSubscription.
+     */
+    public function deleteSubscriptionAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $liste = $request->request->get("data");
+
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:PushSubscription");
+
+            foreach ($liste as $choice) {
+                $pushSubscription = $repository->find($choice["value"]);
+
+                if ($pushSubscription->getUser() != $this->getUser()) {
+                    return new Response("La PushSubscription ne correspond pas à l'utilisateur.", 403);
+                }
+
+                $em->remove($pushSubscription);
+            }
+
+            $em->flush();
+
+            return new Response("PushSubscription(s) removed.");
+        }
+
+        return new Response("This is not ajax.", 400);
+    }
+
+    /**
+     * Action ajax de gestion d'une PushSubscription.
+     */
     public function manageSubscriptionAction(Request $request, $action = false)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("This is not ajax.", 400);
+        }
+
         $annuler = ($action == 'annuler') ? true : false;
         $subscription = array(
             'id' => $request->request->get('id'),
@@ -49,8 +106,10 @@ class PushController extends Controller
         if ($annuler) {
             // on annule
             if($pushSubscription !== null) {
-                $em->remove($pushSubscription);
-                $em->flush();
+                if ($pushSubscription->getUser() == $this->getUser()) {
+                    $em->remove($pushSubscription);
+                    $em->flush();
+                }
             }
         } else {
             // on vérifie que le subscription est déjà enregistrée
