@@ -54,7 +54,7 @@ class PushController extends Controller
             }
         } else {
             // on vérifie que le subscription est déjà enregistrée
-            if($pushSubscription !== null) {
+            if ($pushSubscription !== null) {
                  // si oui, on met à jour le lastSubscribed
                 if ($pushSubscription->getUser() == $this->getUser()) {
                     $pushSubscription->refreshLastSubscribed();
@@ -68,6 +68,7 @@ class PushController extends Controller
                     ->setSubscriptionId($subscription['id'])
                     ->setEndpoint($subscription['endpoint'])
                     ->setUser($this->getUser())
+                    ->setBrowserUA($_SERVER['HTTP_USER_AGENT'])
                 ;
 
                 $em->persist($pushSubscription);

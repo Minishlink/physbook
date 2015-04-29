@@ -162,7 +162,6 @@ function push_unsubscribe() {
 }
 
 function push_sendSubscriptionToServer(subscription, action) {
-    console.log(subscription.subscriptionId);
     var req = new XMLHttpRequest();
     var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
     var url = Routing.generate('pjm_app_push_manageSubscription', {
