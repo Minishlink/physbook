@@ -38,7 +38,9 @@
     Tu peux définir quels sont les notifications que tu veux être sûr de ne pas rater ci-dessous. De cette façon, tu peux éviter de recevoir certaines notifications de bureau/mobile. De plus, elles ne seront pas mises en avant dans l'onglet Notifications de Phy'sbook. Tu recevras dans tous les cas les annonces.
 </p>
 
-{# {{ form(form_reglages) }} #}
+<div class="ajax-form">
+{% render(url('pjm_app_push_reglages')) %}
+</div>
 
 <h2>Liste des abonnements Push</h2>
 <p>

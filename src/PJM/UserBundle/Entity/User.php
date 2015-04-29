@@ -153,6 +153,13 @@ class User extends BaseUser
      **/
     private $pushSubscriptions;
 
+    /**
+     * Réglages des notifications
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $reglagesNotifications;
+
     public function __toString()
     {
         $user = $this->username;
@@ -658,5 +665,29 @@ class User extends BaseUser
     public function getPushSubscriptions()
     {
         return $this->pushSubscriptions;
+    }
+
+    /**
+     * Set reglagesNotifications
+     *
+     * @param \PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications
+     *
+     * @return User
+     */
+    public function setReglagesNotifications(\PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications = null)
+    {
+        $this->reglagesNotifications = $reglagesNotifications;
+
+        return $this;
+    }
+
+    /**
+     * Get reglagesNotifications
+     *
+     * @return \PJM\AppBundle\Entity\ReglagesNotifications
+     */
+    public function getReglagesNotifications()
+    {
+        return $this->reglagesNotifications;
     }
 }

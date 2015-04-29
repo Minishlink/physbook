@@ -147,11 +147,18 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Compte", mappedBy="user")
      **/
     private $comptes;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\PushSubscription", mappedBy="user", cascade={"all"})
      **/
     private $pushSubscriptions;
+    
+    /**
+     * Réglages des notifications
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $reglagesNotifications;
 
     public function __toString()
     {
@@ -624,5 +631,39 @@ class User extends BaseUser
     public function getComptes()
     {
         return $this->comptes;
+    }
+
+    /**
+     * Add pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     *
+     * @return User
+     */
+    public function addPushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions[] = $pushSubscription;
+
+        return $this;
+    }
+
+    /**
+     * Remove pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     */
+    public function removePushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions->removeElement($pushSubscription);
+    }
+
+    /**
+     * Get pushSubscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPushSubscriptions()
+    {
+        return $this->pushSubscriptions;
     }
 }

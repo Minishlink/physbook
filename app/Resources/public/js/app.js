@@ -168,6 +168,7 @@ function push_sendSubscriptionToServer(subscription, action) {
         'action': action
     });
     req.open('POST', url, true);
+    req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.onreadystatechange = function (e) {
         if (req.readyState == 4) {
