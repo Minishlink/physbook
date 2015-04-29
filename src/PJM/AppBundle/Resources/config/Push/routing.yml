@@ -2,9 +2,19 @@ pjm_app_push_reglages:
     path:     /reglages
     defaults: { _controller: PJMAppBundle:Push:reglages }
 
+pjm_app_push_subscriptionResults:
+    path:     /subscription/results
+    defaults: { _controller: PJMAppBundle:Push:subscriptionResults }
+
 pjm_app_push_manageSubscription:
     path:     /subscription/manage/{action}
     defaults: { _controller: PJMAppBundle:Push:manageSubscription, action: false }
+    options:
+        expose: true
+
+pjm_app_push_deleteSubscription:
+    path:     /subscription/delete
+    defaults: { _controller: PJMAppBundle:Push:deleteSubscription }
     options:
         expose: true
 

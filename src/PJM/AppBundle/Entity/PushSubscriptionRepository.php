@@ -2,6 +2,8 @@
 
 namespace PJM\AppBundle\Entity;
 
+use PJM\UserBundle\Entity\User;
+
 /**
  * PushSubscriptionRepository
  *
@@ -10,4 +12,13 @@ namespace PJM\AppBundle\Entity;
  */
 class PushSubscriptionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function callbackFindByUser(User $user)
+    {
+        return function($qb) use($user) {
+            $qb
+                ->join('PushSubscription.user', 'u', 'WITH', 'u = :user')
+                ->setParameter('user', $user)
+            ;
+        };
+    }
 }
