@@ -4,12 +4,47 @@
 {% block categorieName %}Notifications{% endblock %}
 
 {% block pjm_app_body_content %}
+<h2>Notifications possibles</h2>
+<p>Les informations suivantes apparaîtront dans le fil de notifications. Tu peux régler quelles infos te seront mises en avant (par un macaron sur Phy'sbook ou des notifications de bureau/mobile) plus bas dans la page dans les réglages.</p>
+<ul>
+    <li>
+        Actualités
+        <ul>
+            <li>Promotion</li>
+            <li>Centre</li>
+            <li>Boquette (si membre ou abonné)</li>
+            <li>Mises à jour</li>
+            <li>Générales</li>
+        </ul>
+    </li>
+    <li>Messages et annonces</li>
+    <li>
+        B<span class="icon-zagots zagots-AM"></span>k
+        <ul>
+            <li>Alerte de négat's</li>
+            <li>Crédits par transfert</li>
+            <li>Débits spéciaux (évènements)</li>
+        </ul>
+    </li>
+</ul>
+
 <h2>Push</h2>
 <p>Les notifications Push sont des notifications qui apparaissent dans ton navigateur (mobile ou non) même quand Phy'sbook n'est pas ouvert.</p>
 <p>Pour l'instant, cela ne fonctionne que sur Chrome pour ordinateurs et Chrome pour Android.</p>
 <button type="button" class="js-push-button btn btn-default btn-md" disabled><span class="glyphicon glyphicon-bell"></span> S'abonner aux notifications Push</button>
 
+<h2>Réglages</h2>
+<p>
+    Tu peux définir quels sont les notifications que tu veux être sûr de ne pas rater ci-dessous. De cette façon, tu peux éviter de recevoir certaines notifications de bureau/mobile. De plus, elles ne seront pas mises en avant dans l'onglet Notifications de Phy'sbook. Tu recevras dans tous les cas les annonces.
+</p>
+
+{# {{ datatable_render(datatable_notifications) }} #}
+
 <h2>Liste des abonnements Push</h2>
-{# {{ datatable_render(datatable) }} #}
+<p>
+    Si tu n'utilises plus un appareil ou que tu veuilles complètement supprimer tes notifications Push, tu peux supprimer un abonnement ici. Tu pourras toujours te réabonner grâce au bouton ci-dessus.
+</p>
+
+{# {{ datatable_render(datatable_push) }} #}
 
 {% endblock %}
