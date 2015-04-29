@@ -9,19 +9,88 @@ use Symfony\Component\HttpFoundation\Response;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 
 use PJM\AppBundle\Entity\PushSubscription;
+use PJM\AppBundle\Entity\ReglagesNotifications;
+use PJM\AppBundle\Form\ReglagesNotificationsType;
 
 class PushController extends Controller
 {
     /**
      * Action d'affichage de la page des réglages des notifications
      */
-    public function reglagesAction(Request $request)
+    public function indexAction(Request $request)
     {
         $datatable_push = $this->get("pjm.datatable.pushsubscription");
         $datatable_push->buildDatatableView();
 
         return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
             'datatable_push' => $datatable_push,
+        ));
+    }
+
+    /**
+     * Action du formulaire des réglages des notifications
+     */
+    public function reglagesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $reglagesNotifications = $user->getReglagesNotifications();
+        if ($reglagesNotifications === null) {
+            // si l'utilisateur n'a pas déjà de réglages
+            $reglagesNotifications = new ReglagesNotifications();
+            $reglagesNotifications->setUser($user);
+        }
+
+        $form = $this->createForm(new ReglagesNotificationsType(), $reglagesNotifications, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_push_reglages'),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em->persist($reglagesNotifications);
+                $em->flush();
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu. Réessaye.'
+                );
+
+                $data = $form->getData();
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            if ($request->isXmlHttpRequest()) {
+                $formView = $this->renderView('PJMAppBundle::form_only.html.twig', array(
+                    'form' => $form->createView(),
+                ));
+
+                $flashBagView = $this->renderView('PJMAppBundle:App:flashBag.html.twig');
+
+                $response = new JsonResponse();
+                $response->setData(array(
+                    'formView' => $formView,
+                    'flashBagView' => $flashBagView,
+                    'success' => isset($success)
+                ));
+
+                return $response;
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_push_index'));
+        }
+
+        return $this->render('PJMAppBundle::form_only.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 

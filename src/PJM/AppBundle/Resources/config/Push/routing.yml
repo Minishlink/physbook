@@ -1,3 +1,7 @@
+pjm_app_push_index:
+    path:     /
+    defaults: { _controller: PJMAppBundle:Push:index }
+
 pjm_app_push_reglages:
     path:     /reglages
     defaults: { _controller: PJMAppBundle:Push:reglages }
