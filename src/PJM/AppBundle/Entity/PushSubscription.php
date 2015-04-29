@@ -48,6 +48,13 @@ class PushSubscription
      */
     private $user;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="browserUA", type="string", length=255)
+     */
+    private $browserUA;
+
     public function __construct()
     {
         $this->lastSubscribed = new \DateTime();
@@ -169,5 +176,29 @@ class PushSubscription
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set browserUA
+     *
+     * @param string $browserUA
+     *
+     * @return PushSubscription
+     */
+    public function setBrowserUA($browserUA)
+    {
+        $this->browserUA = $browserUA;
+
+        return $this;
+    }
+
+    /**
+     * Get browserUA
+     *
+     * @return string
+     */
+    public function getBrowserUA()
+    {
+        return $this->browserUA;
     }
 }
