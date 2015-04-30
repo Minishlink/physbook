@@ -1,4 +1,6 @@
 var isPushEnabled = false;
+const pushEnableText ="<span class='glyphicon glyphicon-bell'></span> S'abonner aux notifications";
+const pushDisableText = "<span class='glyphicon glyphicon-remove'></span> Désactiver les notifications";
 window.addEventListener('load', function() {
     var pushButton = document.querySelector('.js-push-button');
     if (pushButton) {
@@ -70,7 +72,7 @@ function push_initialiseState() {
 
             // Set your UI to show they have subscribed for push messages
             if (pushButton) {
-                pushButton.textContent = 'Désactiver les notifications';
+                pushButton.innerHTML = pushDisableText;
             }
             isPushEnabled = true;
         })
@@ -91,11 +93,11 @@ function push_subscribe() {
         .then(function(subscription) {
             // The subscription was successful
             isPushEnabled = true;
-            pushButton.textContent = 'Désactiver les notifications';
+            pushButton.innerHTML = pushDisableText;
             pushButton.disabled = false;
 
             // on a la subscription, il faut l'enregistrer en BDD
-            return push_sendSubscriptionToServer(subscription, 'maj');
+            return push_sendSubscriptionToServer(subscription, 'new');
         })
         .catch(function(e) {
             if (Notification.permission === 'denied') {
@@ -111,7 +113,7 @@ function push_subscribe() {
                 // gcm_user_visible_only in the manifest.
                 console.error('[SW] Impossible de souscrire aux notifications.', e);
                 pushButton.disabled = false;
-                pushButton.textContent = 'S\'abonner aux notifications';
+                pushButton.innerHTML = pushEnableText;
             }
         });
     });
@@ -132,7 +134,7 @@ function push_unsubscribe() {
           // to allow the user to subscribe to push
           isPushEnabled = false;
           pushButton.disabled = false;
-          pushButton.textContent = 'S\'abonner aux notifications';
+          pushButton.innerHTML = pushEnableText;
           return;
         }
 
@@ -140,18 +142,18 @@ function push_unsubscribe() {
 
         // We have a subscription, so call unsubscribe on it
         pushSubscription.unsubscribe().then(function(successful) {
-          pushButton.disabled = false;
-          pushButton.textContent = 'S\'abonner aux notifications';
-          isPushEnabled = false;
+            pushButton.disabled = false;
+            pushButton.innerHTML = pushEnableText;
+            isPushEnabled = false;
         }).catch(function(e) {
-          // We failed to unsubscribe, this can lead to
-          // an unusual state, so may be best to remove
-          // the users data from your data store and
-          // inform the user that you have done so
+            // We failed to unsubscribe, this can lead to
+            // an unusual state, so may be best to remove
+            // the users data from your data store and
+            // inform the user that you have done so
 
-          console.log('[SW] Erreur pendant le désabonnement aux notifications: ', e);
-          pushButton.disabled = false;
-          pushButton.textContent = 'S\'abonner aux notifications';
+            console.log('[SW] Erreur pendant le désabonnement aux notifications: ', e);
+            pushButton.disabled = false;
+            pushButton.innerHTML = pushEnableText;
         });
       }).catch(function(e) {
         console.error('[SW] Erreur pendant le désabonnement aux notifications.', e);
@@ -159,14 +161,14 @@ function push_unsubscribe() {
   });
 }
 
-function push_sendSubscriptionToServer(subscription, annuler) {
-    console.log(subscription.subscriptionId);
+function push_sendSubscriptionToServer(subscription, action) {
     var req = new XMLHttpRequest();
     var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
     var url = Routing.generate('pjm_app_push_manageSubscription', {
-        'annuler': annuler
+        'action': action
     });
     req.open('POST', url, true);
+    req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.onreadystatechange = function (e) {
         if (req.readyState == 4) {

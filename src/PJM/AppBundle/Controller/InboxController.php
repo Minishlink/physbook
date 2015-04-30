@@ -96,6 +96,12 @@ class InboxController extends Controller
                 $em->persist($message);
                 $em->flush();
 
+                // on envoit les notifications push
+                $type = $annonce ? null : 'message';
+                $msg = $annonce ? "Nouvelle annonce !" : "Nouveau message !";
+                $push = $this->get('pjm.services.push');
+                $push->sendNotificationToUsers($message->getDestinatairesUsers(), $msg, $type);
+
                 return $this->redirect($this->generateUrl('pjm_app_inbox_index'));
             }
 
