@@ -51,13 +51,7 @@ class ReglagesNotifications
      */
     private $user;
 
-
-    /**
-     * Set defaults
-     *
-     * @return ReglagesNotifications
-     */
-    public function setDefaults()
+    public function __construct()
     {
         $enum = new \PJM\AppBundle\Enum\ReglagesNotificationsEnum();
         $this->actus = $enum->getActusChoices();

@@ -688,6 +688,10 @@ class User extends BaseUser
      */
     public function getReglagesNotifications()
     {
+        if ($this->reglagesNotifications === null) {
+            return new \PJM\AppBundle\Entity\ReglagesNotifications();
+        }
+
         return $this->reglagesNotifications;
     }
 }
