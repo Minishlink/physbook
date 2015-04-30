@@ -1,6 +1,7 @@
 var isPushEnabled = false;
 const pushEnableText ="<span class='glyphicon glyphicon-bell'></span> S'abonner aux notifications";
 const pushDisableText = "<span class='glyphicon glyphicon-remove'></span> Désactiver les notifications";
+
 window.addEventListener('load', function() {
     var pushButton = document.querySelector('.js-push-button');
     if (pushButton) {
@@ -76,7 +77,7 @@ function push_initialiseState() {
             }
             isPushEnabled = true;
         })
-        .catch(function(err) {
+        ['catch'](function(err) {
             console.warn('[SW] Erreur pendant getSubscription()', err);
         });
     });
@@ -99,7 +100,7 @@ function push_subscribe() {
             // on a la subscription, il faut l'enregistrer en BDD
             return push_sendSubscriptionToServer(subscription, 'new');
         })
-        .catch(function(e) {
+        ['catch'](function(e) {
             if (Notification.permission === 'denied') {
                 // The user denied the notification permission which
                 // means we failed to subscribe and the user will need
@@ -145,7 +146,7 @@ function push_unsubscribe() {
             pushButton.disabled = false;
             pushButton.innerHTML = pushEnableText;
             isPushEnabled = false;
-        }).catch(function(e) {
+        })['catch'](function(e) {
             // We failed to unsubscribe, this can lead to
             // an unusual state, so may be best to remove
             // the users data from your data store and
@@ -155,7 +156,7 @@ function push_unsubscribe() {
             pushButton.disabled = false;
             pushButton.innerHTML = pushEnableText;
         });
-      }).catch(function(e) {
+      })['catch'](function(e) {
         console.error('[SW] Erreur pendant le désabonnement aux notifications.', e);
       });
   });
