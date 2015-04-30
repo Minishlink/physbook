@@ -5,7 +5,8 @@
     <a class="btn btn-primary" href="{{ path('pjm_app_inbox_nouveauMessage') }}"><span class="glyphicon glyphicon-send"></span> Envoyer un message</a>
     <a class="btn btn-default" href="{{ path('pjm_app_inbox_nouvelleAnnonce') }}"><span class="glyphicon glyphicon-bullhorn"></span> Faire une annonce</a>
 </p>
-
+{% include "PJMAppBundle:Notifications:togglePush.html.twig" %}
+<div class="space"></div>
 <div class="panel panel-primary">
     <div class="panel-heading">
         <div class="panel-title">

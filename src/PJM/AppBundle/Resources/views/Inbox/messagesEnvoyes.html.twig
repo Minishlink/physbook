@@ -9,8 +9,10 @@
             </div>
             {% endif %}
             <div class="panel-body">
-                <p>
+                <div class="btn-group" role="group" aria-label="Actions">
                     <a class="btn btn-default btn-xs cancel" title="Supprime pour tous les destinataires" data-message="{{ message.id }}"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
+                </div>
+                <p>
                     {{ message.contenu|nl2br|citationUsers|raw }}
                 </p>
             </div>

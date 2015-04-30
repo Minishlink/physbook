@@ -142,11 +142,23 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Media\Photo", mappedBy="proprietaire", cascade={"persist", "remove"})
      **/
     private $photosCreated;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Compte", mappedBy="user")
      **/
     private $comptes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\PushSubscription", mappedBy="user", cascade={"all"})
+     **/
+    private $pushSubscriptions;
+    
+    /**
+     * Réglages des notifications
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $reglagesNotifications;
 
     public function __toString()
     {
@@ -179,6 +191,7 @@ class User extends BaseUser
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comptes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pushSubscriptions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -585,5 +598,72 @@ class User extends BaseUser
     public function getPhotosCreated()
     {
         return $this->photosCreated;
+    }
+
+    /**
+     * Add comptes
+     *
+     * @param \PJM\AppBundle\Entity\Compte $comptes
+     * @return User
+     */
+    public function addCompte(\PJM\AppBundle\Entity\Compte $comptes)
+    {
+        $this->comptes[] = $comptes;
+
+        return $this;
+    }
+
+    /**
+     * Remove comptes
+     *
+     * @param \PJM\AppBundle\Entity\Compte $comptes
+     */
+    public function removeCompte(\PJM\AppBundle\Entity\Compte $comptes)
+    {
+        $this->comptes->removeElement($comptes);
+    }
+
+    /**
+     * Get comptes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComptes()
+    {
+        return $this->comptes;
+    }
+
+    /**
+     * Add pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     *
+     * @return User
+     */
+    public function addPushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions[] = $pushSubscription;
+
+        return $this;
+    }
+
+    /**
+     * Remove pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     */
+    public function removePushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions->removeElement($pushSubscription);
+    }
+
+    /**
+     * Get pushSubscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPushSubscriptions()
+    {
+        return $this->pushSubscriptions;
     }
 }
