@@ -23,6 +23,15 @@ class ReglagesNotificationsEnum
         return array_keys($choices);
     }
 
+    public static function getDefaultActusChoices() {
+        return array(
+            'centre',
+            'promotion',
+            'assos',
+            'maj',
+        );
+    }
+
     public static function getBanqueChoices($withValues = false) {
         $choices = array(
             'negatif' => "Négat's",
@@ -35,5 +44,11 @@ class ReglagesNotificationsEnum
         }
 
         return array_keys($choices);
+    }
+
+    public static function getDefaultBanqueChoices() {
+        return array(
+            'negatif',
+        );
     }
 }
