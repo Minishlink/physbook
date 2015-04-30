@@ -54,8 +54,8 @@ class ReglagesNotifications
     public function __construct()
     {
         $enum = new \PJM\AppBundle\Enum\ReglagesNotificationsEnum();
-        $this->actus = $enum->getActusChoices();
-        $this->banque = $enum->getBanqueChoices();
+        $this->actus = $enum->getDefaultActusChoices();
+        $this->banque = $enum->getDefaultBanqueChoices();
         $this->messages = true;
 
         return $this;
