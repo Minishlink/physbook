@@ -8,7 +8,7 @@
             <span class="glyphicon glyphicon-plus"></span>
             Ajouter un article
         </a>
-        <button type="button" class="js-push-button btn btn-default btn-md" disabled>S'abonner aux notifications</button>
+        {% include "PJMAppBundle:Notifications:togglePush.html.twig" %}
     </p>
     <div id="liste-articles">
         {% include "PJMAppBundle:Actus:articles.html.twig" with {'articles': brouillons} %}

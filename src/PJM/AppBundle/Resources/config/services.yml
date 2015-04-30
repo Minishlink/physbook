@@ -40,6 +40,9 @@ services:
               contactEmail: "contact@physbook.fr"
               notificationSender: "Phy'sbook"
               errorEmail: "error@physbook.fr"
+    pjm.services.push:
+        class: PJM\AppBundle\Services\Push
+        arguments: [@doctrine.orm.entity_manager, @rms_push_notifications]
     pjm.listener.consos.historique:
         class: PJM\AppBundle\Listener\Consos\HistoriqueListener
         tags:
@@ -102,6 +105,10 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.admin.media.photos:
         class: PJM\AppBundle\Datatables\Admin\Media\PhotoDatatable
+        tags:
+            - { name: sg.datatable.view }
+    pjm.datatable.pushsubscription:
+        class: PJM\AppBundle\Datatables\PushSubscriptionDatatable
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.annuaire:

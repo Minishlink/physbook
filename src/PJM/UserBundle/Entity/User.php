@@ -148,6 +148,18 @@ class User extends BaseUser
      **/
     private $comptes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\PushSubscription", mappedBy="user", cascade={"all"})
+     **/
+    private $pushSubscriptions;
+
+    /**
+     * Réglages des notifications
+     *
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $reglagesNotifications;
+
     public function __toString()
     {
         $user = $this->username;
@@ -179,6 +191,7 @@ class User extends BaseUser
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comptes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pushSubscriptions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -618,5 +631,67 @@ class User extends BaseUser
     public function getComptes()
     {
         return $this->comptes;
+    }
+
+    /**
+     * Add pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     *
+     * @return User
+     */
+    public function addPushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions[] = $pushSubscription;
+
+        return $this;
+    }
+
+    /**
+     * Remove pushSubscription
+     *
+     * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
+     */
+    public function removePushSubscription(\PJM\AppBundle\Entity\PushSubscription $pushSubscription)
+    {
+        $this->pushSubscriptions->removeElement($pushSubscription);
+    }
+
+    /**
+     * Get pushSubscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPushSubscriptions()
+    {
+        return $this->pushSubscriptions;
+    }
+
+    /**
+     * Set reglagesNotifications
+     *
+     * @param \PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications
+     *
+     * @return User
+     */
+    public function setReglagesNotifications(\PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications = null)
+    {
+        $this->reglagesNotifications = $reglagesNotifications;
+
+        return $this;
+    }
+
+    /**
+     * Get reglagesNotifications
+     *
+     * @return \PJM\AppBundle\Entity\ReglagesNotifications
+     */
+    public function getReglagesNotifications()
+    {
+        if ($this->reglagesNotifications === null) {
+            return new \PJM\AppBundle\Entity\ReglagesNotifications();
+        }
+
+        return $this->reglagesNotifications;
     }
 }
