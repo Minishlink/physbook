@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    if (window.disableNav) {
+        return;
+    }
+
     // fix safari ios web app
     var userAgent = window.navigator.userAgent.toLowerCase();
     if (window.navigator.standalone && /iphone|ipod|ipad/.test(userAgent)) {

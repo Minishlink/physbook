@@ -1,0 +1,3 @@
+pjm_app_boquette_rezal_internet_connexion:
+    path:     /internet/connexion
+    defaults: { _controller: PJMAppBundle:Boquette/Rezal:connexion }

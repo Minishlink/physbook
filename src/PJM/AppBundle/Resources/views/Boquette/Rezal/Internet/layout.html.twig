@@ -1,0 +1,33 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}R&amp;z@l{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    var disableNav = true;
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+body {
+    background-color: #B63938;
+    color: white;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="content" class="col-md-10 col-md-offset-1">
+            <h1>R&amp;z@l</h1>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
