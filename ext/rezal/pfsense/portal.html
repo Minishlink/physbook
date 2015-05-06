@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Redirection - Portail de connexion">
+    </head>
+    <body>
+        <style>
+            body {
+                background-color: #B63938;
+                color: white;
+            }
+
+            #wrapper {
+                height:100vh;
+                line-height:100vh;
+                text-align:center;
+            }
+
+            #content {
+                vertical-align:middle;
+                display:inline-block;
+                line-height:normal;
+            }
+
+            input[type="submit"] {
+                font-size: 2em;
+            }
+        </style>
+        <script type="text/javascript">
+            document.write('<style>.noscript { display:none }</style>');
+        </script>
+
+        <div id="wrapper">
+            <div id="content">
+                <?php var_dump($_POST); ?>
+                <p>$PORTAL_MESSAGE$</p>
+                <script type="text/javascript">document.write('<p>Chargement...</p>');</script>
+                <!-- https://physbook.fr/boquette/rezal/internet/connexion -->
+                <form action="http://localhost/pjm-intranet/web/app_dev.php/boquette/rezal/internet/connexion" method="post" id="redirectForm">
+                    <input name="action" type="hidden" value="$PORTAL_ACTION$">
+                    <input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
+                    <input name="zone" type="hidden" value="$PORTAL_ZONE$">
+                    <span class="noscript">
+                        <input name="submitx" type="submit" value="Connexion" />
+                    </span>
+                </form>
+            </div>
+            <span></span>
+        </div>
+
+        <script type="text/javascript">
+            window.addEventListener('load', function() {
+                //document.getElementById("redirectForm").submit();
+            });
+
+
+        </script>
+    </body>
+</html>
