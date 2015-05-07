@@ -4,25 +4,28 @@
 
 {% block javascripts %}
 {{ parent() }}
-{% if connexion %}
+{% if autoConnect %}
 <script type="text/javascript">
-    $('#connexion').prepend('<p>Connexion en cours...</p>');
-    //$('#connexion form').css('visibility', 'hidden').submit();
+    $('.noscript').before('<p>Connexion en cours...</p>');
+    $('.noscript').hide();
+    $('#connexion form button[type="submit"]').click();
 </script>
 {% endif %}
 {% endblock %}
 
-
 {% block content %}
-<h2>Connexion</h2>
-<div id="connexion">
-    {{ form_start(form, {'action': action}) }}
-        {{ form_errors(form) }}
+<div class="noscript">
+    <h2>Connexion</h2>
+    <div id="connexion">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-        {{ form_row(form.auth_user) }}
-        {{ form_row(form.auth_pass) }}
+            {{ form_row(form.auth_user) }}
+            {{ form_row(form.auth_pass) }}
 
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+    </div>
 </div>
+
 
 {% endblock %}
