@@ -1,10 +1,14 @@
+<?php
+    $target = 'https://physbook.fr'; //'http://localhost/pjm-intranet/web/app_dev.php';
+    $action = (isset($_POST['auth_user'])) ? '' : $target.'/boquette/rezal/internet/connexion';
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Redirection - Portail de connexion">
+        <title>R&amp;z@l | Chargement</title>
     </head>
     <body>
         <style>
@@ -28,6 +32,10 @@
             input[type="submit"] {
                 font-size: 2em;
             }
+
+            .hidden {
+                display: none;
+            }
         </style>
         <script type="text/javascript">
             document.write('<style>.noscript { display:none }</style>');
@@ -35,17 +43,14 @@
 
         <div id="wrapper">
             <div id="content">
-                <?php var_dump($_POST); ?>
-                <p>$PORTAL_MESSAGE$</p>
                 <script type="text/javascript">document.write('<p>Chargement...</p>');</script>
-                <!-- https://physbook.fr/boquette/rezal/internet/connexion -->
-                <form action="http://localhost/pjm-intranet/web/app_dev.php/boquette/rezal/internet/connexion" method="post" id="redirectForm">
+                <form action="<?php echo $action ?>" method="post" id="redirectForm" class="noscript">
+                    <input name="auth_user" class="hidden" type="text" value="<?php echo $_POST['auth_user'] ?>">
+                    <input name="auth_pass" class="hidden" type="password" value="<?php echo $_POST['auth_pass'] ?>">
                     <input name="action" type="hidden" value="$PORTAL_ACTION$">
                     <input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
                     <input name="zone" type="hidden" value="$PORTAL_ZONE$">
-                    <span class="noscript">
-                        <input name="submitx" type="submit" value="Connexion" />
-                    </span>
+                        <input name="accept" type="submit" value="Connexion" />
                 </form>
             </div>
             <span></span>
@@ -53,10 +58,8 @@
 
         <script type="text/javascript">
             window.addEventListener('load', function() {
-                //document.getElementById("redirectForm").submit();
+                document.getElementById("redirectForm").submit();
             });
-
-
         </script>
     </body>
 </html>

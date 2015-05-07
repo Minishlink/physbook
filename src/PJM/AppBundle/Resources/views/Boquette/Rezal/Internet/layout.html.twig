@@ -15,6 +15,16 @@
 body {
     background-color: #B63938;
     color: white;
+    text-align: center;
+}
+
+.form-control {
+    margin: 0 auto;
+    width: auto;
+}
+
+h1, h2 {
+    text-transform: none !important;
 }
 </style>
 {% endblock %}
@@ -23,7 +33,7 @@ body {
 
 <div class="container-fluid">
     <div class="row">
-        <div id="content" class="col-md-10 col-md-offset-1">
+        <div id="content" class="col-sm-4 col-sm-offset-4">
             <h1>R&amp;z@l</h1>
             {% block content %}{% endblock %}
         </div>

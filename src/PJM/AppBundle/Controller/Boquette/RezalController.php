@@ -18,19 +18,23 @@ class RezalController extends Controller
             $request->request->get('action') : 'http://172.17.0.1:8002/index.php';
 
         $redirurl = $request->request->get('redirurl') ?
-            $request->request->get('redirurl') : $this->generateUrl("pjm_app_homepage");
+            $request->request->get('redirurl') : $this->generateUrl("pjm_app_homepage", array(), true);
 
         $zone = $request->request->get('zone') ?
             $request->request->get('zone') : 'residence';
 
+        $connexion = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $passType = $connexion ? 'text' : 'password';
+
         $form = $this->get('form.factory')->createNamedBuilder(null, 'form')
             ->setMethod('post')
+            ->setAction($action)
             ->add('auth_user', 'text', array(
                 'label' => "Nom d'utilisateur",
             ))
-            ->add('auth_pass', 'password', array(
-                'label' => "Mot de passe",
-                'always_empty' => false
+            ->add('auth_pass', $passType, array(
+                'label' => "Mot de passe"
             ))
             ->add('redirurl', 'hidden', array(
                 'data' => $redirurl
@@ -42,40 +46,26 @@ class RezalController extends Controller
                 'data' => $action
             ))
             ->add('accept', 'submit', array(
-                'label' => 'Connexion'
+                'label' => 'Connexion',
+                'attr' => array('value' => 'Connexion')
             ))
             ->getForm()
         ;
 
-        if ($request->request->get('auth_user')) {
-            $form->handleRequest($request);
-        }
-
-        // si on a envoyé le formulaire
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $connexion = true;
-            }
-        } else {
-            // si on est connecté, pas besoin d'afficher le formulaire
-            if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                // TODO on vérifie que l'utilisateur a bien accès au R&z@l
-                if (true) {
-                    // on envoit le username et le mot de passe crypté au pfsense
-                    $form->setData(array(
-                        'login' => $this->getUser()->getUsername(),
-                        'pass' => $this->getUser()->getPassword()
-                    ));
-
-                    $connexion = true;
-                }
+        // si on est connecté
+        if ($connexion) {
+            // TODO on vérifie que l'utilisateur a bien accès au R&z@l
+            if (true) {
+                $form->setData(array(
+                    'auth_user' => $this->getUser()->getUsername(),
+                    'auth_pass' => $this->getUser()->getPassword()
+                ));
             }
         }
 
         return $this->render('PJMAppBundle:Boquette/Rezal/Internet:connexion.html.twig', array(
             'form' => $form->createView(),
-            'connexion' => isset($connexion),
-            'action' => isset($connexion) ? $action : ''
+            'autoConnect' => $connexion,
         ));
     }
 }
