@@ -3,7 +3,6 @@
 .include-custom-font("blackout_sunrise-webfont");
 .include-custom-font("blackout_two_am-webfont");
 .include-custom-font("klavika");
-@import url(//fonts.googleapis.com/css?family=Lobster);
 
 .include-custom-font(@family, @weight: normal, @style: normal) {
     @font-face {
@@ -16,6 +15,13 @@
         font-weight: @weight;
         font-style: @style;
     }
+}
+
+@font-face {
+    font-family: 'Lobster';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lobster'), local('Lobster-Regular'), url('fonts/Lobster.woff') format('woff');
 }
 
 .font-lobster {
