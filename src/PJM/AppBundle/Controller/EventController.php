@@ -31,16 +31,19 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $event = new Event\Evenement();
+        $event->setCreateur($this->getUser());
 
         $form = $this->createForm(new EvenementType(), $event, array(
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_event_nouveau'),
+            'user' => $this->getUser()
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+
                 $em->persist($event);
                 $em->flush();
 

@@ -1,8 +1,9 @@
 <?php
 
-namespace PJM\AppBundle\Entity;
+namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\EntityRepository;
+use PJM\UserBundle\Entity\User;
 
 /**
  * EvenementRepository
@@ -12,4 +13,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class EvenementRepository extends EntityRepository
 {
+    public function getEvents(User $user, $max = null)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->orderBy('e.dateDebut', 'DESC')
+            ->where('e.isPublic = true')
+        ;
+
+        // TODO ajouter les évents privés dont l'user est participant
+
+        if ($max !== null) {
+            $qb->setMaxResults($max);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

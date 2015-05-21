@@ -5,6 +5,7 @@ namespace PJM\AppBundle\Form\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Form\ImageType;
 
@@ -16,6 +17,24 @@ class EvenementType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $boquetteOptions = array(
+            'label' => 'De la part d\'une boquette ?',
+            'class'    => 'PJMAppBundle:Boquette',
+            'query_builder' => function(EntityRepository $er) use ($options) {
+                return $er->createQueryBuilder('b')
+                    ->join('b.responsabilites', 'r')
+                    ->join('r.responsables', 're')
+                    ->where('re.user = :user')
+                    ->andWhere('re.active = true')
+                    ->setParameter(':user', $options['user'])
+                ;
+            },
+            'property' => 'nom',
+            'empty_value' => 'Non',
+            'empty_data' => null,
+            'required' => false,
+        );
+
         $builder
             ->add('nom')
             ->add('description', null, array(
@@ -34,6 +53,7 @@ class EvenementType extends AbstractType
                 'required' => false
             ))
             ->add('lieu')
+            ->add('boquette', 'entity', $boquetteOptions)
             ->add('isPublic', null, array(
                 'label' => 'Evènement public',
                 'required' => false
@@ -54,7 +74,8 @@ class EvenementType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Event\Evenement'
+            'data_class' => 'PJM\AppBundle\Entity\Event\Evenement',
+            'user' => null,
         ));
     }
 

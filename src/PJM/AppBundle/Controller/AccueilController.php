@@ -28,7 +28,10 @@ class AccueilController extends Controller
         $annonces = $em->getRepository('PJMAppBundle:Inbox\Reception')
                         ->getAnnoncesByInbox($this->getUser()->getInbox(), false, 3);
 
-        $listeEvents = array(
+        $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
+                        ->getEvents($this->getUser(), 3);
+
+        /*$listeEvents = array(
             array(
                 'titre' => "WTP",
                 'organisateur' => "Bo212",
@@ -50,7 +53,7 @@ class AccueilController extends Controller
                 'journee' => true,
                 'couleur' => 'bleu-clair'
             ),
-        );
+        );*/
 
         return $this->render('PJMAppBundle:Accueil:index.html.twig', array(
             'solde' => $solde,

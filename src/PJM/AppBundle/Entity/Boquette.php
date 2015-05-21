@@ -55,6 +55,13 @@ class Boquette
     */
     private $image;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="couleur", type="string", length=10, nullable=true)
+     */
+    private $couleur;
+
     public function __construct() {
         $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -207,5 +214,29 @@ class Boquette
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     *
+     * @return Boquette
+     */
+    public function setCouleur($couleur)
+    {
+        $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
     }
 }
