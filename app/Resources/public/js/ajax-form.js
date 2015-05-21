@@ -16,6 +16,7 @@ $(document).ready(function () {
                 success: function(json) {
                     if (json.success) {
                         $this.trigger('reset');
+                        $this.trigger('success');
                     }
 
                     $this.parent().html(json.formView);

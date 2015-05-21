@@ -1,0 +1,21 @@
+<div id="creation" class="collapse">
+    <h2>Nouvel évènement
+        <small>
+            <button type="button" class="close" data-toggle="collapse" data-target="#creation" aria-label="Annuler" title="Annuler">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </small>
+    </h2>
+    <p>Tu es l'un des organisateurs d'un évènement ? Invite tes chicop's à participer ! Ils recevront une notification.</p>
+    <div class="ajax-form">
+        {{ form_stylesheet(form) }}
+        {{ form_javascript(form) }}
+        {{ form(form) }}
+    </div>
+</div>
+
+<script type="text/javascript">
+$("#creation").on("success", '.ajax-form form', function() {
+    $('#creation').collapse();
+});
+</script>

@@ -2,13 +2,10 @@
 
 {% block pjm_app_body_content %}
 
-<div class="col-sm-4 col-sm-offset-4">
-    <div class="alert alert-warning">
-        <p>Cette page n'est que temporaire en attendant la fonctionnalité "Évènements".</p>
-    </div>
-</div>
-<div class="space"></div>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creation" aria-expanded="false" aria-controls="creation">
+    <span class="glyphicon glyphicon-plus"></span> Créer
+</button>
 
-<iframe src="https://www.google.com/calendar/embed?src=com.bo%40gadz.org&ctz=Europe/Paris" style="border: 0; display: block; margin: 0 auto;" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+{{ render(controller('PJMAppBundle:Event:nouveau')) }}
 
 {% endblock %}
