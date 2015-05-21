@@ -1,17 +1,19 @@
 <?php
 
-namespace PJM\AppBundle\Entity;
+namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use PJM\AppBundle\Validator\Constraints as PJMAssert;
 
 /**
  * Evenement
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\EvenementRepository")
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Event\EvenementRepository")
+ * @PJMAssert\DateDebutFin
  */
 class Evenement
 {
@@ -28,11 +30,12 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank
      */
     private $nom;
 
     /**
-    * @Gedmo\Slug(fields={"nom", "dateDebut"})
+    * @Gedmo\Slug(fields={"nom"}, updatable=false)
     * @ORM\Column(length=128, unique=true)
     */
     private $slug;
@@ -40,7 +43,7 @@ class Evenement
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -54,14 +57,24 @@ class Evenement
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="date_creation", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $dateCreation;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="date_debut", type="datetime")
+     * @Assert\DateTime()
      */
     private $dateDebut;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_fin", type="datetime", nullable=true)
+     * @ORM\Column(name="date_fin", type="datetime")
+     * @Assert\DateTime()
      */
     private $dateFin;
 
@@ -73,11 +86,29 @@ class Evenement
     private $lieu;
 
     /**
-     * @var string
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     **/
+    private $image;
+
+    /**
+     * @var boolean
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     * @ORM\Column(name="isPublic", type="boolean")
      */
-    private $type;
+    private $isPublic;
+
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+        $this->dateDebut = new \DateTime();
+        $this->dateDebut->setTime($this->dateCreation->format('H'),0);
+        $this->dateFin = new \DateTime();
+        $this->dateFin->setTime($this->dateCreation->format('H')+1,'0');
+        $this->isJournee = false;
+        $this->description = "";
+    }
 
 
     /**
@@ -252,25 +283,74 @@ class Evenement
     }
 
     /**
-     * Set type
+     * Set dateCreation
      *
-     * @param string $type
+     * @param \DateTime $dateCreation
+     *
      * @return Evenement
      */
-    public function setType($type)
+    public function setDateCreation($dateCreation)
     {
-        $this->type = $type;
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get dateCreation
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getType()
+    public function getDateCreation()
     {
-        return $this->type;
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set isPublic
+     *
+     * @param boolean $isPublic
+     *
+     * @return Evenement
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublic
+     *
+     * @return boolean
+     */
+    public function getIsPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \PJM\AppBundle\Entity\Image $image
+     *
+     * @return Evenement
+     */
+    public function setImage(\PJM\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PJM\AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
