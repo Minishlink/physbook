@@ -93,11 +93,26 @@ class Evenement
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="Aucun créateur spécifié.")
+     **/
+    private $createur;
+
+    /**
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $boquette;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="isPublic", type="boolean")
      */
     private $isPublic;
+
+    private $couleur;
 
     public function __construct()
     {
@@ -107,7 +122,8 @@ class Evenement
         $this->dateFin = new \DateTime();
         $this->dateFin->setTime($this->dateCreation->format('H')+1,'0');
         $this->isJournee = false;
-        $this->description = "";
+        $this->isPublic = true;
+        $this->couleur = "rouge";
     }
 
 
@@ -352,5 +368,67 @@ class Evenement
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set createur
+     *
+     * @param \PJM\UserBundle\Entity\User $createur
+     *
+     * @return Evenement
+     */
+    public function setCreateur(\PJM\UserBundle\Entity\User $createur)
+    {
+        $this->createur = $createur;
+
+        return $this;
+    }
+
+    /**
+     * Get createur
+     *
+     * @return \PJM\UserBundle\Entity\User
+     */
+    public function getCreateur()
+    {
+        return $this->createur;
+    }
+
+    /**
+     * Set boquette
+     *
+     * @param \PJM\AppBundle\Entity\Boquette $boquette
+     *
+     * @return Evenement
+     */
+    public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
+    {
+        $this->boquette = $boquette;
+
+        return $this;
+    }
+
+    /**
+     * Get boquette
+     *
+     * @return \PJM\AppBundle\Entity\Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string
+     */
+    public function getCouleur()
+    {
+        if ($this->boquette !== null) {
+            $couleur = $this->boquette->getCouleur();
+        }
+
+        return isset($couleur) ? $couleur : "rouge";
     }
 }
