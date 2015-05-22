@@ -22,7 +22,7 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
-            ->getEvents($this->getUser(), 3);
+            ->getEvents($this->getUser(), 6);
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents

@@ -23,8 +23,12 @@ class EvenementRepository extends EntityRepository
         // TODO ajouter les évents privés dont l'user est participant
 
         if ($max !== null) {
-            $qb->setMaxResults($max);
+            $qb
+                ->setMaxResults($max)
+            ;
         }
+
+        //todo reverse
 
         return $qb->getQuery()->getResult();
     }
