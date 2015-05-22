@@ -6,6 +6,31 @@
     <span class="glyphicon glyphicon-plus"></span> Créer
 </button>
 
-{{ render(controller('PJMAppBundle:Event:nouveau')) }}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {{ render(controller('PJMAppBundle:Event:nouveau')) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {% include "PJMAppBundle:Event:timeline.html.twig" %}
+    </div>
+    <div class="col-md-6">
 
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    '%kernel.root_dir%/../app/Resources/public/js/event.js'
+    filter='?yui_js'
+    output='js/event.js'
+    package='js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}

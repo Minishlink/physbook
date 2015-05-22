@@ -1,0 +1,13 @@
+<section id="timeline">
+    <div class="timeline-block">
+        <div class="timeline-img empty-circle"></div>
+    </div>
+    {% if listeEvents|length > 0 %}
+    {% for event in listeEvents %}
+    {% include "PJMAppBundle:Event:timelineItem.html.twig" %}
+    {% endfor %}
+    {% endif %}
+    <div class="timeline-block">
+        <div class="timeline-img empty-circle"></div>
+    </div>
+</section>

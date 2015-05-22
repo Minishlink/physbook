@@ -19,7 +19,14 @@ class EventController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('PJMAppBundle:Event:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
+            ->getEvents($this->getUser(), 3);
+
+        return $this->render('PJMAppBundle:Event:index.html.twig', array(
+            'listeEvents' => $listeEvents
+        ));
     }
 
     /**
