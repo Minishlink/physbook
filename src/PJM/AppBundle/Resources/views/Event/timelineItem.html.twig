@@ -1,0 +1,12 @@
+<div class="timeline-block">
+    <div class="timeline-img{% if event.couleur is not null%} bg-{{ event.couleur }}{% endif %}" style="color: white !important;"></div>
+
+    <div class="timeline-content">
+        <h2>{{ event.nom }}</h2>
+        <div class="organisateur"><strong>{{ event.createur.bucque }}</strong></div>
+        <span class="date">
+            <span class="dateDate">{{ event.dateDebut|date('d/m') }} </span>{% if not event.isJournee %}<br>
+            {{ event.dateDebut|date('H\\hi') }}
+        {% endif %}</span>
+    </div>
+</div>

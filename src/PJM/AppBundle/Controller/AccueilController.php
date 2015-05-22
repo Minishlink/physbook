@@ -29,7 +29,7 @@ class AccueilController extends Controller
                         ->getAnnoncesByInbox($this->getUser()->getInbox(), false, 3);
 
         $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
-                        ->getEvents($this->getUser(), 3);
+            ->getEvents($this->getUser(), 3);
 
         /*$listeEvents = array(
             array(
