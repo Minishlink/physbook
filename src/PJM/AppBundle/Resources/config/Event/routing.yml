@@ -1,6 +1,6 @@
 pjm_app_event_index:
-    path:     /{event}
-    defaults: { _controller: PJMAppBundle:Event:index, event: null }
+    path:     /{slug}
+    defaults: { _controller: PJMAppBundle:Event:index, slug: null }
 
 pjm_app_event_nouveau:
     path:     /nouveau

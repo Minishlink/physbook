@@ -26,7 +26,9 @@ class EventController extends Controller
         if ($event == null) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
-            $event = $listeEvents[0];
+            if (!empty($listeEvents)) {
+                $event = $listeEvents[0];
+            }
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
@@ -36,11 +38,11 @@ class EventController extends Controller
             dump($listeEvents);
         }
 
-        // on va en chercher les events manquants avant
-        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $event->getDateDebut());
-        dump($eventsARajouter);
-
-        $listeEvents = array_merge($eventsARajouter, $listeEvents);
+        // on va chercher les events manquants avant
+        if ($event !== null) {
+            $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $event->getDateDebut());
+            $listeEvents = array_merge($eventsARajouter, $listeEvents);
+        }
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents,
