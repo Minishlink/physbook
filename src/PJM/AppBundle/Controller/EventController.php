@@ -17,15 +17,34 @@ class EventController extends Controller
      * Accueil des évènements
      * @return object HTML Response
      */
-    public function indexAction()
+    public function indexAction(Event\Evenement $event = null)
     {
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('PJMAppBundle:Event\Evenement');
+        $nombreMax = 6;
 
-        $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
-            ->getEvents($this->getUser(), 6);
+        if ($event == null) {
+            // on va chercher les $nombreMax-1 premiers events à partir de ce moment
+            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
+            $event = $listeEvents[0];
+        } else {
+            // on va chercher les $nombreMax-2 évènements après cet event
+            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
+
+            dump($listeEvents);
+            $listeEvents = array_merge(array($event), $listeEvents);
+            dump($listeEvents);
+        }
+
+        // on va en chercher les events manquants avant
+        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $event->getDateDebut());
+        dump($eventsARajouter);
+
+        $listeEvents = array_merge($eventsARajouter, $listeEvents);
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
-            'listeEvents' => $listeEvents
+            'listeEvents' => $listeEvents,
+            'event' => $event
         ));
     }
 

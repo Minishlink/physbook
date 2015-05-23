@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\EntityRepository;
 use PJM\UserBundle\Entity\User;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * EvenementRepository
@@ -13,12 +14,29 @@ use PJM\UserBundle\Entity\User;
  */
 class EvenementRepository extends EntityRepository
 {
-    public function getEvents(User $user, $max = null)
+    public function getEvents(User $user, $max = 6, $quand = 'after', \DateTime $date = null)
     {
+        if ($date == null) {
+            $date = new \DateTime();
+        }
+
         $qb = $this->createQueryBuilder('e')
-            ->orderBy('e.dateDebut', 'DESC')
             ->where('e.isPublic = true')
         ;
+
+        if ($quand == 'after') {
+            $qb
+                ->andWhere('e.dateDebut > :date')
+                ->orderBy('e.dateDebut', 'ASC')
+            ;
+        } else if ($quand == 'before') {
+            $qb
+                ->andWhere('e.dateDebut < :date')
+                ->orderBy('e.dateDebut', 'DESC')
+            ;
+        }
+
+        $qb->setParameter('date', $date);
 
         // TODO ajouter les évents privés dont l'user est participant
 
@@ -28,8 +46,8 @@ class EvenementRepository extends EntityRepository
             ;
         }
 
-        //todo reverse
+        $res = $qb->getQuery()->getResult();
 
-        return $qb->getQuery()->getResult();
+        return $res;
     }
 }
