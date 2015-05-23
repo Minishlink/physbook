@@ -100,7 +100,7 @@ class Evenement
     private $createur;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=true)
      **/
     private $boquette;

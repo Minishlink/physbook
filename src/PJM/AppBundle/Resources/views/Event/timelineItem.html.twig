@@ -3,7 +3,7 @@
 
     <div class="timeline-content">
         <h2><a href="{{ path('pjm_app_event_index', {slug: event.slug}) }}">{{ event.nom }}</a></h2>
-        <div class="organisateur"><strong>{{ event.createur.bucque }}</strong></div>
+        <div class="organisateur">{% if event.boquette is not null %}<strong><a href="{{ path('pjm_app_boquette_default', {slug: event.boquette.slug}) }}">{{ event.boquette.nom }}</a></strong>{% endif %}</div>
         <span class="date">
             <span class="dateDate">{{ event.dateDebut|date('d/m') }} </span>{% if not event.isJournee %}<br>
             {{ event.dateDebut|date('H\\hi') }}
