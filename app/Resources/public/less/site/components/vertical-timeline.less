@@ -5,6 +5,7 @@
 #timeline {
 	position: relative;
     margin-top: 2.5em;
+    margin-bottom: 3.5em;
 
 	&::before {
 		//ligne verticale
@@ -105,7 +106,10 @@
     }
 
 	.organisateur {
-        color: @jaune;
+        a {
+            color: @jaune;
+        }
+        min-height: 1.5em;
     }
 
 	.date {
