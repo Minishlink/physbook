@@ -115,3 +115,7 @@ services:
         class: PJM\AppBundle\Datatables\AnnuaireDatatable
         tags:
             - { name: sg.datatable.view }
+    pjm.form.type.datetimePicker:
+        class: PJM\AppBundle\Form\DateTimePickerType
+        tags:
+            - { name: form.type, alias: datetimePicker }

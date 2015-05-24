@@ -1,0 +1,26 @@
+{% block datetimePicker_widget %}
+    {% spaceless %}
+    <div class="form-group">
+        <div class='input-group date' id='{{ id }}'>
+            <input type='text' class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+    {% endspaceless %}
+{% endblock datetimePicker_widget %}
+
+{% block datetimePicker_javascript %}
+{% spaceless %}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#{{ id }}').datetimepicker({
+                locale: 'fr',
+                useCurrent: false,
+                //allowInputToggle: true
+            });
+        });
+    </script>
+{% endspaceless %}
+{% endblock datetimePicker_javascript %}
