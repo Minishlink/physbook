@@ -20,6 +20,12 @@
                 useCurrent: false,
                 //allowInputToggle: true
             });
+
+            {% if form.vars.linkedTo is not null %}
+            $("#{{ form.parent.vars.name }}_{{ form.vars.linkedTo }}").on("dp.change", function (e) {
+                $('#{{ id }}').data("DateTimePicker").minDate(e.date);
+            });
+            {% endif %}
         });
     </script>
 {% endspaceless %}
