@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0baabf5afb416ee02a3d5d705c71b190",
+    "hash": "4ac8f60f7966ed47e774102fc80c687b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -929,12 +929,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSCommentBundle.git",
-                "reference": "c2cff629233472702be0c424933407498705ff22"
+                "reference": "52d25de4b5d0679c7ef5a1b356df4bc29241a73e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/c2cff629233472702be0c424933407498705ff22",
-                "reference": "c2cff629233472702be0c424933407498705ff22",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/52d25de4b5d0679c7ef5a1b356df4bc29241a73e",
+                "reference": "52d25de4b5d0679c7ef5a1b356df4bc29241a73e",
                 "shasum": ""
             },
             "require": {
@@ -998,7 +998,7 @@
                 "forum",
                 "threads"
             ],
-            "time": "2015-04-29 12:35:03"
+            "time": "2015-05-21 08:36:35"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1060,50 +1060,56 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "1.5.3",
+            "version": "1.6.0",
             "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "fdd21c4c0cb6222ae37efc9362c6a96bd1432412"
+                "reference": "832d08199cadf1770ec43c2cba68b42b4d5e7f9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/fdd21c4c0cb6222ae37efc9362c6a96bd1432412",
-                "reference": "fdd21c4c0cb6222ae37efc9362c6a96bd1432412",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/832d08199cadf1770ec43c2cba68b42b4d5e7f9f",
+                "reference": "832d08199cadf1770ec43c2cba68b42b4d5e7f9f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "~1.0",
                 "php": ">=5.3.9",
                 "psr/log": "~1.0",
-                "symfony/framework-bundle": "~2.2",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/http-kernel": "~2.3,>=2.3.24",
                 "willdurand/jsonp-callback-validator": "~1.0",
                 "willdurand/negotiation": "~1.2"
             },
             "conflict": {
                 "jms/serializer": "<0.12",
-                "jms/serializer-bundle": "<0.11"
+                "jms/serializer-bundle": "<0.11",
+                "symfony/validator": ">=2.5.0,<2.5.5"
             },
             "require-dev": {
+                "jms/serializer": "~0.13",
                 "jms/serializer-bundle": "~0.12",
-                "sensio/framework-extra-bundle": "~2.2",
-                "symfony/form": "~2.2",
-                "symfony/security": "~2.2",
-                "symfony/serializer": "~2.2",
-                "symfony/validator": "~2.2",
-                "symfony/yaml": "~2.2"
+                "phpoption/phpoption": "~1.1.0",
+                "sensio/framework-extra-bundle": "~3.0",
+                "symfony/browser-kit": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/form": "~2.3",
+                "symfony/security": "~2.3",
+                "symfony/serializer": "~2.3",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "suggest": {
                 "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires ~0.12",
-                "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener",
-                "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ~2.2",
-                "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ~2.2"
+                "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener, requires ~3.0",
+                "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ~2.3",
+                "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -1134,7 +1140,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-02-16 15:26:12"
+            "time": "2015-05-22 20:17:35"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1142,12 +1148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "666afc973daac7bad8478a47d94d10178358b0ae"
+                "reference": "92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/666afc973daac7bad8478a47d94d10178358b0ae",
-                "reference": "666afc973daac7bad8478a47d94d10178358b0ae",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
+                "reference": "92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
                 "shasum": ""
             },
             "require": {
@@ -1201,7 +1207,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2015-04-30 13:32:37"
+            "time": "2015-05-05 15:08:24"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1732,7 +1738,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/froala/KMSFroalaEditorBundle/zipball/63f4797e8d9593110c8a27b58c0693461b7478c9",
+                "url": "https://api.github.com/repos/froala/KMSFroalaEditorBundle/zipball/b1d36d1ff670620d11737a397918bbb3c98d1964",
                 "reference": "63f4797e8d9593110c8a27b58c0693461b7478c9",
                 "shasum": ""
             },
@@ -1903,17 +1909,17 @@
         },
         {
             "name": "lexik/form-filter-bundle",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "target-dir": "Lexik/Bundle/FormFilterBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikFormFilterBundle.git",
-                "reference": "c97909c7204458ad514b7335a06f774a7d26f5f6"
+                "reference": "cd74e78fab839cdb00998359f00e7ee980fdba80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikFormFilterBundle/zipball/c97909c7204458ad514b7335a06f774a7d26f5f6",
-                "reference": "c97909c7204458ad514b7335a06f774a7d26f5f6",
+                "url": "https://api.github.com/repos/lexik/LexikFormFilterBundle/zipball/cd74e78fab839cdb00998359f00e7ee980fdba80",
+                "reference": "cd74e78fab839cdb00998359f00e7ee980fdba80",
                 "shasum": ""
             },
             "require": {
@@ -1959,38 +1965,38 @@
                 "filter",
                 "form"
             ],
-            "time": "2014-12-15 09:06:44"
+            "time": "2015-05-11 15:04:07"
         },
         {
             "name": "liuggio/ExcelBundle",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "target-dir": "Liuggio/ExcelBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liuggio/ExcelBundle.git",
-                "reference": "dce33eb948ba01303c15b9c3bd17390afe37407c"
+                "reference": "33ce101e5fb76786ea05da350ab394b596d7ee52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liuggio/ExcelBundle/zipball/dce33eb948ba01303c15b9c3bd17390afe37407c",
-                "reference": "dce33eb948ba01303c15b9c3bd17390afe37407c",
+                "url": "https://api.github.com/repos/liuggio/ExcelBundle/zipball/33ce101e5fb76786ea05da350ab394b596d7ee52",
+                "reference": "33ce101e5fb76786ea05da350ab394b596d7ee52",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "phpoffice/phpexcel": "~1.8.0",
-                "symfony/framework-bundle": "~2.1"
+                "symfony/framework-bundle": "~2.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "sensio/framework-extra-bundle": "~2.1",
-                "symfony/browser-kit": "~2.1",
-                "symfony/class-loader": "~2.1",
-                "symfony/finder": "~2.0",
-                "symfony/form": "~2.1",
-                "symfony/validator": "~2.1"
+                "phpunit/phpunit": "~4.6",
+                "sensio/framework-extra-bundle": "~2.3",
+                "symfony/browser-kit": "~2.6",
+                "symfony/class-loader": "~2.6",
+                "symfony/finder": "~2.6",
+                "symfony/form": "~2.6",
+                "symfony/validator": "~2.6"
             },
-            "type": "library",
+            "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
@@ -2023,7 +2029,7 @@
                 "excel",
                 "xls"
             ],
-            "time": "2014-06-11 13:07:44"
+            "time": "2015-05-15 09:50:11"
         },
         {
             "name": "monolog/monolog",
@@ -2150,16 +2156,16 @@
         },
         {
             "name": "phpoffice/phpexcel",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPExcel.git",
-                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b"
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
-                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
                 "shasum": ""
             },
             "require": {
@@ -2203,7 +2209,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2014-03-02 15:22:49"
+            "time": "2015-05-01 07:00:55"
         },
         {
             "name": "phpoption/phpoption",
@@ -2299,18 +2305,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/richsage/RMSPushNotificationsBundle.git",
-                "reference": "c065be97ba235b9a5a0bf4ec7a9fc966360a9d66"
+                "reference": "b89badc69ded8377d001766493c5fc2b56347494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/c065be97ba235b9a5a0bf4ec7a9fc966360a9d66",
-                "reference": "c065be97ba235b9a5a0bf4ec7a9fc966360a9d66",
+                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/b89badc69ded8377d001766493c5fc2b56347494",
+                "reference": "b89badc69ded8377d001766493c5fc2b56347494",
                 "shasum": ""
             },
             "require": {
                 "kriswallsmith/buzz": "*",
-                "php": ">=5.3.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
                 "symfony/symfony": "2.*"
+            },
+            "suggest": {
+                "symfony/symfony": "To use as a bundle"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2348,7 +2359,7 @@
                 "push",
                 "windowsphone"
             ],
-            "time": "2015-04-02 11:10:56"
+            "time": "2015-05-14 08:17:38"
         },
         {
             "name": "sensio/buzz-bundle",
@@ -2400,17 +2411,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v3.0.21",
+            "version": "v3.0.24",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "da23c78093676a823a1ff43a214987ea3fbf83c8"
+                "reference": "79b820aee1f1daeb2717fa9471ee19275cc1d638"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/da23c78093676a823a1ff43a214987ea3fbf83c8",
-                "reference": "da23c78093676a823a1ff43a214987ea3fbf83c8",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/79b820aee1f1daeb2717fa9471ee19275cc1d638",
+                "reference": "79b820aee1f1daeb2717fa9471ee19275cc1d638",
                 "shasum": ""
             },
             "require": {
@@ -2456,7 +2467,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-04-10 06:20:46"
+            "time": "2015-05-16 12:57:08"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2515,16 +2526,16 @@
         },
         {
             "name": "sensiolabs/security-checker",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "cecb1397087dc9c733796eda6e9d121336039cdc"
+                "reference": "cde03c48d490d805ef1349e5108f8b3085981ead"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/cecb1397087dc9c733796eda6e9d121336039cdc",
-                "reference": "cecb1397087dc9c733796eda6e9d121336039cdc",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/cde03c48d490d805ef1349e5108f8b3085981ead",
+                "reference": "cde03c48d490d805ef1349e5108f8b3085981ead",
                 "shasum": ""
             },
             "require": {
@@ -2556,7 +2567,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2015-04-21 07:52:05"
+            "time": "2015-05-22 14:21:04"
         },
         {
             "name": "sg/datatablesbundle",
@@ -2915,16 +2926,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.6.6",
+            "version": "v2.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "48c9e835a877adfb023b8b6d033d9dd14f342b4b"
+                "reference": "0449d0e1178bc8e934520b20432d1705c3b25e7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/48c9e835a877adfb023b8b6d033d9dd14f342b4b",
-                "reference": "48c9e835a877adfb023b8b6d033d9dd14f342b4b",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/0449d0e1178bc8e934520b20432d1705c3b25e7e",
+                "reference": "0449d0e1178bc8e934520b20432d1705c3b25e7e",
                 "shasum": ""
             },
             "require": {
@@ -3028,7 +3039,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-04-01 16:55:26"
+            "time": "2015-05-11 01:58:49"
         },
         {
             "name": "twig/extensions",
