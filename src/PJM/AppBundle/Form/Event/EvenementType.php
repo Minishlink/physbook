@@ -50,7 +50,8 @@ class EvenementType extends AbstractType
             ))
             ->add('dateFin', 'datetimePicker', array(
                 'label' => 'Date de fin',
-                'required' => false
+                'required' => false,
+                'linkedTo' => 'dateDebut'
             ))
             ->add('lieu')
             ->add('boquette', 'entity', $boquetteOptions)
