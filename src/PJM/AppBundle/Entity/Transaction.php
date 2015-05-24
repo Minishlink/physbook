@@ -59,9 +59,9 @@ class Transaction
      *
      * @ORM\Column(name="montant", type="smallint")
      * @Assert\NotBlank()
-     * @Assert\GreaterThan(
+     * @Assert\NotEqualTo(
      *      value = 0,
-     *      message = "Le montant doit être supérieur à 0€."
+     *      message = "Le montant doit être différent de 0€."
      * )
      */
     private $montant;
@@ -84,6 +84,8 @@ class Transaction
     {
         $this->date = new \DateTime();
     }
+
+
 
     public function toArray()
     {
@@ -113,9 +115,10 @@ class Transaction
     /**
      * @Assert\Callback
      */
-    public function isInfosValid(ExecutionContextInterface $context)
+    public function validate(ExecutionContextInterface $context)
     {
         $moyenPaiement = $this->getMoyenPaiement();
+        $montant = $this->getMontant();
         $infos = $this->getInfos();
         if ($moyenPaiement == "cheque" && empty($infos)) {
             $context->addViolationAt(
@@ -126,13 +129,53 @@ class Transaction
             );
         }
 
-        if ($moyenPaiement == "autre" && empty($infos)) {
+        if (in_array($moyenPaiement, array("autre", "operation")) && empty($infos)) {
             $context->addViolationAt(
                 'infos',
                 'Merci de préciser la raison.',
                 array(),
                 null
             );
+        }
+
+        if ($moyenPaiement == "operation") {
+            if ($montant >= 0) {
+                $context->addViolationAt(
+                    'montant',
+                    'Une opération doit avoir un montant négatif.',
+                    array(),
+                    null
+                );
+            }
+
+            if (null !== $this->getCompteLie()) {
+                $context->addViolationAt(
+                    'compte',
+                    "Le transfert n'est pas possible pour une opération.",
+                    array(),
+                    null
+                );
+            }
+        } else {
+            if ($montant <= 0) {
+                $context->addViolationAt(
+                    'montant',
+                    'Le montant doit être positif.',
+                    array(),
+                    null
+                );
+            }
+        }
+
+        if (null !== $this->getCompteLie()) {
+            if ($this->getCompteLie() === $this->getCompte()) {
+                $context->addViolationAt(
+                    'compte',
+                    'Le compte de destination et le compte créditeur ne peuvent pas être les mêmes.',
+                    array(),
+                    null
+                );
+            }
         }
     }
 

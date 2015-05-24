@@ -207,7 +207,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * [ADMIN] Gère la liste des crédits pour une boquette.
+     * [ADMIN] Gère la liste des crédits et opérations (débits) pour une boquette.
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
@@ -228,17 +228,6 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if (null !== $credit->getCompteLie()) {
-                    if ($credit->getCompteLie() === $credit->getCompte()) {
-                        $request->getSession()->getFlashBag()->add(
-                            'danger',
-                            "Le traitement n'a pas été effectué. Le compte de destination et le compte créditeur sont les mêmes."
-                        );
-
-                        return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
-                    }
-                }
-
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus("OK");
                 $utils = $this->get('pjm.services.utils');
@@ -247,10 +236,17 @@ class BoquetteController extends Controller
                 $em->flush();
 
                 if ($credit->getStatus() == "OK") {
-                    $request->getSession()->getFlashBag()->add(
-                        'success',
-                        'La transaction a été enregistrée et le compte a été crédité.'
-                    );
+                    if ($credit->getMoyenPaiement() != "operation") {
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            'La transaction a été enregistrée et le compte a été crédité.'
+                        );
+                    } else {
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            'La transaction a été enregistrée et le compte a été débité.'
+                        );
+                    }
                 } else {
                     // si une erreur est survenue pendant le process de mise à jour du compte
                     $request->getSession()->getFlashBag()->add(

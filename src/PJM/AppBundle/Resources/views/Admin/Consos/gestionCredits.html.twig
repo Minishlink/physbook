@@ -1,14 +1,15 @@
 {% extends "PJMAppBundle:App:panel.html.twig" %}
 
-{% set panel_title = "Crédits" %}
+{% set panel_title = "Crédits et débits" %}
 {% set name = "Credits" %}
 
 {% block datatable_title %}Historique{% endblock %}
 
 {% block description %}
 <p>
-    Les crédits sont effectués instantanément.
-    <br>Si quelqu'un donne te donne son argent pour créditer quelqu'un d'autre, renseigne bien "De la part de", sinon laisse vide. La liste des crédits ne fait pas apparaitre les transferts (ils apparaissent chez les utilisateurs concernés)  car ils ne concernent pas la comptabilité de la boquette.
+    Les transactions sont effectués instantanément.
+    <br>Si quelqu'un donne te donne son argent pour créditer quelqu'un d'autre, renseigne bien "De la part de", sinon laisse vide. La liste des crédits ne fait pas apparaitre les transferts (ils apparaissent chez les utilisateurs concernés) car ils ne concernent pas la comptabilité de la boquette.<br>
+    En cas de débit, renseigne "Opération" dans le champ "Moyen de paiement" et indique un montant négatif, ainsi qu'une raison. La raison doit être assez explicite pour que tous les utilisateurs comprennent.
 </p>
 {% endblock %}
 

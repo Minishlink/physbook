@@ -205,12 +205,19 @@ class Utils
                 )
             )) {
                 // on met à jour le solde du compte associé sur la base R&z@l
-
-                $status = $this->rezal->crediteSolde(
-                    $this->getTrueID($transaction->getCompte()->getUser()),
-                    $transaction->getMontant(),
-                    $transaction->getDate()->format('Y-m-d H:i:s')
-                );
+                if ($transaction->getMoyenPaiement() != "operation") {
+                    $status = $this->rezal->crediteSolde(
+                        $this->getTrueID($transaction->getCompte()->getUser()),
+                        $transaction->getMontant(),
+                        $transaction->getDate()->format('Y-m-d H:i:s')
+                    );
+                } else {
+                    $status = $this->rezal->debiteSolde(
+                        $this->getTrueID($transaction->getCompte()->getUser()),
+                        -$transaction->getMontant(),
+                        $transaction->getDate()->format('Y-m-d H:i:s')
+                    );
+                }
 
                 // si une erreur survient
                 if ($status !== true) {

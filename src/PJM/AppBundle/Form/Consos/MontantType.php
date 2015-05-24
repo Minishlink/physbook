@@ -28,6 +28,10 @@ class MontantType extends AbstractType
                         'value' => 200*100,
                         'message' => 'Pas plus de 200€ par transaction. Fais en plusieurs.'
                     )),
+                    new Assert\GreaterThan(array(
+                        'value' => 0,
+                        'message' => "Le montant doit être supérieur à 0€."
+                    )),
                 )
             ))
             ->add('save', 'submit', array(
