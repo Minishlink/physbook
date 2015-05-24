@@ -3,8 +3,8 @@
         <div class="timeline-img empty-circle"></div>
     </div>
     {% if listeEvents|length > 0 %}
-    {% for event in listeEvents %}
-    {% include "PJMAppBundle:Event:timelineItem.html.twig" %}
+    {% for evenement in listeEvents %}
+    {% include "PJMAppBundle:Event:timelineItem.html.twig" with {'event': evenement, 'active': (event is defined and evenement == event) } %}
     {% endfor %}
     {% endif %}
     <div class="timeline-block">

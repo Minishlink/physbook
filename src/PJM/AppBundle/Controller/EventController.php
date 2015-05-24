@@ -33,9 +33,7 @@ class EventController extends Controller
             // on va chercher les $nombreMax-2 évènements après cet event
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
 
-            dump($listeEvents);
             $listeEvents = array_merge(array($event), $listeEvents);
-            dump($listeEvents);
         }
 
         // on va chercher les events manquants avant
