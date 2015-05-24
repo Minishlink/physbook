@@ -1,15 +1,19 @@
 <div id="creation" class="collapse">
-    <h2>Nouvel évènement
-        <small>
-            <button type="button" class="close" data-toggle="collapse" data-target="#creation" aria-label="Annuler" title="Annuler">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </small>
-    </h2>
-    <p>Tu es l'un des organisateurs d'un évènement ? Invite tes chicop's à participer ! Ils recevront une notification.</p>
-    <div class="ajax-form">
-        {{ form_stylesheet(form) }}
-        {{ form_javascript(form) }}
-        {{ form(form) }}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Nouvel évènement
+                <button type="button" class="close" data-toggle="collapse" data-target="#creation" aria-label="Annuler" title="Annuler">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </h2>
+        </div>
+        <div class="panel-body">
+            <p>Tu es l'un des organisateurs d'un évènement ? Invite tes chicop's à participer ! Ils recevront une notification.</p>
+            <div class="ajax-form">
+                {{ form_stylesheet(form) }}
+                {{ form_javascript(form) }}
+                {{ form(form) }}
+            </div>
+        </div>
     </div>
 </div>
