@@ -53,6 +53,7 @@ class TransactionType extends AbstractType
                         ->setParameter('boquette', $options['boquette'])
                     ;
                 },
+                'empty_value' => "Choisir le vrai créditeur, s'il y a lieu",
                 'property' => 'user',
                 'required' => false
             ))
@@ -68,7 +69,7 @@ class TransactionType extends AbstractType
                     new Assert\Length(array(
                         'min' => 1,
                         'max' => 250
-                    ))
+                    )),
                 )
             ))
             ->add('montant', 'money', array(

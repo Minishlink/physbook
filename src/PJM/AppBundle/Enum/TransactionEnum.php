@@ -13,6 +13,7 @@ class TransactionEnum
             'cheque' => "Chèque",
             'monnaie' => "Monnaie",
             'initial' => "Solde initial",
+            'operation' => "Opération",
             'autre' => "Autre"
         );
 
