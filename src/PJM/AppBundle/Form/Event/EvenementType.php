@@ -44,11 +44,11 @@ class EvenementType extends AbstractType
                 'label' => 'Journée(s) entière(s) ?',
                 'required' => false
             ))
-            ->add('dateDebut', 'datetime', array(
+            ->add('dateDebut', 'datetimePicker', array(
                 'label' => 'Date de début',
                 'required' => false
             ))
-            ->add('dateFin', 'datetime', array(
+            ->add('dateFin', 'datetimePicker', array(
                 'label' => 'Date de fin',
                 'required' => false
             ))
