@@ -18,6 +18,9 @@ services:
     pjm.services.citation:
         class:  PJM\AppBundle\Services\Citation
         arguments: [@doctrine.orm.entity_manager, @templating]
+    pjm.services.group:
+        class:  PJM\AppBundle\Services\Group
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.random:
         class:  PJM\AppBundle\Services\Random
     pjm.services.rezal:
