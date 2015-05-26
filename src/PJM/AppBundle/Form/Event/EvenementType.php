@@ -54,6 +54,10 @@ class EvenementType extends AbstractType
                 'linkedTo' => 'dateDebut'
             ))
             ->add('lieu')
+            ->add('prix', 'money', array(
+                'label' => 'Prix',
+                'divisor' => 100
+            ))
             ->add('boquette', 'entity', $boquetteOptions)
             ->add('isPublic', null, array(
                 'label' => 'Evènement public',

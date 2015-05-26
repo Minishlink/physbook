@@ -140,6 +140,7 @@ class Evenement
         $this->isJournee = false;
         $this->isPublic = true;
         $this->couleur = "rouge";
+        $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
