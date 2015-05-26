@@ -112,6 +112,22 @@ class Evenement
      */
     private $isPublic;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Event\Invitation", mappedBy="event")
+     **/
+    private $invitations;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="prix", type="smallint"))
+     * @Assert\GreaterThanOrEqual(
+     *      value = 0,
+     *      message = "Le prix doit être supérieur ou égal à 0€."
+     * )
+     */
+    private $prix;
+
     private $couleur;
 
     public function __construct()
@@ -124,6 +140,7 @@ class Evenement
         $this->isJournee = false;
         $this->isPublic = true;
         $this->couleur = "rouge";
+        $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -430,5 +447,63 @@ class Evenement
         }
 
         return isset($couleur) ? $couleur : "rouge";
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     *
+     * @return Evenement
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Add invitation
+     *
+     * @param \PJM\AppBundle\Entity\Event\Invitation $invitation
+     *
+     * @return Evenement
+     */
+    public function addInvitation(\PJM\AppBundle\Entity\Event\Invitation $invitation)
+    {
+        $this->invitations[] = $invitation;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitation
+     *
+     * @param \PJM\AppBundle\Entity\Event\Invitation $invitation
+     */
+    public function removeInvitation(\PJM\AppBundle\Entity\Event\Invitation $invitation)
+    {
+        $this->invitations->removeElement($invitation);
+    }
+
+    /**
+     * Get invitations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInvitations()
+    {
+        return $this->invitations;
     }
 }

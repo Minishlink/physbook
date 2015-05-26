@@ -2,6 +2,21 @@
 <h2>{{ event.nom }}</h2>
 
 <p>
+{% if invitation is not null %}
+    {% if invitation.estPresent %}
+        Tu es inscrit. Te désinscire ?
+    {% else %}
+        Tu n'es pas inscrit. Y aller ?
+    {% endif %}
+{% else %}
+    {% if event.isPublic %}
+        Tu n'es pas inscrit. Y aller ?
+    {% else %}
+        Cet évènement est privé, tu ne peux pas t'inscrire sans y être invité.
+    {% endif %}
+{% endif %}
+</p>
+<p>
 créé par {% render(url('pjm_profil_encart', {'username': event.createur.username})) %} le {{ event.dateDebut|date('d/m/Y') }}.
 </p>
 {% endif %}
