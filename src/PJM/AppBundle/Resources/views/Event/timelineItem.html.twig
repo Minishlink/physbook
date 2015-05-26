@@ -5,7 +5,7 @@
         <h2><a href="{{ path('pjm_app_event_index', {slug: event.slug}) }}"{% if active is defined and active == true %} class="active"{% endif %}>{{ event.nom }}</a></h2>
         <div class="organisateur">{% if event.boquette is not null %}<strong><a href="{{ path('pjm_app_boquette_default', {slug: event.boquette.slug}) }}">{{ event.boquette.nom }}</a></strong>{% endif %}</div>
         <span class="date slideRight">
-            <span class="dateDate">{{ event.dateDebut|date('d/m') }} </span>{% if not event.isJournee %}<br>
+            <span class="dateDate">{{ event.dateDebut|date('d/m') }}</span>{% if not event.isJournee %}<br>
             {{ event.dateDebut|date('H\\hi') }}
         {% endif %}</span>
     </div>
