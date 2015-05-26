@@ -41,7 +41,11 @@ class BragsController extends BoquetteController
             ->getRepository('PJMAppBundle:Commande')
             ->getTotalCommandes();
 
-        $finAnnee = new \DateTime(date('Y').'-06-12');
+        $group = $this->get('pjm.services.group');
+
+        $finAnnee = ($this->getUser()->getProms() == $group->getPromsPN(2)) ?
+            new \DateTime(date('Y').'-06-05') : // anciens
+            new \DateTime(date('Y').'-06-12'); // conscrits
 
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
             'boquetteSlug' => $this->slug,
