@@ -15,6 +15,9 @@ class BoquetteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $couleursEnum = new \PJM\AppBundle\Enum\CouleursEnum();
+        $couleursChoices = $couleursEnum->getCouleursChoices(true);
+
         $builder
             ->add('nom')
             ->add('slug')
@@ -24,6 +27,10 @@ class BoquetteType extends AbstractType
             ))
             ->add('caisseSMoney', null, array(
                 'label' => 'Caisse S-Money',
+            ))
+            ->add('couleur', 'choice', array(
+                'choices' => $couleursChoices,
+                'required' => false
             ))
             ->add('save', 'submit', array(
                 'label' => 'Envoyer',

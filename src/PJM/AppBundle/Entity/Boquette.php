@@ -59,6 +59,7 @@ class Boquette
      * @var string
      *
      * @ORM\Column(name="couleur", type="string", length=10, nullable=true)
+     * @Assert\Choice(callback = {"PJM\AppBundle\Enum\CouleursEnum", "getCouleursChoices"}, message = "Choisissez une couleur valide.")
      */
     private $couleur;
 
