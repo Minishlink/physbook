@@ -29,6 +29,8 @@ services:
     pjm.services.excel:
         class:  PJM\AppBundle\Services\Excel
         arguments: [@phpexcel, @logger]
+    pjm.services.markdown:
+        class:  PJM\AppBundle\Services\Markdown
     pjm.services.mailer:
         class:  PJM\AppBundle\Services\Mailer
         arguments:
