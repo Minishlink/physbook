@@ -192,8 +192,6 @@ class EventController extends Controller
             return $response;
         }
 
-        $
-
         return $this->render('PJMAppBundle:Event:form_inscription.html.twig', array(
             'form' => $form->createView(),
             'estPresent' => ($invitation !== null && $invitation->getEstPresent()),
