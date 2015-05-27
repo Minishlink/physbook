@@ -117,4 +117,86 @@ class EventController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * Affiche et gère le bouton d'inscription
+     * @param  object   Evenenement $event L'évènement considéré
+     */
+    public function inscriptionAction(Request $request, Event\Evenement $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // on regarde si l'utilisateur est invité
+        $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
+            ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
+
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl(
+                "pjm_app_event_inscription",
+                array('slug' => $event->getSlug())
+            ))
+            ->setMethod('POST')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $json = array('success' => false, 'estPresent' => null);
+
+            if ($form->isValid()) {
+                if ($invitation !== null) {
+                    // si on est déjà un invité
+                    $invitation->setEstPresent(empty($invitation->getEstPresent()));
+                    $em->persist($invitation);
+                    $em->flush();
+
+                    $json = array(
+                        'success' => true,
+                        'estPresent' => $invitation->getEstPresent()
+                    );
+                } else {
+                    // sinon on vérifie que l'on peut accéder à cet évènement
+                    if ($event->getIsPublic()) {
+                        //on crée une nouvelle invitation
+                        $invitation = new Event\Invitation();
+                        $invitation->setEvent($event);
+                        $invitation->setInvite($this->getUser());
+                        $invitation->setEstPresent(true);
+                        $em->persist($invitation);
+                        $em->flush();
+
+                        $json = array(
+                            'success' => true,
+                            'estPresent' => true
+                        );
+                    } else {
+                        $json = array(
+                            'reason' => "Tu n'as pas accès à cet évènement"
+                        );
+                    }
+                }
+            } else {
+                // erreur dans le formulaire
+                $data = $form->getData();
+                foreach ($form->getErrors() as $error) {
+                    $reason[] = $error->getMessage();
+                }
+
+                $json = array(
+                    'reason' => $reason
+                );
+            }
+
+            $response = new JsonResponse();
+            $response->setData($json);
+            return $response;
+        }
+
+        $
+
+        return $this->render('PJMAppBundle:Event:form_inscription.html.twig', array(
+            'form' => $form->createView(),
+            'estPresent' => ($invitation !== null && $invitation->getEstPresent()),
+        ));
+    }
 }

@@ -4,12 +4,14 @@ namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Invitation
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Event\InvitationRepository")
+ * @UniqueEntity(fields = {"event", "invite"})
  */
 class Invitation
 {
@@ -32,7 +34,7 @@ class Invitation
     /**
      * @var boolean
      *
-     * @ORM\Column(name="estPresent", type="boolean")
+     * @ORM\Column(name="estPresent", type="boolean", nullable=true)
      */
     private $estPresent;
 
@@ -49,6 +51,10 @@ class Invitation
      * @Assert\NotNull(message="Aucun invité spécifié.")
      **/
     private $invite;
+
+    public function __construct() {
+        $this->hasPaid = false;
+    }
 
 
     /**
@@ -92,7 +98,7 @@ class Invitation
      *
      * @return Invitation
      */
-    public function setEstPresent($estPresent)
+    public function setEstPresent($estPresent = null)
     {
         $this->estPresent = $estPresent;
 
