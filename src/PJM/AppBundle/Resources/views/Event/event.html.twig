@@ -1,22 +1,19 @@
 {% if event is not null %}
 <h2>{{ event.nom }}</h2>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>Date/Heure</p>
+        <p>Prix</p>
+        {% if event.description %}<blockquote><p>{{ event.description|md2html }}</p></blockquote>{% endif %}
 
-<p>
-{% if invitation is not null %}
-    {% if invitation.estPresent %}
-        Tu es inscrit. Te désinscire ?
-    {% else %}
-        Tu n'es pas inscrit. Y aller ?
-    {% endif %}
-{% else %}
-    {% if event.isPublic %}
-        Tu n'es pas inscrit. Y aller ?
-    {% else %}
-        Cet évènement est privé, tu ne peux pas t'inscrire sans y être invité.
-    {% endif %}
-{% endif %}
-</p>
-<p>
-créé par {% render(url('pjm_profil_encart', {'username': event.createur.username})) %} le {{ event.dateDebut|date('d/m/Y') }}.
-</p>
+        <div class="pull-right">
+            <small>créé par {% render(url('pjm_profil_encart', {'username': event.createur.username})) %} le {{ event.dateDebut|date('d/m/Y') }}</small>
+        </div>
+    </div>
+    <div class="panel-footer clearfix">
+        <div class="pull-right">
+            {% render(url('pjm_app_event_inscription', {'slug': event.slug})) %}
+        </div>
+    </div>
+</div>
 {% endif %}

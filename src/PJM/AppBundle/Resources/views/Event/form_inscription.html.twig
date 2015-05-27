@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+{% if estPresent %}<button class="btn btn-default" type="submit">Se désinscrire</button>{% else %}<button class="btn btn-primary" type="submit">Participer</button>{% endif %}
+
+{{ form_end(form) }}
