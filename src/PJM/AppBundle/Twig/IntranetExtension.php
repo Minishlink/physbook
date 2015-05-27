@@ -25,6 +25,11 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('telephone', array($this, 'telephoneFilter')),
             new \Twig_SimpleFilter('etatPublicationPhoto', array($this, 'etatPublicationPhotoFilter')),
             new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter')),
+            new \Twig_SimpleFilter(
+                'md2html',
+                array($this, 'markdownToHtml'),
+                array('is_safe' => array('html'))
+            ),
         );
     }
 
@@ -138,6 +143,11 @@ class IntranetExtension extends \Twig_Extension
     {
         $citation = $this->container->get('pjm.services.citation');
         return $citation->parseCitationUsers($string);
+    }
+
+    public function markdownToHtml($string)
+    {
+        return $this->container->get('pjm.services.markdown')->toHtml($string);
     }
 
     public function getName()

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4ac8f60f7966ed47e774102fc80c687b",
+    "hash": "b44c5475bbce42cb4dfabfb1f350fba9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -923,6 +923,45 @@
             "time": "2015-04-02 20:40:18"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-04-29 20:22:24"
+        },
+        {
             "name": "friendsofsymfony/comment-bundle",
             "version": "dev-master",
             "target-dir": "FOS/CommentBundle",
@@ -933,7 +972,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/52d25de4b5d0679c7ef5a1b356df4bc29241a73e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/5149544134d017e6cf30458984aeea620ab516e5",
                 "reference": "52d25de4b5d0679c7ef5a1b356df4bc29241a73e",
                 "shasum": ""
             },

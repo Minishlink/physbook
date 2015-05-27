@@ -32,7 +32,8 @@
         "kms/froala-editor-bundle": "dev-master#63f4797e8d9593110c8a27b58c0693461b7478c9",
         "friendsofsymfony/comment-bundle": "dev-master",
         "richsage/rms-push-notifications-bundle": "dev-master",
-        "lexik/form-filter-bundle": "~3.0"
+        "lexik/form-filter-bundle": "~3.0",
+        "erusev/parsedown": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
