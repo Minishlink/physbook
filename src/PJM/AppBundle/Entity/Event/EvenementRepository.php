@@ -48,6 +48,10 @@ class EvenementRepository extends EntityRepository
 
         $res = $qb->getQuery()->getResult();
 
+        if ($quand == 'before') {
+            $res = array_reverse($res);
+        }
+
         return $res;
     }
 }

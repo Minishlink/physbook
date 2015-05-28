@@ -39,14 +39,22 @@ class EventController extends Controller
         if ($event !== null) {
             // on va chercher les events manquants avant
             $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $event->getDateDebut());
-            $listeEvents = array_merge($eventsARajouter, $listeEvents);
 
             // on regarde si l'utilisateur est invité
             $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
                 ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
         } else {
+            // on va chercher les events manquants avant aujourd'hui
+            $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', new \DateTime());
+
+            if (!empty($eventsARajouter)) {
+                $event = $eventsARajouter[0];
+            }
+
             $invitation = null;
         }
+
+        $listeEvents = array_merge($eventsARajouter, $listeEvents);
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents,
