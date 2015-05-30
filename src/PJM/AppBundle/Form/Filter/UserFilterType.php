@@ -16,41 +16,51 @@ class UserFilterType extends AbstractType
     {
         $userEnum = new \PJM\UserBundle\Enum\UserEnum();
 
+        if (!$options['simple']) {
+            $builder
+                ->add('fams', 'filter_text', array(
+                    'label' => "Fam's",
+                    'condition_pattern' => FilterOperands::OPERAND_SELECTOR
+                ))
+                ->add('tabagns', 'filter_choice', array(
+                    'label' => "Tabagn's",
+                    'choices' => $userEnum->getTabagnsChoices(true)
+                ))
+            ;
+        }
+
         $builder
             ->add('proms', 'filter_number', array(
                 'label' => "Prom's",
             ))
-            ->add('tabagns', 'filter_choice', array(
-                'label' => "Tabagn's",
-                'choices' => $userEnum->getTabagnsChoices(true)
-            ))
-            ->add('fams', 'filter_text', array(
-                'label' => "Fam's",
-                'condition_pattern' => FilterOperands::OPERAND_SELECTOR
-            ))
-            ->add('appartement', 'filter_text', array(
-                'label' => 'Etage/Kagib',
-                'condition_pattern' => FilterOperands::STRING_BOTH
-            ))
-            ->add('classe', 'filter_text', array(
-                'label' => 'Classe',
-                'condition_pattern' => FilterOperands::STRING_BOTH
-            ))
-            ->add('genre', 'filter_choice', array(
-                'label' => "Genre",
-                'choices' => $userEnum->getGenreChoices(true)
-            ))
-            ->add('responsables', 'filter_collection_adapter', array(
-                'type'      => new ResponsableFilterType(),
-                'add_shared' => function (\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter $qbe)  {
-                    $closure = function(QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
-                        $filterBuilder->leftJoin($alias . '.responsables', $joinAlias);
-                    };
-
-                    $qbe->addOnce($qbe->getAlias().'.responsables', 're', $closure);
-                },
-            ))
         ;
+
+        if (!$options['simple']) {
+            $builder
+                ->add('appartement', 'filter_text', array(
+                    'label' => 'Etage/Kagib',
+                    'condition_pattern' => FilterOperands::STRING_BOTH
+                ))
+                ->add('classe', 'filter_text', array(
+                    'label' => 'Classe',
+                    'condition_pattern' => FilterOperands::STRING_BOTH
+                ))
+                ->add('genre', 'filter_choice', array(
+                    'label' => "Genre",
+                    'choices' => $userEnum->getGenreChoices(true)
+                ))
+                ->add('responsables', 'filter_collection_adapter', array(
+                    'type'      => new ResponsableFilterType(),
+                    'add_shared' => function (\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter $qbe)  {
+                        $closure = function(QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                            $filterBuilder->leftJoin($alias . '.responsables', $joinAlias);
+                        };
+
+                        $qbe->addOnce($qbe->getAlias().'.responsables', 're', $closure);
+                    },
+                ))
+            ;
+        }
     }
 
     /**
@@ -60,7 +70,8 @@ class UserFilterType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection'   => false,
-            'validation_groups' => array('filtering')
+            'validation_groups' => array('filtering'),
+            'simple' => false
         ));
     }
 

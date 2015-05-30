@@ -24,6 +24,7 @@ use PJM\AppBundle\Form\Consos\MontantType;
 use PJM\AppBundle\Form\Admin\FeaturedItemType;
 use PJM\AppBundle\Form\Admin\ItemType;
 use PJM\AppBundle\Form\Filter\TransactionFilterType;
+use PJM\AppBundle\Form\Filter\CompteFilterType;
 use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteController extends Controller
@@ -358,7 +359,7 @@ class BoquetteController extends Controller
             }
         }
 
-        return $this->render('PJMAppBundle:Admin:Consos/exportCredits.html.twig', array(
+        return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
             'formFilter' => $filterForm->createView(),
         ));
     }
@@ -503,6 +504,62 @@ class BoquetteController extends Controller
         return $this->render('PJMAppBundle:Admin:Consos/comptes.html.twig', array(
             'datatable' => $datatable,
             'boquette' => $boquette,
+        ));
+    }
+
+    /**
+     * [ADMIN] Exporte un Excel des comptes des PGs d'une boquette
+     * @param object Boquette $boquette La boquette en question
+     */
+    public function exportComptesAction(Request $request, Boquette $boquette)
+    {
+        $filterForm = $this->createForm(new CompteFilterType(), null, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_admin_boquette_exportComptes', array(
+                'slug' => $boquette->getSlug()
+            )),
+        ));
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted()) {
+            if ($filterForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $repository = $em->getRepository('PJMAppBundle:Compte');
+
+                $filterBuilder = $repository->buildFindByBoquette($boquette);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $filterBuilder);
+
+                $comptes = $filterBuilder->getQuery()->getResult();
+
+                if ($comptes !== null) {
+                    $tableau = array();
+                    foreach ($comptes as $compte) {
+                        $tableau[] = $compte->toArray();
+                    }
+
+                    $excel = $this->get('pjm.services.excel');
+                    $phpExcelObject = $excel->create(
+                        "[".$boquette->getNomCourt()."] Comptes au ".date('d/m/Y')
+                    );
+
+                    $entetes = array(
+                        'Username',
+                        'Prénom',
+                        'Nom',
+                        'Solde',
+                    );
+
+                    $excel->setData($entetes, $tableau, 'A', '1', 'Comptes');
+
+                    return $excel->download(
+                        'comptes-'.$boquette->getSlug().'-'.date('d/m/Y')
+                    );
+                }
+            }
+        }
+
+        return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
+            'formFilter' => $filterForm->createView(),
         ));
     }
 
