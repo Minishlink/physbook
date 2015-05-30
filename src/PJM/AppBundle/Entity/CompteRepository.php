@@ -122,6 +122,17 @@ class CompteRepository extends EntityRepository
         return $compte;
     }
 
+    public function buildFindByBoquette(Boquette $boquette)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.boquette = :boquette')
+            ->setParameter('boquette', $boquette)
+            ->orderBy('c.solde', 'desc')
+        ;
+
+        return $qb;
+    }
+
     public function callbackFindByBoquetteSlug($slug)
     {
         return function($qb) use($slug) {

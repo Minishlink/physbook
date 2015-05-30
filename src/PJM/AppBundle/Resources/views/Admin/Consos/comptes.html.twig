@@ -10,3 +10,8 @@
     {% if boquette.slug == 'pians' %}Les soldes sont synchronisés avec le serveur du R&amp;z@l toutes les heures.{% endif %}
 </p>
 {% endblock %}
+
+{% block autre %}
+    {% render(url('pjm_app_admin_boquette_exportComptes', {'slug': boquette.slug})) %}
+{% endblock %}
+

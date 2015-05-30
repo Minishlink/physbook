@@ -71,6 +71,17 @@ class Compte
         return '['.$this->boquette.'] '.$this->user;
     }
 
+    public function toArray()
+    {
+        $user = $this->user;
+        return array(
+            'username' => $user->getUsername(),
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
+            'solde' => $this->solde/100
+        );
+    }
+
     public function debiter($montant)
     {
         $this->solde -= $montant;
