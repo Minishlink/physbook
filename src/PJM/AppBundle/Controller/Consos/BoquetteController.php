@@ -546,6 +546,7 @@ class BoquetteController extends Controller
                         'Username',
                         'Prénom',
                         'Nom',
+                        "K'gib",
                         'Solde',
                     );
 
