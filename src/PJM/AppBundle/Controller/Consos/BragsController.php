@@ -68,7 +68,7 @@ class BragsController extends BoquetteController
         //période entre aujourd'hui et la fin
         $now = new \DateTime("now");
         $now->setTime(0, 0, 0);
-        $dateFin->setTime(0, 0, 0);
+        $dateFin->setTime(0, 0, 1);
         $period = new \DatePeriod(
             $now,
             new \DateInterval('P1D'),
