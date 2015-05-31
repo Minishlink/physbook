@@ -78,6 +78,7 @@ class Compte
             'username' => $user->getUsername(),
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
+            'kgib' => $user->getAppartement(),
             'solde' => $this->solde/100
         );
     }
