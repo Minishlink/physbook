@@ -530,4 +530,17 @@ class Evenement
     public function getNonParticipants() {
         return $this->getInvites(false);
     }
+
+    public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user) {
+        //TODO visibilité conscrits/anciens/P3/archis
+
+        if (!$this->getIsPublic()) {
+            // on vérifie que l'utilisateur est invité
+            if (!in_array($user, $this->getInvites(null, true))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
