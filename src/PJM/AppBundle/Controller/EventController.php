@@ -17,17 +17,29 @@ class EventController extends Controller
      * Accueil des évènements
      * @return object HTML Response
      */
-    public function indexAction(Event\Evenement $event = null)
+    public function indexAction(Request $request, Event\Evenement $event = null)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('PJMAppBundle:Event\Evenement');
         $nombreMax = 6;
 
-        if ($event == null) {
+        $droitVue = $event->canBeSeenByUser($this->getUser());
+
+        if ($event == null || !$droitVue) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
             if (!empty($listeEvents)) {
+                $ancienEvent = $event;
                 $event = $listeEvents[0];
+
+                if (!$droitVue) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        "Tu n'as pas le droit d'accéder à l'évènement ".$ancienEvent->getNom()."."
+                    );
+
+                    return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+                }
             }
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
