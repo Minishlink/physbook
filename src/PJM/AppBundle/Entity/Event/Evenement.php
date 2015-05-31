@@ -129,6 +129,9 @@ class Evenement
     private $prix;
 
     private $couleur;
+    private $invites;
+    private $participants;
+    private $nonParticipants;
 
     public function __construct()
     {
@@ -506,5 +509,25 @@ class Evenement
     public function getInvitations()
     {
         return $this->invitations;
+    }
+
+    public function getInvites($statut = null, $tous = false) {
+        $invites = array();
+
+        foreach ($this->invitations as $invitation) {
+            if ($invitation->getEstPresent() == $statut || $tous) {
+                $invites[] = $invitation->getInvite();
+            }
+        }
+
+        return $invites;
+    }
+
+    public function getParticipants() {
+        return $this->getInvites(true);
+    }
+
+    public function getNonParticipants() {
+        return $this->getInvites(false);
     }
 }

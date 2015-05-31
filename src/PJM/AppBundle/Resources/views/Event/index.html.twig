@@ -1,5 +1,7 @@
 {% extends "PJMAppBundle:Event:layout.html.twig" %}
 
+{% block title %}{{ event.nom }} - {{ parent() }}{% endblock %}
+
 {% block pjm_app_body_content %}
 
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creation" aria-expanded="false" aria-controls="creation">
