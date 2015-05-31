@@ -515,7 +515,7 @@ class Evenement
         $invites = array();
 
         foreach ($this->invitations as $invitation) {
-            if ($invitation->getEstPresent() == $statut || $tous) {
+            if ($invitation->getEstPresent() === $statut || $tous) {
                 $invites[] = $invitation->getInvite();
             }
         }

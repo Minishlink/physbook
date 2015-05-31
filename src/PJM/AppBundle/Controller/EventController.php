@@ -149,8 +149,6 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $json = array('success' => false, 'estPresent' => null);
-
             if ($form->isValid()) {
                 if ($invitation !== null) {
                     // si on est déjà un invité
@@ -158,9 +156,9 @@ class EventController extends Controller
                     $em->persist($invitation);
                     $em->flush();
 
-                    $json = array(
-                        'success' => true,
-                        'estPresent' => $invitation->getEstPresent()
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        "Ta modification a bien été prise en compte."
                     );
                 } else {
                     // sinon on vérifie que l'on peut accéder à cet évènement
@@ -173,31 +171,25 @@ class EventController extends Controller
                         $em->persist($invitation);
                         $em->flush();
 
-                        $json = array(
-                            'success' => true,
-                            'estPresent' => true
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            "Tu participes bien à cet évènement."
                         );
                     } else {
-                        $json = array(
-                            'reason' => "Tu n'as pas accès à cet évènement"
+                        $request->getSession()->getFlashBag()->add(
+                            'warning',
+                            "Tu n'as pas accès à cet évènement."
                         );
                     }
                 }
             } else {
-                // erreur dans le formulaire
-                $data = $form->getData();
-                foreach ($form->getErrors() as $error) {
-                    $reason[] = $error->getMessage();
-                }
-
-                $json = array(
-                    'reason' => $reason
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Tes données ne sont pas valides."
                 );
             }
 
-            $response = new JsonResponse();
-            $response->setData($json);
-            return $response;
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Event:form_inscription.html.twig', array(
