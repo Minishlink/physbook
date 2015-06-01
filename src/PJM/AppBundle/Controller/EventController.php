@@ -31,9 +31,6 @@ class EventController extends Controller
             );
         }
 
-        var_dump($repo->getEvents($this->getUser(), $nombreMax));
-        die();
-
         if ($event === null || !$droitVue) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
