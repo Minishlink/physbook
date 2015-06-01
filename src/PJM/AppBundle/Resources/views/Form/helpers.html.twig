@@ -1,0 +1,16 @@
+{% use 'bootstrap_3_layout.html.twig' %}
+
+{% block form_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {% if help_label is defined and help_label %}
+            {{ block('help_label') }}
+        {% endif %}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row %}
+
+{% block help_label %}
+    <span class="help-block">{{ help_label }}</span>
+{% endblock help_label %}
