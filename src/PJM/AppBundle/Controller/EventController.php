@@ -23,21 +23,24 @@ class EventController extends Controller
         $repo = $em->getRepository('PJMAppBundle:Event\Evenement');
         $nombreMax = 6;
 
-        $droitVue = $event->canBeSeenByUser($this->getUser());
+        $droitVue = ($event === null) || $event->canBeSeenByUser($this->getUser());
+        if (!$droitVue) {
+            $request->getSession()->getFlashBag()->add(
+                'warning',
+                "Tu n'as pas le droit d'accéder à l'évènement ".$event->getNom()."."
+            );
+        }
 
-        if ($event == null || !$droitVue) {
+        var_dump($repo->getEvents($this->getUser(), $nombreMax));
+        die();
+
+        if ($event === null || !$droitVue) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
             if (!empty($listeEvents)) {
-                $ancienEvent = $event;
                 $event = $listeEvents[0];
 
                 if (!$droitVue) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        "Tu n'as pas le droit d'accéder à l'évènement ".$ancienEvent->getNom()."."
-                    );
-
                     return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
                 }
             }

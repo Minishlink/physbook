@@ -22,6 +22,9 @@ class EvenementRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('e')
             ->where('e.isPublic = true')
+            ->leftJoin('e.invitations', 'i')
+            ->orWhere('e.isPublic = false AND i.invite = :user')
+            ->setParameter('user', $user)
         ;
 
         if ($quand == 'after') {
@@ -37,8 +40,6 @@ class EvenementRepository extends EntityRepository
         }
 
         $qb->setParameter('date', $date);
-
-        // TODO ajouter les évents privés dont l'user est participant
 
         if ($max !== null) {
             $qb
