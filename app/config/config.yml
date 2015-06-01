@@ -40,6 +40,7 @@ twig:
             - 'bootstrap_3_layout.html.twig'
             - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
             - 'PJMAppBundle:Form:datetimepicker_layout.html.twig'
+            - 'PJMAppBundle:Form:helpers.html.twig'
 
 # Assetic Configuration
 assetic:

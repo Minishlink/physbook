@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use PJM\AppBundle\Form\ImageType;
+use PJM\AppBundle\Form\Boquette\BoquetteByResponsableType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -19,31 +20,6 @@ class MessageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $boquetteOptions = array(
-            'label' => 'De la part d\'une boquette ?',
-            'class'    => 'PJMAppBundle:Boquette',
-            'error_bubbling' => true,
-            'query_builder' => function(EntityRepository $er) use ($options) {
-                return $er->createQueryBuilder('b')
-                    ->join('b.responsabilites', 'r')
-                    ->join('r.responsables', 're')
-                    ->where('re.user = :user')
-                    ->andWhere('re.active = true')
-                    ->andWhere('r.niveau <= 1')
-                    ->setParameter(':user', $options['user'])
-                ;
-            },
-            'property' => 'nom',
-        );
-
-        if (!$options['annonce']) {
-            $boquetteOptions['empty_value'] = 'Non';
-            $boquetteOptions['empty_data'] = null;
-            $boquetteOptions['required'] = false;
-        } else {
-            $boquetteOptions['label'] = 'De la part de';
-        }
-
         $builder
             ->add('destinations', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataires',
@@ -62,7 +38,12 @@ class MessageType extends AbstractType
             ->add('contenu', "textarea", array(
                 'attr'=> array('style' => 'min-height: 20em;')
             ))
-            ->add('boquette', 'entity', $boquetteOptions)
+            ->add('boquette', new BoquetteByResponsableType(array(
+                'user' => $options['user'],
+                'required' => $options['annonce']
+            )), array(
+                'error_bubbling' => true,
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Envoi',
             ))
