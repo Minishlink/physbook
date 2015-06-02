@@ -7,13 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Select2ChoiceType extends AbstractType
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'choices' => array()
-        ));
-    }
-
     public function getParent()
     {
         return 'choice';

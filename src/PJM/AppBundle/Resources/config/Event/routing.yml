@@ -6,6 +6,10 @@ pjm_app_event_inscription:
     path:     /{slug}/inscription
     defaults: { _controller: PJMAppBundle:Event:inscription }
 
+pjm_app_event_invite:
+    path:     /{slug}/invite
+    defaults: { _controller: PJMAppBundle:Event:invite }
+
 pjm_app_event_index:
     path:     /{slug}
     defaults: { _controller: PJMAppBundle:Event:index, slug: null }

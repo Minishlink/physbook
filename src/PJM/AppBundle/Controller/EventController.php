@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use PJM\AppBundle\Form\Event\EvenementType;
+use PJM\AppBundle\Form\Type\UserPickerType;
 use PJM\AppBundle\Entity\Event;
 
 class EventController extends Controller
@@ -207,6 +208,78 @@ class EventController extends Controller
         return $this->render('PJMAppBundle:Event:form_inscription.html.twig', array(
             'form' => $form->createView(),
             'estPresent' => ($invitation !== null && $invitation->getEstPresent()),
+        ));
+    }
+
+    /**
+     * Affiche et gère le formulaire d'invitations
+     * @param  object   Evenenement $event L'évènement considéré
+     */
+    public function inviteAction(Request $request, Event\Evenement $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new UserPickerType(), null, array(
+            'label_users' => false,
+            'method' => 'POST',
+            'action' => $this->generateUrl(
+                "pjm_app_event_invite",
+                array('slug' => $event->getSlug())
+            ),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+
+            if ($form->isValid()) {
+                $users = $data['users'];
+
+                // TODO prendre en compte les groupes
+                foreach ($users as $user) {
+                    // on vérifie que c'est un utilisateur
+                    if ('PJM\UserBundle\Entity\User' == get_class($user)) {
+                        // on vérifie qu'il n'est pas déjà invité
+                        $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
+                            ->findOneBy(array("invite" => $user, "event" => $event));
+
+                        if ($invitation === null) {
+                            $invitation = new Event\Invitation();
+                            $invitation->setEvent($event);
+                            $invitation->setInvite($user);
+                            $em->persist($invitation);
+
+                            //TODO notification
+                        }
+                    }
+                }
+
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    "Tes invitations ont bien été envoyées."
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Un problème est survenu. Réessaye.'
+                );
+
+                foreach ($form->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+        }
+
+        return $this->render('PJMAppBundle:Event:form_invite.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 }
