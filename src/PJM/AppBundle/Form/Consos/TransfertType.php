@@ -28,7 +28,7 @@ class TransfertType extends AbstractType
                 },
                 'property' => 'boquette'
             ))
-            ->add('receveurUser', 'genemu_jqueryselect2_entity', array(
+            ->add('receveurUser', 'pjm_select2_entity', array(
                 'label' => 'A qui ?',
                 'class' => 'PJMUserBundle:User',
                 'query_builder' => function(EntityRepository $er) use ($options) {

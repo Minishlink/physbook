@@ -28,9 +28,9 @@
     <script>$.fn.dataTable || document.write('<script src="{{ asset_url }}"><\/script>');</script>
 {% endjavascripts %}
 
-{% if offline is not defined %}<script src="//cdn.jsdelivr.net/select2/3.5.2/select2.min.js"></script>{% endif %}
+{% if offline is not defined %}<script src="//cdn.jsdelivr.net/select2/4.0.0/js/select2.min.js"></script>{% endif %}
 {% javascripts
-    '%kernel.root_dir%/../app/Resources/public/lib/select2/select2.min.js'
+    '%kernel.root_dir%/../app/Resources/public/lib/select2/dist/js/select2.min.js'
     output='js/select2.js'
 %}
     <script>$.fn.select2 || document.write('<script src="{{ asset_url }}"><\/script>');</script>

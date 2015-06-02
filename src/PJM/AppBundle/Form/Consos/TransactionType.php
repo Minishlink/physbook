@@ -25,7 +25,7 @@ class TransactionType extends AbstractType
         unset($moyenPaiementsChoices['initial']);
 
         $builder
-            ->add('compte', 'genemu_jqueryselect2_entity', array(
+            ->add('compte', 'pjm_select2_entity', array(
                 'label' => 'Destinataire',
                 'class'    => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
@@ -40,7 +40,7 @@ class TransactionType extends AbstractType
                 },
                 'property' => 'user'
             ))
-            ->add('compteLie', 'genemu_jqueryselect2_entity', array(
+            ->add('compteLie', 'pjm_select2_entity', array(
                 'label' => 'De la part de',
                 'class'    => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,

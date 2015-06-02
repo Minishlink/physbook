@@ -20,7 +20,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre', 'text')
             ->add('contenu', "froala")
-            ->add('categories', 'genemu_jqueryselect2_entity', array(
+            ->add('categories', 'pjm_select2_entity', array(
                 'label' => 'Catégories',
                 'class'    => 'PJMAppBundle:Actus\Categorie',
                 'property' => 'nom',
