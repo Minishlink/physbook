@@ -36,9 +36,8 @@ class PushController extends Controller
         $user = $this->getUser();
 
         $reglagesNotifications = $user->getReglagesNotifications();
-        if ($reglagesNotifications === null) {
+        if ($reglagesNotifications->getUser() === null) {
             // si l'utilisateur n'a pas déjà de réglages
-            $reglagesNotifications = new ReglagesNotifications();
             $reglagesNotifications->setUser($user);
         }
 
