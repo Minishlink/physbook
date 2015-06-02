@@ -38,6 +38,9 @@
         </div>
     </div>
     <div class="panel-footer clearfix">
+        <div class="pull-left">
+            {% render(url('pjm_app_event_invite', {'slug': event.slug})) %}
+        </div>
         <div class="pull-right">
             {% render(url('pjm_app_event_inscription', {'slug': event.slug})) %}
         </div>

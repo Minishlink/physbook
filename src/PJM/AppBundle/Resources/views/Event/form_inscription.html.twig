@@ -1,6 +1,6 @@
 {{ form_start(form) }}
     {{ form_errors(form) }}
 
-{% if estPresent %}<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-remove"></span> Se désinscrire</button>{% else %}<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-calendar"></span> Participer</button>{% endif %}
+{% if estPresent %}<button class="btn btn-default" type="submit" title="Se désinscrire"><span class="glyphicon glyphicon-remove"></span><span class="sr-only"> Se désinscrire</span></button>{% else %}<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-calendar"></span> Participer</button>{% endif %}
 
 {{ form_end(form) }}
