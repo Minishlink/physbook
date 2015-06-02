@@ -19,7 +19,7 @@ class ReglagesNotificationsType extends AbstractType
         $banqueChoices = $enum->getBanqueChoices(true);
 
         $builder
-            ->add('actus', 'genemu_jqueryselect2_choice', array(
+            ->add('actus', 'pjm_select2_choice', array(
                 'label' => 'Actualités',
                 'choices' => $actusChoices,
                 'required'  => false,
@@ -29,7 +29,7 @@ class ReglagesNotificationsType extends AbstractType
                 'label' => "Messages",
                 'required' => false
             ))
-            ->add('banque', 'genemu_jqueryselect2_choice', array(
+            ->add('banque', 'pjm_select2_choice', array(
                 'label' => 'Banque',
                 'choices' => $banqueChoices,
                 'required'  => false,

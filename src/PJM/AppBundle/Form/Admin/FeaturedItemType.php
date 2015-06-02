@@ -16,7 +16,7 @@ class FeaturedItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item', 'genemu_jqueryselect2_entity', array(
+            ->add('item', 'pjm_select2_entity', array(
                 'error_bubbling' => true,
                 'label' => 'Item',
                 'class' => 'PJMAppBundle:Item',

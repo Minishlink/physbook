@@ -21,7 +21,7 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('destinations', 'genemu_jqueryselect2_entity', array(
+            ->add('destinations', 'pjm_select2_entity', array(
                 'label' => 'Destinataires',
                 'class'    => 'PJMAppBundle:Inbox\Inbox',
                 'error_bubbling' => true,
