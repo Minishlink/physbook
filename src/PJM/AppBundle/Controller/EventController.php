@@ -255,6 +255,7 @@ class EventController extends Controller
                 }
 
                 $users = array_unique(array_merge($users->toArray(), $usersFilter));
+                $push = $this->get('pjm.services.push');
 
                 foreach ($users as $user) {
                     // on vérifie que c'est un utilisateur
@@ -269,7 +270,8 @@ class EventController extends Controller
                             $invitation->setInvite($user);
                             $em->persist($invitation);
 
-                            //TODO notification
+                            // on envoit la notification
+                            $push->sendNotificationToUser($user, 'Invitation à un évènement', 'events');
                         }
                     }
                 }
