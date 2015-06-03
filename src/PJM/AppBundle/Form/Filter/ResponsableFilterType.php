@@ -25,7 +25,8 @@ class ResponsableFilterType extends AbstractType
                 'required' => false
             ))
             ->add('active', 'filter_boolean', array(
-                'label' => 'Actif',
+                'label' => "Responsable encore actif ?",
+                'data' => 'y'
             ))
         ;
     }
