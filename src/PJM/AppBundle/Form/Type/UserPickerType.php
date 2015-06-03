@@ -37,7 +37,7 @@ class UserPickerType extends AbstractType
         $builder
             ->add('fams', 'filter_text', array(
                 'label' => "Fam's",
-                'condition_pattern' => FilterOperands::OPERAND_SELECTOR
+                'condition_pattern' => FilterOperands::STRING_EQUALS
             ))
             ->add('tabagns', 'filter_choice', array(
                 'label' => "Tabagn's",
