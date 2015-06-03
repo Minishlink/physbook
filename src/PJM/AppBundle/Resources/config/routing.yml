@@ -70,6 +70,14 @@ pjm_app_support_technique:
     path:     /support-technique
     defaults: { _controller: PJMAppBundle:App:supportTechnique }
 
+pjm_app_ecole:
+    path:     /ecole
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PJMAppBundle:Ecole:index.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+
 pjm_app_plan_du_site:
     path:     /plan-du-site
     defaults:
