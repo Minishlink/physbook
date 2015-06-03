@@ -165,7 +165,7 @@ class EventController extends Controller
             if ($form->isValid()) {
                 if ($invitation !== null) {
                     // si on est déjà un invité
-                    $invitation->setEstPresent(empty($invitation->getEstPresent()));
+                    $invitation->setEstPresent(null === $invitation->getEstPresent() || !$invitation->getEstPresent());
                     $em->persist($invitation);
                     $em->flush();
 
