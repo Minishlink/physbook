@@ -25,6 +25,10 @@ class ReglagesNotificationsType extends AbstractType
                 'required'  => false,
                 'multiple' => true
             ))
+            ->add('events', null, array(
+                'label' => "Évènements",
+                'required' => false
+            ))
             ->add('messages', null, array(
                 'label' => "Messages",
                 'required' => false

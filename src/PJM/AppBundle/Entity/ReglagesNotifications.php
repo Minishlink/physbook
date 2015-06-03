@@ -38,6 +38,13 @@ class ReglagesNotifications
     private $messages;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="events", type="boolean")
+     */
+    private $events;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="banque", type="simple_array", nullable=true)
@@ -57,6 +64,7 @@ class ReglagesNotifications
         $this->actus = $enum->getDefaultActusChoices();
         $this->banque = $enum->getDefaultBanqueChoices();
         $this->messages = true;
+        $this->events = true;
 
         return $this;
     }
@@ -126,7 +134,9 @@ class ReglagesNotifications
      */
     public function has($type)
     {
-        return (($type == 'message' && $this->messages) ||
+        return (
+            ($type == 'message' && $this->messages) ||
+            ($type == 'events' && $this->events) ||
             in_array($type, $this->actus) ||
             in_array($type, $this->banque));
     }
@@ -177,5 +187,29 @@ class ReglagesNotifications
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set events
+     *
+     * @param boolean $events
+     *
+     * @return ReglagesNotifications
+     */
+    public function setEvents($events)
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    /**
+     * Get events
+     *
+     * @return boolean
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }
