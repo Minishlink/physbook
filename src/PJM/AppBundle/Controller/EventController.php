@@ -97,7 +97,6 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-
                 $em->persist($event);
                 $em->flush();
 
