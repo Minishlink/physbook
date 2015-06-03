@@ -15,11 +15,11 @@ $(document).ready(function () {
     });
 
     $('.collapse').on('shown.bs.collapse', function () {
-        resizeDataTables();
+        resizeComponents();
     });
 
     $('.modal').on('shown.bs.modal', function() {
-        resizeDataTables();
+        resizeComponents();
     });
 
     $('#fos_comment_thread').on('click', '.fos_comment_comment_vote', function() {
@@ -48,9 +48,18 @@ function chargement(commencer) {
     }
 }
 
+function resizeSelect2() {
+    $('select.select2-hidden-accessible:visible').select2();
+}
+
 function resizeDataTables() {
     var tables = $.fn.dataTable.tables(true);
     $(tables).DataTable().columns.adjust();
     $('.dataTables_scrollHeadInner, .dataTable').css('width', '100%');
     $(tables).css('width', '100%');
+}
+
+function resizeComponents() {
+    resizeDataTables();
+    resizeSelect2();
 }
