@@ -87,7 +87,6 @@ class Evenement
 
     /**
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid()
      **/
     private $image;
