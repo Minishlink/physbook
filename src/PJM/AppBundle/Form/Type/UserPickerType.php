@@ -29,7 +29,15 @@ class UserPickerType extends AbstractType
                 'class' => 'PJMUserBundle:User',
                 'multiple' => true,
                 'required' => false,
-                'apply_filter' => false
+                'apply_filter' => false,
+                'query_builder' => function(EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.fams', 'ASC')
+                        ->addOrderBy('u.proms', 'DESC')
+                        ->where('u NOT IN (:users)')
+                        ->setParameter('users', $options['notIncludeUsers'])
+                    ;
+                },
             ));
 
         $userEnum = new \PJM\UserBundle\Enum\UserEnum();
@@ -84,7 +92,8 @@ class UserPickerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'label_users' => 'Utilisateurs'
+            'label_users' => 'Utilisateurs',
+            'notIncludeUsers' => array()
         ));
     }
 

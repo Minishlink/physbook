@@ -219,8 +219,14 @@ class EventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $invitationsNotInclude = $em->getRepository('PJMAppBundle:Event\Invitation')
+            ->findByEvent($event);
+
+        $notIncludeUsers = $event->getInvites(null, true);
+
         $form = $this->createForm(new UserPickerType(), null, array(
             'label_users' => false,
+            'notIncludeUsers' => $notIncludeUsers,
             'method' => 'POST',
             'action' => $this->generateUrl(
                 "pjm_app_event_invite",
