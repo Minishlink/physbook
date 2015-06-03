@@ -74,7 +74,7 @@ class Responsabilite
     }
 
     public function __toString() {
-        return $this->libelle;
+        return "[".$this->boquette->getNomCourt()."] ".$this->libelle;
     }
 
     /**
