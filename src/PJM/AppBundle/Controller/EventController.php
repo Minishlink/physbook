@@ -235,8 +235,21 @@ class EventController extends Controller
 
             if ($form->isValid()) {
                 $users = $data['users'];
+                $usersFilter = array();
 
-                // TODO prendre en compte les groupes
+                if ($form->get('filtre')->isClicked()) {
+                    // on traite le filtre
+                    $em = $this->getDoctrine()->getManager();
+                    $user_repo = $em->getRepository('PJMUserBundle:User');
+
+                    $filterBuilder = $user_repo->createQueryBuilder('u');
+                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+
+                    $usersFilter = $filterBuilder->getQuery()->getResult();
+                }
+
+                $users = array_unique(array_merge($users->toArray(), $usersFilter));
+
                 foreach ($users as $user) {
                     // on vérifie que c'est un utilisateur
                     if ('PJM\UserBundle\Entity\User' == get_class($user)) {

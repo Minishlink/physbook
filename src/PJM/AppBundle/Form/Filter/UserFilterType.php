@@ -50,6 +50,7 @@ class UserFilterType extends AbstractType
                     'choices' => $userEnum->getGenreChoices(true)
                 ))
                 ->add('responsables', 'filter_collection_adapter', array(
+                    'label' => false,
                     'type'      => new ResponsableFilterType(),
                     'add_shared' => function (\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter $qbe)  {
                         $closure = function(QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
