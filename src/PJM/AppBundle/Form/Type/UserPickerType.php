@@ -31,12 +31,19 @@ class UserPickerType extends AbstractType
                 'required' => false,
                 'apply_filter' => false,
                 'query_builder' => function(EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('u')
+                    $qb = $er->createQueryBuilder('u')
                         ->orderBy('u.fams', 'ASC')
                         ->addOrderBy('u.proms', 'DESC')
-                        ->where('u NOT IN (:users)')
-                        ->setParameter('users', $options['notIncludeUsers'])
                     ;
+
+                    if (!empty($options['notIncludeUsers'])) {
+                        $qb
+                            ->where('u NOT IN (:users)')
+                            ->setParameter('users', $options['notIncludeUsers'])
+                        ;
+                    }
+
+                    return $qb;
                 },
             ));
 
