@@ -70,7 +70,7 @@ pjm_app_support_technique:
     path:     /support-technique
     defaults: { _controller: PJMAppBundle:App:supportTechnique }
 
-pjm_app_ecole:
+pjm_app_ecole_index:
     path:     /ecole
     defaults:
         _controller: FrameworkBundle:Template:template
