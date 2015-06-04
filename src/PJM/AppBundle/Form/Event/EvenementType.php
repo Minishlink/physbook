@@ -50,7 +50,7 @@ class EvenementType extends AbstractType
                 'required' => false
             ))
             ->add('save', 'submit', array(
-                'label' => 'Transférer'
+                'label' => 'Créer'
             ))
         ;
     }
