@@ -49,7 +49,7 @@ function chargement(commencer) {
 }
 
 function resizeSelect2() {
-    $('select.select2-hidden-accessible:visible').select2();
+    $('.select2-container:visible').css('width','100%');
 }
 
 function resizeDataTables() {
