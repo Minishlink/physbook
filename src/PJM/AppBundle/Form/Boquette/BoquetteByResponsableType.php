@@ -44,7 +44,7 @@ class BoquetteByResponsableType extends AbstractType
                 ;
             },
             'property' => 'nom',
-            'help_label' => "Ta boquette n'apparaît pas alors tu en es responsable ? Contacte un ZiPhy'sbook."
+            'help_label' => "Ta boquette n'apparaît pas alors que tu en es responsable ? Contacte un ZiPhy'sbook."
         );
 
         if (!empty($this->options['required'])) {
