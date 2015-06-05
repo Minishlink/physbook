@@ -8,11 +8,15 @@ $(document).ready(function () {
             button.addClass('disabled');
             chargement(true);
 
+            var formData = new FormData($this[0]);
+
             $.ajax({
                 url: $this.attr('action'),
                 type: $this.attr('method'),
-                data: $this.serialize(),
+                data: formData,
                 dataType: 'json',
+                processData: false,
+                contentType: false,
                 success: function(json) {
                     if (json.success) {
                         $this.trigger('reset');
