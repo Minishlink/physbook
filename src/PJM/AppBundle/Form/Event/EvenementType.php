@@ -50,7 +50,7 @@ class EvenementType extends AbstractType
                 'required' => false
             ))
             ->add('save', 'submit', array(
-                'label' => 'Créer'
+                'label' => $options['label_submit']
             ))
         ;
     }
@@ -63,6 +63,7 @@ class EvenementType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Event\Evenement',
             'user' => null,
+            'label_submit' => "Créer"
         ));
     }
 

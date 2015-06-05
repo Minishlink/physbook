@@ -10,6 +10,14 @@ pjm_app_event_invite:
     path:     /{slug}/invite
     defaults: { _controller: PJMAppBundle:Event:invite }
 
+pjm_app_event_suppression:
+    path:     /{slug}/suppression
+    defaults: { _controller: PJMAppBundle:Event:suppression }
+
+pjm_app_event_modifier:
+    path:     /{slug}/modifier
+    defaults: { _controller: PJMAppBundle:Event:modifier }
+
 pjm_app_event_index:
     path:     /{slug}
     defaults: { _controller: PJMAppBundle:Event:index, slug: null }

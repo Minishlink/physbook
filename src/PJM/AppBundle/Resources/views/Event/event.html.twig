@@ -38,12 +38,15 @@
         </div>
     </div>
     <div class="panel-footer clearfix">
-        <div class="pull-left" style="max-width: 100%">
-            {% render(url('pjm_app_event_invite', {'slug': event.slug})) %}
-        </div>
         <div class="pull-right">
             {% render(url('pjm_app_event_inscription', {'slug': event.slug})) %}
         </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body text-center">
+        {% render(url('pjm_app_event_invite', {'slug': event.slug})) %}
+        {% if event.createur == app.user or is_granted('ROLE_ADMIN') %}<br><a href="{{ path('pjm_app_event_modifier', {'slug': event.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier</a> {% render(url('pjm_app_event_suppression', {'slug': event.slug})) %}{% endif %}
     </div>
 </div>
 {% endif %}

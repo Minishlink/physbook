@@ -138,6 +138,99 @@ class EventController extends Controller
         ));
     }
 
+     /**
+     * Ajout d'un évènement
+     * @return object HTML Response
+     */
+    public function modifierAction(Request $request, Event\Evenement $event)
+    {
+        // on regarde si l'utilisateur est créateur
+        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return new Response("Tu n'as pas les droits pour modifier cet article.");
+        }
+
+        $form = $this->createForm(new EvenementType(), $event, array(
+            'method' => 'POST',
+            'action' => $this->generateUrl('pjm_app_event_modifier', array('slug' => $event->getSlug())),
+            'user' => $this->getUser(),
+            'label_submit' => "Modifier"
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($event);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    "L'évènement a été modifié."
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Un problème est survenu lors de la création de l'évènement. Réessaye."
+                );
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+        }
+
+        return $this->render('PJMAppBundle:Event:modifier.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $event
+        ));
+    }
+
+    /**
+     * Affiche et gère le bouton de suppression
+     * @param  object   Evenenement $event L'évènement considéré
+     */
+    public function suppressionAction(Request $request, Event\Evenement $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // on regarde si l'utilisateur est créateur
+        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return new Response("Tu n'as pas les droits pour supprimer cet article.");
+        }
+
+        $form = $this->get('form.factory')->createNamedBuilder('form_suppression')
+            ->setAction($this->generateUrl(
+                "pjm_app_event_suppression",
+                array('slug' => $event->getSlug())
+            ))
+            ->setMethod('POST')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em->remove($event);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    "L'évènement a été supprimé."
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Tes données ne sont pas valides."
+                );
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index'));
+        }
+
+        return $this->render('PJMAppBundle:Event:form_suppression.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
     /**
      * Affiche et gère le bouton d'inscription
      * @param  object   Evenenement $event L'évènement considéré
@@ -150,7 +243,7 @@ class EventController extends Controller
         $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
             ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
 
-        $form = $this->createFormBuilder()
+        $form = $this->get('form.factory')->createNamedBuilder('form_inscription')
             ->setAction($this->generateUrl(
                 "pjm_app_event_inscription",
                 array('slug' => $event->getSlug())

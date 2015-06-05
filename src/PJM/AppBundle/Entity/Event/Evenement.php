@@ -112,7 +112,7 @@ class Evenement
     private $isPublic;
 
     /**
-     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Event\Invitation", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Event\Invitation", mappedBy="event", cascade={"remove"})
      **/
     private $invitations;
 
