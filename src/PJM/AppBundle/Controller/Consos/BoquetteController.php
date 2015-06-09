@@ -604,7 +604,7 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des items pour DataTables
+     * Action ajax de rendu de la liste des items pour DataTables (on n'affiche pas les évènements)
      */
     public function itemResultsAction($boquette_slug)
     {
