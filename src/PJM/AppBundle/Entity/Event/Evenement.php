@@ -92,6 +92,12 @@ class Evenement
     private $image;
 
     /**
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Item", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     **/
+    private $item;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull(message="Aucun créateur spécifié.")
@@ -541,5 +547,29 @@ class Evenement
         }
 
         return true;
+    }
+
+    /**
+     * Set item
+     *
+     * @param \PJM\AppBundle\Entity\Item $item
+     *
+     * @return Evenement
+     */
+    public function setItem(\PJM\AppBundle\Entity\Item $item = null)
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return \PJM\AppBundle\Entity\Item
+     */
+    public function getItem()
+    {
+        return $this->item;
     }
 }
