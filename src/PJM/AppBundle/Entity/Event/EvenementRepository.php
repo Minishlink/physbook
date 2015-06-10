@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class EvenementRepository extends EntityRepository
 {
-    public function getEvents(User $user, $max = 6, $quand = 'after', \DateTime $date = null)
+    public function getEvents(User $user, $max = 6, $quand = 'after', \DateTime $date = null, Evenement $eventExclure = null)
     {
         if ($date == null) {
             $date = new \DateTime();
@@ -26,6 +26,13 @@ class EvenementRepository extends EntityRepository
             ->orWhere('e.isPublic = false AND i.invite = :user')
             ->setParameter('user', $user)
         ;
+
+        if ($eventExclure !== null) {
+            $qb
+                ->andWhere('e != :eventExclure')
+                ->setParameter('eventExclure', $eventExclure)
+            ;
+        }
 
         if ($quand == 'after') {
             $qb
