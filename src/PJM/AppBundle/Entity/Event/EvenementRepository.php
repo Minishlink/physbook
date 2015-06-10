@@ -34,7 +34,7 @@ class EvenementRepository extends EntityRepository
             ;
         } else if ($quand == 'before') {
             $qb
-                ->andWhere('e.dateDebut < :date')
+                ->andWhere('e.dateDebut <= :date')
                 ->orderBy('e.dateDebut', 'DESC')
             ;
         }

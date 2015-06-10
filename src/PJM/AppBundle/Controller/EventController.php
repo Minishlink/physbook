@@ -47,8 +47,6 @@ class EventController extends Controller
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
-
-            $listeEvents = array_merge(array($event), $listeEvents);
         }
 
         $dateRechercheAvant = ($event !== null) ? $event->getDateDebut() : new \DateTime();
