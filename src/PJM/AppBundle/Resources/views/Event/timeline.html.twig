@@ -6,6 +6,13 @@
     {% for evenement in listeEvents %}
     {% include "PJMAppBundle:Event:timelineItem.html.twig" with {'event': evenement, 'active': (event is defined and evenement == event) } %}
     {% endfor %}
+    {% else %}
+    <div class="timeline-block">
+        <div class="timeline-img slideExpandUp" style="color: white !important;"></div>
+        <div class="timeline-content">
+            <h2>Pas d'évènement prévu, <a href="{{ path('pjm_app_event_index') }}" style="color: gold">en créer un</a> ?</h2>
+        </div>
+    </div>
     {% endif %}
     <div class="timeline-block">
         <div class="timeline-img empty-circle"></div>
