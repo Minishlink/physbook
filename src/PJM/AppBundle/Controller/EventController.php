@@ -47,11 +47,13 @@ class EventController extends Controller
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
+
+            $listeEvents = array_merge(array($event), $listeEvents);
         }
 
         $dateRechercheAvant = ($event !== null) ? $event->getDateDebut() : new \DateTime();
         // on va chercher les events manquants avant
-        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $dateRechercheAvant);
+        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $dateRechercheAvant, $event);
 
         $listeEvents = array_merge($eventsARajouter, $listeEvents);
 
@@ -96,7 +98,7 @@ class EventController extends Controller
                 $em->persist($event);
                 $em->flush();
 
-                if ($event->getPrix() > 0) {
+                /*if ($event->getPrix() > 0) {
                     $item = new Item();
                     $item->setLibelle($event->getNom());
                     $item->setPrix($event->getPrix());
@@ -111,7 +113,7 @@ class EventController extends Controller
                     $event->setItem($item);
                     $em->persist($event);
                     $em->flush();
-                }
+                }*/
 
                 $success = true;
 
@@ -272,7 +274,7 @@ class EventController extends Controller
                     // si on est déjà un invité
                     $invitation->setEstPresent(null === $invitation->getEstPresent() || !$invitation->getEstPresent());
                     // on fait payer l'utilisateur si l'event n'est pas gratuit
-                    $invitation->payer();
+                    //$invitation->payer();
                     $em->persist($invitation);
                     $em->flush();
 
