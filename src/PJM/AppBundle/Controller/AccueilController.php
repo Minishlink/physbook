@@ -31,30 +31,6 @@ class AccueilController extends Controller
         $listeEvents = $em->getRepository('PJMAppBundle:Event\Evenement')
             ->getEvents($this->getUser(), 3);
 
-        /*$listeEvents = array(
-            array(
-                'titre' => "WTP",
-                'organisateur' => "Bo212",
-                'date' => new \DateTime('2014-04-11'),
-                'journee' => true,
-                'couleur' => 'vert'
-            ),
-            array(
-                'titre' => "Semaine SKZ",
-                'organisateur' => "UE",
-                'date' => new \DateTime('2015-04-18'),
-                'journee' => true,
-                'couleur' => null
-            ),
-            array(
-                'titre' => "Grandes UAI",
-                'organisateur' => "UAI",
-                'date' => new \DateTime('2015-05-14'),
-                'journee' => true,
-                'couleur' => 'bleu-clair'
-            ),
-        );*/
-
         return $this->render('PJMAppBundle:Accueil:index.html.twig', array(
             'solde' => $solde,
             'mazoutage' => $mazoutage,
