@@ -25,23 +25,24 @@ class EventController extends Controller
         $repo = $em->getRepository('PJMAppBundle:Event\Evenement');
         $nombreMax = 6;
 
-        $droitVue = ($event === null) || $event->canBeSeenByUser($this->getUser());
-        if (!$droitVue) {
+        // si l'évènement choisi n'est pas visible on redirige vers l'accueil des évènements
+        if (isset($event) && !$event->canBeSeenByUser($this->getUser())) {
             $request->getSession()->getFlashBag()->add(
                 'warning',
                 "Tu n'as pas le droit d'accéder à l'évènement ".$event->getNom()."."
             );
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
-        if ($event === null || !$droitVue) {
+        // si c'est l'accueil des évènements
+        if ($event === null) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
             $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
-            if (!empty($listeEvents)) {
-                $event = $listeEvents[0];
 
-                if (!$droitVue) {
-                    return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
-                }
+            // on définit l'event en cours comme celui le plus proche de la date
+            if (count($listeEvents) > 0) {
+                $event = $listeEvents[0];
             }
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
@@ -50,25 +51,21 @@ class EventController extends Controller
             $listeEvents = array_merge(array($event), $listeEvents);
         }
 
-        if ($event !== null) {
-            // on va chercher les events manquants avant
-            $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $event->getDateDebut());
+        $dateRechercheAvant = ($event !== null) ? $event->getDateDebut() : new \DateTime();
+        // on va chercher les events manquants avant
+        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $dateRechercheAvant);
 
+        $listeEvents = array_merge($eventsARajouter, $listeEvents);
+
+        if ($event === null && count($listeEvents) > 0) {
+            $event = end($listeEvents);
+        }
+
+        if (isset($event)) {
             // on regarde si l'utilisateur est invité
             $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
                 ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
-        } else {
-            // on va chercher les events manquants avant aujourd'hui
-            $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', new \DateTime());
-
-            if (!empty($eventsARajouter)) {
-                $event = $eventsARajouter[0];
-            }
-
-            $invitation = null;
         }
-
-        $listeEvents = array_merge($eventsARajouter, $listeEvents);
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents,
