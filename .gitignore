@@ -17,5 +17,8 @@
 /app/config/parameters.yml
 /app/config/parameters_dev.yml
 /vendor/
+/bin/
+/doc/
+desktop.ini
 /.brackets.json
 /npm-debug.log
