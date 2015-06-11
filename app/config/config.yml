@@ -52,8 +52,8 @@ assetic:
     filters:
         cssrewrite: ~
         less:
-           node: C:\Users\Louis\AppData\Roaming\nodejs\node.exe
-           node_paths: [C:\Users\Louis\AppData\Roaming\npm\node_modules]
+           node: %node%
+           node_paths: %node_paths%
         yui_js:
             jar: %kernel.root_dir%/Resources/java/yuicompressor.jar
         yui_css:
