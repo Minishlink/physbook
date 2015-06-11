@@ -26,9 +26,12 @@ parameters:
     router.request_context.base_url: ""
     assets_base_url: "%router.request_context.host%%router.request_context.base_url%"
     
-    paiement.smoney.url: https://mon-espace-pp.s-money.fr/ecommerce/payments/smoney
-    paiement.smoney.auth: Bearer MTsxMztUR3F4ZUZwdDFs
+    paiement.smoney.url: urlSmoneyAChanger
+    paiement.smoney.auth: Bearer clef
     
-    android_gcm_api_key: AIzaSyCCyyGyPINOp8fG19IhA2giCUc0Iabbcuo #clef serveur dev
+    android_gcm_api_key: clefAChanger #clef serveur dev
     
     canal: https
+    
+    node: C:\Users\Louis\AppData\Roaming\nodejs\node.exe
+    node_paths: [C:\Users\Louis\AppData\Roaming\npm\node_modules]
