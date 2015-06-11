@@ -25,7 +25,7 @@ services:
         class:  PJM\AppBundle\Services\Random
     pjm.services.rezal:
         class:  PJM\AppBundle\Services\Rezal
-        arguments: [@doctrine.orm.entity_manager, %kernel.environment%]
+        arguments: [@doctrine.orm.entity_manager, %db_rezal_host%, %db_rezal_user%, %db_rezal_pass%]
     pjm.services.excel:
         class:  PJM\AppBundle\Services\Excel
         arguments: [@phpexcel, @logger]
