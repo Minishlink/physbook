@@ -29,14 +29,17 @@ recommended with extensions :
 * Todo
 * QuickDocsPHP
 * Quick Search
+* Exclude File Tree
 
 ### Install composer ###
 
 ### Configure repository ###
 
-Symfony2 vendors etc...
-
-To be continued @ Bordel's.
+* git clone url physbook
+* mettre parameters.yml et parameters_dev.yml (modifier si nécessaire)
+* mettre dossier "Site" du Drive (images, fonts, utilitaires..)
+* composer.phar install
+* bower install
 
 ## Contribution guidelines ##
 
