@@ -1,10 +1,4 @@
-"Louis Lagrange <louis.lagrange@gadz.org>" 
-<<<<<<< HEAD
-<<<<<<< HEAD
+"Louis Lagrange <louis.lagrange@gadz.org>"
 "Baptiste Gauthier <baptiste.gauthier@gadz.org>"
-=======
-=======
 "Astrid Frot <astrid.frot@gadz.org>"
->>>>>>> origin/master
 "Paul Derivaux <paul.derivaux@gadz.org>"
->>>>>>> origin/master
