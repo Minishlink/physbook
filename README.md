@@ -31,7 +31,16 @@ recommended with extensions :
 * Quick Search
 * Exclude File Tree
 
-### Install composer ###
+### Package managers ###
+
+#### Composer ####
+https://getcomposer.org/download/
+
+#### npm (+ node.js)) ####
+https://nodejs.org/download/
+
+#### Bower ####
+http://bower.io/#install-bower
 
 ### Configure repository ###
 
