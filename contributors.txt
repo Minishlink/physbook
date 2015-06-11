@@ -1,2 +1,3 @@
 "Louis Lagrange <louis.lagrange@gadz.org>" 
 "Astrid Frot <astrid.frot@gadz.org>"
+"Paul Derivaux <paul.derivaux@gadz.org>"
