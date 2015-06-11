@@ -1,1 +1,2 @@
 "Louis Lagrange <louis.lagrange@gadz.org>" 
+"Baptiste Gauthier <baptiste.gauthier@gadz.org>"
