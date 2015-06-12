@@ -42,13 +42,24 @@ https://nodejs.org/download/
 #### Bower ####
 http://bower.io/#install-bower
 
+* npm install -g bower
+
+### Outils ###
+
+#### Less ####
+http://lesscss.org/
+
+* npm install -g less
+
 ### Configure repository ###
 
 * git clone url physbook
 * mettre parameters.yml et parameters_dev.yml (modifier si nécessaire)
 * mettre dossier "Site" du Drive (images, fonts, utilitaires..)
-* composer.phar install
 * bower install
+* créer la BDD physbook
+* php composer.phar install
+* php composer.phar doctrine:schema:update --force
 
 ## Contribution guidelines ##
 
