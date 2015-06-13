@@ -192,6 +192,7 @@ class User extends BaseUser
         $this->photosCreated = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comptes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pushSubscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genre = 0;
     }
 
     /**
