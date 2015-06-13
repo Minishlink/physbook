@@ -32,17 +32,6 @@ class RechargementController extends Controller
         $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
 
-        /*$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
-        $ua_checker = array(
-          'android' => preg_match('/android/', $ua),
-          'ios' => preg_match('/iphone|ipod|ipad/', $ua),
-        );
-
-        $agent = "web";
-        if ($ua_checker['ios']) {
-            $agent = "iphoneweb";
-        }*/
-
         $agent = "web";
 
         $headers = array(
