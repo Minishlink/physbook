@@ -2,9 +2,7 @@
 
 namespace PJM\AppBundle\Services;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
-use PJM\UserBundle\Entity\User;
 
 class Group
 {

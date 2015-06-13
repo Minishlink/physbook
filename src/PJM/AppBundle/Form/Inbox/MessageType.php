@@ -5,12 +5,9 @@ namespace PJM\AppBundle\Form\Inbox;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
-use PJM\AppBundle\Form\ImageType;
-use PJM\AppBundle\Form\Boquette\BoquetteByResponsableType;
-
 use Doctrine\ORM\EntityRepository;
+
+use PJM\AppBundle\Form\Boquette\BoquetteByResponsableType;
 
 class MessageType extends AbstractType
 {

@@ -2,25 +2,12 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Entity\Commande;
-use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
-use PJM\AppBundle\Entity\Compte;
-use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Transaction;
-use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Form\VacancesType;
 use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;

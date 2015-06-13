@@ -9,8 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Transaction;
 

@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\EntityRepository;
 use PJM\UserBundle\Entity\User;
-use Doctrine\Common\Collections\Collection;
 
 /**
  * EvenementRepository

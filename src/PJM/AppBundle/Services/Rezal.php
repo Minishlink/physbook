@@ -2,12 +2,7 @@
 
 namespace PJM\AppBundle\Services;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
-use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Historique;
-use PJM\AppBundle\Entity\Compte;
-use PJM\UserBundle\Entity\User;
 
 /**
  * Ce fichier rassemble l'ensemble des fonctions relatives à la connexion et au dialogue

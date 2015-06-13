@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Entity\Media\Photo;

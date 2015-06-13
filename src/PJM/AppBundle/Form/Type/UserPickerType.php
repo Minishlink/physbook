@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\EntityRepository;
-use Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionBuilderInterface;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;

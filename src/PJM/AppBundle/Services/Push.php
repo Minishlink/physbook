@@ -2,12 +2,10 @@
 
 namespace PJM\AppBundle\Services;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use PJM\UserBundle\Entity\User;
-use PJM\AppBundle\Entity\PushSubscription;
 
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Service\Notifications;
