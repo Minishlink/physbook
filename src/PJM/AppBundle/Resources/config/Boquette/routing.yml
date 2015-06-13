@@ -28,10 +28,6 @@ pjm_app_boquette_rechargement:
     path:     /{slug}/rechargement
     defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement }
 
-pjm_app_boquette_itemHM:
-    path:     /hm/{item}
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:itemHM }
-
 pjm_app_boquette_pians:
     resource: "@PJMAppBundle/Resources/config/Boquette/Pians/routing.yml"
     prefix:   /pians

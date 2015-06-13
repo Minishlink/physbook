@@ -1,19 +1,3 @@
 pjm_app_homepage:
     path:     /
     defaults: { _controller: PJMAppBundle:Accueil:index }
-
-pjm_app_accueil_etatComptes:
-    path:     /etatComptes
-    defaults: { _controller: PJMAppBundle:Accueil:etatComptes }
-
-pjm_app_accueil_anniversaires:
-    path:     /anniversaires
-    defaults: { _controller: PJMAppBundle:Accueil:anniversaires }
-
-pjm_app_accueil_bonjourGadzarts:
-    path:     /bonjourGadzarts
-    defaults: { _controller: PJMAppBundle:Accueil:bonjourGadzarts }
-
-pjm_app_accueil_aVenir:
-    path:     /aVenir
-    defaults: { _controller: PJMAppBundle:Accueil:aVenir }

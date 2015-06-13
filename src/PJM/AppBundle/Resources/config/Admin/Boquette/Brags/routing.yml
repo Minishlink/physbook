@@ -40,14 +40,6 @@ pjm_app_admin_boquette_brags_prixResults:
     path:     /listePrix/results
     defaults: { _controller: PJMAppBundle:Consos/Brags:prixResults }
 
-pjm_app_admin_boquette_brags_listeZiBrags:
-    path:     /listeZiBrags
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listeZiBrags }
-
-pjm_app_admin_boquette_brags_removeZiBrags:
-    path:     /removeZiBrags/{user}
-    defaults: { _controller: PJMAppBundle:Consos/Brags:removeZiBrags }
-
 pjm_app_boquette_brags_bucquage:
     path:     /bucquage
     defaults: { _controller: PJMAppBundle:Consos/Brags:bucquageCron }
