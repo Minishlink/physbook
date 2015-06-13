@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new PJM\AppBundle\PJMAppBundle(),
             new PJM\UserBundle\PJMUserBundle(),
         );
