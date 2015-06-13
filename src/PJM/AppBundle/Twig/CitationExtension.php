@@ -1,20 +1,23 @@
 <?php
 
-namespace PJM\AppBundle\Services;
+namespace PJM\AppBundle\Twig;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
-use PJM\UserBundle\Entity\User;
 
-class Citation
+class CitationExtension extends \Twig_Extension
 {
-    protected $em;
-    protected $templating;
-
-    public function __construct(EntityManager $em, $templating)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->templating = $templating;
+    }
+
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter'), array(
+                'needs_environment' => true
+            ))
+        );
     }
 
     /**
@@ -22,10 +25,8 @@ class Citation
      * @param  string  $texte Texte où regarder
      * @return integer Nombre d'occurences remplacées
      */
-    public function parseCitationUsers($texte, &$count = null)
+    public function citationUsersFilter(\Twig_Environment $twig, $texte)
     {
-        $count = 0;
-
         preg_match_all("/@[a-zA-Z0-9\-!#]+[bo|li|an|me|ch|cl|ai|ka|pa][0-9]+/", $texte, $usernames);
 
         $repo_user = $this->em->getRepository('PJMUserBundle:User');
@@ -37,10 +38,11 @@ class Citation
                 $user = $repo_user->findOneByUsername($username);
                 if ($user !== null) {
                     if(!in_array($username, $usersOK)) {
-                        $view = $this->templating->render('PJMAppBundle:Profil:encart.html.twig', array(
+                        $view = $twig->render('PJMAppBundle:Profil:encart.html.twig', array(
                             'user' => $user,
                             'citation' => true
                         ));
+
                         $texte = str_replace("@".$username, $view, $texte, $count);
 
                         $usersOK[] = $username;
@@ -52,22 +54,8 @@ class Citation
         return $texte;
     }
 
-    public function parseArticles($articles)
+    public function getName()
     {
-        foreach ($articles as &$article) {
-            $count = 0;
-            $contenu = $this->parseCitationUsers($article->getContenu(), $count);
-            if ($count > 0) {
-                $article->setContenu($contenu);
-            }
-        }
-
-        return $articles;
-    }
-
-    public function parseArticle(\PJM\AppBundle\Entity\Actus\Article $article)
-    {
-        $articles = $this->parseArticles(array($article));
-        return $articles[0];
+        return 'citation_extension';
     }
 }
