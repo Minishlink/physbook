@@ -263,7 +263,7 @@ class BragsController extends BoquetteController
 
                     // on résilie les précédentes commandes
                     foreach ($commandes as $c) {
-                        if ($c != $commande && (null === $c->getValid() || $c->getValid() == true)) {
+                        if ($c != $commande && (null === $c->getValid() || $c->getValid() === true)) {
                             $c->resilier();
                             $em->persist($c);
                         }

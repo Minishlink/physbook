@@ -160,11 +160,11 @@ class HistoriqueRepository extends EntityRepository
             ->orderBy('h.date', 'desc')
         ;
 
-        if ($limit != null) {
+        if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
 
-        if ($valid != null) {
+        if ($valid !== null) {
             $qb
                 ->andWhere('h.valid = :valid')
                 ->setParameter('valid', $valid)
@@ -220,7 +220,7 @@ class HistoriqueRepository extends EntityRepository
             ))
         ;
 
-        if ($limit != null) {
+        if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
 
@@ -231,8 +231,8 @@ class HistoriqueRepository extends EntityRepository
 
     public function triParDate($qb, $month, $year)
     {
-        if ($month != null) {
-            if ($year == null) {
+        if ($month !== null) {
+            if ($year === null) {
                 $year = date('Y');
             }
 
@@ -241,7 +241,7 @@ class HistoriqueRepository extends EntityRepository
                 ->setParameter('debut', $year.'-'.$month.'-01')
                 ->setParameter('fin', $year.'-'.$month.'-31')
             ;
-        } else if ($year != null) {
+        } else if ($year !== null) {
             $qb
                 ->where('h.date BETWEEN :debut AND :fin')
                 ->setParameter('debut', $year.'-01-01')

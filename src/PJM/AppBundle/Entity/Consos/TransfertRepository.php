@@ -18,7 +18,7 @@ class TransfertRepository extends EntityRepository
             ->orderBy('t.date', 'desc')
         ;
 
-        if ($limit != null) {
+        if ($limit !== null) {
             $qb
                 ->andWhere("t.status = 'OK'")
                 ->setMaxResults($limit)

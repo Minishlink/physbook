@@ -48,7 +48,7 @@ class Push
         $subscriptions = $user->getPushSubscriptions();
 
         // on envoit une notif pour chaque
-        if ($subscriptions != null) {
+        if ($subscriptions !== null) {
             foreach ($subscriptions as $subscription) {
                 // TODO vérifier que la subscription est pas trop vieille pour éviter d'exploser le quota
                 $this->sendNotificationToSubscriptionId($subscription->getSubscriptionId(), $message);

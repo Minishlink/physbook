@@ -45,7 +45,7 @@ class CreerUsersHMCommand extends ContainerAwareCommand
         if (!empty($res)) {
             foreach ($res as $r) {
                 $usersHM = $r->getUsersHM();
-                if($usersHM == null) {
+                if($usersHM === null) {
                     //on crée le lien
                     $usersHM = new UsersHM();
                     $r->setUsersHM($usersHM);

@@ -97,7 +97,7 @@ class RechargementController extends Controller
                     if ($status == "OK") {
                         $transaction->setStatus("OK");
                     } else {
-                        if ($errorCode != null) {
+                        if ($errorCode !== null) {
                             $transaction->setStatus($errorCode);
                         } else {
                             $transaction->setStatus("NOK");
