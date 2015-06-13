@@ -7,6 +7,8 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
             - { name: twig.extension }
+    doctrine_dbal_platform:
+        class: Doctrine\DBAL\Platforms\MySqlPlatform
     pjm.twig.intranet_extension:
         class: PJM\AppBundle\Twig\IntranetExtension
         arguments: [@service_container]
