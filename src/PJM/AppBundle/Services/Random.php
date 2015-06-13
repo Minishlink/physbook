@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Services;
 class Random
 {
     /**
-     * weighted_random()
+     * weightedRandom()
      * Randomly select one of the elements based on their weights. Optimized for a large number of elements.
      *
      * @param array $values Array of elements to choose from
@@ -14,24 +14,24 @@ class Random
      * @param int $total_weight Sum of all weights
      * @return mixed Selected element
      */
-    public function weighted_random($values, $weights, $lookup = null, $total_weight = null)
+    public function weightedRandom($values, $weights, $lookup = null, $total_weight = null)
     {
         if ($lookup == null) {
-            list($lookup, $total_weight) = $this->calc_lookups($weights);
+            list($lookup, $total_weight) = $this->calcLookups($weights);
         }
 
         $r = mt_rand(0, $total_weight);
-        return $values[$this->binary_search($r, $lookup)];
+        return $values[$this->binarySearch($r, $lookup)];
     }
 
     /**
-     * calc_lookups()
+     * calcLookups()
      * Build the lookup array to use with binary search
      *
      * @param array $weights
      * @return array The lookup array and the sum of all weights
      */
-    public function calc_lookups($weights)
+    public function calcLookups($weights)
     {
         $lookup = array();
         $total_weight = 0;
@@ -44,7 +44,7 @@ class Random
     }
 
     /**
-     * binary_search()
+     * binarySearch()
      * Search a sorted array for a number. Returns the item's index if found. Otherwise
      * returns the position where it should be inserted, or count($haystack)-1 if the
      * $needle is higher than every element in the array.
@@ -53,7 +53,7 @@ class Random
      * @param array $haystack
      * @return int
      */
-    public function binary_search($needle, $haystack)
+    public function binarySearch($needle, $haystack)
     {
         $high = count($haystack)-1;
         $low = 0;
