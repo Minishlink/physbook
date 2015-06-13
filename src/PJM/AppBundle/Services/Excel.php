@@ -58,10 +58,6 @@ class Excel
         // on charge le logo
         $logo = new \PHPExcel_Worksheet_HeaderFooterDrawing();
         $logo->setName("Phy'sbook logo");
-        /*$urlLogo = parse_url($this->get('templating.helper.assets')->getUrl('/images/general/logo+banniere.png'), PHP_URL_PATH);
-        $basePath = $_SERVER['DOCUMENT_ROOT'];
-        $basePath .= "/web";
-        $logo->setPath($basePath.$urlLogo);*/
         $logo->setPath('images/general/logo+banniere.png');
         $logo->setHeight(40);
         $sheet->getHeaderFooter()->addImage($logo, \PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
