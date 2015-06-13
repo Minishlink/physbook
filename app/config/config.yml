@@ -72,6 +72,7 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        platform_service: doctrine_dbal_platform
         mapping_types:
             enum:       string
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
