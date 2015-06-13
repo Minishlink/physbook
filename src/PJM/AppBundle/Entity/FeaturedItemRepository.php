@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * FeaturedItemRepository
@@ -26,7 +27,7 @@ class FeaturedItemRepository extends EntityRepository
 
     public function callbackFindByBoquetteSlug($boquette_slug, $active = null, $item_valid = null)
     {
-        return function($qb) use($boquette_slug, $active, $item_valid) {
+        return function(QueryBuilder $qb) use($boquette_slug, $active, $item_valid) {
             $qb
                 ->join('FeaturedItem.item', 'i')
                 ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')

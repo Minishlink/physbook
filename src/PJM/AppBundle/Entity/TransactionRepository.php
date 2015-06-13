@@ -3,6 +3,8 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
 use PJM\UserBundle\Entity\User;
 
 /**
@@ -89,7 +91,7 @@ class TransactionRepository extends EntityRepository
 
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
-        return function($qb) use($boquette_slug) {
+        return function(QueryBuilder $qb) use($boquette_slug) {
             $qb
                 ->andWhere('Transaction.status IS NOT NULL')
                 ->join('Transaction.compte', 'c')
@@ -101,7 +103,7 @@ class TransactionRepository extends EntityRepository
 
     public function callbackFindByUser(User $user)
     {
-        return function($qb) use($user) {
+        return function(QueryBuilder $qb) use($user) {
             $qb
                 ->andWhere('Transaction.status IS NOT NULL')
                 ->join('Transaction.compte', 'c')
