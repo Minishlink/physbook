@@ -61,6 +61,12 @@ http://lesscss.org/
 * php app/console doctrine:create:database
 * php app/console doctrine:schema:update --force
 
+### Create test users ###
+* php app/console fos:user:create admin --super-admin
+* php app/console fos:user:create user
+* php app/console users:create:inbox
+* php app/console users:create:compte
+
 ## Contribution guidelines ##
 
 PHP coding standard is [PSR-2](http://php-fig.org/psr/psr-2/).
