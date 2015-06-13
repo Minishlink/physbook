@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity\Consos;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * TransfertRepository
@@ -30,7 +31,7 @@ class TransfertRepository extends EntityRepository
 
     public function callbackFindByUser($user)
     {
-        return function($qb) use($user) {
+        return function(QueryBuilder $qb) use($user) {
             $qb
                 ->join('Transfert.receveur', 'r')
                 ->join('Transfert.emetteur', 'e')

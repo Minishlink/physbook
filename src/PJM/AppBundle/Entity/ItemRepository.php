@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ItemRepository
@@ -31,7 +32,7 @@ class ItemRepository extends EntityRepository
 
     public function callbackFindBySlug($slug)
     {
-        return function($qb) use($slug) {
+        return function(QueryBuilder $qb) use($slug) {
             $qb
                 ->andWhere('Item.slug = :slug')
                 ->setParameter('slug', $slug)
@@ -74,7 +75,7 @@ class ItemRepository extends EntityRepository
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         // TODO ne pas retourner les events
-        return function($qb) use($boquette_slug) {
+        return function(QueryBuilder $qb) use($boquette_slug) {
             $qb
                 ->join('Item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Doctrine\ORM\QueryBuilder;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
@@ -477,7 +478,7 @@ class BoquetteController extends Controller
         $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsable"));
 
         $datatable->addWhereBuilderCallback(
-            function($qb) use ($boquette_slug) {
+            function(QueryBuilder $qb) use ($boquette_slug) {
                 $qb
                     ->join('Responsable.responsabilite', 're')
                     ->join('re.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
