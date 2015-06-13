@@ -6,10 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use RMS\PushNotificationsBundle\Message\AndroidMessage;
 
 use PJM\AppBundle\Entity\PushSubscription;
-use PJM\AppBundle\Entity\ReglagesNotifications;
 use PJM\AppBundle\Form\ReglagesNotificationsType;
 
 class PushController extends Controller

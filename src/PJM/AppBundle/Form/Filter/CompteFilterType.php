@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
-use Doctrine\ORM\EntityRepository;
 
 class CompteFilterType extends AbstractType
 {

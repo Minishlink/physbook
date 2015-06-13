@@ -5,11 +5,9 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use PJM\AppBundle\Entity\Media\Photo;
 use PJM\AppBundle\Form\Media\PhotoType;
-use PJM\UserBundle\Entity\User;
 
 class MediaController extends Controller
 {

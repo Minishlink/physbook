@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Form\Consos;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\EntityRepository;
 
 class TransfertType extends AbstractType

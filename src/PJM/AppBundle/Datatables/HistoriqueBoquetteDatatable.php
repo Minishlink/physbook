@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Datatables;
 
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class HistoriqueBoquetteDatatable

@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Controller\Boquette;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class AssoController extends Controller //extends BoquetteController
 {

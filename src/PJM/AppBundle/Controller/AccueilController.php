@@ -3,9 +3,6 @@
 namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-
-use PJM\AppBundle\Entity\Inbox\Reception;
 
 class AccueilController extends Controller
 {

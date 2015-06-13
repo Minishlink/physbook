@@ -6,12 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use PJM\AppBundle\Form\Event\EvenementType;
 use PJM\AppBundle\Form\Type\UserPickerType;
 use PJM\AppBundle\Entity\Event;
-use PJM\AppBundle\Entity\Item;
 
 class EventController extends Controller
 {

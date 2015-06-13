@@ -2,19 +2,12 @@
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
-use PJM\AppBundle\Entity\Transaction;
-use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Item;
-use PJM\UserBundle\Entity\User;
 
 class RezalSyncCommand extends ContainerAwareCommand
 {

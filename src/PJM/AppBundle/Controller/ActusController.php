@@ -3,14 +3,9 @@
 namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use PJM\AppBundle\Entity\Actus\Article;
-use PJM\AppBundle\Entity\Actus\Image;
-use PJM\AppBundle\Entity\Actus\Commentaire;
-use PJM\AppBundle\Entity\Actus\Categorie;
 use PJM\AppBundle\Form\Actus\ArticleType;
 
 class ActusController extends Controller

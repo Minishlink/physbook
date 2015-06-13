@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use PJM\AppBundle\Form\Admin\NewUserType;
 use PJM\AppBundle\Form\Admin\ResponsabiliteType;
