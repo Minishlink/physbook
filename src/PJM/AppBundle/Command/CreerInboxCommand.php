@@ -34,10 +34,9 @@ class CreerInboxCommand extends ContainerAwareCommand
         $users = $this->em->getRepository('PJMUserBundle:User')->findAll();
 
         if (!empty($users)) {
-            //$repository = $this->em->getRepository('PJMAppBundle:Inbox');
             foreach ($users as $user) {
                 $inbox = $user->getInbox();
-                if($inbox == null) {
+                if($inbox === null) {
                     //on crée l'inbox
                     $inbox = new Inbox();
                     $user->setInbox($inbox);

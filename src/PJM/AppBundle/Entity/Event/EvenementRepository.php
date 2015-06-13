@@ -15,7 +15,7 @@ class EvenementRepository extends EntityRepository
 {
     public function getEvents(User $user, $max = 6, $quand = 'after', \DateTime $date = null, Evenement $eventExclure = null)
     {
-        if ($date == null) {
+        if ($date === null) {
             $date = new \DateTime();
         }
 

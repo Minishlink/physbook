@@ -16,7 +16,7 @@ class Random
      */
     public function weightedRandom($values, $weights, $lookup = null, $total_weight = null)
     {
-        if ($lookup == null) {
+        if ($lookup === null) {
             list($lookup, $total_weight) = $this->calcLookups($weights);
         }
 

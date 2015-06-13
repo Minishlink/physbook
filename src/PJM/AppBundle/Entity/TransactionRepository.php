@@ -24,11 +24,11 @@ class TransactionRepository extends EntityRepository
             ->orderBy('t.date', 'desc')
         ;
 
-        if ($limit != null) {
+        if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
 
-        if ($status != null) {
+        if ($status !== null) {
             $qb
                 ->andWhere('t.status = :status')
                 ->setParameter('status', $status)
@@ -46,11 +46,11 @@ class TransactionRepository extends EntityRepository
             ->orderBy('t.date', 'desc')
         ;
 
-        if ($limit != null) {
+        if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
 
-        if ($status != null) {
+        if ($status !== null) {
             if ($status == "notNull") {
                 $qb->andWhere('t.status IS NOT NULL');
             } else {
