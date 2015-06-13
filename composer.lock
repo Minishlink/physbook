@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b44c5475bbce42cb4dfabfb1f350fba9",
+    "hash": "bd582cb32aee323591b10ec951818d89",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -963,6 +963,102 @@
             "time": "2015-04-29 20:22:24"
         },
         {
+            "name": "exercise/htmlpurifier-bundle",
+            "version": "dev-master",
+            "target-dir": "Exercise/HTMLPurifierBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Exercise/HTMLPurifierBundle.git",
+                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/cffa4509aa32faf63e663a0e10dc53f3ed404081",
+                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081",
+                "shasum": ""
+            },
+            "require": {
+                "ezyang/htmlpurifier": "~4.0",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.0"
+            },
+            "require-dev": {
+                "symfony/form": "~2.0",
+                "twig/twig": "~1.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Exercise\\HTMLPurifierBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "contributors",
+                    "homepage": "https://github.com/Exercise/HTMLPurifierBundle/contributors"
+                }
+            ],
+            "description": "HTMLPurifier integration for your Symfony2 project",
+            "homepage": "https://github.com/Exercise/HTMLPurifierBundle",
+            "keywords": [
+                "htmlpurifier"
+            ],
+            "time": "2014-04-10 20:14:05"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/6f389f0f25b90d0b495308efcfa073981177f0fd",
+                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "time": "2013-11-30 08:25:19"
+        },
+        {
             "name": "friendsofsymfony/comment-bundle",
             "version": "dev-master",
             "target-dir": "FOS/CommentBundle",
@@ -1192,7 +1288,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/3efbc08a97f218d0a4524dee926fc4381e3d0947",
                 "reference": "92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
                 "shasum": ""
             },
@@ -1777,7 +1873,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/froala/KMSFroalaEditorBundle/zipball/b1d36d1ff670620d11737a397918bbb3c98d1964",
+                "url": "https://api.github.com/repos/froala/KMSFroalaEditorBundle/zipball/37cd29e200234e83de2467042c1e68e0b5e7f66e",
                 "reference": "63f4797e8d9593110c8a27b58c0693461b7478c9",
                 "shasum": ""
             },
@@ -2348,7 +2444,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/b89badc69ded8377d001766493c5fc2b56347494",
+                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/b6205fa90d26733e3e3ce2900b8883a902bdd8f4",
                 "reference": "b89badc69ded8377d001766493c5fc2b56347494",
                 "shasum": ""
             },
@@ -3392,7 +3488,8 @@
         "sensio/buzz-bundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
-        "richsage/rms-push-notifications-bundle": 20
+        "richsage/rms-push-notifications-bundle": 20,
+        "exercise/htmlpurifier-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

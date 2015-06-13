@@ -33,7 +33,8 @@
         "friendsofsymfony/comment-bundle": "dev-master",
         "richsage/rms-push-notifications-bundle": "dev-master",
         "lexik/form-filter-bundle": "~3.0",
-        "erusev/parsedown": "^1.5"
+        "erusev/parsedown": "^1.5",
+        "exercise/htmlpurifier-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -15,7 +15,7 @@
                     <a class="btn btn-default btn-xs remove" data-reception="{{ reception.id }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
                 </div>
                 <p>
-                    {{ reception.message.contenu|nl2br|citationUsers|raw }}
+                    {{ reception.message.contenu|nl2br|citationUsers|purify }}
                 </p>
             </div>
             <div class="panel-footer">
