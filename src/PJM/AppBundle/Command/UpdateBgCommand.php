@@ -49,7 +49,8 @@ class UpdateBgCommand extends ContainerAwareCommand
                 $photoZeroHM = true;
             }
         }
-        $moy = $totalUsersHM/$nbTotalPhotosPlusZeroHM;
+
+        $moy = ($nbTotalPhotosPlusZeroHM != 0) ? $totalUsersHM/$nbTotalPhotosPlusZeroHM : 0;
         $moyBasse = round(0.8*$moy);
         $moyHaute = round(1.2*$moy);
 

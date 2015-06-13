@@ -35,8 +35,9 @@ class Random
     {
         $lookup = array();
         $total_weight = 0;
+        $nb_weights = count($weights);
 
-        for ($i=0; $i<count($weights); $i++){
+        for ($i=0; $i<$nb_weights; $i++){
             $total_weight += $weights[$i];
             $lookup[$i] = $total_weight;
         }
