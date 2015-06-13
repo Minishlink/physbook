@@ -31,7 +31,7 @@
                 <li><em>Non-participants :</em> {% include "PJMAppBundle:Profil:show_users.html.twig" with {'users': event.nonParticipants} %}</li>
             </ul></li>
         </ul>
-        {% if event.description %}<blockquote><p>{{ event.description|md2html }}</p></blockquote>{% endif %}
+        {% if event.description %}<blockquote><p>{{ event.description|md2html|citationUsers|raw }}</p></blockquote>{% endif %}
 
         <div class="pull-right">
             <small>créé par {% render(url('pjm_profil_encart', {'username': event.createur.username})) %} le {{ event.dateCreation|date('d/m/Y') }}</small>

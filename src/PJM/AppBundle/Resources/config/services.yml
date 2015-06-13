@@ -11,15 +11,21 @@ services:
         class: Doctrine\DBAL\Platforms\MySqlPlatform
     pjm.twig.intranet_extension:
         class: PJM\AppBundle\Twig\IntranetExtension
-        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+    pjm.twig.markdown_extension:
+        class: PJM\AppBundle\Twig\MarkdownExtension
+        arguments: [@pjm.services.markdown]
+        tags:
+            - { name: twig.extension }
+    pjm.twig.citation_extension:
+        class: PJM\AppBundle\Twig\CitationExtension
+        arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: twig.extension }
     pjm.services.utils:
         class:  PJM\AppBundle\Services\Utils
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer, @pjm.twig.intranet_extension, @pjm.services.rezal]
-    pjm.services.citation:
-        class:  PJM\AppBundle\Services\Citation
-        arguments: [@doctrine.orm.entity_manager, @templating]
     pjm.services.group:
         class:  PJM\AppBundle\Services\Group
         arguments: [@doctrine.orm.entity_manager]

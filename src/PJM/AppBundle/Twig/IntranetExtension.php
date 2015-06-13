@@ -2,17 +2,8 @@
 
 namespace PJM\AppBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 class IntranetExtension extends \Twig_Extension
 {
-    public function __construct(ContainerInterface $container = null)
-    {
-        if (isset($container)) {
-            $this->container = $container;
-        }
-    }
-
     public function getFilters()
     {
         return array(
@@ -24,23 +15,12 @@ class IntranetExtension extends \Twig_Extension
             new \Twig_SimpleFilter('tabagns', array($this, 'tabagnsFilter')),
             new \Twig_SimpleFilter('telephone', array($this, 'telephoneFilter')),
             new \Twig_SimpleFilter('etatPublicationPhoto', array($this, 'etatPublicationPhotoFilter')),
-            new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter')),
-            new \Twig_SimpleFilter(
-                'md2html',
-                array($this, 'markdownToHtml'),
-                array('is_safe' => array('html'))
-            ),
         );
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
-                'image',
-                array($this, 'imageFunction'),
-                array('is_safe' => array('html'))
-            ),
             new \Twig_SimpleFunction(
                 'e',
                 array($this, 'eFunction')
@@ -116,14 +96,6 @@ class IntranetExtension extends \Twig_Extension
         return $string;
     }
 
-    public function imageFunction($id, $ext, $alt = '')
-    {
-        $uploadDir = 'uploads/img'; // apparait dans PJM\AppBundle\Entity\Image
-        $imgPath = $uploadDir.'/'.$id.'.'.$ext;
-        $path = $this->container->get('templating.helper.assets')->getUrl($imgPath);
-        return '<img src="'.$path.'" alt="'.$alt.'" />';
-    }
-
     public function eFunction($feminin = false)
     {
         return $feminin ? "e" : "";
@@ -137,17 +109,6 @@ class IntranetExtension extends \Twig_Extension
         return array_key_exists($string, $map)
             ? $map[$string]
             : $string;
-    }
-
-    public function citationUsersFilter($string)
-    {
-        $citation = $this->container->get('pjm.services.citation');
-        return $citation->parseCitationUsers($string);
-    }
-
-    public function markdownToHtml($string)
-    {
-        return $this->container->get('pjm.services.markdown')->toHtml($string);
     }
 
     public function getName()
