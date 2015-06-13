@@ -57,9 +57,9 @@ http://lesscss.org/
 * mettre parameters.yml et parameters_dev.yml (modifier si nécessaire)
 * mettre dossier "Site" du Drive (images, fonts, utilitaires..)
 * bower install
-* créer la BDD physbook
 * php composer.phar install
-* php composer.phar doctrine:schema:update --force
+* php app/console doctrine:create:database
+* php app/console doctrine:schema:update --force
 
 ## Contribution guidelines ##
 
