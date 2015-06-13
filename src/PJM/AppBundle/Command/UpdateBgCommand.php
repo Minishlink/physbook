@@ -78,7 +78,7 @@ class UpdateBgCommand extends ContainerAwareCommand
         }
 
         // on tire la photo
-        $photo = $this->random->weighted_random($photos, $probas);
+        $photo = $this->random->weightedRandom($photos, $probas);
 
         if ($input->getOption('show')) {
             $output->writeln($photo->getId().": ".$photo->getLegende());
