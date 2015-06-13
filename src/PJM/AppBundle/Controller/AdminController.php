@@ -393,7 +393,7 @@ class AdminController extends Controller
         ));
     }
 
-    public function envoiMailInscription(User $user, $password)
+    private function envoiMailInscription(User $user, $password)
     {
         $utils = $this->get('pjm.services.mailer');
 

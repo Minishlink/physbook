@@ -45,7 +45,7 @@ class BragsController extends BoquetteController
         ));
     }
 
-    public function getNbJoursOuvres(\DateTime $dateFin)
+    private function getNbJoursOuvres(\DateTime $dateFin)
     {
         // on va chercher les vacances
         $em = $this->getDoctrine()->getManager();
@@ -82,7 +82,7 @@ class BragsController extends BoquetteController
         return $nbJoursOuvres;
     }
 
-    public function getCommande()
+    private function getCommande()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -109,7 +109,7 @@ class BragsController extends BoquetteController
         );
     }
 
-    public function getCurrentBaguette()
+    private function getCurrentBaguette()
     {
         $baguette = $this->getItem($this->itemSlug);
 
@@ -126,20 +126,6 @@ class BragsController extends BoquetteController
         }
 
         return $baguette;
-    }
-
-    public function getZiBrags($tous = false)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ZiBrags = $em->getRepository('PJMUserBundle:User')
-            ->findByRole('ROLE_ZIBRAGS');
-
-        if ($tous) {
-            return $ZiBrags;
-        }
-
-        return (isset($ZiBrags[0])) ? $ZiBrags[0] : null;
-
     }
 
     public function commandeAction(Request $request)

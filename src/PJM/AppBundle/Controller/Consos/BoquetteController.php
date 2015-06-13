@@ -29,7 +29,7 @@ class BoquetteController extends Controller
 {
     protected $slug;
 
-    public function getTwigTemplatePath($boquetteSlug = null)
+    private function getTwigTemplatePath($boquetteSlug = null)
     {
         if (isset($boquetteSlug)) {
             $this->slug = $boquetteSlug;
@@ -56,7 +56,7 @@ class BoquetteController extends Controller
         return $templatePath;
     }
 
-    public function getSolde($user = null)
+    protected function getSolde($user = null)
     {
         if (!isset($user)) {
             $user = $this->getUser();
@@ -66,13 +66,13 @@ class BoquetteController extends Controller
         return $utils->getSolde($user, $this->slug);
     }
 
-    public function getBoquette()
+    protected function getBoquette()
     {
         $utils = $this->get('pjm.services.utils');
         return $utils->getBoquette($this->slug);
     }
 
-    public function getItem($itemSlug, $valid = true)
+    protected function getItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('PJMAppBundle:Item');
@@ -84,7 +84,7 @@ class BoquetteController extends Controller
         return $rep->findOneBy(array('slug' => $itemSlug, 'valid' => $valid));
     }
 
-    public function getLastItem($itemSlug, $valid = true)
+    protected function getLastItem($itemSlug, $valid = true)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('PJMAppBundle:Item');
@@ -102,7 +102,7 @@ class BoquetteController extends Controller
         return $res[0];
     }
 
-    public function getItems($valid = true, $limit = null, $offset = null)
+    protected function getItems($valid = true, $limit = null, $offset = null)
     {
         $em = $this->getDoctrine()->getManager();
         $items = $em
@@ -112,7 +112,7 @@ class BoquetteController extends Controller
         return $items;
     }
 
-    public function compterAchatsItem($itemSlug, $month = null, $year = null)
+    protected function compterAchatsItem($itemSlug, $month = null, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('PJMAppBundle:Historique')
@@ -121,7 +121,7 @@ class BoquetteController extends Controller
         return $nb;
     }
 
-    public function compterAchatsBoquette($month = null, $year = null)
+    protected function compterAchatsBoquette($month = null, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('PJMAppBundle:Historique')
@@ -136,7 +136,7 @@ class BoquetteController extends Controller
      * @param  integer [$year  = null]  Année à chercher. Si $year null, cherche depuis toujours.
      * @return array   Matrice d'utilisateurs avec leur nombre d'achats associés, triés par ce nombre.
      */
-    public function getTopConsommateurs($month = null, $year = null) {
+    protected function getTopConsommateurs($month = null, $year = null) {
         $em = $this->getDoctrine()->getManager();
         $res = $em->getRepository('PJMAppBundle:Historique')
             ->getTopUsers($this->slug, 3, $month, $year);

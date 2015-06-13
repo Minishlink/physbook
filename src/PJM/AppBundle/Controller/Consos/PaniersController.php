@@ -30,7 +30,7 @@ class PaniersController extends BoquetteController
         ));
     }
 
-    public function getCommande(Item $panier)
+    private function getCommande(Item $panier)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
@@ -126,7 +126,7 @@ class PaniersController extends BoquetteController
         return $this->redirect($this->generateUrl('pjm_app_boquette_paniers_index'));
     }
 
-    public function getCurrentPanier()
+    private function getCurrentPanier()
     {
         return $this->getLastItem($this->itemSlug, 'any');
     }
