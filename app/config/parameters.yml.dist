@@ -18,7 +18,7 @@ parameters:
     mailer_port: 25
 
     locale:            fr
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            SecretAEncoreChangerPourLaProd
 
     debug_toolbar:          true
     debug_redirects:        false
