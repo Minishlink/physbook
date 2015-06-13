@@ -16,23 +16,17 @@ pjm_app_inbox_nouvelleAnnonce:
 pjm_app_inbox_lu:
     path:     /lu/{reception}
     defaults: { _controller: PJMAppBundle:Inbox:lu }
-    requirements:
-        _method: POST
     options:
         expose: true
 
 pjm_app_inbox_supprimer:
     path:     /supprimer/{reception}
     defaults: { _controller: PJMAppBundle:Inbox:supprimer }
-    requirements:
-        _method: POST
     options:
         expose: true
 
 pjm_app_inbox_annuler:
     path:     /annuler/{message}
     defaults: { _controller: PJMAppBundle:Inbox:annuler }
-    requirements:
-        _method: POST
     options:
         expose: true
