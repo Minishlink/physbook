@@ -61,7 +61,10 @@ http://lesscss.org/
 * php app/console doctrine:create:database
 * php app/console doctrine:schema:update --force
 
-### Create test users ###
+#### Création des boquettes principales ####
+Dans phpmyadmin, créer les boquettes avec slug pians, paniers, brags et cvis.
+
+#### Create test users ####
 * php app/console fos:user:create admin --super-admin
 * php app/console fos:user:create user
 * php app/console users:create:inbox
