@@ -66,19 +66,14 @@
 {% endblock %}
 
 {% block body %}
-
 {# modals #}
-<div id="modals">
-{% block modals %}{% endblock %}
-</div>
+{% include("::modals.html.twig") %}
 
 {# menu #}
 {% include("::nav.html.twig") %}
 
 {# contenu #}
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+{% include("::content.html.twig") %}
 
 {# footer #}
 {% include("::footer.html.twig") %}
