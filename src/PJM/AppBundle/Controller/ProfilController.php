@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Entity\Media\Photo;
-use PJM\UserBundle\Form\UserType;
+use PJM\UserBundle\Form\Type\UserType;
 use PJM\AppBundle\Form\Type\Media\PhotoType;
 
 class ProfilController extends Controller
