@@ -1,23 +1,23 @@
 pjm_app_admin_boquette_paniers_index:
     path:     /
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:admin }
+    defaults: { _controller: PJMAppBundle:Consos/PaniersAdmin:index }
 
 pjm_app_admin_boquette_paniers_listePaniers:
     path:     /gestionPaniers
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:gestionPaniers }
+    defaults: { _controller: PJMAppBundle:Consos/PaniersAdmin:gestionPaniers }
 
 pjm_app_admin_boquette_paniers_paniersResults:
     path:     /listePaniers/results
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:paniersResultsAdmin }
+    defaults: { _controller: PJMAppBundle:Consos/PaniersAdmin:paniersResultsAdmin }
 
 pjm_app_admin_boquette_paniers_voirCommandes:
     path:     /commandes/voir/{panier}
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes, download: false}
+    defaults: { _controller: PJMAppBundle:Consos/PaniersAdmin:voirCommandes, download: false}
     options:
         expose: true
 
 pjm_app_admin_boquette_paniers_telechargerCommandes:
     path:     /commandes/telecharger/{panier}
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:voirCommandes, download: true}
+    defaults: { _controller: PJMAppBundle:Consos/PaniersAdmin:voirCommandes, download: true}
     options:
         expose: true

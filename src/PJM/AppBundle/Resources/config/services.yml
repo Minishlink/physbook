@@ -1,3 +1,6 @@
+imports:
+    - { resource: Boquette/services.yml }
+
 services:
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
@@ -23,6 +26,9 @@ services:
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: twig.extension }
+    pjm.services.image:
+        class: PJM\AppBundle\Services\Image
+        arguments: [@templating.helper.assets=]
     pjm.services.utils:
         class:  PJM\AppBundle\Services\Utils
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer, @pjm.twig.intranet_extension, @pjm.services.rezal]

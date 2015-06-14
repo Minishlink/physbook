@@ -1,3 +1,3 @@
 pjm_app_admin_boquette_pians_index:
     path:     /
-    defaults: { _controller: PJMAppBundle:Consos/Pians:admin }
+    defaults: { _controller: PJMAppBundle:Consos/PiansAdmin:index }

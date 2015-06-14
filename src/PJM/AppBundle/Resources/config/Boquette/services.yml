@@ -1,0 +1,16 @@
+services:
+    pjm.services.boquette:
+        class:  PJM\AppBundle\Services\Boquette\BoquetteService
+        arguments: [@doctrine.orm.entity_manager]
+    pjm.services.boquette.brags:
+        class:  PJM\AppBundle\Services\Boquette\BragsService
+        parent: pjm.services.boquette
+    pjm.services.boquette.paniers:
+        class:  PJM\AppBundle\Services\Boquette\PaniersService
+        parent: pjm.services.boquette
+    pjm.services.boquette.cvis:
+        class:  PJM\AppBundle\Services\Boquette\CvisService
+        parent: pjm.services.boquette
+    pjm.services.boquette.pians:
+        class:  PJM\AppBundle\Services\Boquette\PiansService
+        parent: pjm.services.boquette

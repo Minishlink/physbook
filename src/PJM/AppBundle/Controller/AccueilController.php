@@ -8,7 +8,7 @@ class AccueilController extends Controller
 {
     public function indexAction()
     {
-        $utils = $this->get('pjm.services.utils');
+        $utils = $this->get('pjm.services.boquette');
         $solde['brags'] = $utils->getSolde($this->getUser(), 'brags');
         $solde['pians'] = $utils->getSolde($this->getUser(), 'pians');
         $solde['paniers'] = $utils->getSolde($this->getUser(), 'paniers');

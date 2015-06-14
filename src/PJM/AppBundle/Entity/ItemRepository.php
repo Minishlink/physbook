@@ -30,6 +30,19 @@ class ItemRepository extends EntityRepository
         return $res;
     }
 
+    public function getLastItem($slug, $valid = true)
+    {
+        $res = ($valid === 'any') ?
+            $this->findBy(array('slug' => $slug), array('date' => 'DESC'), 1) :
+            $this->findBy(array('slug' => $slug, 'valid' => $valid), array('date' => 'DESC'), 1);
+
+        if (empty($res)) {
+            return null;
+        }
+
+        return $res[0];
+    }
+
     public function callbackFindBySlug($slug)
     {
         return function(QueryBuilder $qb) use($slug) {

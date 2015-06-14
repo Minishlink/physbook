@@ -2,9 +2,10 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class PiansController extends BoquetteController
+class PiansController extends Controller
 {
     public function __construct()
     {
@@ -14,26 +15,15 @@ class PiansController extends BoquetteController
     public function indexAction(Request $request)
     {
         $utils = $this->get('pjm.services.utils');
+        $piansService = $this->get('pjm.services.boquette.pians');
         $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
         $boissonDuMois = $utils->getFeaturedItem($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'boquetteSlug' => $this->slug,
-            'solde' => $this->getSolde(),
+            'solde' => $piansService->getSolde($this->getUser()),
             'listeHistoriques' => $listeHistoriques,
             'boissonDuMois' => $boissonDuMois,
-        ));
-    }
-
-    /*
-    * ADMIN
-    */
-    public function adminAction()
-    {
-        // TODO faire reloguer l'utilisateur sauf si redirection depuis l'admin
-
-        return $this->render('PJMAppBundle:Admin:Consos/Pians/index.html.twig', array(
-            'boquetteSlug' => $this->slug
         ));
     }
 }

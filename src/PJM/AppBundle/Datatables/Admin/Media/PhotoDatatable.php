@@ -3,7 +3,9 @@
 namespace PJM\AppBundle\Datatables\Admin\Media;
 
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+
 use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class PhotoDatatable
@@ -13,10 +15,16 @@ use PJM\AppBundle\Twig\IntranetExtension;
 class PhotoDatatable extends AbstractDatatableView
 {
     protected $twigExt;
+    protected $extImage;
 
     public function setTwigExt(IntranetExtension $twigExt)
     {
         $this->twigExt = $twigExt;
+    }
+
+    public function setExtImage(ImageService $extImage)
+    {
+        $this->extImage = $extImage;
     }
 
     /**
@@ -108,8 +116,9 @@ class PhotoDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = $this->twigExt;
-        $formatter = function($line) use($ext) {
-            $line["image"]["alt"] = $ext->imageFunction($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]);
+        $extImage = $this->extImage;
+        $formatter = function($line) use($ext, $extImage) {
+            $line["image"]["alt"] = $extImage->html($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]);
             $line["publication"] = $ext->etatPublicationPhotoFilter($line["publication"]);
             $line["usersHM"]["id"] = count($line["usersHM"]["users"]);
 
