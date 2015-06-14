@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Form\Consos\MontantType;
+use PJM\AppBundle\Form\Type\Consos\MontantType;
 
 class BoquetteController extends Controller
 {

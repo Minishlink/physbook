@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use PJM\AppBundle\Entity\Media\Photo;
-use PJM\AppBundle\Form\Media\PhotoType;
+use PJM\AppBundle\Form\Type\Media\PhotoType;
 
 class MediaController extends Controller
 {

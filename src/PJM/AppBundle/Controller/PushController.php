@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use PJM\AppBundle\Entity\PushSubscription;
-use PJM\AppBundle\Form\ReglagesNotificationsType;
+use PJM\AppBundle\Form\Type\ReglagesNotificationsType;
 
 class PushController extends Controller
 {

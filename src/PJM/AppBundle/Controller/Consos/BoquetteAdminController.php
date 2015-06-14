@@ -13,12 +13,12 @@ use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Responsable;
 use PJM\AppBundle\Entity\FeaturedItem;
-use PJM\AppBundle\Form\Consos\TransactionType;
-use PJM\AppBundle\Form\Admin\ResponsableType;
-use PJM\AppBundle\Form\Admin\FeaturedItemType;
-use PJM\AppBundle\Form\Admin\ItemType;
-use PJM\AppBundle\Form\Filter\TransactionFilterType;
-use PJM\AppBundle\Form\Filter\CompteFilterType;
+use PJM\AppBundle\Form\Type\Consos\TransactionType;
+use PJM\AppBundle\Form\Type\Admin\ResponsableType;
+use PJM\AppBundle\Form\Type\Admin\FeaturedItemType;
+use PJM\AppBundle\Form\Type\Admin\ItemType;
+use PJM\AppBundle\Form\Type\Filter\TransactionFilterType;
+use PJM\AppBundle\Form\Type\Filter\CompteFilterType;
 use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteAdminController extends Controller

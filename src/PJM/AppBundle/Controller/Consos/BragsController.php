@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use PJM\AppBundle\Entity\Commande;
-use PJM\AppBundle\Form\Consos\CommandeType;
+use PJM\AppBundle\Form\Type\Consos\CommandeType;
 
 class BragsController extends Controller
 {

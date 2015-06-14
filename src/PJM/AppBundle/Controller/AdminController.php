@@ -5,9 +5,9 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Form\Admin\NewUserType;
-use PJM\AppBundle\Form\Admin\ResponsabiliteType;
-use PJM\AppBundle\Form\Admin\BoquetteType;
+use PJM\AppBundle\Form\Type\Admin\NewUserType;
+use PJM\AppBundle\Form\Type\Admin\ResponsabiliteType;
+use PJM\AppBundle\Form\Type\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;

@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use PJM\AppBundle\Entity\Inbox\Message;
 use PJM\AppBundle\Entity\Inbox\Reception;
 use PJM\UserBundle\Entity\User;
-use PJM\AppBundle\Form\Inbox\MessageType;
-use PJM\AppBundle\Form\Filter\UserFilterType;
+use PJM\AppBundle\Form\Type\Inbox\MessageType;
+use PJM\AppBundle\Form\Type\Filter\UserFilterType;
 
 class InboxController extends Controller
 {

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use PJM\AppBundle\Form\Event\EvenementType;
+use PJM\AppBundle\Form\Type\Event\EvenementType;
 use PJM\AppBundle\Form\Type\UserPickerType;
 use PJM\AppBundle\Entity\Event;
 

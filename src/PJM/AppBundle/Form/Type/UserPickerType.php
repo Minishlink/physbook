@@ -11,7 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter;
-use PJM\AppBundle\Form\Filter\ResponsableFilterType;
+use PJM\AppBundle\Form\Type\Filter\ResponsableFilterType;
 
 class UserPickerType extends AbstractType
 {
