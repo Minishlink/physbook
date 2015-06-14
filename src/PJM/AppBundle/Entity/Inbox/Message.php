@@ -320,7 +320,7 @@ class Message
      * @param boolean $isAnnonce
      * @return Message
      */
-    public function setIsAnnonce($isAnnonce)
+    public function setAnnonce($isAnnonce)
     {
         $this->isAnnonce = $isAnnonce;
 
@@ -332,7 +332,7 @@ class Message
      *
      * @return boolean
      */
-    public function getIsAnnonce()
+    public function isAnnonce()
     {
         return $this->isAnnonce;
     }

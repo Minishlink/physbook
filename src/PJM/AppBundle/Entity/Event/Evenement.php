@@ -232,7 +232,7 @@ class Evenement
      * @param boolean $isJournee
      * @return Evenement
      */
-    public function setIsJournee($isJournee)
+    public function setJournee($isJournee)
     {
         $this->isJournee = $isJournee;
 
@@ -244,7 +244,7 @@ class Evenement
      *
      * @return boolean
      */
-    public function getIsJournee()
+    public function getJournee()
     {
         return $this->isJournee;
     }
@@ -349,7 +349,7 @@ class Evenement
      *
      * @return Evenement
      */
-    public function setIsPublic($isPublic)
+    public function setPublic($isPublic)
     {
         $this->isPublic = $isPublic;
 
@@ -361,7 +361,7 @@ class Evenement
      *
      * @return boolean
      */
-    public function getIsPublic()
+    public function isPublic()
     {
         return $this->isPublic;
     }
@@ -533,7 +533,7 @@ class Evenement
     public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user) {
         //TODO visibilité conscrits/anciens/P3/archis
 
-        if (!$this->getIsPublic()) {
+        if (!$this->isPublic()) {
             // on vérifie que l'utilisateur est invité
             if (!in_array($user, $this->getInvites(null, true))) {
                 return false;

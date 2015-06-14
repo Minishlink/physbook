@@ -79,7 +79,7 @@ class InboxController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $message->setExpedition($this->getUser()->getInbox());
-                $message->setIsAnnonce($annonce);
+                $message->setAnnonce($annonce);
 
                 if($annonce) {
                     if ($message->getBoquette() === null) {
