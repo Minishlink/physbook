@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use PJM\AppBundle\Entity\Item;
-use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Form\Consos\PanierType;
 
 class PaniersAdminController extends Controller

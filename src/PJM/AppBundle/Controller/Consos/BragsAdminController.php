@@ -6,11 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
 use PJM\AppBundle\Form\VacancesType;
-use PJM\AppBundle\Form\Consos\CommandeType;
 use PJM\AppBundle\Form\Consos\PrixBaguetteType;
 
 class BragsAdminController extends Controller

@@ -7,7 +7,6 @@ use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Consos\Transfert;
-use PJM\AppBundle\Entity\Compte;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Twig\IntranetExtension;
 

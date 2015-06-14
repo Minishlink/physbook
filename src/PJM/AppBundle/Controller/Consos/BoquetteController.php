@@ -5,25 +5,13 @@ namespace PJM\AppBundle\Controller\Consos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Doctrine\ORM\QueryBuilder;
 
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Item;
-use PJM\AppBundle\Entity\Responsable;
-use PJM\AppBundle\Entity\FeaturedItem;
-use PJM\AppBundle\Form\Consos\TransactionType;
-use PJM\AppBundle\Form\Admin\ResponsableType;
 use PJM\AppBundle\Form\Consos\MontantType;
-use PJM\AppBundle\Form\Admin\FeaturedItemType;
-use PJM\AppBundle\Form\Admin\ItemType;
-use PJM\AppBundle\Form\Filter\TransactionFilterType;
-use PJM\AppBundle\Form\Filter\CompteFilterType;
-use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteController extends Controller
 {
