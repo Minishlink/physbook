@@ -282,7 +282,7 @@ class EventController extends Controller
                     );
                 } else {
                     // sinon on vérifie que l'on peut accéder à cet évènement
-                    if ($event->getIsPublic()) {
+                    if ($event->isPublic()) {
                         //on crée une nouvelle invitation
                         $invitation = new Event\Invitation();
                         $invitation->setEvent($event);
