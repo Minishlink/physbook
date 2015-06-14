@@ -133,11 +133,6 @@ class Evenement
      */
     private $prix;
 
-    private $couleur;
-    private $invites;
-    private $participants;
-    private $nonParticipants;
-
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
@@ -147,7 +142,6 @@ class Evenement
         $this->dateFin->setTime($this->dateCreation->format('H')+1,'0');
         $this->isJournee = false;
         $this->isPublic = true;
-        $this->couleur = "rouge";
         $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
     }

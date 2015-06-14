@@ -56,8 +56,6 @@ class PushController extends Controller
                     'Un problème est survenu. Réessaye.'
                 );
 
-                $data = $form->getData();
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',

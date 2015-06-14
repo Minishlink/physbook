@@ -65,8 +65,6 @@ class MediaController extends Controller
                     'Un problème est survenu lors de l\'ajout ou de la modification de la photo. Réessaye.'
                 );
 
-                $data = $form->getData();
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',

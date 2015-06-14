@@ -48,8 +48,6 @@ class Message
      **/
     private $receptions;
 
-    private $destinations;
-
     /**
      * @var array
      *

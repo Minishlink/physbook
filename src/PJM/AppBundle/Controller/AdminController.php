@@ -64,8 +64,6 @@ class AdminController extends Controller
                     'Un problème est survenu lors de l\'ajout ou de la modification de la responsabilité. Réessaye.'
                 );
 
-                $data = $form->getData();
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',
@@ -137,8 +135,6 @@ class AdminController extends Controller
                     'danger',
                     'Un problème est survenu lors de l\'ajout ou de la modification de la boquette. Réessaye.'
                 );
-
-                $data = $form->getData();
 
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(

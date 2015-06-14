@@ -150,10 +150,9 @@ class Rezal
      * @param array  $user Tableau ayant comme clés fams, tabagns et proms
      * @param $montant montant à ajouter ou soustraire
      * @param $add si addition
-     * @param $date date de l'opération
      * @return true si l'opération s'est bien déroulée, false sinon
      */
-    public function editSolde($user, $montant, $date, $add = true) {
+    public function editSolde($user, $montant, $add = true) {
         if ($montant >= 0) {
             // on va chercher l'utilisateur
             $resIdPg = $this->getUser($user);
@@ -163,7 +162,6 @@ class Rezal
                 // connexion à la BDD
                 $e = $this->connexion();
                 if($e === true) {
-                    // TODO PDO beginTransaction etc... là il détecte pas s'il y a une erreur à la deuxième requête
                     // requête à la BDD pour modifier le compte
                     $sqlCompte = 'UPDATE compte AS c
                         INNER JOIN pg AS p ON p.compte = c.idCompte
@@ -171,25 +169,10 @@ class Rezal
                         c.estMazoute = IF(c.montant '.($add ? '+' : '-').' :montant >= 0, 0, 1)
                         WHERE p.idPg = :idPg;';
 
-                    // requête à la BDD pour modifier l'historique ?
-                    /*$sqlHist = 'INSERT INTO historique
-                        SET
-                        idEmetteur = :idPg,
-                        estEmetteurBoquette = false,
-                        idReceveur = 0,
-                        estReceveurBoquette = true,
-                        montant = :montant,
-                        type = 1,
-                        date = :date;';
-                    $sth = $this->dbh->prepare(
-                        $sqlCompte.$sqlHist
-                    );*/
-
                     $sth = $this->dbh->prepare($sqlCompte);
 
                     $sth->bindParam(':idPg', $idPg, \PDO::PARAM_INT);
                     $sth->bindParam(':montant', $montant, \PDO::PARAM_INT);
-                    //$sth->bindParam(':date', $date, \PDO::PARAM_STR);
 
                     if($sth->execute()) {
                         $this->deconnexion();
@@ -215,24 +198,22 @@ class Rezal
      * Ajoute un montant au solde d’un pg
      * @param array  $user Tableau ayant comme clés fams, tabagns et proms
      * @param $montant montant à ajouter
-     * @param $date date de l'opération
      * @return true si l'opération s'est bien déroulée, false sinon
      */
-    public function crediteSolde($user, $montant, $date)
+    public function crediteSolde($user, $montant)
     {
-        return $this->editSolde($user, $montant, $date, true);
+        return $this->editSolde($user, $montant, true);
     }
 
     /**
      * Soustrait un montant au solde d’un pg
      * @param array  $user Tableau ayant comme clés fams, tabagns et proms
      * @param $montant montant à soustraire
-     * @param $date date de l'opération
      * @return true si l'opération s'est bien déroulée, false sinon
      */
-    public function debiteSolde($user, $montant, $date)
+    public function debiteSolde($user, $montant)
     {
-        return $this->editSolde($user, $montant, $date, false);
+        return $this->editSolde($user, $montant, false);
     }
 
     private function convertBoquetteSlug($boquetteSlug)

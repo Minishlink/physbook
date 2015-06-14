@@ -168,14 +168,12 @@ class Utils
                 if ($transaction->getMoyenPaiement() != "operation") {
                     $status = $this->rezal->crediteSolde(
                         $this->getTrueID($transaction->getCompte()->getUser()),
-                        $transaction->getMontant(),
-                        $transaction->getDate()->format('Y-m-d H:i:s')
+                        $transaction->getMontant()
                     );
                 } else {
                     $status = $this->rezal->debiteSolde(
                         $this->getTrueID($transaction->getCompte()->getUser()),
-                        -$transaction->getMontant(),
-                        $transaction->getDate()->format('Y-m-d H:i:s')
+                        -$transaction->getMontant()
                     );
                 }
 
@@ -222,8 +220,7 @@ class Utils
             // on met à jour le solde des comptes associés sur la base R&z@l
             $status = $this->rezal->debiteSolde(
                 $this->getTrueID($transfert->getEmetteur()->getUser()),
-                $transfert->getMontant(),
-                $transfert->getDate()->format('Y-m-d H:i:s')
+                $transfert->getMontant()
             );
 
             // si une erreur survient
@@ -237,8 +234,7 @@ class Utils
             } else {
                 $status = $this->rezal->crediteSolde(
                     $this->getTrueID($transfert->getReceveur()->getUser()),
-                    $transfert->getMontant(),
-                    $transfert->getDate()->format('Y-m-d H:i:s')
+                    $transfert->getMontant()
                 );
 
                 // si une erreur survient
@@ -252,8 +248,7 @@ class Utils
                     // on recrédite l'émetteur sur le pians
                     $status = $this->rezal->crediteSolde(
                         $this->getTrueID($transfert->getEmetteur()->getUser()),
-                        $transfert->getMontant(),
-                        $transfert->getDate()->format('Y-m-d H:i:s')
+                        $transfert->getMontant()
                     );
 
                     if ($status !== true) {

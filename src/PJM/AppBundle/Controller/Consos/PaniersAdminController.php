@@ -143,7 +143,7 @@ class PaniersAdminController extends Controller
 
                 // on appelle le service PHPExcel
                 $excel = $this->get('pjm.services.excel');
-                $phpExcelObject = $excel->create($panier->getLibelle());
+                $excel->create($panier->getLibelle());
 
                 $entetes = array(
                     'Bucque',

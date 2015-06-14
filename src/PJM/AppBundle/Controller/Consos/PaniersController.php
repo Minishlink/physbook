@@ -13,12 +13,10 @@ use PJM\AppBundle\Form\Consos\PanierType;
 class PaniersController extends Controller
 {
     private $slug;
-    private $itemSlug;
 
     public function __construct()
     {
         $this->slug = 'paniers';
-        $this->itemSlug = 'panier';
     }
 
     public function indexAction(Request $request)

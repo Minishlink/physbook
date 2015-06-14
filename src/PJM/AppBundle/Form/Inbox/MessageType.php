@@ -22,7 +22,7 @@ class MessageType extends AbstractType
                 'label' => 'Destinataires',
                 'class'    => 'PJMAppBundle:Inbox\Inbox',
                 'error_bubbling' => true,
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.user', 'u')
                         ->orderBy('u.fams', 'ASC')
