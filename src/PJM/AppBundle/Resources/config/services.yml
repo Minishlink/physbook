@@ -135,7 +135,7 @@ services:
         tags:
             - { name: sg.datatable.view }
     pjm.form.type.datetimePicker:
-        class: PJM\AppBundle\Form\DateTimePickerType
+        class: PJM\AppBundle\Form\Type\DateTimePickerType
         tags:
             - { name: form.type, alias: datetimePicker }
     pjm.form.type.select2Choice:

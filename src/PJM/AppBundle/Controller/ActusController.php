@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use PJM\AppBundle\Entity\Actus\Article;
-use PJM\AppBundle\Form\Actus\ArticleType;
+use PJM\AppBundle\Form\Type\Actus\ArticleType;
 
 class ActusController extends Controller
 {

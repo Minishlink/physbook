@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
-use PJM\AppBundle\Form\VacancesType;
-use PJM\AppBundle\Form\Consos\PrixBaguetteType;
+use PJM\AppBundle\Form\Type\VacancesType;
+use PJM\AppBundle\Form\Type\Consos\PrixBaguetteType;
 
 class BragsAdminController extends Controller
 {
