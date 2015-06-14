@@ -1,60 +1,60 @@
 pjm_app_admin_boquette_gestionItem:
     path:     /{slug}/gestionItem
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionItem }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionItem }
 
 pjm_app_admin_boquette_gestionResponsables:
     path:     /{slug}/responsables
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionResponsables }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionResponsables }
 
 pjm_app_admin_boquette_responsablesResults:
     path:     /{boquette_slug}/responsables/results
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:responsablesResults }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:responsablesResults }
 
 pjm_app_admin_boquette_gestionFeaturedItem:
     path:     /{slug}/featuredItem
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionFeaturedItem }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionFeaturedItem }
 
 pjm_app_admin_boquette_featuredItemResults:
     path:     /{boquette_slug}/featuredItem/results
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:featuredItemResults }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:featuredItemResults }
 
 pjm_app_admin_boquette_modifierItem:
     path:     /{boquette}/item/{item}/modifier
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:modifierItem }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:modifierItem }
     options:
         expose: true
 
 pjm_app_admin_boquette_gestionCredits:
     path:     /{slug}/gestionCredits
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:gestionCredits }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionCredits }
 
 pjm_app_admin_boquette_creditsResults:
     path:     /{boquette_slug}/gestionCredits/results
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:creditsResults }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:creditsResults }
 
 pjm_app_admin_boquette_exportCredits:
     path:     /{slug}/exportCredits
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:exportCredits }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportCredits }
 
 pjm_app_admin_boquette_voirAchats:
     path:     /{slug}/achats
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirAchats }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirAchats }
 
 pjm_app_admin_boquette_achatsResults:
     path:     /{boquette_slug}/achats/results
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:achatsResults }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:achatsResults }
 
 pjm_app_admin_boquette_voirComptes:
     path:     /{slug}/comptes
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:voirComptes }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirComptes }
 
 pjm_app_admin_boquette_exportComptes:
     path:     /{slug}/exportComptes
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:exportComptes }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportComptes }
 
 pjm_app_admin_boquette_comptesResults:
     path:     /{boquette_slug}/comptes/results
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:comptesResults }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:comptesResults }
 
 pjm_app_admin_boquette_pians:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Pians/routing.yml"
@@ -78,4 +78,4 @@ pjm_app_admin_boquette_asso:
 
 pjm_app_admin_boquette_default:
     path:     /{slug}
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:defaultAdmin }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:defaultAdmin }

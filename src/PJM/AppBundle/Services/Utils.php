@@ -122,44 +122,6 @@ class Utils
         return $liste;
     }
 
-    public function getThread($id) {
-
-    }
-
-    public function getBoquette($boquetteSlug)
-    {
-        $boquette = $this->em
-            ->getRepository('PJMAppBundle:Boquette')
-            ->findOneBySlug($boquetteSlug)
-        ;
-
-        return $boquette;
-    }
-
-    public function getCompte(User $user, $boquetteSlug)
-    {
-        // Le C'vis est dans le compte du Pian's
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
-        }
-
-        $repository = $this->em->getRepository('PJMAppBundle:Compte');
-        $compte = $repository->findOneByUserAndBoquetteSlug($user, $boquetteSlug);
-
-        if ($compte === null) {
-            $compte = new Compte($user, $this->getBoquette($boquetteSlug));
-            $this->em->persist($compte);
-            $this->em->flush();
-        }
-
-        return $compte;
-    }
-
-    public function getSolde(User $user, $boquetteSlug)
-    {
-        return $this->getCompte($user, $boquetteSlug)->getSolde();
-    }
-
     /**
      * Retourne l'item du moment pour une boquette
      * @param  string      $boquetteSlug Slug de la boquette
@@ -318,7 +280,8 @@ class Utils
 
     public function bucquage($boquetteSlug, $itemSlug)
     {
-        $boquette = $this->getBoquette($boquetteSlug);
+        $boquette = $this->em->getRepository('PJMAppBundle:Boquette')
+            ->findOneBySlug($boquetteSlug);
         $repositoryHistorique = $this->em->getRepository('PJMAppBundle:Historique');
         $repositoryCommande = $this->em->getRepository('PJMAppBundle:Commande');
         $repositoryCompte = $this->em->getRepository('PJMAppBundle:Compte');

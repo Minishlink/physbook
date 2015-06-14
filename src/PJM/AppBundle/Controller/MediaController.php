@@ -95,6 +95,7 @@ class MediaController extends Controller
     {
         $datatable = $this->get("pjm.datatable.admin.media.photos");
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatable->setExtImage($this->get('pjm.services.image'));
         $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
         return $datatableData->getResponse();

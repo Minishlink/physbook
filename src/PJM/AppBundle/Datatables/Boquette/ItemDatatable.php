@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Datatables\Boquette;
 
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class ItemDatatable
@@ -14,6 +15,7 @@ class ItemDatatable extends AbstractDatatableView
 {
     protected $boquetteSlug;
     protected $twigExt;
+    protected $extImage;
     protected $admin;
 
     public function setBoquetteSlug($boquetteSlug)
@@ -24,6 +26,11 @@ class ItemDatatable extends AbstractDatatableView
     public function setTwigExt(IntranetExtension $twigExt)
     {
         $this->twigExt = $twigExt;
+    }
+
+    public function setExtImage(ImageService $extImage)
+    {
+        $this->extImage = $extImage;
     }
 
     public function setAdmin($admin)
@@ -116,10 +123,12 @@ class ItemDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = $this->twigExt;
-        $formatter = function($line) use($ext) {
+        $extImage = $this->extImage;
+
+        $formatter = function($line) use($ext, $extImage) {
             $line["prix"] = $ext->prixFilter($line["prix"]);
             $line["image"]["alt"] = !empty($line["image"]["id"]) ?
-                $ext->imageFunction($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]) :
+                $extImage->html($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]) :
                 "Pas d'image";
 
             return $line;

@@ -1,45 +1,41 @@
 pjm_app_admin_boquette_brags_index:
     path:     /
-    defaults: { _controller: PJMAppBundle:Consos/Brags:admin }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:index }
 
 pjm_app_admin_boquette_brags_listeCommandes:
     path:     /listeCommandes
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listeCommandes }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listeCommandes }
 
 pjm_app_admin_boquette_brags_commandesResults:
     path:     /listeCommandes/results
-    defaults: { _controller: PJMAppBundle:Consos/Brags:commandesResults }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:commandesResults }
 
 pjm_app_admin_boquette_brags_validerCommandes:
     path:     /valider
-    defaults: { _controller: PJMAppBundle:Consos/Brags:validerCommandes }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:validerCommandes }
 
 pjm_app_admin_boquette_brags_resilierCommandes:
     path:     /resilier
-    defaults: { _controller: PJMAppBundle:Consos/Brags:resilierCommandes }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:resilierCommandes }
 
 pjm_app_admin_boquette_brags_listeVacances:
     path:     /listeVacances
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listeVacances }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listeVacances }
 
 pjm_app_admin_boquette_brags_vacancesResults:
     path:     /listeVacances/results
-    defaults: { _controller: PJMAppBundle:Consos/Brags:vacancesResults }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:vacancesResults }
 
 pjm_app_admin_boquette_brags_annulerVacances:
     path:     /annulerVacances/{vacances}
-    defaults: { _controller: PJMAppBundle:Consos/Brags:annulerVacances }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:annulerVacances }
     options:
         expose: true
 
 pjm_app_admin_boquette_brags_listePrix:
     path:     /listePrix
-    defaults: { _controller: PJMAppBundle:Consos/Brags:listePrix }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listePrix }
 
 pjm_app_admin_boquette_brags_prixResults:
     path:     /listePrix/results
-    defaults: { _controller: PJMAppBundle:Consos/Brags:prixResults }
-
-pjm_app_boquette_brags_bucquage:
-    path:     /bucquage
-    defaults: { _controller: PJMAppBundle:Consos/Brags:bucquageCron }
+    defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:prixResults }
