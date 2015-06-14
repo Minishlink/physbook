@@ -244,7 +244,7 @@ class Evenement
      *
      * @return boolean
      */
-    public function getJournee()
+    public function isJournee()
     {
         return $this->isJournee;
     }
