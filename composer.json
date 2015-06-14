@@ -1,6 +1,7 @@
 {
-    "name": "Minishlink/physbook",
+    "name": "minishlink/physbook",
     "type": "project",
+    "license": "GPL-3.0+",
     "description": "Social extranet for Arts et Métiers ParisTech students",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
