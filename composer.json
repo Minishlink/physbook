@@ -21,7 +21,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/user-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "2.0.x-dev",
         "sensio/buzz-bundle": "~1.0",
         "ircmaxell/password-compat": "~1.0",
         "sg/datatablesbundle": "~0.6.1",
