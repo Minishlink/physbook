@@ -57,7 +57,6 @@ class AppController extends Controller
     public function supportTechniqueAction()
     {
         return $this->render('PJMAppBundle:App:en_construction.html.twig');
-        //return $this->render('PJMAppBundle:App:support_technique.html.twig');
     }
 
     /**
