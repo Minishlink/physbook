@@ -19,28 +19,15 @@ class HistoriqueListener implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        $em = $args->getEntityManager();
-
-        if ($entity instanceof Historique) {
-            $historique = $entity;
-            if ($historique->getItem()->getBoquette()->getSlug() != 'cvis' && $historique->getItem()->getBoquette()->getSlug() != 'pians') {
-                if ($historique->getValid()) {
-                    $repository = $em->getRepository('PJMAppBundle:Compte');
-                    $compte = $repository->findOneByUserAndBoquetteSlug($historique->getUser(), $historique->getItem()->getBoquette()->getSlug());
-
-                    if (!isset($compte)) {
-                        $compte = new Compte($historique->getUser(), $historique->getItem()->getBoquette());
-                    }
-
-                    $compte->debiter($historique->getPrix());
-                    $em->persist($compte);
-                }
-            }
-        }
+        $this->traiterHistorique($args, false);
     }
 
     public function preRemove(LifecycleEventArgs $args)
+    {
+        $this->traiterHistorique($args, true);
+    }
+
+    private function traiterHistorique(LifecycleEventArgs $args, $crediter)
     {
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
@@ -56,7 +43,12 @@ class HistoriqueListener implements EventSubscriber
                         $compte = new Compte($historique->getUser(), $historique->getItem()->getBoquette());
                     }
 
-                    $compte->crediter($historique->getPrix());
+                    if ($crediter) {
+                        $compte->crediter($historique->getPrix());
+                    } else {
+                        $compte->debiter($historique->getPrix());
+                    }
+
                     $em->persist($compte);
                 }
             }
