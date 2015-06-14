@@ -33,7 +33,6 @@ class BragsResetCommand extends ContainerAwareCommand
         $this->phpExcel = $this->getContainer()->get('phpexcel');
 
         $slug = 'brags';
-        $itemSlug = 'baguette';
 
         $repo_compte = $this->em->getRepository('PJMAppBundle:Compte');
         $repo_transaction = $this->em->getRepository('PJMAppBundle:Transaction');

@@ -92,8 +92,6 @@ class BanqueController extends Controller
                     'Un problème est survenu lors du transfert. Réessaye.'
                 );
 
-                $data = $form->getData();
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',

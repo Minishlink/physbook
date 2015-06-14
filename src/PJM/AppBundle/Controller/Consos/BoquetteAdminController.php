@@ -107,8 +107,6 @@ class BoquetteAdminController extends Controller
                     'Un problème est survenu lors de la transaction. Réessaye.'
                 );
 
-                $data = $form->getData();
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',
@@ -166,7 +164,7 @@ class BoquetteAdminController extends Controller
                     }
 
                     $excel = $this->get('pjm.services.excel');
-                    $phpExcelObject = $excel->create(
+                    $excel->create(
                         "[".$boquette->getNomCourt()."] Crédits au ".date('d/m/Y')
                     );
 
@@ -275,8 +273,6 @@ class BoquetteAdminController extends Controller
                         'Un problème est survenu lors de la modification du responsable. Réessaye. Vérifie que le profil de l\'utilisateur est complet.'
                     );
 
-                    $data = $form->getData();
-
                     foreach ($form->getErrors() as $error) {
                         $request->getSession()->getFlashBag()->add(
                             'warning',
@@ -369,7 +365,7 @@ class BoquetteAdminController extends Controller
                     }
 
                     $excel = $this->get('pjm.services.excel');
-                    $phpExcelObject = $excel->create(
+                    $excel->create(
                         "[".$boquette->getNomCourt()."] Comptes au ".date('d/m/Y')
                     );
 

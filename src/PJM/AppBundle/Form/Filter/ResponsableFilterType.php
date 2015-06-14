@@ -15,7 +15,7 @@ class ResponsableFilterType extends AbstractType
             ->add('responsabilite', 'filter_entity', array(
                 'label' => 'Responsabilité',
                 'class' => 'PJMAppBundle:Responsabilite',
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('r')
                         ->orderBy('r.libelle', 'ASC')
                     ;

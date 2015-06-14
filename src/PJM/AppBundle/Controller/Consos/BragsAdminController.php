@@ -63,7 +63,6 @@ class BragsAdminController extends Controller
             $listeCommandes = $request->request->get("data");
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository("PJMAppBundle:Commande");
-            $repositoryCompte = $em->getRepository('PJMAppBundle:Compte');
 
             foreach ($listeCommandes as $commandeChoice) {
                 $commande = $repository->find($commandeChoice["value"]);
@@ -164,8 +163,6 @@ class BragsAdminController extends Controller
                     'danger',
                     'Un problème est survenu lors de l\'envoi de crédit de vacances/jours fériés. Réessaye.'
                 );
-
-                $data = $form->getData();
 
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(

@@ -105,7 +105,6 @@ class AppController extends Controller
                 }
             } else {
                 // erreur dans le formulaire
-                $data = $form->getData();
                 foreach ($form->getErrors() as $error) {
                     $reason[] = $error->getMessage();
                 }

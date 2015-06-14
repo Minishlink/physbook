@@ -80,7 +80,7 @@ class BoquetteService
         }
 
         return $this->em->getRepository('PJMAppBundle:Item')
-            ->findByBoquetteSlug($this->slug, true, null, $offset);
+            ->findByBoquetteSlug($this->slug, $valid, $limit, $offset);
     }
 
     public function compterAchatsItem($itemSlug, $month = null, $year = null)
