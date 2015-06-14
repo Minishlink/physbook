@@ -43,7 +43,7 @@ class ResponsableDatatable extends AbstractDatatableView
         $this->getMultiselect()
             ->setEnabled(true)
             ->setPosition("last")
-            ->addAction("Activer/Désactiver", "pjm_app_admin_toggleResponsables")
+            ->addAction("Activer/Désactiver", "pjm_app_admin_boquette_toggleResponsables")
             ->setWidth("20px")
         ;
 

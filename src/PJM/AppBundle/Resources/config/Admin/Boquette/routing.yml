@@ -10,6 +10,10 @@ pjm_app_admin_boquette_responsablesResults:
     path:     /{boquette_slug}/responsables/results
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:responsablesResults }
 
+pjm_app_admin_boquette_toggleResponsables:
+    path:     /responsables/toggle
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:toggleResponsables }
+
 pjm_app_admin_boquette_gestionFeaturedItem:
     path:     /{slug}/featuredItem
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionFeaturedItem }
