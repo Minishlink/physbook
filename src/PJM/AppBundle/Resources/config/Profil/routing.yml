@@ -37,7 +37,7 @@ pjm_profil_voir:
 
 pjm_profil_encart:
     path:       /encart/{username}/{content}
-    methods: [ get, post ]
+    methods: [ get ]
     defaults:   { _controller: PJMAppBundle:Profil:encart, content: false }
     options:
         expose: true

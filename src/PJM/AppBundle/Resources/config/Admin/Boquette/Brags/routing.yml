@@ -5,7 +5,7 @@ pjm_app_admin_boquette_brags_index:
 
 pjm_app_admin_boquette_brags_listeCommandes:
     path:     /listeCommandes
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listeCommandes }
 
 pjm_app_admin_boquette_brags_commandesResults:

@@ -136,7 +136,7 @@ class BoquetteAdminController extends Controller
     public function exportCreditsAction(Request $request, Boquette $boquette)
     {
         $filterForm = $this->createForm(new TransactionFilterType(), null, array(
-            'method' => 'POST',
+            'method' => 'GET',
             'action' => $this->generateUrl('pjm_app_admin_boquette_exportCredits', array(
                 'slug' => $boquette->getSlug()
             )),
@@ -337,7 +337,7 @@ class BoquetteAdminController extends Controller
     public function exportComptesAction(Request $request, Boquette $boquette)
     {
         $filterForm = $this->createForm(new CompteFilterType(), null, array(
-            'method' => 'POST',
+            'method' => 'GET',
             'action' => $this->generateUrl('pjm_app_admin_boquette_exportComptes', array(
                 'slug' => $boquette->getSlug()
             )),

@@ -71,7 +71,7 @@ pjm_app_contact:
 
 pjm_app_support_technique:
     path:     /support-technique
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:App:supportTechnique }
 
 pjm_app_ecole_index:

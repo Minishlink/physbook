@@ -14,7 +14,6 @@ class AppController extends Controller
 {
     public function contactAction(Request $request)
     {
-        $envoi = false;
         $user = $this->getUser();
 
         $form = $this->createFormBuilder()
@@ -45,12 +44,16 @@ class AppController extends Controller
             ;
             $this->get('mailer')->send($message);
 
-            $envoi = true;
+            $request->getSession()->getFlashBag()->add(
+                'success',
+                'Message envoyé.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_contact'));
         }
 
         return $this->render('PJMAppBundle:App:contact.html.twig', array(
-            'form' => $form->createView(),
-            'envoi' => $envoi
+            'form' => $form->createView()
         ));
     }
 

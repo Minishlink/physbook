@@ -59,6 +59,8 @@ class MediaController extends Controller
                     'success',
                     'La photo a bien été ajoutée ou modifiée.'
                 );
+
+                return $this->redirect($this->generateUrl('pjm_app_admin_media_gestionPhotos'));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',

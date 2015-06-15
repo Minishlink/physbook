@@ -5,7 +5,7 @@ pjm_app_admin_index:
 
 pjm_app_admin_users_liste:
     path:     /users/liste
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Admin:liste }
 
 pjm_app_admin_users_inscriptionListe:
