@@ -214,39 +214,39 @@ class AdminController extends Controller
                 );
 
                 while (($data = fgetcsv($handle, 0, "\t")) !== false) {
-                    if (count($data) >= 6) {
+                    if (count($data) >= 8) {
                         // si il y a au moins le nombre de paramètres requis
                         $user = $userManager->createUser();
-
-                        // TODO faire genre
-                        $user->setGenre(0);
 
                         $user->setFams($data[0]);
                         $user->setTabagns(strtolower($data[1]));
                         $user->setProms($data[2]);
-                        $user->setEmail($data[3]);
+                        $user->setEmail(strtolower($data[3]));
                         $user->setBucque($data[4]);
                         $user->setPlainPassword($data[5]);
                         $user->setPrenom($data[6]);
                         $user->setNom($data[7]);
 
                         $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
-
                         if (!empty($data[8])) {
-                            $tel = (strlen($data[8]) == 9) ? "0".$data[8] : $data[8];
-                            $user->setTelephone($tel);
+                            $user->setGenre($data[8] == "F");
                         }
 
                         if (!empty($data[9])) {
-                            $user->setAppartement(strtoupper($data[9]));
+                            $tel = (strlen($data[9]) == 9) ? "0".$data[9] : $data[9];
+                            $user->setTelephone($tel);
                         }
 
                         if (!empty($data[10])) {
-                            $user->setClasse(strtoupper($data[10]));
+                            $user->setAppartement(strtoupper($data[10]));
                         }
 
                         if (!empty($data[11])) {
-                            $user->setAnniversaire($data[11]);
+                            $user->setClasse(strtoupper($data[11]));
+                        }
+
+                        if (!empty($data[12])) {
+                            $user->setAnniversaire($data[12]);
                         }
 
                         $user->setEnabled(true);
