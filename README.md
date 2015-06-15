@@ -48,6 +48,7 @@ recommended with extensions :
 * QuickDocsPHP
 * Quick Search
 * Exclude File Tree
+* Todo
 
 ### Package managers ###
 
