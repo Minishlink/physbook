@@ -12,6 +12,13 @@
         Retour
     </a>
 </p>
+{% if users is defined %}
+<div class="row">
+    <div class="col-md-12">
+        {% include "PJMAppBundle:Admin:users_liste.html.twig" %}
+    </div>
+</div>
+{% endif %}
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <form action="{{ form.vars.action }}" method="{{ form.vars.method }}" {{ form_enctype(form) }}>

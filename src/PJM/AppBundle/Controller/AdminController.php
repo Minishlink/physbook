@@ -181,7 +181,6 @@ class AdminController extends Controller
         ));
     }
 
-    // TODO confirmation (check accents)
     public function inscriptionListeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -193,6 +192,7 @@ class AdminController extends Controller
             'method' => 'POST',
         ))
             ->add('liste', 'file')
+            ->add('verifier', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
@@ -202,7 +202,7 @@ class AdminController extends Controller
 
             if ($file->isValid()) {
                 $handle = fopen($file, "r");
-                $nbUsers = 0;
+                $users = array();
                 $problem = 0;
 
                 // les boquettes concernées pour l'ouverture de compte :
@@ -256,6 +256,7 @@ class AdminController extends Controller
                         $user->setInbox($inbox);
 
                         $userManager->updateUser($user, false);
+                        $users[] = $user;
 
                         // on crée les comptes
                         foreach ($boquettes as $boquette) {
@@ -265,13 +266,13 @@ class AdminController extends Controller
                     } else {
                         $problem++;
                     }
-                    $nbUsers++;
                 }
 
                 fclose($handle);
+                $nbUsers = count($users);
 
                 if (!$problem) {
-                    if ($nbUsers) {
+                    if ($nbUsers && !$form->get('verifier')->isClicked()) {
                         $success = true;
 
                         try {
@@ -306,8 +307,15 @@ class AdminController extends Controller
                 } else {
                     $request->getSession()->getFlashBag()->add(
                         'danger',
-                        "Aucun ajout n'a été fait. Il y a ".$problem." problèmes sur cette liste de ".$nbUsers." utilisateurs."
+                        "Aucun ajout n'a été fait. Il y a ".$problem." problèmes et ".$nbUsers." utilisateurs corrects."
                     );
+                }
+
+                if ($form->get('verifier')->isClicked()) {
+                    return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
+                        'form' => $form->createView(),
+                        'users' => $users
+                    ));
                 }
             }
         }
