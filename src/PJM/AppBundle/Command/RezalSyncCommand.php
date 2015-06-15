@@ -69,8 +69,6 @@ class RezalSyncCommand extends ContainerAwareCommand
 
     public function syncRezalProduits($boquetteSlug)
     {
-        // TODO Catégories
-
         if ($boquetteSlug == "pians" || $boquetteSlug == "cvis") {
             $repository = $this->em->getRepository('PJMAppBundle:Item');
 
