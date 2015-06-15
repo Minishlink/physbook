@@ -1,35 +1,43 @@
 pjm_app_admin_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Admin:index }
 
 pjm_app_admin_users_liste:
     path:     /users/liste
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:liste }
 
 pjm_app_admin_users_inscriptionListe:
     path:     /users/inscription/liste
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:inscriptionListe }
 
 pjm_app_admin_users_inscriptionUnique:
     path:     /users/inscription/unique
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:inscriptionUnique }
 
 pjm_app_admin_responsabilitesResults:
     path:     /responsabilites/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:responsabilitesResults }
 
 pjm_app_admin_responsabilites:
     path:     /responsabilites/{responsabilite}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:responsabilites, responsabilite: null }
     options:
         expose: true
 
 pjm_app_admin_boquettesResults:
     path:     /gestionBoquettes/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:boquettesResults }
 
 pjm_app_admin_gestionBoquettes:
     path:     /gestionBoquettes/{boquette}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Admin:gestionBoquettes, boquette: null }
     options:
         expose: true

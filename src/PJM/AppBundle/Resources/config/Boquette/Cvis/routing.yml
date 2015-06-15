@@ -1,3 +1,4 @@
 pjm_app_boquette_cvis_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Cvis:index }

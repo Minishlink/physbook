@@ -1,5 +1,6 @@
 pjm_app_media_index:
     path:     /
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:en_construction.html.twig'
@@ -8,6 +9,7 @@ pjm_app_media_index:
 
 pjm_app_media_bonjourGadzart:
     path:     /bonjourGadzart
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'TwigBundle:Exception:error403.html.twig'

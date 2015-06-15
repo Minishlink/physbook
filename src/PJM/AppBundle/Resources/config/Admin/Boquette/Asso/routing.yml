@@ -1,3 +1,4 @@
 pjm_app_admin_boquette_asso_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Boquette/Asso:admin }

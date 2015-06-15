@@ -1,41 +1,51 @@
 pjm_app_admin_boquette_brags_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:index }
 
 pjm_app_admin_boquette_brags_listeCommandes:
     path:     /listeCommandes
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listeCommandes }
 
 pjm_app_admin_boquette_brags_commandesResults:
     path:     /listeCommandes/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:commandesResults }
 
 pjm_app_admin_boquette_brags_validerCommandes:
     path:     /valider
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:validerCommandes }
 
 pjm_app_admin_boquette_brags_resilierCommandes:
     path:     /resilier
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:resilierCommandes }
 
 pjm_app_admin_boquette_brags_listeVacances:
     path:     /listeVacances
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listeVacances }
 
 pjm_app_admin_boquette_brags_vacancesResults:
     path:     /listeVacances/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:vacancesResults }
 
 pjm_app_admin_boquette_brags_annulerVacances:
     path:     /annulerVacances/{vacances}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:annulerVacances }
     options:
         expose: true
 
 pjm_app_admin_boquette_brags_listePrix:
     path:     /listePrix
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:listePrix }
 
 pjm_app_admin_boquette_brags_prixResults:
     path:     /listePrix/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BragsAdmin:prixResults }

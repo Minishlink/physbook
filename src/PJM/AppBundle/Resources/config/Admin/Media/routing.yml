@@ -1,21 +1,26 @@
 pjm_app_admin_media_gestionPhotos:
     path:     /photos/gestion/{photo}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Media:gestionPhotos, photo: null }
     options:
         expose: true
 
 pjm_app_admin_media_photosResults:
     path:     /photos/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Media:photosResults }
 
 pjm_app_admin_media_autoriserPhotos:
     path:     /photos/autoriser
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Media:togglePublicationPhotos, autoriser: true }
 
 pjm_app_admin_media_pasAutoriserPhotos:
     path:     /photos/non-autoriser
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Media:togglePublicationPhotos, autoriser: false }
 
 pjm_app_admin_media_supprimerPhotos:
     path:     /photos/supprimer
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Media:supprimerPhotos }
