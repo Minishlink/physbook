@@ -58,6 +58,8 @@ class AdminController extends Controller
                     'success',
                     'La responsabilité a bien été ajoutée ou modifiée.'
                 );
+
+                return $this->redirect($this->generateUrl('pjm_app_admin_responsabilites'));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -169,7 +171,6 @@ class AdminController extends Controller
         return $datatableData->getResponse();
     }
 
-    // TODO gérer promos à l'ec'ss ou pas
     public function listeAction()
     {
         $userManager = $this->get('fos_user.user_manager');
@@ -298,6 +299,8 @@ class AdminController extends Controller
                                 'success',
                                 $nbUsers.' utilisateurs ajoutés.'
                             );
+
+                            return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
                         }
                     }
                 } else {

@@ -1,6 +1,6 @@
 pjm_app_admin_boquette_gestionItem:
     path:     /{slug}/gestionItem
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionItem }
 
 pjm_app_admin_boquette_gestionResponsables:
@@ -47,12 +47,12 @@ pjm_app_admin_boquette_creditsResults:
 
 pjm_app_admin_boquette_exportCredits:
     path:     /{slug}/exportCredits
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportCredits }
 
 pjm_app_admin_boquette_voirAchats:
     path:     /{slug}/achats
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirAchats }
 
 pjm_app_admin_boquette_achatsResults:
@@ -62,12 +62,12 @@ pjm_app_admin_boquette_achatsResults:
 
 pjm_app_admin_boquette_voirComptes:
     path:     /{slug}/comptes
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirComptes }
 
 pjm_app_admin_boquette_exportComptes:
     path:     /{slug}/exportComptes
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportComptes }
 
 pjm_app_admin_boquette_comptesResults:

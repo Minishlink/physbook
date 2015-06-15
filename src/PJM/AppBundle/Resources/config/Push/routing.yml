@@ -29,5 +29,5 @@ pjm_app_push_deleteSubscription:
 
 pjm_app_push_sendNotification:
     path:     /notification/send
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Push:sendNotification }

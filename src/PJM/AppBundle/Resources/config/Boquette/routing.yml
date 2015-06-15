@@ -1,6 +1,6 @@
 pjm_app_boquette_listeItem:
     path:     /{slug}/listeItem
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:listeItem }
 
 pjm_app_boquette_itemResults:
@@ -10,24 +10,24 @@ pjm_app_boquette_itemResults:
 
 pjm_app_boquette_getItems:
     path:     /{boquette_slug}/item/liste/{offset}
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:getItems }
     options:
         expose: true
 
 pjm_app_boquette_voirResponsables:
     path:     /{slug}/responsables
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }
 
 pjm_app_boquette_voirHistoriqueResponsables:
     path:     /{slug}/responsables/historique
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirHistoriqueResponsables }
 
 pjm_app_boquette_boquette_historique:
     path:     /{slug}/historique
-    methods: [ get, post ]
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:historique }
 
 pjm_app_boquette_rechargement:

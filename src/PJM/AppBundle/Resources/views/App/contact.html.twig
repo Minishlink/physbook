@@ -10,8 +10,6 @@
         <div class="col-md-8 col-md-offset-2">
             <h1 class="font-blackout_sunrise text-rouge">Nous contacter</h1>
 
-            {% if envoi == true %}<div class="alert alert-success">Message envoyé.</div>{% endif %}
-
             <form method="post" role="form">
                 <div class="form-group">
                     {{ form_widget(form.sujet, {'attr': {'class': 'form-control', 'placeholder': 'Sujet'}}) }}
