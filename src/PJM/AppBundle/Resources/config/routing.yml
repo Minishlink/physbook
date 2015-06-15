@@ -48,6 +48,7 @@ pjm_app_admin:
 
 pjm_app_logo:
     path:     /logo
+    methods: [ get, post ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:logo.html.twig'
@@ -56,6 +57,7 @@ pjm_app_logo:
 
 pjm_app_a_propos:
     path:     /a-propos
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:a_propos.html.twig'
@@ -64,14 +66,17 @@ pjm_app_a_propos:
 
 pjm_app_contact:
     path:     /contact
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:App:contact }
 
 pjm_app_support_technique:
     path:     /support-technique
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:App:supportTechnique }
 
 pjm_app_ecole_index:
     path:     /ecole
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:Ecole:index.html.twig'
@@ -80,6 +85,7 @@ pjm_app_ecole_index:
 
 pjm_app_plan_du_site:
     path:     /plan-du-site
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:plan_du_site.html.twig'
@@ -88,4 +94,5 @@ pjm_app_plan_du_site:
 
 pjm_app_physHM:
     path:     /hm/{usersHM}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:App:physHM }

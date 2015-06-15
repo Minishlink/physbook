@@ -1,29 +1,11 @@
 pjm_app_event_nouveau:
     path:     /nouveau
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:nouveau }
-
-pjm_app_event_inscription:
-    path:     /{slug}/inscription
-    defaults: { _controller: PJMAppBundle:Event:inscription }
-
-pjm_app_event_invite:
-    path:     /{slug}/invite
-    defaults: { _controller: PJMAppBundle:Event:invite }
-
-pjm_app_event_suppression:
-    path:     /{slug}/suppression
-    defaults: { _controller: PJMAppBundle:Event:suppression }
-
-pjm_app_event_modifier:
-    path:     /{slug}/modifier
-    defaults: { _controller: PJMAppBundle:Event:modifier }
-
-pjm_app_event_index:
-    path:     /{slug}
-    defaults: { _controller: PJMAppBundle:Event:index, slug: null }
 
 pjm_app_event_fins_index:
     path:     /fins
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:en_construction.html.twig'
@@ -32,8 +14,34 @@ pjm_app_event_fins_index:
 
 pjm_app_event_elections_index:
     path:     /elections
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:en_construction.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
+
+pjm_app_event_inscription:
+    path:     /{slug}/inscription
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:inscription }
+
+pjm_app_event_invite:
+    path:     /{slug}/invite
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:invite }
+
+pjm_app_event_suppression:
+    path:     /{slug}/suppression
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:suppression }
+
+pjm_app_event_modifier:
+    path:     /{slug}/modifier
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:modifier }
+
+pjm_app_event_index:
+    path:     /{slug}
+    methods: [ get ]
+    defaults: { _controller: PJMAppBundle:Event:index, slug: null }

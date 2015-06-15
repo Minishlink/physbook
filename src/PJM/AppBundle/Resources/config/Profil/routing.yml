@@ -1,35 +1,43 @@
 pjm_profil_modifier:
     path:       /modifier
+    methods: [ get, post ]
     defaults:   { _controller: PJMAppBundle:Profil:modifier }
 
 pjm_profil_changerPhoto:
     path:       /changer/photo
+    methods: [ get, post ]
     defaults:   { _controller: PJMAppBundle:Profil:modifierPhoto, nouvelle: true }
 
 pjm_profil_modifierPhoto:
     path:       /modifier/photo
+    methods: [ get, post ]
     defaults:   { _controller: PJMAppBundle:Profil:modifierPhoto, nouvelle: false }
 
 pjm_profil_annuaire:
     path:       /annuaire
+    methods: [ get ]
     defaults:   { _controller: PJMAppBundle:Profil:annuaire }
 
 pjm_profil_annuaireResults:
     path:       /annuaire/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Profil:annuaireResults }
 
 fos_user_profile_show:
     path:       /
+    methods: [ get ]
     defaults:   { _controller: PJMAppBundle:Profil:voir }
 
 pjm_profil_voir:
     path:       /voir/{username}
+    methods: [ get ]
     defaults:   { _controller: PJMAppBundle:Profil:voir }
     options:
         expose: true
 
 pjm_profil_encart:
     path:       /encart/{username}/{content}
+    methods: [ get, post ]
     defaults:   { _controller: PJMAppBundle:Profil:encart, content: false }
     options:
         expose: true

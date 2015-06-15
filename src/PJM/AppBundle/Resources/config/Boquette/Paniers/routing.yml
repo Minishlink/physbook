@@ -1,11 +1,14 @@
 pjm_app_boquette_paniers_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Paniers:index }
 
 pjm_app_boquette_paniers_commander:
     path:     /commander
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Paniers:commander }
 
 pjm_app_boquette_paniers_annuler:
     path:     /annuler
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Paniers:annuler }

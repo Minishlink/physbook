@@ -1,27 +1,33 @@
 pjm_app_push_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Push:index }
 
 pjm_app_push_reglages:
     path:     /reglages
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Push:reglages }
 
 pjm_app_push_subscriptionResults:
     path:     /subscription/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Push:subscriptionResults }
 
 pjm_app_push_manageSubscription:
     path:     /subscription/manage/{action}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Push:manageSubscription, action: false }
     options:
         expose: true
 
 pjm_app_push_deleteSubscription:
     path:     /subscription/delete
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Push:deleteSubscription }
     options:
         expose: true
 
 pjm_app_push_sendNotification:
     path:     /notification/send
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Push:sendNotification }

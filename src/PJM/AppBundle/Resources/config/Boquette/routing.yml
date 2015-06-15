@@ -1,31 +1,38 @@
 pjm_app_boquette_listeItem:
     path:     /{slug}/listeItem
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:listeItem }
 
 pjm_app_boquette_itemResults:
     path:     /{boquette_slug}/item/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:itemResults }
 
 pjm_app_boquette_getItems:
     path:     /{boquette_slug}/item/liste/{offset}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:getItems }
     options:
         expose: true
 
 pjm_app_boquette_voirResponsables:
     path:     /{slug}/responsables
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirResponsables }
 
 pjm_app_boquette_voirHistoriqueResponsables:
     path:     /{slug}/responsables/historique
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:voirHistoriqueResponsables }
 
 pjm_app_boquette_boquette_historique:
     path:     /{slug}/historique
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:historique }
 
 pjm_app_boquette_rechargement:
     path:     /{slug}/rechargement
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement }
 
 pjm_app_boquette_pians:
@@ -62,4 +69,5 @@ pjm_app_boquette_rezal:
 
 pjm_app_boquette_default:
     path:     /{slug}
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:default }

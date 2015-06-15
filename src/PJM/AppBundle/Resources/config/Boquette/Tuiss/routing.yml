@@ -1,5 +1,6 @@
 pjm_app_boquette_tuiss_index:
     path:     /
+    methods: [ get ]
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PJMAppBundle:App:en_construction.html.twig'

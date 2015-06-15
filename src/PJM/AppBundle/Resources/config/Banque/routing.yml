@@ -1,19 +1,24 @@
 pjm_app_banque_index:
     path:     /
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Banque:index }
 
 pjm_app_banque_transfert:
     path:     /transfert
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Banque:transfert }
 
 pjm_app_banque_transactionsResults:
     path:     /historique/transactions/{user}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Banque:transactionsResults, user: null }
 
 pjm_app_banque_achatsResults:
     path:     /historique/achats/{user}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Banque:achatsResults, user: null }
 
 pjm_app_banque_transfertsResults:
     path:     /historique/transferts/{user}
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Banque:transfertsResults, user: null }

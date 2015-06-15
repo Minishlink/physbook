@@ -1,14 +1,15 @@
 pjm_app_smoney_rechargement_getURL:
     path:     /envoi/{transaction}
+    methods: [ post ]
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:getURL }
-    requirements:
-        _method: POST
 
 pjm_app_smoney_rechargement_retourSMoney:
     path:     /retour
+    methods: [ get, post ]
     defaults:
         _controller: PJMAppBundle:Consos/Rechargement:retourSMoney
 
 pjm_app_smoney_rechargement_redirectionDepuisSMoney:
     path:     /redirection
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Rechargement:redirectionDepuisSMoney }

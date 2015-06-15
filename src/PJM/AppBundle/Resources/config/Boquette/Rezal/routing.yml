@@ -1,3 +1,4 @@
 pjm_app_boquette_rezal_internet_connexion:
     path:     /internet/connexion
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Boquette/Rezal:connexion }

@@ -1,63 +1,78 @@
 pjm_app_admin_boquette_gestionItem:
     path:     /{slug}/gestionItem
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionItem }
 
 pjm_app_admin_boquette_gestionResponsables:
     path:     /{slug}/responsables
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionResponsables }
 
 pjm_app_admin_boquette_responsablesResults:
     path:     /{boquette_slug}/responsables/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:responsablesResults }
 
 pjm_app_admin_boquette_toggleResponsables:
     path:     /responsables/toggle
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:toggleResponsables }
 
 pjm_app_admin_boquette_gestionFeaturedItem:
     path:     /{slug}/featuredItem
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionFeaturedItem }
 
 pjm_app_admin_boquette_featuredItemResults:
     path:     /{boquette_slug}/featuredItem/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:featuredItemResults }
 
 pjm_app_admin_boquette_modifierItem:
     path:     /{boquette}/item/{item}/modifier
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:modifierItem }
     options:
         expose: true
 
 pjm_app_admin_boquette_gestionCredits:
     path:     /{slug}/gestionCredits
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionCredits }
 
 pjm_app_admin_boquette_creditsResults:
     path:     /{boquette_slug}/gestionCredits/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:creditsResults }
 
 pjm_app_admin_boquette_exportCredits:
     path:     /{slug}/exportCredits
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportCredits }
 
 pjm_app_admin_boquette_voirAchats:
     path:     /{slug}/achats
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirAchats }
 
 pjm_app_admin_boquette_achatsResults:
     path:     /{boquette_slug}/achats/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:achatsResults }
 
 pjm_app_admin_boquette_voirComptes:
     path:     /{slug}/comptes
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirComptes }
 
 pjm_app_admin_boquette_exportComptes:
     path:     /{slug}/exportComptes
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportComptes }
 
 pjm_app_admin_boquette_comptesResults:
     path:     /{boquette_slug}/comptes/results
+    methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:comptesResults }
 
 pjm_app_admin_boquette_pians:
@@ -82,4 +97,5 @@ pjm_app_admin_boquette_asso:
 
 pjm_app_admin_boquette_default:
     path:     /{slug}
+    methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:defaultAdmin }
