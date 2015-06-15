@@ -4,6 +4,8 @@
 
 Phy'sbook is a social extranet for Arts et Métiers ParisTech students.
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/38d17c9c-bf5e-4fb7-b5c8-788622fa78df/big.png)](https://insight.sensiolabs.com/projects/38d17c9c-bf5e-4fb7-b5c8-788622fa78df)
+
 ## License ##
 
     Copyright (C) 2014-2015  Louis Lagrange
