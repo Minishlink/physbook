@@ -11,18 +11,23 @@ class ResponsableRepository extends EntityRepository
 {
     public function findByBoquette(Boquette $boquette, $active = true)
     {
-        $query = $this->createQueryBuilder('r')
-                    ->where('r.active = :active')
-                    ->join('r.responsabilite', 're', 'WITH', 're.boquette = :boquette')
-                    ->join('r.user', 'u')
-                    ->setParameter('boquette', $boquette)
-                    ->setParameter('active', $active)
-                    ->addOrderBy('re.niveau', 'asc')
-                    ->addOrderBy('u.bucque', 'asc')
-                    ->getQuery();
+        $qb = $this->createQueryBuilder('r')
+            ->join('r.responsabilite', 're', 'WITH', 're.boquette = :boquette')
+            ->join('r.user', 'u')
+            ->setParameter('boquette', $boquette)
+            ->addOrderBy('re.niveau', 'asc')
+            ->addOrderBy('u.bucque', 'asc')
+        ;
+
+        if ($active !== null) {
+            $qb
+                ->where('r.active = :active')
+                ->setParameter('active', $active)
+            ;
+        }
 
         try {
-            $res = $query->getResult();
+            $res = $qb->getQuery()->getResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
             $res = null;
         }

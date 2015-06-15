@@ -168,7 +168,7 @@ class BoquetteController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Responsable');
-        $responsables = $repository->findByBoquette($boquette);
+        $responsables = $repository->findByBoquette($boquette, null);
 
         $proms = array();
         foreach($responsables as $responsable) {
@@ -176,6 +176,8 @@ class BoquetteController extends Controller
                 $proms[] = $responsable->getUser()->getProms();
             }
         }
+
+        asort($proms);
 
         return $this->render('PJMAppBundle:Boquette:historiqueResponsables.html.twig', array(
             'responsables' => $responsables,
