@@ -29,7 +29,7 @@ admin@physbook.fr
 
 <h3>Sal's {{ user.bucque }},</h3>
 
-<p>Tu es en négat's sur ton compte {{ boquette.nom }} de <strong>{{ dette|prix }}</strong> ! Régularise ta situation au plus vite en rechargeant ton compte sur <a href="{{ url('pjm_app_boquette_brags_index') }}" style="color:#ffba00">Phy'sbook.fr</a>.</p>
+<p>Tu es en négat's sur ton compte {{ boquette.nom }} de <strong>{{ dette|prix }}</strong> ! Régularise ta situation au plus vite en rechargeant ton compte sur <a href="{{ url('pjm_app_boquette_default', {slug: boquette.slug}) }}" style="color:#ffba00">Phy'sbook.fr</a>.</p>
 
 {% if boquette.slug == "brags" %}
 <p>Si tu ne veux plus recevoir de brag's, rends toi sur <a href="{{ url('pjm_app_boquette_brags_index') }}" style="color:#ffba00">Phy'sbook.fr</a> et modifie ta commande pour avoir 0 brag's par jour. Ton solde cessera de baisser quand le ZiBrag's aura confirmé ta résiliation au boulanger. Une fois cela fait, il te faudra rembourser ton négat's.</p>
@@ -37,6 +37,6 @@ admin@physbook.fr
 
 <p>Fratern's.<br>
 Phy'sbook<br>
-<a href="mailto:admin@physbook.fr" style="color:#ffba00">admin@physbook.fr</a>
+<a href="mailto:zi@physbook.fr" style="color:#ffba00">zi@physbook.fr</a>
 </p>
 {% endblock %}
