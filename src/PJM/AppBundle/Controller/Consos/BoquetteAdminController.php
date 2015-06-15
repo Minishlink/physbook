@@ -238,31 +238,16 @@ class BoquetteAdminController extends Controller
                     $user = $responsable->getUser();
                     $role = $responsable->getResponsabilite()->getRole();
 
-                    if ($responsable->getActive()) {
-                        if (!$user->hasRole($role)) {
-                            $user->addRole($role);
-                            $userManager->updateUser($user, false);
-                        }
-
-                        $em->flush();
-
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            $user.' est maintenant '.$responsable->getResponsabilite().' dans '.$boquette.'.'
-                        );
-                    } else {
-                        if ($user->hasRole($role)) {
-                            $user->removeRole($role);
-                            $userManager->updateUser($user, false);
-                        }
-
-                        $em->flush();
-
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            $user.' n\'est plus '.$responsable->getResponsabilite().' dans '.$boquette.'.'
-                        );
+                    if (!empty($role) && !$user->hasRole($role) && $responsable->getActive()) {
+                        $user->addRole($role);
                     }
+
+                    $userManager->updateUser($user);
+
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        $user.' est indiqué '.$responsable->getResponsabilite()->getLibelle().' dans '.$boquette.'.'
+                    );
                 } else {
                     $request->getSession()->getFlashBag()->add(
                         'danger',
@@ -278,11 +263,7 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            $router = $this->get('router');
-            $route = "pjm_app_admin_boquette_".$boquette->getSlug()."_index";
-            if (null !== $router->getRouteCollection()->get($route)) {
-                return $this->redirect($this->generateUrl($route));
-            }
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
         }
 
         $datatable = $this->get("pjm.datatable.admin.responsable");
@@ -313,6 +294,31 @@ class BoquetteAdminController extends Controller
         );
 
         return $datatable->getResponse();
+    }
+
+    /**
+     * Action ajax d'activation ou désactivation des responsables.
+     */
+    public function toggleResponsablesAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $listeResponsables = $request->request->get("data");
+
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository("PJMAppBundle:Responsable");
+
+            foreach ($listeResponsables as $responsableChoice) {
+                $responsable = $repository->find($responsableChoice["value"]);
+                $responsable->toggleActive();
+                $em->persist($responsable);
+            }
+
+            $em->flush();
+
+            return new Response("Responsables toggled.");
+        }
+
+        return new Response("This is not ajax.", 400);
     }
 
     /**
@@ -592,30 +598,5 @@ class BoquetteAdminController extends Controller
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $datatable->getResponse();
-    }
-
-    /**
-     * Action ajax d'activation ou désactivation des responsables.
-     */
-    public function toggleResponsablesAction(Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $listeResponsables = $request->request->get("data");
-
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("PJMAppBundle:Responsable");
-
-            foreach ($listeResponsables as $responsableChoice) {
-                $responsable = $repository->find($responsableChoice["value"]);
-                $responsable->toggleActive();
-                $em->persist($responsable);
-            }
-
-            $em->flush();
-
-            return new Response("Responsables toggled.");
-        }
-
-        return new Response("This is not ajax.", 400);
     }
 }
