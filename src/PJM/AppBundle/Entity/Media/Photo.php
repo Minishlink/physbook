@@ -63,7 +63,7 @@ class Photo
      **/
     private $proprietaire;
 
-    // TODO users apparaissants sur la photo
+    // FUTURE users apparaissants sur la photo
 
     public function __construct()
     {

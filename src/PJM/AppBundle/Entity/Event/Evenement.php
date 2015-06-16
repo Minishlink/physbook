@@ -531,7 +531,7 @@ class Evenement
     }
 
     public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user) {
-        //TODO visibilité conscrits/anciens/P3/archis
+        // FUTURE visibilité conscrits/anciens/P3/archis
 
         if (!$this->isPublic()) {
             // on vérifie que l'utilisateur est invité
