@@ -49,9 +49,12 @@ class Push
 
         // on envoit une notif pour chaque
         if ($subscriptions !== null) {
+            $dateLimite = new \DateTime('3 months ago');
             foreach ($subscriptions as $subscription) {
-                // TODO vérifier que la subscription est pas trop vieille pour éviter d'exploser le quota
-                $this->sendNotificationToSubscriptionId($subscription->getSubscriptionId(), $message);
+                // on vérifie que la subscription est pas trop vieille pour éviter d'exploser le quota
+                if ($subscription->getLastSubscribed() > $dateLimite) {
+                    $this->sendNotificationToSubscriptionId($subscription->getSubscriptionId(), $message);
+                }
             }
         }
     }
