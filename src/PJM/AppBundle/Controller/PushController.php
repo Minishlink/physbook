@@ -191,7 +191,7 @@ class PushController extends Controller
                     ->setSubscriptionId($subscription['id'])
                     ->setEndpoint($subscription['endpoint'])
                     ->setUser($this->getUser())
-                    ->setBrowserUA($request->server['HTTP_USER_AGENT'])
+                    ->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'))
                 ;
 
                 $em->persist($pushSubscription);
