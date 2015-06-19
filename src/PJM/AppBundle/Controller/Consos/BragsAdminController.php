@@ -93,10 +93,10 @@ class BragsAdminController extends Controller
 
             $em->flush();
 
-            return new Response("This is an ajax response.");
+            return new Response('Ok');
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     public function resilierCommandesAction(Request $request)
@@ -122,10 +122,10 @@ class BragsAdminController extends Controller
 
             $em->flush();
 
-            return new Response("This is an ajax response.");
+            return new Response('Ok');
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     public function listeVacancesAction(Request $request)

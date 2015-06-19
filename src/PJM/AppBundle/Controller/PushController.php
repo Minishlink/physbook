@@ -128,7 +128,7 @@ class PushController extends Controller
             return new Response("PushSubscription(s) removed.");
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     /**
@@ -137,7 +137,7 @@ class PushController extends Controller
     public function manageSubscriptionAction(Request $request, $action = false)
     {
         if (!$request->isXmlHttpRequest()) {
-            return new Response("This is not ajax.", 400);
+            return $this->redirect($this->generateUrl("pjm_app_homepage"));
         }
 
         $annuler = ($action == 'annuler') ? true : false;
