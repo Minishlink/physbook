@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Form\Type\Actus;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleType extends AbstractType
 {
@@ -20,7 +20,7 @@ class ArticleType extends AbstractType
             ->add('categories', 'pjm_select2_entity', array(
                 'label' => 'Catégories',
                 'class'    => 'PJMAppBundle:Actus\Categorie',
-                'property' => 'nom',
+                'choice_label' => 'nom',
                 'multiple' => true,
                 'required' => false
             ))
@@ -37,7 +37,7 @@ class ArticleType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Actus\Article',

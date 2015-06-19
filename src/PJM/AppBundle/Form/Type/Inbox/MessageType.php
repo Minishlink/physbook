@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Form\Type\Inbox;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 use PJM\AppBundle\Form\Type\Boquette\BoquetteByResponsableType;
@@ -30,7 +30,7 @@ class MessageType extends AbstractType
                     ;
                 },
                 'multiple' => true,
-                'property' => 'user'
+                'choice_label' => 'user'
             ))
             ->add('contenu', "textarea", array(
                 'attr'=> array('style' => 'min-height: 20em;')
@@ -50,7 +50,7 @@ class MessageType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Inbox\Message',
