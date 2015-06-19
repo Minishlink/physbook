@@ -165,7 +165,7 @@ class AdminController extends Controller
     public function boquettesResultsAction()
     {
         $datatable = $this->get("pjm.datatable.admin.boquettes");
-        $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
+        $datatable->setExtImage($this->get('pjm.services.image'));
         $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
 
         return $datatableData->getResponse();

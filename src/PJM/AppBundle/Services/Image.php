@@ -2,13 +2,13 @@
 
 namespace PJM\AppBundle\Services;
 
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
 
 class Image
 {
     private $assets;
 
-    public function __construct(CoreAssetsHelper $assets)
+    public function __construct(AssetsHelper $assets)
     {
         $this->assets = $assets;
     }
