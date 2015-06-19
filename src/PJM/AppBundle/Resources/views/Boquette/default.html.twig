@@ -7,5 +7,5 @@
 
 {% block pjm_app_body_content %}
     <h2>Responsables</h2>
-    {% render(url('pjm_app_boquette_voirHistoriqueResponsables', {'slug': boquette.slug })) %}
+    {{ render(url('pjm_app_boquette_voirHistoriqueResponsables', {'slug': boquette.slug })) }}
 {% endblock %}

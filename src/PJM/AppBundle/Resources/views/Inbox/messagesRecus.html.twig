@@ -20,7 +20,7 @@
             </div>
             <div class="panel-footer">
                 {% spaceless %}
-                de {% render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) %},
+                de {{ render(url('pjm_profil_encart', {'username': reception.message.expediteur.username})) }},
                 le {{ reception.message.date|date('d/m/Y') }} à {{ reception.message.date|date('H:i') }}
                 {%- if reception.message.destinataires|length > 0 -%}
                     , pour
@@ -28,7 +28,7 @@
                         {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': reception.message.destinataires } %} personnes
                     {% else %}
                         {% if reception.message.destinataires[0] != app.user %}
-                            {% render(url('pjm_profil_encart', {'username': reception.message.destinataires[0]})) %}
+                            {{ render(url('pjm_profil_encart', {'username': reception.message.destinataires[0]})) }}
                         {% else %}
                             phy's
                         {% endif %}

@@ -12,7 +12,7 @@
                 <ul class="list-unstyled">
                     {% for responsable in responsables %}
                     {% if responsable.user.proms == proms %}
-                    <li>{{ responsable.responsabilite.libelle }} : {% render(url('pjm_profil_encart', {'username': responsable.user.username})) %}</li>
+                    <li>{{ responsable.responsabilite.libelle }} : {{ render(url('pjm_profil_encart', {'username': responsable.user.username})) }}</li>
                     {% endif %}
                     {% endfor %}
                 </ul>

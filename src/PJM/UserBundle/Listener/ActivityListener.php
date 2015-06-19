@@ -3,7 +3,7 @@
 
 namespace PJM\UserBundle\Listener;
 
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -11,12 +11,12 @@ use PJM\UserBundle\Entity\User;
 
 class ActivityListener
 {
-    protected $context;
+    protected $tokenStorage;
     protected $em;
 
-    public function __construct(SecurityContext $context, EntityManager $manager)
+    public function __construct(TokenStorage $tokenStorage, EntityManager $manager)
     {
-        $this->context = $context;
+        $this->tokenStorage = $tokenStorage;
         $this->em = $manager;
     }
 
@@ -32,8 +32,8 @@ class ActivityListener
         }
 
         // Nous vérifions qu'un token d'autentification est bien présent avant d'essayer manipuler l'utilisateur courant.
-        if ($this->context->getToken()) {
-            $user = $this->context->getToken()->getUser();
+        if ($this->tokenStorage->getToken()) {
+            $user = $this->tokenStorage->getToken()->getUser();
 
             // Nous utilisons un délais pendant lequel nous considèrerons que l'utilisateur est toujours actif et qu'il n'est pas nécessaire de refaire de mise à jour
             $delay = new \DateTime();

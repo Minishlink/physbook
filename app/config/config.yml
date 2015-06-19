@@ -4,7 +4,9 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: "%locale%" }
+    translator:
+        fallback: "%locale%"
+        logging: false
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -14,7 +16,8 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: v1r20150605
+    assets:
+        version: v1r20150605
         packages:
             noVersion:
                 version:

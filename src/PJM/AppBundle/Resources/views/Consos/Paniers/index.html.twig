@@ -132,7 +132,7 @@
                             {% if dejaCommande %}Récupère ton panier chez le ZiPaniers ou au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>{% endif %}
                             Un problème ? Contacte :
                         </p>
-                        {% render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) %}
+                        {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
                     </div>
                 </div>
                 <div id="com3pom" class="col-sm-5 text-center">

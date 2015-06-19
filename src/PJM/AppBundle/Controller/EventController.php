@@ -158,7 +158,7 @@ class EventController extends Controller
     public function modifierAction(Request $request, Event\Evenement $event)
     {
         // on regarde si l'utilisateur est créateur
-        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return new Response("Tu n'as pas les droits pour modifier cet article.");
         }
 
@@ -206,7 +206,7 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // on regarde si l'utilisateur est créateur
-        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return new Response("Tu n'as pas les droits pour supprimer cet article.");
         }
 

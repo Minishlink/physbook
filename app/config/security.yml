@@ -41,7 +41,7 @@ security:
             form_login:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
-                csrf_provider: form.csrf_provider
+                csrf_provider: security.csrf.token_manager
             logout:
                 path:   fos_user_security_logout
                 target: /

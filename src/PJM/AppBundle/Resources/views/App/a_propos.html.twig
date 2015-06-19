@@ -27,11 +27,11 @@
             </p>
             <p>Les créateurs de Phy'sbook sont :</p>
             <ul>
-                <li>Zi² : {% render(url('pjm_profil_encart', {'username': '40bo213'})) %} 40bo213 (Louis Lagrange) (code)</li>
-                <li>Zi : {% render(url('pjm_profil_encart', {'username': '26-68bo213'})) %} 26-68bo213 (Etienne Blanc) (graphisme)</li>
-                <li>Zi : {% render(url('pjm_profil_encart', {'username': '56bo213'})) %} 56bo213 (Alice Calès) (contenu)</li>
-                <li>Zi : {% render(url('pjm_profil_encart', {'username': '95-157bo213'})) %} 95-157bo213 (Louis Brillot) (graphisme)</li>
-                <li>Zi : {% render(url('pjm_profil_encart', {'username': '100-159bo213'})) %} 100-159bo213 (Stéphie Noailles) (contenu)</li>
+                <li>Zi² : {{ render(url('pjm_profil_encart', {'username': '40bo213'})) }} 40bo213 (Louis Lagrange) (code)</li>
+                <li>Zi : {{ render(url('pjm_profil_encart', {'username': '26-68bo213'})) }} 26-68bo213 (Etienne Blanc) (graphisme)</li>
+                <li>Zi : {{ render(url('pjm_profil_encart', {'username': '56bo213'})) }} 56bo213 (Alice Calès) (contenu)</li>
+                <li>Zi : {{ render(url('pjm_profil_encart', {'username': '95-157bo213'})) }} 95-157bo213 (Louis Brillot) (graphisme)</li>
+                <li>Zi : {{ render(url('pjm_profil_encart', {'username': '100-159bo213'})) }} 100-159bo213 (Stéphie Noailles) (contenu)</li>
             </ul>
             <p>
                 Depuis, l'équipe s'est agrandie d'année en année, tu peux voir la liste <a href="{{ path('pjm_app_boquette_default', {'slug': 'physbook'}) }}">ici</a>.

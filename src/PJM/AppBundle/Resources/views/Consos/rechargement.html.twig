@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <p>S-Money va bientôt mettre à jour son interface. D'ici là, ton compte S-Money doit avoir au moins un solde aussi grand que le montant que tu souhaites recharger ici. Pour ce faire, rends-toi sur <a href="https://mon-espace.s-money.fr">S-Money.fr</a> ou sur l'application mobile.</p>
-                {% render(url('pjm_app_boquette_rechargement', {'slug': boquetteSlug})) %}
+                {{ render(url('pjm_app_boquette_rechargement', {'slug': boquetteSlug})) }}
             </div>
         </div>
     </div>
