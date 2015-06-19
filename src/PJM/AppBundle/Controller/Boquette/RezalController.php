@@ -58,6 +58,8 @@ class RezalController extends Controller
                     'auth_user' => $this->getUser()->getUsername(),
                     'auth_pass' => $this->getUser()->getPassword()
                 ));
+            } else {
+                return $this->redirect($this->generateUrl('pjm_app_boquette_default', array('slug' => 'rezal')));
             }
         }
 
