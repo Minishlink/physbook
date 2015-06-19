@@ -25,7 +25,7 @@
                         {% include "PJMAppBundle:Profil:show_users.html.twig" with { 'usernames': message.destinataires } %} personnes
                     {% else %}
                         {% if message.destinataires[0] != app.user %}
-                            {% render(url('pjm_profil_encart', {'username': message.destinataires[0]})) %}
+                            {{ render(url('pjm_profil_encart', {'username': message.destinataires[0]})) }}
                         {% else %}
                             phy's
                         {% endif %}

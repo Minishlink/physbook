@@ -43,14 +43,14 @@
     </div>
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {% render(url('pjm_app_admin_boquette_brags_listeCommandes')) %}
-    {% render(url('pjm_app_admin_boquette_gestionCredits', {slug: boquetteSlug})) %}
+    {{ render(url('pjm_app_admin_boquette_brags_listeCommandes')) %}
+    {{ render(url('pjm_app_admin_boquette_gestionCredits', {slug: boquetteSlug})) }}
     {% if is_granted('ROLE_HARPAGS') %}
-    {% render(url('pjm_app_admin_boquette_voirAchats', {slug: boquetteSlug})) %}
-    {% render(url('pjm_app_admin_boquette_voirComptes', {slug: boquetteSlug})) %}
+    {{ render(url('pjm_app_admin_boquette_voirAchats', {slug: boquetteSlug})) }}
+    {{ render(url('pjm_app_admin_boquette_voirComptes', {slug: boquetteSlug})) }}
     {% endif %}
-    {% render(url('pjm_app_admin_boquette_brags_listeVacances')) %}
-    {% render(url('pjm_app_admin_boquette_brags_listePrix')) %}
-    {% render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) %}
+    {{ render(url('pjm_app_admin_boquette_brags_listeVacances')) }}
+    {{ render(url('pjm_app_admin_boquette_brags_listePrix')) }}
+    {{ render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) }}
 </div>
 {% endblock %}

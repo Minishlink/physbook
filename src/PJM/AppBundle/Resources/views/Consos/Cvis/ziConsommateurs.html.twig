@@ -3,7 +3,7 @@
     {% if ziConsommateurs|length > 0 %}
         <ul>
         {% for consommateur in ziConsommateurs %}
-            <li>{% if loop.first %}<span class="text-larger">{% endif %}<span class="text-bleu-clair">#{{ loop.index }}</span> {% render(url('pjm_profil_encart', {'username': consommateur.user.username})) %} ({{ consommateur.somme }} achats){% if loop.first %}</span>{% endif %}</li>
+            <li>{% if loop.first %}<span class="text-larger">{% endif %}<span class="text-bleu-clair">#{{ loop.index }}</span> {{ render(url('pjm_profil_encart', {'username': consommateur.user.username})) }} ({{ consommateur.somme }} achats){% if loop.first %}</span>{% endif %}</li>
         {% endfor %}
         </ul>
     {% else %}

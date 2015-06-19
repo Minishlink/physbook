@@ -14,5 +14,5 @@
 {% endblock %}
 
 {% block autre %}
-    {% render(url('pjm_app_admin_boquette_exportCredits', {'slug': boquetteSlug})) %}
+    {{ render(url('pjm_app_admin_boquette_exportCredits', {'slug': boquetteSlug})) }}
 {% endblock %}

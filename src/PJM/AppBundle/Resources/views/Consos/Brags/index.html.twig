@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-7">
-            {% render(url('pjm_app_boquette_brags_commande')) %}
+            {{ render(url('pjm_app_boquette_brags_commande')) }}
         </div>
         <div class="col-md-5 text-center">
             <h2>Prix</h2>
@@ -104,7 +104,7 @@
             <div id="contact">
                 <h2>S.O.S. Brag's</h2>
     <img style="height: 4em;" class="img-responsive center-block" src="{{ asset('images/general/Contact.png') }}">
-                {% render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) %}
+                {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
             </div>
         </div>
     </div>
