@@ -3,7 +3,7 @@
 namespace PJM\AppBundle\Datatables\Admin;
 
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class BoquettesDatatable
@@ -12,11 +12,11 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class BoquettesDatatable extends AbstractDatatableView
 {
-    protected $twigExt;
+    protected $extImage;
 
-    public function setTwigExt(IntranetExtension $twigExt)
+    public function setExtImage(ImageService $extImage)
     {
-        $this->twigExt = $twigExt;
+        $this->extImage = $extImage;
     }
 
     /**
@@ -80,10 +80,10 @@ class BoquettesDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = $this->twigExt;
-        $formatter = function($line) use($ext) {
+        $extImage = $this->extImage;
+        $formatter = function($line) use($extImage) {
             $line["image"]["alt"] = !empty($line["image"]["id"]) ?
-                $ext->imageFunction($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]) :
+                $extImage->html($line["image"]["id"], $line["image"]["ext"], $line["image"]["alt"]) :
                 "Pas d'image";
 
             return $line;
