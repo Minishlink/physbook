@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Form\Type\Consos;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 class TransfertType extends AbstractType
@@ -25,7 +25,7 @@ class TransfertType extends AbstractType
                         ->setParameter('user', $options['user'])
                     ;
                 },
-                'property' => 'boquette'
+                'choice_label' => 'boquette'
             ))
             ->add('receveurUser', 'pjm_select2_entity', array(
                 'label' => 'A qui ?',
@@ -50,7 +50,7 @@ class TransfertType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Consos\Transfert',

@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Form\Type\Boquette;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 class BoquetteByResponsableType extends AbstractType
@@ -29,7 +29,7 @@ class BoquetteByResponsableType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $defaults = array(
             'label' => 'De la part d\'une boquette ?',
@@ -43,7 +43,7 @@ class BoquetteByResponsableType extends AbstractType
                     ->setParameter(':user', $this->options['user'])
                 ;
             },
-            'property' => 'nom',
+            'choice_label' => 'nom',
             'help_label' => "Ta boquette n'apparaît pas alors que tu en es responsable ? Contacte un ZiPhy'sbook."
         );
 

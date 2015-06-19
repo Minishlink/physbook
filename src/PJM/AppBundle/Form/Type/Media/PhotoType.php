@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Form\Type\Media;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use PJM\AppBundle\Form\Type\ImageType;
 
@@ -51,7 +51,7 @@ class PhotoType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Media\Photo',

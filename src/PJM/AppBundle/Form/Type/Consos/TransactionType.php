@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Form\Type\Consos;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\EntityRepository;
 
@@ -35,7 +35,7 @@ class TransactionType extends AbstractType
                         ->setParameter('boquette', $options['boquette'])
                     ;
                 },
-                'property' => 'user'
+                'choice_label' => 'user'
             ))
             ->add('compteLie', 'pjm_select2_entity', array(
                 'label' => 'De la part de',
@@ -51,7 +51,7 @@ class TransactionType extends AbstractType
                     ;
                 },
                 'empty_value' => "Choisir le vrai créditeur, s'il y a lieu",
-                'property' => 'user',
+                'choice_label' => 'user',
                 'required' => false
             ))
             ->add('moyenPaiement', 'choice', array(
@@ -89,7 +89,7 @@ class TransactionType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Transaction',
