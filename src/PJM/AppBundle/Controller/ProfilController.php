@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Entity\Media\Photo;
 use PJM\UserBundle\Form\Type\UserType;
@@ -27,22 +28,26 @@ class ProfilController extends Controller
         ));
     }
 
-    public function encartAction(Request $request, User $user, $content = false)
+    public function encartAction(Request $request, User $user = null, $content = false)
     {
-        if ($content) { // si on clique sur le lien d'encart
-            $online = $this->getDoctrine()->getManager()
-                ->getRepository('PJMUserBundle:User')
-                ->getOneActive($user);
+        if (isset($user)) {
+            if ($content) { // si on clique sur le lien d'encart
+                $online = $this->getDoctrine()->getManager()
+                    ->getRepository('PJMUserBundle:User')
+                    ->getOneActive($user);
 
-                return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(
-                    'user' => $user,
-                    'online' => isset($online)
-                ));
+                    return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(
+                        'user' => $user,
+                        'online' => isset($online)
+                    ));
+            }
+
+            return $this->render('PJMAppBundle:Profil:encart.html.twig', array(
+                'user' => $user
+            ));
         }
 
-        return $this->render('PJMAppBundle:Profil:encart.html.twig', array(
-            'user' => $user
-        ));
+        return new Response('Inconnu(e)');
     }
 
     public function modifierAction(Request $request)
