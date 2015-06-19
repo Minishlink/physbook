@@ -182,6 +182,8 @@ class BoquetteAdminController extends Controller
                     );
                 }
             }
+
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
@@ -314,11 +316,10 @@ class BoquetteAdminController extends Controller
             }
 
             $em->flush();
-
             return new Response("Responsables toggled.");
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     /**
@@ -386,6 +387,8 @@ class BoquetteAdminController extends Controller
                     );
                 }
             }
+
+            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
@@ -433,8 +436,6 @@ class BoquetteAdminController extends Controller
      */
     public function modifierItemAction(Request $request, Boquette $boquette, Item $item)
     {
-        $routeRetour = "pjm_app_admin_boquette_".$boquette->getSlug()."_index";
-
         $form = $this->createForm(new ItemType(), $item, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
@@ -459,7 +460,7 @@ class BoquetteAdminController extends Controller
                     "L'image de l'item ".$item." a été modifiée."
                 );
 
-                return $this->redirect($this->generateUrl($routeRetour));
+                return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -477,8 +478,7 @@ class BoquetteAdminController extends Controller
 
         return $this->render('PJMAppBundle:Admin:imageItem.html.twig', array(
             'form' => $form->createView(),
-            'item' => $item,
-            'routeRetour' => $routeRetour
+            'item' => $item
         ));
     }
 

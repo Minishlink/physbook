@@ -139,7 +139,7 @@ class InboxController extends Controller
             }
         }
 
-        return new Response('Pas Ajax', 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
 
@@ -161,7 +161,7 @@ class InboxController extends Controller
             }
         }
 
-        return new Response('Pas Ajax', 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     /**
@@ -184,6 +184,6 @@ class InboxController extends Controller
             }
         }
 
-        return new Response('Pas Ajax', 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 }

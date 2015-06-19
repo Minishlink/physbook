@@ -129,7 +129,7 @@ class MediaController extends Controller
             return new Response("Photos toggled.");
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     /**
@@ -163,6 +163,6 @@ class MediaController extends Controller
             return new Response("Photos removed.");
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 }

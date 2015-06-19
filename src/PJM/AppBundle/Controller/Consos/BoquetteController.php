@@ -131,7 +131,7 @@ class BoquetteController extends Controller
             ));
         }
 
-        return new Response("This is not ajax.", 400);
+        return $this->redirect($this->generateUrl("pjm_app_homepage"));
     }
 
     /**
