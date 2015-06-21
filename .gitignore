@@ -18,8 +18,7 @@
 /app/config/parameters_dev.yml
 /vendor/
 /bin/
-/doc/
+/doc/S-Money
 desktop.ini
-/.brackets.json
 /npm-debug.log
 /composer.phar

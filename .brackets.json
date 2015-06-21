@@ -1,7 +1,4 @@
 {
-    "jscodehints.detectedExclusions": [
-        "C:/Users/Louis/Documents/Programmation/Sites/pjm-intranet/app/Resources/public/lib/jquery/src/css/var/cssExpand.js"
-    ],
     "jwolfe.file-tree-exclude.list": [
         ".git",
         "vendor",
