@@ -5,14 +5,13 @@ namespace PJM\AppBundle\Form\Type\Consos;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PrixBaguetteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,9 +23,9 @@ class PrixBaguetteType extends AbstractType
                     new Assert\NotBlank(),
                     new Assert\LessThan(array(
                         'value' => 200,
-                        'message' => 'Le prix de la baguette ne devrait pas être plus grand que 2€.'
+                        'message' => 'Le prix de la baguette ne devrait pas être plus grand que 2€.',
                     )),
-                )
+                ),
             ))
             ->add('save', 'submit', array(
                 'label' => 'Modifier',
@@ -40,7 +39,7 @@ class PrixBaguetteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Item'
+            'data_class' => 'PJM\AppBundle\Entity\Item',
         ));
     }
 

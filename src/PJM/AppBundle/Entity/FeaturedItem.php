@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FeaturedItem
+ * FeaturedItem.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\FeaturedItemRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FeaturedItem
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,7 +35,7 @@ class FeaturedItem
     private $item;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean")
      */
@@ -48,9 +48,9 @@ class FeaturedItem
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -58,9 +58,10 @@ class FeaturedItem
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return FeaturedItem
      */
     public function setDate($date)
@@ -71,7 +72,7 @@ class FeaturedItem
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -81,9 +82,10 @@ class FeaturedItem
     }
 
     /**
-     * Set item
+     * Set item.
      *
      * @param \PJM\AppBundle\Entity\Item $item
+     *
      * @return FeaturedItem
      */
     public function setItem(\PJM\AppBundle\Entity\Item $item)
@@ -94,7 +96,7 @@ class FeaturedItem
     }
 
     /**
-     * Get item
+     * Get item.
      *
      * @return \PJM\AppBundle\Entity\Item
      */
@@ -104,9 +106,10 @@ class FeaturedItem
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
+     *
      * @return FeaturedItem
      */
     public function setActive($active)
@@ -117,9 +120,9 @@ class FeaturedItem
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {

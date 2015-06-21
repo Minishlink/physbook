@@ -4,19 +4,17 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-
 use PJM\UserBundle\Entity\User;
-use PJM\AppBundle\Entity\Boquette;
 
 /**
- * CompteRepository
+ * CompteRepository.
  */
 class CompteRepository extends EntityRepository
 {
     public function findOneByUserAndBoquetteSlug(User $user, $boquetteSlug)
     {
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
+        if ($boquetteSlug == 'cvis') {
+            $boquetteSlug = 'pians';
         }
 
         $query = $this->createQueryBuilder('c')
@@ -24,7 +22,7 @@ class CompteRepository extends EntityRepository
                     ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquetteSlug')
                     ->setParameters(array(
                         'user' => $user,
-                        'boquetteSlug'  => $boquetteSlug,
+                        'boquetteSlug' => $boquetteSlug,
                     ))
                     ->getQuery();
         try {
@@ -38,14 +36,14 @@ class CompteRepository extends EntityRepository
 
     public function findByBoquetteSlug($boquetteSlug)
     {
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
+        if ($boquetteSlug == 'cvis') {
+            $boquetteSlug = 'pians';
         }
 
         $query = $this->createQueryBuilder('c')
                     ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquetteSlug')
                     ->setParameters(array(
-                        'boquetteSlug'  => $boquetteSlug,
+                        'boquetteSlug' => $boquetteSlug,
                     ))
                     ->getQuery();
         try {
@@ -59,8 +57,8 @@ class CompteRepository extends EntityRepository
 
     public function findOneByUsernameAndBoquetteSlug($username, $boquetteSlug)
     {
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
+        if ($boquetteSlug == 'cvis') {
+            $boquetteSlug = 'pians';
         }
 
         $query = $this->createQueryBuilder('c')
@@ -68,7 +66,7 @@ class CompteRepository extends EntityRepository
                     ->join('c.user', 'u', 'WITH', 'u.username = :username')
                     ->setParameters(array(
                         'username' => $username,
-                        'boquetteSlug'  => $boquetteSlug,
+                        'boquetteSlug' => $boquetteSlug,
                     ))
                     ->getQuery();
         try {
@@ -89,8 +87,8 @@ class CompteRepository extends EntityRepository
                     ->andWhere('c.solde >= :solde')
                     ->setParameters(array(
                         'user' => $user,
-                        'boquette'  => $boquette,
-                        'solde'  => $solde,
+                        'boquette' => $boquette,
+                        'solde' => $solde,
                     ))
                     ->getQuery();
         try {
@@ -111,8 +109,8 @@ class CompteRepository extends EntityRepository
                     ->andWhere('c.solde < :solde')
                     ->setParameters(array(
                         'user' => $user,
-                        'boquette'  => $boquette,
-                        'solde'  => $solde,
+                        'boquette' => $boquette,
+                        'solde' => $solde,
                     ))
                     ->getQuery();
         try {
@@ -137,7 +135,7 @@ class CompteRepository extends EntityRepository
 
     public function callbackFindByBoquetteSlug($slug)
     {
-        return function(QueryBuilder $qb) use($slug) {
+        return function (QueryBuilder $qb) use ($slug) {
             $qb
                 ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
                 ->setParameter('slug', $slug)
@@ -147,7 +145,7 @@ class CompteRepository extends EntityRepository
 
     public function callbackFindByUserAndBoquetteSlug(User $user, $slug)
     {
-        return function(QueryBuilder $qb) use($slug, $user) {
+        return function (QueryBuilder $qb) use ($slug, $user) {
             $qb
                 ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
                 ->join('Compte.user', 'u', 'WITH', 'u = :user')

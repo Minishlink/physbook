@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Photo
+ * Photo.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Media\PhotoRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Photo
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -38,7 +38,7 @@ class Photo
     private $legende;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="publication", type="smallint")
      * @Assert\NotBlank()
@@ -67,16 +67,16 @@ class Photo
 
     public function __construct()
     {
-        $this->legende = "";
+        $this->legende = '';
         $this->date = new \DateTime();
         $this->usersHM = new \PJM\AppBundle\Entity\UsersHM();
         $this->publication = 0;
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -84,21 +84,24 @@ class Photo
     }
 
     /**
-     * Set legende
+     * Set legende.
      *
      * @param string $legende
+     *
      * @return Photo
      */
     public function setLegende($legende)
     {
-        if ($legende === null) { $legende = ""; }
+        if ($legende === null) {
+            $legende = '';
+        }
         $this->legende = $legende;
 
         return $this;
     }
 
     /**
-     * Get legende
+     * Get legende.
      *
      * @return string
      */
@@ -108,9 +111,10 @@ class Photo
     }
 
     /**
-     * Set publication
+     * Set publication.
      *
-     * @param integer $publication
+     * @param int $publication
+     *
      * @return Photo
      */
     public function setPublication($publication)
@@ -121,9 +125,9 @@ class Photo
     }
 
     /**
-     * Get publication
+     * Get publication.
      *
-     * @return integer
+     * @return int
      */
     public function getPublication()
     {
@@ -131,9 +135,10 @@ class Photo
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Photo
      */
     public function setDate($date)
@@ -144,7 +149,7 @@ class Photo
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -154,9 +159,10 @@ class Photo
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param \PJM\AppBundle\Entity\Image $image
+     *
      * @return Photo
      */
     public function setImage(\PJM\AppBundle\Entity\Image $image = null)
@@ -167,7 +173,7 @@ class Photo
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return \PJM\AppBundle\Entity\Image
      */
@@ -177,9 +183,10 @@ class Photo
     }
 
     /**
-     * Set usersHM
+     * Set usersHM.
      *
      * @param \PJM\AppBundle\Entity\UsersHM $usersHM
+     *
      * @return Photo
      */
     public function setUsersHM(\PJM\AppBundle\Entity\UsersHM $usersHM = null)
@@ -190,7 +197,7 @@ class Photo
     }
 
     /**
-     * Get usersHM
+     * Get usersHM.
      *
      * @return \PJM\AppBundle\Entity\UsersHM
      */
@@ -200,9 +207,9 @@ class Photo
     }
 
     /**
-     * Get nbUsersHM
+     * Get nbUsersHM.
      *
-     * @return integer
+     * @return int
      */
     public function getNbUsersHM()
     {
@@ -210,9 +217,10 @@ class Photo
     }
 
     /**
-     * Set proprietaire
+     * Set proprietaire.
      *
      * @param \PJM\UserBundle\Entity\User $proprietaire
+     *
      * @return Photo
      */
     public function setProprietaire(\PJM\UserBundle\Entity\User $proprietaire = null)
@@ -223,7 +231,7 @@ class Photo
     }
 
     /**
-     * Get proprietaire
+     * Get proprietaire.
      *
      * @return \PJM\UserBundle\Entity\User
      */

@@ -22,6 +22,6 @@ class RegexpFunction extends FunctionNode
 
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
-        return '(' . $this->value->dispatch($sqlWalker) . ' REGEXP ' . $this->regexp->dispatch($sqlWalker) . ')';
+        return '('.$this->value->dispatch($sqlWalker).' REGEXP '.$this->regexp->dispatch($sqlWalker).')';
     }
 }

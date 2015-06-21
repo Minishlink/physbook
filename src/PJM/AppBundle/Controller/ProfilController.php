@@ -14,7 +14,7 @@ class ProfilController extends Controller
 {
     public function voirAction(Request $request, User $user = null)
     {
-        if(!isset($user)) {
+        if (!isset($user)) {
             $user = $this->getUser();
         }
 
@@ -24,7 +24,7 @@ class ProfilController extends Controller
 
         return $this->render('PJMAppBundle:Profil:voir.html.twig', array(
             'user' => $user,
-            'online' => isset($online)
+            'online' => isset($online),
         ));
     }
 
@@ -36,14 +36,14 @@ class ProfilController extends Controller
                     ->getRepository('PJMUserBundle:User')
                     ->getOneActive($user);
 
-                    return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(
+                return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(
                         'user' => $user,
-                        'online' => isset($online)
+                        'online' => isset($online),
                     ));
             }
 
             return $this->render('PJMAppBundle:Profil:encart.html.twig', array(
-                'user' => $user
+                'user' => $user,
             ));
         }
 
@@ -66,7 +66,7 @@ class ProfilController extends Controller
         }
 
         return $this->render('PJMAppBundle:Profil:modifier.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
@@ -84,7 +84,7 @@ class ProfilController extends Controller
         }
 
         $form = $this->createForm(new PhotoType(), $photo, array(
-            'ajout' => $nouvelle
+            'ajout' => $nouvelle,
         ));
 
         $form->handleRequest($request);
@@ -108,7 +108,7 @@ class ProfilController extends Controller
         return $this->render('PJMAppBundle:Profil:modifierPhoto.html.twig', array(
             'form' => $form->createView(),
             'nouvelle' => $nouvelle,
-            'photo' => $photo
+            'photo' => $photo,
         ));
     }
 
@@ -117,11 +117,11 @@ class ProfilController extends Controller
      */
     public function annuaireAction()
     {
-        $datatable = $this->get("pjm.datatable.annuaire");
+        $datatable = $this->get('pjm.datatable.annuaire');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Profil:annuaire.html.twig', array(
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
@@ -130,7 +130,8 @@ class ProfilController extends Controller
      */
     public function annuaireResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.annuaire"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.annuaire'));
+
         return $datatable->getResponse();
     }
 }

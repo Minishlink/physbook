@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Historique
+ * Historique.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\HistoriqueRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Historique
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -43,15 +43,15 @@ class Historique
     private $date;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="valid", type="boolean", nullable=true)
      */
     private $valid;
 
     /**
-     * @var integer
-     * multiplié par 10
+     * @var int
+     *          multiplié par 10
      * @ORM\Column(name="nombre", type="smallint")
      */
     private $nombre;
@@ -70,9 +70,9 @@ class Historique
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -80,9 +80,10 @@ class Historique
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Historique
      */
     public function setDate($date)
@@ -93,7 +94,7 @@ class Historique
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -103,9 +104,10 @@ class Historique
     }
 
     /**
-     * Set nombre
+     * Set nombre.
      *
-     * @param integer $nombre
+     * @param int $nombre
+     *
      * @return Historique
      */
     public function setNombre($nombre)
@@ -116,9 +118,9 @@ class Historique
     }
 
     /**
-     * Get nombre
+     * Get nombre.
      *
-     * @return integer
+     * @return int
      */
     public function getNombre()
     {
@@ -126,19 +128,20 @@ class Historique
     }
 
     /**
-     * Get prix (cents)
+     * Get prix (cents).
      *
-     * @return integer
+     * @return int
      */
     public function getPrix()
     {
-        return $this->getNombre()*$this->getItem()->getPrix()/10;
+        return $this->getNombre() * $this->getItem()->getPrix() / 10;
     }
 
     /**
-     * Set item
+     * Set item.
      *
      * @param \PJM\AppBundle\Entity\Item $item
+     *
      * @return Historique
      */
     public function setItem(\PJM\AppBundle\Entity\Item $item)
@@ -149,7 +152,7 @@ class Historique
     }
 
     /**
-     * Get item
+     * Get item.
      *
      * @return \PJM\AppBundle\Entity\Item
      */
@@ -159,9 +162,10 @@ class Historique
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
+     *
      * @return Historique
      */
     public function setUser(\PJM\UserBundle\Entity\User $user)
@@ -172,7 +176,7 @@ class Historique
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -182,9 +186,10 @@ class Historique
     }
 
     /**
-     * Set valid
+     * Set valid.
      *
-     * @param boolean $valid
+     * @param bool $valid
+     *
      * @return Historique
      */
     public function setValid($valid)
@@ -195,9 +200,9 @@ class Historique
     }
 
     /**
-     * Get valid
+     * Get valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function getValid()
     {

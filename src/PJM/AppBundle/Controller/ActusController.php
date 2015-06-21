@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\Actus\Article;
 use PJM\AppBundle\Form\Type\Actus\ArticleType;
 
@@ -22,19 +21,18 @@ class ActusController extends Controller
 
         // on retourne le template
         return $this->render('PJMAppBundle:Actus:index.html.twig', array(
-            'articles'   => $articles,
+            'articles' => $articles,
             'brouillons' => $brouillons,
-            'page'       => $page,
-            'nombrePages'=> ceil(count($articles)/$nbArticlesParPage)
+            'page' => $page,
+            'nombrePages' => ceil(count($articles) / $nbArticlesParPage),
         ));
     }
-
 
     public function voirAction(Article $article)
     {
         // on retourne le template
         return $this->render('PJMAppBundle:Actus:voir.html.twig', array(
-            'article' => $article
+            'article' => $article,
         ));
     }
 
@@ -48,7 +46,7 @@ class ActusController extends Controller
 
         $form->handleRequest($request);
 
-         if ($form->isSubmitted()) {
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $article->setAuteur($this->getUser());
@@ -62,7 +60,7 @@ class ActusController extends Controller
                 'danger',
                 'Un problème est survenu lors de l\'ajout. Réessaye.'
             );
-         }
+        }
 
         return $this->render('PJMAppBundle:Actus:ajouter.html.twig', array(
             'form' => $form->createView(),
@@ -75,7 +73,7 @@ class ActusController extends Controller
             $form = $this->createForm(new ArticleType(), $article, array(
                 'method' => 'POST',
                 'action' => $this->generateUrl('pjm_app_actus_modifier', array(
-                    'slug' => $article->getSlug()
+                    'slug' => $article->getSlug(),
                 )),
                 'ajout' => false,
             ));
@@ -89,7 +87,7 @@ class ActusController extends Controller
                     $em->flush();
 
                     return $this->redirect($this->generateUrl('pjm_app_actus_voir', array(
-                        'slug' => $article->getSlug()
+                        'slug' => $article->getSlug(),
                     )));
                 }
 
@@ -101,7 +99,7 @@ class ActusController extends Controller
 
             return $this->render('PJMAppBundle:Actus:modifier.html.twig', array(
                 'article' => $article,
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ));
         }
 
@@ -139,7 +137,7 @@ class ActusController extends Controller
 
             return $this->render('PJMAppBundle:Actus:supprimer.html.twig', array(
                 'article' => $article,
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ));
         }
 
@@ -166,7 +164,7 @@ class ActusController extends Controller
 
         // affichage du menu
         return $this->render('PJMAppBundle:Actus:extrait.html.twig', array(
-            'liste_articles' => $articles
+            'liste_articles' => $articles,
         ));
     }
 }

@@ -1,5 +1,7 @@
 <?php
+
 // src/PJM/AppBundle/Entity/Commentaires/Comment.php
+
 
 namespace PJM\AppBundle\Entity\Commentaires;
 
@@ -23,7 +25,7 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
     protected $id;
 
     /**
-     * Thread of this comment
+     * Thread of this comment.
      *
      * @var Thread
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Commentaires\Thread")
@@ -32,14 +34,16 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     protected $score = 0;
 
     /**
-     * Author of the comment
+     * Author of the comment.
      *
      * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     *
      * @var User
      */
     protected $author;
@@ -66,7 +70,7 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
     /**
      * Sets the score of the comment.
      *
-     * @param integer $score
+     * @param int $score
      */
     public function setScore($score)
     {
@@ -76,7 +80,7 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
     /**
      * Returns the current score of the comment.
      *
-     * @return integer
+     * @return int
      */
     public function getScore()
     {
@@ -87,9 +91,9 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
      * Increments the comment score by the provided
      * value.
      *
-     * @param integer value
+     * @param int value
      *
-     * @return integer The new comment score
+     * @return int The new comment score
      */
     public function incrementScore($by = 1)
     {

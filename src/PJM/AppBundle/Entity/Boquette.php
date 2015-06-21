@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Boquette
+ * Boquette.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Boquette
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,10 +48,10 @@ class Boquette
     private $responsabilites;
 
     /**
-    * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
-    * @ORM\JoinColumn(nullable=true)
-    * @Assert\Valid()
-    */
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     */
     private $image;
 
     /**
@@ -62,19 +62,20 @@ class Boquette
      */
     private $couleur;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->nom;
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -82,9 +83,10 @@ class Boquette
     }
 
     /**
-     * Set nom
+     * Set nom.
      *
      * @param string $nom
+     *
      * @return Boquette
      */
     public function setNom($nom)
@@ -95,7 +97,7 @@ class Boquette
     }
 
     /**
-     * Get nom
+     * Get nom.
      *
      * @return string
      */
@@ -105,19 +107,20 @@ class Boquette
     }
 
     /**
-     * Get nom au format court
+     * Get nom au format court.
      *
      * @return string
      */
     public function getNomCourt()
     {
-        return strtok($this->nom, " ");
+        return strtok($this->nom, ' ');
     }
 
     /**
-     * Set caisseSMoney
+     * Set caisseSMoney.
      *
      * @param string $caisseSMoney
+     *
      * @return Boquette
      */
     public function setCaisseSMoney($caisseSMoney)
@@ -128,7 +131,7 @@ class Boquette
     }
 
     /**
-     * Get caisseSMoney
+     * Get caisseSMoney.
      *
      * @return string
      */
@@ -138,9 +141,10 @@ class Boquette
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Boquette
      */
     public function setSlug($slug)
@@ -151,7 +155,7 @@ class Boquette
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -161,9 +165,10 @@ class Boquette
     }
 
     /**
-     * Add responsabilites
+     * Add responsabilites.
      *
      * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
+     *
      * @return Boquette
      */
     public function addResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilites)
@@ -174,7 +179,7 @@ class Boquette
     }
 
     /**
-     * Remove responsabilites
+     * Remove responsabilites.
      *
      * @param \PJM\AppBundle\Entity\Responsabilite $responsabilites
      */
@@ -184,7 +189,7 @@ class Boquette
     }
 
     /**
-     * Get responsabilites
+     * Get responsabilites.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -194,9 +199,10 @@ class Boquette
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param \PJM\AppBundle\Entity\Image $image
+     *
      * @return Boquette
      */
     public function setImage(\PJM\AppBundle\Entity\Image $image = null)
@@ -207,7 +213,7 @@ class Boquette
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return \PJM\AppBundle\Entity\Image
      */
@@ -217,7 +223,7 @@ class Boquette
     }
 
     /**
-     * Set couleur
+     * Set couleur.
      *
      * @param string $couleur
      *
@@ -231,7 +237,7 @@ class Boquette
     }
 
     /**
-     * Get couleur
+     * Get couleur.
      *
      * @return string
      */

@@ -18,6 +18,7 @@ class Image
         $uploadDir = 'uploads/img'; // apparait dans PJM\AppBundle\Entity\Image
         $imgPath = $uploadDir.'/'.$id.'.'.$ext;
         $path = $this->assets->getUrl($imgPath);
+
         return '<img src="'.$path.'" alt="'.$alt.'" />';
     }
 }

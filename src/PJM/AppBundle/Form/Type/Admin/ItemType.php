@@ -11,17 +11,17 @@ class ItemType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('libelle')
             ->add('image', new ImageType(), array(
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
-                'label' => 'Modifier'
+                'label' => 'Modifier',
             ))
         ;
     }
@@ -32,7 +32,7 @@ class ItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Item'
+            'data_class' => 'PJM\AppBundle\Entity\Item',
         ));
     }
 

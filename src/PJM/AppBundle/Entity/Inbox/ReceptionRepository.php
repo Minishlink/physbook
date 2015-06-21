@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity\Inbox;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ReceptionRepository
+ * ReceptionRepository.
  */
 class ReceptionRepository extends EntityRepository
 {

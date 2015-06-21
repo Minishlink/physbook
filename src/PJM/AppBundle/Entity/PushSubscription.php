@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PushSubscription
+ * PushSubscription.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\PushSubscriptionRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PushSubscription
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -61,9 +61,9 @@ class PushSubscription
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -71,7 +71,7 @@ class PushSubscription
     }
 
     /**
-     * Set subscriptionId
+     * Set subscriptionId.
      *
      * @param string $subscriptionId
      *
@@ -85,7 +85,7 @@ class PushSubscription
     }
 
     /**
-     * Get subscriptionId
+     * Get subscriptionId.
      *
      * @return string
      */
@@ -95,7 +95,7 @@ class PushSubscription
     }
 
     /**
-     * Set lastSubscribed
+     * Set lastSubscribed.
      *
      * @param \DateTime $lastSubscribed
      *
@@ -109,7 +109,7 @@ class PushSubscription
     }
 
     /**
-     * Get lastSubscribed
+     * Get lastSubscribed.
      *
      * @return \DateTime
      */
@@ -119,7 +119,7 @@ class PushSubscription
     }
 
     /**
-     * Refresh lastSubscribed
+     * Refresh lastSubscribed.
      *
      * @return PushSubscription
      */
@@ -131,7 +131,7 @@ class PushSubscription
     }
 
     /**
-     * Set endpoint
+     * Set endpoint.
      *
      * @param string $endpoint
      *
@@ -145,7 +145,7 @@ class PushSubscription
     }
 
     /**
-     * Get endpoint
+     * Get endpoint.
      *
      * @return string
      */
@@ -155,7 +155,7 @@ class PushSubscription
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
      *
@@ -169,7 +169,7 @@ class PushSubscription
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -179,7 +179,7 @@ class PushSubscription
     }
 
     /**
-     * Set browserUA
+     * Set browserUA.
      *
      * @param string $browserUA
      *
@@ -193,7 +193,7 @@ class PushSubscription
     }
 
     /**
-     * Get browserUA
+     * Get browserUA.
      *
      * @return string
      */

@@ -11,7 +11,7 @@ class ResponsableType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,7 @@ class ResponsableType extends AbstractType
                 'error_bubbling' => true,
                 'label' => 'Utilisateur',
                 'class' => 'PJMUserBundle:User',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.username', 'ASC');
                 },
@@ -29,7 +29,7 @@ class ResponsableType extends AbstractType
                 'error_bubbling' => true,
                 'label' => 'Responsabilité',
                 'class' => 'PJMAppBundle:Responsabilite',
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('r')
                         ->where('r.boquette = :boquette')
                         ->andWhere('r.active = true')
@@ -40,7 +40,7 @@ class ResponsableType extends AbstractType
             ))
             ->add('active', null, array(
                 'label' => 'Actif',
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
                 'label' => 'Envoyer',
@@ -55,7 +55,7 @@ class ResponsableType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Responsable',
-            'boquette' => null
+            'boquette' => null,
         ));
     }
 

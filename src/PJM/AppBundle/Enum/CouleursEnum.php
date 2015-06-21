@@ -3,23 +3,24 @@
 namespace PJM\AppBundle\Enum;
 
 /**
- * CouleursEnum
+ * CouleursEnum.
  *
  * Enumerations des couleurs possibles, c'est-à-dire celles dans site/background.less
  */
 class CouleursEnum
 {
-    public static function getCouleursChoices($withValues = false) {
+    public static function getCouleursChoices($withValues = false)
+    {
         $choices = array(
-            'blanc' => "Blanc",
-            'noir' => "Noir",
-            'gris' => "Gris",
-            'orange' => "Orange",
-            'jaune' => "Jaune",
-            'bleu' => "Bleu",
-            'vert' => "Vert",
-            'mauve' => "Mauve",
-            'rose' => "Rose"
+            'blanc' => 'Blanc',
+            'noir' => 'Noir',
+            'gris' => 'Gris',
+            'orange' => 'Orange',
+            'jaune' => 'Jaune',
+            'bleu' => 'Bleu',
+            'vert' => 'Vert',
+            'mauve' => 'Mauve',
+            'rose' => 'Rose',
         );
 
         if ($withValues) {

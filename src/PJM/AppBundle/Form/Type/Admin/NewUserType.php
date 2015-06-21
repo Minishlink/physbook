@@ -10,7 +10,7 @@ class NewUserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,11 +20,11 @@ class NewUserType extends AbstractType
             ->add('email', 'email')
             ->add('fams', 'text')
             ->add('tabagns', 'choice', array(
-                'choices' => $userEnum->getTabagnsChoices(true)
+                'choices' => $userEnum->getTabagnsChoices(true),
             ))
             ->add('proms', 'text')
             ->add('genre', 'choice', array(
-                'choices' => array_reverse($userEnum->getGenreChoices(true)) // plus fréquent d'inscrire des hommes
+                'choices' => array_reverse($userEnum->getGenreChoices(true)), // plus fréquent d'inscrire des hommes
             ))
             ->add('bucque', 'text')
             ->add('prenom', 'text')
@@ -35,10 +35,10 @@ class NewUserType extends AbstractType
             ->add('anniversaire', 'text', array('required' => false))
             ->add('enabled', 'checkbox', array(
                 'label' => 'Activé',
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
-                'label' => 'Ajouter'
+                'label' => 'Ajouter',
             ))
         ;
     }
@@ -49,7 +49,7 @@ class NewUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\UserBundle\Entity\User'
+            'data_class' => 'PJM\UserBundle\Entity\User',
         ));
     }
 

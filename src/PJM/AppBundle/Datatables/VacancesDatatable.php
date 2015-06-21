@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class VacancesDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class VacancesDatatable.
  */
 class VacancesDatatable extends AbstractDatatableView
 {
@@ -22,7 +20,7 @@ class VacancesDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_vacancesResults'));
@@ -33,46 +31,46 @@ class VacancesDatatable extends AbstractDatatableView
             ->add('dateDebut', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('dateDebut', 'datetime', array(
                 'title' => 'Début',
-                'format' => 'll'
+                'format' => 'll',
             ))
             ->add('dateFin', 'datetime', array(
                 'title' => 'Fin',
-                'format' => 'll'
+                'format' => 'll',
             ))
-            ->add("fait", "boolean", array(
-                "title" => "Fait",
-                "visible" => false,
-                "true_icon" => "glyphicon glyphicon-ok",
-                "false_icon" => "glyphicon glyphicon-remove"
+            ->add('fait', 'boolean', array(
+                'title' => 'Fait',
+                'visible' => false,
+                'true_icon' => 'glyphicon glyphicon-ok',
+                'false_icon' => 'glyphicon glyphicon-remove',
             ))
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
+            ->add(null, 'action', array(
+                'title' => 'Actions',
+                'actions' => array(
                     array(
-                        "route" => "pjm_app_admin_boquette_brags_annulerVacances",
-                        "route_parameters" => array(
-                            "vacances" => "id"
+                        'route' => 'pjm_app_admin_boquette_brags_annulerVacances',
+                        'route_parameters' => array(
+                            'vacances' => 'id',
                         ),
-                        "icon" => "glyphicon glyphicon-trash",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Supprimer",
-                            "class" => "btn btn-primary btn-xs",
-                            "role" => "button"
+                        'icon' => 'glyphicon glyphicon-trash',
+                        'attributes' => array(
+                            'rel' => 'tooltip',
+                            'title' => 'Supprimer',
+                            'class' => 'btn btn-primary btn-xs',
+                            'role' => 'button',
                         ),
-                        "confirm" => true,
-                        "confirm_message" => "Es-tu sûr ?",
-                        "role" => "ROLE_ZIBRAGS",
-                        "renderif" => array(
+                        'confirm' => true,
+                        'confirm_message' => 'Es-tu sûr ?',
+                        'role' => 'ROLE_ZIBRAGS',
+                        'renderif' => array(
                             // #FUTURE remplacer si MAJ bundle datatable
-                            "fait) == false; var dummy = function(){}; dummy("
-                        )
+                            'fait) == false; var dummy = function(){}; dummy(',
+                        ),
                     ),
-                )
+                ),
             ))
         ;
     }

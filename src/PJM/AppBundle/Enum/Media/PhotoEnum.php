@@ -3,16 +3,17 @@
 namespace PJM\AppBundle\Enum\Media;
 
 /**
- * PhotoEnum
+ * PhotoEnum.
  */
 class PhotoEnum
 {
-    public static function getPublicationChoices($withValues = false) {
+    public static function getPublicationChoices($withValues = false)
+    {
         $choices = array(
-            '0' => "En attente de validation",
-            '1' => "Pas autorisée",
-            '2' => "Autorisée",
-            '3' => "Affichée",
+            '0' => 'En attente de validation',
+            '1' => 'Pas autorisée',
+            '2' => 'Autorisée',
+            '3' => 'Affichée',
         );
 
         if ($withValues) {

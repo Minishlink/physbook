@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity\Consos;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use PJM\AppBundle\Entity\Transaction;
 
 /**
@@ -18,7 +17,7 @@ use PJM\AppBundle\Entity\Transaction;
 class Transfert
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,7 +34,7 @@ class Transfert
     private $date;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="montant", type="integer")
      * @Assert\Range(
@@ -71,10 +70,10 @@ class Transfert
 
     /**
      * @var string
-     * "OK" : paiement validé et enregistré
-     * "NOK" : paiement non validé
-     * {chaine} : erreur
-     * null : paiement non complété
+     *             "OK" : paiement validé et enregistré
+     *             "NOK" : paiement non validé
+     *             {chaine} : erreur
+     *             null : paiement non complété
      *
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
@@ -88,10 +87,10 @@ class Transfert
             $this->emetteur = $transaction->getCompte();
             $this->receveur = $transaction->getCompteLie();
             $this->montant = $transaction->getMontant();
-            $this->raison = "Via ".$transaction->getMoyenPaiement();
-            if ($transaction->getMoyenPaiement() != "cheque") {
+            $this->raison = 'Via '.$transaction->getMoyenPaiement();
+            if ($transaction->getMoyenPaiement() != 'cheque') {
                 if (null !== $transaction->getInfos()) {
-                    $this->raison .= " : ".$transaction->getInfos();
+                    $this->raison .= ' : '.$transaction->getInfos();
                 }
             }
         }
@@ -106,14 +105,14 @@ class Transfert
         } else {
             $this->receveur->crediter($this->montant);
             $this->emetteur->debiter($this->montant);
-            $this->status = "OK";
+            $this->status = 'OK';
         }
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -121,9 +120,10 @@ class Transfert
     }
 
     /**
-     * Set montant
+     * Set montant.
      *
-     * @param integer $montant
+     * @param int $montant
+     *
      * @return Transfert
      */
     public function setMontant($montant)
@@ -134,9 +134,9 @@ class Transfert
     }
 
     /**
-     * Get montant
+     * Get montant.
      *
-     * @return integer
+     * @return int
      */
     public function getMontant()
     {
@@ -144,9 +144,10 @@ class Transfert
     }
 
     /**
-     * Set raison
+     * Set raison.
      *
      * @param string $raison
+     *
      * @return Transfert
      */
     public function setRaison($raison)
@@ -157,7 +158,7 @@ class Transfert
     }
 
     /**
-     * Get raison
+     * Get raison.
      *
      * @return string
      */
@@ -167,9 +168,10 @@ class Transfert
     }
 
     /**
-     * Set receveur
+     * Set receveur.
      *
      * @param \PJM\AppBundle\Entity\Compte $receveur
+     *
      * @return Transfert
      */
     public function setReceveur(\PJM\AppBundle\Entity\Compte $receveur)
@@ -180,7 +182,7 @@ class Transfert
     }
 
     /**
-     * Get receveur
+     * Get receveur.
      *
      * @return \PJM\AppBundle\Entity\Compte
      */
@@ -190,9 +192,10 @@ class Transfert
     }
 
     /**
-     * Set receveurUser
+     * Set receveurUser.
      *
      * @param \PJM\UserBundle\Entity\User $receveurUser
+     *
      * @return Transfert
      */
     public function setReceveurUser(\PJM\UserBundle\Entity\User $receveurUser)
@@ -203,7 +206,7 @@ class Transfert
     }
 
     /**
-     * Get receveurUser
+     * Get receveurUser.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -213,9 +216,10 @@ class Transfert
     }
 
     /**
-     * Set emetteur
+     * Set emetteur.
      *
      * @param \PJM\AppBundle\Entity\Compte $emetteur
+     *
      * @return Transfert
      */
     public function setEmetteur(\PJM\AppBundle\Entity\Compte $emetteur)
@@ -226,7 +230,7 @@ class Transfert
     }
 
     /**
-     * Get emetteur
+     * Get emetteur.
      *
      * @return \PJM\AppBundle\Entity\Compte
      */
@@ -236,9 +240,10 @@ class Transfert
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Transfert
      */
     public function setDate($date)
@@ -249,7 +254,7 @@ class Transfert
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -259,9 +264,10 @@ class Transfert
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
+     *
      * @return Transfert
      */
     public function setStatus($status)
@@ -272,7 +278,7 @@ class Transfert
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */

@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class AchatsDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class AchatsDatatable.
  */
 class AchatsDatatable extends AbstractDatatableView
 {
@@ -35,7 +33,7 @@ class AchatsDatatable extends AbstractDatatableView
             ->setProcessing(true);
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->ajaxUrl);
@@ -46,28 +44,28 @@ class AchatsDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll'
+                'format' => 'lll',
             ))
         ;
 
         if (!$this->admin) {
             $this->getColumnBuilder()
-                ->add('item.boquette.nom', 'column', array('title' => 'Boquette',))
+                ->add('item.boquette.nom', 'column', array('title' => 'Boquette'))
             ;
         } else {
             $this->getColumnBuilder()
-                ->add('user.username', 'column', array('title' => 'PG',))
+                ->add('user.username', 'column', array('title' => 'PG'))
             ;
         }
 
         $this->getColumnBuilder()
-            ->add('item.libelle', 'column', array('title' => 'Item',))
-            ->add('nombre', 'column', array('title' => 'Nombre',))
-            ->add('item.prix', 'column', array('title' => 'Prix',))
+            ->add('item.libelle', 'column', array('title' => 'Item'))
+            ->add('nombre', 'column', array('title' => 'Nombre'))
+            ->add('item.prix', 'column', array('title' => 'Prix'))
         ;
     }
 
@@ -77,9 +75,10 @@ class AchatsDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            $line["nombre"] = $ext->nombreFilter($line["nombre"]);
-            $line["item"]["prix"] = $ext->prixFilter($line["nombre"]*$line["item"]["prix"]);
+        $formatter = function ($line) use ($ext) {
+            $line['nombre'] = $ext->nombreFilter($line['nombre']);
+            $line['item']['prix'] = $ext->prixFilter($line['nombre'] * $line['item']['prix']);
+
             return $line;
         };
 

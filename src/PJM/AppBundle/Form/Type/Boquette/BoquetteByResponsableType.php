@@ -22,7 +22,7 @@ class BoquetteByResponsableType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_merge($view->vars, array(
-            'help_label' => $options['help_label']
+            'help_label' => $options['help_label'],
         ));
     }
 
@@ -33,8 +33,8 @@ class BoquetteByResponsableType extends AbstractType
     {
         $defaults = array(
             'label' => 'De la part d\'une boquette ?',
-            'class'    => 'PJMAppBundle:Boquette',
-            'query_builder' => function(EntityRepository $er) {
+            'class' => 'PJMAppBundle:Boquette',
+            'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('b')
                     ->join('b.responsabilites', 'r')
                     ->join('r.responsables', 're')
@@ -44,7 +44,7 @@ class BoquetteByResponsableType extends AbstractType
                 ;
             },
             'choice_label' => 'nom',
-            'help_label' => "Ta boquette n'apparaît pas alors que tu en es responsable ? Contacte un ZiPhy'sbook."
+            'help_label' => "Ta boquette n'apparaît pas alors que tu en es responsable ? Contacte un ZiPhy'sbook.",
         );
 
         if (!empty($this->options['required'])) {

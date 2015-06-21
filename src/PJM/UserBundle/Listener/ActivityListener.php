@@ -1,5 +1,7 @@
 <?php
+
 // http://www.symfony-grenoble.fr/238/lister-les-utilisateurs-en-ligne/
+
 
 namespace PJM\UserBundle\Listener;
 
@@ -21,9 +23,10 @@ class ActivityListener
     }
 
     /**
-    * Update the user "lastActivity" on each request
-    * @param FilterControllerEvent $event
-    */
+     * Update the user "lastActivity" on each request.
+     *
+     * @param FilterControllerEvent $event
+     */
     public function onCoreController(FilterControllerEvent $event)
     {
         // ici nous vérifions que la requête est une "MASTER_REQUEST" pour que les sous-requête soit ingoré (par exemple si vous faites un render() dans votre template)

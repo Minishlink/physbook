@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Image
+ * Image.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ImageRepository")
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Image
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id")
      * @ORM\Id
@@ -38,23 +38,22 @@ class Image
      */
     private $alt;
 
-
     /**
-    * @Assert\Image(maxSize="500k", maxWidth=2000, maxHeight=1500)
-    */
+     * @Assert\Image(maxSize="500k", maxWidth=2000, maxHeight=1500)
+     */
     private $file;
 
     private $tempFilename;
 
     public function __toString()
     {
-        return "Image id:".$this->id."; alt:".$this->alt;
+        return 'Image id:'.$this->id.'; alt:'.$this->alt;
     }
 
     /**
-    * @ORM\PrePersist()
-    * @ORM\PreUpdate()
-    */
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
     public function preUpload()
     {
         if (null === $this->file) {
@@ -66,9 +65,9 @@ class Image
     }
 
     /**
-    * @ORM\PostPersist()
-    * @ORM\PostUpdate()
-    */
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
     public function upload()
     {
         if (null === $this->file) {
@@ -92,16 +91,16 @@ class Image
     }
 
     /**
-    * @ORM\PreRemove()
-    */
+     * @ORM\PreRemove()
+     */
     public function preRemoveUpload()
     {
         $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->ext;
     }
 
     /**
-    * @ORM\PostRemove()
-    */
+     * @ORM\PostRemove()
+     */
     public function removeUpload()
     {
         if (file_exists($this->tempFilename)) {
@@ -133,11 +132,10 @@ class Image
             : $this->getUploadDir().'/'.$this->getId().'.'.$this->getExt();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -145,9 +143,10 @@ class Image
     }
 
     /**
-     * Set ext
+     * Set ext.
      *
      * @param string $ext
+     *
      * @return Image
      */
     public function setExt($ext)
@@ -158,7 +157,7 @@ class Image
     }
 
     /**
-     * Get ext
+     * Get ext.
      *
      * @return string
      */
@@ -168,9 +167,10 @@ class Image
     }
 
     /**
-     * Set alt
+     * Set alt.
      *
      * @param string $alt
+     *
      * @return Image
      */
     public function setAlt($alt)
@@ -181,7 +181,7 @@ class Image
     }
 
     /**
-     * Get alt
+     * Get alt.
      *
      * @return string
      */
@@ -191,9 +191,10 @@ class Image
     }
 
     /**
-     * Set file
+     * Set file.
      *
      * @param UploadedFile $file
+     *
      * @return Image
      */
     public function setFile(UploadedFile $file = null)
@@ -214,7 +215,7 @@ class Image
     }
 
     /**
-     * Get file
+     * Get file.
      *
      * @return UploadedFile
      */

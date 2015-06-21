@@ -14,7 +14,7 @@ class DateTimePickerType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_merge($view->vars, array(
-            'linkedTo' => $options['linkedTo']
+            'linkedTo' => $options['linkedTo'],
         ));
     }
 
@@ -26,7 +26,7 @@ class DateTimePickerType extends AbstractType
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy HH:mm',
-            'linkedTo' => null
+            'linkedTo' => null,
         ));
     }
 

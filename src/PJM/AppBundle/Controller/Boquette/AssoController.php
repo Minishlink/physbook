@@ -17,7 +17,7 @@ class AssoController extends Controller //extends BoquetteController
     public function adminAction()
     {
         return $this->render('PJMAppBundle:Admin:Boquette/Asso/index.html.twig', array(
-            'boquetteSlug' => $this->slug
+            'boquetteSlug' => $this->slug,
         ));
     }
 }

@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class CreditsDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class CreditsDatatable.
  */
 class CreditsDatatable extends AbstractDatatableView
 {
@@ -36,7 +34,7 @@ class CreditsDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->ajaxUrl);
@@ -47,11 +45,11 @@ class CreditsDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll'
+                'format' => 'lll',
             ))
         ;
 
@@ -81,7 +79,7 @@ class CreditsDatatable extends AbstractDatatableView
             ))
             ->add('status', 'column', array(
                 'title' => 'Statut',
-                'visible' => false
+                'visible' => false,
             ))
         ;
     }
@@ -92,12 +90,13 @@ class CreditsDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            $line["montant"] = $ext->prixFilter($line["montant"]);
-            $line["moyenPaiement"] = $ext->moyenPaiementFilter($line["moyenPaiement"]);
-            if ($line['status'] != "OK") {
-                $line["infos"] = "Annulé ! Erreur : ".$line['status']." / ".$line["infos"];
+        $formatter = function ($line) use ($ext) {
+            $line['montant'] = $ext->prixFilter($line['montant']);
+            $line['moyenPaiement'] = $ext->moyenPaiementFilter($line['moyenPaiement']);
+            if ($line['status'] != 'OK') {
+                $line['infos'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['infos'];
             }
+
             return $line;
         };
 

@@ -1,10 +1,10 @@
 <?php
+
 namespace PJM\AppBundle\Form\Type\Filter;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Doctrine\ORM\EntityRepository;
 
 class ResponsableFilterType extends AbstractType
@@ -15,16 +15,16 @@ class ResponsableFilterType extends AbstractType
             ->add('responsabilite', 'filter_entity', array(
                 'label' => 'Responsabilité',
                 'class' => 'PJMAppBundle:Responsabilite',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('r')
                         ->orderBy('r.libelle', 'ASC')
                     ;
                 },
                 'multiple' => true,
-                'required' => false
+                'required' => false,
             ))
             ->add('active', 'filter_boolean', array(
-                'label' => "Responsable encore actif ?",
+                'label' => 'Responsable encore actif ?',
             ))
         ;
     }
@@ -35,8 +35,8 @@ class ResponsableFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection'   => false,
-            'validation_groups' => array('filtering')
+            'csrf_protection' => false,
+            'validation_groups' => array('filtering'),
         ));
     }
 

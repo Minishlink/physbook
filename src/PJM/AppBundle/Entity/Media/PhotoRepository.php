@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity\Media;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * PhotoRepository
+ * PhotoRepository.
  */
 class PhotoRepository extends EntityRepository
 {

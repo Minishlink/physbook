@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class PushSubscriptionDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class PushSubscriptionDatatable.
  */
 class PushSubscriptionDatatable extends AbstractDatatableView
 {
@@ -22,7 +20,7 @@ class PushSubscriptionDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl(
@@ -33,18 +31,18 @@ class PushSubscriptionDatatable extends AbstractDatatableView
 
         $this->getMultiselect()
             ->setEnabled(true)
-            ->setPosition("last")
-            ->addAction("Supprimer", "pjm_app_push_deleteSubscription")
-            ->setWidth("20px")
+            ->setPosition('last')
+            ->addAction('Supprimer', 'pjm_app_push_deleteSubscription')
+            ->setWidth('20px')
         ;
 
         $this->getColumnBuilder()
-            ->add("lastSubscribed", "datetime", array(
-                "title" => "Dernier accès",
-                "format" => "lll"
+            ->add('lastSubscribed', 'datetime', array(
+                'title' => 'Dernier accès',
+                'format' => 'lll',
             ))
-            ->add("browserUA", "column", array(
-                "title" => "Type de navigateur",
+            ->add('browserUA', 'column', array(
+                'title' => 'Type de navigateur',
             ))
         ;
     }

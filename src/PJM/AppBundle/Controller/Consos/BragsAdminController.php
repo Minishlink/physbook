@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Controller\Consos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\Vacances;
 use PJM\AppBundle\Form\Type\VacancesType;
@@ -25,13 +24,13 @@ class BragsAdminController extends Controller
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:Consos/Brags/index.html.twig', array(
-            'boquetteSlug' => $this->slug
+            'boquetteSlug' => $this->slug,
         ));
     }
 
     public function listeCommandesAction()
     {
-        $datatable = $this->get("pjm.datatable.commandes");
+        $datatable = $this->get('pjm.datatable.commandes');
         $datatable->buildDatatableView();
 
         $commandes = $this->getDoctrine()->getManager()
@@ -40,14 +39,14 @@ class BragsAdminController extends Controller
 
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listeCommandes.html.twig', array(
             'datatable' => $datatable,
-            'commandes' => $commandes
+            'commandes' => $commandes,
         ));
     }
 
     // action ajax de rendu de la liste des commandes
     public function commandesResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.commandes"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.commandes'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Commande');
         $datatable->addWhereBuilderCallback($repository->callbackFindByItemSlug($this->itemSlug));
@@ -58,12 +57,12 @@ class BragsAdminController extends Controller
     public function validerCommandesAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $listeCommandes = $request->request->get("data");
+            $listeCommandes = $request->request->get('data');
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("PJMAppBundle:Commande");
+            $repository = $em->getRepository('PJMAppBundle:Commande');
 
             foreach ($listeCommandes as $commandeChoice) {
-                $commande = $repository->find($commandeChoice["value"]);
+                $commande = $repository->find($commandeChoice['value']);
 
                 if ($commande->getItem()->getSlug() == $this->itemSlug && null === $commande->getValid()) {
                     $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
@@ -96,18 +95,18 @@ class BragsAdminController extends Controller
             return new Response('Ok');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     public function resilierCommandesAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $listeCommandes = $request->request->get("data");
+            $listeCommandes = $request->request->get('data');
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("PJMAppBundle:Commande");
+            $repository = $em->getRepository('PJMAppBundle:Commande');
 
             foreach ($listeCommandes as $commandeChoice) {
-                $commande = $repository->find($commandeChoice["value"]);
+                $commande = $repository->find($commandeChoice['value']);
 
                 if ($commande->getItem()->getSlug() == $this->itemSlug && $commande->getValid() !== false) {
                     $em = $this->getDoctrine()->getManager();
@@ -125,7 +124,7 @@ class BragsAdminController extends Controller
             return new Response('Ok');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     public function listeVacancesAction(Request $request)
@@ -173,18 +172,18 @@ class BragsAdminController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_admin_boquette_brags_index'));
         }
 
-        $datatable = $this->get("pjm.datatable.vacances");
+        $datatable = $this->get('pjm.datatable.vacances');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listeVacances.html.twig', array(
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
     public function vacancesResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.vacances"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.vacances'));
 
         return $datatable->getResponse();
     }
@@ -206,6 +205,7 @@ class BragsAdminController extends Controller
                 'Les vacances du '.$vacances->getDateDebut()->format('d/m/y').' au '.$vacances->getDateFin()->format('d/m/y').' ne peuvent pas être annulées.'
             );
         }
+
         return $this->redirect($this->generateUrl('pjm_app_admin_boquette_brags_index'));
     }
 
@@ -281,13 +281,13 @@ class BragsAdminController extends Controller
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listePrix.html.twig', array(
             'datatable' => $datatable,
             'prixActuel' => $currentBaguette->getPrix(),
-            'form'      => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
     public function prixResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.prix"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.prix'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
         $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Commande
+ * Commande.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\CommandeRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Commande
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -59,14 +59,14 @@ class Commande
     private $dateFin;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="valid", type="boolean", nullable=true)
      */
     private $valid;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nombre", type="smallint")
      */
@@ -90,9 +90,9 @@ class Commande
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -100,9 +100,10 @@ class Commande
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Historique
      */
     public function setDate($date)
@@ -113,7 +114,7 @@ class Commande
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -123,9 +124,10 @@ class Commande
     }
 
     /**
-     * Set nombre
+     * Set nombre.
      *
-     * @param integer $nombre
+     * @param int $nombre
+     *
      * @return Historique
      */
     public function setNombre($nombre)
@@ -136,9 +138,9 @@ class Commande
     }
 
     /**
-     * Get nombre
+     * Get nombre.
      *
-     * @return integer
+     * @return int
      */
     public function getNombre()
     {
@@ -146,9 +148,10 @@ class Commande
     }
 
     /**
-     * Set item
+     * Set item.
      *
      * @param \PJM\AppBundle\Entity\Item $item
+     *
      * @return Historique
      */
     public function setItem(\PJM\AppBundle\Entity\Item $item)
@@ -159,7 +162,7 @@ class Commande
     }
 
     /**
-     * Get item
+     * Get item.
      *
      * @return \PJM\AppBundle\Entity\Item
      */
@@ -169,9 +172,10 @@ class Commande
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
+     *
      * @return Historique
      */
     public function setUser(\PJM\UserBundle\Entity\User $user)
@@ -182,7 +186,7 @@ class Commande
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -192,9 +196,10 @@ class Commande
     }
 
     /**
-     * Set valid
+     * Set valid.
      *
-     * @param boolean $valid
+     * @param bool $valid
+     *
      * @return Historique
      */
     public function setValid($valid)
@@ -205,9 +210,9 @@ class Commande
     }
 
     /**
-     * Get valid
+     * Get valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function getValid()
     {
@@ -215,9 +220,10 @@ class Commande
     }
 
     /**
-     * Set dateDebut
+     * Set dateDebut.
      *
      * @param \DateTime $dateDebut
+     *
      * @return Commande
      */
     public function setDateDebut($dateDebut)
@@ -228,7 +234,7 @@ class Commande
     }
 
     /**
-     * Get dateDebut
+     * Get dateDebut.
      *
      * @return \DateTime
      */
@@ -238,9 +244,10 @@ class Commande
     }
 
     /**
-     * Set dateFin
+     * Set dateFin.
      *
      * @param \DateTime $dateFin
+     *
      * @return Commande
      */
     public function setDateFin($dateFin)
@@ -251,7 +258,7 @@ class Commande
     }
 
     /**
-     * Get dateFin
+     * Get dateFin.
      *
      * @return \DateTime
      */

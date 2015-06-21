@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ResponsableRepository
+ * ResponsableRepository.
  */
 class ResponsableRepository extends EntityRepository
 {

@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity\Actus;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categorie
+ * Categorie.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Actus\CategorieRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Categorie
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,11 +28,10 @@ class Categorie
      */
     private $nom;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -40,9 +39,10 @@ class Categorie
     }
 
     /**
-     * Set nom
+     * Set nom.
      *
      * @param string $nom
+     *
      * @return Categorie
      */
     public function setNom($nom)
@@ -53,7 +53,7 @@ class Categorie
     }
 
     /**
-     * Get nom
+     * Get nom.
      *
      * @return string
      */

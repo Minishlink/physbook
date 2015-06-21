@@ -11,7 +11,7 @@ class BoquetteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,14 +23,14 @@ class BoquetteType extends AbstractType
             ->add('slug')
             ->add('image', new ImageType(), array(
                 'label' => 'Logo',
-                'required' => false
+                'required' => false,
             ))
             ->add('caisseSMoney', null, array(
                 'label' => 'Caisse S-Money',
             ))
             ->add('couleur', 'choice', array(
                 'choices' => $couleursChoices,
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
                 'label' => 'Envoyer',
@@ -44,7 +44,7 @@ class BoquetteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Boquette'
+            'data_class' => 'PJM\AppBundle\Entity\Boquette',
         ));
     }
 

@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class TransfertsDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class TransfertsDatatable.
  */
 class TransfertsDatatable extends AbstractDatatableView
 {
@@ -36,7 +34,7 @@ class TransfertsDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->ajaxUrl);
@@ -47,11 +45,11 @@ class TransfertsDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll'
+                'format' => 'lll',
             ))
             ->add('emetteur.boquette.nom', 'column', array(
                 'title' => 'Boquette',
@@ -70,7 +68,7 @@ class TransfertsDatatable extends AbstractDatatableView
             ))
             ->add('status', 'column', array(
                 'title' => 'Statut',
-                'visible' => false
+                'visible' => false,
             ))
         ;
     }
@@ -81,12 +79,13 @@ class TransfertsDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            $line["montant"] = $ext->prixFilter($line["montant"]);
-            if ($line['status'] != "OK") {
-                $line["raison"] = "Annulé ! Erreur : ".$line['status']." / ".$line["raison"];
+        $formatter = function ($line) use ($ext) {
+            $line['montant'] = $ext->prixFilter($line['montant']);
+            if ($line['status'] != 'OK') {
+                $line['raison'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['raison'];
             }
-            $line["raison"] = htmlentities($line["raison"]);
+            $line['raison'] = htmlentities($line['raison']);
+
             return $line;
         };
 

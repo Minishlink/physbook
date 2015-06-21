@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Invitation
+ * Invitation.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Event\InvitationRepository")
@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Invitation
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,14 +25,14 @@ class Invitation
     private $id;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="hasPaid", type="boolean")
      */
     private $hasPaid;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="estPresent", type="boolean", nullable=true)
      */
@@ -52,15 +52,15 @@ class Invitation
      **/
     private $invite;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->hasPaid = false;
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -68,9 +68,9 @@ class Invitation
     }
 
     /**
-     * Set hasPaid
+     * Set hasPaid.
      *
-     * @param boolean $hasPaid
+     * @param bool $hasPaid
      *
      * @return Invitation
      */
@@ -82,9 +82,9 @@ class Invitation
     }
 
     /**
-     * Get hasPaid
+     * Get hasPaid.
      *
-     * @return boolean
+     * @return bool
      */
     public function getHasPaid()
     {
@@ -92,9 +92,9 @@ class Invitation
     }
 
     /**
-     * Set estPresent
+     * Set estPresent.
      *
-     * @param boolean $estPresent
+     * @param bool $estPresent
      *
      * @return Invitation
      */
@@ -106,9 +106,9 @@ class Invitation
     }
 
     /**
-     * Get estPresent
+     * Get estPresent.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEstPresent()
     {
@@ -116,7 +116,7 @@ class Invitation
     }
 
     /**
-     * Set event
+     * Set event.
      *
      * @param \PJM\AppBundle\Entity\Event\Evenement $event
      *
@@ -130,7 +130,7 @@ class Invitation
     }
 
     /**
-     * Get event
+     * Get event.
      *
      * @return \PJM\AppBundle\Entity\Event\Evenement
      */
@@ -140,7 +140,7 @@ class Invitation
     }
 
     /**
-     * Set invite
+     * Set invite.
      *
      * @param \PJM\UserBundle\Entity\User $invite
      *
@@ -154,7 +154,7 @@ class Invitation
     }
 
     /**
-     * Get invite
+     * Get invite.
      *
      * @return \PJM\UserBundle\Entity\User
      */

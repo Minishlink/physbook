@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Form\Type\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use PJM\AppBundle\Form\Type\ImageType;
 use PJM\AppBundle\Form\Type\Boquette\BoquetteByResponsableType;
 
@@ -13,44 +12,44 @@ class EvenementType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
             ->add('description', null, array(
-                'required' => false
+                'required' => false,
             ))
             ->add('isJournee', null, array(
                 'label' => 'Journée(s) entière(s) ?',
-                'required' => false
+                'required' => false,
             ))
             ->add('dateDebut', 'datetimePicker', array(
                 'label' => 'Date de début',
-                'required' => false
+                'required' => false,
             ))
             ->add('dateFin', 'datetimePicker', array(
                 'label' => 'Date de fin',
                 'required' => false,
-                'linkedTo' => 'dateDebut'
+                'linkedTo' => 'dateDebut',
             ))
             ->add('lieu')
             ->add('prix', 'money', array(
                 'label' => 'Prix',
-                'divisor' => 100
+                'divisor' => 100,
             ))
             ->add('boquette', new BoquetteByResponsableType(array('user' => $options['user'])))
             ->add('isPublic', null, array(
                 'label' => 'Evènement public',
-                'required' => false
+                'required' => false,
             ))
             ->add('image', new ImageType(), array(
                 'label' => 'Image',
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
-                'label' => $options['label_submit']
+                'label' => $options['label_submit'],
             ))
         ;
     }
@@ -63,7 +62,7 @@ class EvenementType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Event\Evenement',
             'user' => null,
-            'label_submit' => "Créer"
+            'label_submit' => 'Créer',
         ));
     }
 

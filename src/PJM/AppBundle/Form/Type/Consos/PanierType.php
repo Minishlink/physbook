@@ -7,14 +7,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PanierType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,7 +25,7 @@ class PanierType extends AbstractType
             ->add('infos', 'textarea', array(
                 'error_bubbling' => true,
                 'label' => 'Contenu du panier',
-                'attr' => array('placeholder' => 'une ligne par fruit ou légume')
+                'attr' => array('placeholder' => 'une ligne par fruit ou légume'),
             ))
             ->add('prix', 'money', array(
                 'error_bubbling' => true,
@@ -35,10 +34,10 @@ class PanierType extends AbstractType
                     new Assert\NotBlank(),
                     new Assert\LessThan(array(
                         'value' => 3000,
-                        'message' => 'Le prix du panier devrait pas être plus grand que 30€.'
+                        'message' => 'Le prix du panier devrait pas être plus grand que 30€.',
                     )),
                 ),
-                'data' => '500'
+                'data' => '500',
             ))
             ->add('save', 'submit', array(
                 'label' => 'Ajouter',
@@ -59,7 +58,7 @@ class PanierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Item'
+            'data_class' => 'PJM\AppBundle\Entity\Item',
         ));
     }
 

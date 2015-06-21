@@ -11,7 +11,7 @@ class TransfertType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,18 +19,18 @@ class TransfertType extends AbstractType
             ->add('emetteur', null, array(
                 'label' => 'Depuis quel compte ?',
                 'class' => 'PJMAppBundle:Compte',
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                    return $er->createQueryBuilder('c')
                         ->where('c.user = :user')
                         ->setParameter('user', $options['user'])
                     ;
                 },
-                'choice_label' => 'boquette'
+                'choice_label' => 'boquette',
             ))
             ->add('receveurUser', 'pjm_select2_entity', array(
                 'label' => 'A qui ?',
                 'class' => 'PJMUserBundle:User',
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                    return $er->getQbAllButUser($options['user']);
                 },
             ))
@@ -42,7 +42,7 @@ class TransfertType extends AbstractType
                 'label' => 'Raison',
             ))
             ->add('save', 'submit', array(
-                'label' => 'Transférer'
+                'label' => 'Transférer',
             ))
         ;
     }
@@ -54,7 +54,7 @@ class TransfertType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Consos\Transfert',
-            'user' => null
+            'user' => null,
         ));
     }
 

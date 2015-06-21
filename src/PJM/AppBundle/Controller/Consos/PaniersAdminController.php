@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Controller\Consos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Form\Type\Consos\PanierType;
 
@@ -23,7 +22,7 @@ class PaniersAdminController extends Controller
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:Consos/Paniers/index.html.twig', array(
-            'boquetteSlug' => $this->slug
+            'boquetteSlug' => $this->slug,
         ));
     }
 
@@ -54,7 +53,7 @@ class PaniersAdminController extends Controller
                     $em->persist($ancienPanier);
                 }
 
-                $panier->setLibelle('Panier de fruits et légumes ('.$panier->getDate()->format('d/m').")");
+                $panier->setLibelle('Panier de fruits et légumes ('.$panier->getDate()->format('d/m').')');
                 $em->persist($panier);
 
                 $em->flush();
@@ -80,19 +79,19 @@ class PaniersAdminController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_admin_boquette_paniers_index'));
         }
 
-        $datatable = $this->get("pjm.datatable.admin.paniers.liste");
+        $datatable = $this->get('pjm.datatable.admin.paniers.liste');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:Consos/Paniers/listePaniers.html.twig', array(
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
     // action ajax de rendu de la liste des paniers
     public function paniersResultsAdminAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.paniers.liste"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.paniers.liste'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
         $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
@@ -147,9 +146,9 @@ class PaniersAdminController extends Controller
                 $entetes = array(
                     'Bucque',
                     "Fam's",
-                    "Tbk",
+                    'Tbk',
                     "Prom's",
-                    "Signature"
+                    'Signature',
                 );
 
                 $sheet = $excel->setData($entetes, $tableau, 'A', '3', 'Commandes');
@@ -158,16 +157,16 @@ class PaniersAdminController extends Controller
                 $nbRows = count($tableau);
                 $rangeTab = $excel->getRangeString();
                 $sheet
-                    ->setCellValue('A1', "Total")
+                    ->setCellValue('A1', 'Total')
                     ->setCellValue('B1', count($tableau))
-                    ->setCellValue('C1', "paniers")
-                    ->setCellValue('D1', "soit")
-                    ->setCellValue('E1', count($tableau)*$panier->getPrix()/100)
+                    ->setCellValue('C1', 'paniers')
+                    ->setCellValue('D1', 'soit')
+                    ->setCellValue('E1', count($tableau) * $panier->getPrix() / 100)
                 ;
 
                 $boldStyle = array(
                     'font' => array(
-                        'bold' => true
+                        'bold' => true,
                     ),
                     'borders' => array(
                         'allborders' => array(
@@ -179,8 +178,8 @@ class PaniersAdminController extends Controller
 
                 $italicStyle = array(
                     'font' => array(
-                        'italic' => true
-                    )
+                        'italic' => true,
+                    ),
                 );
 
                 $borduresIntStyle = array(
@@ -209,8 +208,8 @@ class PaniersAdminController extends Controller
                 $sheet->getStyle($rangeTab)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
                 $sheet->getColumnDimension('A')->setWidth(13);
                 $sheet->getColumnDimension('E')->setWidth(15);
-                for ($r = 0; $r < $nbRows; $r++) {
-                    $sheet->getRowDimension(4+$r)->setRowHeight(25);
+                for ($r = 0; $r < $nbRows; ++$r) {
+                    $sheet->getRowDimension(4 + $r)->setRowHeight(25);
                 }
 
                 // on télécharge

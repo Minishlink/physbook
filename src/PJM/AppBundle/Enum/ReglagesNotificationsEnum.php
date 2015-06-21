@@ -3,17 +3,18 @@
 namespace PJM\AppBundle\Enum;
 
 /**
- * ReglagesNotificationsEnum
+ * ReglagesNotificationsEnum.
  */
 class ReglagesNotificationsEnum
 {
-    public static function getActusChoices($withValues = false) {
+    public static function getActusChoices($withValues = false)
+    {
         $choices = array(
             'centre' => "Tabagn's",
             'promotion' => "Prom's",
-            'assos' => "Boquettes",
-            'maj' => "Mises à jour",
-            'generales' => "Générales"
+            'assos' => 'Boquettes',
+            'maj' => 'Mises à jour',
+            'generales' => 'Générales',
         );
 
         if ($withValues) {
@@ -23,7 +24,8 @@ class ReglagesNotificationsEnum
         return array_keys($choices);
     }
 
-    public static function getDefaultActusChoices() {
+    public static function getDefaultActusChoices()
+    {
         return array(
             'centre',
             'promotion',
@@ -32,11 +34,12 @@ class ReglagesNotificationsEnum
         );
     }
 
-    public static function getBanqueChoices($withValues = false) {
+    public static function getBanqueChoices($withValues = false)
+    {
         $choices = array(
             'negatif' => "Négat's",
-            'credits' => "Crédts par transfert",
-            'debits' => "Débits spéciaux"
+            'credits' => 'Crédts par transfert',
+            'debits' => 'Débits spéciaux',
         );
 
         if ($withValues) {
@@ -46,7 +49,8 @@ class ReglagesNotificationsEnum
         return array_keys($choices);
     }
 
-    public static function getDefaultBanqueChoices() {
+    public static function getDefaultBanqueChoices()
+    {
         return array(
             'negatif',
         );

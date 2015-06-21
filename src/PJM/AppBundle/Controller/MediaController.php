@@ -5,26 +5,25 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use PJM\AppBundle\Entity\Media\Photo;
 use PJM\AppBundle\Form\Type\Media\PhotoType;
 
 class MediaController extends Controller
 {
     /**
-     * [ADMIN] Gère les photos
+     * [ADMIN] Gère les photos.
      *
      * @param object Request $request Requête
      */
     public function gestionPhotosAction(Request $request, Photo $photo = null)
     {
         $ajout = ($photo === null);
-        if($ajout) {
+        if ($ajout) {
             $photo = new Photo();
             $urlAction = $this->generateUrl('pjm_app_admin_media_gestionPhotos');
         } else {
             $urlAction = $this->generateUrl('pjm_app_admin_media_gestionPhotos', array(
-                'photo' => $photo->getId()
+                'photo' => $photo->getId(),
             ));
         }
 
@@ -33,7 +32,7 @@ class MediaController extends Controller
             'action' => $urlAction,
             'ajout' => $ajout,
             'proprietaire' => ($photo->getProprietaire() === null) ? 'admin' : null,
-            'admin' => true
+            'admin' => true,
         ));
 
         $form->handleRequest($request);
@@ -76,44 +75,44 @@ class MediaController extends Controller
             }
         }
 
-        $datatable = $this->get("pjm.datatable.admin.media.photos");
+        $datatable = $this->get('pjm.datatable.admin.media.photos');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:Media/gestionPhotos.html.twig', array(
             'ajout' => $ajout,
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
     /**
-     * [ADMIN] Va chercher toutes les entités Photo
+     * [ADMIN] Va chercher toutes les entités Photo.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function photosResultsAction()
     {
-        $datatable = $this->get("pjm.datatable.admin.media.photos");
+        $datatable = $this->get('pjm.datatable.admin.media.photos');
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
         $datatable->setExtImage($this->get('pjm.services.image'));
-        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
 
         return $datatableData->getResponse();
     }
 
     /**
-     * [ADMIN] Action ajax d'autorisation de publication de photos
+     * [ADMIN] Action ajax d'autorisation de publication de photos.
      */
     public function togglePublicationPhotosAction(Request $request, $autoriser)
     {
         if ($request->isXmlHttpRequest()) {
-            $liste = $request->request->get("data");
+            $liste = $request->request->get('data');
 
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository("PJMAppBundle:Media\Photo");
 
             foreach ($liste as $choice) {
-                $photo = $repository->find($choice["value"]);
+                $photo = $repository->find($choice['value']);
                 if ($photo !== null) {
                     if ($autoriser) {
                         $photo->setPublication(2);
@@ -126,25 +125,25 @@ class MediaController extends Controller
 
             $em->flush();
 
-            return new Response("Photos toggled.");
+            return new Response('Photos toggled.');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     /**
-     * [ADMIN] Action ajax de suppression de photos
+     * [ADMIN] Action ajax de suppression de photos.
      */
     public function supprimerPhotosAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $liste = $request->request->get("data");
+            $liste = $request->request->get('data');
 
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository("PJMAppBundle:Media\Photo");
 
             foreach ($liste as $choice) {
-                $photo = $repository->find($choice["value"]);
+                $photo = $repository->find($choice['value']);
                 if ($photo !== null) {
                     $user = $photo->getProprietaire();
                     if ($user !== null) {
@@ -160,9 +159,9 @@ class MediaController extends Controller
 
             $em->flush();
 
-            return new Response("Photos removed.");
+            return new Response('Photos removed.');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 }

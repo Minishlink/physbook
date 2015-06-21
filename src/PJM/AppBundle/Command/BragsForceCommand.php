@@ -1,4 +1,5 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -6,9 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Entity\Transaction;
 
@@ -41,7 +40,7 @@ class BragsForceCommand extends ContainerAwareCommand
         $itemSlug = 'baguette';
         $url = $input->getArgument('url');
 
-        if ($url == "") {
+        if ($url == '') {
             $dialog = $this->getHelperSet()->get('dialog');
             $url = $dialog->ask(
                 $output,
@@ -51,12 +50,13 @@ class BragsForceCommand extends ContainerAwareCommand
 
         if (!file_exists($url)) {
             $this->logger->warn("Le fichier '".$url."' n'existe pas !");
+
             return;
         }
 
         $phpExcelObject = $this->phpExcel->createPHPExcelObject($url);
 
-        $sheetData = $phpExcelObject->getActiveSheet()->toArray(null,true,true,true);
+        $sheetData = $phpExcelObject->getActiveSheet()->toArray(null, true, true, true);
 
         $user_repo = $this->em->getRepository('PJMUserBundle:User');
         $compte_repo = $this->em->getRepository('PJMAppBundle:Compte');
@@ -65,19 +65,20 @@ class BragsForceCommand extends ContainerAwareCommand
 
         if ($baguette === null) {
             $this->logger->error('Baguette non trouvee');
+
             return;
         }
 
         foreach ($sheetData as $row) {
             $users = array();
-            $prenomnoms = explode(", ", $row["A"]);
+            $prenomnoms = explode(', ', $row['A']);
             if ($prenomnoms !== null) {
                 foreach ($prenomnoms as $prenomnom) {
                     if (preg_match("/[a-zA-Z]+ ([a-zA-Z éè\-]+)+/", $prenomnom, $id)) {
                         if (isset($id[1])) {
                             $user = $user_repo->findOneByNom($id[1]);
                             if ($user === null) {
-                                $output->writeln("User '". $id[1] ."' non trouvé avec nom");
+                                $output->writeln("User '".$id[1]."' non trouvé avec nom");
                             } else {
                                 $users[] = $user;
                             }
@@ -87,24 +88,25 @@ class BragsForceCommand extends ContainerAwareCommand
             }
 
             if (empty($users)) {
-                $users = $user_repo->findByUsername($row["A"]);
+                $users = $user_repo->findByUsername($row['A']);
                 if ($users === null) {
-                    $output->writeln("User '". $row["A"] ."' non trouvé avec username");
+                    $output->writeln("User '".$row['A']."' non trouvé avec username");
                 }
             }
 
             if (!empty($users)) {
-                $nombre = $row["C"]*10;
-                $kagib = $row["B"];
-                $solde = $row["D"]*100;
-                $date = $row["E"];
-                $dateFin = $row["F"];
+                $nombre = $row['C'] * 10;
+                $kagib = $row['B'];
+                $solde = $row['D'] * 100;
+                $date = $row['E'];
+                $dateFin = $row['F'];
 
                 if (empty($nombre) && $nombre !== 0) {
-                    $this->logger->warn("Il manque la commande pour ".$row["A"]);
+                    $this->logger->warn('Il manque la commande pour '.$row['A']);
                     continue;
-                } else if (empty($date)) {
-                    $this->logger->error("Il manque la date pour ".$row["A"]);
+                } elseif (empty($date)) {
+                    $this->logger->error('Il manque la date pour '.$row['A']);
+
                     return;
                 }
 
@@ -120,8 +122,9 @@ class BragsForceCommand extends ContainerAwareCommand
                     }
 
                     if (!$ok) {
-                        if ($user->getAppartement() == "") {
+                        if ($user->getAppartement() == '') {
                             $this->logger->warn($user." ne peut pas prendre de commande car il n'a pas d'appartement.");
+
                             return;
                         }
 
@@ -145,7 +148,7 @@ class BragsForceCommand extends ContainerAwareCommand
                             $transaction->setMoyenPaiement('initial');
                             $transaction->setCompte($compte);
                             $transaction->setMontant($solde);
-                            $transaction->setStatus("OK");
+                            $transaction->setStatus('OK');
                             $transaction->finaliser();
                             $this->em->persist($transaction);
                         }

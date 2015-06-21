@@ -4,11 +4,10 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-
 use PJM\UserBundle\Entity\User;
 
 /**
- * HistoriqueRepository
+ * HistoriqueRepository.
  */
 class HistoriqueRepository extends EntityRepository
 {
@@ -19,7 +18,7 @@ class HistoriqueRepository extends EntityRepository
                     ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
                     ->setParameters(array(
                         'user' => $user,
-                        'item_slug'  => $item_slug,
+                        'item_slug' => $item_slug,
                     ))
                     ->orderBy('h.date', 'desc')
                     ->getQuery();
@@ -40,7 +39,7 @@ class HistoriqueRepository extends EntityRepository
                     ->andWhere('h.item = :item')
                     ->setParameters(array(
                         'user' => $user,
-                        'item'  => $item,
+                        'item' => $item,
                     ))
                     ->orderBy('h.date', 'desc')
                     ->getQuery();
@@ -59,7 +58,7 @@ class HistoriqueRepository extends EntityRepository
         $query = $this->createQueryBuilder('h')
                     ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
                     ->setParameters(array(
-                        'item_slug'  => $item_slug,
+                        'item_slug' => $item_slug,
                     ))
                     ->orderBy('h.date', 'desc')
                     ->getQuery();
@@ -78,7 +77,7 @@ class HistoriqueRepository extends EntityRepository
         $qb = $this->createQueryBuilder('h')
             ->where('h.item = :item')
             ->setParameters(array(
-                'item'  => $item,
+                'item' => $item,
             ))
         ;
 
@@ -113,7 +112,7 @@ class HistoriqueRepository extends EntityRepository
                     ->where('h.valid = true')
                     ->join('h.item', 'i', 'WITH', 'i.slug = :item_slug')
                     ->setParameters(array(
-                        'item_slug'  => $item_slug,
+                        'item_slug' => $item_slug,
                     ))
                     ->orderBy('h.date', 'desc')
                     ->setMaxResults(1)
@@ -157,7 +156,7 @@ class HistoriqueRepository extends EntityRepository
             ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
             ->setParameters(array(
                 'user' => $user,
-                'boquette_slug'  => $boquetteSlug
+                'boquette_slug' => $boquetteSlug,
             ))
             ->orderBy('h.date', 'desc')
         ;
@@ -182,13 +181,13 @@ class HistoriqueRepository extends EntityRepository
             ->select('sum(h.nombre)')
             ->join('h.item', 'i', 'WITH', 'i.slug = :item OR i.libelle = :item')
             ->setParameters(array(
-                'item'  => $item
+                'item' => $item,
             ))
         ;
 
         $qb = $this->triParDate($qb, $month, $year);
 
-        return $qb->getQuery()->getSingleScalarResult()/10;
+        return $qb->getQuery()->getSingleScalarResult() / 10;
     }
 
     public function countByBoquetteSlug($boquetteSlug, $month, $year)
@@ -198,13 +197,13 @@ class HistoriqueRepository extends EntityRepository
             ->join('h.item', 'i')
             ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
             ->setParameters(array(
-                'boquette_slug'  => $boquetteSlug
+                'boquette_slug' => $boquetteSlug,
             ))
         ;
 
         $qb = $this->triParDate($qb, $month, $year);
 
-        return $qb->getQuery()->getSingleScalarResult()/10;
+        return $qb->getQuery()->getSingleScalarResult() / 10;
     }
 
     public function getTopUsers($boquetteSlug, $limit = null, $month = null, $year = null)
@@ -218,7 +217,7 @@ class HistoriqueRepository extends EntityRepository
             ->groupBy('u')
             ->orderBy('somme', 'desc')
             ->setParameters(array(
-                'boquette_slug'  => $boquetteSlug
+                'boquette_slug' => $boquetteSlug,
             ))
         ;
 
@@ -243,7 +242,7 @@ class HistoriqueRepository extends EntityRepository
                 ->setParameter('debut', $year.'-'.$month.'-01')
                 ->setParameter('fin', $year.'-'.$month.'-31')
             ;
-        } else if ($year !== null) {
+        } elseif ($year !== null) {
             $qb
                 ->where('h.date BETWEEN :debut AND :fin')
                 ->setParameter('debut', $year.'-01-01')
@@ -267,7 +266,7 @@ class HistoriqueRepository extends EntityRepository
 
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
-        return function(QueryBuilder $qb) use($boquette_slug) {
+        return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
                 ->join('Historique.item', 'i')
                 ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
@@ -278,7 +277,7 @@ class HistoriqueRepository extends EntityRepository
 
     public function callbackFindByUser($user)
     {
-        return function(QueryBuilder $qb) use($user) {
+        return function (QueryBuilder $qb) use ($user) {
             $qb
                 ->join('Historique.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('user', $user)

@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class ResponsableDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class ResponsableDatatable.
  */
 class ResponsableDatatable extends AbstractDatatableView
 {
@@ -29,12 +27,12 @@ class ResponsableDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 3, "direction" => "desc"))
+            ->setOrder(array('column' => 3, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl(
             $this->getRouter()->generate('pjm_app_admin_boquette_responsablesResults', array(
-                'boquette_slug' => $this->boquetteSlug
+                'boquette_slug' => $this->boquetteSlug,
             ))
         );
 
@@ -42,29 +40,29 @@ class ResponsableDatatable extends AbstractDatatableView
 
         $this->getMultiselect()
             ->setEnabled(true)
-            ->setPosition("last")
-            ->addAction("Activer/Désactiver", "pjm_app_admin_boquette_toggleResponsables")
-            ->setWidth("20px")
+            ->setPosition('last')
+            ->addAction('Activer/Désactiver', 'pjm_app_admin_boquette_toggleResponsables')
+            ->setWidth('20px')
         ;
 
         $this->getColumnBuilder()
-            ->add("user.bucque", "column", array("visible" => false))
+            ->add('user.bucque', 'column', array('visible' => false))
             ->add('user.username', 'column', array(
                 'title' => 'Utilisateur',
             ))
             ->add('responsabilite.libelle', 'column', array(
-                "title" => "Rôle",
+                'title' => 'Rôle',
             ))
-            ->add("active", "boolean", array(
-                "title" => "Actif",
-                "true_icon" => "glyphicon glyphicon-ok",
-                "false_icon" => "glyphicon glyphicon-remove",
-                "true_label" => "Oui",
-                "false_label" => "Non"
+            ->add('active', 'boolean', array(
+                'title' => 'Actif',
+                'true_icon' => 'glyphicon glyphicon-ok',
+                'false_icon' => 'glyphicon glyphicon-remove',
+                'true_label' => 'Oui',
+                'false_label' => 'Non',
             ))
-            ->add("date", "datetime", array(
-                "title" => "Créé",
-                "format" => "ll"
+            ->add('date', 'datetime', array(
+                'title' => 'Créé',
+                'format' => 'll',
             ))
         ;
     }
@@ -74,8 +72,8 @@ class ResponsableDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $formatter = function($line){
-            $line["user"]["username"] = $line["user"]["bucque"]." ".$line["user"]["username"];
+        $formatter = function ($line) {
+            $line['user']['username'] = $line['user']['bucque'].' '.$line['user']['username'];
 
             return $line;
         };

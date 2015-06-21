@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 use PJM\AppBundle\Entity\Transaction;
 
 class RechargementController extends Controller
@@ -27,21 +26,21 @@ class RechargementController extends Controller
         $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
 
-        $agent = "web";
+        $agent = 'web';
 
         $headers = array(
-            "Authorization" => $authToken,
+            'Authorization' => $authToken,
         );
         $content = array(
-            "amount" => $transaction->getMontant(),
-            "receiver" => $transaction->getCompte()->getBoquette()->getCaisseSMoney(),
-            "transactionId" => substr(uniqid(), 0, 6)."_".$transaction->getId(),
-            "amountEditable" => false,
-            "receiverEditable" => false,
-            "agent" => $agent,
-            "source" => "web",
-            "identifier" => "",
-            "message" => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom()." - ".$transaction->getCompte()->getUser()->getUsername()
+            'amount' => $transaction->getMontant(),
+            'receiver' => $transaction->getCompte()->getBoquette()->getCaisseSMoney(),
+            'transactionId' => substr(uniqid(), 0, 6).'_'.$transaction->getId(),
+            'amountEditable' => false,
+            'receiverEditable' => false,
+            'agent' => $agent,
+            'source' => 'web',
+            'identifier' => '',
+            'message' => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom().' - '.$transaction->getCompte()->getUser()->getUsername(),
         );
 
         $response = $buzz->post($urlSMoney, $headers, $content);
@@ -62,7 +61,7 @@ class RechargementController extends Controller
             if (isset($data['url'])) {
                 $resData = array(
                     'valid' => true,
-                    'url' => $data['url']
+                    'url' => $data['url'],
                 );
             } else {
                 $resData = array(
@@ -78,6 +77,7 @@ class RechargementController extends Controller
 
         $res = new JsonResponse();
         $res->setData($resData);
+
         return $res;
     }
 
@@ -94,13 +94,13 @@ class RechargementController extends Controller
 
             if (isset($transaction)) {
                 if (null === $transaction->getStatus()) {
-                    if ($status == "OK") {
-                        $transaction->setStatus("OK");
+                    if ($status == 'OK') {
+                        $transaction->setStatus('OK');
                     } else {
                         if ($errorCode !== null) {
                             $transaction->setStatus($errorCode);
                         } else {
-                            $transaction->setStatus("NOK");
+                            $transaction->setStatus('NOK');
                         }
                     }
 
@@ -109,7 +109,7 @@ class RechargementController extends Controller
                     $em->persist($transaction);
                     $em->flush();
 
-                    return new Response($transaction->getStatus() === "OK" ? "OK" : "NOK");
+                    return new Response($transaction->getStatus() === 'OK' ? 'OK' : 'NOK');
                 } else {
                     return new Response('Cette transaction a deja ete traitee.', 403);
                 }
@@ -132,7 +132,7 @@ class RechargementController extends Controller
         if (isset($transaction)) {
             if ($this->getUser() == $transaction->getCompte()->getUser()) {
                 if (null !== $transaction->getStatus()) {
-                    if ($transaction->getStatus() == "OK") {
+                    if ($transaction->getStatus() == 'OK') {
                         // si le paiement a été complété
                         $this->get('session')->getFlashBag()->add(
                             'success',
@@ -146,22 +146,22 @@ class RechargementController extends Controller
                         );
 
                         switch ($transaction->getStatus()) {
-                            case "623":
+                            case '623':
                                 $source = "Phy'sbook";
                                 break;
-                            case "624":
-                                $source = "S-Money";
+                            case '624':
+                                $source = 'S-Money';
                                 break;
-                            case "625":
-                                $source = "Utilisateur";
+                            case '625':
+                                $source = 'Utilisateur';
                                 break;
                             default:
-                                $source = "inconnue";
+                                $source = 'inconnue';
                                 break;
                         }
 
-                        if (substr($transaction->getStatus(), 0, 5) == "REZAL") {
-                            $source = "Serveur R&z@l";
+                        if (substr($transaction->getStatus(), 0, 5) == 'REZAL') {
+                            $source = 'Serveur R&z@l';
 
                             $this->get('session')->getFlashBag()->add(
                                 'danger',
@@ -182,7 +182,7 @@ class RechargementController extends Controller
                     );
                 }
 
-                return $this->redirect($this->generateUrl("pjm_app_boquette_".$transaction->getCompte()->getBoquette()->getSlug()."_index"));
+                return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
             } else {
                 throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
             }

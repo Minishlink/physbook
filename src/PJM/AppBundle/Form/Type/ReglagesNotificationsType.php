@@ -10,7 +10,7 @@ class ReglagesNotificationsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,25 +22,25 @@ class ReglagesNotificationsType extends AbstractType
             ->add('actus', 'pjm_select2_choice', array(
                 'label' => 'Actualités',
                 'choices' => $actusChoices,
-                'required'  => false,
-                'multiple' => true
+                'required' => false,
+                'multiple' => true,
             ))
             ->add('events', null, array(
-                'label' => "Évènements",
-                'required' => false
+                'label' => 'Évènements',
+                'required' => false,
             ))
             ->add('messages', null, array(
-                'label' => "Messages",
-                'required' => false
+                'label' => 'Messages',
+                'required' => false,
             ))
             ->add('banque', 'pjm_select2_choice', array(
                 'label' => 'Banque',
                 'choices' => $banqueChoices,
-                'required'  => false,
-                'multiple' => true
+                'required' => false,
+                'multiple' => true,
             ))
             ->add('save', 'submit', array(
-                'label' => 'Sauvegarder'
+                'label' => 'Sauvegarder',
             ))
         ;
     }
@@ -51,7 +51,7 @@ class ReglagesNotificationsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\ReglagesNotifications'
+            'data_class' => 'PJM\AppBundle\Entity\ReglagesNotifications',
         ));
     }
 

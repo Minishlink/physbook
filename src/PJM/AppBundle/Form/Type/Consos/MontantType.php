@@ -11,7 +11,7 @@ class MontantType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,20 +22,20 @@ class MontantType extends AbstractType
                 'divisor' => 100,
                 'constraints' => array(
                     new Assert\LessThan(array(
-                        'value' => 200*100,
-                        'message' => 'Pas plus de 200€ par transaction. Fais en plusieurs.'
+                        'value' => 200 * 100,
+                        'message' => 'Pas plus de 200€ par transaction. Fais en plusieurs.',
                     )),
                     new Assert\GreaterThan(array(
                         'value' => 0,
-                        'message' => "Le montant doit être supérieur à 0€."
+                        'message' => 'Le montant doit être supérieur à 0€.',
                     )),
-                )
+                ),
             ))
             ->add('save', 'submit', array(
                 'label' => 'Recharger',
                 'attr' => array(
                     'class' => 'btn-primary',
-                )
+                ),
             ))
         ;
     }
@@ -46,7 +46,7 @@ class MontantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Transaction'
+            'data_class' => 'PJM\AppBundle\Entity\Transaction',
         ));
     }
 

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use PJM\AppBundle\Entity\UsersHM;
 
 class AppController extends Controller
@@ -37,7 +36,7 @@ class AppController extends Controller
             $data = $form->getData();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject("[Physbook] [Contact] ".$data['sujet'])
+                ->setSubject('[Physbook] [Contact] '.$data['sujet'])
                 ->setFrom(array($user->getEmail() => $user->getUsername()))
                 ->setTo(array('contact@physbook.fr' => "ZiPhy'sbook"))
                 ->setBody($data['contenu'])
@@ -53,7 +52,7 @@ class AppController extends Controller
         }
 
         return $this->render('PJMAppBundle:App:contact.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
@@ -63,8 +62,9 @@ class AppController extends Controller
     }
 
     /**
-     * Affiche et gère un bouton Phy's HM
-     * @param  object   UsersHM $usersHM Le lien usersHM entre les users et l'article, item etc...
+     * Affiche et gère un bouton Phy's HM.
+     *
+     * @param object   UsersHM $usersHM Le lien usersHM entre les users et l'article, item etc...
      */
     public function physHMAction(Request $request, UsersHM $usersHM)
     {
@@ -72,7 +72,7 @@ class AppController extends Controller
 
         $form = $this->createFormBuilder($usersHM)
             ->setAction($this->generateUrl(
-                "pjm_app_physHM",
+                'pjm_app_physHM',
                 array('usersHM' => $usersHM->getId())
             ))
             ->setMethod('POST')
@@ -80,7 +80,7 @@ class AppController extends Controller
                 'label' => "Phy's HM",
                 'attr' => array(
                     'class' => 'physHM',
-                    'title' => "Phy's HM"
+                    'title' => "Phy's HM",
                 ),
             ))
             ->getForm();
@@ -97,12 +97,12 @@ class AppController extends Controller
                     $em->flush();
 
                     $json = array(
-                        'success' => true
+                        'success' => true,
                     );
                 } else {
                     $json = array(
                         'success' => false,
-                        'reason' => 'Déjà HM'
+                        'reason' => 'Déjà HM',
                     );
                 }
             } else {
@@ -113,12 +113,13 @@ class AppController extends Controller
 
                 $json = array(
                     'success' => false,
-                    'reason' => $reason
+                    'reason' => $reason,
                 );
             }
 
             $response = new JsonResponse();
             $response->setData($json);
+
             return $response;
         }
 

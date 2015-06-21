@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\QueryBuilder;
-
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Item;
@@ -24,8 +23,9 @@ use PJM\AppBundle\Entity\Consos\Transfert;
 class BoquetteAdminController extends Controller
 {
     /**
-     * Page par défaut d'admin des boquettes
-     * @param  object   Boquette $boquette
+     * Page par défaut d'admin des boquettes.
+     *
+     * @param object   Boquette $boquette
      */
     public function defaultAdminAction(Boquette $boquette)
     {
@@ -46,10 +46,10 @@ class BoquetteAdminController extends Controller
         $form = $this->createForm(new TransactionType(), $credit, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
-                "pjm_app_admin_boquette_gestionCredits",
+                'pjm_app_admin_boquette_gestionCredits',
                 array('slug' => $boquette->getSlug())
             ),
-            'boquette' => $boquette
+            'boquette' => $boquette,
         ));
 
         $form->handleRequest($request);
@@ -57,14 +57,14 @@ class BoquetteAdminController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 // on enregistre le crédit dans l'historique
-                $credit->setStatus("OK");
+                $credit->setStatus('OK');
                 $utils = $this->get('pjm.services.utils');
                 $retour = $utils->traiterTransaction($credit);
                 $em->persist($credit);
                 $em->flush();
 
-                if ($credit->getStatus() == "OK") {
-                    if ($credit->getMoyenPaiement() != "operation") {
+                if ($credit->getStatus() == 'OK') {
+                    if ($credit->getMoyenPaiement() != 'operation') {
                         $request->getSession()->getFlashBag()->add(
                             'success',
                             'La transaction a été enregistrée et le compte a été crédité.'
@@ -84,7 +84,7 @@ class BoquetteAdminController extends Controller
                 }
 
                 if ($retour instanceof Transfert) {
-                    if ($retour->getStatus() == "OK") {
+                    if ($retour->getStatus() == 'OK') {
                         $request->getSession()->getFlashBag()->add(
                             'success',
                             'Le transfert a été effectué.'
@@ -111,13 +111,13 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_'.$boquette->getSlug().'_index'));
         }
 
-        $datatable = $this->get("pjm.datatable.credits");
+        $datatable = $this->get('pjm.datatable.credits');
         $datatable->setAdmin(true);
         $datatable->setAjaxUrl($this->generateUrl(
-            "pjm_app_admin_boquette_creditsResults",
+            'pjm_app_admin_boquette_creditsResults',
             array('boquette_slug' => $boquette->getSlug())
         ));
         $datatable->buildDatatableView();
@@ -125,12 +125,13 @@ class BoquetteAdminController extends Controller
         return $this->render('PJMAppBundle:Admin:Consos/gestionCredits.html.twig', array(
             'form' => $form->createView(),
             'datatable' => $datatable,
-            'boquetteSlug' => $boquette->getSlug()
+            'boquetteSlug' => $boquette->getSlug(),
         ));
     }
 
     /**
-     * Exporte un Excel de crédits
+     * Exporte un Excel de crédits.
+     *
      * @param object Boquette $boquette La boquette en question
      */
     public function exportCreditsAction(Request $request, Boquette $boquette)
@@ -138,7 +139,7 @@ class BoquetteAdminController extends Controller
         $filterForm = $this->createForm(new TransactionFilterType(), null, array(
             'method' => 'GET',
             'action' => $this->generateUrl('pjm_app_admin_boquette_exportCredits', array(
-                'slug' => $boquette->getSlug()
+                'slug' => $boquette->getSlug(),
             )),
         ));
         $filterForm->handleRequest($request);
@@ -148,7 +149,7 @@ class BoquetteAdminController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $repository = $em->getRepository('PJMAppBundle:Transaction');
 
-                $filterBuilder = $repository->buildFindByBoquette($boquette, null, "notNull");
+                $filterBuilder = $repository->buildFindByBoquette($boquette, null, 'notNull');
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $filterBuilder);
 
                 $credits = $filterBuilder->getQuery()->getResult();
@@ -161,7 +162,7 @@ class BoquetteAdminController extends Controller
 
                     $excel = $this->get('pjm.services.excel');
                     $excel->create(
-                        "[".$boquette->getNomCourt()."] Crédits au ".date('d/m/Y')
+                        '['.$boquette->getNomCourt().'] Crédits au '.date('d/m/Y')
                     );
 
                     $entetes = array(
@@ -172,7 +173,7 @@ class BoquetteAdminController extends Controller
                         'Montant',
                         'Type',
                         'Infos',
-                        'Statut'
+                        'Statut',
                     );
 
                     $excel->setData($entetes, $tableau, 'A', '1', 'Crédits');
@@ -183,7 +184,7 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_default', array('slug' => $boquette->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
@@ -196,7 +197,7 @@ class BoquetteAdminController extends Controller
      */
     public function creditsResultsAction($boquette_slug)
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.credits'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
@@ -205,7 +206,7 @@ class BoquetteAdminController extends Controller
     }
 
     /**
-     * Gère la liste des responsables pour une boquette. (ajout et liste)
+     * Gère la liste des responsables pour une boquette. (ajout et liste).
      */
     public function gestionResponsablesAction(Request $request, Boquette $boquette)
     {
@@ -217,10 +218,10 @@ class BoquetteAdminController extends Controller
             'action' => $this->generateUrl(
                 'pjm_app_admin_boquette_gestionResponsables',
                 array(
-                    'slug' => $boquette->getSlug()
+                    'slug' => $boquette->getSlug(),
                 )
             ),
-            'boquette' => $boquette
+            'boquette' => $boquette,
         ));
 
         $form->handleRequest($request);
@@ -265,16 +266,16 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_default', array('slug' => $boquette->getSlug())));
         }
 
-        $datatable = $this->get("pjm.datatable.admin.responsable");
+        $datatable = $this->get('pjm.datatable.admin.responsable');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:gestionResponsables.html.twig', array(
-            'form'      => $form->createView(),
-            'datatable' => $datatable
+            'form' => $form->createView(),
+            'datatable' => $datatable,
         ));
     }
 
@@ -283,14 +284,14 @@ class BoquetteAdminController extends Controller
      */
     public function responsablesResultsAction($boquette_slug)
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsable"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.responsable'));
 
         $datatable->addWhereBuilderCallback(
-            function(QueryBuilder $qb) use ($boquette_slug) {
+            function (QueryBuilder $qb) use ($boquette_slug) {
                 $qb
                     ->join('Responsable.responsabilite', 're')
                     ->join('re.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
-                    ->setParameter(":boquette_slug", $boquette_slug)
+                    ->setParameter(':boquette_slug', $boquette_slug)
                 ;
             }
         );
@@ -304,30 +305,31 @@ class BoquetteAdminController extends Controller
     public function toggleResponsablesAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $listeResponsables = $request->request->get("data");
+            $listeResponsables = $request->request->get('data');
 
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("PJMAppBundle:Responsable");
+            $repository = $em->getRepository('PJMAppBundle:Responsable');
 
             foreach ($listeResponsables as $responsableChoice) {
-                $responsable = $repository->find($responsableChoice["value"]);
+                $responsable = $repository->find($responsableChoice['value']);
                 $responsable->toggleActive();
                 $em->persist($responsable);
             }
 
             $em->flush();
-            return new Response("Responsables toggled.");
+
+            return new Response('Responsables toggled.');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     /**
-     * Affiche la liste des comptes des PGs d'une boquette
+     * Affiche la liste des comptes des PGs d'une boquette.
      */
     public function voirComptesAction(Boquette $boquette)
     {
-        $datatable = $this->get("pjm.datatable.admin.consos.comptes");
+        $datatable = $this->get('pjm.datatable.admin.consos.comptes');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->buildDatatableView();
 
@@ -338,7 +340,8 @@ class BoquetteAdminController extends Controller
     }
 
     /**
-     * Exporte un Excel des comptes des PGs d'une boquette
+     * Exporte un Excel des comptes des PGs d'une boquette.
+     *
      * @param object Boquette $boquette La boquette en question
      */
     public function exportComptesAction(Request $request, Boquette $boquette)
@@ -346,7 +349,7 @@ class BoquetteAdminController extends Controller
         $filterForm = $this->createForm(new CompteFilterType(), null, array(
             'method' => 'GET',
             'action' => $this->generateUrl('pjm_app_admin_boquette_exportComptes', array(
-                'slug' => $boquette->getSlug()
+                'slug' => $boquette->getSlug(),
             )),
         ));
         $filterForm->handleRequest($request);
@@ -369,7 +372,7 @@ class BoquetteAdminController extends Controller
 
                     $excel = $this->get('pjm.services.excel');
                     $excel->create(
-                        "[".$boquette->getNomCourt()."] Comptes au ".date('d/m/Y')
+                        '['.$boquette->getNomCourt().'] Comptes au '.date('d/m/Y')
                     );
 
                     $entetes = array(
@@ -388,7 +391,7 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_default', array('slug' => $boquette->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Admin:Consos/export.html.twig', array(
@@ -401,10 +404,10 @@ class BoquetteAdminController extends Controller
      */
     public function comptesResultsAction($boquette_slug)
     {
-        $datatable = $this->get("pjm.datatable.admin.consos.comptes");
+        $datatable = $this->get('pjm.datatable.admin.consos.comptes');
         $datatable->setBoquetteSlug($boquette_slug);
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
-        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Compte');
@@ -419,18 +422,18 @@ class BoquetteAdminController extends Controller
      */
     public function gestionItemAction(Request $request, Boquette $boquette)
     {
-        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable = $this->get('pjm.datatable.boquette.item');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->setAdmin(true);
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:listeItem.html.twig', array(
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
     /**
-     * Modifier un item
+     * Modifier un item.
      *
      * @ParamConverter("boquette", options={"mapping": {"boquette": "slug"}})
      */
@@ -442,9 +445,9 @@ class BoquetteAdminController extends Controller
                 'pjm_app_admin_boquette_modifierItem',
                 array(
                     'boquette' => $boquette->getSlug(),
-                    'item' => $item->getId()
+                    'item' => $item->getId(),
                 )
-            )
+            ),
         ));
 
         $form->handleRequest($request);
@@ -457,14 +460,14 @@ class BoquetteAdminController extends Controller
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    "L'image de l'item ".$item." a été modifiée."
+                    "L'image de l'item ".$item.' a été modifiée.'
                 );
 
-                return $this->redirect($this->generateUrl("pjm_app_admin_boquette_default", array('slug' => $boquette->getSlug())));
+                return $this->redirect($this->generateUrl('pjm_app_admin_boquette_default', array('slug' => $boquette->getSlug())));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Un problème est survenu lors de la modification de l'image de l'item ".$item.". Réessaye."
+                    "Un problème est survenu lors de la modification de l'image de l'item ".$item.'. Réessaye.'
                 );
 
                 foreach ($form->getErrors() as $error) {
@@ -478,12 +481,12 @@ class BoquetteAdminController extends Controller
 
         return $this->render('PJMAppBundle:Admin:imageItem.html.twig', array(
             'form' => $form->createView(),
-            'item' => $item
+            'item' => $item,
         ));
     }
 
     /**
-     * Gère la liste des produits mis en avant pour une boquette. (ajout et liste)
+     * Gère la liste des produits mis en avant pour une boquette. (ajout et liste).
      */
     public function gestionFeaturedItemAction(Request $request, Boquette $boquette)
     {
@@ -494,10 +497,10 @@ class BoquetteAdminController extends Controller
             'action' => $this->generateUrl(
                 'pjm_app_admin_boquette_gestionFeaturedItem',
                 array(
-                    'slug' => $boquette->getSlug()
+                    'slug' => $boquette->getSlug(),
                 )
             ),
-            'boquette' => $boquette
+            'boquette' => $boquette,
         ));
 
         $form->handleRequest($request);
@@ -522,12 +525,12 @@ class BoquetteAdminController extends Controller
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    "L'item ".$featuredItem->getItem()." est maintenant mis en avant."
+                    "L'item ".$featuredItem->getItem().' est maintenant mis en avant.'
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Un problème est survenu lors de la mise en avant de l'item ".$featuredItem->getItem().". Réessaye."
+                    "Un problème est survenu lors de la mise en avant de l'item ".$featuredItem->getItem().'. Réessaye.'
                 );
 
                 foreach ($form->getErrors() as $error) {
@@ -538,25 +541,25 @@ class BoquetteAdminController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl("pjm_app_admin_boquette_".$boquette->getSlug()."_index"));
+            return $this->redirect($this->generateUrl('pjm_app_admin_boquette_'.$boquette->getSlug().'_index'));
         }
 
-        $datatable = $this->get("pjm.datatable.admin.featuredItem");
+        $datatable = $this->get('pjm.datatable.admin.featuredItem');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:gestionFeaturedItem.html.twig', array(
-            'form'      => $form->createView(),
-            'datatable' => $datatable
+            'form' => $form->createView(),
+            'datatable' => $datatable,
         ));
     }
 
     /**
-     * Action ajax de rendu de la liste des produits mis en avant
+     * Action ajax de rendu de la liste des produits mis en avant.
      */
     public function featuredItemResultsAction($boquette_slug)
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.featuredItem"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.featuredItem'));
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:FeaturedItem');
@@ -567,15 +570,17 @@ class BoquetteAdminController extends Controller
     }
 
     /**
-     * Affiche la liste des achats
-     * @param  object Boquette $boquette
+     * Affiche la liste des achats.
+     *
+     * @param object Boquette $boquette
+     *
      * @return object Template
      */
     public function voirAchatsAction(Boquette $boquette)
     {
-        $datatable = $this->get("pjm.datatable.achats");
+        $datatable = $this->get('pjm.datatable.achats');
         $datatable->setAjaxUrl($this->generateUrl(
-            "pjm_app_admin_boquette_achatsResults",
+            'pjm_app_admin_boquette_achatsResults',
             array('boquette_slug' => $boquette->getSlug())
         ));
         $datatable->setAdmin(true);
@@ -588,11 +593,11 @@ class BoquetteAdminController extends Controller
     }
 
     /**
-     * Action ajax de rendu de la liste des achats d'une boquette
+     * Action ajax de rendu de la liste des achats d'une boquette.
      */
     public function achatsResultsAction($boquette_slug)
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.achats"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.achats'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));

@@ -10,7 +10,7 @@ class UserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +25,7 @@ class UserType extends AbstractType
             ->add('classe')
             ->add('anniversaire', 'birthday')
             ->add('save', 'submit', array(
-                'label' => 'Mettre à jour'
+                'label' => 'Mettre à jour',
             ))
         ;
     }
@@ -36,7 +36,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\UserBundle\Entity\User'
+            'data_class' => 'PJM\UserBundle\Entity\User',
         ));
     }
 

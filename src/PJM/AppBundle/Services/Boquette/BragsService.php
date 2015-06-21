@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Services\Boquette;
 
 use Doctrine\ORM\EntityManager;
-
 use PJM\UserBundle\Entity\User;
 use PJM\AppBundle\Entity\Item;
 
@@ -44,7 +43,7 @@ class BragsService extends BoquetteService
         $listeVacances = $repositoryVacances->findByFait(false);
 
         //période entre aujourd'hui et la fin
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
         $now->setTime(0, 0, 0);
         $dateFin->setTime(0, 0, 1);
         $period = new \DatePeriod(
@@ -58,15 +57,15 @@ class BragsService extends BoquetteService
         // pour tous les jours jusqu'à aujourd'hui, on débite
         foreach ($period as $date) {
             // si le jour n'est pas un samedi/dimanche
-            if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
+            if ($date->format('D') != 'Sat' && $date->format('D') != 'Sun') {
                 // pour chaque vacances pas encore finies
                 foreach ($listeVacances as $vacances) {
                     if ($date <= $vacances->getDateFin() && $date >= $vacances->getDateDebut()) {
-                        $nbJoursOuvres--;
+                        --$nbJoursOuvres;
                     }
                 }
 
-                $nbJoursOuvres++;
+                ++$nbJoursOuvres;
             }
         }
 
@@ -80,11 +79,11 @@ class BragsService extends BoquetteService
 
         foreach ($commandes as $commande) {
             if (!isset($active) && $commande->getValid()) {
-                $active = $commande->getNombre()/10;
+                $active = $commande->getNombre() / 10;
             }
 
             if (!isset($attente) && null === $commande->getValid()) {
-                $attente = $commande->getNombre()/10;
+                $attente = $commande->getNombre() / 10;
             }
 
             if (isset($active) && isset($attente)) {

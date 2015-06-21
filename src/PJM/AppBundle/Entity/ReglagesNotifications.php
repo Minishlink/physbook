@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * ReglagesNotifications
+ * ReglagesNotifications.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ReglagesNotifications
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -31,14 +31,14 @@ class ReglagesNotifications
     private $actus;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="messages", type="boolean")
      */
     private $messages;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="events", type="boolean")
      */
@@ -70,9 +70,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -80,7 +80,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Set actus
+     * Set actus.
      *
      * @param array $actus
      *
@@ -94,7 +94,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Get actus
+     * Get actus.
      *
      * @return array
      */
@@ -104,9 +104,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Set messages
+     * Set messages.
      *
-     * @param boolean $messages
+     * @param bool $messages
      *
      * @return ReglagesNotifications
      */
@@ -118,9 +118,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Get messages
+     * Get messages.
      *
-     * @return boolean
+     * @return bool
      */
     public function getMessages()
     {
@@ -128,9 +128,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Has setting by type
+     * Has setting by type.
      *
-     * @return boolean
+     * @return bool
      */
     public function has($type)
     {
@@ -142,7 +142,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Set banque
+     * Set banque.
      *
      * @param array $banque
      *
@@ -156,7 +156,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Get banque
+     * Get banque.
      *
      * @return array
      */
@@ -166,7 +166,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
      *
@@ -180,7 +180,7 @@ class ReglagesNotifications
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -190,9 +190,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Set events
+     * Set events.
      *
-     * @param boolean $events
+     * @param bool $events
      *
      * @return ReglagesNotifications
      */
@@ -204,9 +204,9 @@ class ReglagesNotifications
     }
 
     /**
-     * Get events
+     * Get events.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEvents()
     {

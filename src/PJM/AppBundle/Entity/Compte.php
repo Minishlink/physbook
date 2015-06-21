@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Compte
+ * Compte.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\CompteRepository")
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Compte
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,7 +23,7 @@ class Compte
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="solde", type="smallint")
      */
@@ -74,12 +74,13 @@ class Compte
     public function toArray()
     {
         $user = $this->user;
+
         return array(
             'username' => $user->getUsername(),
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
             'kgib' => $user->getAppartement(),
-            'solde' => $this->solde/100
+            'solde' => $this->solde / 100,
         );
     }
 
@@ -94,9 +95,9 @@ class Compte
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -104,9 +105,10 @@ class Compte
     }
 
     /**
-     * Set solde (en centimes)
+     * Set solde (en centimes).
      *
-     * @param integer $solde
+     * @param int $solde
+     *
      * @return Compte
      */
     public function setSolde($solde)
@@ -117,9 +119,9 @@ class Compte
     }
 
     /**
-     * Get solde (en centimes)
+     * Get solde (en centimes).
      *
-     * @return integer
+     * @return int
      */
     public function getSolde()
     {
@@ -127,9 +129,10 @@ class Compte
     }
 
     /**
-     * Set boquette
+     * Set boquette.
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette
+     *
      * @return Compte
      */
     public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
@@ -140,7 +143,7 @@ class Compte
     }
 
     /**
-     * Get boquette
+     * Get boquette.
      *
      * @return \PJM\AppBundle\Entity\Boquette
      */
@@ -150,9 +153,10 @@ class Compte
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
+     *
      * @return Compte
      */
     public function setUser(\PJM\UserBundle\Entity\User $user)
@@ -163,7 +167,7 @@ class Compte
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -173,9 +177,10 @@ class Compte
     }
 
     /**
-     * Add transactions
+     * Add transactions.
      *
      * @param \PJM\AppBundle\Entity\Boquette $transactions
+     *
      * @return Compte
      */
     public function addTransaction(\PJM\AppBundle\Entity\Boquette $transactions)
@@ -186,7 +191,7 @@ class Compte
     }
 
     /**
-     * Remove transactions
+     * Remove transactions.
      *
      * @param \PJM\AppBundle\Entity\Boquette $transactions
      */
@@ -196,7 +201,7 @@ class Compte
     }
 
     /**
-     * Get transactions
+     * Get transactions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -206,9 +211,10 @@ class Compte
     }
 
     /**
-     * Add envois
+     * Add envois.
      *
      * @param \PJM\AppBundle\Entity\Consos\Transfert $envois
+     *
      * @return Compte
      */
     public function addEnvois(\PJM\AppBundle\Entity\Consos\Transfert $envois)
@@ -219,7 +225,7 @@ class Compte
     }
 
     /**
-     * Remove envois
+     * Remove envois.
      *
      * @param \PJM\AppBundle\Entity\Consos\Transfert $envois
      */
@@ -229,7 +235,7 @@ class Compte
     }
 
     /**
-     * Get envois
+     * Get envois.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -239,9 +245,10 @@ class Compte
     }
 
     /**
-     * Add receptions
+     * Add receptions.
      *
      * @param \PJM\AppBundle\Entity\Consos\Transfert $receptions
+     *
      * @return Compte
      */
     public function addReception(\PJM\AppBundle\Entity\Consos\Transfert $receptions)
@@ -252,7 +259,7 @@ class Compte
     }
 
     /**
-     * Remove receptions
+     * Remove receptions.
      *
      * @param \PJM\AppBundle\Entity\Consos\Transfert $receptions
      */
@@ -262,7 +269,7 @@ class Compte
     }
 
     /**
-     * Get receptions
+     * Get receptions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

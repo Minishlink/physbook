@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UsersHM
+ * UsersHM.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UsersHM
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,7 +28,7 @@ class UsersHM
     private $users;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -36,9 +36,9 @@ class UsersHM
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -46,9 +46,10 @@ class UsersHM
     }
 
     /**
-     * Add users
+     * Add users.
      *
      * @param \PJM\UserBundle\Entity\User $users
+     *
      * @return UsersHM
      */
     public function addUser(\PJM\UserBundle\Entity\User $users)
@@ -59,7 +60,7 @@ class UsersHM
     }
 
     /**
-     * Remove users
+     * Remove users.
      *
      * @param \PJM\UserBundle\Entity\User $users
      */
@@ -69,7 +70,7 @@ class UsersHM
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

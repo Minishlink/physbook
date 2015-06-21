@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * ItemRepository
+ * ItemRepository.
  */
 class ItemRepository extends EntityRepository
 {
@@ -16,7 +16,7 @@ class ItemRepository extends EntityRepository
 
                     ->where('REGEXP(i.slug, :item_slug_regex) = 1')
                     ->setParameters(array(
-                        'item_slug_regex'  => $item_slug_regex,
+                        'item_slug_regex' => $item_slug_regex,
                     ))
                     ->orderBy('i.date', 'desc')
                     ->getQuery();
@@ -37,7 +37,7 @@ class ItemRepository extends EntityRepository
             $this->findBy(array('slug' => $slug, 'valid' => $valid), array('date' => 'DESC'), 1);
 
         if (empty($res)) {
-            return null;
+            return;
         }
 
         return $res[0];
@@ -45,7 +45,7 @@ class ItemRepository extends EntityRepository
 
     public function callbackFindBySlug($slug)
     {
-        return function(QueryBuilder $qb) use($slug) {
+        return function (QueryBuilder $qb) use ($slug) {
             $qb
                 ->andWhere('Item.slug = :slug')
                 ->setParameter('slug', $slug)
@@ -88,7 +88,7 @@ class ItemRepository extends EntityRepository
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
         // TODO ne pas retourner les events
-        return function(QueryBuilder $qb) use($boquette_slug) {
+        return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
                 ->join('Item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)

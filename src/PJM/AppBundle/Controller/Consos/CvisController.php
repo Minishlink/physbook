@@ -26,7 +26,7 @@ class CvisController extends Controller
         $stats = array(
             'achats' => $cvisService->compterAchatsBoquette(date('m')),
             'saucisson' => $cvisService->compterAchatsItem('Saucisson', date('m')),
-            'burgers' => $cvisService->compterAchatsItem('Cheese Burger', date('m'))
+            'burgers' => $cvisService->compterAchatsItem('Cheese Burger', date('m')),
         );
 
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
@@ -36,7 +36,7 @@ class CvisController extends Controller
             'ziConsommateurs' => $ziConsommateurs,
             'produitMoment' => $produitMoment,
             'listeProduits' => $listeProduits,
-            'stats' => $stats
+            'stats' => $stats,
         ));
     }
 }

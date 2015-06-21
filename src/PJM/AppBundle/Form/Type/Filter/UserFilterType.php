@@ -1,14 +1,13 @@
 <?php
+
 namespace PJM\AppBundle\Form\Type\Filter;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter;
 
 class UserFilterType extends AbstractType
 {
@@ -20,11 +19,11 @@ class UserFilterType extends AbstractType
             $builder
                 ->add('fams', 'filter_text', array(
                     'label' => "Fam's",
-                    'condition_pattern' => FilterOperands::OPERAND_SELECTOR
+                    'condition_pattern' => FilterOperands::OPERAND_SELECTOR,
                 ))
                 ->add('tabagns', 'filter_choice', array(
                     'label' => "Tabagn's",
-                    'choices' => $userEnum->getTabagnsChoices(true)
+                    'choices' => $userEnum->getTabagnsChoices(true),
                 ))
             ;
         }
@@ -39,22 +38,22 @@ class UserFilterType extends AbstractType
             $builder
                 ->add('appartement', 'filter_text', array(
                     'label' => 'Etage/Kagib',
-                    'condition_pattern' => FilterOperands::STRING_BOTH
+                    'condition_pattern' => FilterOperands::STRING_BOTH,
                 ))
                 ->add('classe', 'filter_text', array(
                     'label' => 'Classe',
-                    'condition_pattern' => FilterOperands::STRING_BOTH
+                    'condition_pattern' => FilterOperands::STRING_BOTH,
                 ))
                 ->add('genre', 'filter_choice', array(
-                    'label' => "Genre",
-                    'choices' => $userEnum->getGenreChoices(true)
+                    'label' => 'Genre',
+                    'choices' => $userEnum->getGenreChoices(true),
                 ))
                 ->add('responsables', 'filter_collection_adapter', array(
                     'label' => false,
-                    'type'      => new ResponsableFilterType(),
-                    'add_shared' => function (\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter $qbe)  {
-                        $closure = function(QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
-                            $filterBuilder->leftJoin($alias . '.responsables', $joinAlias);
+                    'type' => new ResponsableFilterType(),
+                    'add_shared' => function (\Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuter $qbe) {
+                        $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                            $filterBuilder->leftJoin($alias.'.responsables', $joinAlias);
                         };
 
                         $qbe->addOnce($qbe->getAlias().'.responsables', 're', $closure);
@@ -70,9 +69,9 @@ class UserFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection'   => false,
+            'csrf_protection' => false,
             'validation_groups' => array('filtering'),
-            'simple' => false
+            'simple' => false,
         ));
     }
 

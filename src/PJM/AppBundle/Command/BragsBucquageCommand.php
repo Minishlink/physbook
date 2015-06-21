@@ -1,10 +1,10 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
 class BragsBucquageCommand extends ContainerAwareCommand
@@ -23,7 +23,7 @@ class BragsBucquageCommand extends ContainerAwareCommand
         $this->getContainer()->enterScope('request');
         $this->getContainer()->set('request', new Request(), 'request');
 
-        $msg = $utils->bucquage("brags", "baguette");
+        $msg = $utils->bucquage('brags', 'baguette');
         $output->writeln($msg);
     }
 }

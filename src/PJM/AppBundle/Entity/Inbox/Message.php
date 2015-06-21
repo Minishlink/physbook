@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Message
+ * Message.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Message
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,7 +55,6 @@ class Message
      */
     private $destinataires;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Inbox", inversedBy="sent", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
@@ -63,7 +62,7 @@ class Message
     private $expedition;
 
     /**
-     * Si de la part d'une boquette, laquelle
+     * Si de la part d'une boquette, laquelle.
      *
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
      * @ORM\JoinColumn(nullable=true)
@@ -71,14 +70,14 @@ class Message
     private $boquette;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $isAnnonce;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -94,9 +93,9 @@ class Message
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -104,9 +103,10 @@ class Message
     }
 
     /**
-     * Set contenu
+     * Set contenu.
      *
      * @param string $contenu
+     *
      * @return Message
      */
     public function setContenu($contenu)
@@ -117,7 +117,7 @@ class Message
     }
 
     /**
-     * Get contenu
+     * Get contenu.
      *
      * @return string
      */
@@ -127,9 +127,10 @@ class Message
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Message
      */
     public function setDate($date)
@@ -140,7 +141,7 @@ class Message
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -150,9 +151,10 @@ class Message
     }
 
     /**
-     * Set expedition
+     * Set expedition.
      *
      * @param Inbox $expedition
+     *
      * @return Message
      */
     public function setExpedition(Inbox $expedition)
@@ -163,7 +165,7 @@ class Message
     }
 
     /**
-     * Get expedition
+     * Get expedition.
      *
      * @return Inbox
      */
@@ -173,7 +175,7 @@ class Message
     }
 
     /**
-     * Get expediteur
+     * Get expediteur.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -183,9 +185,10 @@ class Message
     }
 
     /**
-     * Add receptions
+     * Add receptions.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
+     *
      * @return Message
      */
     public function addReception(\PJM\AppBundle\Entity\Inbox\Reception $receptions)
@@ -196,7 +199,7 @@ class Message
     }
 
     /**
-     * Remove receptions
+     * Remove receptions.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
      */
@@ -206,7 +209,7 @@ class Message
     }
 
     /**
-     * Get receptions
+     * Get receptions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -219,8 +222,7 @@ class Message
     {
         $destinataires = new \Doctrine\Common\Collections\ArrayCollection();
 
-        foreach($this->receptions as $reception)
-        {
+        foreach ($this->receptions as $reception) {
             $destinataires[] = $reception->getInbox()->getUser();
         }
 
@@ -231,8 +233,7 @@ class Message
     {
         $lus = array();
 
-        foreach($this->receptions as $reception)
-        {
+        foreach ($this->receptions as $reception) {
             if ($reception->getLu()) {
                 $lus[] = $reception->getInbox()->getUser()->getUsername();
             }
@@ -245,8 +246,7 @@ class Message
     {
         $destinations = new \Doctrine\Common\Collections\ArrayCollection();
 
-        foreach($this->receptions as $reception)
-        {
+        foreach ($this->receptions as $reception) {
             $destinations[] = $reception->getInbox();
         }
 
@@ -255,8 +255,7 @@ class Message
 
     public function setDestinations($destinations)
     {
-        foreach($destinations as $destination)
-        {
+        foreach ($destinations as $destination) {
             $reception = new Reception();
 
             $reception->setMessage($this);
@@ -269,9 +268,10 @@ class Message
     }
 
     /**
-     * Set destinataires
+     * Set destinataires.
      *
      * @param array $destinataires
+     *
      * @return Message
      */
     public function setDestinataires($destinataires)
@@ -282,7 +282,7 @@ class Message
     }
 
     /**
-     * Get destinataires
+     * Get destinataires.
      *
      * @return array
      */
@@ -292,9 +292,10 @@ class Message
     }
 
     /**
-     * Set boquette
+     * Set boquette.
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette
+     *
      * @return Message
      */
     public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
@@ -305,7 +306,7 @@ class Message
     }
 
     /**
-     * Get boquette
+     * Get boquette.
      *
      * @return \PJM\AppBundle\Entity\Boquette
      */
@@ -315,9 +316,10 @@ class Message
     }
 
     /**
-     * Set isAnnonce
+     * Set isAnnonce.
      *
-     * @param boolean $isAnnonce
+     * @param bool $isAnnonce
+     *
      * @return Message
      */
     public function setAnnonce($isAnnonce)
@@ -328,9 +330,9 @@ class Message
     }
 
     /**
-     * Get isAnnonce
+     * Get isAnnonce.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnnonce()
     {

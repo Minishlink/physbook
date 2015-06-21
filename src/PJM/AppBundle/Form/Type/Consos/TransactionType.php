@@ -12,7 +12,7 @@ class TransactionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,9 +24,9 @@ class TransactionType extends AbstractType
         $builder
             ->add('compte', 'pjm_select2_entity', array(
                 'label' => 'Destinataire',
-                'class'    => 'PJMAppBundle:Compte',
+                'class' => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('c')
                         ->where('c.boquette = :boquette')
                         ->join('c.user', 'u')
@@ -35,13 +35,13 @@ class TransactionType extends AbstractType
                         ->setParameter('boquette', $options['boquette'])
                     ;
                 },
-                'choice_label' => 'user'
+                'choice_label' => 'user',
             ))
             ->add('compteLie', 'pjm_select2_entity', array(
                 'label' => 'De la part de',
-                'class'    => 'PJMAppBundle:Compte',
+                'class' => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('c')
                         ->where('c.boquette = :boquette')
                         ->join('c.user', 'u')
@@ -52,12 +52,12 @@ class TransactionType extends AbstractType
                 },
                 'empty_value' => "Choisir le vrai créditeur, s'il y a lieu",
                 'choice_label' => 'user',
-                'required' => false
+                'required' => false,
             ))
             ->add('moyenPaiement', 'choice', array(
                 'label' => 'Moyen de paiement',
                 'error_bubbling' => true,
-                'choices' => $moyenPaiementsChoices
+                'choices' => $moyenPaiementsChoices,
             ))
             ->add('infos', null, array(
                 'label' => 'Infos (n° de chèque/raison)',
@@ -65,9 +65,9 @@ class TransactionType extends AbstractType
                 'constraints' => array(
                     new Assert\Length(array(
                         'min' => 1,
-                        'max' => 250
+                        'max' => 250,
                     )),
-                )
+                ),
             ))
             ->add('montant', 'money', array(
                 'label' => 'Montant',
@@ -75,10 +75,10 @@ class TransactionType extends AbstractType
                 'divisor' => 100,
                 'constraints' => array(
                     new Assert\LessThanOrEqual(array(
-                        'value' => 200*100,
-                        'message' => 'Pas plus de 200€ par crédit. Fais en plusieurs.'
+                        'value' => 200 * 100,
+                        'message' => 'Pas plus de 200€ par crédit. Fais en plusieurs.',
                     )),
-                )
+                ),
             ))
             ->add('save', 'submit', array(
                 'label' => 'Créditer',
@@ -93,7 +93,7 @@ class TransactionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\Transaction',
-            'boquette' => null
+            'boquette' => null,
         ));
     }
 

@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\Commande;
 use PJM\AppBundle\Form\Type\Consos\CommandeType;
 
@@ -30,7 +29,7 @@ class BragsController extends Controller
             'commande' => $bragsService->getCommande($this->getUser()),
             'nbCommandes' => $nbCommandes,
             'finAnnee' => $finAnnee,
-            'resteNbJoursOuvres' => $bragsService->getNbJoursOuvres($finAnnee)
+            'resteNbJoursOuvres' => $bragsService->getNbJoursOuvres($finAnnee),
         ));
     }
 
@@ -51,7 +50,7 @@ class BragsController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $kagib = $this->getUser()->getAppartement();
-                if ($kagib === null || !preg_match("/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/", substr($kagib,0,2))) {
+                if ($kagib === null || !preg_match("/(^([A-C])(\d)+([a-zA-Z]+)?$)|SKF/", substr($kagib, 0, 2))) {
                     $request->getSession()->getFlashBag()->add(
                         'danger',
                         "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons (SFK)\"."
@@ -62,7 +61,7 @@ class BragsController extends Controller
 
                 $commande->setItem($bragsService->getCurrentBaguette());
                 $commande->setUser($this->getUser());
-                $commande->setNombre($commande->getNombre()*10);
+                $commande->setNombre($commande->getNombre() * 10);
                 $em->persist($commande);
                 $em->flush($commande);
 
@@ -96,7 +95,7 @@ class BragsController extends Controller
 
         return $this->render('PJMAppBundle:Consos:Brags/commande.html.twig', array(
             'form' => $form->createView(),
-            'commande' => $bragsService->getCommande($this->getUser())
+            'commande' => $bragsService->getCommande($this->getUser()),
         ));
     }
 }

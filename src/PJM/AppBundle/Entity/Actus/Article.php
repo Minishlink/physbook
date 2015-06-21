@@ -5,11 +5,10 @@ namespace PJM\AppBundle\Entity\Actus;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-
 use PJM\AppBundle\Entity\UsersHM;
 
 /**
- * Article
+ * Article.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Actus\ArticleRepository")
@@ -18,7 +17,7 @@ use PJM\AppBundle\Entity\UsersHM;
 class Article
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -64,29 +63,28 @@ class Article
     private $contenu;
 
     /**
-    * @var boolean
-    *
-    * @ORM\Column(name="publication", type="boolean")
-    */
+     * @var bool
+     *
+     * @ORM\Column(name="publication", type="boolean")
+     */
     private $publication;
 
     /**
-    * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Actus\Categorie", cascade={"persist"})
-    * @Assert\Valid()
-    */
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\Actus\Categorie", cascade={"persist"})
+     * @Assert\Valid()
+     */
     private $categories;
 
     /**
-    * @Gedmo\Slug(fields={"titre"}, updatable=false)
-    * @ORM\Column(length=128, unique=true)
-    */
+     * @Gedmo\Slug(fields={"titre"}, updatable=false)
+     * @ORM\Column(length=128, unique=true)
+     */
     private $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist", "remove"})
      **/
     private $usersHM;
-
 
     public function __construct()
     {
@@ -97,19 +95,18 @@ class Article
         $this->usersHM = new UsersHM();
     }
 
-
     /**
-    * @ORM\PreUpdate
-    */
+     * @ORM\PreUpdate
+     */
     public function updateDate()
     {
         $this->setDateEdition(new \Datetime());
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -117,9 +114,10 @@ class Article
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Article
      */
     public function setDate($date)
@@ -130,7 +128,7 @@ class Article
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -140,9 +138,10 @@ class Article
     }
 
     /**
-     * Set titre
+     * Set titre.
      *
      * @param string $titre
+     *
      * @return Article
      */
     public function setTitre($titre)
@@ -153,7 +152,7 @@ class Article
     }
 
     /**
-     * Get titre
+     * Get titre.
      *
      * @return string
      */
@@ -163,9 +162,10 @@ class Article
     }
 
     /**
-     * Set auteur
+     * Set auteur.
      *
      * @param \PJM\UserBundle\Entity\User $auteur
+     *
      * @return Article
      */
     public function setAuteur(\PJM\UserBundle\Entity\User $auteur)
@@ -176,7 +176,7 @@ class Article
     }
 
     /**
-     * Get auteur
+     * Get auteur.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -186,9 +186,10 @@ class Article
     }
 
     /**
-     * Set contenu
+     * Set contenu.
      *
      * @param string $contenu
+     *
      * @return Article
      */
     public function setContenu($contenu)
@@ -199,7 +200,7 @@ class Article
     }
 
     /**
-     * Get contenu
+     * Get contenu.
      *
      * @return string
      */
@@ -209,9 +210,10 @@ class Article
     }
 
     /**
-     * Set publication
+     * Set publication.
      *
-     * @param boolean $publication
+     * @param bool $publication
+     *
      * @return Article
      */
     public function setPublication($publication)
@@ -222,9 +224,9 @@ class Article
     }
 
     /**
-     * Get publication
+     * Get publication.
      *
-     * @return boolean
+     * @return bool
      */
     public function getPublication()
     {
@@ -232,9 +234,10 @@ class Article
     }
 
     /**
-     * Add categories
+     * Add categories.
      *
      * @param \PJM\AppBundle\Entity\Actus\Categorie $categories
+     *
      * @return Article
      */
     public function addCategory(\PJM\AppBundle\Entity\Actus\Categorie $categories)
@@ -245,7 +248,7 @@ class Article
     }
 
     /**
-     * Remove categories
+     * Remove categories.
      *
      * @param \PJM\AppBundle\Entity\Actus\Categorie $categories
      */
@@ -255,7 +258,7 @@ class Article
     }
 
     /**
-     * Get categories
+     * Get categories.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -265,9 +268,10 @@ class Article
     }
 
     /**
-     * Set dateEdition
+     * Set dateEdition.
      *
      * @param \DateTime $dateEdition
+     *
      * @return Article
      */
     public function setDateEdition($dateEdition)
@@ -278,7 +282,7 @@ class Article
     }
 
     /**
-     * Get dateEdition
+     * Get dateEdition.
      *
      * @return \DateTime
      */
@@ -288,9 +292,10 @@ class Article
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Article
      */
     public function setSlug($slug)
@@ -301,7 +306,7 @@ class Article
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -311,19 +316,20 @@ class Article
     }
 
     /**
-     * Get thread id (commentaires)
+     * Get thread id (commentaires).
      *
      * @return string
      */
     public function getThreadId()
     {
-        return "article_".$this->id;
+        return 'article_'.$this->id;
     }
 
     /**
-     * Set usersHM
+     * Set usersHM.
      *
      * @param \PJM\AppBundle\Entity\UsersHM $usersHM
+     *
      * @return Article
      */
     public function setUsersHM(\PJM\AppBundle\Entity\UsersHM $usersHM = null)
@@ -334,7 +340,7 @@ class Article
     }
 
     /**
-     * Get usersHM
+     * Get usersHM.
      *
      * @return \PJM\AppBundle\Entity\UsersHM
      */
