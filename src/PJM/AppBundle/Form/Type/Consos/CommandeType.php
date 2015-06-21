@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Form\Type\Consos;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -14,7 +13,7 @@ class CommandeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,9 +26,9 @@ class CommandeType extends AbstractType
                     new NotBlank(),
                     new Choice(array(
                         'choices' => $this->getRangeBaguettes(),
-                        'message' => "Choisis un nombre de baguettes par jour valide."
-                    ))
-                )
+                        'message' => 'Choisis un nombre de baguettes par jour valide.',
+                    )),
+                ),
             ))
             ->add('save', 'submit', array(
                 'label' => 'Modifier',
@@ -38,7 +37,6 @@ class CommandeType extends AbstractType
     }
 
     /** Get nombre de baguettes par jour possibles
-     *
      * @return array
      */
     public static function getRangeBaguettes($keys = false)
@@ -59,7 +57,7 @@ class CommandeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Commande'
+            'data_class' => 'PJM\AppBundle\Entity\Commande',
         ));
     }
 

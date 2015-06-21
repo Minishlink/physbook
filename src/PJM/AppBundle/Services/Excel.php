@@ -36,11 +36,12 @@ class Excel
 
     public function getRangeString()
     {
-        return $this->range[0][0].$this->range[0][1].":".$this->range[1][0].$this->range[1][1];
+        return $this->range[0][0].$this->range[0][1].':'.$this->range[1][0].$this->range[1][1];
     }
 
     /**
-     * Retourne le phpExcelObject avec lequel travailler
+     * Retourne le phpExcelObject avec lequel travailler.
+     *
      * @param string $titre Titre du document
      */
     public function create($titre)
@@ -66,7 +67,7 @@ class Excel
         $sheet->getHeaderFooter()->setOddHeader('&L&G&C&20 '.$titre);
 
         // on met un petit message d'horodatage
-        $sheet->getHeaderFooter()->setOddFooter("&LAutogénéré le &D à &T.&Rphysbook.fr");
+        $sheet->getHeaderFooter()->setOddFooter('&LAutogénéré le &D à &T.&Rphysbook.fr');
 
         return $this->phpExcelObject;
     }
@@ -85,29 +86,29 @@ class Excel
 
         $nbCols = count($entetes);
         $lastCol = $firstCol;
-        for ($i = 1; $i <= $nbCols; $i++) {
-            $sheet->setCellValue($lastCol.$firstRow, $entetes[$i-1]);
+        for ($i = 1; $i <= $nbCols; ++$i) {
+            $sheet->setCellValue($lastCol.$firstRow, $entetes[$i - 1]);
 
             if ($i != $nbCols) {
-                $lastCol++;
+                ++$lastCol;
             }
         }
 
         $nbRows = count($tableau);
         $lastRow = $firstRow;
-        for ($i = 0; $i < $nbRows; $i++) {
-            $lastRow++;
+        for ($i = 0; $i < $nbRows; ++$i) {
+            ++$lastRow;
         }
 
         $this->range = array(
             array($firstCol, $firstRow),
-            array($lastCol, $lastRow)
+            array($lastCol, $lastRow),
         );
 
         $range = $this->getRangeString();
 
         $sheet
-            ->fromArray($tableau, NULL, $firstCol.(++$firstRow))
+            ->fromArray($tableau, null, $firstCol.(++$firstRow))
             ->setAutoFilter($range)
         ;
 
@@ -119,8 +120,10 @@ class Excel
     }
 
     /**
-     * Télécharge le fichier excel
-     * @param  string $filename Le nom du fichier (sans l'extension)
+     * Télécharge le fichier excel.
+     *
+     * @param string $filename Le nom du fichier (sans l'extension)
+     *
      * @return object La réponse à retourner au controlleur.
      */
     public function download($filename)
@@ -140,19 +143,22 @@ class Excel
     }
 
     /**
-     * Lit un fichier Excel
+     * Lit un fichier Excel.
+     *
      * @param string $url L'URL du fichier à lire
+     *
      * @return Le tableau associé à l'Excel
      */
     public function parse($url)
     {
         if (!file_exists($url)) {
             $this->logger->warn("Le fichier '".$url."' n'existe pas !");
+
             return;
         }
 
         $this->phpExcelObject = $this->phpExcel->createPHPExcelObject($url);
-        $sheetData = $this->phpExcelObject->getActiveSheet()->toArray(null,true,true,true);
+        $sheetData = $this->phpExcelObject->getActiveSheet()->toArray(null, true, true, true);
 
         return $sheetData;
     }

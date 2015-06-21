@@ -5,11 +5,10 @@ namespace PJM\AppBundle\Entity\Event;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-
 use PJM\AppBundle\Validator\Constraints as PJMAssert;
 
 /**
- * Evenement
+ * Evenement.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Event\EvenementRepository")
@@ -18,7 +17,7 @@ use PJM\AppBundle\Validator\Constraints as PJMAssert;
 class Evenement
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,9 +34,9 @@ class Evenement
     private $nom;
 
     /**
-    * @Gedmo\Slug(fields={"nom"}, updatable=false)
-    * @ORM\Column(length=128, unique=true)
-    */
+     * @Gedmo\Slug(fields={"nom"}, updatable=false)
+     * @ORM\Column(length=128, unique=true)
+     */
     private $slug;
 
     /**
@@ -48,7 +47,7 @@ class Evenement
     private $description;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="isJournee", type="boolean")
      */
@@ -111,7 +110,7 @@ class Evenement
     private $boquette;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="isPublic", type="boolean")
      */
@@ -123,7 +122,7 @@ class Evenement
     private $invitations;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="prix", type="smallint"))
      * @Assert\GreaterThanOrEqual(
@@ -137,20 +136,19 @@ class Evenement
     {
         $this->dateCreation = new \DateTime();
         $this->dateDebut = new \DateTime();
-        $this->dateDebut->setTime($this->dateCreation->format('H'),0);
+        $this->dateDebut->setTime($this->dateCreation->format('H'), 0);
         $this->dateFin = new \DateTime();
-        $this->dateFin->setTime($this->dateCreation->format('H')+1,'0');
+        $this->dateFin->setTime($this->dateCreation->format('H') + 1, '0');
         $this->isJournee = false;
         $this->isPublic = true;
         $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -158,9 +156,10 @@ class Evenement
     }
 
     /**
-     * Set nom
+     * Set nom.
      *
      * @param string $nom
+     *
      * @return Evenement
      */
     public function setNom($nom)
@@ -171,7 +170,7 @@ class Evenement
     }
 
     /**
-     * Get nom
+     * Get nom.
      *
      * @return string
      */
@@ -181,9 +180,10 @@ class Evenement
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Evenement
      */
     public function setSlug($slug)
@@ -194,7 +194,7 @@ class Evenement
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -204,9 +204,10 @@ class Evenement
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Evenement
      */
     public function setDescription($description)
@@ -217,7 +218,7 @@ class Evenement
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -227,9 +228,10 @@ class Evenement
     }
 
     /**
-     * Set isJournee
+     * Set isJournee.
      *
-     * @param boolean $isJournee
+     * @param bool $isJournee
+     *
      * @return Evenement
      */
     public function setJournee($isJournee)
@@ -240,9 +242,9 @@ class Evenement
     }
 
     /**
-     * Get isJournee
+     * Get isJournee.
      *
-     * @return boolean
+     * @return bool
      */
     public function isJournee()
     {
@@ -250,9 +252,10 @@ class Evenement
     }
 
     /**
-     * Set dateDebut
+     * Set dateDebut.
      *
      * @param \DateTime $dateDebut
+     *
      * @return Evenement
      */
     public function setDateDebut($dateDebut)
@@ -263,7 +266,7 @@ class Evenement
     }
 
     /**
-     * Get dateDebut
+     * Get dateDebut.
      *
      * @return \DateTime
      */
@@ -273,9 +276,10 @@ class Evenement
     }
 
     /**
-     * Set dateFin
+     * Set dateFin.
      *
      * @param \DateTime $dateFin
+     *
      * @return Evenement
      */
     public function setDateFin($dateFin)
@@ -286,7 +290,7 @@ class Evenement
     }
 
     /**
-     * Get dateFin
+     * Get dateFin.
      *
      * @return \DateTime
      */
@@ -296,9 +300,10 @@ class Evenement
     }
 
     /**
-     * Set lieu
+     * Set lieu.
      *
      * @param string $lieu
+     *
      * @return Evenement
      */
     public function setLieu($lieu)
@@ -309,7 +314,7 @@ class Evenement
     }
 
     /**
-     * Get lieu
+     * Get lieu.
      *
      * @return string
      */
@@ -319,7 +324,7 @@ class Evenement
     }
 
     /**
-     * Set dateCreation
+     * Set dateCreation.
      *
      * @param \DateTime $dateCreation
      *
@@ -333,7 +338,7 @@ class Evenement
     }
 
     /**
-     * Get dateCreation
+     * Get dateCreation.
      *
      * @return \DateTime
      */
@@ -343,9 +348,9 @@ class Evenement
     }
 
     /**
-     * Set isPublic
+     * Set isPublic.
      *
-     * @param boolean $isPublic
+     * @param bool $isPublic
      *
      * @return Evenement
      */
@@ -357,9 +362,9 @@ class Evenement
     }
 
     /**
-     * Get isPublic
+     * Get isPublic.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPublic()
     {
@@ -367,7 +372,7 @@ class Evenement
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param \PJM\AppBundle\Entity\Image $image
      *
@@ -381,7 +386,7 @@ class Evenement
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return \PJM\AppBundle\Entity\Image
      */
@@ -391,7 +396,7 @@ class Evenement
     }
 
     /**
-     * Set createur
+     * Set createur.
      *
      * @param \PJM\UserBundle\Entity\User $createur
      *
@@ -405,7 +410,7 @@ class Evenement
     }
 
     /**
-     * Get createur
+     * Get createur.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -415,7 +420,7 @@ class Evenement
     }
 
     /**
-     * Set boquette
+     * Set boquette.
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette
      *
@@ -429,7 +434,7 @@ class Evenement
     }
 
     /**
-     * Get boquette
+     * Get boquette.
      *
      * @return \PJM\AppBundle\Entity\Boquette
      */
@@ -439,7 +444,7 @@ class Evenement
     }
 
     /**
-     * Get couleur
+     * Get couleur.
      *
      * @return string
      */
@@ -449,13 +454,13 @@ class Evenement
             $couleur = $this->boquette->getCouleur();
         }
 
-        return isset($couleur) ? $couleur : "rouge";
+        return isset($couleur) ? $couleur : 'rouge';
     }
 
     /**
-     * Set prix
+     * Set prix.
      *
-     * @param integer $prix
+     * @param int $prix
      *
      * @return Evenement
      */
@@ -467,9 +472,9 @@ class Evenement
     }
 
     /**
-     * Get prix
+     * Get prix.
      *
-     * @return integer
+     * @return int
      */
     public function getPrix()
     {
@@ -477,7 +482,7 @@ class Evenement
     }
 
     /**
-     * Add invitation
+     * Add invitation.
      *
      * @param \PJM\AppBundle\Entity\Event\Invitation $invitation
      *
@@ -491,7 +496,7 @@ class Evenement
     }
 
     /**
-     * Remove invitation
+     * Remove invitation.
      *
      * @param \PJM\AppBundle\Entity\Event\Invitation $invitation
      */
@@ -501,7 +506,7 @@ class Evenement
     }
 
     /**
-     * Get invitations
+     * Get invitations.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -510,7 +515,8 @@ class Evenement
         return $this->invitations;
     }
 
-    public function getInvites($statut = null, $tous = false) {
+    public function getInvites($statut = null, $tous = false)
+    {
         $invites = array();
 
         foreach ($this->invitations as $invitation) {
@@ -522,15 +528,18 @@ class Evenement
         return $invites;
     }
 
-    public function getParticipants() {
+    public function getParticipants()
+    {
         return $this->getInvites(true);
     }
 
-    public function getNonParticipants() {
+    public function getNonParticipants()
+    {
         return $this->getInvites(false);
     }
 
-    public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user) {
+    public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user)
+    {
         // FUTURE visibilité conscrits/anciens/P3/archis
 
         if (!$this->isPublic()) {
@@ -544,7 +553,7 @@ class Evenement
     }
 
     /**
-     * Set item
+     * Set item.
      *
      * @param \PJM\AppBundle\Entity\Item $item
      *
@@ -558,7 +567,7 @@ class Evenement
     }
 
     /**
-     * Get item
+     * Get item.
      *
      * @return \PJM\AppBundle\Entity\Item
      */

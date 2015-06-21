@@ -41,15 +41,15 @@ class Utils
 
         foreach ($debits as $k => $debit) {
             $debitsFormates[$k]['date'] = $debit->getDate();
-            $debitsFormates[$k]['nom'] = $debit->getItem()->getLibelle()." (".($debit->getNombre()/10).")";
-            $debitsFormates[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix()*$debit->getNombre()/10);
+            $debitsFormates[$k]['nom'] = $debit->getItem()->getLibelle().' ('.($debit->getNombre() / 10).')';
+            $debitsFormates[$k]['montant'] = '-'.$this->twigExt->prixFilter($debit->getItem()->getPrix() * $debit->getNombre() / 10);
             $debitsFormates[$k]['infos'] = $debit->getItem()->getInfos();
         }
         unset($debits);
 
         // cvis appartient au pians pour les crédits
-        if ($boquetteSlug == "cvis") {
-            $boquetteSlug = "pians";
+        if ($boquetteSlug == 'cvis') {
+            $boquetteSlug = 'pians';
         }
 
         $credits = $this->em
@@ -73,43 +73,42 @@ class Utils
         $transferts = $this->em
             ->getRepository('PJMAppBundle:Consos\Transfert')
             ->findByCompte($compte, $limit);
-        ;
 
         $transfertsFormates = array();
 
         foreach ($transferts as $k => $transfert) {
             $recu = ($transfert->getReceveur() === $compte);
             $dest = $recu ? $transfert->getEmetteur()->getUser() : $transfert->getReceveur()->getUser();
-            $annule = ($transfert->getStatus() != "OK");
+            $annule = ($transfert->getStatus() != 'OK');
 
             $transfertsFormates[$k]['date'] = $transfert->getDate();
 
-            $transfertsFormates[$k]['nom'] = "Transfert ";
+            $transfertsFormates[$k]['nom'] = 'Transfert ';
             $transfertsFormates[$k]['nom'] .= $recu ? 'de ' : 'à ';
-            $transfertsFormates[$k]['nom'] .= $dest->getBucque()." ".$dest->getUsername();
+            $transfertsFormates[$k]['nom'] .= $dest->getBucque().' '.$dest->getUsername();
 
             $transfertsFormates[$k]['montant'] = $recu ? '+' : '-';
             $transfertsFormates[$k]['montant'] .= $this->twigExt->prixFilter($transfert->getMontant());
 
             if ($annule) {
-                if (substr($transfert->getStatus(), 0, 1) != "3") {
-                    $transfertsFormates[$k]['nom'] .= " (annulé)";
+                if (substr($transfert->getStatus(), 0, 1) != '3') {
+                    $transfertsFormates[$k]['nom'] .= ' (annulé)';
                 }
-                $transfertsFormates[$k]['infos'] =  'Erreur : '.$transfert->getStatus();
+                $transfertsFormates[$k]['infos'] = 'Erreur : '.$transfert->getStatus();
             } else {
                 $transfertsFormates[$k]['infos'] = $transfert->getRaison();
             }
         }
         unset($transferts);
 
-
         $liste = array_merge($debitsFormates, $creditsFormates, $transfertsFormates);
         unset($debitsFormates);
         unset($creditsFormates);
         unset($transfertsFormates);
 
-        $sort_function = function($a, $b) {
-            $diff = $a["date"]->diff($b["date"]);
+        $sort_function = function ($a, $b) {
+            $diff = $a['date']->diff($b['date']);
+
             return $diff->invert ? '-1' : '1';
         };
         usort($liste, $sort_function);
@@ -122,8 +121,10 @@ class Utils
     }
 
     /**
-     * Retourne l'item du moment pour une boquette
-     * @param  string      $boquetteSlug Slug de la boquette
+     * Retourne l'item du moment pour une boquette.
+     *
+     * @param string $boquetteSlug Slug de la boquette
+     *
      * @return object|null Item du moment ou null si introuvable
      */
     public function getFeaturedItem($boquetteSlug)
@@ -151,7 +152,7 @@ class Utils
 
     public function traiterTransaction(Transaction $transaction)
     {
-        if ($transaction->getStatus() == "OK") {
+        if ($transaction->getStatus() == 'OK') {
             // si la transaction est bonne
             // on met à jour le solde du compte associé sur la base Phy'sbook
             $transaction->finaliser();
@@ -160,11 +161,11 @@ class Utils
             if (in_array(
                 $transaction->getCompte()->getBoquette()->getSlug(), array(
                     'cvis',
-                    'pians'
+                    'pians',
                 )
             )) {
                 // on met à jour le solde du compte associé sur la base R&z@l
-                if ($transaction->getMoyenPaiement() != "operation") {
+                if ($transaction->getMoyenPaiement() != 'operation') {
                     $status = $this->rezal->crediteSolde(
                         $this->getTrueID($transaction->getCompte()->getUser()),
                         $transaction->getMontant()
@@ -189,7 +190,7 @@ class Utils
             if (null !== $transaction->getCompteLie()) {
                 // si on fait un crédit pour quelqu'un d'autre
                 // le compte lie et le compte sont déjà inversés (voir Entité)
-                if ($transaction->getStatus() == "OK") {
+                if ($transaction->getStatus() == 'OK') {
                     // s'il n'y a pas eu d'erreur avant
                     // on effectue le transfert vers compteLie
                     $transfert = new Transfert($transaction);
@@ -213,7 +214,7 @@ class Utils
         if (in_array(
             $transfert->getReceveur()->getBoquette()->getSlug(), array(
                 'cvis',
-                'pians'
+                'pians',
             )
         )) {
             // on met à jour le solde des comptes associés sur la base R&z@l
@@ -229,7 +230,7 @@ class Utils
                 }
 
                 // on annule la transaction
-                $transfert->finaliser("1. ".$status);
+                $transfert->finaliser('1. '.$status);
             } else {
                 $status = $this->rezal->crediteSolde(
                     $this->getTrueID($transfert->getReceveur()->getUser()),
@@ -242,7 +243,7 @@ class Utils
                         $status = 'REZAL_LIAISON_TRANSACTION';
                     }
                     // on annule la transaction
-                    $transfert->finaliser("2. ".$status);
+                    $transfert->finaliser('2. '.$status);
 
                     // on recrédite l'émetteur sur le pians
                     $status = $this->rezal->crediteSolde(
@@ -255,7 +256,7 @@ class Utils
                             $status = 'REZAL_LIAISON_TRANSACTION';
                         }
 
-                        $transfert->setStatus("3. ".$status);
+                        $transfert->setStatus('3. '.$status);
                     }
                 }
             }
@@ -267,7 +268,7 @@ class Utils
     public function getTrueID(User $user)
     {
         $keys = array('fams', 'tabagns', 'proms');
-        $values = preg_split("/(bo|li|an|me|ch|cl|ai|ka|pa)/", $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
+        $values = preg_split('/(bo|li|an|me|ch|cl|ai|ka|pa)/', $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
 
         return array_combine($keys, $values);
     }
@@ -284,7 +285,7 @@ class Utils
 
         // on regarde quand a été fait le dernier bucquage
         $lastBucquage = $repositoryHistorique->findLastValidByItemSlug($itemSlug);
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
         $now->setTime(0, 0, 0);
         // s'il y a déjà eu un bucquage
         if (isset($lastBucquage)) {
@@ -295,7 +296,7 @@ class Utils
 
             // sinon on compte le nombre de jours à bucquer
             $startDate = $lastBucquage->getDate()->setTime(0, 0, 0)->add(new \DateInterval('P1D'));
-            $nbJours = $startDate->diff($now, true)->days+1;
+            $nbJours = $startDate->diff($now, true)->days + 1;
         } else {
             // sinon on bucque le premier jour
             $startDate = $now;
@@ -317,7 +318,7 @@ class Utils
         // pour tous les jours jusqu'à aujourd'hui, on débite
         foreach ($period as $date) {
             // si le jour n'est pas un samedi/dimanche
-            if ($date->format("D") != "Sat" && $date->format("D") != "Sun") {
+            if ($date->format('D') != 'Sat' && $date->format('D') != 'Sun') {
                 $jourDeVacs = false; // par défaut
 
                 // pour chaque vacances pas encore finies
@@ -371,11 +372,11 @@ class Utils
                         }
                     }
                 } else {
-                    $nbJours--;
+                    --$nbJours;
                 }
             } else {
                 // si c'est un samedi ou un dimanche on compte un jour en moins
-                $nbJours--;
+                --$nbJours;
             }
         }
 

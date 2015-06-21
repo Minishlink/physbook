@@ -1,5 +1,7 @@
 <?php
+
 // src/PJM/AppBundle/Entity/Commentaires/Vote.php
+
 
 namespace PJM\AppBundle\Entity\Commentaires;
 
@@ -20,7 +22,7 @@ class Vote extends BaseVote
     protected $id;
 
     /**
-     * Comment of this vote
+     * Comment of this vote.
      *
      * @var Comment
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Commentaires\Comment")

@@ -40,19 +40,20 @@ class Mailer
         }
 
         $from = array(
-            $this->parameters['notificationEmail'] => $this->parameters['notificationSender']
+            $this->parameters['notificationEmail'] => $this->parameters['notificationSender'],
         );
         $to = array(
-            $user->getEmail() => $user
+            $user->getEmail() => $user,
         );
 
         $this->sendMessage($template, $context, $from, $to);
     }
 
     /**
-     * Envoie un mail d'erreur à la fois à l'utilisateur et à l'admin Phy'sbook
-     * @param object User       $user         L'utilisateur qui a rencontré l'erreur
-     * @param array  $context   Un tableau contenant le message d'erreur sous la clef "errorMsg"
+     * Envoie un mail d'erreur à la fois à l'utilisateur et à l'admin Phy'sbook.
+     *
+     * @param object User $user    L'utilisateur qui a rencontré l'erreur
+     * @param array       $context Un tableau contenant le message d'erreur sous la clef "errorMsg"
      * @param string [$template = null] Un template autre que le layout d'erreur par défaut
      */
     public function sendError(User $user, $context, $template = null)
@@ -62,11 +63,11 @@ class Mailer
         }
 
         $from = array(
-            $this->parameters['errorEmail'] => $this->parameters['notificationSender']
+            $this->parameters['errorEmail'] => $this->parameters['notificationSender'],
         );
         $to = array(
             $user->getEmail() => $user,
-            $this->parameters['errorEmail'] => $this->parameters['notificationSender']
+            $this->parameters['errorEmail'] => $this->parameters['notificationSender'],
 
         );
 
@@ -74,9 +75,10 @@ class Mailer
     }
 
     /**
-     * Envoie un mail de admin@physbook.fr
-     * @param object User       $user         L'utilisateur inscrit
-     * @param array  $context   Un tableau des variables utilisées dans le template
+     * Envoie un mail de admin@physbook.fr.
+     *
+     * @param object User $user    L'utilisateur inscrit
+     * @param array       $context Un tableau des variables utilisées dans le template
      * @param string [$template = null] Un template autre que le layout par défaut
      */
     public function send(User $user, $context, $template = null)
@@ -86,21 +88,21 @@ class Mailer
         }
 
         $from = array(
-            $this->parameters['contactEmail'] => $this->parameters['notificationSender']
+            $this->parameters['contactEmail'] => $this->parameters['notificationSender'],
         );
         $to = array(
-            $user->getEmail() => $user->getPrenom()." ".$user->getNom()
+            $user->getEmail() => $user->getPrenom().' '.$user->getNom(),
         );
 
         $this->sendMessage($template, $context, $from, $to);
     }
 
     /**
-    * @param string $templateName
-    * @param array $context
-    * @param string $fromEmail
-    * @param string $toEmail
-    */
+     * @param string $templateName
+     * @param array  $context
+     * @param string $fromEmail
+     * @param string $toEmail
+     */
     protected function sendMessage($templateName, $context, $fromEmail, $toEmail)
     {
         $context = $this->twig->mergeGlobals($context);

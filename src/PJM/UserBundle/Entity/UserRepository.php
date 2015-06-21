@@ -5,7 +5,7 @@ namespace PJM\UserBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * UserRepository
+ * UserRepository.
  */
 class UserRepository extends EntityRepository
 {
@@ -17,18 +17,18 @@ class UserRepository extends EntityRepository
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
 
-    public function defaultOrder($qb = null, $alias = "")
+    public function defaultOrder($qb = null, $alias = '')
     {
         if ($qb !== null) {
-            foreach($this->defaultOrder(null, 'u') as $order => $sort) {
+            foreach ($this->defaultOrder(null, 'u') as $order => $sort) {
                 return $qb->orderBy($order, $sort);
             }
 
             return $qb;
         }
 
-        if ($alias != "") {
-            $alias .= ".";
+        if ($alias != '') {
+            $alias .= '.';
         }
 
         return array($alias.'fams' => 'asc', $alias.'proms' => 'desc');
@@ -38,8 +38,9 @@ class UserRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('u')
                 ->where('u.roles LIKE :roles')
-                ->setParameter('roles', '%"' . $role . '"%')
+                ->setParameter('roles', '%"'.$role.'"%')
                 ->getQuery();
+
         return $query->getResult();
     }
 
@@ -55,7 +56,7 @@ class UserRepository extends EntityRepository
         return $qb;
     }
 
-    function getActive(User $excludedUser = null)
+    public function getActive(User $excludedUser = null)
     {
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime('5 minutes ago'));

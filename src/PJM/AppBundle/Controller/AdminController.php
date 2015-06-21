@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Form\Type\Admin\NewUserType;
 use PJM\AppBundle\Form\Type\Admin\ResponsabiliteType;
 use PJM\AppBundle\Form\Type\Admin\BoquetteType;
@@ -17,7 +16,8 @@ use PJM\UserBundle\Entity\User;
 class AdminController extends Controller
 {
     /**
-     * Page d'accueil de la gestion du site
+     * Page d'accueil de la gestion du site.
+     *
      * @return object Vue de la page
      */
     public function indexAction()
@@ -26,18 +26,19 @@ class AdminController extends Controller
     }
 
     /**
-     * Gère les responsabilités
+     * Gère les responsabilités.
+     *
      * @param object Request $request Requête
      */
     public function responsabilitesAction(Request $request, Responsabilite $responsabilite = null)
     {
         $ajout = ($responsabilite === null);
-        if($ajout) {
+        if ($ajout) {
             $responsabilite = new Responsabilite();
             $urlAction = $this->generateUrl('pjm_app_admin_responsabilites');
         } else {
             $urlAction = $this->generateUrl('pjm_app_admin_responsabilites', array(
-                'responsabilite' => $responsabilite->getId()
+                'responsabilite' => $responsabilite->getId(),
             ));
         }
 
@@ -75,13 +76,13 @@ class AdminController extends Controller
             }
         }
 
-        $datatable = $this->get("pjm.datatable.admin.responsabilites");
+        $datatable = $this->get('pjm.datatable.admin.responsabilites');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:responsabilites.html.twig', array(
             'ajout' => $ajout,
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
@@ -92,24 +93,25 @@ class AdminController extends Controller
      */
     public function responsabilitesResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.admin.responsabilites"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.responsabilites'));
 
         return $datatable->getResponse();
     }
 
     /**
-     * Gère les boquettes
+     * Gère les boquettes.
+     *
      * @param object Request $request Requête
      */
     public function gestionBoquettesAction(Request $request, Boquette $boquette = null)
     {
         $ajout = ($boquette === null);
-        if($ajout) {
+        if ($ajout) {
             $boquette = new Boquette();
             $urlAction = $this->generateUrl('pjm_app_admin_gestionBoquettes');
         } else {
             $urlAction = $this->generateUrl('pjm_app_admin_gestionBoquettes', array(
-                'boquette' => $boquette->getId()
+                'boquette' => $boquette->getId(),
             ));
         }
 
@@ -147,13 +149,13 @@ class AdminController extends Controller
             }
         }
 
-        $datatable = $this->get("pjm.datatable.admin.boquettes");
+        $datatable = $this->get('pjm.datatable.admin.boquettes');
         $datatable->buildDatatableView();
 
         return $this->render('PJMAppBundle:Admin:gestionBoquettes.html.twig', array(
             'ajout' => $ajout,
             'form' => $form->createView(),
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
@@ -164,9 +166,9 @@ class AdminController extends Controller
      */
     public function boquettesResultsAction()
     {
-        $datatable = $this->get("pjm.datatable.admin.boquettes");
+        $datatable = $this->get('pjm.datatable.admin.boquettes');
         $datatable->setExtImage($this->get('pjm.services.image'));
-        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
 
         return $datatableData->getResponse();
     }
@@ -177,7 +179,7 @@ class AdminController extends Controller
         $users = $userManager->findUsers();
 
         return $this->render('PJMAppBundle:Admin:users_liste.html.twig', array(
-            'users' => $users
+            'users' => $users,
         ));
     }
 
@@ -201,7 +203,7 @@ class AdminController extends Controller
             $file = $form['liste']->getData();
 
             if ($file->isValid()) {
-                $handle = fopen($file, "r");
+                $handle = fopen($file, 'r');
                 $users = array();
                 $problem = 0;
 
@@ -229,11 +231,11 @@ class AdminController extends Controller
 
                         $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
                         if (!empty($data[8])) {
-                            $user->setGenre($data[8] == "F");
+                            $user->setGenre($data[8] == 'F');
                         }
 
                         if (!empty($data[9])) {
-                            $tel = (strlen($data[9]) == 9) ? "0".$data[9] : $data[9];
+                            $tel = (strlen($data[9]) == 9) ? '0'.$data[9] : $data[9];
                             $user->setTelephone($tel);
                         }
 
@@ -264,7 +266,7 @@ class AdminController extends Controller
                             $em->persist($nvCompte);
                         }
                     } else {
-                        $problem++;
+                        ++$problem;
                     }
                 }
 
@@ -307,14 +309,14 @@ class AdminController extends Controller
                 } else {
                     $request->getSession()->getFlashBag()->add(
                         'danger',
-                        "Aucun ajout n'a été fait. Il y a ".$problem." problèmes et ".$nbUsers." utilisateurs corrects."
+                        "Aucun ajout n'a été fait. Il y a ".$problem.' problèmes et '.$nbUsers.' utilisateurs corrects.'
                     );
                 }
 
                 if ($form->get('verifier')->isClicked()) {
                     return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
                         'form' => $form->createView(),
-                        'users' => $users
+                        'users' => $users,
                     ));
                 }
             }
@@ -405,8 +407,8 @@ class AdminController extends Controller
         $utils = $this->get('pjm.services.mailer');
 
         $context = array(
-            "user" => $user,
-            "password" => $password,
+            'user' => $user,
+            'password' => $password,
         );
 
         $template = 'PJMAppBundle:Mail:inscription.html.twig';

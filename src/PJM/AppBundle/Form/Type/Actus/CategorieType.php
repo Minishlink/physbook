@@ -8,9 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +25,7 @@ class CategorieType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Actus\Categorie'
+            'data_class' => 'PJM\AppBundle\Entity\Actus\Categorie',
         ));
     }
 

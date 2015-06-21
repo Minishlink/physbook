@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class HistoriqueBoquetteDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class HistoriqueBoquetteDatatable.
  */
 class HistoriqueBoquetteDatatable extends AbstractDatatableView
 {
@@ -19,7 +17,7 @@ class HistoriqueBoquetteDatatable extends AbstractDatatableView
         $this->getFeatures()->setServerSide(false);
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
@@ -28,11 +26,11 @@ class HistoriqueBoquetteDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll'
+                'format' => 'lll',
             ))
             ->add('nom', 'column', array(
                 'title' => 'Nom',

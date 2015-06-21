@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use PJM\AppBundle\Form\Type\Event\EvenementType;
 use PJM\AppBundle\Form\Type\UserPickerType;
 use PJM\AppBundle\Entity\Event;
@@ -14,7 +13,8 @@ use PJM\AppBundle\Entity\Event;
 class EventController extends Controller
 {
     /**
-     * Accueil des évènements
+     * Accueil des évènements.
+     *
      * @return object HTML Response
      */
     public function indexAction(Request $request, Event\Evenement $event = null)
@@ -27,7 +27,7 @@ class EventController extends Controller
         if (isset($event) && !$event->canBeSeenByUser($this->getUser())) {
             $request->getSession()->getFlashBag()->add(
                 'warning',
-                "Tu n'as pas le droit d'accéder à l'évènement ".$event->getNom()."."
+                "Tu n'as pas le droit d'accéder à l'évènement ".$event->getNom().'.'
             );
 
             return $this->redirect($this->generateUrl('pjm_app_event_index'));
@@ -36,7 +36,7 @@ class EventController extends Controller
         // si c'est l'accueil des évènements
         if ($event === null) {
             // on va chercher les $nombreMax-1 premiers events à partir de ce moment
-            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-1);
+            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax - 1);
 
             // on définit l'event en cours comme celui le plus proche de la date
             if (count($listeEvents) > 0) {
@@ -44,7 +44,7 @@ class EventController extends Controller
             }
         } else {
             // on va chercher les $nombreMax-2 évènements après cet event
-            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax-2, 'after', $event->getDateDebut());
+            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax - 2, 'after', $event->getDateDebut());
 
             $listeEvents = array_merge(array($event), $listeEvents);
         }
@@ -62,18 +62,19 @@ class EventController extends Controller
         if (isset($event)) {
             // on regarde si l'utilisateur est invité
             $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-                ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
+                ->findOneBy(array('invite' => $this->getUser(), 'event' => $event));
         }
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents,
             'event' => $event,
-            'invitation' => $invitation
+            'invitation' => $invitation,
         ));
     }
 
     /**
-     * Ajout d'un évènement
+     * Ajout d'un évènement.
+     *
      * @return object HTML Response
      */
     public function nouveauAction(Request $request)
@@ -86,7 +87,7 @@ class EventController extends Controller
         $form = $this->createForm(new EvenementType(), $event, array(
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_event_nouveau'),
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ));
 
         $form->handleRequest($request);
@@ -137,7 +138,7 @@ class EventController extends Controller
                 $response->setData(array(
                     'formView' => $formView,
                     'flashBagView' => $flashBagView,
-                    'success' => isset($success)
+                    'success' => isset($success),
                 ));
 
                 return $response;
@@ -151,8 +152,9 @@ class EventController extends Controller
         ));
     }
 
-     /**
-     * Ajout d'un évènement
+    /**
+     * Ajout d'un évènement.
+     *
      * @return object HTML Response
      */
     public function modifierAction(Request $request, Event\Evenement $event)
@@ -166,7 +168,7 @@ class EventController extends Controller
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_event_modifier', array('slug' => $event->getSlug())),
             'user' => $this->getUser(),
-            'label_submit' => "Modifier"
+            'label_submit' => 'Modifier',
         ));
 
         $form->handleRequest($request);
@@ -193,13 +195,14 @@ class EventController extends Controller
 
         return $this->render('PJMAppBundle:Event:modifier.html.twig', array(
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
         ));
     }
 
     /**
-     * Affiche et gère le bouton de suppression
-     * @param  object   Evenenement $event L'évènement considéré
+     * Affiche et gère le bouton de suppression.
+     *
+     * @param object   Evenenement $event L'évènement considéré
      */
     public function suppressionAction(Request $request, Event\Evenement $event)
     {
@@ -212,7 +215,7 @@ class EventController extends Controller
 
         $form = $this->get('form.factory')->createNamedBuilder('form_suppression')
             ->setAction($this->generateUrl(
-                "pjm_app_event_suppression",
+                'pjm_app_event_suppression',
                 array('slug' => $event->getSlug())
             ))
             ->setMethod('POST')
@@ -232,7 +235,7 @@ class EventController extends Controller
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Tes données ne sont pas valides."
+                    'Tes données ne sont pas valides.'
                 );
             }
 
@@ -245,8 +248,9 @@ class EventController extends Controller
     }
 
     /**
-     * Affiche et gère le bouton d'inscription
-     * @param  object   Evenenement $event L'évènement considéré
+     * Affiche et gère le bouton d'inscription.
+     *
+     * @param object   Evenenement $event L'évènement considéré
      */
     public function inscriptionAction(Request $request, Event\Evenement $event)
     {
@@ -254,11 +258,11 @@ class EventController extends Controller
 
         // on regarde si l'utilisateur est invité
         $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-            ->findOneBy(array("invite" => $this->getUser(), "event" => $event));
+            ->findOneBy(array('invite' => $this->getUser(), 'event' => $event));
 
         $form = $this->get('form.factory')->createNamedBuilder('form_inscription')
             ->setAction($this->generateUrl(
-                "pjm_app_event_inscription",
+                'pjm_app_event_inscription',
                 array('slug' => $event->getSlug())
             ))
             ->setMethod('POST')
@@ -278,7 +282,7 @@ class EventController extends Controller
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        "Ta modification a bien été prise en compte."
+                        'Ta modification a bien été prise en compte.'
                     );
                 } else {
                     // sinon on vérifie que l'on peut accéder à cet évènement
@@ -293,7 +297,7 @@ class EventController extends Controller
 
                         $request->getSession()->getFlashBag()->add(
                             'success',
-                            "Tu participes bien à cet évènement."
+                            'Tu participes bien à cet évènement.'
                         );
                     } else {
                         $request->getSession()->getFlashBag()->add(
@@ -305,7 +309,7 @@ class EventController extends Controller
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Tes données ne sont pas valides."
+                    'Tes données ne sont pas valides.'
                 );
             }
 
@@ -319,8 +323,9 @@ class EventController extends Controller
     }
 
     /**
-     * Affiche et gère le formulaire d'invitations
-     * @param  object   Evenenement $event L'évènement considéré
+     * Affiche et gère le formulaire d'invitations.
+     *
+     * @param object   Evenenement $event L'évènement considéré
      */
     public function inviteAction(Request $request, Event\Evenement $event)
     {
@@ -333,7 +338,7 @@ class EventController extends Controller
             'notIncludeUsers' => $notIncludeUsers,
             'method' => 'POST',
             'action' => $this->generateUrl(
-                "pjm_app_event_invite",
+                'pjm_app_event_invite',
                 array('slug' => $event->getSlug())
             ),
         ));
@@ -366,7 +371,7 @@ class EventController extends Controller
                     if ('PJM\UserBundle\Entity\User' == get_class($user)) {
                         // on vérifie qu'il n'est pas déjà invité
                         $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-                            ->findOneBy(array("invite" => $user, "event" => $event));
+                            ->findOneBy(array('invite' => $user, 'event' => $event));
 
                         if ($invitation === null) {
                             $invitation = new Event\Invitation();
@@ -384,7 +389,7 @@ class EventController extends Controller
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
-                    "Tes invitations ont bien été envoyées."
+                    'Tes invitations ont bien été envoyées.'
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(

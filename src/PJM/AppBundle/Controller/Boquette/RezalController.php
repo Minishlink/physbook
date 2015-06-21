@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RezalController extends Controller
 {
     /**
-     * Action d'affichage de la page de connexion au R&z@l
+     * Action d'affichage de la page de connexion au R&z@l.
      */
     public function connexionAction(Request $request)
     {
@@ -16,7 +16,7 @@ class RezalController extends Controller
             $request->request->get('action') : 'http://172.17.0.1:8002/index.php';
 
         $redirurl = $request->request->get('redirurl') ?
-            $request->request->get('redirurl') : $this->generateUrl("pjm_app_homepage", array(), true);
+            $request->request->get('redirurl') : $this->generateUrl('pjm_app_homepage', array(), true);
 
         $zone = $request->request->get('zone') ?
             $request->request->get('zone') : 'residence';
@@ -32,20 +32,20 @@ class RezalController extends Controller
                 'label' => "Nom d'utilisateur",
             ))
             ->add('auth_pass', $passType, array(
-                'label' => "Mot de passe"
+                'label' => 'Mot de passe',
             ))
             ->add('redirurl', 'hidden', array(
-                'data' => $redirurl
+                'data' => $redirurl,
             ))
             ->add('zone', 'hidden', array(
-                'data' => $zone
+                'data' => $zone,
             ))
             ->add('action', 'hidden', array(
-                'data' => $action
+                'data' => $action,
             ))
             ->add('accept', 'submit', array(
                 'label' => 'Connexion',
-                'attr' => array('value' => 'Connexion')
+                'attr' => array('value' => 'Connexion'),
             ))
             ->getForm()
         ;
@@ -56,7 +56,7 @@ class RezalController extends Controller
             if (true) {
                 $form->setData(array(
                     'auth_user' => $this->getUser()->getUsername(),
-                    'auth_pass' => $this->getUser()->getPassword()
+                    'auth_pass' => $this->getUser()->getPassword(),
                 ));
             } else {
                 return $this->redirect($this->generateUrl('pjm_app_boquette_default', array('slug' => 'rezal')));

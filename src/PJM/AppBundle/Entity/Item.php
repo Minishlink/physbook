@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Item
+ * Item.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ItemRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Item
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -37,14 +37,14 @@ class Item
     private $slug;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="prix", type="smallint")
      */
     private $prix;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="valid", type="boolean")
      */
@@ -74,10 +74,10 @@ class Item
     private $boquette;
 
     /**
-    * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
-    * @ORM\JoinColumn(nullable=true)
-    * @Assert\Valid()
-    */
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     */
     private $image;
 
     /**
@@ -98,9 +98,9 @@ class Item
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -108,9 +108,10 @@ class Item
     }
 
     /**
-     * Set libelle
+     * Set libelle.
      *
      * @param string $libelle
+     *
      * @return Item
      */
     public function setLibelle($libelle)
@@ -121,7 +122,7 @@ class Item
     }
 
     /**
-     * Get libelle
+     * Get libelle.
      *
      * @return string
      */
@@ -131,9 +132,10 @@ class Item
     }
 
     /**
-     * Set prix
+     * Set prix.
      *
-     * @param integer $prix
+     * @param int $prix
+     *
      * @return Item
      */
     public function setPrix($prix)
@@ -144,9 +146,9 @@ class Item
     }
 
     /**
-     * Get prix
+     * Get prix.
      *
-     * @return integer
+     * @return int
      */
     public function getPrix()
     {
@@ -154,9 +156,10 @@ class Item
     }
 
     /**
-     * Set boquette
+     * Set boquette.
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette
+     *
      * @return Item
      */
     public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette)
@@ -167,7 +170,7 @@ class Item
     }
 
     /**
-     * Get boquette
+     * Get boquette.
      *
      * @return \PJM\AppBundle\Entity\Boquette
      */
@@ -177,9 +180,10 @@ class Item
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Item
      */
     public function setSlug($slug)
@@ -190,7 +194,7 @@ class Item
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -200,9 +204,10 @@ class Item
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Item
      */
     public function setDate($date)
@@ -213,7 +218,7 @@ class Item
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -223,9 +228,10 @@ class Item
     }
 
     /**
-     * Set valid
+     * Set valid.
      *
-     * @param boolean $valid
+     * @param bool $valid
+     *
      * @return Item
      */
     public function setValid($valid)
@@ -236,9 +242,9 @@ class Item
     }
 
     /**
-     * Get valid
+     * Get valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function getValid()
     {
@@ -246,9 +252,10 @@ class Item
     }
 
     /**
-     * Set infos
+     * Set infos.
      *
      * @param array $infos
+     *
      * @return Item
      */
     public function setInfos($infos)
@@ -259,7 +266,7 @@ class Item
     }
 
     /**
-     * Get infos
+     * Get infos.
      *
      * @return array
      */
@@ -269,9 +276,10 @@ class Item
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param \PJM\AppBundle\Entity\Image $image
+     *
      * @return Item
      */
     public function setImage(\PJM\AppBundle\Entity\Image $image = null)
@@ -282,7 +290,7 @@ class Item
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return \PJM\AppBundle\Entity\Image
      */
@@ -292,9 +300,10 @@ class Item
     }
 
     /**
-     * Set usersHM
+     * Set usersHM.
      *
      * @param \PJM\AppBundle\Entity\UsersHM $usersHM
+     *
      * @return Item
      */
     public function setUsersHM(\PJM\AppBundle\Entity\UsersHM $usersHM = null)
@@ -305,7 +314,7 @@ class Item
     }
 
     /**
-     * Get usersHM
+     * Get usersHM.
      *
      * @return \PJM\AppBundle\Entity\UsersHM
      */

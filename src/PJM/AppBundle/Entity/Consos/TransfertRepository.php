@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * TransfertRepository
+ * TransfertRepository.
  */
 class TransfertRepository extends EntityRepository
 {
@@ -31,7 +31,7 @@ class TransfertRepository extends EntityRepository
 
     public function callbackFindByUser($user)
     {
-        return function(QueryBuilder $qb) use($user) {
+        return function (QueryBuilder $qb) use ($user) {
             $qb
                 ->join('Transfert.receveur', 'r')
                 ->join('Transfert.emetteur', 'e')
@@ -42,4 +42,3 @@ class TransfertRepository extends EntityRepository
         };
     }
 }
-

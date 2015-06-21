@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class ResponsabilitesDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class ResponsabilitesDatatable.
  */
 class ResponsabilitesDatatable extends AbstractDatatableView
 {
@@ -22,7 +20,7 @@ class ResponsabilitesDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_responsabilitesResults'));
@@ -37,36 +35,36 @@ class ResponsabilitesDatatable extends AbstractDatatableView
                 'title' => 'Boquette',
             ))
             ->add('niveau', 'column', array(
-                "title" => "Niveau",
+                'title' => 'Niveau',
             ))
             ->add('role', 'column', array(
-                "title" => "Rôle",
+                'title' => 'Rôle',
             ))
-            ->add("active", "boolean", array(
-                "title" => "Active",
-                "true_icon" => "glyphicon glyphicon-ok",
-                "false_icon" => "glyphicon glyphicon-remove",
-                "true_label" => "Oui",
-                "false_label" => "Non"
+            ->add('active', 'boolean', array(
+                'title' => 'Active',
+                'true_icon' => 'glyphicon glyphicon-ok',
+                'false_icon' => 'glyphicon glyphicon-remove',
+                'true_label' => 'Oui',
+                'false_label' => 'Non',
             ))
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
+            ->add(null, 'action', array(
+                'title' => 'Actions',
+                'actions' => array(
                     array(
-                        "route" => "pjm_app_admin_responsabilites",
-                        "route_parameters" => array(
-                            "responsabilite" => "id"
+                        'route' => 'pjm_app_admin_responsabilites',
+                        'route_parameters' => array(
+                            'responsabilite' => 'id',
                         ),
-                        "label" => "Modifier",
-                        "icon" => "glyphicon glyphicon-edit",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Modifier",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
+                        'label' => 'Modifier',
+                        'icon' => 'glyphicon glyphicon-edit',
+                        'attributes' => array(
+                            'rel' => 'tooltip',
+                            'title' => 'Modifier',
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
                         ),
                     ),
-                )
+                ),
             ))
         ;
     }

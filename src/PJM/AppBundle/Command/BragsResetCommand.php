@@ -1,11 +1,11 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
 class BragsResetCommand extends ContainerAwareCommand
@@ -18,7 +18,7 @@ class BragsResetCommand extends ContainerAwareCommand
     {
         $this
             ->setName('brags:reset')
-                        ->setDescription("Supprime les débits, mets le solde à la somme des crédits. ATTENTION, il faut que les commandes, les vacances (fait=0) et le prix de la baguette soient bien définis.")
+                        ->setDescription('Supprime les débits, mets le solde à la somme des crédits. ATTENTION, il faut que les commandes, les vacances (fait=0) et le prix de la baguette soient bien définis.')
             ->addOption('test', null, InputOption::VALUE_NONE, 'Si défini, pas de flush')
         ;
     }
@@ -49,7 +49,7 @@ class BragsResetCommand extends ContainerAwareCommand
 
         if ($comptes !== null) {
             foreach ($comptes as $compte) {
-                $somme = $repo_transaction->findByCompteAndValid($compte, "OK");
+                $somme = $repo_transaction->findByCompteAndValid($compte, 'OK');
                 $compte->setSolde($somme);
                 $this->em->persist($compte);
             }

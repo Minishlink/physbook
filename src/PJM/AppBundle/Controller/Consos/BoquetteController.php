@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Form\Type\Consos\MontantType;
@@ -38,8 +37,9 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Page par défaut des boquettes
-     * @param  object   Boquette $boquette
+     * Page par défaut des boquettes.
+     *
+     * @param object   Boquette $boquette
      */
     public function defaultAction(Boquette $boquette)
     {
@@ -75,7 +75,7 @@ class BoquetteController extends Controller
             'titre' => 'Historique',
             'layout' => $layout,
             'routeRetour' => $routeRetour,
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
@@ -84,7 +84,7 @@ class BoquetteController extends Controller
      */
     public function listeItemAction(Request $request, Boquette $boquette)
     {
-        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable = $this->get('pjm.datatable.boquette.item');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->setAdmin(false);
         $datatable->buildDatatableView();
@@ -96,20 +96,20 @@ class BoquetteController extends Controller
             'titre' => 'Catalogue',
             'layout' => $layout,
             'routeRetour' => $routeRetour,
-            'datatable' => $datatable
+            'datatable' => $datatable,
         ));
     }
 
     /**
-     * Action ajax de rendu de la liste des items pour DataTables (on n'affiche pas les évènements)
+     * Action ajax de rendu de la liste des items pour DataTables (on n'affiche pas les évènements).
      */
     public function itemResultsAction($boquette_slug)
     {
-        $datatable = $this->get("pjm.datatable.boquette.item");
+        $datatable = $this->get('pjm.datatable.boquette.item');
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
         $datatable->setExtImage($this->get('pjm.services.image'));
         $datatable->setBoquetteSlug($boquette_slug);
-        $datatableData = $this->get("sg_datatables.datatable")->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
@@ -126,16 +126,18 @@ class BoquetteController extends Controller
 
             return $this->render('PJMAppBundle:Consos/Cvis:produits.html.twig', array(
                 'listeProduits' => $listeItems,
-                'ajoutCatalogue' => true
+                'ajoutCatalogue' => true,
             ));
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     /**
-     * Affiche la liste des responsables d'une boquette
-     * @param  object Boquette $boquette
+     * Affiche la liste des responsables d'une boquette.
+     *
+     * @param object Boquette $boquette
+     *
      * @return object Template
      */
     public function voirResponsablesAction(Boquette $boquette)
@@ -145,22 +147,24 @@ class BoquetteController extends Controller
         $responsables = $repository->findByBoquette($boquette);
 
         $ok = 0;
-        foreach($responsables as $responsable) {
-            if(!isset($oldResponsabilite) || $oldResponsabilite == $responsable->getResponsabilite()) {
-                $ok++;
+        foreach ($responsables as $responsable) {
+            if (!isset($oldResponsabilite) || $oldResponsabilite == $responsable->getResponsabilite()) {
+                ++$ok;
                 $oldResponsabilite = $responsable->getResponsabilite();
             }
         }
 
         return $this->render('PJMAppBundle:Consos:responsables.html.twig', array(
             'responsables' => $responsables,
-            'uneResp' => ($ok == count($responsables))
+            'uneResp' => ($ok == count($responsables)),
         ));
     }
 
     /**
-     * Affiche l'historique des responsables d'une boquette
-     * @param  object Boquette $boquette
+     * Affiche l'historique des responsables d'une boquette.
+     *
+     * @param object Boquette $boquette
+     *
      * @return object Template
      */
     public function voirHistoriqueResponsablesAction(Boquette $boquette)
@@ -170,7 +174,7 @@ class BoquetteController extends Controller
         $responsables = $repository->findByBoquette($boquette, null);
 
         $proms = array();
-        foreach($responsables as $responsable) {
+        foreach ($responsables as $responsable) {
             if (!in_array($responsable->getUser()->getProms(), $proms)) {
                 $proms[] = $responsable->getUser()->getProms();
             }
@@ -180,7 +184,7 @@ class BoquetteController extends Controller
 
         return $this->render('PJMAppBundle:Boquette:historiqueResponsables.html.twig', array(
             'responsables' => $responsables,
-            'listeProms' => $proms
+            'listeProms' => $proms,
         ));
     }
 
@@ -196,7 +200,7 @@ class BoquetteController extends Controller
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_boquette_rechargement', array('slug' => $boquette->getSlug()))
+            'action' => $this->generateUrl('pjm_app_boquette_rechargement', array('slug' => $boquette->getSlug())),
         ));
 
         $form->handleRequest($request);
@@ -242,7 +246,7 @@ class BoquetteController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_boquette_'.$boquette->getSlug().'_index'));
         }
 
-        return $this->render("PJMAppBundle::form_only.html.twig", array(
+        return $this->render('PJMAppBundle::form_only.html.twig', array(
             'form' => $form->createView(),
         ));
     }

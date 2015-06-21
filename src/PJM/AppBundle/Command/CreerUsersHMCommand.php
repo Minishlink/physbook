@@ -1,12 +1,11 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\UsersHM;
 
 class CreerUsersHMCommand extends ContainerAwareCommand
@@ -18,7 +17,7 @@ class CreerUsersHMCommand extends ContainerAwareCommand
     {
         $this
             ->setName('users:create:HM')
-            ->setDescription("Créer les liens usersHM manquants")
+            ->setDescription('Créer les liens usersHM manquants')
         ;
     }
 
@@ -41,11 +40,12 @@ class CreerUsersHMCommand extends ContainerAwareCommand
         $this->em->flush();
     }
 
-    private function boucle($res) {
+    private function boucle($res)
+    {
         if (!empty($res)) {
             foreach ($res as $r) {
                 $usersHM = $r->getUsersHM();
-                if($usersHM === null) {
+                if ($usersHM === null) {
                     //on crée le lien
                     $usersHM = new UsersHM();
                     $r->setUsersHM($usersHM);

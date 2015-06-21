@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Form\Type\Consos\TransfertType;
 use PJM\UserBundle\Entity\User;
@@ -15,25 +14,25 @@ class BanqueController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $datatable_transactions = $this->get("pjm.datatable.credits");
+        $datatable_transactions = $this->get('pjm.datatable.credits');
         $datatable_transactions->setAdmin(false);
-        $datatable_transactions->setAjaxUrl($this->generateUrl("pjm_app_banque_transactionsResults"));
+        $datatable_transactions->setAjaxUrl($this->generateUrl('pjm_app_banque_transactionsResults'));
         $datatable_transactions->buildDatatableView();
 
-        $datatable_achats = $this->get("pjm.datatable.achats");
+        $datatable_achats = $this->get('pjm.datatable.achats');
         $datatable_achats->setAdmin(false);
-        $datatable_achats->setAjaxUrl($this->generateUrl("pjm_app_banque_achatsResults"));
+        $datatable_achats->setAjaxUrl($this->generateUrl('pjm_app_banque_achatsResults'));
         $datatable_achats->buildDatatableView();
 
-        $datatable_transferts = $this->get("pjm.datatable.transferts");
+        $datatable_transferts = $this->get('pjm.datatable.transferts');
         $datatable_transferts->setAdmin(false);
-        $datatable_transferts->setAjaxUrl($this->generateUrl("pjm_app_banque_transfertsResults"));
+        $datatable_transferts->setAjaxUrl($this->generateUrl('pjm_app_banque_transfertsResults'));
         $datatable_transferts->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Banque/index.html.twig', array(
             'datatable_transactions' => $datatable_transactions,
             'datatable_achats' => $datatable_achats,
-            'datatable_transferts' => $datatable_transferts
+            'datatable_transferts' => $datatable_transferts,
         ));
     }
 
@@ -46,7 +45,7 @@ class BanqueController extends Controller
         $form = $this->createForm(new TransfertType(), $transfert, array(
             'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_banque_transfert'),
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ));
 
         $form->handleRequest($request);
@@ -62,7 +61,7 @@ class BanqueController extends Controller
                     $repo_compte = $em->getRepository('PJMAppBundle:Compte');
                     $receveur = $repo_compte->findOneBy(array(
                         'boquette' => $transfert->getEmetteur()->getBoquette(),
-                        'user' => $transfert->getReceveurUser()
+                        'user' => $transfert->getReceveurUser(),
                     ));
                     $transfert->setReceveur($receveur);
 
@@ -72,12 +71,12 @@ class BanqueController extends Controller
                     $em->persist($transfert);
                     $em->flush();
 
-                    if ($transfert->getStatus() == "OK") {
+                    if ($transfert->getStatus() == 'OK') {
                         $success = true;
 
                         $request->getSession()->getFlashBag()->add(
                             'success',
-                            'Tu as bien transféré '.($transfert->getMontant()/100).'€ de ton compte '.$transfert->getEmetteur()->getBoquette().' à '.$transfert->getReceveur()->getUser().'.'
+                            'Tu as bien transféré '.($transfert->getMontant() / 100).'€ de ton compte '.$transfert->getEmetteur()->getBoquette().' à '.$transfert->getReceveur()->getUser().'.'
                         );
                     } else {
                         $request->getSession()->getFlashBag()->add(
@@ -111,7 +110,7 @@ class BanqueController extends Controller
                 $response->setData(array(
                     'formView' => $formView,
                     'flashBagView' => $flashBagView,
-                    'success' => isset($success)
+                    'success' => isset($success),
                 ));
 
                 return $response;
@@ -136,12 +135,11 @@ class BanqueController extends Controller
     {
         if (null === $user) {
             $user = $this->getUser();
-        }
-        else if ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.credits"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.credits'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
@@ -156,12 +154,11 @@ class BanqueController extends Controller
     {
         if (null === $user) {
             $user = $this->getUser();
-        }
-        else if ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.achats"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.achats'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
@@ -176,12 +173,11 @@ class BanqueController extends Controller
     {
         if (null === $user) {
             $user = $this->getUser();
-        }
-        else if ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.transferts"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.transferts'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Consos\Transfert');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));

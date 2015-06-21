@@ -1,4 +1,5 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -35,11 +36,11 @@ class UpdateBgCommand extends ContainerAwareCommand
         // on calcule la moyenne des HM photos avec > 0 HM
         $nbTotalPhotosPlusZeroHM = 0;
         $totalUsersHM = 0;
-        foreach($photosBDD as $photo) {
+        foreach ($photosBDD as $photo) {
             $nbUsersHM = $photo->getNbUsersHM();
 
             if ($nbUsersHM > 0) {
-                $nbTotalPhotosPlusZeroHM++;
+                ++$nbTotalPhotosPlusZeroHM;
                 $totalUsersHM += $nbUsersHM;
             } else {
                 // on indique qu'une photo avec 0 HM a été trouvée
@@ -47,12 +48,12 @@ class UpdateBgCommand extends ContainerAwareCommand
             }
         }
 
-        $moy = ($nbTotalPhotosPlusZeroHM != 0) ? $totalUsersHM/$nbTotalPhotosPlusZeroHM : 0;
-        $moyBasse = round(0.8*$moy);
-        $moyHaute = round(1.2*$moy);
+        $moy = ($nbTotalPhotosPlusZeroHM != 0) ? $totalUsersHM / $nbTotalPhotosPlusZeroHM : 0;
+        $moyBasse = round(0.8 * $moy);
+        $moyHaute = round(1.2 * $moy);
 
         // on attribue les probabilités
-        foreach($photosBDD as $photo) {
+        foreach ($photosBDD as $photo) {
             $nbUsersHM = $photo->getNbUsersHM();
 
             if ($nbUsersHM == 0) {
@@ -64,7 +65,7 @@ class UpdateBgCommand extends ContainerAwareCommand
 
                 if ($nbUsersHM < $moyBasse) {
                     $proba *= 0.1;
-                } else if ($nbUsersHM > $moyHaute) {
+                } elseif ($nbUsersHM > $moyHaute) {
                     $proba *= 0.5;
                 } else {
                     $proba *= 0.4;
@@ -72,14 +73,14 @@ class UpdateBgCommand extends ContainerAwareCommand
             }
 
             $photos[] = $photo;
-            $probas[] = round($proba*100);
+            $probas[] = round($proba * 100);
         }
 
         // on tire la photo
         $photo = $this->random->weightedRandom($photos, $probas);
 
         if ($input->getOption('show')) {
-            $output->writeln($photo->getId().": ".$photo->getLegende());
+            $output->writeln($photo->getId().': '.$photo->getLegende());
         }
 
         // on change la photo Bonjour Gadz'Arts

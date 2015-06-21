@@ -10,23 +10,23 @@ class ArticleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('titre', 'text')
-            ->add('contenu', "froala")
+            ->add('contenu', 'froala')
             ->add('categories', 'pjm_select2_entity', array(
                 'label' => 'Catégories',
-                'class'    => 'PJMAppBundle:Actus\Categorie',
+                'class' => 'PJMAppBundle:Actus\Categorie',
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'required' => false
+                'required' => false,
             ))
             ->add('publication', 'checkbox', array(
                 'label' => 'Décocher pour enregistrer en tant que brouillon',
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
                 'label' => $options['ajout'] ? 'Ajouter' : 'Modifier',

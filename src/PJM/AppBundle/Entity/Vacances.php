@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Vacances
+ * Vacances.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\VacancesRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Vacances
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -39,12 +39,11 @@ class Vacances
     private $dateFin;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="fait", type="boolean")
      */
     private $fait;
-
 
     public function __construct()
     {
@@ -55,13 +54,13 @@ class Vacances
 
     public function getNbJours()
     {
-        return $this->dateFin->diff($this->dateDebut)->days+1;
+        return $this->dateFin->diff($this->dateDebut)->days + 1;
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,9 +68,10 @@ class Vacances
     }
 
     /**
-     * Set dateDebut
+     * Set dateDebut.
      *
      * @param \DateTime $dateDebut
+     *
      * @return Vacances
      */
     public function setDateDebut($dateDebut)
@@ -82,7 +82,7 @@ class Vacances
     }
 
     /**
-     * Get dateDebut
+     * Get dateDebut.
      *
      * @return \DateTime
      */
@@ -92,9 +92,10 @@ class Vacances
     }
 
     /**
-     * Set dateFin
+     * Set dateFin.
      *
      * @param \DateTime $dateFin
+     *
      * @return Vacances
      */
     public function setDateFin($dateFin)
@@ -105,7 +106,7 @@ class Vacances
     }
 
     /**
-     * Get dateFin
+     * Get dateFin.
      *
      * @return \DateTime
      */
@@ -115,9 +116,10 @@ class Vacances
     }
 
     /**
-     * Set fait
+     * Set fait.
      *
-     * @param boolean $fait
+     * @param bool $fait
+     *
      * @return Vacances
      */
     public function setFait($fait)
@@ -128,9 +130,9 @@ class Vacances
     }
 
     /**
-     * Get fait
+     * Get fait.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFait()
     {

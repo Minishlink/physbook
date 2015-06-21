@@ -6,18 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
 use PJM\AppBundle\Entity\PushSubscription;
 use PJM\AppBundle\Form\Type\ReglagesNotificationsType;
 
 class PushController extends Controller
 {
     /**
-     * Action d'affichage de la page des réglages des notifications
+     * Action d'affichage de la page des réglages des notifications.
      */
     public function indexAction(Request $request)
     {
-        $datatable_push = $this->get("pjm.datatable.pushsubscription");
+        $datatable_push = $this->get('pjm.datatable.pushsubscription');
         $datatable_push->buildDatatableView();
 
         return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
@@ -26,7 +25,7 @@ class PushController extends Controller
     }
 
     /**
-     * Action du formulaire des réglages des notifications
+     * Action du formulaire des réglages des notifications.
      */
     public function reglagesAction(Request $request)
     {
@@ -75,7 +74,7 @@ class PushController extends Controller
                 $response->setData(array(
                     'formView' => $formView,
                     'flashBagView' => $flashBagView,
-                    'success' => isset($success)
+                    'success' => isset($success),
                 ));
 
                 return $response;
@@ -94,7 +93,7 @@ class PushController extends Controller
      */
     public function subscriptionResultsAction()
     {
-        $datatable = $this->get("sg_datatables.datatable")->getDatatable($this->get("pjm.datatable.pushsubscription"));
+        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.pushsubscription'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:PushSubscription');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($this->getUser()));
@@ -108,13 +107,13 @@ class PushController extends Controller
     public function deleteSubscriptionAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $liste = $request->request->get("data");
+            $liste = $request->request->get('data');
 
             $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("PJMAppBundle:PushSubscription");
+            $repository = $em->getRepository('PJMAppBundle:PushSubscription');
 
             foreach ($liste as $choice) {
-                $pushSubscription = $repository->find($choice["value"]);
+                $pushSubscription = $repository->find($choice['value']);
 
                 if ($pushSubscription->getUser() != $this->getUser()) {
                     return new Response("La PushSubscription ne correspond pas à l'utilisateur.", 403);
@@ -125,10 +124,10 @@ class PushController extends Controller
 
             $em->flush();
 
-            return new Response("PushSubscription(s) removed.");
+            return new Response('PushSubscription(s) removed.');
         }
 
-        return $this->redirect($this->generateUrl("pjm_app_homepage"));
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     /**
@@ -137,24 +136,25 @@ class PushController extends Controller
     public function manageSubscriptionAction(Request $request, $action = false)
     {
         if (!$request->isXmlHttpRequest()) {
-            return $this->redirect($this->generateUrl("pjm_app_homepage"));
+            return $this->redirect($this->generateUrl('pjm_app_homepage'));
         }
 
         $annuler = ($action == 'annuler') ? true : false;
         $subscription = array(
             'id' => $request->request->get('id'),
-            'endpoint' => $request->request->get('endpoint')
+            'endpoint' => $request->request->get('endpoint'),
         );
 
         if (empty($subscription['id']) && empty($subscription['id'])) {
             $json = array(
                 'success' => false,
                 'done' => $action,
-                'subscription' => $subscription
+                'subscription' => $subscription,
             );
 
             $response = new JsonResponse();
             $response->setData($json);
+
             return $response;
         }
 
@@ -169,7 +169,7 @@ class PushController extends Controller
 
         if ($annuler) {
             // on annule
-            if($pushSubscription !== null) {
+            if ($pushSubscription !== null) {
                 if ($pushSubscription->getUser() == $this->getUser()) {
                     $em->remove($pushSubscription);
                     $em->flush();
@@ -178,7 +178,7 @@ class PushController extends Controller
         } else {
             // on vérifie que le subscription est déjà enregistrée
             if ($pushSubscription !== null) {
-                 // si oui, on met à jour le lastSubscribed
+                // si oui, on met à jour le lastSubscribed
                 if ($pushSubscription->getUser() == $this->getUser()) {
                     $pushSubscription->refreshLastSubscribed();
                     $em->persist($pushSubscription);
@@ -202,11 +202,12 @@ class PushController extends Controller
         $json = array(
             'success' => true,
             'done' => $action,
-            'subscription' => $subscription
+            'subscription' => $subscription,
         );
 
         $response = new JsonResponse();
         $response->setData($json);
+
         return $response;
     }
 

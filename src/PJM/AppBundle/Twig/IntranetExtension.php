@@ -30,10 +30,10 @@ class IntranetExtension extends \Twig_Extension
 
     public function prixFilter($string)
     {
-        $unit = "c";
+        $unit = 'c';
         $price = (float) $string / 100; // centimes => euros
-        if (strlen($string) > 2 || $string == "0") {
-            $unit = "€";
+        if (strlen($string) > 2 || $string == '0') {
+            $unit = '€';
             $string = number_format($price, 2, ',', ' ');
         }
 
@@ -42,20 +42,20 @@ class IntranetExtension extends \Twig_Extension
 
     public function nombreFilter($string)
     {
-        return $string/10;
+        return $string / 10;
     }
 
     public function validCommandeFilter($string)
     {
         switch ($string) {
-            case "1":
-                $string = "En cours";
+            case '1':
+                $string = 'En cours';
                 break;
-            case "0":
-                $string = "Résiliée";
+            case '0':
+                $string = 'Résiliée';
                 break;
             default:
-                $string = "<strong>En attente</strong>";
+                $string = '<strong>En attente</strong>';
                 break;
         }
 
@@ -72,7 +72,8 @@ class IntranetExtension extends \Twig_Extension
             : $string;
     }
 
-    public function jsonDecodeFilter($string) {
+    public function jsonDecodeFilter($string)
+    {
         return json_decode($string);
     }
 
@@ -98,7 +99,7 @@ class IntranetExtension extends \Twig_Extension
 
     public function eFunction($feminin = false)
     {
-        return $feminin ? "e" : "";
+        return $feminin ? 'e' : '';
     }
 
     public function etatPublicationPhotoFilter($string)

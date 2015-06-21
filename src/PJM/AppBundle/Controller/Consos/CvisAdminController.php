@@ -16,7 +16,7 @@ class CvisAdminController extends Controller
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:Consos/Cvis/index.html.twig', array(
-            'boquetteSlug' => $this->slug
+            'boquetteSlug' => $this->slug,
         ));
     }
 }

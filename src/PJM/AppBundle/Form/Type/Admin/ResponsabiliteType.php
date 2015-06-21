@@ -11,7 +11,7 @@ class ResponsabiliteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class ResponsabiliteType extends AbstractType
             ->add('boquette', 'pjm_select2_entity', array(
                 'label' => 'Boquette',
                 'class' => 'PJMAppBundle:Boquette',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->orderBy('b.nom', 'ASC');
                 },
@@ -31,10 +31,10 @@ class ResponsabiliteType extends AbstractType
                 'label' => 'Rôle',
             ))
             ->add('niveau', null, array(
-                'attr' => array('placeholder' => "ex. 0")
+                'attr' => array('placeholder' => 'ex. 0'),
             ))
             ->add('active', null, array(
-                'required' => false
+                'required' => false,
             ))
             ->add('save', 'submit', array(
                 'label' => 'Envoyer',
@@ -48,7 +48,7 @@ class ResponsabiliteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\AppBundle\Entity\Responsabilite'
+            'data_class' => 'PJM\AppBundle\Entity\Responsabilite',
         ));
     }
 

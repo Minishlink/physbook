@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class AnnuaireDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class AnnuaireDatatable.
  */
 class AnnuaireDatatable extends AbstractDatatableView
 {
@@ -23,7 +21,7 @@ class AnnuaireDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 2, "direction" => "asc"))
+            ->setOrder(array('column' => 2, 'direction' => 'asc'))
             ->setPageLength(25)
         ;
 
@@ -32,73 +30,73 @@ class AnnuaireDatatable extends AbstractDatatableView
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
-            ->add(null, "action", array(
-                "title" => "Actions",
-                "actions" => array(
+            ->add(null, 'action', array(
+                'title' => 'Actions',
+                'actions' => array(
                     array(
-                        "route" => "pjm_profil_voir",
-                        "route_parameters" => array(
-                            "username" => "username"
+                        'route' => 'pjm_profil_voir',
+                        'route_parameters' => array(
+                            'username' => 'username',
                         ),
-                        "label" => "",
-                        "icon" => "glyphicon glyphicon-user",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Voir son profil",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
+                        'label' => '',
+                        'icon' => 'glyphicon glyphicon-user',
+                        'attributes' => array(
+                            'rel' => 'tooltip',
+                            'title' => 'Voir son profil',
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
                         ),
                     ),
                     array(
-                        "route" => "pjm_app_inbox_nouveauMessage",
-                        "route_parameters" => array(
-                            "user" => "username"
+                        'route' => 'pjm_app_inbox_nouveauMessage',
+                        'route_parameters' => array(
+                            'user' => 'username',
                         ),
-                        "label" => "",
-                        "icon" => "glyphicon glyphicon-comment",
-                        "attributes" => array(
-                            "rel" => "tooltip",
-                            "title" => "Lui envoyer un message",
-                            "class" => "btn btn-default btn-xs",
-                            "role" => "button"
+                        'label' => '',
+                        'icon' => 'glyphicon glyphicon-comment',
+                        'attributes' => array(
+                            'rel' => 'tooltip',
+                            'title' => 'Lui envoyer un message',
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
                         ),
                     ),
-                )
+                ),
             ))
             ->add('username', 'column', array(
                 'title' => 'Username',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('bucque', 'column', array(
-                'title' => 'Bucque'
+                'title' => 'Bucque',
             ))
             ->add('fams', 'column', array(
-                'title' => "Fam's"
+                'title' => "Fam's",
             ))
             ->add('tabagns', 'column', array(
-                'title' => "Tabagn's"
+                'title' => "Tabagn's",
             ))
             ->add('proms', 'column', array(
-                'title' => "Prom's"
+                'title' => "Prom's",
             ))
             ->add('prenom', 'column', array(
-                'title' => 'Prénom'
+                'title' => 'Prénom',
             ))
             ->add('nom', 'column', array(
-                'title' => 'Nom'
+                'title' => 'Nom',
             ))
             ->add('telephone', 'column', array(
-                'title' => 'Téléphone'
+                'title' => 'Téléphone',
             ))
             ->add('appartement', 'column', array(
-                'title' => "K'gib"
+                'title' => "K'gib",
             ))
             ->add('classe', 'column', array(
-                'title' => 'Classe'
+                'title' => 'Classe',
             ))
             ->add('anniversaire', 'datetime', array(
                 'title' => 'Anniversaire',
-                'format' => 'll'
+                'format' => 'll',
             ))
         ;
     }
@@ -109,17 +107,17 @@ class AnnuaireDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            foreach($line as &$l) {
+        $formatter = function ($line) use ($ext) {
+            foreach ($line as &$l) {
                 if (gettype($l) == 'string') {
                     $l = htmlentities($l);
                 }
             }
 
-            $line["tabagns"] = $ext->tabagnsFilter($line["tabagns"]);
+            $line['tabagns'] = $ext->tabagnsFilter($line['tabagns']);
 
-            if ($line["telephone"] != "") {
-                $line["telephone"] = '<a href="tel:'.$line["telephone"].'" title="Appeler">'.$ext->telephoneFilter($line["telephone"]).'</a>';
+            if ($line['telephone'] != '') {
+                $line['telephone'] = '<a href="tel:'.$line['telephone'].'" title="Appeler">'.$ext->telephoneFilter($line['telephone']).'</a>';
             }
 
             return $line;

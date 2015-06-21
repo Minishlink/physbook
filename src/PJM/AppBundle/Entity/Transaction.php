@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
- * Transaction
+ * Transaction.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\TransactionRepository")
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 class Transaction
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,7 +55,7 @@ class Transaction
     private $compte;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="montant", type="smallint")
      * @Assert\NotBlank()
@@ -68,10 +68,10 @@ class Transaction
 
     /**
      * @var string
-     * "OK" : paiement validé et enregistré
-     * "NOK" : paiement non validé
-     * {errorCode} : erreur communiquée par S-Money
-     * null : paiement non complété
+     *             "OK" : paiement validé et enregistré
+     *             "NOK" : paiement non validé
+     *             {errorCode} : erreur communiquée par S-Money
+     *             null : paiement non complété
      *
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
@@ -79,26 +79,24 @@ class Transaction
 
     private $compteLie;
 
-
     public function __construct()
     {
         $this->date = new \DateTime();
     }
 
-
-
     public function toArray()
     {
         $user = $this->compte->getUser();
+
         return array(
             'date' => $this->date->format('d/m/Y H:i:s'),
             'username' => $user->getUsername(),
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'montant' => $this->montant/100,
+            'montant' => $this->montant / 100,
             'moyenPaiement' => $this->moyenPaiement,
             'infos' => $this->infos,
-            'status' => $this->status
+            'status' => $this->status,
         );
     }
 
@@ -120,7 +118,7 @@ class Transaction
         $moyenPaiement = $this->getMoyenPaiement();
         $montant = $this->getMontant();
         $infos = $this->getInfos();
-        if ($moyenPaiement == "cheque" && empty($infos)) {
+        if ($moyenPaiement == 'cheque' && empty($infos)) {
             $context->addViolationAt(
                 'infos',
                 'Merci de renseigner le n° du chèque.',
@@ -129,7 +127,7 @@ class Transaction
             );
         }
 
-        if (in_array($moyenPaiement, array("autre", "operation")) && empty($infos)) {
+        if (in_array($moyenPaiement, array('autre', 'operation')) && empty($infos)) {
             $context->addViolationAt(
                 'infos',
                 'Merci de préciser la raison.',
@@ -138,7 +136,7 @@ class Transaction
             );
         }
 
-        if ($moyenPaiement == "operation") {
+        if ($moyenPaiement == 'operation') {
             if ($montant >= 0) {
                 $context->addViolationAt(
                     'montant',
@@ -180,9 +178,9 @@ class Transaction
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -190,9 +188,10 @@ class Transaction
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Transaction
      */
     public function setDate($date)
@@ -203,7 +202,7 @@ class Transaction
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -213,9 +212,10 @@ class Transaction
     }
 
     /**
-     * Set caisseSMoney
+     * Set caisseSMoney.
      *
      * @param string $caisseSMoney
+     *
      * @return Transaction
      */
     public function setCaisseSMoney($caisseSMoney)
@@ -226,7 +226,7 @@ class Transaction
     }
 
     /**
-     * Get caisseSMoney
+     * Get caisseSMoney.
      *
      * @return string
      */
@@ -236,9 +236,10 @@ class Transaction
     }
 
     /**
-     * Set montant
+     * Set montant.
      *
-     * @param integer $montant
+     * @param int $montant
+     *
      * @return Transaction
      */
     public function setMontant($montant)
@@ -249,9 +250,9 @@ class Transaction
     }
 
     /**
-     * Get montant
+     * Get montant.
      *
-     * @return integer
+     * @return int
      */
     public function getMontant()
     {
@@ -259,19 +260,20 @@ class Transaction
     }
 
     /**
-     * Show montant
+     * Show montant.
      *
      * @return string
      */
     public function showMontant()
     {
-        return (string) $this->montant/100;
+        return (string) $this->montant / 100;
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
+     *
      * @return Transaction
      */
     public function setStatus($status)
@@ -282,7 +284,7 @@ class Transaction
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */
@@ -292,9 +294,10 @@ class Transaction
     }
 
     /**
-     * Set moyenPaiement
+     * Set moyenPaiement.
      *
      * @param string $moyenPaiement
+     *
      * @return Transaction
      */
     public function setMoyenPaiement($moyenPaiement)
@@ -305,7 +308,7 @@ class Transaction
     }
 
     /**
-     * Get moyenPaiement
+     * Get moyenPaiement.
      *
      * @return string
      */
@@ -315,9 +318,10 @@ class Transaction
     }
 
     /**
-     * Set infos
+     * Set infos.
      *
      * @param string $infos
+     *
      * @return Transaction
      */
     public function setInfos($infos)
@@ -328,7 +332,7 @@ class Transaction
     }
 
     /**
-     * Get infos
+     * Get infos.
      *
      * @return string
      */
@@ -338,9 +342,10 @@ class Transaction
     }
 
     /**
-     * Set compte
+     * Set compte.
      *
      * @param \PJM\AppBundle\Entity\Compte $compte
+     *
      * @return Transaction
      */
     public function setCompte(\PJM\AppBundle\Entity\Compte $compte)
@@ -351,7 +356,7 @@ class Transaction
     }
 
     /**
-     * Get compte
+     * Get compte.
      *
      * @return \PJM\AppBundle\Entity\Compte
      */
@@ -361,9 +366,10 @@ class Transaction
     }
 
     /**
-     * Set compteLie
+     * Set compteLie.
      *
      * @param \PJM\AppBundle\Entity\Compte $compteLie
+     *
      * @return Transaction
      */
     public function setCompteLie(\PJM\AppBundle\Entity\Compte $compteLie)
@@ -375,7 +381,7 @@ class Transaction
     }
 
     /**
-     * Get compteLie
+     * Get compteLie.
      *
      * @return \PJM\AppBundle\Entity\Compte
      */

@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Entity\Inbox;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Reception
+ * Reception.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\Inbox\ReceptionRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Reception
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,7 +22,7 @@ class Reception
     private $id;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="lu", type="boolean")
      */
@@ -54,9 +54,9 @@ class Reception
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,9 +64,10 @@ class Reception
     }
 
     /**
-     * Set lu
+     * Set lu.
      *
-     * @param boolean $lu
+     * @param bool $lu
+     *
      * @return MessageInbox
      */
     public function setLu($lu)
@@ -83,9 +84,9 @@ class Reception
     }
 
     /**
-     * Get lu
+     * Get lu.
      *
-     * @return boolean
+     * @return bool
      */
     public function getLu()
     {
@@ -93,9 +94,10 @@ class Reception
     }
 
     /**
-     * Set inbox
+     * Set inbox.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Inbox $inbox
+     *
      * @return MessagesInbox
      */
     public function setInbox(\PJM\AppBundle\Entity\Inbox\Inbox $inbox)
@@ -110,7 +112,7 @@ class Reception
     }
 
     /**
-     * Get inbox
+     * Get inbox.
      *
      * @return \PJM\AppBundle\Entity\Inbox\Inbox
      */
@@ -120,9 +122,10 @@ class Reception
     }
 
     /**
-     * Set message
+     * Set message.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Message $message
+     *
      * @return MessagesInbox
      */
     public function setMessage(\PJM\AppBundle\Entity\Inbox\Message $message)
@@ -133,7 +136,7 @@ class Reception
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return \PJM\AppBundle\Entity\Inbox\Message
      */
@@ -143,9 +146,10 @@ class Reception
     }
 
     /**
-     * Set variables
+     * Set variables.
      *
      * @param array $variables
+     *
      * @return Reception
      */
     public function setVariables($variables)
@@ -156,7 +160,7 @@ class Reception
     }
 
     /**
-     * Get variables
+     * Get variables.
      *
      * @return array
      */

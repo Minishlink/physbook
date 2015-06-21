@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class PrixDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class PrixDatatable.
  */
 class PrixDatatable extends AbstractDatatableView
 {
@@ -23,7 +21,7 @@ class PrixDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_prixResults'));
@@ -34,11 +32,11 @@ class PrixDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll'
+                'format' => 'll',
             ))
             ->add('prix', 'column', array(
                 'title' => 'Prix',
@@ -52,8 +50,8 @@ class PrixDatatable extends AbstractDatatableView
     public function getLineFormatter()
     {
         $ext = new IntranetExtension();
-        $formatter = function($line) use($ext) {
-            $line["prix"] = $ext->prixFilter($line["prix"]);
+        $formatter = function ($line) use ($ext) {
+            $line['prix'] = $ext->prixFilter($line['prix']);
 
             return $line;
         };

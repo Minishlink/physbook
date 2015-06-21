@@ -11,7 +11,7 @@ class FeaturedItemType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,7 @@ class FeaturedItemType extends AbstractType
                 'error_bubbling' => true,
                 'label' => 'Item',
                 'class' => 'PJMAppBundle:Item',
-                'query_builder' => function(EntityRepository $er) use ($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                    return $er->createQueryBuilder('i')
                         ->where('i.boquette = :boquette')
                         ->andWhere('i.valid = true')
@@ -42,7 +42,7 @@ class FeaturedItemType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PJM\AppBundle\Entity\FeaturedItem',
-            'boquette' => null
+            'boquette' => null,
         ));
     }
 

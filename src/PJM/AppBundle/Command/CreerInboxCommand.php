@@ -1,12 +1,11 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use PJM\AppBundle\Entity\Inbox\Inbox;
 
 class CreerInboxCommand extends ContainerAwareCommand
@@ -36,7 +35,7 @@ class CreerInboxCommand extends ContainerAwareCommand
         if (!empty($users)) {
             foreach ($users as $user) {
                 $inbox = $user->getInbox();
-                if($inbox === null) {
+                if ($inbox === null) {
                     //on crée l'inbox
                     $inbox = new Inbox();
                     $user->setInbox($inbox);
@@ -47,5 +46,4 @@ class CreerInboxCommand extends ContainerAwareCommand
             $this->em->flush();
         }
     }
-
 }

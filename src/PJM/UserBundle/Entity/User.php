@@ -7,7 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="pjm_user")
  * @ORM\Entity(repositoryClass="PJM\UserBundle\Entity\UserRepository")
@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,7 +48,7 @@ class User extends BaseUser
     private $tabagns;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="proms", type="smallint", length=5, nullable=true)
      * @Assert\NotBlank()
@@ -114,8 +114,8 @@ class User extends BaseUser
     private $anniversaire;
 
     /**
-     * @var boolean
-     * 1 si féminin
+     * @var bool
+     *           1 si féminin
      *
      * @ORM\Column(name="genre", type="boolean")
      */
@@ -132,7 +132,7 @@ class User extends BaseUser
     private $inbox;
 
     /**
-     * Photo de profil
+     * Photo de profil.
      *
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Media\Photo", cascade={"persist", "remove"})
      **/
@@ -154,7 +154,7 @@ class User extends BaseUser
     private $pushSubscriptions;
 
     /**
-     * Réglages des notifications
+     * Réglages des notifications.
      *
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
      **/
@@ -164,28 +164,29 @@ class User extends BaseUser
     {
         $user = $this->username;
         if (!empty($this->bucque)) {
-            $user = $this->bucque." ".$user;
+            $user = $this->bucque.' '.$user;
         }
 
         if (!empty($this->prenom) || !empty($this->nom)) {
-            $user .= " (";
+            $user .= ' (';
             if (!empty($this->prenom)) {
                 $user .= $this->prenom;
             }
             if (!empty($this->nom)) {
                 if (!empty($this->prenom)) {
-                    $user .= " ";
+                    $user .= ' ';
                 }
 
                 $user .= $this->nom;
             }
-            $user .= ")";
+            $user .= ')';
         }
 
         return $user;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
@@ -196,9 +197,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -206,9 +207,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set fams
+     * Set fams.
      *
      * @param string $fams
+     *
      * @return User
      */
     public function setFams($fams)
@@ -219,7 +221,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get fams
+     * Get fams.
      *
      * @return string
      */
@@ -229,9 +231,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set tabagns
+     * Set tabagns.
      *
      * @param string $tabagns
+     *
      * @return User
      */
     public function setTabagns($tabagns)
@@ -242,7 +245,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get tabagns
+     * Get tabagns.
      *
      * @return string
      */
@@ -252,9 +255,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set proms
+     * Set proms.
      *
-     * @param integer $proms
+     * @param int $proms
+     *
      * @return User
      */
     public function setProms($proms)
@@ -265,9 +269,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get proms
+     * Get proms.
      *
-     * @return integer
+     * @return int
      */
     public function getProms()
     {
@@ -275,9 +279,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set bucque
+     * Set bucque.
      *
      * @param string $bucque
+     *
      * @return User
      */
     public function setBucque($bucque)
@@ -288,7 +293,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get bucque
+     * Get bucque.
      *
      * @return string
      */
@@ -298,9 +303,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set prenom
+     * Set prenom.
      *
      * @param string $prenom
+     *
      * @return User
      */
     public function setPrenom($prenom)
@@ -311,7 +317,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get prenom
+     * Get prenom.
      *
      * @return string
      */
@@ -321,9 +327,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set nom
+     * Set nom.
      *
      * @param string $nom
+     *
      * @return User
      */
     public function setNom($nom)
@@ -334,7 +341,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get nom
+     * Get nom.
      *
      * @return string
      */
@@ -344,9 +351,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set telephone
+     * Set telephone.
      *
      * @param string $telephone
+     *
      * @return User
      */
     public function setTelephone($telephone)
@@ -357,7 +365,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get telephone
+     * Get telephone.
      *
      * @return string
      */
@@ -367,9 +375,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set appartement
+     * Set appartement.
      *
      * @param string $appartement
+     *
      * @return User
      */
     public function setAppartement($appartement)
@@ -380,7 +389,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get appartement
+     * Get appartement.
      *
      * @return string
      */
@@ -390,9 +399,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set classe
+     * Set classe.
      *
      * @param string $classe
+     *
      * @return User
      */
     public function setClasse($classe)
@@ -403,7 +413,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get classe
+     * Get classe.
      *
      * @return string
      */
@@ -413,14 +423,15 @@ class User extends BaseUser
     }
 
     /**
-     * Set anniversaire
+     * Set anniversaire.
      *
      * @param string $anniversaire
+     *
      * @return User
      */
     public function setAnniversaire($anniversaire)
     {
-        if (gettype($anniversaire) == "string") {
+        if (gettype($anniversaire) == 'string') {
             $this->anniversaire = \DateTime::createFromFormat('d/m/Y', $anniversaire);
         } else {
             $this->anniversaire = $anniversaire;
@@ -430,7 +441,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get anniversaire
+     * Get anniversaire.
      *
      * @return \DateTime
      */
@@ -440,9 +451,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastActivity
+     * Set lastActivity.
      *
      * @param \DateTime $lastActivity
+     *
      * @return User
      */
     public function setLastActivity($lastActivity)
@@ -453,7 +465,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get lastActivity
+     * Get lastActivity.
      *
      * @return \DateTime
      */
@@ -463,9 +475,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add responsables
+     * Add responsables.
      *
      * @param \PJM\AppBundle\Entity\Responsable $responsables
+     *
      * @return User
      */
     public function addResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
@@ -476,7 +489,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove responsables
+     * Remove responsables.
      *
      * @param \PJM\AppBundle\Entity\Responsable $responsables
      */
@@ -486,7 +499,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get responsables
+     * Get responsables.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -496,9 +509,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set inbox
+     * Set inbox.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Inbox $inbox
+     *
      * @return User
      */
     public function setInbox(\PJM\AppBundle\Entity\Inbox\Inbox $inbox)
@@ -509,7 +523,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get inbox
+     * Get inbox.
      *
      * @return \PJM\AppBundle\Entity\Inbox\Inbox
      */
@@ -519,9 +533,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set photo
+     * Set photo.
      *
      * @param \PJM\AppBundle\Entity\Media\Photo $photo
+     *
      * @return User
      */
     public function setPhoto(\PJM\AppBundle\Entity\Media\Photo $photo = null)
@@ -536,7 +551,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get photo
+     * Get photo.
      *
      * @return \PJM\AppBundle\Entity\Media\Photo
      */
@@ -546,9 +561,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set genre
+     * Set genre.
      *
-     * @param boolean $genre
+     * @param bool $genre
+     *
      * @return User
      */
     public function setGenre($genre)
@@ -559,9 +575,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get genre
+     * Get genre.
      *
-     * @return boolean
+     * @return bool
      */
     public function getGenre()
     {
@@ -569,9 +585,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add photosCreated
+     * Add photosCreated.
      *
      * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
+     *
      * @return User
      */
     public function addPhotosCreated(\PJM\AppBundle\Entity\Media\Photo $photosCreated)
@@ -582,7 +599,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove photosCreated
+     * Remove photosCreated.
      *
      * @param \PJM\AppBundle\Entity\Media\Photo $photosCreated
      */
@@ -592,7 +609,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get photosCreated
+     * Get photosCreated.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -602,9 +619,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add comptes
+     * Add comptes.
      *
      * @param \PJM\AppBundle\Entity\Compte $comptes
+     *
      * @return User
      */
     public function addCompte(\PJM\AppBundle\Entity\Compte $comptes)
@@ -615,7 +633,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove comptes
+     * Remove comptes.
      *
      * @param \PJM\AppBundle\Entity\Compte $comptes
      */
@@ -625,7 +643,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get comptes
+     * Get comptes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -635,7 +653,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add pushSubscription
+     * Add pushSubscription.
      *
      * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
      *
@@ -649,7 +667,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove pushSubscription
+     * Remove pushSubscription.
      *
      * @param \PJM\AppBundle\Entity\PushSubscription $pushSubscription
      */
@@ -659,7 +677,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get pushSubscriptions
+     * Get pushSubscriptions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -669,7 +687,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set reglagesNotifications
+     * Set reglagesNotifications.
      *
      * @param \PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications
      *
@@ -683,7 +701,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get reglagesNotifications
+     * Get reglagesNotifications.
      *
      * @return \PJM\AppBundle\Entity\ReglagesNotifications
      */

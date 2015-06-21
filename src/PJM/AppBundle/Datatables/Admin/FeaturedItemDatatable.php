@@ -5,9 +5,7 @@ namespace PJM\AppBundle\Datatables\Admin;
 use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 
 /**
- * Class FeaturedItemDatatable
- *
- * @package PJM\AppBundle\Datatables\Admin
+ * Class FeaturedItemDatatable.
  */
 class FeaturedItemDatatable extends AbstractDatatableView
 {
@@ -28,12 +26,12 @@ class FeaturedItemDatatable extends AbstractDatatableView
             ->setProcessing(true);
 
         $this->getOptions()
-            ->setOrder(array("column" => 0, "direction" => "desc"))
+            ->setOrder(array('column' => 0, 'direction' => 'desc'))
         ;
 
         $this->getAjax()->setUrl(
             $this->getRouter()->generate('pjm_app_admin_boquette_featuredItemResults', array(
-                'boquette_slug' => $this->boquetteSlug
+                'boquette_slug' => $this->boquetteSlug,
             ))
         );
 
@@ -43,19 +41,19 @@ class FeaturedItemDatatable extends AbstractDatatableView
             ->add('date', 'datetime', array(
                 'title' => 'Date ISO',
                 'format' => '',
-                'visible' => false
+                'visible' => false,
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll'
+                'format' => 'll',
             ))
-            ->add('item.libelle', 'column', array('title' => 'Item',))
-            ->add("active", "boolean", array(
-                "title" => "Actif",
-                "true_icon" => "glyphicon glyphicon-ok",
-                "false_icon" => "glyphicon glyphicon-remove",
-                "true_label" => "Oui",
-                "false_label" => "Non"
+            ->add('item.libelle', 'column', array('title' => 'Item'))
+            ->add('active', 'boolean', array(
+                'title' => 'Actif',
+                'true_icon' => 'glyphicon glyphicon-ok',
+                'false_icon' => 'glyphicon glyphicon-remove',
+                'true_label' => 'Oui',
+                'false_label' => 'Non',
             ))
         ;
     }

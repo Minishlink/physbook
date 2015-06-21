@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Responsable
+ * Responsable.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ResponsableRepository")
@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Responsable
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -26,7 +26,7 @@ class Responsable
     private $id;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean")
      */
@@ -53,14 +53,15 @@ class Responsable
      **/
     private $user;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->date = new \DateTime();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -68,9 +69,10 @@ class Responsable
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
+     *
      * @return Responsable
      */
     public function setActive($active)
@@ -80,9 +82,8 @@ class Responsable
         return $this;
     }
 
-
     /**
-     * Toggle active
+     * Toggle active.
      *
      * @return Responsable
      */
@@ -94,9 +95,9 @@ class Responsable
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -104,9 +105,10 @@ class Responsable
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Responsable
      */
     public function setDate($date)
@@ -117,7 +119,7 @@ class Responsable
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -127,9 +129,10 @@ class Responsable
     }
 
     /**
-     * Set responsabilite
+     * Set responsabilite.
      *
      * @param \PJM\AppBundle\Entity\Responsabilite $responsabilite
+     *
      * @return Responsable
      */
     public function setResponsabilite(\PJM\AppBundle\Entity\Responsabilite $responsabilite = null)
@@ -140,7 +143,7 @@ class Responsable
     }
 
     /**
-     * Get responsabilite
+     * Get responsabilite.
      *
      * @return \PJM\AppBundle\Entity\Responsabilite
      */
@@ -150,9 +153,10 @@ class Responsable
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
+     *
      * @return Responsable
      */
     public function setUser(\PJM\UserBundle\Entity\User $user = null)
@@ -163,7 +167,7 @@ class Responsable
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */

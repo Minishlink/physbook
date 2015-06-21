@@ -7,7 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Responsabilite
+ * Responsabilite.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ResponsabiliteRepository")
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Responsabilite
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -42,7 +42,7 @@ class Responsabilite
     /**
      * Niveau hiérarchique de la responsabilité, 0 étant le plus important.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="niveau", type="smallint")
      * @Assert\NotBlank()
@@ -52,7 +52,7 @@ class Responsabilite
     /**
      * Si la responsabilité existe au tabagn'ss ou pas.
      *
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean")
      */
@@ -69,18 +69,20 @@ class Responsabilite
      **/
     private $boquette;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function __toString() {
-        return "[".$this->boquette->getNomCourt()."] ".$this->libelle;
+    public function __toString()
+    {
+        return '['.$this->boquette->getNomCourt().'] '.$this->libelle;
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -88,9 +90,10 @@ class Responsabilite
     }
 
     /**
-     * Set libelle
+     * Set libelle.
      *
      * @param string $libelle
+     *
      * @return Responsabilite
      */
     public function setLibelle($libelle)
@@ -101,7 +104,7 @@ class Responsabilite
     }
 
     /**
-     * Get libelle
+     * Get libelle.
      *
      * @return string
      */
@@ -111,9 +114,10 @@ class Responsabilite
     }
 
     /**
-     * Set role
+     * Set role.
      *
      * @param string $role
+     *
      * @return Responsabilite
      */
     public function setRole($role)
@@ -124,7 +128,7 @@ class Responsabilite
     }
 
     /**
-     * Get role
+     * Get role.
      *
      * @return string
      */
@@ -134,9 +138,10 @@ class Responsabilite
     }
 
     /**
-     * Set niveau
+     * Set niveau.
      *
-     * @param integer $niveau
+     * @param int $niveau
+     *
      * @return Responsabilite
      */
     public function setNiveau($niveau)
@@ -147,9 +152,9 @@ class Responsabilite
     }
 
     /**
-     * Get niveau
+     * Get niveau.
      *
-     * @return integer
+     * @return int
      */
     public function getNiveau()
     {
@@ -157,9 +162,10 @@ class Responsabilite
     }
 
     /**
-     * Set boquette
+     * Set boquette.
      *
      * @param \PJM\AppBundle\Entity\Boquette $boquette
+     *
      * @return Responsabilite
      */
     public function setBoquette(\PJM\AppBundle\Entity\Boquette $boquette = null)
@@ -170,7 +176,7 @@ class Responsabilite
     }
 
     /**
-     * Get boquette
+     * Get boquette.
      *
      * @return \PJM\AppBundle\Entity\Boquette
      */
@@ -180,9 +186,10 @@ class Responsabilite
     }
 
     /**
-     * Add responsables
+     * Add responsables.
      *
      * @param \PJM\AppBundle\Entity\Responsable $responsables
+     *
      * @return Responsabilite
      */
     public function addResponsable(\PJM\AppBundle\Entity\Responsable $responsables)
@@ -193,7 +200,7 @@ class Responsabilite
     }
 
     /**
-     * Remove responsables
+     * Remove responsables.
      *
      * @param \PJM\AppBundle\Entity\Responsable $responsables
      */
@@ -203,7 +210,7 @@ class Responsabilite
     }
 
     /**
-     * Get responsables
+     * Get responsables.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -213,9 +220,10 @@ class Responsabilite
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
+     *
      * @return Responsabilite
      */
     public function setActive($active)
@@ -226,9 +234,9 @@ class Responsabilite
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {

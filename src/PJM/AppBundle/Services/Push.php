@@ -4,9 +4,7 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use PJM\UserBundle\Entity\User;
-
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Service\Notifications;
 
@@ -29,10 +27,11 @@ class Push
     }
 
     /**
-     * Envoit une Notification Push à l'utilisateur en vérifiant que l'utilisateur a accepté ce type de notification
-     * @param object User     $user L'utilisateur destinataire
-     * @param string $message Le message "body" de la notification
-     * @param string $type    Le type de notification
+     * Envoit une Notification Push à l'utilisateur en vérifiant que l'utilisateur a accepté ce type de notification.
+     *
+     * @param object User $user    L'utilisateur destinataire
+     * @param string      $message Le message "body" de la notification
+     * @param string      $type    Le type de notification
      */
     public function sendNotificationToUser(User $user, $message, $type = null)
     {

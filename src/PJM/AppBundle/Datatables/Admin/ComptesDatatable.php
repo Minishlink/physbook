@@ -6,9 +6,7 @@ use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
- * Class ComptesDatatable
- *
- * @package PJM\AppBundle\Datatables
+ * Class ComptesDatatable.
  */
 class ComptesDatatable extends AbstractDatatableView
 {
@@ -36,19 +34,19 @@ class ComptesDatatable extends AbstractDatatableView
         ;
 
         $this->getOptions()
-            ->setOrder(array("column" => 2, "direction" => "asc"))
+            ->setOrder(array('column' => 2, 'direction' => 'asc'))
         ;
 
         $this->getAjax()->setUrl(
             $this->getRouter()->generate('pjm_app_admin_boquette_comptesResults', array(
-                'boquette_slug' => $this->boquetteSlug
+                'boquette_slug' => $this->boquetteSlug,
             ))
         );
 
         $this->setStyle(self::BOOTSTRAP_3_STYLE);
 
         $this->getColumnBuilder()
-            ->add("user.bucque", "column", array("visible" => false))
+            ->add('user.bucque', 'column', array('visible' => false))
             ->add('user.username', 'column', array(
                 'title' => 'Utilisateur',
             ))
@@ -63,9 +61,9 @@ class ComptesDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $formatter = function($line){
-            $line["user"]["username"] = $line["user"]["bucque"]." ".$line["user"]["username"];
-            $line["solde"] = $this->twigExt->prixFilter($line["solde"]);
+        $formatter = function ($line) {
+            $line['user']['username'] = $line['user']['bucque'].' '.$line['user']['username'];
+            $line['solde'] = $this->twigExt->prixFilter($line['solde']);
 
             return $line;
         };

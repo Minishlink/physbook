@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Inbox
+ * Inbox.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Inbox
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,7 +23,7 @@ class Inbox
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nbNonLus", type="smallint")
      */
@@ -46,17 +46,17 @@ class Inbox
      **/
     private $sent;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->received = new ArrayCollection();
         $this->sent = new ArrayCollection();
         $this->setNbNonLus(0);
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,9 +64,10 @@ class Inbox
     }
 
     /**
-     * Set nbNonLus
+     * Set nbNonLus.
      *
-     * @param integer $nbNonLus
+     * @param int $nbNonLus
+     *
      * @return Inbox
      */
     public function setNbNonLus($nbNonLus)
@@ -84,9 +85,9 @@ class Inbox
     }
 
     /**
-     * Get nbNonLus
+     * Get nbNonLus.
      *
-     * @return integer
+     * @return int
      */
     public function getNbNonLus()
     {
@@ -94,9 +95,10 @@ class Inbox
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\UserBundle\Entity\User $user
+     *
      * @return Inbox
      */
     public function setUser(\PJM\UserBundle\Entity\User $user = null)
@@ -107,7 +109,7 @@ class Inbox
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\UserBundle\Entity\User
      */
@@ -117,7 +119,7 @@ class Inbox
     }
 
     /**
-     * Get received
+     * Get received.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -125,8 +127,7 @@ class Inbox
     {
         $received = new \Doctrine\Common\Collections\ArrayCollection();
 
-        foreach($this->receptions as $reception)
-        {
+        foreach ($this->receptions as $reception) {
             $received[] = $reception->getMessage();
         }
 
@@ -134,9 +135,10 @@ class Inbox
     }
 
     /**
-     * Add sent
+     * Add sent.
      *
      * @param Message $sent
+     *
      * @return Inbox
      */
     public function addSent(Message $sent)
@@ -147,7 +149,7 @@ class Inbox
     }
 
     /**
-     * Remove sent
+     * Remove sent.
      *
      * @param Message $sent
      */
@@ -157,7 +159,7 @@ class Inbox
     }
 
     /**
-     * Get sent
+     * Get sent.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -167,9 +169,10 @@ class Inbox
     }
 
     /**
-     * Add receptions
+     * Add receptions.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
+     *
      * @return Inbox
      */
     public function addReception(\PJM\AppBundle\Entity\Inbox\Reception $receptions)
@@ -180,7 +183,7 @@ class Inbox
     }
 
     /**
-     * Remove receptions
+     * Remove receptions.
      *
      * @param \PJM\AppBundle\Entity\Inbox\Reception $receptions
      */
@@ -190,7 +193,7 @@ class Inbox
     }
 
     /**
-     * Get receptions
+     * Get receptions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

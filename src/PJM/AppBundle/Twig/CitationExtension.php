@@ -15,15 +15,17 @@ class CitationExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter'), array(
-                'needs_environment' => true
-            ))
+                'needs_environment' => true,
+            )),
         );
     }
 
     /**
-     * Remplace dans un texte les @username par un lien cliquable
-     * @param  string  $texte Texte où regarder
-     * @return integer Nombre d'occurences remplacées
+     * Remplace dans un texte les @username par un lien cliquable.
+     *
+     * @param string $texte Texte où regarder
+     *
+     * @return int Nombre d'occurences remplacées
      */
     public function citationUsersFilter(\Twig_Environment $twig, $texte)
     {
@@ -33,17 +35,17 @@ class CitationExtension extends \Twig_Extension
 
         if ($usernames !== null) {
             $usersOK = array();
-            foreach($usernames[0] as $username) {
+            foreach ($usernames[0] as $username) {
                 $username = substr($username, 1);
                 $user = $repo_user->findOneByUsername($username);
                 if ($user !== null) {
-                    if(!in_array($username, $usersOK)) {
+                    if (!in_array($username, $usersOK)) {
                         $view = $twig->render('PJMAppBundle:Profil:encart.html.twig', array(
                             'user' => $user,
-                            'citation' => true
+                            'citation' => true,
                         ));
 
-                        $texte = str_replace("@".$username, $view, $texte, $count);
+                        $texte = str_replace('@'.$username, $view, $texte, $count);
 
                         $usersOK[] = $username;
                     }

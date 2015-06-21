@@ -1,4 +1,5 @@
 <?php
+
 namespace PJM\AppBundle\Form\Type\Filter;
 
 use Symfony\Component\Form\AbstractType;
@@ -16,18 +17,18 @@ class TransactionFilterType extends AbstractType
             ->add('date', 'filter_date_range', array(
                 'label' => 'Date (intervalle ouvert)',
                 'left_date_options' => array(
-                    'label' => 'De'
+                    'label' => 'De',
                 ),
                 'right_date_options' => array(
-                    'label' => 'A'
+                    'label' => 'A',
                 ),
             ))
             ->add('moyenPaiement', 'filter_choice', array(
                 'label' => 'Moyen de paiement',
-                'choices' => $moyenPaiementsChoices
+                'choices' => $moyenPaiementsChoices,
             ))
             ->add('export', 'submit', array(
-                'label' => 'Exporter'
+                'label' => 'Exporter',
             ))
         ;
     }
@@ -38,8 +39,8 @@ class TransactionFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection'   => false,
-            'validation_groups' => array('filtering')
+            'csrf_protection' => false,
+            'validation_groups' => array('filtering'),
         ));
     }
 

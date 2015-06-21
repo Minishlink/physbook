@@ -5,27 +5,26 @@ namespace PJM\AppBundle\Form\Type\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use PJM\AppBundle\Form\Type\ImageType;
 
 class PhotoType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['ajout'] || $options['proprietaire'] == 'admin') {
             $builder->add('image', new ImageType(), array(
-                'required' => $options['ajout']
+                'required' => $options['ajout'],
             ));
         }
 
         $builder
             ->add('legende', null, array(
                 'label' => 'Légende',
-                'required' => false
+                'required' => false,
             ))
         ;
 
@@ -39,12 +38,12 @@ class PhotoType extends AbstractType
         $builder
             ->add('publication', 'choice', array(
                 'label' => "Publication sur Bonjour Gadz'Arts",
-                'choices' => $publicationChoices
+                'choices' => $publicationChoices,
             ))
         ;
 
         $builder->add('save', 'submit', array(
-            'label' => 'Sauvegarder'
+            'label' => 'Sauvegarder',
         ));
     }
 
@@ -57,7 +56,7 @@ class PhotoType extends AbstractType
             'data_class' => 'PJM\AppBundle\Entity\Media\Photo',
             'ajout' => true,
             'admin' => false,
-            'proprietaire' => null
+            'proprietaire' => null,
         ));
     }
 

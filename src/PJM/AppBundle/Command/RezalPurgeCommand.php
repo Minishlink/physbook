@@ -1,4 +1,5 @@
 <?php
+
 namespace PJM\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -32,7 +33,7 @@ class RezalPurgeCommand extends ContainerAwareCommand
         // les boquettes concernées :
         $boquettes = array(
             'pians',
-            'cvis'
+            'cvis',
         );
 
         foreach ($boquettes as $boquette) {
