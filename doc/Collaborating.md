@@ -4,7 +4,7 @@
 Please read [Setup.md](https://github.com/Minishlink/physbook/blob/master/doc/Setup.md).
 
 ## Workflow ##
-We work with the [GitHub Flow](https://guides.github.com/introduction/flow). Basically, you should never commit changes directly on origin/master.
+We work with the [GitHub Flow](https://guides.github.com/introduction/flow). Basically, you should never commit changes directly on origin/master. The branch origin/master should always be ready to be deployed on the production server. It should be *stable*.
 
 ### Schema ###
 When working on a new feature or a bugfix, you should always follow this workflow:
@@ -16,7 +16,7 @@ When working on a new feature or a bugfix, you should always follow this workflo
 3. Test your modifications
   * Tests should be made continuously during your development
 4. Create a pull request
-  * You can create the pull request as soon as you create the branch so that team collaborators can discuss about the feature/fix..
+  * You can create the pull request as soon as you create the branch so that team collaborators can discuss about the feature/fix.
 5. Wait for the review of the team members
   * They comment about the code/feature and test the changes
 6. Your modifications will be merged either by you or one of the team members when reviewed.
@@ -26,9 +26,6 @@ When working on a new feature or a bugfix, you should always follow this workflo
 If you want to implement a new feature, give a representative name to the branch (eg. "survey").
 
 If you want to fix a bug, name the branch "fix-*" where * is the page/feature it is related to (eg. "fix-events").
-
-### Reviewing ###
-Team collaborators review pull requests. . When the new branch is believed to be finished, they can merge it to origin/master and delete it.
 
 ### Deployment ###
 See [Deploy.md](https://github.com/Minishlink/physbook/blob/master/doc/Deploy.md). Once deployed, you should set a new release tag.
