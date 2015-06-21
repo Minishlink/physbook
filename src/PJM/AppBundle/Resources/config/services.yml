@@ -62,6 +62,9 @@ services:
     pjm.services.push:
         class: PJM\AppBundle\Services\Push
         arguments: [@doctrine.orm.entity_manager, @rms_push_notifications]
+    pjm.services.file_manager:
+        class: PJM\AppBundle\Services\FileManager
+        arguments: [%kernel.root_dir%]
     pjm.listener.consos.historique:
         class: PJM\AppBundle\Listener\Consos\HistoriqueListener
         tags:
