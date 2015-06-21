@@ -24,16 +24,12 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
     
-    java_path: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
-    
-    router.request_context.host: physbook.fr
-    router.request_context.base_url: ""
-    assets_base_url: "%router.request_context.host%%router.request_context.base_url%"
+    java_path: java
     
     paiement.smoney.url: urlSmoneyAChanger
     paiement.smoney.auth: Bearer clef
     
-    android_gcm_api_key: clefAChanger #clef serveur dev
+    android_gcm_api_key: clefAChanger
     
     canal: https
     
