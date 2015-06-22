@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\UserBundle\Entity;
+namespace PJM\AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User.
  *
  * @ORM\Table(name="pjm_user")
- * @ORM\Entity(repositoryClass="PJM\UserBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
@@ -43,7 +43,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
      * @Assert\NotBlank()
-     * @Assert\Choice(callback = {"PJM\UserBundle\Enum\UserEnum", "getTabagnsChoices"})
+     * @Assert\Choice(callback = {"PJM\AppBundle\Enum\UserEnum", "getTabagnsChoices"})
      */
     private $tabagns;
 

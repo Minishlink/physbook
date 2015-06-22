@@ -2,7 +2,7 @@
 
 namespace PJM\AppBundle\Services;
 
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Entity\Compte;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

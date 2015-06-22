@@ -29,7 +29,7 @@ class Commande
     private $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -174,11 +174,11 @@ class Commande
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return Historique
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user)
+    public function setUser(\PJM\AppBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -188,7 +188,7 @@ class Commande
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {

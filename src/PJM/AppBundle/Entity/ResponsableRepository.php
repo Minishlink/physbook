@@ -35,7 +35,7 @@ class ResponsableRepository extends EntityRepository
         return $res;
     }
 
-    public function estNiveauUn(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
+    public function estNiveauUn(\PJM\AppBundle\Entity\User $user, Boquette $boquette)
     {
         $query = $this->createQueryBuilder('r')
                     ->where('r.active = true')
