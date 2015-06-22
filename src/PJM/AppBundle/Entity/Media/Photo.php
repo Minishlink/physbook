@@ -59,7 +59,7 @@ class Photo
     private $usersHM;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="photosCreated")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="photosCreated")
      **/
     private $proprietaire;
 
@@ -219,11 +219,11 @@ class Photo
     /**
      * Set proprietaire.
      *
-     * @param \PJM\UserBundle\Entity\User $proprietaire
+     * @param \PJM\AppBundle\Entity\User $proprietaire
      *
      * @return Photo
      */
-    public function setProprietaire(\PJM\UserBundle\Entity\User $proprietaire = null)
+    public function setProprietaire(\PJM\AppBundle\Entity\User $proprietaire = null)
     {
         $this->proprietaire = $proprietaire;
 
@@ -233,7 +233,7 @@ class Photo
     /**
      * Get proprietaire.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getProprietaire()
     {

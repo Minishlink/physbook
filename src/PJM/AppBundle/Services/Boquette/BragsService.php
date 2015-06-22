@@ -3,7 +3,7 @@
 namespace PJM\AppBundle\Services\Boquette;
 
 use Doctrine\ORM\EntityManager;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Entity\Item;
 
 class BragsService extends BoquetteService

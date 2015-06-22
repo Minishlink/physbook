@@ -97,7 +97,7 @@ class Evenement
     private $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull(message="Aucun créateur spécifié.")
      **/
@@ -398,11 +398,11 @@ class Evenement
     /**
      * Set createur.
      *
-     * @param \PJM\UserBundle\Entity\User $createur
+     * @param \PJM\AppBundle\Entity\User $createur
      *
      * @return Evenement
      */
-    public function setCreateur(\PJM\UserBundle\Entity\User $createur)
+    public function setCreateur(\PJM\AppBundle\Entity\User $createur)
     {
         $this->createur = $createur;
 
@@ -412,7 +412,7 @@ class Evenement
     /**
      * Get createur.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getCreateur()
     {
@@ -538,7 +538,7 @@ class Evenement
         return $this->getInvites(false);
     }
 
-    public function canBeSeenByUser(\PJM\UserBundle\Entity\User $user)
+    public function canBeSeenByUser(\PJM\AppBundle\Entity\User $user)
     {
         // FUTURE visibilité conscrits/anciens/P3/archis
 

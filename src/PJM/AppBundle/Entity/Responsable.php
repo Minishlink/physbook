@@ -48,7 +48,7 @@ class Responsable
     private $responsabilite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="responsables")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="responsables")
      * @Assert\NotBlank()
      **/
     private $user;
@@ -155,11 +155,11 @@ class Responsable
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return Responsable
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user = null)
+    public function setUser(\PJM\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -169,7 +169,7 @@ class Responsable
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\UserBundle\Enum;
+namespace PJM\AppBundle\Enum;
 
 /**
  * UserEnum.

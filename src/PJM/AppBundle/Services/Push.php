@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Service\Notifications;
 

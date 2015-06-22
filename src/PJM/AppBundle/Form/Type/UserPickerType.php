@@ -22,7 +22,7 @@ class UserPickerType extends AbstractType
         $builder
             ->add('users', 'entity', array(
                 'label' => $options['label_users'],
-                'class' => 'PJMUserBundle:User',
+                'class' => 'PJMAppBundle:User',
                 'multiple' => true,
                 'required' => false,
                 'apply_filter' => false,
@@ -43,7 +43,7 @@ class UserPickerType extends AbstractType
                 },
             ));
 
-        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+        $userEnum = new \PJM\AppBundle\Enum\UserEnum();
 
         $builder
             ->add('fams', 'filter_text', array(

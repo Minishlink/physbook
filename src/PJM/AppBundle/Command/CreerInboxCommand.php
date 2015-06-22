@@ -30,7 +30,7 @@ class CreerInboxCommand extends ContainerAwareCommand
         $this->logger = $this->getContainer()->get('logger');
 
         // on va chercher les users
-        $users = $this->em->getRepository('PJMUserBundle:User')->findAll();
+        $users = $this->em->getRepository('PJMAppBundle:User')->findAll();
 
         if (!empty($users)) {
             foreach ($users as $user) {

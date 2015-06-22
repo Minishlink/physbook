@@ -177,7 +177,7 @@ class Message
     /**
      * Get expediteur.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getExpediteur()
     {

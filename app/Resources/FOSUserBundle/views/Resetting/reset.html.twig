@@ -1,0 +1,14 @@
+{% extends "PJMAppBundle:Connexion:layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.plainPassword) }}
+    <div>
+        <button class="btn" id="_submit" name="_submit" type="submit">Modifier le mot de passe</button>
+    </div>
+{{ form_end(form) }}
+
+{% endblock fos_user_content %}

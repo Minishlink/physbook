@@ -58,7 +58,7 @@ class BragsForceCommand extends ContainerAwareCommand
 
         $sheetData = $phpExcelObject->getActiveSheet()->toArray(null, true, true, true);
 
-        $user_repo = $this->em->getRepository('PJMUserBundle:User');
+        $user_repo = $this->em->getRepository('PJMAppBundle:User');
         $compte_repo = $this->em->getRepository('PJMAppBundle:Compte');
 
         $baguette = $this->em->getRepository('PJMAppBundle:Item')->findOneBy(array('slug' => $itemSlug, 'valid' => true));

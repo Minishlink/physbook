@@ -5,9 +5,9 @@ namespace PJM\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Entity\Media\Photo;
-use PJM\UserBundle\Form\Type\UserType;
+use PJM\AppBundle\Form\Type\UserType;
 use PJM\AppBundle\Form\Type\Media\PhotoType;
 
 class ProfilController extends Controller
@@ -19,7 +19,7 @@ class ProfilController extends Controller
         }
 
         $online = $this->getDoctrine()->getManager()
-            ->getRepository('PJMUserBundle:User')
+            ->getRepository('PJMAppBundle:User')
             ->getOneActive($user);
 
         return $this->render('PJMAppBundle:Profil:voir.html.twig', array(
@@ -33,7 +33,7 @@ class ProfilController extends Controller
         if (isset($user)) {
             if ($content) { // si on clique sur le lien d'encart
                 $online = $this->getDoctrine()->getManager()
-                    ->getRepository('PJMUserBundle:User')
+                    ->getRepository('PJMAppBundle:User')
                     ->getOneActive($user);
 
                 return $this->render('PJMAppBundle:Profil:encart_content.html.twig', array(

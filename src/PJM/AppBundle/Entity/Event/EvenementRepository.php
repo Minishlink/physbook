@@ -3,7 +3,7 @@
 namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\EntityRepository;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 
 /**
  * EvenementRepository.

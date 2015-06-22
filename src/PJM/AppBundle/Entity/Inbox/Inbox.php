@@ -30,7 +30,7 @@ class Inbox
     private $nbNonLus;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\UserBundle\Entity\User", mappedBy="inbox")
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\User", mappedBy="inbox")
      **/
     private $user;
 
@@ -97,11 +97,11 @@ class Inbox
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return Inbox
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user = null)
+    public function setUser(\PJM\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -111,7 +111,7 @@ class Inbox
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {
