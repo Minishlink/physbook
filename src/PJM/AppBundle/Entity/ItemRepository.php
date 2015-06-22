@@ -87,6 +87,7 @@ class ItemRepository extends EntityRepository
 
     public function callbackFindByBoquetteSlug($boquette_slug)
     {
+        // TODO ne pas retourner les events
         return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
                 ->join('Item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
