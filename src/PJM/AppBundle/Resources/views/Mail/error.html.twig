@@ -10,7 +10,6 @@ Echec du crédit de la transaction
 {% endblock %}
 
 {% block content_text %}
-{% autoescape false %}
 Sal's {{ user.bucque }},
 
 une erreur est survenue lors de ta navigation sur Phy'sbook.
@@ -35,7 +34,6 @@ Montant : {{ transaction.montant }}
 
 Phy'sbook
 error@physbook.fr
-{% endautoescape %}
 {% endblock %}
 
 {% block content_html %}
