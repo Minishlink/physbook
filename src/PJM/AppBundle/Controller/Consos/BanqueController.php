@@ -24,9 +24,15 @@ class BanqueController extends Controller
         $datatable_achats->setAjaxUrl($this->generateUrl('pjm_app_banque_achatsResults'));
         $datatable_achats->buildDatatableView();
 
+        $datatable_transferts = $this->get('pjm.datatable.transferts');
+        $datatable_transferts->setAdmin(false);
+        $datatable_transferts->setAjaxUrl($this->generateUrl('pjm_app_banque_transfertsResults'));
+        $datatable_transferts->buildDatatableView();
+
         return $this->render('PJMAppBundle:Consos:Banque/index.html.twig', array(
             'datatable_transactions' => $datatable_transactions,
             'datatable_achats' => $datatable_achats,
+            'datatable_transferts' => $datatable_transferts,
         ));
     }
 
