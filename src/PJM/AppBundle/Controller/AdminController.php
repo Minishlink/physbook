@@ -254,7 +254,7 @@ class AdminController extends Controller
                     }
 
                     if (!empty($row['M'])) {
-                        $user->setAnniversaire($row['M']);
+                        $user->setAnniversaire(\DateTime::createFromFormat('m-d-y', $row['M']));
                     }
 
                     $user->setEnabled(true);
