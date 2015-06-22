@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Entity\Actus;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 
 /**
  * ArticleRepository.

@@ -9,6 +9,10 @@ pour de meilleurs échanges et des paiements faciles au tabagn's
 http://physbook.fr
 
 {% block content_text %}{% endblock %}
+{% block footer_text %}
+Les ZiPhy'sbook
+zi@physbook.fr
+{% endblock %}
 {% endblock %}
 
 {% block body_html %}
@@ -21,10 +25,8 @@ http://physbook.fr
             <tr>
                 <td>
                     <a href="{{ url('pjm_app_homepage') }}" style="color:#ffba00">
-                        {# FUTURE à partir de Symfony 2.7
+
                         <img src="{{ absolute_url(asset('images/general/physbook_bg-transp-small.png')) }}" style="text-align:center" alt="Phy'sbook" />
-                        #}
-                        <img src="{{ asset('images/general/physbook_bg-transp-small.png', absolute=true) }}" style="text-align:center" alt="Phy'sbook" />
                     </a>
                     <br><small>pour de meilleurs échanges et des paiements faciles au tabagn's</small>
                 </td>
@@ -32,6 +34,12 @@ http://physbook.fr
             <tr>
                 <td>
                     {% block content_html %}{% endblock %}
+                    {% block footer_html %}
+                    <p>
+                        Les ZiPhy'sbook<br>
+                        <a href="mailto:zi@physbook.fr" style="color:#ffba00">zi@physbook.fr</a>
+                    </p>
+                    {% endblock %}
                 </td>
             </tr>
 

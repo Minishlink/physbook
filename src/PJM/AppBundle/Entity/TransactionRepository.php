@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 
 /**
  * TransactionRepository.

@@ -15,7 +15,7 @@ class AccueilController extends Controller
         $mazoutage = ($solde['pians'] < -300);
 
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMUserBundle:User');
+        $repository = $em->getRepository('PJMAppBundle:User');
         $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
         $listeConnectes = $repository->getActive($this->getUser());
 

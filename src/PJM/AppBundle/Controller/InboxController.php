@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use PJM\AppBundle\Entity\Inbox\Message;
 use PJM\AppBundle\Entity\Inbox\Reception;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Form\Type\Inbox\MessageType;
 use PJM\AppBundle\Form\Type\Filter\UserFilterType;
 
@@ -57,7 +57,7 @@ class InboxController extends Controller
         if ($filterForm->isSubmitted()) {
             if ($filterForm->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $user_repo = $em->getRepository('PJMUserBundle:User');
+                $user_repo = $em->getRepository('PJMAppBundle:User');
 
                 $filterBuilder = $user_repo->createQueryBuilder('u');
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $filterBuilder);

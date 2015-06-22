@@ -19,7 +19,7 @@ class ResponsableType extends AbstractType
             ->add('user', 'pjm_select2_entity', array(
                 'error_bubbling' => true,
                 'label' => 'Utilisateur',
-                'class' => 'PJMUserBundle:User',
+                'class' => 'PJMAppBundle:User',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.username', 'ASC');

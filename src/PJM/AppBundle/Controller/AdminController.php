@@ -11,7 +11,7 @@ use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Inbox\Inbox;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 
 class AdminController extends Controller
 {

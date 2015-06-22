@@ -53,7 +53,7 @@ class ReglagesNotifications
     private $banque;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="reglagesNotifications")
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="reglagesNotifications")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -168,11 +168,11 @@ class ReglagesNotifications
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return ReglagesNotifications
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user)
+    public function setUser(\PJM\AppBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -182,7 +182,7 @@ class ReglagesNotifications
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {
