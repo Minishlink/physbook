@@ -131,7 +131,7 @@ class AnnuaireDatatable extends AbstractDatatableView
      */
     public function getEntity()
     {
-        return 'PJM\UserBundle\Entity\User';
+        return 'PJM\AppBundle\Entity\User';
     }
 
     /**

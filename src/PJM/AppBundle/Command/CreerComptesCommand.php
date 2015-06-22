@@ -38,7 +38,7 @@ class CreerComptesCommand extends ContainerAwareCommand
         );
 
         // on va chercher les users
-        $users = $this->em->getRepository('PJMUserBundle:User')->findAll();
+        $users = $this->em->getRepository('PJMAppBundle:User')->findAll();
 
         if (!empty($users)) {
             $repository = $this->em->getRepository('PJMAppBundle:Compte');

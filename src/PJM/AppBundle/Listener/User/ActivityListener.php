@@ -3,13 +3,13 @@
 // http://www.symfony-grenoble.fr/238/lister-les-utilisateurs-en-ligne/
 
 
-namespace PJM\UserBundle\Listener;
+namespace PJM\AppBundle\Listener\User;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
-use PJM\UserBundle\Entity\User;
+use PJM\AppBundle\Entity\User;
 
 class ActivityListener
 {

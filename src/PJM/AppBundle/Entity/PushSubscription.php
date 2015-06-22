@@ -43,7 +43,7 @@ class PushSubscription
     private $endpoint;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="pushSubscriptions")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="pushSubscriptions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -157,11 +157,11 @@ class PushSubscription
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return PushSubscription
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user)
+    public function setUser(\PJM\AppBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -171,7 +171,7 @@ class PushSubscription
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {

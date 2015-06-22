@@ -22,7 +22,7 @@ class UsersHM
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToMany(targetEntity="PJM\AppBundle\Entity\User")
      * @ORM\OrderBy({"bucque" = "ASC"})
      **/
     private $users;
@@ -48,11 +48,11 @@ class UsersHM
     /**
      * Add users.
      *
-     * @param \PJM\UserBundle\Entity\User $users
+     * @param \PJM\AppBundle\Entity\User $users
      *
      * @return UsersHM
      */
-    public function addUser(\PJM\UserBundle\Entity\User $users)
+    public function addUser(\PJM\AppBundle\Entity\User $users)
     {
         $this->users[] = $users;
 
@@ -62,9 +62,9 @@ class UsersHM
     /**
      * Remove users.
      *
-     * @param \PJM\UserBundle\Entity\User $users
+     * @param \PJM\AppBundle\Entity\User $users
      */
-    public function removeUser(\PJM\UserBundle\Entity\User $users)
+    public function removeUser(\PJM\AppBundle\Entity\User $users)
     {
         $this->users->removeElement($users);
     }

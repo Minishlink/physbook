@@ -42,7 +42,7 @@ class Comment extends BaseComment implements VotableCommentInterface, SignedComm
     /**
      * Author of the comment.
      *
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User")
      *
      * @var User
      */

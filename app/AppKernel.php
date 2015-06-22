@@ -31,7 +31,6 @@ class AppKernel extends Kernel
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new PJM\AppBundle\PJMAppBundle(),
-            new PJM\UserBundle\PJMUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
