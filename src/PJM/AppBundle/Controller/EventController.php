@@ -97,23 +97,6 @@ class EventController extends Controller
                 $em->persist($event);
                 $em->flush();
 
-                /*if ($event->getPrix() > 0) {
-                    $item = new Item();
-                    $item->setLibelle($event->getNom());
-                    $item->setPrix($event->getPrix());
-                    $item->setImage($event->getImage());
-                    $item->setSlug("event_".$event->getSlug());
-                    $item->setDate($event->getDateCreation());
-                    $item->setInfos(array('event'));
-                    $item->setValid(1);
-                    // bucquage sur compte Pi
-                    $item->setBoquette($em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians'));
-                    $item->setUsersHM(null);
-                    $event->setItem($item);
-                    $em->persist($event);
-                    $em->flush();
-                }*/
-
                 $success = true;
 
                 $request->getSession()->getFlashBag()->add(
@@ -275,8 +258,6 @@ class EventController extends Controller
                 if ($invitation !== null) {
                     // si on est déjà un invité
                     $invitation->setEstPresent(null === $invitation->getEstPresent() || !$invitation->getEstPresent());
-                    // on fait payer l'utilisateur si l'event n'est pas gratuit
-                    //$invitation->payer();
                     $em->persist($invitation);
                     $em->flush();
 
