@@ -200,125 +200,129 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form['liste']->getData();
+            // on upload temporairement le fichier
+            $fileManager = $this->get('pjm.services.file_manager');
+            $filePath = $fileManager->upload($form['liste']->getData(), 'registrationUsers', false, 'excel');
 
-            if ($file->isValid()) {
-                $handle = fopen($file, 'r');
-                $users = array();
-                $problem = 0;
+            // on va chercher le tableau correspondant à l'Excel
+            $usersExcel = $this->get('pjm.services.excel')
+                ->parse($filePath);
 
-                // les boquettes concernées pour l'ouverture de compte :
-                $repository = $em->getRepository('PJMAppBundle:Boquette');
-                $boquettes = array(
-                    $repository->findOneBySlug('pians'),
-                    $repository->findOneBySlug('paniers'),
-                    $repository->findOneBySlug('brags'),
-                );
+            // on supprime le fichier temporaire
+            $fileManager->remove($filePath);
 
-                while (($data = fgetcsv($handle, 0, "\t")) !== false) {
-                    if (count($data) >= 8) {
-                        // si il y a au moins le nombre de paramètres requis
-                        $user = $userManager->createUser();
+            $problem = 0;
 
-                        $user->setFams($data[0]);
-                        $user->setTabagns(strtolower($data[1]));
-                        $user->setProms($data[2]);
-                        $user->setEmail(strtolower($data[3]));
-                        $user->setBucque($data[4]);
-                        $user->setPlainPassword($data[5]);
-                        $user->setPrenom($data[6]);
-                        $user->setNom($data[7]);
+            // les boquettes concernées pour l'ouverture de compte :
+            $repository = $em->getRepository('PJMAppBundle:Boquette');
+            $boquettes = array(
+                $repository->findOneBySlug('pians'),
+                $repository->findOneBySlug('paniers'),
+                $repository->findOneBySlug('brags'),
+            );
 
-                        $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
-                        if (!empty($data[8])) {
-                            $user->setGenre($data[8] == 'F');
-                        }
+            foreach ($usersExcel as $row) {
+                if (count($row) >= 8) {
+                    // si il y a au moins le nombre de paramètres requis
+                    $user = $userManager->createUser();
 
-                        if (!empty($data[9])) {
-                            $tel = (strlen($data[9]) == 9) ? '0'.$data[9] : $data[9];
-                            $user->setTelephone($tel);
-                        }
+                    $user->setFams($row['A']);
+                    $user->setTabagns(strtolower($row['B']));
+                    $user->setProms($row['C']);
+                    $user->setEmail(strtolower($row['D']));
+                    $user->setBucque($row['E']);
+                    $user->setPlainPassword($row['F']);
+                    $user->setPrenom($row['G']);
+                    $user->setNom($row['H']);
 
-                        if (!empty($data[10])) {
-                            $user->setAppartement(strtoupper($data[10]));
-                        }
-
-                        if (!empty($data[11])) {
-                            $user->setClasse(strtoupper($data[11]));
-                        }
-
-                        if (!empty($data[12])) {
-                            $user->setAnniversaire($data[12]);
-                        }
-
-                        $user->setEnabled(true);
-
-                        //on crée l'inbox
-                        $inbox = new Inbox();
-                        $user->setInbox($inbox);
-
-                        $userManager->updateUser($user, false);
-                        $users[] = $user;
-
-                        // on crée les comptes
-                        foreach ($boquettes as $boquette) {
-                            $nvCompte = new Compte($user, $boquette);
-                            $em->persist($nvCompte);
-                        }
-                    } else {
-                        ++$problem;
+                    $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
+                    if (!empty($row['I'])) {
+                        $user->setGenre($row['I'] == 'F');
                     }
-                }
 
-                fclose($handle);
-                $nbUsers = count($users);
+                    if (!empty($row['J'])) {
+                        $tel = (strlen($row['J']) == 9) ? '0'.$row['J'] : $row['J'];
+                        $user->setTelephone($tel);
+                    }
 
-                if (!$problem) {
-                    if ($nbUsers && !$form->get('verifier')->isClicked()) {
-                        $success = true;
+                    if (!empty($row['K'])) {
+                        $user->setAppartement(strtoupper($row['K']));
+                    }
 
-                        try {
-                            $em->flush();
-                        } catch (\Doctrine\DBAL\DBALException $e) {
-                            if ($e->getPrevious()->getCode() === '23000') {
-                                $success = false;
+                    if (!empty($row['L'])) {
+                        $user->setClasse(strtoupper($row['L']));
+                    }
 
-                                $request->getSession()->getFlashBag()->add(
-                                    'danger',
-                                    'Erreur : un utilisateur existe déjà !'
-                                );
+                    if (!empty($row['M'])) {
+                        $user->setAnniversaire(\DateTime::createFromFormat('m-d-y', $row['M']));
+                    }
 
-                                $request->getSession()->getFlashBag()->add(
-                                    'warning',
-                                    $e->getMessage()
-                                );
-                            } else {
-                                throw $e;
-                            }
-                        }
+                    $user->setEnabled(true);
 
-                        if ($success) {
-                            $request->getSession()->getFlashBag()->add(
-                                'success',
-                                $nbUsers.' utilisateurs ajoutés.'
-                            );
+                    //on crée l'inbox
+                    $inbox = new Inbox();
+                    $user->setInbox($inbox);
 
-                            return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
-                        }
+                    $userManager->updateUser($user, false);
+                    $users[] = $user;
+
+                    // on crée les comptes
+                    foreach ($boquettes as $boquette) {
+                        $nvCompte = new Compte($user, $boquette);
+                        $em->persist($nvCompte);
                     }
                 } else {
-                    $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        "Aucun ajout n'a été fait. Il y a ".$problem.' problèmes et '.$nbUsers.' utilisateurs corrects.'
-                    );
+                    ++$problem;
                 }
+            }
 
-                if ($form->get('verifier')->isClicked()) {
-                    return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
-                        'form' => $form->createView(),
-                        'users' => $users,
-                    ));
+            $nbUsers = count($users);
+
+            if (!$problem) {
+                if ($nbUsers && !$form->get('verifier')->isClicked()) {
+                    $success = true;
+
+                    try {
+                        $em->flush();
+                    } catch (\Doctrine\DBAL\DBALException $e) {
+                        if ($e->getPrevious()->getCode() === '23000') {
+                            $success = false;
+
+                            $request->getSession()->getFlashBag()->add(
+                                'danger',
+                                'Erreur : un utilisateur existe déjà !'
+                            );
+
+                            $request->getSession()->getFlashBag()->add(
+                                'warning',
+                                $e->getMessage()
+                            );
+                        } else {
+                            throw $e;
+                        }
+                    }
+
+                    if ($success) {
+                        $request->getSession()->getFlashBag()->add(
+                            'success',
+                            $nbUsers.' utilisateurs ajoutés.'
+                        );
+
+                        return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
+                    }
                 }
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Aucun ajout n'a été fait. Il y a ".$problem.' problèmes et '.$nbUsers.' utilisateurs corrects.'
+                );
+            }
+
+            if ($form->get('verifier')->isClicked()) {
+                return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
+                    'form' => $form->createView(),
+                    'users' => $users,
+                ));
             }
         }
 
