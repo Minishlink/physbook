@@ -5,8 +5,6 @@
 {% block subject %}{{ parent() }} Négat's de {{ dette|prix }}{% endblock %}
 
 {% block content_text %}
-{% autoescape false %}
-
 Sal's {{ user.bucque }},
 
 tu es en négat's sur ton compte {{ boquette.nom }} de {{ dette|prix }} ! Régularise ta situation au plus vite en rechargeant ton compte sur Phy'sbook.fr.
@@ -21,7 +19,6 @@ Ici :
 Fratern's.
 Phy'sbook
 admin@physbook.fr
-{% endautoescape %}
 {% endblock %}
 
 {% block content_html %}

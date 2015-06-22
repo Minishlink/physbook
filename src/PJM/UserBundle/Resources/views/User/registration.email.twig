@@ -3,7 +3,6 @@
 {% block subject %}Confirmation d'inscription au site d'AMJE Bordeaux{% endblock %}
 
 {% block body_text %}
-{% autoescape false %}
 Bonjour {{ user.prenom }},
 
 Merci de t'être inscrit au site intranet d'AMJE Bordeaux. Après que nous ayons vérifié que tu es bien membre d'AMJE Bordeaux, tu auras accès à toutes les fonctionnalités du site.
@@ -15,7 +14,6 @@ Pense à liker notre page Facebook ! ( https://www.facebook.com/amje.bordeaux )
 Amicalement,
 le bureau d'AMJE Bordeaux
 bureau@amje-bordeaux.fr
-{% endautoescape %}
 {% endblock %}
 
 {% block body_html %}
