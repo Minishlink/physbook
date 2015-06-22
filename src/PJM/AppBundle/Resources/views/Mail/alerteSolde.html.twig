@@ -15,10 +15,6 @@ Si tu ne veux plus recevoir de brag's, rends toi sur Phy'sbook.fr et modifie ta 
 
 Ici :
 {{ url('pjm_app_boquette_brags_index') }}
-
-Fratern's.
-Phy'sbook
-admin@physbook.fr
 {% endblock %}
 
 {% block content_html %}
@@ -31,9 +27,4 @@ admin@physbook.fr
 {% if boquette.slug == "brags" %}
 <p>Si tu ne veux plus recevoir de brag's, rends toi sur <a href="{{ url('pjm_app_boquette_brags_index') }}" style="color:#ffba00">Phy'sbook.fr</a> et modifie ta commande pour avoir 0 brag's par jour. Ton solde cessera de baisser quand le ZiBrag's aura confirmé ta résiliation au boulanger. Une fois cela fait, il te faudra rembourser ton négat's.</p>
 {% endif %}
-
-<p>Fratern's.<br>
-Phy'sbook<br>
-<a href="mailto:zi@physbook.fr" style="color:#ffba00">zi@physbook.fr</a>
-</p>
 {% endblock %}
