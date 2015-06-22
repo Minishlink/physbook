@@ -79,7 +79,7 @@ class IntranetExtension extends \Twig_Extension
 
     public function tabagnsFilter($string)
     {
-        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+        $userEnum = new \PJM\AppBundle\Enum\UserEnum();
         $map = $userEnum->getTabagnsChoices(true);
         $map[''] = '';
 

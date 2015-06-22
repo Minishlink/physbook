@@ -194,11 +194,11 @@ class Transfert
     /**
      * Set receveurUser.
      *
-     * @param \PJM\UserBundle\Entity\User $receveurUser
+     * @param \PJM\AppBundle\Entity\User $receveurUser
      *
      * @return Transfert
      */
-    public function setReceveurUser(\PJM\UserBundle\Entity\User $receveurUser)
+    public function setReceveurUser(\PJM\AppBundle\Entity\User $receveurUser)
     {
         $this->receveurUser = $receveurUser;
 
@@ -208,7 +208,7 @@ class Transfert
     /**
      * Get receveurUser.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getReceveurUser()
     {

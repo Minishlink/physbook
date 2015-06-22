@@ -36,7 +36,7 @@ class Compte
     private $boquette;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User", inversedBy="comptes")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -56,7 +56,7 @@ class Compte
      **/
     private $receptions;
 
-    public function __construct(\PJM\UserBundle\Entity\User $user, Boquette $boquette)
+    public function __construct(\PJM\AppBundle\Entity\User $user, Boquette $boquette)
     {
         $this->solde = 0;
         $this->user = $user;
@@ -155,11 +155,11 @@ class Compte
     /**
      * Set user.
      *
-     * @param \PJM\UserBundle\Entity\User $user
+     * @param \PJM\AppBundle\Entity\User $user
      *
      * @return Compte
      */
-    public function setUser(\PJM\UserBundle\Entity\User $user)
+    public function setUser(\PJM\AppBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -169,7 +169,7 @@ class Compte
     /**
      * Get user.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getUser()
     {

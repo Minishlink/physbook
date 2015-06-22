@@ -160,7 +160,7 @@ class RezalSyncCommand extends ContainerAwareCommand
         if ($boquetteSlug == 'pians' || $boquetteSlug == 'cvis') {
             $repository = $this->em->getRepository('PJMAppBundle:Historique');
             $repositoryItem = $this->em->getRepository('PJMAppBundle:Item');
-            $repositoryUser = $this->em->getRepository('PJMUserBundle:User');
+            $repositoryUser = $this->em->getRepository('PJMAppBundle:User');
 
             // on va chercher le dernier historique rentré dans la BDD Phy'sbook
             $lastHistorique = $repository->findLastValidByBoquetteSlug($boquetteSlug);
