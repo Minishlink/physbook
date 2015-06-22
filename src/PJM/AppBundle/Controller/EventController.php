@@ -336,7 +336,7 @@ class EventController extends Controller
                 if ($form->get('filtre')->isClicked()) {
                     // on traite le filtre
                     $em = $this->getDoctrine()->getManager();
-                    $user_repo = $em->getRepository('PJMUserBundle:User');
+                    $user_repo = $em->getRepository('PJMAppBundle:User');
 
                     $filterBuilder = $user_repo->createQueryBuilder('u');
                     $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
@@ -349,7 +349,7 @@ class EventController extends Controller
 
                 foreach ($users as $user) {
                     // on vérifie que c'est un utilisateur
-                    if ('PJM\UserBundle\Entity\User' == get_class($user)) {
+                    if ('PJM\AppBundle\Entity\User' == get_class($user)) {
                         // on vérifie qu'il n'est pas déjà invité
                         $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
                             ->findOneBy(array('invite' => $user, 'event' => $event));

@@ -14,7 +14,7 @@ class NewUserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+        $userEnum = new \PJM\AppBundle\Enum\UserEnum();
 
         $builder
             ->add('email', 'email')
@@ -49,7 +49,7 @@ class NewUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PJM\UserBundle\Entity\User',
+            'data_class' => 'PJM\AppBundle\Entity\User',
         ));
     }
 

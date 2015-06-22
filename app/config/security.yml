@@ -1,6 +1,6 @@
 security:
     encoders:
-        PJM\UserBundle\Entity\User: bcrypt
+        PJM\AppBundle\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_EXT:             [ROLE_USER]

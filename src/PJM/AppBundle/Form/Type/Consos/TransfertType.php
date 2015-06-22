@@ -29,7 +29,7 @@ class TransfertType extends AbstractType
             ))
             ->add('receveurUser', 'pjm_select2_entity', array(
                 'label' => 'A qui ?',
-                'class' => 'PJMUserBundle:User',
+                'class' => 'PJMAppBundle:User',
                 'query_builder' => function (EntityRepository $er) use ($options) {
                    return $er->getQbAllButUser($options['user']);
                 },
