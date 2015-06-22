@@ -46,7 +46,7 @@ class Invitation
     private $event;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull(message="Aucun invité spécifié.")
      **/
@@ -142,11 +142,11 @@ class Invitation
     /**
      * Set invite.
      *
-     * @param \PJM\UserBundle\Entity\User $invite
+     * @param \PJM\AppBundle\Entity\User $invite
      *
      * @return Invitation
      */
-    public function setInvite(\PJM\UserBundle\Entity\User $invite)
+    public function setInvite(\PJM\AppBundle\Entity\User $invite)
     {
         $this->invite = $invite;
 
@@ -156,7 +156,7 @@ class Invitation
     /**
      * Get invite.
      *
-     * @return \PJM\UserBundle\Entity\User
+     * @return \PJM\AppBundle\Entity\User
      */
     public function getInvite()
     {

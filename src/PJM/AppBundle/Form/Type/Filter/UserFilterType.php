@@ -13,7 +13,7 @@ class UserFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $userEnum = new \PJM\UserBundle\Enum\UserEnum();
+        $userEnum = new \PJM\AppBundle\Enum\UserEnum();
 
         if (!$options['simple']) {
             $builder

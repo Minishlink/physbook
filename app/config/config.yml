@@ -52,7 +52,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ PJMAppBundle, PJMUserBundle, "FOSCommentBundle" ]
+    bundles:        [ PJMAppBundle, "FOSCommentBundle" ]
     java: %java_path%
     filters:
         cssrewrite: ~
@@ -112,18 +112,18 @@ genemu_form:
 fos_user:
     db_driver:     orm
     firewall_name: main
-    user_class:    PJM\UserBundle\Entity\User
+    user_class:    PJM\AppBundle\Entity\User
     service:
         mailer: fos_user.mailer.twig_swift
     from_email:
-        address:        admin@physbook.fr
+        address:        zi@physbook.fr
         sender_name:    Phy'sbook
     registration:
         form:
             type: pjm_user_registration
     resetting:
         email:
-            template: PJMUserBundle:Resetting:email.html.twig
+            template: PJMAppBundle:Mail:resetting.html.twig
 
 kms_froala_editor:
     language: "fr"
