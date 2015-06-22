@@ -52,7 +52,6 @@ class RezalController extends Controller
 
         // si on est connecté
         if ($connexion) {
-            // TODO on vérifie que l'utilisateur a bien accès au R&z@l
             if (true) {
                 $form->setData(array(
                     'auth_user' => $this->getUser()->getUsername(),
