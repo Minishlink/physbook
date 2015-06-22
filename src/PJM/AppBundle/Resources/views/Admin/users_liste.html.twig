@@ -27,7 +27,7 @@
             <td>{{ user.telephone }}</td>
             <td>{{ user.appartement }}</td>
             <td>{{ user.classe }}</td>
-            <td>{{ user.anniversaire }}</td>
+            <td>{{ user.anniversaire is not null ? user.anniversaire|localizeddate('medium') : '' }}</td>
         </tr>
         {% endfor %}
     </table>
