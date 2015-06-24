@@ -2716,12 +2716,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Minishlink/DatatablesBundle.git",
-                "reference": "86aaf199515f8d7b987fa45be6af5d3f48e5983f"
+                "reference": "817f57405401952e700ca22acced1de9b1fdb1ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Minishlink/DatatablesBundle/zipball/86aaf199515f8d7b987fa45be6af5d3f48e5983f",
-                "reference": "86aaf199515f8d7b987fa45be6af5d3f48e5983f",
+                "url": "https://api.github.com/repos/Minishlink/DatatablesBundle/zipball/817f57405401952e700ca22acced1de9b1fdb1ce",
+                "reference": "817f57405401952e700ca22acced1de9b1fdb1ce",
                 "shasum": ""
             },
             "require": {
@@ -2769,7 +2769,7 @@
                 "issues": "https://github.com/stwe/DatatablesBundle/issues",
                 "source": "https://github.com/Minishlink/DatatablesBundle/tree/master"
             },
-            "time": "2015-06-24 13:29:59"
+            "time": "2015-06-24 16:52:01"
         },
         {
             "name": "stof/doctrine-extensions-bundle",

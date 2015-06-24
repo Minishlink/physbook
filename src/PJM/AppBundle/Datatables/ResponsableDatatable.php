@@ -19,6 +19,8 @@ class ResponsableDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->options->setOption('order', [[3, 'desc']]);
 
         $this->ajax->setOptions(array(

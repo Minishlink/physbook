@@ -27,6 +27,8 @@ class AchatsDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->ajax->setOptions(array(
             'url' => $this->ajaxUrl
         ));

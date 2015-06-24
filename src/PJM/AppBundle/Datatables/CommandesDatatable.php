@@ -14,6 +14,8 @@ class CommandesDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->options->setOption('order', [[7, 'asc']]);
 
         $this->ajax->setOptions(array(

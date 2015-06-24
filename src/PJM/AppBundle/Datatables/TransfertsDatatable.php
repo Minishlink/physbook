@@ -21,6 +21,8 @@ class TransfertsDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->ajax->setOptions(array(
             'url' => 'pjm_app_banque_transfertsResults',
         ));

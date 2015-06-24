@@ -12,6 +12,8 @@ class VacancesDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->ajax->setOptions(array(
             'url' => $this->router->generate('pjm_app_admin_boquette_brags_vacancesResults'),
         ));

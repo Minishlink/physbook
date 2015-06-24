@@ -12,6 +12,8 @@ class HistoriqueBoquetteDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->features->setFeatures(array(
             'server_side' => false,
         ));

@@ -28,6 +28,8 @@ class ComptesDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->options->setOption('order', [[2, 'asc']]);
 
         $this->ajax->setOptions(array(
