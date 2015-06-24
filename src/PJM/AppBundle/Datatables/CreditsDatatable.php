@@ -27,6 +27,8 @@ class CreditsDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->ajax->setOptions(array(
             'url' => $this->ajaxUrl,
         ));

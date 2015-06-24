@@ -41,6 +41,8 @@ class ItemDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->options->setOption('order', [[7, 'desc']]);
 
         $this->ajax->setOptions(array(

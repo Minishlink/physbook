@@ -22,6 +22,8 @@ class BoquettesDatatable extends BaseDatatable
      */
     public function buildDatatableView()
     {
+        parent::buildDatatableView();
+
         $this->options->setOption('order', [[0, 'asc']]);
 
         $this->ajax->setOptions(array(
