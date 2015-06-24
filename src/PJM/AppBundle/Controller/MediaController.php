@@ -76,7 +76,7 @@ class MediaController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.admin.media.photos');
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:Media/gestionPhotos.html.twig', array(
             'ajout' => $ajout,
@@ -95,7 +95,7 @@ class MediaController extends Controller
         $datatable = $this->get('pjm.datatable.admin.media.photos');
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
         $datatable->setExtImage($this->get('pjm.services.image'));
-        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.query')->getQueryFrom($datatable);
 
         return $datatableData->getResponse();
     }

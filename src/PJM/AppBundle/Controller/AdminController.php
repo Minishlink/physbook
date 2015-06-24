@@ -77,7 +77,7 @@ class AdminController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.admin.responsabilites');
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:responsabilites.html.twig', array(
             'ajout' => $ajout,
@@ -93,9 +93,9 @@ class AdminController extends Controller
      */
     public function responsabilitesResultsAction()
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.responsabilites'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.admin.responsabilites'));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -150,7 +150,7 @@ class AdminController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.admin.boquettes');
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:gestionBoquettes.html.twig', array(
             'ajout' => $ajout,
@@ -168,7 +168,7 @@ class AdminController extends Controller
     {
         $datatable = $this->get('pjm.datatable.admin.boquettes');
         $datatable->setExtImage($this->get('pjm.services.image'));
-        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.query')->getQueryFrom($datatable);
 
         return $datatableData->getResponse();
     }

@@ -2,21 +2,14 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class TransfertsDatatable.
  */
-class TransfertsDatatable extends AbstractDatatableView
+class TransfertsDatatable extends BaseDatatable
 {
-    protected $ajaxUrl;
     protected $admin;
-
-    public function setAjaxUrl($ajaxUrl)
-    {
-        $this->ajaxUrl = $ajaxUrl;
-    }
 
     public function setAdmin($admin)
     {
@@ -28,28 +21,14 @@ class TransfertsDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->ajax->setOptions(array(
+            'url' => 'pjm_app_banque_transfertsResults',
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->ajaxUrl);
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll',
+                'date_format' => 'lll',
             ))
             ->add('emetteur.boquette.nom', 'column', array(
                 'title' => 'Boquette',

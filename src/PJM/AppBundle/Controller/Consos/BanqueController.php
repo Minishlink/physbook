@@ -26,7 +26,6 @@ class BanqueController extends Controller
 
         $datatable_transferts = $this->get('pjm.datatable.transferts');
         $datatable_transferts->setAdmin(false);
-        $datatable_transferts->setAjaxUrl($this->generateUrl('pjm_app_banque_transfertsResults'));
         $datatable_transferts->buildDatatableView();
 
         return $this->render('PJMAppBundle:Consos:Banque/index.html.twig', array(
@@ -135,12 +134,12 @@ class BanqueController extends Controller
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.credits'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.credits'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -154,12 +153,12 @@ class BanqueController extends Controller
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.achats'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.achats'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -173,11 +172,11 @@ class BanqueController extends Controller
             throw new AccessDeniedException();
         }
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.transferts'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.transferts'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Consos\Transfert');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 }

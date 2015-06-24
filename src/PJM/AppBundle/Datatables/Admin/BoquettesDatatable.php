@@ -2,13 +2,13 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+use PJM\AppBundle\Datatables\BaseDatatable;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class BoquettesDatatable.
  */
-class BoquettesDatatable extends AbstractDatatableView
+class BoquettesDatatable extends BaseDatatable
 {
     protected $extImage;
 
@@ -22,20 +22,13 @@ class BoquettesDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->options->setOption('order', [[0, 'asc']]);
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'asc'))
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquettesResults'),
+        ));
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquettesResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('nom', 'column', array(
                 'title' => 'Nom',
             ))

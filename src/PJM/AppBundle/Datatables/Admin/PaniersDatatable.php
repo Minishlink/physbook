@@ -2,40 +2,27 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+use PJM\AppBundle\Datatables\BaseDatatable;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class PaniersDatatable.
  */
-class PaniersDatatable extends AbstractDatatableView
+class PaniersDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_paniers_paniersResults'),
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_paniers_paniersResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('infos', 'column', array('title' => 'Infos'))
             ->add('prix', 'column', array('title' => 'Prix'))
