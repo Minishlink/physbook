@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1142ece7204f268d580840c44f15ddce",
+    "hash": "51de5ce298edc0944a28b7ae1ae0b6dd",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -971,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Exercise/HTMLPurifierBundle.git",
-                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081"
+                "reference": "7d34e1defda0c8c527d8ec886544d0911ff3a40c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/cffa4509aa32faf63e663a0e10dc53f3ed404081",
-                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081",
+                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/7d34e1defda0c8c527d8ec886544d0911ff3a40c",
+                "reference": "7d34e1defda0c8c527d8ec886544d0911ff3a40c",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
             "keywords": [
                 "htmlpurifier"
             ],
-            "time": "2014-04-10 20:14:05"
+            "time": "2015-06-15 09:16:38"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2711,33 +2711,31 @@
         },
         {
             "name": "sg/datatablesbundle",
-            "version": "v0.6.1",
+            "version": "dev-master",
             "target-dir": "Sg/DatatablesBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/stwe/DatatablesBundle.git",
-                "reference": "7b92c6d19efb82a76337b55e76360fe941fb48f1"
+                "url": "https://github.com/Minishlink/DatatablesBundle.git",
+                "reference": "86aaf199515f8d7b987fa45be6af5d3f48e5983f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/7b92c6d19efb82a76337b55e76360fe941fb48f1",
-                "reference": "7b92c6d19efb82a76337b55e76360fe941fb48f1",
+                "url": "https://api.github.com/repos/Minishlink/DatatablesBundle/zipball/86aaf199515f8d7b987fa45be6af5d3f48e5983f",
+                "reference": "86aaf199515f8d7b987fa45be6af5d3f48e5983f",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/jsrouting-bundle": "@stable",
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.3"
+                "symfony/framework-bundle": "~2.6"
             },
             "require-dev": {
                 "sensio/generator-bundle": "~2.3"
             },
             "suggest": {
-                "components/jquery": "1.11.1",
-                "datatables/datatables": "1.10.4",
-                "moment/moment": "2.8.4",
-                "mopa/bootstrap-bundle": "v3.0.0-beta4",
-                "twbs/bootstrap": "v3.2.0"
+                "components/jquery": "1.11.3",
+                "datatables/datatables": "1.10.7",
+                "moment/moment": "2.10.2"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2745,7 +2743,6 @@
                     "Sg\\DatatablesBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2761,14 +2758,18 @@
             "description": "Symfony2 Datatable Bundle For Doctrine2 Entities",
             "homepage": "https://github.com/stwe/DatatablesBundle",
             "keywords": [
-                "Symfony2",
                 "datagrid",
                 "datatable",
                 "grid",
                 "pagination",
+                "symfony2",
                 "table"
             ],
-            "time": "2015-01-14 22:35:26"
+            "support": {
+                "issues": "https://github.com/stwe/DatatablesBundle/issues",
+                "source": "https://github.com/Minishlink/DatatablesBundle/tree/master"
+            },
+            "time": "2015-06-24 13:29:59"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -3441,6 +3442,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
+        "sg/datatablesbundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
         "exercise/htmlpurifier-bundle": 20

@@ -2,12 +2,10 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-
 /**
  * Class ResponsableDatatable.
  */
-class ResponsableDatatable extends AbstractDatatableView
+class ResponsableDatatable extends BaseDatatable
 {
     protected $boquetteSlug;
 
@@ -21,31 +19,15 @@ class ResponsableDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->options->setOption('order', [[3, 'desc']]);
 
-        $this->getOptions()
-            ->setOrder(array('column' => 3, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_admin_boquette_responsablesResults', array(
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_responsablesResults', array(
                 'boquette_slug' => $this->boquetteSlug,
-            ))
-        );
+            )),
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getMultiselect()
-            ->setEnabled(true)
-            ->setPosition('last')
-            ->addAction('Activer/Désactiver', 'pjm_app_admin_boquette_toggleResponsables')
-            ->setWidth('20px')
-        ;
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('user.bucque', 'column', array('visible' => false))
             ->add('user.username', 'column', array(
                 'title' => 'Utilisateur',
@@ -62,7 +44,14 @@ class ResponsableDatatable extends AbstractDatatableView
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Créé',
-                'format' => 'll',
+                'date_format' => 'll',
+            ))
+            ->add(null, 'multiselect', array(
+                'action' => array(
+                    'route' => 'pjm_app_admin_boquette_toggleResponsables',
+                    'label' => 'Activer/Désactiver',
+                    'icon' => 'glyphicon glyphicon-pencil',
+                ),
             ))
         ;
     }

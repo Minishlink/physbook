@@ -2,13 +2,12 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class AchatsDatatable.
  */
-class AchatsDatatable extends AbstractDatatableView
+class AchatsDatatable extends BaseDatatable
 {
     protected $ajaxUrl;
     protected $admin;
@@ -28,41 +27,28 @@ class AchatsDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        $this->ajax->setOptions(array(
+            'url' => $this->ajaxUrl
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->ajaxUrl);
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll',
+                'date_format' => 'lll',
             ))
         ;
 
         if (!$this->admin) {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('item.boquette.nom', 'column', array('title' => 'Boquette'))
             ;
         } else {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('user.username', 'column', array('title' => 'PG'))
             ;
         }
 
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('item.libelle', 'column', array('title' => 'Item'))
             ->add('nombre', 'column', array('title' => 'Nombre'))
             ->add('item.prix', 'column', array('title' => 'Prix'))

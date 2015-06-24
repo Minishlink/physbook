@@ -93,12 +93,12 @@ class PushController extends Controller
      */
     public function subscriptionResultsAction()
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.pushsubscription'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.pushsubscription'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:PushSubscription');
         $datatable->addWhereBuilderCallback($repository->callbackFindByUser($this->getUser()));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**

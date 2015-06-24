@@ -2,14 +2,14 @@
 
 namespace PJM\AppBundle\Datatables\Boquette;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+use PJM\AppBundle\Datatables\BaseDatatable;
 use PJM\AppBundle\Twig\IntranetExtension;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class ItemDatatable.
  */
-class ItemDatatable extends AbstractDatatableView
+class ItemDatatable extends BaseDatatable
 {
     protected $boquetteSlug;
     protected $twigExt;
@@ -41,29 +41,15 @@ class ItemDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->options->setOption('order', [[7, 'desc']]);
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_boquette_itemResults', array(
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_boquette_itemResults', array(
                 'boquette_slug' => $this->boquetteSlug,
-            ))
-        );
+            )),
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('boquette.slug', 'column', array('visible' => false))
             ->add('image.id', 'column', array('visible' => false))
             ->add('image.ext', 'column', array('visible' => false))
@@ -78,7 +64,7 @@ class ItemDatatable extends AbstractDatatableView
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('valid', 'boolean', array(
                 'title' => 'Actif',
@@ -90,7 +76,7 @@ class ItemDatatable extends AbstractDatatableView
         ;
 
         if ($this->admin) {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add(null, 'action', array(
                     'title' => 'Actions',
                     'actions' => array(

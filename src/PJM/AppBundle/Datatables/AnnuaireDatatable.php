@@ -2,36 +2,32 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class AnnuaireDatatable.
  */
-class AnnuaireDatatable extends AbstractDatatableView
+class AnnuaireDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatableView();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 2, 'direction' => 'asc'))
-            ->setPageLength(25)
-        ;
+        $this->options->setOption('order', [[2, 'asc']]);
+        $this->options->setOption('page_length', 25);
+        $this->options->setOption('individual_filtering', true);
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_profil_annuaireResults'));
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_profil_annuaireResults')
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add(null, 'action', array(
                 'title' => 'Actions',
+                'width' => '20px',
                 'actions' => array(
                     array(
                         'route' => 'pjm_profil_voir',
@@ -96,7 +92,7 @@ class AnnuaireDatatable extends AbstractDatatableView
             ))
             ->add('anniversaire', 'datetime', array(
                 'title' => 'Anniversaire',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
         ;
     }

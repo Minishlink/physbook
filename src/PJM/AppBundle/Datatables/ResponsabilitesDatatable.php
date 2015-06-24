@@ -2,32 +2,21 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-
 /**
  * Class ResponsabilitesDatatable.
  */
-class ResponsabilitesDatatable extends AbstractDatatableView
+class ResponsabilitesDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_responsabilitesResults'),
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_responsabilitesResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('libelle', 'column', array(
                 'title' => 'Libellé',
             ))

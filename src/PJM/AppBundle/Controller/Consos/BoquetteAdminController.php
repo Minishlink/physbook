@@ -120,7 +120,7 @@ class BoquetteAdminController extends Controller
             'pjm_app_admin_boquette_creditsResults',
             array('boquette_slug' => $boquette->getSlug())
         ));
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:Consos/gestionCredits.html.twig', array(
             'form' => $form->createView(),
@@ -197,12 +197,12 @@ class BoquetteAdminController extends Controller
      */
     public function creditsResultsAction($boquette_slug)
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.credits'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.credits'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -271,7 +271,7 @@ class BoquetteAdminController extends Controller
 
         $datatable = $this->get('pjm.datatable.admin.responsable');
         $datatable->setBoquetteSlug($boquette->getSlug());
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:gestionResponsables.html.twig', array(
             'form' => $form->createView(),
@@ -284,7 +284,7 @@ class BoquetteAdminController extends Controller
      */
     public function responsablesResultsAction($boquette_slug)
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.responsable'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.admin.responsable'));
 
         $datatable->addWhereBuilderCallback(
             function (QueryBuilder $qb) use ($boquette_slug) {
@@ -296,7 +296,7 @@ class BoquetteAdminController extends Controller
             }
         );
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -331,7 +331,7 @@ class BoquetteAdminController extends Controller
     {
         $datatable = $this->get('pjm.datatable.admin.consos.comptes');
         $datatable->setBoquetteSlug($boquette->getSlug());
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:Consos/comptes.html.twig', array(
             'datatable' => $datatable,
@@ -407,7 +407,7 @@ class BoquetteAdminController extends Controller
         $datatable = $this->get('pjm.datatable.admin.consos.comptes');
         $datatable->setBoquetteSlug($boquette_slug);
         $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
-        $datatableData = $this->get('sg_datatables.datatable')->getDatatable($datatable);
+        $datatableData = $this->get('sg_datatables.query')->getQueryFrom($datatable);
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Compte');
@@ -425,7 +425,7 @@ class BoquetteAdminController extends Controller
         $datatable = $this->get('pjm.datatable.boquette.item');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->setAdmin(true);
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:listeItem.html.twig', array(
             'datatable' => $datatable,
@@ -546,7 +546,7 @@ class BoquetteAdminController extends Controller
 
         $datatable = $this->get('pjm.datatable.admin.featuredItem');
         $datatable->setBoquetteSlug($boquette->getSlug());
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:gestionFeaturedItem.html.twig', array(
             'form' => $form->createView(),
@@ -559,14 +559,14 @@ class BoquetteAdminController extends Controller
      */
     public function featuredItemResultsAction($boquette_slug)
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.admin.featuredItem'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.admin.featuredItem'));
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:FeaturedItem');
 
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
@@ -584,7 +584,7 @@ class BoquetteAdminController extends Controller
             array('boquette_slug' => $boquette->getSlug())
         ));
         $datatable->setAdmin(true);
-        $datatable->buildDatatableView();
+
 
         return $this->render('PJMAppBundle:Admin:Consos/achats.html.twig', array(
             'datatable' => $datatable,
@@ -597,11 +597,11 @@ class BoquetteAdminController extends Controller
      */
     public function achatsResultsAction($boquette_slug)
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.achats'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.achats'));
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
         $datatable->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 }

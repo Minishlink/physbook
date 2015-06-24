@@ -2,44 +2,28 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-
 /**
  * Class VacancesDatatable.
  */
-class VacancesDatatable extends AbstractDatatableView
+class VacancesDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_brags_vacancesResults'),
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_vacancesResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('dateDebut', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('dateDebut', 'datetime', array(
                 'title' => 'Début',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('dateFin', 'datetime', array(
                 'title' => 'Fin',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('fait', 'boolean', array(
                 'title' => 'Fait',

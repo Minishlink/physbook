@@ -2,13 +2,12 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
 use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class CreditsDatatable.
  */
-class CreditsDatatable extends AbstractDatatableView
+class CreditsDatatable extends BaseDatatable
 {
     protected $ajaxUrl;
     protected $admin;
@@ -28,46 +27,32 @@ class CreditsDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->ajaxUrl,
+        ));
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
-
-        $this->getAjax()->setUrl($this->ajaxUrl);
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll',
+                'date_format' => 'lll',
             ))
         ;
 
         if ($this->admin) {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('compte.user.username', 'column', array(
                     'title' => 'PG',
                 ))
             ;
         } else {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('compte.boquette.nom', 'column', array(
                     'title' => 'Boquette',
                 ))
             ;
         }
 
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('moyenPaiement', 'column', array(
                 'title' => 'Moyen',
             ))
