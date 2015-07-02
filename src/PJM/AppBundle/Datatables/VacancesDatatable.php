@@ -46,7 +46,7 @@ class VacancesDatatable extends BaseDatatable
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => 'Supprimer',
-                            'class' => 'btn btn-primary btn-xs',
+                            'class' => 'btn btn-default btn-xs',
                             'role' => 'button',
                         ),
                         'confirm' => true,
