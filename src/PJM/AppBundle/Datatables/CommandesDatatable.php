@@ -2,20 +2,11 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class CommandesDatatable.
  */
 class CommandesDatatable extends BaseDatatable
 {
-    private $intranetExt;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
-
     /**
      * {@inheritdoc}
      */

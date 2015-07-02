@@ -3,20 +3,13 @@
 namespace PJM\AppBundle\Datatables\Admin;
 
 use PJM\AppBundle\Datatables\BaseDatatable;
-use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class ComptesDatatable.
  */
 class ComptesDatatable extends BaseDatatable
 {
-    private $intranetExt;
     protected $boquetteSlug;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
 
     public function setBoquetteSlug($boquetteSlug)
     {

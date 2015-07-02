@@ -2,20 +2,11 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class PrixDatatable.
  */
 class PrixDatatable extends BaseDatatable
 {
-    private $intranetExt;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
-
     /**
      * {@inheritdoc}
      */

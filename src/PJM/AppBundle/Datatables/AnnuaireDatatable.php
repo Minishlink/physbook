@@ -9,13 +9,6 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class AnnuaireDatatable extends BaseDatatable
 {
-    private $intranetExt;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
-
     /**
      * {@inheritdoc}
      */
