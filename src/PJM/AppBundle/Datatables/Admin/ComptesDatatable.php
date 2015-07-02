@@ -10,33 +10,35 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class ComptesDatatable extends BaseDatatable
 {
+    private $intranetExt;
     protected $boquetteSlug;
-    protected $twigExt;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
 
     public function setBoquetteSlug($boquetteSlug)
     {
         $this->boquetteSlug = $boquetteSlug;
     }
 
-    public function setTwigExt(IntranetExtension $twigExt)
-    {
-        $this->twigExt = $twigExt;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->options->setOption('order', [[2, 'asc']]);
 
-        $this->ajax->setOptions(array(
-            'url' => $this->router->generate('pjm_app_admin_boquette_comptesResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            )),
-        ));
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_admin_boquette_comptesResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
         $this->columnBuilder
             ->add('user.bucque', 'column', array('visible' => false))
@@ -56,7 +58,7 @@ class ComptesDatatable extends BaseDatatable
     {
         $formatter = function ($line) {
             $line['user']['username'] = $line['user']['bucque'].' '.$line['user']['username'];
-            $line['solde'] = $this->twigExt->prixFilter($line['solde']);
+            $line['solde'] = $this->intranetExt->prixFilter($line['solde']);
 
             return $line;
         };

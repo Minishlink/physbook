@@ -12,7 +12,7 @@ class FeaturedItemRepository extends EntityRepository
 {
     public function findByBoquetteSlug($boquetteSlug, $active = null, $item_valid = null)
     {
-        $qb = $this->createQueryBuilder('FeaturedItem');
+        $qb = $this->createQueryBuilder('featureditem');
         $callback = $this->callbackFindByBoquetteSlug($boquetteSlug, $active, $item_valid);
         $callback($qb);
 
@@ -29,15 +29,15 @@ class FeaturedItemRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($boquette_slug, $active, $item_valid) {
             $qb
-                ->join('FeaturedItem.item', 'i')
+                ->join('featureditem.item', 'i')
                 ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
-                ->orderBy('FeaturedItem.date', 'desc')
+                ->orderBy('featureditem.date', 'desc')
             ;
 
             if (isset($active)) {
                 $qb
-                    ->andWhere('FeaturedItem.active = :active')
+                    ->andWhere('featureditem.active = :active')
                     ->setParameter('active', $active)
                 ;
             }

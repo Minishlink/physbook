@@ -18,7 +18,7 @@ class PushSubscriptionRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($user) {
             $qb
-                ->join('PushSubscription.user', 'u', 'WITH', 'u = :user')
+                ->join('pushsubscription.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('user', $user)
             ;
         };

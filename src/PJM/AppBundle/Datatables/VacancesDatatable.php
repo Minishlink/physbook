@@ -10,9 +10,9 @@ class VacancesDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->ajax->setOptions(array(
             'url' => $this->router->generate('pjm_app_admin_boquette_brags_vacancesResults'),
@@ -41,6 +41,7 @@ class VacancesDatatable extends BaseDatatable
                         'route_parameters' => array(
                             'vacances' => 'id',
                         ),
+                        'label' => 'Supprimer',
                         'icon' => 'glyphicon glyphicon-trash',
                         'attributes' => array(
                             'rel' => 'tooltip',
@@ -51,8 +52,8 @@ class VacancesDatatable extends BaseDatatable
                         'confirm' => true,
                         'confirm_message' => 'Es-tu sûr ?',
                         'role' => 'ROLE_ZIBRAGS',
-                        'renderif' => array(
-                            // #FUTURE remplacer si MAJ bundle datatable
+                        'render_if' => array(
+                            // FUTURE remplacer si MAJ bundle datatable
                             'fait) == false; var dummy = function(){}; dummy(',
                         ),
                     ),

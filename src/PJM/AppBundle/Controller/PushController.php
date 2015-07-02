@@ -17,7 +17,7 @@ class PushController extends Controller
     public function indexAction(Request $request)
     {
         $datatable_push = $this->get('pjm.datatable.pushsubscription');
-        $datatable_push->buildDatatableView();
+        $datatable_push->buildDatatable();
 
         return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
             'datatable_push' => $datatable_push,
@@ -93,10 +93,14 @@ class PushController extends Controller
      */
     public function subscriptionResultsAction()
     {
-        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.pushsubscription'));
+        $datatable = $this->get('pjm.datatable.pushsubscription');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:PushSubscription');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($this->getUser()));
+        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
 
         return $query->getResponse();
     }

@@ -10,28 +10,36 @@ class PushSubscriptionDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
+
+        $this->options->setOption('order', [[1, 'desc']]);
 
         $this->ajax->setOptions(array('url' =>
             $this->router->generate('pjm_app_push_subscriptionResults')
         ));
 
         $this->columnBuilder
+            ->add(null, 'multiselect', array(
+                'actions' => array(
+                    array(
+                        'route' => 'pjm_app_push_deleteSubscription',
+                        'label' => 'Supprimer',
+                        'icon' => 'glyphicon glyphicon-remove',
+                        'attributes' => array(
+                            'class' => 'btn btn-primary btn-xs',
+                        ),
+                    ),
+                ),
+                'width' => '20px',
+            ))
             ->add('lastSubscribed', 'datetime', array(
                 'title' => 'Dernier accès',
                 'date_format' => 'lll',
             ))
             ->add('browserUA', 'column', array(
                 'title' => 'Type de navigateur',
-            ))
-            ->add(null, 'multiselect', array(
-                'action' => array(
-                    'route' => 'pjm_app_push_deleteSubscription',
-                    'label' => 'Supprimer',
-                    'icon' => 'glyphicon glyphicon-remove',
-                ),
             ))
         ;
     }

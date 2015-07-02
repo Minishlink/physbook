@@ -17,19 +17,35 @@ class ResponsableDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
-        $this->options->setOption('order', [[3, 'desc']]);
+        $this->options->setOption('order', [[4, 'desc']]);
 
-        $this->ajax->setOptions(array(
-            'url' => $this->router->generate('pjm_app_admin_boquette_responsablesResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            )),
-        ));
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_admin_boquette_responsablesResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
         $this->columnBuilder
+            ->add(null, 'multiselect', array(
+                'actions' => array(
+                    array(
+                        'route' => 'pjm_app_admin_boquette_toggleResponsables',
+                        'label' => 'Activer/Désactiver',
+                        'icon' => 'glyphicon glyphicon-pencil',
+                        'attributes' => array(
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button'
+                        ),
+                    ),
+                ),
+                'width' => '20px',
+            ))
             ->add('user.bucque', 'column', array('visible' => false))
             ->add('user.username', 'column', array(
                 'title' => 'Utilisateur',
@@ -47,13 +63,6 @@ class ResponsableDatatable extends BaseDatatable
             ->add('date', 'datetime', array(
                 'title' => 'Créé',
                 'date_format' => 'll',
-            ))
-            ->add(null, 'multiselect', array(
-                'action' => array(
-                    'route' => 'pjm_app_admin_boquette_toggleResponsables',
-                    'label' => 'Activer/Désactiver',
-                    'icon' => 'glyphicon glyphicon-pencil',
-                ),
             ))
         ;
     }
