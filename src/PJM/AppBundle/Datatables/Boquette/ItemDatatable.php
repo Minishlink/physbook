@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Datatables\Boquette;
 
 use PJM\AppBundle\Datatables\BaseDatatable;
-use PJM\AppBundle\Twig\IntranetExtension;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
@@ -11,25 +10,12 @@ use PJM\AppBundle\Services\Image as ImageService;
  */
 class ItemDatatable extends BaseDatatable
 {
-    private $intranetExt;
     private $imageExt;
-    protected $admin;
     protected $boquetteSlug;
-
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
 
     public function setImageExt(ImageService $imageExt)
     {
         $this->imageExt = $imageExt;
-    }
-
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
     }
 
     public function setBoquetteSlug($boquetteSlug)

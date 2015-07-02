@@ -2,32 +2,11 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class CreditsDatatable.
  */
 class CreditsDatatable extends BaseDatatable
 {
-    private $intranetExt;
-    protected $ajaxUrl;
-    protected $admin;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
-
-    public function setAjaxUrl($ajaxUrl)
-    {
-        $this->ajaxUrl = $ajaxUrl;
-    }
-
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-    }
-
     /**
      * {@inheritdoc}
      */

@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Datatables\Admin\Media;
 
 use PJM\AppBundle\Datatables\BaseDatatable;
-use PJM\AppBundle\Twig\IntranetExtension;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
@@ -11,13 +10,7 @@ use PJM\AppBundle\Services\Image as ImageService;
  */
 class PhotoDatatable extends BaseDatatable
 {
-    private $intranetExt;
     private $imageExt;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
 
     public function setImageExt(ImageService $imageExt)
     {

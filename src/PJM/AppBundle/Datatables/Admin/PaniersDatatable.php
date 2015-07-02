@@ -3,20 +3,12 @@
 namespace PJM\AppBundle\Datatables\Admin;
 
 use PJM\AppBundle\Datatables\BaseDatatable;
-use PJM\AppBundle\Twig\IntranetExtension;
 
 /**
  * Class PaniersDatatable.
  */
 class PaniersDatatable extends BaseDatatable
 {
-    private $intranetExt;
-
-    public function setIntranetExt(IntranetExtension $intranetExt)
-    {
-        $this->intranetExt = $intranetExt;
-    }
-
     /**
      * {@inheritdoc}
      */
