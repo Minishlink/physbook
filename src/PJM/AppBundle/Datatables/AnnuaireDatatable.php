@@ -2,8 +2,6 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class AnnuaireDatatable.
  */
