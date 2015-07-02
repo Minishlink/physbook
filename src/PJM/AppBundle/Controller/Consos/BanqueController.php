@@ -5,10 +5,8 @@ namespace PJM\AppBundle\Controller\Consos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Form\Type\Consos\TransfertType;
-use PJM\AppBundle\Entity\User;
 
 class BanqueController extends Controller
 {
