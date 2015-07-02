@@ -19,15 +19,17 @@ class FeaturedItemDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
-        $this->ajax->setOptions(array(
-            'url' => $this->router->generate('pjm_app_admin_boquette_featuredItemResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            )),
-        ));
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_admin_boquette_featuredItemResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
         $this->columnBuilder
             ->add('date', 'datetime', array(

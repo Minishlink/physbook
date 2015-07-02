@@ -10,12 +10,19 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class PaniersDatatable extends BaseDatatable
 {
+    private $intranetExt;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->ajax->setOptions(array(
             'url' => $this->router->generate('pjm_app_admin_boquette_paniers_paniersResults'),
@@ -43,7 +50,7 @@ class PaniersDatatable extends BaseDatatable
                         'route_parameters' => array(
                             'panier' => 'id',
                         ),
-                        'label' => "Voir l'état",
+                        'label' => 'État',
                         'icon' => 'glyphicon glyphicon-eye-open',
                         'attributes' => array(
                             'rel' => 'tooltip',
@@ -78,9 +85,8 @@ class PaniersDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['prix'] = $ext->prixFilter($line['prix']);
+        $formatter = function ($line) {
+            $line['prix'] = $this->intranetExt->prixFilter($line['prix']);
 
             return $line;
         };

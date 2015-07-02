@@ -10,7 +10,7 @@ use Sg\DatatablesBundle\Datatable\View\Style;
  */
 abstract class BaseDatatable extends AbstractDatatableView
 {
-    public function buildDatatableView()
+    public function buildDatatable()
     {
         $this->options->setOptions(array(
             'order' => [[0, 'desc']],

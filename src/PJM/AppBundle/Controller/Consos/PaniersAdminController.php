@@ -80,7 +80,7 @@ class PaniersAdminController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.admin.paniers.liste');
-
+        $datatable->buildDatatable();
 
         return $this->render('PJMAppBundle:Admin:Consos/Paniers/listePaniers.html.twig', array(
             'form' => $form->createView(),
@@ -91,10 +91,13 @@ class PaniersAdminController extends Controller
     // action ajax de rendu de la liste des paniers
     public function paniersResultsAdminAction()
     {
-        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.admin.paniers.liste'));
+        $datatable = $this->get('pjm.datatable.admin.paniers.liste');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
+        $query->addWhereResult($repository->callbackFindBySlug($this->itemSlug));
 
         return $query->getResponse();
     }

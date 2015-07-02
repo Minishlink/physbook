@@ -9,8 +9,14 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class AchatsDatatable extends BaseDatatable
 {
+    private $intranetExt;
     protected $ajaxUrl;
     protected $admin;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
 
     public function setAjaxUrl($ajaxUrl)
     {
@@ -25,12 +31,12 @@ class AchatsDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->ajax->setOptions(array(
-            'url' => $this->ajaxUrl
+            'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
         ));
 
         $this->columnBuilder
@@ -62,10 +68,9 @@ class AchatsDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['nombre'] = $ext->nombreFilter($line['nombre']);
-            $line['item']['prix'] = $ext->prixFilter($line['nombre'] * $line['item']['prix']);
+        $formatter = function ($line) {
+            $line['nombre'] = $this->intranetExt->nombreFilter($line['nombre']);
+            $line['item']['prix'] = $this->intranetExt->prixFilter($line['nombre'] * $line['item']['prix']);
 
             return $line;
         };

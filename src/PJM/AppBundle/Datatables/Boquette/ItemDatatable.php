@@ -11,24 +11,20 @@ use PJM\AppBundle\Services\Image as ImageService;
  */
 class ItemDatatable extends BaseDatatable
 {
-    protected $boquetteSlug;
-    protected $twigExt;
-    protected $extImage;
+    private $intranetExt;
+    private $imageExt;
     protected $admin;
+    protected $boquetteSlug;
 
-    public function setBoquetteSlug($boquetteSlug)
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
     {
-        $this->boquetteSlug = $boquetteSlug;
+        $this->intranetExt = $intranetExt;
     }
 
-    public function setTwigExt(IntranetExtension $twigExt)
+    public function setImageExt(ImageService $imageExt)
     {
-        $this->twigExt = $twigExt;
-    }
-
-    public function setExtImage(ImageService $extImage)
-    {
-        $this->extImage = $extImage;
+        $this->imageExt = $imageExt;
     }
 
     public function setAdmin($admin)
@@ -36,20 +32,28 @@ class ItemDatatable extends BaseDatatable
         $this->admin = $admin;
     }
 
+    public function setBoquetteSlug($boquetteSlug)
+    {
+        $this->boquetteSlug = $boquetteSlug;
+    }
+
+
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
-        $this->options->setOption('order', [[7, 'desc']]);
+        $this->options->setOption('order', [[6, 'desc']]);
 
-        $this->ajax->setOptions(array(
-            'url' => $this->router->generate('pjm_app_boquette_itemResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            )),
-        ));
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_boquette_itemResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
         $this->columnBuilder
             ->add('boquette.slug', 'column', array('visible' => false))
@@ -108,13 +112,10 @@ class ItemDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = $this->twigExt;
-        $extImage = $this->extImage;
-
-        $formatter = function ($line) use ($ext, $extImage) {
-            $line['prix'] = $ext->prixFilter($line['prix']);
+        $formatter = function ($line) {
+            $line['prix'] = $this->intranetExt->prixFilter($line['prix']);
             $line['image']['alt'] = !empty($line['image']['id']) ?
-                $extImage->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
+                $this->imageExt->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
                 "Pas d'image";
 
             return $line;

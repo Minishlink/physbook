@@ -9,7 +9,19 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class TransfertsDatatable extends BaseDatatable
 {
+    private $intranetExt;
+    protected $ajaxUrl;
     protected $admin;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
+
+    public function setAjaxUrl($ajaxUrl)
+    {
+        $this->ajaxUrl = $ajaxUrl;
+    }
 
     public function setAdmin($admin)
     {
@@ -19,12 +31,14 @@ class TransfertsDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
+
+        $this->options->setOption('individual_filtering', true);
 
         $this->ajax->setOptions(array(
-            'url' => 'pjm_app_banque_transfertsResults',
+            'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
         ));
 
         $this->columnBuilder
@@ -59,9 +73,8 @@ class TransfertsDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['montant'] = $ext->prixFilter($line['montant']);
+        $formatter = function ($line) {
+            $line['montant'] = $this->intranetExt->prixFilter($line['montant']);
             if ($line['status'] != 'OK') {
                 $line['raison'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['raison'];
             }

@@ -65,7 +65,7 @@ class BoquetteController extends Controller
 
         // on crée le tableau de données
         $datatable = $this->get('pjm.datatable.boquette.historique');
-
+        $datatable->buildDatatable();
         $datatable->setData($serializer->serialize($historique, 'json'));
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
@@ -87,7 +87,7 @@ class BoquetteController extends Controller
         $datatable = $this->get('pjm.datatable.boquette.item');
         $datatable->setBoquetteSlug($boquette->getSlug());
         $datatable->setAdmin(false);
-
+        $datatable->buildDatatable();
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
         $routeRetour = 'pjm_app_boquette_'.$boquette->getSlug().'_index';
@@ -106,17 +106,14 @@ class BoquetteController extends Controller
     public function itemResultsAction($boquette_slug)
     {
         $datatable = $this->get('pjm.datatable.boquette.item');
-        $datatable->setTwigExt($this->get('pjm.twig.intranet_extension'));
-        $datatable->setExtImage($this->get('pjm.services.image'));
-        $datatable->setBoquetteSlug($boquette_slug);
-        $datatableData = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+        $datatable->buildDatatable();
 
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
+        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
 
-        $datatableData->addWhereBuilderCallback($repository->callbackFindByBoquetteSlug($boquette_slug));
-
-        return $datatableData->getResponse();
+        return $query->getResponse();
     }
 
     public function getItemsAction(Request $request, $boquette_slug, $offset = 0)

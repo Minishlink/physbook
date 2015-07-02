@@ -118,6 +118,7 @@ class ProfilController extends Controller
     public function annuaireAction()
     {
         $datatable = $this->get('pjm.datatable.annuaire');
+        $datatable->buildDatatable();
 
         return $this->render('PJMAppBundle:Profil:annuaire.html.twig', array(
             'datatable' => $datatable,
@@ -129,8 +130,10 @@ class ProfilController extends Controller
      */
     public function annuaireResultsAction()
     {
-        $query = $this->get('sg_datatables.query')->getQueryFrom($this->get('pjm.datatable.annuaire'));
+        $datatable = $this->get('pjm.datatable.annuaire');
+        $datatable->buildDatatable();
 
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         return $query->getResponse();
     }
 }

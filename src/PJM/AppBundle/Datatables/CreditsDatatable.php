@@ -9,8 +9,14 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class CreditsDatatable extends BaseDatatable
 {
+    private $intranetExt;
     protected $ajaxUrl;
     protected $admin;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
 
     public function setAjaxUrl($ajaxUrl)
     {
@@ -25,12 +31,12 @@ class CreditsDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->ajax->setOptions(array(
-            'url' => $this->ajaxUrl,
+            'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
         ));
 
         $this->columnBuilder
@@ -76,10 +82,9 @@ class CreditsDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['montant'] = $ext->prixFilter($line['montant']);
-            $line['moyenPaiement'] = $ext->moyenPaiementFilter($line['moyenPaiement']);
+        $formatter = function ($line) {
+            $line['montant'] = $this->intranetExt->prixFilter($line['montant']);
+            $line['moyenPaiement'] = $this->intranetExt->moyenPaiementFilter($line['moyenPaiement']);
             if ($line['status'] != 'OK') {
                 $line['infos'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['infos'];
             }

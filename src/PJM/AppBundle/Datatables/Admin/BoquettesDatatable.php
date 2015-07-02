@@ -10,19 +10,19 @@ use PJM\AppBundle\Services\Image as ImageService;
  */
 class BoquettesDatatable extends BaseDatatable
 {
-    protected $extImage;
+    private $imageExt;
 
-    public function setExtImage(ImageService $extImage)
+    public function setImageExt(ImageService $imageExt)
     {
-        $this->extImage = $extImage;
+        $this->imageExt = $imageExt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->options->setOption('order', [[0, 'asc']]);
 
@@ -73,10 +73,9 @@ class BoquettesDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $extImage = $this->extImage;
-        $formatter = function ($line) use ($extImage) {
+        $formatter = function ($line) {
             $line['image']['alt'] = !empty($line['image']['id']) ?
-                $extImage->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
+                $this->imageExt->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
                 "Pas d'image";
 
             return $line;

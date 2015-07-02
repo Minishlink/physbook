@@ -9,12 +9,19 @@ use PJM\AppBundle\Twig\IntranetExtension;
  */
 class AnnuaireDatatable extends BaseDatatable
 {
+    private $intranetExt;
+
+    public function setIntranetExt(IntranetExtension $intranetExt)
+    {
+        $this->intranetExt = $intranetExt;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->options->setOption('order', [[2, 'asc']]);
         $this->options->setOption('page_length', 25);
@@ -102,18 +109,17 @@ class AnnuaireDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
+        $formatter = function ($line) {
             foreach ($line as &$l) {
                 if (gettype($l) == 'string') {
                     $l = htmlentities($l);
                 }
             }
 
-            $line['tabagns'] = $ext->tabagnsFilter($line['tabagns']);
+            $line['tabagns'] = $this->intranetExt->tabagnsFilter($line['tabagns']);
 
             if ($line['telephone'] != '') {
-                $line['telephone'] = '<a href="tel:'.$line['telephone'].'" title="Appeler">'.$ext->telephoneFilter($line['telephone']).'</a>';
+                $line['telephone'] = '<a href="tel:'.$line['telephone'].'" title="Appeler">'.$this->intranetExt->telephoneFilter($line['telephone']).'</a>';
             }
 
             return $line;

@@ -11,25 +11,25 @@ use PJM\AppBundle\Services\Image as ImageService;
  */
 class PhotoDatatable extends BaseDatatable
 {
-    protected $twigExt;
-    protected $extImage;
+    private $intranetExt;
+    private $imageExt;
 
-    public function setTwigExt(IntranetExtension $twigExt)
+    public function setIntranetExt(IntranetExtension $intranetExt)
     {
-        $this->twigExt = $twigExt;
+        $this->intranetExt = $intranetExt;
     }
 
-    public function setExtImage(ImageService $extImage)
+    public function setImageExt(ImageService $imageExt)
     {
-        $this->extImage = $extImage;
+        $this->imageExt = $imageExt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->options->setOption('order', [[1, 'desc']]);
 
@@ -45,8 +45,6 @@ class PhotoDatatable extends BaseDatatable
                         'label' => 'Autoriser',
                         'icon' => 'glyphicon glyphicon-ok-circle',
                         'attributes' => array(
-                            'rel' => 'tooltip',
-                            'title' => 'truc',
                             'class' => 'btn btn-default btn-xs',
                             'role' => 'button'
                         ),
@@ -56,8 +54,6 @@ class PhotoDatatable extends BaseDatatable
                         'label' => 'Ne pas autoriser',
                         'icon' => 'glyphicon glyphicon-ban-circle',
                         'attributes' => array(
-                            'rel' => 'tooltip',
-                            'title' => 'truc',
                             'class' => 'btn btn-default btn-xs',
                             'role' => 'button'
                         ),
@@ -67,8 +63,6 @@ class PhotoDatatable extends BaseDatatable
                         'label' => 'Supprimer',
                         'icon' => 'glyphicon glyphicon-remove-circle',
                         'attributes' => array(
-                            'rel' => 'tooltip',
-                            'title' => 'truc',
                             'class' => 'btn btn-danger btn-xs',
                             'role' => 'button'
                         ),
@@ -129,11 +123,9 @@ class PhotoDatatable extends BaseDatatable
      */
     public function getLineFormatter()
     {
-        $ext = $this->twigExt;
-        $extImage = $this->extImage;
-        $formatter = function ($line) use ($ext, $extImage) {
-            $line['image']['alt'] = $extImage->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']);
-            $line['publication'] = $ext->etatPublicationPhotoFilter($line['publication']);
+        $formatter = function ($line) {
+            $line['image']['alt'] = $this->imageExt->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']);
+            $line['publication'] = $this->intranetExt->etatPublicationPhotoFilter($line['publication']);
             $line['usersHM']['id'] = count($line['usersHM']['users']);
 
             return $line;

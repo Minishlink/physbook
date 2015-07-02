@@ -10,9 +10,9 @@ class ResponsabilitesDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        parent::buildDatatableView();
+        parent::buildDatatable();
 
         $this->ajax->setOptions(array(
             'url' => $this->router->generate('pjm_app_admin_responsabilitesResults'),
