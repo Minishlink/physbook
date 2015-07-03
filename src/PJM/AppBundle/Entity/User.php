@@ -5,12 +5,15 @@ namespace PJM\AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * User.
+ * User
  *
  * @ORM\Table(name="pjm_user")
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\UserRepository")
+ * @UniqueEntity("emailCanonical")
+ * @UniqueEntity("usernameCanonical")
  */
 class User extends BaseUser
 {
