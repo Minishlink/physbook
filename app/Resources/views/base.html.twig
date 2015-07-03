@@ -61,8 +61,7 @@
 
         {% block base_javascripts %}
         <script type="text/javascript">
-            var assetsDir = "{{ asset('', 'noVersion') }}";
-            var PJMAppBundlePath = "bundles/pjmapp/";
+            var swPath = "{{ asset('service-worker.js') }}";
         </script>
         {% endblock %}
     </head>

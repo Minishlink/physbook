@@ -19,9 +19,6 @@ framework:
     assets:
         version: v1r20150605
         packages:
-            noVersion:
-                version:
-                version_format: ""
             js:
                 version: v1r20150605
             css:
