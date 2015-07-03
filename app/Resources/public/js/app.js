@@ -15,8 +15,7 @@ window.addEventListener('load', function() {
     }
 
     if ('serviceWorker' in navigator) {
-        var path = window.assetsDir;
-        navigator.serviceWorker.register(path + "service-worker.js", { scope: path })
+        navigator.serviceWorker.register(window.swPath)
         .then(function(sw) {
             console.log('[SW] Service worker enregistré');
             push_initialiseState();
