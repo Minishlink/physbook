@@ -33,10 +33,10 @@ class TransfertRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($user) {
             $qb
-                ->join('Transfert.receveur', 'r')
-                ->join('Transfert.emetteur', 'e')
+                ->join('transfert.receveur', 'r')
+                ->join('transfert.emetteur', 'e')
                 ->andWhere('r.user = :user OR e.user = :user')
-                ->andWhere('Transfert.status IS NOT NULL')
+                ->andWhere('transfert.status IS NOT NULL')
                 ->setParameter('user', $user)
             ;
         };

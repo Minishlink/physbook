@@ -9,16 +9,16 @@ pjm_app_banque_transfert:
     defaults: { _controller: PJMAppBundle:Consos/Banque:transfert }
 
 pjm_app_banque_transactionsResults:
-    path:     /historique/transactions/{user}
+    path:     /historique/transactions
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Consos/Banque:transactionsResults, user: null }
+    defaults: { _controller: PJMAppBundle:Consos/Banque:transactionsResults }
 
 pjm_app_banque_achatsResults:
-    path:     /historique/achats/{user}
+    path:     /historique/achats
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Consos/Banque:achatsResults, user: null }
+    defaults: { _controller: PJMAppBundle:Consos/Banque:achatsResults }
 
 pjm_app_banque_transfertsResults:
-    path:     /historique/transferts/{user}
+    path:     /historique/transferts
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Consos/Banque:transfertsResults, user: null }
+    defaults: { _controller: PJMAppBundle:Consos/Banque:transfertsResults }

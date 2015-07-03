@@ -5,10 +5,8 @@ namespace PJM\AppBundle\Controller\Consos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Form\Type\Consos\TransfertType;
-use PJM\AppBundle\Entity\User;
 
 class BanqueController extends Controller
 {
@@ -17,16 +15,22 @@ class BanqueController extends Controller
         $datatable_transactions = $this->get('pjm.datatable.credits');
         $datatable_transactions->setAdmin(false);
         $datatable_transactions->setAjaxUrl($this->generateUrl('pjm_app_banque_transactionsResults'));
-        $datatable_transactions->buildDatatableView();
+        $datatable_transactions->buildDatatable();
 
         $datatable_achats = $this->get('pjm.datatable.achats');
         $datatable_achats->setAdmin(false);
         $datatable_achats->setAjaxUrl($this->generateUrl('pjm_app_banque_achatsResults'));
-        $datatable_achats->buildDatatableView();
+        $datatable_achats->buildDatatable();
+
+        $datatable_transferts = $this->get('pjm.datatable.transferts');
+        $datatable_transferts->setAdmin(false);
+        $datatable_transferts->setAjaxUrl($this->generateUrl('pjm_app_banque_transfertsResults'));
+        $datatable_transferts->buildDatatable();
 
         return $this->render('PJMAppBundle:Consos:Banque/index.html.twig', array(
             'datatable_transactions' => $datatable_transactions,
             'datatable_achats' => $datatable_achats,
+            'datatable_transferts' => $datatable_transferts,
         ));
     }
 
@@ -121,57 +125,48 @@ class BanqueController extends Controller
     /**
      * Action ajax de rendu de la liste des transactions de l'user.
      */
-    public function transactionsResultsAction(User $user = null)
+    public function transactionsResultsAction()
     {
-        if (null === $user) {
-            $user = $this->getUser();
-        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $datatable = $this->get('pjm.datatable.credits');
+        $datatable->buildDatatable();
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.credits'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
+        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
      * Action ajax de rendu de la liste des achats de l'user.
      */
-    public function achatsResultsAction(User $user = null)
+    public function achatsResultsAction()
     {
-        if (null === $user) {
-            $user = $this->getUser();
-        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $datatable = $this->get('pjm.datatable.achats');
+        $datatable->buildDatatable();
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.achats'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
+        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     /**
      * Action ajax de rendu de la liste des transferts de l'user.
      */
-    public function transfertsResultsAction(User $user = null)
+    public function transfertsResultsAction()
     {
-        if (null === $user) {
-            $user = $this->getUser();
-        } elseif ($user !== $this->getUser() && false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $datatable = $this->get('pjm.datatable.transferts');
+        $datatable->buildDatatable();
 
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.transferts'));
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Consos\Transfert');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByUser($user));
+        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 }

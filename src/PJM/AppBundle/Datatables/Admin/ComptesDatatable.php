@@ -2,50 +2,38 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Datatables\BaseDatatable;
 
 /**
  * Class ComptesDatatable.
  */
-class ComptesDatatable extends AbstractDatatableView
+class ComptesDatatable extends BaseDatatable
 {
     protected $boquetteSlug;
-    protected $twigExt;
 
     public function setBoquetteSlug($boquetteSlug)
     {
         $this->boquetteSlug = $boquetteSlug;
     }
 
-    public function setTwigExt(IntranetExtension $twigExt)
-    {
-        $this->twigExt = $twigExt;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 2, 'direction' => 'asc'))
-        ;
+        $this->options->setOption('order', [[2, 'asc']]);
 
-        $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_admin_boquette_comptesResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            ))
-        );
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_admin_boquette_comptesResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('user.bucque', 'column', array('visible' => false))
             ->add('user.username', 'column', array(
                 'title' => 'Utilisateur',
@@ -63,7 +51,7 @@ class ComptesDatatable extends AbstractDatatableView
     {
         $formatter = function ($line) {
             $line['user']['username'] = $line['user']['bucque'].' '.$line['user']['username'];
-            $line['solde'] = $this->twigExt->prixFilter($line['solde']);
+            $line['solde'] = $this->intranetExt->prixFilter($line['solde']);
 
             return $line;
         };

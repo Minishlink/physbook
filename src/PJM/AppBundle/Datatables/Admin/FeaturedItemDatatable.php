@@ -2,12 +2,12 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+use PJM\AppBundle\Datatables\BaseDatatable;
 
 /**
  * Class FeaturedItemDatatable.
  */
-class FeaturedItemDatatable extends AbstractDatatableView
+class FeaturedItemDatatable extends BaseDatatable
 {
     protected $boquetteSlug;
 
@@ -19,33 +19,22 @@ class FeaturedItemDatatable extends AbstractDatatableView
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        if (isset($this->boquetteSlug)) {
+            $this->ajax->setOptions(array(
+                'url' => $this->router->generate('pjm_app_admin_boquette_featuredItemResults', array(
+                    'boquette_slug' => $this->boquetteSlug,
+                )),
+            ));
+        }
 
-        $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_admin_boquette_featuredItemResults', array(
-                'boquette_slug' => $this->boquetteSlug,
-            ))
-        );
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('item.libelle', 'column', array('title' => 'Item'))
             ->add('active', 'boolean', array(
