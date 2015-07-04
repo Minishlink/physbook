@@ -189,13 +189,8 @@ class AdminController extends Controller
 
     public function inscriptionListeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->createUser();
-
         $form = $this->createFormBuilder(null, array(
             'action' => $this->generateUrl('pjm_app_admin_users_inscriptionListe'),
-            'method' => 'POST',
         ))
             ->add('liste', 'file')
             ->add('verifier', 'submit')
@@ -204,6 +199,8 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userManager = $this->get('pjm.services.user_manager');
+
             // on upload temporairement le fichier
             $fileManager = $this->get('pjm.services.file_manager');
             $filePath = $fileManager->upload($form['liste']->getData(), 'registrationUsers', false, 'excel');
@@ -216,14 +213,6 @@ class AdminController extends Controller
             $fileManager->remove($filePath);
 
             $problem = 0;
-
-            // les boquettes concernées pour l'ouverture de compte :
-            $repository = $em->getRepository('PJMAppBundle:Boquette');
-            $boquettes = array(
-                $repository->findOneBySlug('pians'),
-                $repository->findOneBySlug('paniers'),
-                $repository->findOneBySlug('brags'),
-            );
 
             $validator = $this->get('validator');
             $users = [];
@@ -242,7 +231,6 @@ class AdminController extends Controller
                     $user->setPrenom($row['G']);
                     $user->setNom($row['H']);
 
-                    $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
                     if (!empty($row['I'])) {
                         $user->setGenre($row['I'] == 'F');
                     }
@@ -266,7 +254,7 @@ class AdminController extends Controller
 
                     $user->setEnabled(true);
 
-                    $userManager->updateUser($user, false);
+                    $userManager->configure($user);
 
                     // on vérifie la validité des infos
                     $errorList = $validator->validate($user);
@@ -283,16 +271,7 @@ class AdminController extends Controller
                         continue;
                     }
 
-                    //on crée l'inbox
-                    $inbox = new Inbox();
-                    $user->setInbox($inbox);
                     $users[] = $user;
-
-                    // on crée les comptes
-                    foreach ($boquettes as $boquette) {
-                        $nvCompte = new Compte($user, $boquette);
-                        $em->persist($nvCompte);
-                    }
                 } else {
                     ++$problem;
                 }
@@ -302,7 +281,7 @@ class AdminController extends Controller
 
             if (!$problem) {
                 if ($nbUsers && !$form->get('verifier')->isClicked()) {
-                    $em->flush();
+                    $this->getDoctrine()->getManager()->flush();
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
