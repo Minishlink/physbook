@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use PJM\AppBundle\Form\Type\FileParserType;
 use PJM\AppBundle\Form\Type\Admin\NewUserType;
 use PJM\AppBundle\Form\Type\Admin\ResponsabiliteType;
 use PJM\AppBundle\Form\Type\Admin\BoquetteType;
@@ -116,7 +117,6 @@ class AdminController extends Controller
         }
 
         $form = $this->createForm(new BoquetteType(), $boquette, array(
-            'method' => 'POST',
             'action' => $urlAction,
         ));
 
@@ -186,103 +186,23 @@ class AdminController extends Controller
 
     public function inscriptionListeAction(Request $request)
     {
-        $form = $this->createFormBuilder(null, array(
+        $form = $this->createForm(new FileParserType(), null, array(
             'action' => $this->generateUrl('pjm_app_admin_users_inscriptionListe'),
-        ))
-            ->add('liste', 'file')
-            ->add('verifier', 'submit')
-            ->getForm();
+            'parserType' => 'userFileParser',
+        ));
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userManager = $this->get('pjm.services.user_manager');
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $users = $form['file']->getData();
 
-            // on upload temporairement le fichier
-            $fileManager = $this->get('pjm.services.file_manager');
-            $filePath = $fileManager->upload($form['liste']->getData(), 'registrationUsers', false, 'excel');
-
-            // on va chercher le tableau correspondant à l'Excel
-            $usersExcel = $this->get('pjm.services.excel')
-                ->parse($filePath);
-
-            // on supprime le fichier temporaire
-            $fileManager->remove($filePath);
-
-            $problem = 0;
-
-            $validator = $this->get('validator');
-            $users = [];
-
-            foreach ($usersExcel as $row) {
-                if (count($row) >= 8) {
-                    // si il y a au moins le nombre de paramètres requis
-                    $user = $userManager->createUser();
-
-                    $user->setFams($row['A']);
-                    $user->setTabagns(strtolower($row['B']));
-                    $user->setProms($row['C']);
-                    $user->setEmail(strtolower($row['D']));
-                    $user->setBucque($row['E']);
-                    $user->setPlainPassword($row['F']);
-                    $user->setPrenom($row['G']);
-                    $user->setNom($row['H']);
-
-                    if (!empty($row['I'])) {
-                        $user->setGenre($row['I'] == 'F');
-                    }
-
-                    if (!empty($row['J'])) {
-                        $tel = (strlen($row['J']) == 9) ? '0'.$row['J'] : $row['J'];
-                        $user->setTelephone($tel);
-                    }
-
-                    if (!empty($row['K'])) {
-                        $user->setAppartement(strtoupper($row['K']));
-                    }
-
-                    if (!empty($row['L'])) {
-                        $user->setClasse(strtoupper($row['L']));
-                    }
-
-                    if (!empty($row['M'])) {
-                        $user->setAnniversaire(\DateTime::createFromFormat('m-d-y', $row['M']));
-                    }
-
-                    $user->setEnabled(true);
-
-                    $userManager->configure($user);
-
-                    // on vérifie la validité des infos
-                    $errorList = $validator->validate($user);
-                    if (count($errorList) > 0) {
-                        ++$problem;
-
-                        foreach($errorList as $violation) {
-                            $request->getSession()->getFlashBag()->add(
-                                'warning',
-                                '['.$user->getUsername().'] Erreur au niveau du champ "'.$violation->getPropertyPath().'" : '.$violation->getMessage()
-                            );
-                        }
-
-                        continue;
-                    }
-
-                    $users[] = $user;
-                } else {
-                    ++$problem;
-                }
-            }
-
-            $nbUsers = count($users);
-
-            if (!$problem) {
-                if ($nbUsers && !$form->get('verifier')->isClicked()) {
+                if (!$form->get('verifier')->isClicked()) {
                     $this->getDoctrine()->getManager()->flush();
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        $nbUsers.' utilisateurs ajoutés.'
+                        count($users).' utilisateurs ajoutés.'
                     );
 
                     return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
@@ -290,20 +210,14 @@ class AdminController extends Controller
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Aucun ajout n'a été fait. Il y a ".$problem.' problèmes et '.$nbUsers.' utilisateurs corrects.'
+                    "Aucun ajout n'a été fait. Il y a des erreurs dans le fichier."
                 );
-            }
-
-            if ($form->get('verifier')->isClicked()) {
-                return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
-                    'form' => $form->createView(),
-                    'users' => $users,
-                ));
             }
         }
 
         return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
             'form' => $form->createView(),
+            'users' => isset($users) ? $users : [],
         ));
     }
 
