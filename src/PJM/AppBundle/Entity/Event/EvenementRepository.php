@@ -19,12 +19,44 @@ class EvenementRepository extends EntityRepository
             $date = new \DateTime();
         }
 
-        $qb = $this->createQueryBuilder('e')
-            ->where('e.isPublic = true')
-            ->leftJoin('e.invitations', 'i')
-            ->orWhere('e.isPublic = false AND i.invite = :user')
-            ->setParameter('user', $user)
-        ;
+        $eventsPublics = $this->_getEvents(null, $max, $quand, $date, $eventExclure);
+        $eventsPrives = $this->_getEvents($user, $max, $quand, $date, $eventExclure);
+
+        $res = array_merge($eventsPublics, $eventsPrives);
+
+        $reverse = ($quand == 'before');
+        usort($res, function($a, $b) use($reverse)
+        {
+            if ($reverse) {
+                return $a->getDateDebut() < $b->getDateDebut();
+            }
+
+            return $a->getDateDebut() > $b->getDateDebut();
+        });
+
+        if ($reverse) {
+            $res = array_reverse($res);
+        }
+
+        return $res;
+    }
+
+    private function _getEvents(User $user = null, $max, $quand, \DateTime $date, Evenement $eventExclure = null)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        if ($user === null) {
+            $qb
+                ->where('e.isPublic = true')
+            ;
+        } else {
+            $qb
+                ->innerJoin('e.invitations', 'i')
+                ->where('e.isPublic = false')
+                ->andWhere('i.invite = :user')
+                ->setParameter('user', $user)
+            ;
+        }
 
         if ($eventExclure !== null) {
             $qb
@@ -53,12 +85,6 @@ class EvenementRepository extends EntityRepository
             ;
         }
 
-        $res = $qb->getQuery()->getResult();
-
-        if ($quand == 'before') {
-            $res = array_reverse($res);
-        }
-
-        return $res;
+        return $qb->getQuery()->getResult();
     }
 }
