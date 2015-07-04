@@ -169,6 +169,11 @@ services:
             - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
+    pjm.form.type.userFileParser:
+        class: PJM\AppBundle\Form\Type\Parser\UserFileParserType
+        arguments: ["@pjm.services.user_manager", "@pjm.services.file_manager", "@pjm.services.excel"]
+        tags:
+            - { name: form.type, alias: userFileParser }
     pjm.form.type.datetimePicker:
         class: PJM\AppBundle\Form\Type\DateTimePickerType
         tags:

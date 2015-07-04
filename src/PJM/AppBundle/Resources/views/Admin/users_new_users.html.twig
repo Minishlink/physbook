@@ -33,7 +33,7 @@
 <p><a href="https://github.com/Minishlink/physbook/blob/master/doc/Files/users_inscription_list.xlsx">Ce fichier</a> donne un exemple avec deux utilisateurs.</p>
 <p>Appuie d'abord sur "Vérifier" pour voir si le fichier est correctement parsé. Si oui, clique sur "Ajouter".</p>
 <p>Une fois que tu as créé les utilisateurs, envoie un MailChimp. Attention, ne modifie surtout pas le fichier Excel que tu as utilisé, car les mots de passe dans l'Excel sont générés à chaque changement de cellule... Fais une copie des valeurs et importe tout ça dans MailChimp pour indiquer aux nouveaux inscrits leur mot de passe temporaire.</p>
-{% if users is defined %}
+{% if users|length > 0 %}
 <div class="row">
     <div class="col-md-12">
         {% include "PJMAppBundle:Admin:users_liste.html.twig" %}
@@ -46,8 +46,8 @@
             {{ form_errors(form) }}
 
             <div class="form-group">
-                {{ form_widget(form.liste, {'attr': {'class': 'form-control', 'placeholder': 'Liste'}}) }}
-                {{ form_errors(form.liste) }}
+                {{ form_widget(form.file, {'attr': {'class': 'form-control', 'placeholder': 'Liste'}}) }}
+                {{ form_errors(form.file) }}
             </div>
 
             {{ form_rest(form) }}

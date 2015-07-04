@@ -12,8 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="pjm_user")
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\UserRepository")
- * @UniqueEntity("emailCanonical")
- * @UniqueEntity("usernameCanonical")
+ * @UniqueEntity("emailCanonical", message="Cet e-mail {{ emailCanonical }} existe déjà.")
+ * @UniqueEntity("usernameCanonical", message="Ce nom d'utilisateur {{ usernameCanonical }} existe déjà.")
  */
 class User extends BaseUser
 {
