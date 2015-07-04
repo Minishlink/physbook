@@ -8,10 +8,7 @@ use PJM\AppBundle\Form\Type\Admin\NewUserType;
 use PJM\AppBundle\Form\Type\Admin\ResponsabiliteType;
 use PJM\AppBundle\Form\Type\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
-use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Inbox\Inbox;
-use PJM\AppBundle\Entity\User;
 
 class AdminController extends Controller
 {
