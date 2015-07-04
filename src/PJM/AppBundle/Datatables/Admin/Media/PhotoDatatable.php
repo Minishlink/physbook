@@ -39,7 +39,7 @@ class PhotoDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-ok-circle',
                         'attributes' => array(
                             'class' => 'btn btn-default btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                     array(
@@ -48,7 +48,7 @@ class PhotoDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-ban-circle',
                         'attributes' => array(
                             'class' => 'btn btn-default btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                     array(
@@ -57,7 +57,7 @@ class PhotoDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-remove-circle',
                         'attributes' => array(
                             'class' => 'btn btn-danger btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                 ),

@@ -14,16 +14,16 @@ class CreateUserCommand extends ContainerAwareCommand
     {
         $this
             ->setName('create:user')
-            ->setDescription("Créer un utilisateur")
+            ->setDescription('Créer un utilisateur')
             ->addArgument(
                 'email',
                 InputArgument::REQUIRED,
-                "E-mail"
+                'E-mail'
             )
             ->addArgument(
                 'password',
                 InputArgument::REQUIRED,
-                "Mot de passe"
+                'Mot de passe'
             )
             ->addArgument(
                 'fams',
@@ -43,17 +43,17 @@ class CreateUserCommand extends ContainerAwareCommand
             ->addArgument(
                 'bucque',
                 InputArgument::REQUIRED,
-                "Bucque"
+                'Bucque'
             )
             ->addArgument(
                 'prenom',
                 InputArgument::REQUIRED,
-                "Prenom"
+                'Prenom'
             )
             ->addArgument(
                 'nom',
                 InputArgument::REQUIRED,
-                "Nom"
+                'Nom'
             )
             ->addOption(
                'super-admin',
@@ -84,11 +84,11 @@ class CreateUserCommand extends ContainerAwareCommand
         $userManager->configure($user);
 
         if ($input->getOption('super-admin')) {
-            $user->addRole("ROLE_SUPER_ADMIN");
+            $user->addRole('ROLE_SUPER_ADMIN');
         }
 
         if ($input->getOption('admin')) {
-            $user->addRole("ROLE_ADMIN");
+            $user->addRole('ROLE_ADMIN');
         }
 
         $this->getContainer()->get('doctrine')->getManager()->flush();

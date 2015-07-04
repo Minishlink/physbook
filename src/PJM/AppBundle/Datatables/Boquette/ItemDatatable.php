@@ -23,7 +23,6 @@ class ItemDatatable extends BaseDatatable
         $this->boquetteSlug = $boquetteSlug;
     }
 
-
     /**
      * {@inheritdoc}
      */

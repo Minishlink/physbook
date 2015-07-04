@@ -16,8 +16,7 @@ class PushSubscriptionDatatable extends BaseDatatable
 
         $this->options->setOption('order', [[1, 'desc']]);
 
-        $this->ajax->setOptions(array('url' =>
-            $this->router->generate('pjm_app_push_subscriptionResults')
+        $this->ajax->setOptions(array('url' => $this->router->generate('pjm_app_push_subscriptionResults'),
         ));
 
         $this->columnBuilder

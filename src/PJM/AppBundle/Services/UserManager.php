@@ -12,7 +12,8 @@ class UserManager extends BaseUserManager
     private $boquettesComptes;
     private $mailer;
 
-    public function setMailer(Mailer $mailer) {
+    public function setMailer(Mailer $mailer)
+    {
         $this->mailer = $mailer;
     }
 
@@ -21,8 +22,8 @@ class UserManager extends BaseUserManager
      *
      * Creates the user inbox and accounts.
      *
-     * @param User    $user                     The user
-     * @param boolean [$generatePassword=false] If true, a random password will be generated
+     * @param User $user The user
+     * @param bool [$generatePassword=false] If true, a random password will be generated
      */
     public function configure(User $user, $generatePassword = false)
     {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="pjm_user")
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\UserRepository")

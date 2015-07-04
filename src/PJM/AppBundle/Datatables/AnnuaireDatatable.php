@@ -19,7 +19,7 @@ class AnnuaireDatatable extends BaseDatatable
         $this->options->setOption('individual_filtering', true);
 
         $this->ajax->setOptions(array(
-            'url' => $this->router->generate('pjm_profil_annuaireResults')
+            'url' => $this->router->generate('pjm_profil_annuaireResults'),
         ));
 
         $this->columnBuilder

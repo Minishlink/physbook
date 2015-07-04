@@ -40,7 +40,7 @@ class ResponsableDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-pencil',
                         'attributes' => array(
                             'class' => 'btn btn-default btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                 ),

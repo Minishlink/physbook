@@ -30,7 +30,7 @@ class UserFileParserType extends AbstractType
     /**
      * @param UserManager $userManager
      * @param FileManager $fileManager
-     * @param Excel $excel
+     * @param Excel       $excel
      */
     public function __construct(UserManager $userManager, FileManager $fileManager, Excel $excel)
     {

@@ -29,7 +29,7 @@ class CommandesDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-ok',
                         'attributes' => array(
                             'class' => 'btn btn-default btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                     array(
@@ -38,7 +38,7 @@ class CommandesDatatable extends BaseDatatable
                         'icon' => 'glyphicon glyphicon-remove',
                         'attributes' => array(
                             'class' => 'btn btn-default btn-xs',
-                            'role' => 'button'
+                            'role' => 'button',
                         ),
                     ),
                 ),

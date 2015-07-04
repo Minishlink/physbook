@@ -134,6 +134,7 @@ class ProfilController extends Controller
         $datatable->buildDatatable();
 
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+
         return $query->getResponse();
     }
 }

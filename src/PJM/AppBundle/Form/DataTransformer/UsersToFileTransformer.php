@@ -28,7 +28,7 @@ class UsersToFileTransformer implements DataTransformerInterface
     /**
      * @param UserManager $userManager
      * @param FileManager $fileManager
-     * @param Excel $excel
+     * @param Excel       $excel
      */
     public function __construct(UserManager $userManager, FileManager $fileManager, Excel $excel)
     {
@@ -38,26 +38,28 @@ class UsersToFileTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an array of users (users) to a UploadedFile (file). (not used)
+     * Transforms an array of users (users) to a UploadedFile (file). (not used).
      *
-     * @param  array|null $users
+     * @param array|null $users
+     *
      * @return UploadedFile
      */
     public function transform($users)
     {
-        return null;
+        return;
     }
 
     /**
      * Transforms a UploadedFile (file) to an array of users (users).
      *
-     * @param  UploadedFile $file
+     * @param UploadedFile $file
+     *
      * @return array|null
      */
     public function reverseTransform($file)
     {
         if (empty($file)) {
-            return null;
+            return;
         }
 
         // on upload temporairement le fichier
