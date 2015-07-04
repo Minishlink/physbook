@@ -5,12 +5,15 @@ namespace PJM\AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * User.
+ * User
  *
  * @ORM\Table(name="pjm_user")
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\UserRepository")
+ * @UniqueEntity("emailCanonical", message="Cet e-mail {{ emailCanonical }} existe déjà.")
+ * @UniqueEntity("usernameCanonical", message="Ce nom d'utilisateur {{ usernameCanonical }} existe déjà.")
  */
 class User extends BaseUser
 {

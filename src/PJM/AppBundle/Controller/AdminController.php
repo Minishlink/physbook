@@ -4,14 +4,12 @@ namespace PJM\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use PJM\AppBundle\Form\Type\FileParserType;
 use PJM\AppBundle\Form\Type\Admin\NewUserType;
 use PJM\AppBundle\Form\Type\Admin\ResponsabiliteType;
 use PJM\AppBundle\Form\Type\Admin\BoquetteType;
 use PJM\AppBundle\Entity\Responsabilite;
-use PJM\AppBundle\Entity\Compte;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\Inbox\Inbox;
-use PJM\AppBundle\Entity\User;
 
 class AdminController extends Controller
 {
@@ -119,7 +117,6 @@ class AdminController extends Controller
         }
 
         $form = $this->createForm(new BoquetteType(), $boquette, array(
-            'method' => 'POST',
             'action' => $urlAction,
         ));
 
@@ -189,218 +186,61 @@ class AdminController extends Controller
 
     public function inscriptionListeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->createUser();
-
-        $form = $this->createFormBuilder(null, array(
+        $form = $this->createForm(new FileParserType(), null, array(
             'action' => $this->generateUrl('pjm_app_admin_users_inscriptionListe'),
-            'method' => 'POST',
-        ))
-            ->add('liste', 'file')
-            ->add('verifier', 'submit')
-            ->getForm();
+            'parserType' => 'userFileParser',
+        ));
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // on upload temporairement le fichier
-            $fileManager = $this->get('pjm.services.file_manager');
-            $filePath = $fileManager->upload($form['liste']->getData(), 'registrationUsers', false, 'excel');
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $users = $form['file']->getData();
 
-            // on va chercher le tableau correspondant à l'Excel
-            $usersExcel = $this->get('pjm.services.excel')
-                ->parse($filePath);
+                if (!$form->get('verifier')->isClicked()) {
+                    $this->getDoctrine()->getManager()->flush();
 
-            // on supprime le fichier temporaire
-            $fileManager->remove($filePath);
+                    $request->getSession()->getFlashBag()->add(
+                        'success',
+                        count($users).' utilisateurs ajoutés.'
+                    );
 
-            $problem = 0;
-
-            // les boquettes concernées pour l'ouverture de compte :
-            $repository = $em->getRepository('PJMAppBundle:Boquette');
-            $boquettes = array(
-                $repository->findOneBySlug('pians'),
-                $repository->findOneBySlug('paniers'),
-                $repository->findOneBySlug('brags'),
-            );
-
-            foreach ($usersExcel as $row) {
-                if (count($row) >= 8) {
-                    // si il y a au moins le nombre de paramètres requis
-                    $user = $userManager->createUser();
-
-                    $user->setFams($row['A']);
-                    $user->setTabagns(strtolower($row['B']));
-                    $user->setProms($row['C']);
-                    $user->setEmail(strtolower($row['D']));
-                    $user->setBucque($row['E']);
-                    $user->setPlainPassword($row['F']);
-                    $user->setPrenom($row['G']);
-                    $user->setNom($row['H']);
-
-                    $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
-                    if (!empty($row['I'])) {
-                        $user->setGenre($row['I'] == 'F');
-                    }
-
-                    if (!empty($row['J'])) {
-                        $tel = (strlen($row['J']) == 9) ? '0'.$row['J'] : $row['J'];
-                        $user->setTelephone($tel);
-                    }
-
-                    if (!empty($row['K'])) {
-                        $user->setAppartement(strtoupper($row['K']));
-                    }
-
-                    if (!empty($row['L'])) {
-                        $user->setClasse(strtoupper($row['L']));
-                    }
-
-                    if (!empty($row['M'])) {
-                        $user->setAnniversaire(\DateTime::createFromFormat('m-d-y', $row['M']));
-                    }
-
-                    $user->setEnabled(true);
-
-                    //on crée l'inbox
-                    $inbox = new Inbox();
-                    $user->setInbox($inbox);
-
-                    $userManager->updateUser($user, false);
-                    $users[] = $user;
-
-                    // on crée les comptes
-                    foreach ($boquettes as $boquette) {
-                        $nvCompte = new Compte($user, $boquette);
-                        $em->persist($nvCompte);
-                    }
-                } else {
-                    ++$problem;
-                }
-            }
-
-            $nbUsers = count($users);
-
-            if (!$problem) {
-                if ($nbUsers && !$form->get('verifier')->isClicked()) {
-                    $success = true;
-
-                    try {
-                        $em->flush();
-                    } catch (\Doctrine\DBAL\DBALException $e) {
-                        if ($e->getPrevious()->getCode() === '23000') {
-                            $success = false;
-
-                            $request->getSession()->getFlashBag()->add(
-                                'danger',
-                                'Erreur : un utilisateur existe déjà !'
-                            );
-
-                            $request->getSession()->getFlashBag()->add(
-                                'warning',
-                                $e->getMessage()
-                            );
-                        } else {
-                            throw $e;
-                        }
-                    }
-
-                    if ($success) {
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            $nbUsers.' utilisateurs ajoutés.'
-                        );
-
-                        return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
-                    }
+                    return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionListe'));
                 }
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Aucun ajout n'a été fait. Il y a ".$problem.' problèmes et '.$nbUsers.' utilisateurs corrects.'
+                    "Aucun ajout n'a été fait. Il y a des erreurs dans le fichier."
                 );
-            }
-
-            if ($form->get('verifier')->isClicked()) {
-                return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
-                    'form' => $form->createView(),
-                    'users' => $users,
-                ));
             }
         }
 
         return $this->render('PJMAppBundle:Admin:users_new_users.html.twig', array(
             'form' => $form->createView(),
+            'users' => isset($users) ? $users : [],
         ));
     }
 
     public function inscriptionUniqueAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $userManager = $this->get('fos_user.user_manager');
+        $userManager = $this->get('pjm.services.user_manager');
+        $userManager->setMailer($this->get('pjm.services.mailer'));
         $user = $userManager->createUser();
 
         $form = $this->createForm(new NewUserType(), $user, array(
             'action' => $this->generateUrl('pjm_app_admin_users_inscriptionUnique'),
-            'method' => 'POST',
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = substr(uniqid(), 0, 8);
-            $user->setPlainPassword($password);
-            $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
-
-            //on crée l'inbox
-            $inbox = new Inbox();
-            $user->setInbox($inbox);
-
-            $userManager->updateUser($user, false);
-
-            // les boquettes concernées pour l'ouverture de compte :
-            $repository = $em->getRepository('PJMAppBundle:Boquette');
-            $boquettes = array(
-                $repository->findOneBySlug('pians'),
-                $repository->findOneBySlug('paniers'),
-                $repository->findOneBySlug('brags'),
-            );
-
-            // on crée les comptes
-            foreach ($boquettes as $boquette) {
-                $nvCompte = new Compte($user, $boquette);
-                $em->persist($nvCompte);
-            }
-
-            try {
-                $em->flush();
-            } catch (\Doctrine\DBAL\DBALException $e) {
-                if ($e->getPrevious()->getCode() === '23000') {
-                    $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        'Erreur : l\'utilisateur existe déjà !'
-                    );
-
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $e->getMessage()
-                    );
-
-                    return $this->render('PJMAppBundle:Admin:users_new_user.html.twig', array(
-                        'form' => $form->createView(),
-                    ));
-                } else {
-                    throw $e;
-                }
-            }
+            $userManager->configure($user, true);
+            $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add(
                 'success',
                 'Utilisateur ajouté.'
             );
-
-            $this->envoiMailInscription($user, $password);
 
             return $this->redirect($this->generateUrl('pjm_app_admin_users_inscriptionUnique'));
         }
@@ -408,19 +248,5 @@ class AdminController extends Controller
         return $this->render('PJMAppBundle:Admin:users_new_user.html.twig', array(
             'form' => $form->createView(),
         ));
-    }
-
-    private function envoiMailInscription(User $user, $password)
-    {
-        $utils = $this->get('pjm.services.mailer');
-
-        $context = array(
-            'user' => $user,
-            'password' => $password,
-        );
-
-        $template = 'PJMAppBundle:Mail:inscription.html.twig';
-
-        $utils->send($user, $context, $template);
     }
 }

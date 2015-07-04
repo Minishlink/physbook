@@ -26,6 +26,9 @@ services:
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: twig.extension }
+    pjm.services.user_manager:
+        class: PJM\AppBundle\Services\UserManager
+        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -166,6 +169,11 @@ services:
             - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
+    pjm.form.type.userFileParser:
+        class: PJM\AppBundle\Form\Type\Parser\UserFileParserType
+        arguments: ["@pjm.services.user_manager", "@pjm.services.file_manager", "@pjm.services.excel"]
+        tags:
+            - { name: form.type, alias: userFileParser }
     pjm.form.type.datetimePicker:
         class: PJM\AppBundle\Form\Type\DateTimePickerType
         tags:
