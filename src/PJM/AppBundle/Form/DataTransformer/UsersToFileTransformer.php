@@ -4,8 +4,6 @@ namespace PJM\AppBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use PJM\AppBundle\Entity\User;
-use Doctrine\Common\Collections\Collection;
 use PJM\AppBundle\Services\UserManager;
 use PJM\AppBundle\Services\FileManager;
 use PJM\AppBundle\Services\Excel;
