@@ -111,7 +111,7 @@ class BoquetteController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $query->addWhereAll($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $query->getResponse();
     }

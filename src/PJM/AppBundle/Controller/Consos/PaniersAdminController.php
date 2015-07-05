@@ -97,7 +97,7 @@ class PaniersAdminController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-        $query->addWhereResult($repository->callbackFindBySlug($this->itemSlug));
+        $query->addWhereAll($repository->callbackFindBySlug($this->itemSlug));
 
         return $query->getResponse();
     }

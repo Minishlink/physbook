@@ -204,7 +204,7 @@ class BoquetteAdminController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $query->addWhereAll($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $query->getResponse();
     }
@@ -292,7 +292,7 @@ class BoquetteAdminController extends Controller
         $datatable->buildDatatable();
 
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
-        $query->addWhereResult(
+        $query->addWhereAll(
             function (QueryBuilder $qb) use ($boquette_slug) {
                 $qb
                     ->join('responsable.responsabilite', 're')
@@ -416,7 +416,7 @@ class BoquetteAdminController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Compte');
-        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $query->addWhereAll($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $query->getResponse();
     }
@@ -569,7 +569,7 @@ class BoquetteAdminController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:FeaturedItem');
-        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $query->addWhereAll($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $query->getResponse();
     }
@@ -609,7 +609,7 @@ class BoquetteAdminController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
-        $query->addWhereResult($repository->callbackFindByBoquetteSlug($boquette_slug));
+        $query->addWhereAll($repository->callbackFindByBoquetteSlug($boquette_slug));
 
         return $query->getResponse();
     }

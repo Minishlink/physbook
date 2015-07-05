@@ -133,7 +133,7 @@ class BanqueController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Transaction');
-        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
+        $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
 
         return $query->getResponse();
     }
@@ -149,7 +149,7 @@ class BanqueController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Historique');
-        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
+        $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
 
         return $query->getResponse();
     }
@@ -165,7 +165,7 @@ class BanqueController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Consos\Transfert');
-        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
+        $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
 
         return $query->getResponse();
     }

@@ -100,7 +100,7 @@ class PushController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:PushSubscription');
-        $query->addWhereResult($repository->callbackFindByUser($this->getUser()));
+        $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
 
         return $query->getResponse();
     }
