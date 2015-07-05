@@ -19,13 +19,13 @@ class EvenementRepository extends EntityRepository
             $date = new \DateTime();
         }
 
-        $eventsPublics = $this->_getEvents(null, $max, $quand, $date, $eventExclure);
-        $eventsPrives = $this->_getEvents($user, $max, $quand, $date, $eventExclure);
+        $eventsPublics = $this->__getEvents(null, $max, $quand, $date, $eventExclure);
+        $eventsPrives = $this->__getEvents($user, $max, $quand, $date, $eventExclure);
 
         $res = array_merge($eventsPublics, $eventsPrives);
 
         $reverse = ($quand == 'before');
-        usort($res, function($a, $b) use($reverse)
+        usort($res, function(Evenement $a, Evenement $b) use($reverse)
         {
             if ($reverse) {
                 return $a->getDateDebut() < $b->getDateDebut();
@@ -41,7 +41,7 @@ class EvenementRepository extends EntityRepository
         return $res;
     }
 
-    private function _getEvents(User $user = null, $max, $quand, \DateTime $date, Evenement $eventExclure = null)
+    private function __getEvents(User $user = null, $max, $quand, \DateTime $date, Evenement $eventExclure = null)
     {
         $qb = $this->createQueryBuilder('e');
 
