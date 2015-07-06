@@ -2,44 +2,30 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-
 /**
  * Class VacancesDatatable.
  */
-class VacancesDatatable extends AbstractDatatableView
+class VacancesDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_brags_vacancesResults'),
+        ));
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_vacancesResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('dateDebut', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('dateDebut', 'datetime', array(
                 'title' => 'Début',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('dateFin', 'datetime', array(
                 'title' => 'Fin',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('fait', 'boolean', array(
                 'title' => 'Fait',
@@ -55,18 +41,19 @@ class VacancesDatatable extends AbstractDatatableView
                         'route_parameters' => array(
                             'vacances' => 'id',
                         ),
+                        'label' => 'Supprimer',
                         'icon' => 'glyphicon glyphicon-trash',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => 'Supprimer',
-                            'class' => 'btn btn-primary btn-xs',
+                            'class' => 'btn btn-default btn-xs',
                             'role' => 'button',
                         ),
                         'confirm' => true,
                         'confirm_message' => 'Es-tu sûr ?',
                         'role' => 'ROLE_ZIBRAGS',
-                        'renderif' => array(
-                            // #FUTURE remplacer si MAJ bundle datatable
+                        'render_if' => array(
+                            // FUTURE remplacer si MAJ bundle datatable
                             'fait) == false; var dummy = function(){}; dummy(',
                         ),
                     ),

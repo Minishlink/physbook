@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\AppBundle\Entity\User;
 
 /**
  * PushSubscriptionRepository.
@@ -18,7 +17,7 @@ class PushSubscriptionRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($user) {
             $qb
-                ->join('PushSubscription.user', 'u', 'WITH', 'u = :user')
+                ->join('pushsubscription.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('user', $user)
             ;
         };

@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\AppBundle\Entity\User;
 
 /**
  * CompteRepository.
@@ -137,7 +136,7 @@ class CompteRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($slug) {
             $qb
-                ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
+                ->join('compte.boquette', 'b', 'WITH', 'b.slug = :slug')
                 ->setParameter('slug', $slug)
             ;
         };
@@ -147,8 +146,8 @@ class CompteRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($slug, $user) {
             $qb
-                ->join('Compte.boquette', 'b', 'WITH', 'b.slug = :slug')
-                ->join('Compte.user', 'u', 'WITH', 'u = :user')
+                ->join('compte.boquette', 'b', 'WITH', 'b.slug = :slug')
+                ->join('compte.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('slug', $slug)
                 ->setParameter('user', $user)
             ;

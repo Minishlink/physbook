@@ -2,40 +2,28 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Datatables\BaseDatatable;
 
 /**
  * Class PaniersDatatable.
  */
-class PaniersDatatable extends AbstractDatatableView
+class PaniersDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_paniers_paniersResults'),
+        ));
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_paniers_paniersResults'));
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('infos', 'column', array('title' => 'Infos'))
             ->add('prix', 'column', array('title' => 'Prix'))
@@ -54,7 +42,7 @@ class PaniersDatatable extends AbstractDatatableView
                         'route_parameters' => array(
                             'panier' => 'id',
                         ),
-                        'label' => "Voir l'état",
+                        'label' => 'État',
                         'icon' => 'glyphicon glyphicon-eye-open',
                         'attributes' => array(
                             'rel' => 'tooltip',
@@ -89,9 +77,8 @@ class PaniersDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['prix'] = $ext->prixFilter($line['prix']);
+        $formatter = function ($line) {
+            $line['prix'] = $this->intranetExt->prixFilter($line['prix']);
 
             return $line;
         };

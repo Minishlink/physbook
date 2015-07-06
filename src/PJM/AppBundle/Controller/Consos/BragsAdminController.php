@@ -31,7 +31,7 @@ class BragsAdminController extends Controller
     public function listeCommandesAction()
     {
         $datatable = $this->get('pjm.datatable.commandes');
-        $datatable->buildDatatableView();
+        $datatable->buildDatatable();
 
         $commandes = $this->getDoctrine()->getManager()
             ->getRepository('PJMAppBundle:Commande')
@@ -46,12 +46,15 @@ class BragsAdminController extends Controller
     // action ajax de rendu de la liste des commandes
     public function commandesResultsAction()
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.commandes'));
+        $datatable = $this->get('pjm.datatable.commandes');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Commande');
-        $datatable->addWhereBuilderCallback($repository->callbackFindByItemSlug($this->itemSlug));
+        $query->addWhereAll($repository->callbackFindByItemSlug($this->itemSlug));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 
     public function validerCommandesAction(Request $request)
@@ -173,7 +176,7 @@ class BragsAdminController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.vacances');
-        $datatable->buildDatatableView();
+        $datatable->buildDatatable();
 
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listeVacances.html.twig', array(
             'form' => $form->createView(),
@@ -183,9 +186,12 @@ class BragsAdminController extends Controller
 
     public function vacancesResultsAction()
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.vacances'));
+        $datatable = $this->get('pjm.datatable.vacances');
+        $datatable->buildDatatable();
 
-        return $datatable->getResponse();
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+
+        return $query->getResponse();
     }
 
     public function annulerVacancesAction(Request $request, Vacances $vacances)
@@ -276,7 +282,7 @@ class BragsAdminController extends Controller
         }
 
         $datatable = $this->get('pjm.datatable.prix');
-        $datatable->buildDatatableView();
+        $datatable->buildDatatable();
 
         return $this->render('PJMAppBundle:Admin:Consos/Brags/listePrix.html.twig', array(
             'datatable' => $datatable,
@@ -287,11 +293,14 @@ class BragsAdminController extends Controller
 
     public function prixResultsAction()
     {
-        $datatable = $this->get('sg_datatables.datatable')->getDatatable($this->get('pjm.datatable.prix'));
+        $datatable = $this->get('pjm.datatable.prix');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PJMAppBundle:Item');
-        $datatable->addWhereBuilderCallback($repository->callbackFindBySlug($this->itemSlug));
+        $query->addWhereAll($repository->callbackFindBySlug($this->itemSlug));
 
-        return $datatable->getResponse();
+        return $query->getResponse();
     }
 }

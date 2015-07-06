@@ -47,7 +47,7 @@ class ItemRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($slug) {
             $qb
-                ->andWhere('Item.slug = :slug')
+                ->andWhere('item.slug = :slug')
                 ->setParameter('slug', $slug)
             ;
         };
@@ -90,7 +90,7 @@ class ItemRepository extends EntityRepository
         // TODO ne pas retourner les events
         return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
-                ->join('Item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
+                ->join('item.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
             ;
         };

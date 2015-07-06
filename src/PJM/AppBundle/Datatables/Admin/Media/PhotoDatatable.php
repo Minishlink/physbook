@@ -2,62 +2,66 @@
 
 namespace PJM\AppBundle\Datatables\Admin\Media;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
+use PJM\AppBundle\Datatables\BaseDatatable;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class PhotoDatatable.
  */
-class PhotoDatatable extends AbstractDatatableView
+class PhotoDatatable extends BaseDatatable
 {
-    protected $twigExt;
-    protected $extImage;
+    private $imageExt;
 
-    public function setTwigExt(IntranetExtension $twigExt)
+    public function setImageExt(ImageService $imageExt)
     {
-        $this->twigExt = $twigExt;
-    }
-
-    public function setExtImage(ImageService $extImage)
-    {
-        $this->extImage = $extImage;
+        $this->imageExt = $imageExt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        $this->options->setOption('order', [[1, 'desc']]);
 
-        $this->getAjax()->setUrl(
-            $this->getRouter()->generate('pjm_app_admin_media_photosResults')
-        );
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_media_photosResults'),
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getMultiselect()
-            ->setEnabled(true)
-            ->setPosition('last')
-            ->addAction('Autoriser', 'pjm_app_admin_media_autoriserPhotos')
-            ->addAction('Ne pas autoriser', 'pjm_app_admin_media_pasAutoriserPhotos')
-            ->addAction('Supprimer', 'pjm_app_admin_media_supprimerPhotos')
-            ->setWidth('20px')
-        ;
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
+        $this->columnBuilder
+            ->add(null, 'multiselect', array(
+                'actions' => array(
+                    array(
+                        'route' => 'pjm_app_admin_media_autoriserPhotos',
+                        'label' => 'Autoriser',
+                        'icon' => 'glyphicon glyphicon-ok-circle',
+                        'attributes' => array(
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
+                        ),
+                    ),
+                    array(
+                        'route' => 'pjm_app_admin_media_pasAutoriserPhotos',
+                        'label' => 'Ne pas autoriser',
+                        'icon' => 'glyphicon glyphicon-ban-circle',
+                        'attributes' => array(
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
+                        ),
+                    ),
+                    array(
+                        'route' => 'pjm_app_admin_media_supprimerPhotos',
+                        'label' => 'Supprimer',
+                        'icon' => 'glyphicon glyphicon-remove-circle',
+                        'attributes' => array(
+                            'class' => 'btn btn-danger btn-xs',
+                            'role' => 'button',
+                        ),
+                    ),
+                ),
+                'width' => '20px',
             ))
             ->add('image.id', 'column', array('visible' => false))
             ->add('image.ext', 'column', array('visible' => false))
@@ -72,14 +76,14 @@ class PhotoDatatable extends AbstractDatatableView
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('publication', 'column', array(
                 'title' => 'Publication',
             ))
             ->add('usersHM.users.username', 'array', array(
                 'title' => "Phy's HM Users",
-                'read_as' => 'usersHM.users[, ].username',
+                'data' => 'usersHM.users[, ].username',
                 'visible' => false,
             ))
             ->add('usersHM.id', 'virtual', array(
@@ -112,11 +116,9 @@ class PhotoDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = $this->twigExt;
-        $extImage = $this->extImage;
-        $formatter = function ($line) use ($ext, $extImage) {
-            $line['image']['alt'] = $extImage->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']);
-            $line['publication'] = $ext->etatPublicationPhotoFilter($line['publication']);
+        $formatter = function ($line) {
+            $line['image']['alt'] = $this->imageExt->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']);
+            $line['publication'] = $this->intranetExt->etatPublicationPhotoFilter($line['publication']);
             $line['usersHM']['id'] = count($line['usersHM']['users']);
 
             return $line;

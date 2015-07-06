@@ -2,54 +2,28 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class TransfertsDatatable.
  */
-class TransfertsDatatable extends AbstractDatatableView
+class TransfertsDatatable extends BaseDatatable
 {
-    protected $ajaxUrl;
-    protected $admin;
-
-    public function setAjaxUrl($ajaxUrl)
-    {
-        $this->ajaxUrl = $ajaxUrl;
-    }
-
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        $this->options->setOption('individual_filtering', true);
 
-        $this->getAjax()->setUrl($this->ajaxUrl);
+        $this->ajax->setOptions(array(
+            'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll',
+                'date_format' => 'lll',
             ))
             ->add('emetteur.boquette.nom', 'column', array(
                 'title' => 'Boquette',
@@ -78,9 +52,8 @@ class TransfertsDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['montant'] = $ext->prixFilter($line['montant']);
+        $formatter = function ($line) {
+            $line['montant'] = $this->intranetExt->prixFilter($line['montant']);
             if ($line['status'] != 'OK') {
                 $line['raison'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['raison'];
             }

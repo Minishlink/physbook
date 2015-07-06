@@ -26,6 +26,9 @@ services:
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: twig.extension }
+    pjm.services.user_manager:
+        class: PJM\AppBundle\Services\UserManager
+        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -76,10 +79,14 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
     pjm.datatable.achats:
         class: PJM\AppBundle\Datatables\AchatsDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.transferts:
         class: PJM\AppBundle\Datatables\TransfertsDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.vacances:
@@ -88,14 +95,20 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.prix:
         class: PJM\AppBundle\Datatables\PrixDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.commandes:
         class: PJM\AppBundle\Datatables\CommandesDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.credits:
         class: PJM\AppBundle\Datatables\CreditsDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.boquette.historique:
@@ -104,6 +117,8 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.admin.paniers.liste:
         class: PJM\AppBundle\Datatables\Admin\PaniersDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.admin.responsabilites:
@@ -112,6 +127,8 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.admin.boquettes:
         class: PJM\AppBundle\Datatables\Admin\BoquettesDatatable
+        calls:
+            - [setImageExt, ["@pjm.services.image"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.admin.responsable:
@@ -120,10 +137,15 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.admin.consos.comptes:
         class: PJM\AppBundle\Datatables\Admin\ComptesDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.boquette.item:
         class: PJM\AppBundle\Datatables\Boquette\ItemDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
+            - [setImageExt, ["@pjm.services.image"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.admin.featuredItem:
@@ -132,6 +154,9 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.admin.media.photos:
         class: PJM\AppBundle\Datatables\Admin\Media\PhotoDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
+            - [setImageExt, ["@pjm.services.image"]]
         tags:
             - { name: sg.datatable.view }
     pjm.datatable.pushsubscription:
@@ -140,8 +165,15 @@ services:
             - { name: sg.datatable.view }
     pjm.datatable.annuaire:
         class: PJM\AppBundle\Datatables\AnnuaireDatatable
+        calls:
+            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
         tags:
             - { name: sg.datatable.view }
+    pjm.form.type.userFileParser:
+        class: PJM\AppBundle\Form\Type\Parser\UserFileParserType
+        arguments: ["@pjm.services.user_manager", "@pjm.services.file_manager", "@pjm.services.excel"]
+        tags:
+            - { name: form.type, alias: userFileParser }
     pjm.form.type.datetimePicker:
         class: PJM\AppBundle\Form\Type\DateTimePickerType
         tags:

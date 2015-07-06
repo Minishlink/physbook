@@ -2,72 +2,44 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class CreditsDatatable.
  */
-class CreditsDatatable extends AbstractDatatableView
+class CreditsDatatable extends BaseDatatable
 {
-    protected $ajaxUrl;
-    protected $admin;
-
-    public function setAjaxUrl($ajaxUrl)
-    {
-        $this->ajaxUrl = $ajaxUrl;
-    }
-
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'desc'))
-        ;
+        $this->ajax->setOptions(array(
+            'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
+        ));
 
-        $this->getAjax()->setUrl($this->ajaxUrl);
-
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
-            ))
+        $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'format' => 'lll',
+                'date_format' => 'lll',
             ))
         ;
 
         if ($this->admin) {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('compte.user.username', 'column', array(
                     'title' => 'PG',
                 ))
             ;
         } else {
-            $this->getColumnBuilder()
+            $this->columnBuilder
                 ->add('compte.boquette.nom', 'column', array(
                     'title' => 'Boquette',
                 ))
             ;
         }
 
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('moyenPaiement', 'column', array(
                 'title' => 'Moyen',
             ))
@@ -89,10 +61,9 @@ class CreditsDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['montant'] = $ext->prixFilter($line['montant']);
-            $line['moyenPaiement'] = $ext->moyenPaiementFilter($line['moyenPaiement']);
+        $formatter = function ($line) {
+            $line['montant'] = $this->intranetExt->prixFilter($line['montant']);
+            $line['moyenPaiement'] = $this->intranetExt->moyenPaiementFilter($line['moyenPaiement']);
             if ($line['status'] != 'OK') {
                 $line['infos'] = 'Annulé ! Erreur : '.$line['status'].' / '.$line['infos'];
             }

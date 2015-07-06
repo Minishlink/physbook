@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\AppBundle\Entity\User;
 
 /**
  * TransactionRepository.
@@ -92,8 +91,8 @@ class TransactionRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
-                ->andWhere('Transaction.status IS NOT NULL')
-                ->join('Transaction.compte', 'c')
+                ->andWhere('transaction.status IS NOT NULL')
+                ->join('transaction.compte', 'c')
                 ->join('c.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
             ;
@@ -104,8 +103,8 @@ class TransactionRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($user) {
             $qb
-                ->andWhere('Transaction.status IS NOT NULL')
-                ->join('Transaction.compte', 'c')
+                ->andWhere('transaction.status IS NOT NULL')
+                ->join('transaction.compte', 'c')
                 ->join('c.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('user', $user)
             ;

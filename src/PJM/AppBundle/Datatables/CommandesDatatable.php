@@ -2,55 +2,59 @@
 
 namespace PJM\AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
-use PJM\AppBundle\Twig\IntranetExtension;
-
 /**
  * Class CommandesDatatable.
  */
-class CommandesDatatable extends AbstractDatatableView
+class CommandesDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true);
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 8, 'direction' => 'asc'));
+        $this->options->setOption('order', [[8, 'asc']]);
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquette_brags_commandesResults'));
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquette_brags_commandesResults'),
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getMultiselect()
-            ->setEnabled(true)
-            ->setPosition('last')
-            ->addAction('Valider', 'pjm_app_admin_boquette_brags_validerCommandes')
-            ->addAction('Résilier', 'pjm_app_admin_boquette_brags_resilierCommandes')
-            ->setWidth('20px')
-        ;
-
-        $this->getColumnBuilder()
-            ->add('date', 'datetime', array(
-                'title' => 'Date ISO',
-                'format' => '',
-                'visible' => false,
+        $this->columnBuilder
+            ->add(null, 'multiselect', array(
+                'actions' => array(
+                    array(
+                        'route' => 'pjm_app_admin_boquette_brags_validerCommandes',
+                        'label' => 'Valider',
+                        'icon' => 'glyphicon glyphicon-ok',
+                        'attributes' => array(
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
+                        ),
+                    ),
+                    array(
+                        'route' => 'pjm_app_admin_boquette_brags_resilierCommandes',
+                        'label' => 'Résilier',
+                        'icon' => 'glyphicon glyphicon-remove',
+                        'attributes' => array(
+                            'class' => 'btn btn-default btn-xs',
+                            'role' => 'button',
+                        ),
+                    ),
+                ),
+                'width' => '20px',
             ))
             ->add('date', 'datetime', array(
                 'title' => 'Création',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('dateDebut', 'datetime', array(
                 'title' => 'Début',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('dateFin', 'datetime', array(
                 'title' => 'Fin',
-                'format' => 'll',
+                'date_format' => 'll',
             ))
             ->add('user.username', 'column', array('title' => 'PG'))
             ->add('user.appartement', 'column', array('title' => 'Kagib'))
@@ -65,11 +69,10 @@ class CommandesDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $ext = new IntranetExtension();
-        $formatter = function ($line) use ($ext) {
-            $line['item']['prix'] = $ext->prixFilter($line['item']['prix']);
-            $line['nombre'] = $ext->nombreFilter($line['nombre']);
-            $line['valid'] = $ext->validCommandeFilter($line['valid']);
+        $formatter = function ($line) {
+            $line['item']['prix'] = $this->intranetExt->prixFilter($line['item']['prix']);
+            $line['nombre'] = $this->intranetExt->nombreFilter($line['nombre']);
+            $line['valid'] = $this->intranetExt->validCommandeFilter($line['valid']);
 
             return $line;
         };

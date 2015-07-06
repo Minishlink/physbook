@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\AppBundle\Entity\User;
 
 /**
  * CommandeRepository.
@@ -145,7 +144,7 @@ class CommandeRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($item_slug) {
             $qb
-                ->join('Commande.item', 'i', 'WITH', 'i.slug = :item_slug')
+                ->join('commande.item', 'i', 'WITH', 'i.slug = :item_slug')
                 ->setParameter('item_slug', $item_slug)
             ;
         };

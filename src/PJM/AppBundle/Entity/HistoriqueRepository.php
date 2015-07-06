@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use PJM\AppBundle\Entity\User;
 
 /**
  * HistoriqueRepository.
@@ -268,7 +267,7 @@ class HistoriqueRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($boquette_slug) {
             $qb
-                ->join('Historique.item', 'i')
+                ->join('historique.item', 'i')
                 ->join('i.boquette', 'b', 'WITH', 'b.slug = :boquette_slug')
                 ->setParameter('boquette_slug', $boquette_slug)
             ;
@@ -279,7 +278,7 @@ class HistoriqueRepository extends EntityRepository
     {
         return function (QueryBuilder $qb) use ($user) {
             $qb
-                ->join('Historique.user', 'u', 'WITH', 'u = :user')
+                ->join('historique.user', 'u', 'WITH', 'u = :user')
                 ->setParameter('user', $user)
             ;
         };

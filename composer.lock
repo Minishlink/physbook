@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1142ece7204f268d580840c44f15ddce",
+    "hash": "6c5832a48a3f909c6219ee150e0141b9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -971,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Exercise/HTMLPurifierBundle.git",
-                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081"
+                "reference": "7d34e1defda0c8c527d8ec886544d0911ff3a40c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/cffa4509aa32faf63e663a0e10dc53f3ed404081",
-                "reference": "cffa4509aa32faf63e663a0e10dc53f3ed404081",
+                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/7d34e1defda0c8c527d8ec886544d0911ff3a40c",
+                "reference": "7d34e1defda0c8c527d8ec886544d0911ff3a40c",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
             "keywords": [
                 "htmlpurifier"
             ],
-            "time": "2014-04-10 20:14:05"
+            "time": "2015-06-15 09:16:38"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1067,12 +1067,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSCommentBundle.git",
-                "reference": "cfe7865a027c9e1f95b7165c8e9283c49632011c"
+                "reference": "bdc2f5d7fe0883b8f01464db1748213d7cf75ee9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/cfe7865a027c9e1f95b7165c8e9283c49632011c",
-                "reference": "cfe7865a027c9e1f95b7165c8e9283c49632011c",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/bdc2f5d7fe0883b8f01464db1748213d7cf75ee9",
+                "reference": "bdc2f5d7fe0883b8f01464db1748213d7cf75ee9",
                 "shasum": ""
             },
             "require": {
@@ -1136,7 +1136,7 @@
                 "forum",
                 "threads"
             ],
-            "time": "2015-06-19 09:30:37"
+            "time": "2015-07-01 07:53:50"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1998,16 +1998,16 @@
         },
         {
             "name": "kriswallsmith/buzz",
-            "version": "v0.14",
+            "version": "v0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/Buzz.git",
-                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300"
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
-                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8",
                 "shasum": ""
             },
             "require": {
@@ -2042,7 +2042,7 @@
                 "curl",
                 "http client"
             ],
-            "time": "2015-06-02 16:48:29"
+            "time": "2015-06-25 17:26:56"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -2440,17 +2440,17 @@
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
-            "version": "0.1.7",
+            "version": "0.1.8",
             "target-dir": "RMS/PushNotificationsBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/richsage/RMSPushNotificationsBundle.git",
-                "reference": "b6205fa90d26733e3e3ce2900b8883a902bdd8f4"
+                "reference": "98659c696925c1b9c21a0703cd01bcee0bbae669"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/b6205fa90d26733e3e3ce2900b8883a902bdd8f4",
-                "reference": "b6205fa90d26733e3e3ce2900b8883a902bdd8f4",
+                "url": "https://api.github.com/repos/richsage/RMSPushNotificationsBundle/zipball/98659c696925c1b9c21a0703cd01bcee0bbae669",
+                "reference": "98659c696925c1b9c21a0703cd01bcee0bbae669",
                 "shasum": ""
             },
             "require": {
@@ -2499,7 +2499,7 @@
                 "push",
                 "windowsphone"
             ],
-            "time": "2015-06-08 08:56:26"
+            "time": "2015-06-29 08:57:44"
         },
         {
             "name": "sensio/buzz-bundle",
@@ -2711,33 +2711,31 @@
         },
         {
             "name": "sg/datatablesbundle",
-            "version": "v0.6.1",
+            "version": "dev-master",
             "target-dir": "Sg/DatatablesBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stwe/DatatablesBundle.git",
-                "reference": "7b92c6d19efb82a76337b55e76360fe941fb48f1"
+                "reference": "444a82b5c6dde3f9b325030eff35eead54c72c69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/7b92c6d19efb82a76337b55e76360fe941fb48f1",
-                "reference": "7b92c6d19efb82a76337b55e76360fe941fb48f1",
+                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/444a82b5c6dde3f9b325030eff35eead54c72c69",
+                "reference": "444a82b5c6dde3f9b325030eff35eead54c72c69",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/jsrouting-bundle": "@stable",
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.3"
+                "symfony/framework-bundle": "~2.6"
             },
             "require-dev": {
                 "sensio/generator-bundle": "~2.3"
             },
             "suggest": {
-                "components/jquery": "1.11.1",
-                "datatables/datatables": "1.10.4",
-                "moment/moment": "2.8.4",
-                "mopa/bootstrap-bundle": "v3.0.0-beta4",
-                "twbs/bootstrap": "v3.2.0"
+                "components/jquery": "1.11.3",
+                "datatables/datatables": "1.10.7",
+                "moment/moment": "2.10.2"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2768,7 +2766,7 @@
                 "pagination",
                 "table"
             ],
-            "time": "2015-01-14 22:35:26"
+            "time": "2015-06-29 20:11:43"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -3441,6 +3439,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
+        "sg/datatablesbundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
         "exercise/htmlpurifier-bundle": 20

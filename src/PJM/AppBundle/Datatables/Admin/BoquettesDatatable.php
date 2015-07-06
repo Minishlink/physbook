@@ -2,40 +2,35 @@
 
 namespace PJM\AppBundle\Datatables\Admin;
 
-use Sg\DatatablesBundle\Datatable\View\AbstractDatatableView;
+use PJM\AppBundle\Datatables\BaseDatatable;
 use PJM\AppBundle\Services\Image as ImageService;
 
 /**
  * Class BoquettesDatatable.
  */
-class BoquettesDatatable extends AbstractDatatableView
+class BoquettesDatatable extends BaseDatatable
 {
-    protected $extImage;
+    private $imageExt;
 
-    public function setExtImage(ImageService $extImage)
+    public function setImageExt(ImageService $imageExt)
     {
-        $this->extImage = $extImage;
+        $this->imageExt = $imageExt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildDatatableView()
+    public function buildDatatable()
     {
-        $this->getFeatures()
-            ->setServerSide(true)
-            ->setProcessing(true)
-        ;
+        parent::buildDatatable();
 
-        $this->getOptions()
-            ->setOrder(array('column' => 0, 'direction' => 'asc'))
-        ;
+        $this->options->setOption('order', [[0, 'asc']]);
 
-        $this->getAjax()->setUrl($this->getRouter()->generate('pjm_app_admin_boquettesResults'));
+        $this->ajax->setOptions(array(
+            'url' => $this->router->generate('pjm_app_admin_boquettesResults'),
+        ));
 
-        $this->setStyle(self::BOOTSTRAP_3_STYLE);
-
-        $this->getColumnBuilder()
+        $this->columnBuilder
             ->add('nom', 'column', array(
                 'title' => 'Nom',
             ))
@@ -78,10 +73,9 @@ class BoquettesDatatable extends AbstractDatatableView
      */
     public function getLineFormatter()
     {
-        $extImage = $this->extImage;
-        $formatter = function ($line) use ($extImage) {
+        $formatter = function ($line) {
             $line['image']['alt'] = !empty($line['image']['id']) ?
-                $extImage->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
+                $this->imageExt->html($line['image']['id'], $line['image']['ext'], $line['image']['alt']) :
                 "Pas d'image";
 
             return $line;
