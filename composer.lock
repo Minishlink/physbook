@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c5832a48a3f909c6219ee150e0141b9",
+    "hash": "35c6f77dad7d7d35202a7c6876119496",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1067,12 +1067,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSCommentBundle.git",
-                "reference": "bdc2f5d7fe0883b8f01464db1748213d7cf75ee9"
+                "reference": "031546a43a2a76b362f836ead11b29485b36e837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/bdc2f5d7fe0883b8f01464db1748213d7cf75ee9",
-                "reference": "bdc2f5d7fe0883b8f01464db1748213d7cf75ee9",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/031546a43a2a76b362f836ead11b29485b36e837",
+                "reference": "031546a43a2a76b362f836ead11b29485b36e837",
                 "shasum": ""
             },
             "require": {
@@ -1136,7 +1136,7 @@
                 "forum",
                 "threads"
             ],
-            "time": "2015-07-01 07:53:50"
+            "time": "2015-07-06 13:20:46"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -2711,17 +2711,17 @@
         },
         {
             "name": "sg/datatablesbundle",
-            "version": "dev-master",
+            "version": "v0.7.1",
             "target-dir": "Sg/DatatablesBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stwe/DatatablesBundle.git",
-                "reference": "444a82b5c6dde3f9b325030eff35eead54c72c69"
+                "reference": "c85b626e094df48634c06e3d6dd3365319ee9e87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/444a82b5c6dde3f9b325030eff35eead54c72c69",
-                "reference": "444a82b5c6dde3f9b325030eff35eead54c72c69",
+                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/c85b626e094df48634c06e3d6dd3365319ee9e87",
+                "reference": "c85b626e094df48634c06e3d6dd3365319ee9e87",
                 "shasum": ""
             },
             "require": {
@@ -2766,7 +2766,7 @@
                 "pagination",
                 "table"
             ],
-            "time": "2015-06-29 20:11:43"
+            "time": "2015-07-05 18:01:31"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -3439,7 +3439,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "sg/datatablesbundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
         "exercise/htmlpurifier-bundle": 20

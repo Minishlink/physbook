@@ -25,7 +25,7 @@
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "sensio/buzz-bundle": "~1.0",
         "ircmaxell/password-compat": "~1.0",
-        "sg/datatablesbundle": "dev-master",
+        "sg/datatablesbundle": "~0.7.1",
         "genemu/form-bundle": "~2.2",
         "liuggio/excelbundle": "~2.0",
         "kms/froala-editor-bundle": "dev-master#63f4797e8d9593110c8a27b58c0693461b7478c9",
