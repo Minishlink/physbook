@@ -21,7 +21,7 @@ class EvenementType extends AbstractType
             ->add('description', null, array(
                 'required' => false,
             ))
-            ->add('isJournee', null, array(
+            ->add('day', null, array(
                 'label' => 'Journée(s) entière(s) ?',
                 'required' => false,
             ))
@@ -40,7 +40,7 @@ class EvenementType extends AbstractType
                 'divisor' => 100,
             ))
             ->add('boquette', new BoquetteByResponsableType(array('user' => $options['user'])))
-            ->add('isPublic', null, array(
+            ->add('public', null, array(
                 'label' => 'Evènement public',
                 'required' => false,
             ))

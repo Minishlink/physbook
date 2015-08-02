@@ -6,7 +6,7 @@
         <ul class="list-unstyled">
             {% spaceless %}
                 <li><strong>Quand ?</strong>
-                {% if event.isJournee %}
+                {% if event.isDay %}
                     {% if event.dateDebut|date('d-m-Y') != event.dateFin|date('d-m-Y') %}
                         Du {{ event.dateDebut|localizeddate('medium', 'none') }} au {{ event.dateFin|localizeddate('medium', 'none') }}
                     {% else %}
