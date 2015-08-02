@@ -79,13 +79,10 @@ class EventController extends Controller
      */
     public function nouveauAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $event = new Event\Evenement();
-        $event->setCreateur($this->getUser());
+        $eventManager = $this->get('pjm.services.evenement_manager');
+        $event = $eventManager->create($this->getUser());
 
         $form = $this->createForm(new EvenementType(), $event, array(
-            'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_event_nouveau'),
             'user' => $this->getUser(),
         ));
@@ -94,26 +91,7 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em->persist($event);
-                $em->flush();
-
-                if ($event->getPrix() > 0) {
-                    $item = new Item();
-                    $item->setLibelle($event->getNom());
-                    $item->setPrix($event->getPrix());
-                    $item->setImage($event->getImage());
-                    $item->setSlug("event_".$event->getSlug());
-                    $item->setDate($event->getDateCreation());
-                    $item->setInfos(array('event'));
-                    $item->setValid(1);
-                    // bucquage sur compte Pi
-                    $item->setBoquette($em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians'));
-                    $item->setUsersHM(null);
-                    $event->setItem($item);
-                    $em->persist($event);
-                    $em->flush();
-                }
-
+                $eventManager->configure($event);
                 $success = true;
 
                 $request->getSession()->getFlashBag()->add(

@@ -29,6 +29,9 @@ services:
     pjm.services.user_manager:
         class: PJM\AppBundle\Services\UserManager
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
+    pjm.services.evenement_manager:
+        class: PJM\AppBundle\Services\Event\EvenementManager
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
