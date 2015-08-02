@@ -16,6 +16,7 @@ class CitationExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('citationUsers', array($this, 'citationUsersFilter'), array(
                 'needs_environment' => true,
+                'is_safe' => array('html'),
             )),
         );
     }
