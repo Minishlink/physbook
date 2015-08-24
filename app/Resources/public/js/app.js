@@ -89,7 +89,7 @@ function push_subscribe() {
     pushButton.disabled = true;
 
     navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-        serviceWorkerRegistration.pushManager.subscribe()
+        serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
         .then(function(subscription) {
             // The subscription was successful
             isPushEnabled = true;
@@ -162,6 +162,7 @@ function push_unsubscribe() {
 }
 
 function push_sendSubscriptionToServer(subscription, action) {
+    subscription = getSubscriptionInfos(subscription);
     var req = new XMLHttpRequest();
     var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
     var url = Routing.generate('pjm_app_push_manageSubscription', {
@@ -183,4 +184,22 @@ function push_sendSubscriptionToServer(subscription, action) {
     req.send(params);
 
     return true;
+}
+
+function getSubscriptionInfos(pushSubscription) {
+    endpoint = pushSubscription.endpoint;
+
+    // fix Chrome < 45
+    if (pushSubscription.subscriptionId &&
+        pushSubscription.endpoint.indexOf(pushSubscription.subscriptionId) === -1) {
+        endpoint = pushSubscription.endpoint + '/' + pushSubscription.subscriptionId;
+    }
+
+    var endpointSections = endpoint.split('/');
+    var subscriptionId = endpointSections[endpointSections.length - 1];
+
+    return {
+        subscriptionId: subscriptionId,
+        endpoint: endpoint
+    };
 }
