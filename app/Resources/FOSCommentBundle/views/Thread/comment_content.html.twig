@@ -50,9 +50,9 @@
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
                 {% if comment is fos_comment_raw %}
-                    {{ comment.rawBody | md2html }}
+                    {{ comment.rawBody | show }}
                 {% else %}
-                    {{ comment.body | nl2br }}
+                    {{ comment.body | show }}
                 {% endif %}
             {% endif %}
         {% endblock fos_comment_comment_body %}

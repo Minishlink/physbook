@@ -26,7 +26,7 @@ class CitationExtension extends \Twig_Extension
      *
      * @param string $texte Texte où regarder
      *
-     * @return int Nombre d'occurences remplacées
+     * @return string Texte avec @username cliquables
      */
     public function citationUsersFilter(\Twig_Environment $twig, $texte)
     {
