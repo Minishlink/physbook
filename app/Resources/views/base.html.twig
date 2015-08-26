@@ -61,7 +61,7 @@
 
         {% block base_javascripts %}
         <script type="text/javascript">
-            var swPath = "{{ asset('service-worker.js') }}";
+            var swPath = "{{ asset('service-worker.js', 'sw') }}";
         </script>
         {% endblock %}
     </head>
