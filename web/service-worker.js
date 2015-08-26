@@ -25,7 +25,7 @@ self.addEventListener('fetch', function (event) {
     }
 
     if (event.request.method === 'GET'
-            && event.request.headers.get('accept').includes('text/html') !== -1) {
+            && event.request.headers.get('accept').includes('text/html')) {
 
         event.respondWith(
             fetch(event.request).catch(function (e) {
