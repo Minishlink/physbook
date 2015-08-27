@@ -2,7 +2,6 @@
 
 namespace PJM\AppBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
 use HTMLPurifier;
 use PJM\AppBundle\Twig\CitationExtension;
 use PJM\AppBundle\Services\LinkParser;
