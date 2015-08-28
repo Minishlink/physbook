@@ -149,7 +149,7 @@ class PushController extends Controller
             'endpoint' => $request->request->get('endpoint'),
         );
 
-        if (empty($subscription['id']) && empty($subscription['id'])) {
+        if (empty($subscription['id']) && empty($subscription['endpoint'])) {
             $json = array(
                 'success' => false,
                 'done' => $action,

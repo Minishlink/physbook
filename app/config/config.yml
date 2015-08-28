@@ -24,7 +24,7 @@ framework:
             css:
                 version: v1r20150707
             sw:
-                version: v1r20150818
+                version: v1r20150828
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
