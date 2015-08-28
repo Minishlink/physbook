@@ -115,7 +115,7 @@ class Image
 
     protected function getUploadRootDir() // pour le code PHP
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return getcwd().'/'.$this->getUploadDir();
     }
 
     public function getAbsolutePath()
