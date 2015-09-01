@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\ResponsabiliteRepository")
- * @UniqueEntity("libelle")
+ * @UniqueEntity({"libelle","boquette"})
  */
 class Responsabilite
 {
@@ -27,7 +27,7 @@ class Responsabilite
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255, unique=true)
+     * @ORM\Column(name="libelle", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $libelle;
