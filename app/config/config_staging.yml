@@ -1,0 +1,14 @@
+# app/config/config_staging.yml
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    profiler:
+        enabled:              true
+        collect:              true
+        only_exceptions:      false
+        only_master_requests: false
+
+assetic:
+  debug:          false
+  use_controller: false
