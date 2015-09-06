@@ -97,6 +97,8 @@ swiftmailer:
     host:       %mailer_host%
     username:   %mailer_user%
     password:   %mailer_password%
+    encryption: %mailer_encryption%
+    port:       %mailer_port%
     spool:     { type: memory }
 
 # Stof\DoctrineExtensionBundle configuration
