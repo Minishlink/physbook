@@ -12,3 +12,6 @@ framework:
 assetic:
   debug:          false
   use_controller: false
+
+swiftmailer:
+  delivery_address: test@physbook.fr
