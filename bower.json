@@ -19,16 +19,16 @@
   "dependencies": {
     "bootstrap-progressbar": "~0.8.4",
     "bootstrap": "~3.3.5",
+    "moment": "2.10.6",
     "eonasdan-bootstrap-datetimepicker": "~4.7.14",
     "jquery": "~2.1.4",
     "datatables": "~1.10.7",
-    "datatables-responsive" : "~1.0.6",
+    "datatables-responsive" : "1.0.6",
     "select2": "~4.0.0",
     "select2-bootstrap-theme": "~0.1.0",
     "webui-popover": "1.1.4"
   },
   "resolutions": {
-    "select2": "~4.0.0",
     "jquery": "~2.1.4"
   }
 }

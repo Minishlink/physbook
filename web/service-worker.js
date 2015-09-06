@@ -19,22 +19,25 @@ self.addEventListener('fetch', function (event) {
         return;
     }
 
-    // fix for unknown bug when redirecting after a form POST request
-    if (event.request.method === 'GET' && event.request.context === 'form') {
-        return;
-    }
-
     if (event.request.method === 'GET'
-            && event.request.headers.get('accept').includes('text/html') !== -1) {
+            && event.request.headers.get('accept').includes('text/html')) {
 
-        event.respondWith(
-            fetch(event.request).catch(function (e) {
-                // hors ligne
-                return caches.open(OFFLINE_CACHE).then(function (cache) {
-                    return cache.match(OFFLINE_URL);
-                });
-            })
-        );
+        // a request should not have any body (blob), but sometimes it does
+        event.request.blob().then(function(blob) {
+            if (blob.size == 0) {
+                event.respondWith(
+                    fetch(event.request).catch(function (e) {
+                        // hors ligne
+                        return caches.open(OFFLINE_CACHE).then(function (cache) {
+                            return cache.match(OFFLINE_URL);
+                        });
+                    })
+                );
+            } else {
+                console.warn("Bad GET request with body : " + event.request.url);
+                console.warn(blob);
+            }
+        });
     }
 });
 

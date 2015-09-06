@@ -2,17 +2,8 @@
 
 namespace PJM\AppBundle\Services;
 
-use Doctrine\ORM\EntityManager;
-
 class Group
 {
-    protected $em;
-
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Retourne la prom's des 1A actuels.
      *
