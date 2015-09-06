@@ -40,10 +40,12 @@ echo execute("php app/console doctrine:schema:update --dump-sql --force");
 echo "Clearing Symfony cache";
 echo execute("php app/console cache:clear --env=staging --no-debug");
 
+echo "Loading data fixtures";
+echo execute("php app/console doctrine:fixtures:load -n");
+
 chdir("./web");
 echo "Finished deployment !<br>";
 echo "<a href='http://test.physbook.fr'>Aller vers Phy'sbook</a>";
 echo "</body></html>";
-
 
 ?>
