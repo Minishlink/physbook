@@ -37,7 +37,6 @@ services:
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer, @pjm.twig.intranet_extension, @pjm.services.rezal]
     pjm.services.group:
         class:  PJM\AppBundle\Services\Group
-        arguments: [@doctrine.orm.entity_manager]
     pjm.services.random:
         class:  PJM\AppBundle\Services\Random
     pjm.services.rezal:
