@@ -15,6 +15,8 @@ class EventController extends Controller
     /**
      * Accueil des évènements.
      *
+     * @param Request $request
+     * @param Event\Evenement $event
      * @return object HTML Response
      */
     public function indexAction(Request $request, Event\Evenement $event = null)
@@ -59,23 +61,18 @@ class EventController extends Controller
             $event = end($listeEvents);
         }
 
-        if (isset($event)) {
-            // on regarde si l'utilisateur est invité
-            $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-                ->findOneBy(array('invite' => $this->getUser(), 'event' => $event));
-        }
-
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
             'listeEvents' => $listeEvents,
-            'event' => $event,
-            'invitation' => $invitation,
+            'event' => $event
         ));
     }
 
     /**
      * Ajout d'un évènement.
      *
+     * @param Request $request
      * @return object HTML Response
+     * @throws \Exception
      */
     public function nouveauAction(Request $request)
     {
@@ -133,6 +130,8 @@ class EventController extends Controller
     /**
      * Ajout d'un évènement.
      *
+     * @param Request $request
+     * @param Event\Evenement $event
      * @return object HTML Response
      */
     public function modifierAction(Request $request, Event\Evenement $event)
@@ -180,7 +179,9 @@ class EventController extends Controller
     /**
      * Affiche et gère le bouton de suppression.
      *
-     * @param object   Evenenement $event L'évènement considéré
+     * @param Request $request
+     * @param Event\Evenement $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function suppressionAction(Request $request, Event\Evenement $event)
     {
@@ -228,62 +229,29 @@ class EventController extends Controller
     /**
      * Affiche et gère le bouton d'inscription.
      *
-     * @param object   Evenenement $event L'évènement considéré
+     * @param Request $request
+     * @param Event\Evenement $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function inscriptionAction(Request $request, Event\Evenement $event)
     {
-        $em = $this->getDoctrine()->getManager();
+        $invitationManager = $this->get('pjm.services.invitation_manager');
 
         // on regarde si l'utilisateur est invité
-        $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-            ->findOneBy(array('invite' => $this->getUser(), 'event' => $event));
+        $invitation = $invitationManager->getInvitationFromUserToEvent($this->getUser(), $event);
 
         $form = $this->get('form.factory')->createNamedBuilder('form_inscription')
             ->setAction($this->generateUrl(
                 'pjm_app_event_inscription',
                 array('slug' => $event->getSlug())
             ))
-            ->setMethod('POST')
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($invitation !== null) {
-                    // si on est déjà un invité
-                    $invitation->setEstPresent(null === $invitation->getEstPresent() || !$invitation->getEstPresent());
-                    // on fait payer l'utilisateur si l'event n'est pas gratuit
-                    $invitation->payer();
-                    $em->persist($invitation);
-                    $em->flush();
-
-                    $request->getSession()->getFlashBag()->add(
-                        'success',
-                        'Ta modification a bien été prise en compte.'
-                    );
-                } else {
-                    // sinon on vérifie que l'on peut accéder à cet évènement
-                    if ($event->isPublic()) {
-                        //on crée une nouvelle invitation
-                        $invitation = new Event\Invitation();
-                        $invitation->setEvent($event);
-                        $invitation->setInvite($this->getUser());
-                        $invitation->setEstPresent(true);
-                        $em->persist($invitation);
-                        $em->flush();
-
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            'Tu participes bien à cet évènement.'
-                        );
-                    } else {
-                        $request->getSession()->getFlashBag()->add(
-                            'warning',
-                            "Tu n'as pas accès à cet évènement."
-                        );
-                    }
-                }
+                $invitationManager->toggleInscriptionFromUserToEvent($invitation, $this->getUser(), $event);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -303,7 +271,9 @@ class EventController extends Controller
     /**
      * Affiche et gère le formulaire d'invitations.
      *
-     * @param object   Evenenement $event L'évènement considéré
+     * @param Request $request
+     * @param Event\Evenement $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function inviteAction(Request $request, Event\Evenement $event)
     {
@@ -342,33 +312,7 @@ class EventController extends Controller
                 }
 
                 $users = array_unique(array_merge($users->toArray(), $usersFilter));
-                $push = $this->get('pjm.services.push');
-
-                foreach ($users as $user) {
-                    // on vérifie que c'est un utilisateur
-                    if ('PJM\AppBundle\Entity\User' == get_class($user)) {
-                        // on vérifie qu'il n'est pas déjà invité
-                        $invitation = $em->getRepository('PJMAppBundle:Event\Invitation')
-                            ->findOneBy(array('invite' => $user, 'event' => $event));
-
-                        if ($invitation === null) {
-                            $invitation = new Event\Invitation();
-                            $invitation->setEvent($event);
-                            $invitation->setInvite($user);
-                            $em->persist($invitation);
-
-                            // on envoit la notification
-                            $push->sendNotificationToUser($user, 'Invitation à un évènement', 'events');
-                        }
-                    }
-                }
-
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    'Tes invitations ont bien été envoyées.'
-                );
+                $this->get('pjm.services.invitation_manager')->sendInvitations($users, $event);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',

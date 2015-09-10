@@ -32,6 +32,12 @@ services:
     pjm.services.evenement_manager:
         class: PJM\AppBundle\Services\Event\EvenementManager
         arguments: [@doctrine.orm.entity_manager]
+    pjm.services.invitation_manager:
+        class: PJM\AppBundle\Services\Event\InvitationManager
+        arguments: [@doctrine.orm.entity_manager, @pjm.services.notification]
+    pjm.services.notification:
+                class: PJM\AppBundle\Services\Notification
+                arguments: [@request_stack, @pjm.services.push]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]

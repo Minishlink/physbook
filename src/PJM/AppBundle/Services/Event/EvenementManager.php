@@ -42,7 +42,7 @@ class EvenementManager
             $item->setSlug("event_".$event->getSlug());
             $item->setDate($event->getDateCreation());
             $item->setInfos(array('event'));
-            $item->setValid(1);
+            $item->setValid(true);
             // bucquage sur compte Pi
             $item->setBoquette($this->em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians'));
             $item->setUsersHM(null);
