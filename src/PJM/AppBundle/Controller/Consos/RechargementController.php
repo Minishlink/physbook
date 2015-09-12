@@ -114,9 +114,9 @@ class RechargementController extends Controller
                     return new Response('Cette transaction a deja ete traitee.', 403);
                 }
             }
+            return new Response('Transaction inconnue', 404);
         }
-
-        return new Response('Transaction inconnue', 404);
+        return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
     public function redirectionDepuisSMoneyAction(Request $request)
