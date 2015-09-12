@@ -277,13 +277,9 @@ class EventController extends Controller
      */
     public function inviteAction(Request $request, Event\Evenement $event)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $notIncludeUsers = $event->getInvites(null, true);
-
         $form = $this->createForm(new UserPickerType(), null, array(
             'label_users' => false,
-            'notIncludeUsers' => $notIncludeUsers,
+            'notIncludeUsers' => $event->getInvites(null, true),
             'method' => 'POST',
             'action' => $this->generateUrl(
                 'pjm_app_event_invite',
@@ -294,25 +290,21 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $data = $form->getData();
-
             if ($form->isValid()) {
-                $users = $data['users'];
-                $usersFilter = array();
-
                 if ($form->get('filtre')->isClicked()) {
                     // on traite le filtre
-                    $em = $this->getDoctrine()->getManager();
-                    $user_repo = $em->getRepository('PJMAppBundle:User');
-
-                    $filterBuilder = $user_repo->createQueryBuilder('u');
+                    $filterBuilder = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:User')->createQueryBuilder('u');
                     $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-
                     $usersFilter = $filterBuilder->getQuery()->getResult();
                 }
 
-                $users = array_unique(array_merge($users->toArray(), $usersFilter));
-                $this->get('pjm.services.invitation_manager')->sendInvitations($users, $event);
+                $this->get('pjm.services.invitation_manager')->sendInvitations(
+                    array_unique(array_merge(
+                        $form->getData()['users']->toArray(),
+                        isset($usersFilter) ? $usersFilter : array()
+                    )),
+                    $event
+                );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
