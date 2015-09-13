@@ -38,7 +38,7 @@ class InvitationManager
      * @param Evenement $event
      * @return Invitation
      */
-    public function toggleInscriptionFromUserToEvent(Invitation $invitation, User $user, Evenement $event)
+    public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event)
     {
         if ($invitation !== null) {
             // si on est déjà un invité
@@ -51,11 +51,11 @@ class InvitationManager
 
             $this->notification->sendFlash(
                 'success',
-                'Ta modification a bien été prise en compte.'
+                'Ton changement de participation à l\'évènement '.$event->getNom().' a bien été pris en compte.'
             );
         } else {
             // sinon on vérifie que l'on peut accéder à cet évènement
-            if ($event->isPublic()) {
+            if ($event->isPublic() || $event->getCreateur() == $user) {
                 //on crée une nouvelle invitation
                 $invitation = new Invitation();
                 $invitation->setEvent($event);
@@ -69,12 +69,12 @@ class InvitationManager
 
                 $this->notification->sendFlash(
                     'success',
-                    'Tu participes bien à cet évènement.'
+                    'Tu participes à l\'évènement '.$event->getNom().'.'
                 );
             } else {
                 $this->notification->sendFlash(
                     'warning',
-                    "Tu n'as pas accès à cet évènement."
+                    'Tu n\'as pas accès à l\'évènement '.$event->getNom().'.'
                 );
             }
         }
@@ -105,7 +105,7 @@ class InvitationManager
 
         $this->notification->sendFlash(
             'success',
-            'Tes invitations ont bien été envoyées.'
+            'Tes invitations ont bien à l\'évènement '.$event->getNom().' ont été envoyées.'
         );
     }
 }

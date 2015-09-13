@@ -25,7 +25,7 @@ class EventController extends Controller
         if (isset($event) && !$event->canBeSeenByUser($this->getUser())) {
             $request->getSession()->getFlashBag()->add(
                 'warning',
-                "Tu n'as pas le droit d'accéder à l'évènement ".$event->getNom().'.'
+                'Tu n\'as pas le droit d\'accéder à l\'évènement '.$event->getNom().'.'
             );
 
             return $this->redirect($this->generateUrl('pjm_app_event_index'));
@@ -61,6 +61,9 @@ class EventController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $eventManager->configure($event);
+
+                // on fait participer le créateur
+                $this->get('pjm.services.invitation_manager')->toggleInscriptionFromUserToEvent(null, $this->getUser(), $event);
 
                 $data = array(
                     'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug()))

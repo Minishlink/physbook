@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Services\Event;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Event\Evenement;
-use PJM\AppBundle\Entity\Event\Invitation;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Notification;
@@ -30,11 +29,6 @@ class EvenementManager
 
     public function configure(Evenement $event)
     {
-        $invitation = new Invitation();
-        $invitation->setEvent($event);
-        $invitation->setInvite($event->getCreateur());
-        $invitation->setEstPresent(true);
-        $this->em->persist($invitation);
         $this->persist($event); // needed for slug generation
 
         if ($event->getPrix() > 0) {
@@ -55,7 +49,7 @@ class EvenementManager
 
         $this->notification->sendFlash(
             'success',
-            "L'évènement a été créé."
+            'L\'évènement '.$event->getNom().' a été créé.'
         );
     }
 
@@ -71,10 +65,10 @@ class EvenementManager
 
         $this->notification->sendFlash(
             'success',
-            "L'évènement a été modifié."
+            'L\'évènement '.$event->getNom().' a été modifié.'
         );
 
-        // envoyer notifications aux invités
+        // TODO envoyer notifications aux invités
     }
 
     public function remove(Evenement $event)
@@ -84,10 +78,10 @@ class EvenementManager
 
         $this->notification->sendFlash(
             'success',
-            "L'évènement a été supprimé."
+            'L\'évènement '.$event->getNom().' a été supprimé.'
         );
 
-        // envoyer notifications aux inscrits
+        // TODO envoyer notifications aux inscrits
     }
 
     public function get(Evenement $event = null, User $user, $nombreMax)
