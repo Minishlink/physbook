@@ -62,11 +62,6 @@ class EventController extends Controller
             if ($form->isValid()) {
                 $eventManager->configure($event);
 
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    "L'évènement a été créé."
-                );
-
                 $data = array(
                     'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug()))
                 );
@@ -118,22 +113,15 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
-                $em->flush();
+                $this->get("pjm.services.evenement_manager")->update($event);
 
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    "L'évènement a été modifié."
-                );
+                return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
-                    "Un problème est survenu lors de la création de l'évènement. Réessaye."
+                    "Un problème est survenu lors de la modification de l'évènement. Réessaye."
                 );
             }
-
-            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
         return $this->render('PJMAppBundle:Event:modifier.html.twig', array(
@@ -151,8 +139,6 @@ class EventController extends Controller
      */
     public function suppressionAction(Request $request, Event\Evenement $event)
     {
-        $em = $this->getDoctrine()->getManager();
-
         // on regarde si l'utilisateur est créateur
         if ($event->getCreateur() !== $this->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return new Response("Tu n'as pas les droits pour supprimer cet article.");
@@ -170,13 +156,7 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em->remove($event);
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add(
-                    'success',
-                    "L'évènement a été supprimé."
-                );
+                $this->get("pjm.services.evenement_manager")->remove($event);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',

@@ -7,14 +7,17 @@ use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Event\Invitation;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
+use PJM\AppBundle\Services\Notification;
 
 class EvenementManager
 {
     private $em;
+    private $notification;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Notification $notification)
     {
         $this->em = $em;
+        $this->notification = $notification;
     }
 
     public function create(User $createur)
@@ -32,7 +35,7 @@ class EvenementManager
         $invitation->setInvite($event->getCreateur());
         $invitation->setEstPresent(true);
         $this->em->persist($invitation);
-        $this->persist($event);
+        $this->persist($event); // needed for slug generation
 
         if ($event->getPrix() > 0) {
             $item = new Item();
@@ -49,12 +52,42 @@ class EvenementManager
             $event->setItem($item);
             $this->persist($event);
         }
+
+        $this->notification->sendFlash(
+            'success',
+            "L'évènement a été créé."
+        );
     }
 
     public function persist(Evenement $event)
     {
         $this->em->persist($event);
         $this->em->flush();
+    }
+
+    public function update(Evenement $event)
+    {
+        $this->persist($event);
+
+        $this->notification->sendFlash(
+            'success',
+            "L'évènement a été modifié."
+        );
+
+        // envoyer notifications aux invités
+    }
+
+    public function remove(Evenement $event)
+    {
+        $this->em->remove($event);
+        $this->em->flush();
+
+        $this->notification->sendFlash(
+            'success',
+            "L'évènement a été supprimé."
+        );
+
+        // envoyer notifications aux inscrits
     }
 
     public function get(Evenement $event = null, User $user, $nombreMax)
