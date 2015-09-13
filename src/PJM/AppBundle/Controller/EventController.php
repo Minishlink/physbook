@@ -21,10 +21,6 @@ class EventController extends Controller
      */
     public function indexAction(Request $request, Event\Evenement $event = null)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('PJMAppBundle:Event\Evenement');
-        $nombreMax = 6;
-
         // si l'évènement choisi n'est pas visible on redirige vers l'accueil des évènements
         if (isset($event) && !$event->canBeSeenByUser($this->getUser())) {
             $request->getSession()->getFlashBag()->add(
@@ -35,35 +31,11 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
-        // si c'est l'accueil des évènements
-        if ($event === null) {
-            // on va chercher les $nombreMax-1 premiers events à partir de ce moment
-            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax - 1);
-
-            // on définit l'event en cours comme celui le plus proche de la date
-            if (count($listeEvents) > 0) {
-                $event = $listeEvents[0];
-            }
-        } else {
-            // on va chercher les $nombreMax-2 évènements après cet event
-            $listeEvents = $repo->getEvents($this->getUser(), $nombreMax - 2, 'after', $event->getDateDebut());
-
-            $listeEvents = array_merge(array($event), $listeEvents);
-        }
-
-        $dateRechercheAvant = ($event !== null) ? $event->getDateDebut() : new \DateTime();
-        // on va chercher les events manquants avant
-        $eventsARajouter = $repo->getEvents($this->getUser(), $nombreMax - count($listeEvents), 'before', $dateRechercheAvant, $event);
-
-        $listeEvents = array_merge($eventsARajouter, $listeEvents);
-
-        if ($event === null && count($listeEvents) > 0) {
-            $event = end($listeEvents);
-        }
+        $evenements = $this->get("pjm.services.evenement_manager")->get($event, $this->getUser(), 6);
 
         return $this->render('PJMAppBundle:Event:index.html.twig', array(
-            'listeEvents' => $listeEvents,
-            'event' => $event
+            'listeEvents' => $evenements['listeEvents'],
+            'event' => $evenements['event']
         ));
     }
 
@@ -89,37 +61,31 @@ class EventController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $eventManager->configure($event);
-                $success = true;
 
                 $request->getSession()->getFlashBag()->add(
                     'success',
                     "L'évènement a été créé."
+                );
+
+                $data = array(
+                    'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug()))
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
                     "Un problème est survenu lors de la création de l'évènement. Réessaye."
                 );
+
+                $data = array(
+                    'formView' => $this->renderView('PJMAppBundle::form_only.html.twig', array(
+                        'form' => $form->createView(),
+                    )),
+                    'flashBagView' => $this->renderView('PJMAppBundle:App:flashBag.html.twig'),
+                    'success' => false,
+                );
             }
 
-            if ($request->isXmlHttpRequest()) {
-                $formView = $this->renderView('PJMAppBundle::form_only.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-
-                $flashBagView = $this->renderView('PJMAppBundle:App:flashBag.html.twig');
-
-                $response = new JsonResponse();
-                $response->setData(array(
-                    'formView' => $formView,
-                    'flashBagView' => $flashBagView,
-                    'success' => isset($success),
-                ));
-
-                return $response;
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_event_index'));
+            return $request->isXmlHttpRequest() ? new JsonResponse($data) : $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
         return $this->render('PJMAppBundle:Event:nouveau.html.twig', array(

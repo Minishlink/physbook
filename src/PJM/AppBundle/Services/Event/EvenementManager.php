@@ -56,4 +56,41 @@ class EvenementManager
         $this->em->persist($event);
         $this->em->flush();
     }
+
+    public function get(Evenement $event = null, User $user, $nombreMax)
+    {
+        $repo = $this->em->getRepository('PJMAppBundle:Event\Evenement');
+
+        // si c'est l'accueil des évènements
+        if ($event === null) {
+            // on va chercher les $nombreMax-1 premiers events à partir de ce moment
+            $listeEvents = $repo->getEvents($user, $nombreMax - 1);
+
+            // on définit l'event en cours comme celui le plus proche de la date
+            if (count($listeEvents) > 0) {
+                $event = $listeEvents[0];
+            }
+        } else {
+            // on va chercher les $nombreMax-2 évènements après cet event
+            $listeEvents = $repo->getEvents($user, $nombreMax - 2, 'after', $event->getDateDebut());
+
+            $listeEvents = array_merge(array($event), $listeEvents);
+        }
+
+        $dateRechercheAvant = ($event !== null) ? $event->getDateDebut() : new \DateTime();
+        // on va chercher les events manquants avant
+        $eventsARajouter = $repo->getEvents($user, $nombreMax - count($listeEvents), 'before', $dateRechercheAvant, $event);
+
+        $listeEvents = array_merge($eventsARajouter, $listeEvents);
+
+        // si on n'avait toujouts pas d'évènement
+        if ($event === null && count($listeEvents) > 0) {
+            $event = end($listeEvents);
+        }
+
+        return array(
+            'listeEvents' => $listeEvents,
+            'event' => $event
+        );
+    }
 }
