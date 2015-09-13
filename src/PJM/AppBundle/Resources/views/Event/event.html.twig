@@ -24,13 +24,21 @@
             {% endspaceless %}
 
             {% if event.lieu is not null %}<li><strong>Où ?</strong> {{ event.lieu }}</li>{% endif %}
-            {% if event.prix %}<li><strong>Combien ?</strong> {{ event.prix|prix }}</li>{% endif %}
+            {% if event.prix %}
+                <li><strong>Combien ?</strong> {{ event.prix|prix }}</li>
+                <li>C'est un évènement <strong>{{ event.isMajeur ? "majeur" : "mineur" }}</strong>.
+                    {%  if event.isMajeur %}Le paiement sera donc validé et déclenché par l'Harpag's Pian's.
+                    {% else %}Le prix ne sera pas validé par l'Harpag's Pian's et l'organisateur pourra déclencher le paiement après l'évènement.{% endif %}
+                </li>
+            {% endif %}
             <li><strong>Avec qui ?</strong>
             <ul>
                 <li><em>Participants :</em> {% include "PJMAppBundle:Profil:show_users.html.twig" with {'users': event.participants} %}</li>
                 <li><em>Autres invités :</em> {% include "PJMAppBundle:Profil:show_users.html.twig" with {'users': event.invites} %}</li>
                 <li><em>Non-participants :</em> {% include "PJMAppBundle:Profil:show_users.html.twig" with {'users': event.nonParticipants} %}</li>
-            </ul></li>
+            </ul>
+            </li>
+            <li>C'est un évènement <strong>{{ event.isPublic ? "public" : "privé" }}</strong>.</li>
         </ul>
         {% if event.description %}<blockquote><p>{{ event.description|md2html|citationUsers|purify }}</p></blockquote>{% endif %}
 

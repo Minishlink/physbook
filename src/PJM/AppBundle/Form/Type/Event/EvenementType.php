@@ -39,6 +39,10 @@ class EvenementType extends AbstractType
                 'label' => 'Prix',
                 'divisor' => 100,
             ))
+            ->add('majeur', null, array(
+                'label' => 'Evènement majeur',
+                'required' => false,
+            ))
             ->add('boquette', new BoquetteByResponsableType(array('user' => $options['user'])))
             ->add('public', null, array(
                 'label' => 'Evènement public',

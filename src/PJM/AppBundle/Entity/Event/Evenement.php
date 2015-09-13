@@ -132,6 +132,13 @@ class Evenement
      */
     private $prix;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="majeur", type="boolean")
+     */
+    private $majeur;
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
@@ -143,6 +150,7 @@ class Evenement
         $this->public = true;
         $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->majeur = true;
     }
 
     /**
@@ -479,6 +487,30 @@ class Evenement
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Set majeur.
+     *
+     * @param bool $majeur
+     *
+     * @return Evenement
+     */
+    public function setMajeur($majeur)
+    {
+        $this->majeur = $majeur;
+
+        return $this;
+    }
+
+    /**
+     * Get majeur.
+     *
+     * @return bool
+     */
+    public function isMajeur()
+    {
+        return $this->majeur;
     }
 
     /**

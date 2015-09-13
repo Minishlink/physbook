@@ -112,13 +112,22 @@ class EventController extends Controller
             'label_submit' => 'Modifier',
         ));
 
+        $isMajeurOriginal = $event->isMajeur();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $this->get("pjm.services.evenement_manager")->update($event);
+                if (!(!$event->isMajeur() && $isMajeurOriginal && !$this->get('security.authorization_checker')->isGranted('ROLE_ASSO_TRESORS'))) {
+                    $this->get("pjm.services.evenement_manager")->update($event);
 
-                return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+                    return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+                }
+
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    "Seuls les Harpag's Asso peuvent changer un évènement majeur en un évènement mineur."
+                );
+
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
