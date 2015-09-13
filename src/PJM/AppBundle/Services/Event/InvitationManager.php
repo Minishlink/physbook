@@ -62,8 +62,6 @@ class InvitationManager
                 $invitation->setInvite($user);
                 $invitation->setEstPresent(true);
 
-                // on paye si besoin
-
                 $this->em->persist($invitation);
                 $this->em->flush();
 

@@ -1,5 +1,6 @@
 {% if event is not null %}
 <h2>{{ event.nom }}</h2>
+{% if event.prix > 0 %}{{ render(controller('PJMAppBundle:Event:etatPaiementUser', { 'event': event })) }}{% endif %}
 <div class="panel panel-default">
     <div class="panel-body">
         {% if event.image is not null %}<img class="affiche" src="{{ asset(event.image.webPath) }}" alt="Affiche">{% endif %}

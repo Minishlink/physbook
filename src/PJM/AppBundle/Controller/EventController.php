@@ -218,6 +218,31 @@ class EventController extends Controller
     }
 
     /**
+     * Affiche l'état du paiement (côté utilisateur).
+     *
+     * @param Event\Evenement $event
+     * @return Response
+     */
+    public function etatPaiementUserAction(Event\Evenement $event)
+    {
+        // on va chercher le compte de l'utilisateur
+        $compte = $this->get('pjm.services.boquette.pians')->getCompte($this->getUser());
+
+        // on regarde si l'utilisateur a assez d'argent
+        $montantRechargement = $event->getPrix() - $compte->getSolde();
+
+        // on va chercher l'invitation de l'utilisateur
+        $invitation = $this->get('pjm.services.invitation_manager')->getInvitationFromUserToEvent($this->getUser(), $event);
+
+        return $this->render('PJMAppBundle:Event:paiement.html.twig', array(
+            'inscrit' => isset($invitation) && $invitation->getEstPresent(),
+            'prix' => $event->getPrix(),
+            'date' => $event->getDateFin()->add(new \DateInterval('P2D')),
+            'montantRechargement' => $montantRechargement,
+        ));
+    }
+
+    /**
      * Affiche et gère le formulaire d'invitations.
      *
      * @param Request $request

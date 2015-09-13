@@ -29,23 +29,7 @@ class EvenementManager
 
     public function configure(Evenement $event)
     {
-        $this->persist($event); // needed for slug generation
-
-        if ($event->getPrix() > 0) {
-            $item = new Item();
-            $item->setLibelle($event->getNom());
-            $item->setPrix($event->getPrix());
-            $item->setImage($event->getImage());
-            $item->setSlug("event_".$event->getSlug());
-            $item->setDate($event->getDateCreation());
-            $item->setInfos(array('event'));
-            $item->setValid(true);
-            // bucquage sur compte Pi
-            $item->setBoquette($this->em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians'));
-            $item->setUsersHM(null);
-            $event->setItem($item);
-            $this->persist($event);
-        }
+        $this->persist($event);
 
         $this->notification->sendFlash(
             'success',
@@ -119,5 +103,27 @@ class EvenementManager
             'listeEvents' => $listeEvents,
             'event' => $event
         );
+    }
+
+    public function paiement(Evenement $event)
+    {
+        // on crée l'item associé
+        $item = new Item();
+        $item->setLibelle($event->getNom());
+        $item->setPrix($event->getPrix());
+        $item->setImage($event->getImage());
+        $item->setSlug("event_".$event->getSlug());
+        $item->setDate($event->getDateCreation());
+        $item->setInfos(array('event'));
+        $item->setValid(true);
+        // bucquage sur compte Pi
+        $item->setBoquette($this->em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians'));
+        $item->setUsersHM(null);
+        $event->setItem($item);
+        $this->persist($event);
+
+        // on fait payer chaque inscrit
+
+        // on crédite le créateur ?
     }
 }
