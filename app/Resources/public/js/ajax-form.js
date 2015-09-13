@@ -10,6 +10,8 @@ $(document).ready(function () {
 
             var formData = new FormData($this[0]);
 
+
+
             $.ajax({
                 url: $this.attr('action'),
                 type: $this.attr('method'),
@@ -18,6 +20,10 @@ $(document).ready(function () {
                 processData: false,
                 contentType: false,
                 success: function(json) {
+                    if (json.redirectURL) {
+                        window.location.assign(json.redirectURL);
+                    }
+
                     if (json.success) {
                         $this.trigger('reset');
                         $this.trigger('success');
