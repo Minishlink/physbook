@@ -129,17 +129,9 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if (!(!$event->isMajeur() && $isMajeurOriginal && !$this->get('security.authorization_checker')->isGranted('ROLE_ASSO_TRESORS'))) {
-                    $eventManager->update($event);
+                $eventManager->update($event, $isMajeurOriginal);
 
-                    return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
-                }
-
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    "Seuls les Harpag's Asso peuvent changer un évènement majeur en un évènement mineur."
-                );
-
+                return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -344,9 +336,7 @@ class EventController extends Controller
         $eventManager = $this->get('pjm.services.evenement_manager');
 
         if (!$eventManager->canTriggerPayment($this->getUser(), $event)) {
-            return array(
-                'auth' => false,
-            );
+            return array();
         }
 
         $form = $this->get('form.factory')->createNamedBuilder('form_paiement')
@@ -372,7 +362,6 @@ class EventController extends Controller
         }
 
         return array(
-            'auth' => true,
             'form' => $form->createView(),
         );
     }

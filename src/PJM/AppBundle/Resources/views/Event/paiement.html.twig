@@ -1,4 +1,4 @@
-{% if auth %}
+{% if form is defined %}
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
@@ -6,3 +6,4 @@
 
     {{ form_end(form) }}
 {% endif %}
+

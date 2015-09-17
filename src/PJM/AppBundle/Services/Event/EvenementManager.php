@@ -46,8 +46,16 @@ class EvenementManager
         $this->em->flush();
     }
 
-    public function update(Evenement $event)
+    public function update(Evenement $event, $isMajeurOriginal)
     {
+        if (!$event->isMajeur() && $isMajeurOriginal && !$this->authChecker->isGranted('ROLE_ASSO_TRESORS')) {
+            $this->notification->sendFlash(
+                'danger',
+                'Seuls les Harpag\'s Asso peuvent changer un évènement majeur en un évènement mineur.'
+            );
+            return;
+        }
+
         $this->persist($event);
 
         $this->notification->sendFlash(
