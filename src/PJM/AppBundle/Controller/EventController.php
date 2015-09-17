@@ -110,7 +110,12 @@ class EventController extends Controller
 
         // on regarde si l'utilisateur est créateur
         if (!$eventManager->canEdit($this->getUser(), $event)) {
-            return new Response('Tu n\'as pas les droits pour modifier cet évènement.');
+            $request->getSession()->getFlashBag()->add(
+                'danger',
+                'Tu n\'as pas les droits pour modifier cet évènement.'
+            );
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
         $form = $this->createForm(new EvenementType(), $event, array(
@@ -164,7 +169,7 @@ class EventController extends Controller
 
         // on regarde si l'utilisateur est créateur
         if (!$eventManager->canEdit($this->getUser(), $event)) {
-            return new Response('Tu n\'as pas les droits pour supprimer cet évènement.');
+            return array();
         }
 
         $form = $this->get('form.factory')->createNamedBuilder('form_suppression')
