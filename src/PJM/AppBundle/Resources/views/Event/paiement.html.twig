@@ -1,13 +1,8 @@
-{% if inscrit %}
-<div class="alert alert-{{ montantRechargement < 0 ? "info" : "warning" }}">
-        <p>Tu es inscrit à cet évènement <strong>payant</strong>.
-            Tu seras débité d'environ {{ prix|prix }} après la fin de celui-ci.
-            Le prix peut changer jusque là (tu seras notifié).
-        </p>
+{% if auth %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-        {% if montantRechargement > 0 %}
-            <p><strong>Attention !</strong> Tu vas entrer en négat's ! Recharge ton compte :</p>
-            {{ render(url('pjm_app_boquette_rechargement', {'slug': 'pians', 'montant': montantRechargement})) }}
-        {% endif %}
-</div>
+    <button onclick="return confirm ('Sûr de vouloir déclencher le paiement ?');" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-eur"></span> Paiement</button>
+
+    {{ form_end(form) }}
 {% endif %}

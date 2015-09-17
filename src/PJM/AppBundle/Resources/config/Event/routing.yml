@@ -41,6 +41,11 @@ pjm_app_event_modifier:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:modifier }
 
+pjm_app_event_paiement:
+    path:     /{slug}/paiement
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:paiement }
+
 pjm_app_event_index:
     path:     /{slug}
     methods: [ get ]

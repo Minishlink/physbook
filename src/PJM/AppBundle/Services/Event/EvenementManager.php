@@ -7,16 +7,19 @@ use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Notification;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class EvenementManager
 {
     private $em;
     private $notification;
+    private $authChecker;
 
-    public function __construct(EntityManager $em, Notification $notification)
+    public function __construct(EntityManager $em, Notification $notification, AuthorizationChecker $authChecker)
     {
         $this->em = $em;
         $this->notification = $notification;
+        $this->authChecker = $authChecker;
     }
 
     public function create(User $createur)
@@ -103,6 +106,19 @@ class EvenementManager
             'listeEvents' => $listeEvents,
             'event' => $event
         );
+    }
+
+    public function canEdit(User $user, Evenement $event)
+    {
+        return ($event->getCreateur() === $user
+            || $this->authChecker->isGranted('ROLE_ADMIN'));
+    }
+
+    public function canTriggerPayment(User $user, Evenement $event)
+    {
+        return ($this->authChecker->isGranted('ROLE_ADMIN')
+            || ($event->isMajeur() && $this->authChecker->isGranted('ROLE_ZIPIANS_HARPAGS'))
+            || (!$event->isMajeur() && $event->getCreateur() == $user));
     }
 
     public function paiement(Evenement $event)

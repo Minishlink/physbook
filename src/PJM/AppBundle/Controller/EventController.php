@@ -2,9 +2,9 @@
 
 namespace PJM\AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use PJM\AppBundle\Form\Type\Event\EvenementType;
 use PJM\AppBundle\Form\Type\UserPickerType;
@@ -18,6 +18,8 @@ class EventController extends Controller
      * @param Request $request
      * @param Event\Evenement $event
      * @return object HTML Response
+     *
+     * @Template
      */
     public function indexAction(Request $request, Event\Evenement $event = null)
     {
@@ -33,10 +35,10 @@ class EventController extends Controller
 
         $evenements = $this->get("pjm.services.evenement_manager")->get($event, $this->getUser(), 6);
 
-        return $this->render('PJMAppBundle:Event:index.html.twig', array(
+        return array(
             'listeEvents' => $evenements['listeEvents'],
             'event' => $evenements['event']
-        ));
+        );
     }
 
     /**
@@ -45,6 +47,8 @@ class EventController extends Controller
      * @param Request $request
      * @return object HTML Response
      * @throws \Exception
+     *
+     * @Template
      */
     public function nouveauAction(Request $request)
     {
@@ -86,9 +90,9 @@ class EventController extends Controller
             return $request->isXmlHttpRequest() ? new JsonResponse($data) : $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
-        return $this->render('PJMAppBundle:Event:nouveau.html.twig', array(
+        return array(
             'form' => $form->createView(),
-        ));
+        );
     }
 
     /**
@@ -97,16 +101,19 @@ class EventController extends Controller
      * @param Request $request
      * @param Event\Evenement $event
      * @return object HTML Response
+     *
+     * @Template
      */
     public function modifierAction(Request $request, Event\Evenement $event)
     {
+        $eventManager = $this->get("pjm.services.evenement_manager");
+
         // on regarde si l'utilisateur est créateur
-        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return new Response("Tu n'as pas les droits pour modifier cet article.");
+        if (!$eventManager->canEdit($this->getUser(), $event)) {
+            return new Response('Tu n\'as pas les droits pour modifier cet évènement.');
         }
 
         $form = $this->createForm(new EvenementType(), $event, array(
-            'method' => 'POST',
             'action' => $this->generateUrl('pjm_app_event_modifier', array('slug' => $event->getSlug())),
             'user' => $this->getUser(),
             'label_submit' => 'Modifier',
@@ -118,7 +125,7 @@ class EventController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 if (!(!$event->isMajeur() && $isMajeurOriginal && !$this->get('security.authorization_checker')->isGranted('ROLE_ASSO_TRESORS'))) {
-                    $this->get("pjm.services.evenement_manager")->update($event);
+                    $eventManager->update($event);
 
                     return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
                 }
@@ -136,10 +143,10 @@ class EventController extends Controller
             }
         }
 
-        return $this->render('PJMAppBundle:Event:modifier.html.twig', array(
+        return array(
             'form' => $form->createView(),
             'event' => $event,
-        ));
+        );
     }
 
     /**
@@ -148,12 +155,16 @@ class EventController extends Controller
      * @param Request $request
      * @param Event\Evenement $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template
      */
     public function suppressionAction(Request $request, Event\Evenement $event)
     {
+        $eventManager = $this->get("pjm.services.evenement_manager");
+
         // on regarde si l'utilisateur est créateur
-        if ($event->getCreateur() !== $this->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return new Response("Tu n'as pas les droits pour supprimer cet article.");
+        if (!$eventManager->canEdit($this->getUser(), $event)) {
+            return new Response('Tu n\'as pas les droits pour supprimer cet évènement.');
         }
 
         $form = $this->get('form.factory')->createNamedBuilder('form_suppression')
@@ -161,14 +172,13 @@ class EventController extends Controller
                 'pjm_app_event_suppression',
                 array('slug' => $event->getSlug())
             ))
-            ->setMethod('POST')
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $this->get("pjm.services.evenement_manager")->remove($event);
+                $eventManager->remove($event);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -179,9 +189,9 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
-        return $this->render('PJMAppBundle:Event:form_suppression.html.twig', array(
+        return array(
             'form' => $form->createView(),
-        ));
+        );
     }
 
     /**
@@ -190,6 +200,8 @@ class EventController extends Controller
      * @param Request $request
      * @param Event\Evenement $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template
      */
     public function inscriptionAction(Request $request, Event\Evenement $event)
     {
@@ -220,10 +232,10 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
-        return $this->render('PJMAppBundle:Event:form_inscription.html.twig', array(
+        return array(
             'form' => $form->createView(),
             'estPresent' => ($invitation !== null && $invitation->getEstPresent()),
-        ));
+        );
     }
 
     /**
@@ -231,6 +243,8 @@ class EventController extends Controller
      *
      * @param Event\Evenement $event
      * @return Response
+     *
+     * @Template
      */
     public function etatPaiementUserAction(Event\Evenement $event)
     {
@@ -243,12 +257,12 @@ class EventController extends Controller
         // on va chercher l'invitation de l'utilisateur
         $invitation = $this->get('pjm.services.invitation_manager')->getInvitationFromUserToEvent($this->getUser(), $event);
 
-        return $this->render('PJMAppBundle:Event:paiement.html.twig', array(
+        return array(
             'inscrit' => isset($invitation) && $invitation->getEstPresent(),
             'prix' => $event->getPrix(),
             'date' => $event->getDateFin()->add(new \DateInterval('P2D')),
             'montantRechargement' => $montantRechargement,
-        ));
+        );
     }
 
     /**
@@ -257,13 +271,14 @@ class EventController extends Controller
      * @param Request $request
      * @param Event\Evenement $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template
      */
     public function inviteAction(Request $request, Event\Evenement $event)
     {
         $form = $this->createForm(new UserPickerType(), null, array(
             'label_users' => false,
             'notIncludeUsers' => $event->getInvites(null, true),
-            'method' => 'POST',
             'action' => $this->generateUrl(
                 'pjm_app_event_invite',
                 array('slug' => $event->getSlug())
@@ -305,8 +320,55 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
-        return $this->render('PJMAppBundle:Event:form_invite.html.twig', array(
+        return array(
             'form' => $form->createView(),
-        ));
+        );
+    }
+
+    /**
+     * Affiche et gère le formulaire de déclenchement des paiements.
+     *
+     * @param Request $request
+     * @param Event\Evenement $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template
+     */
+    public function paiementAction(Request $request, Event\Evenement $event)
+    {
+        $eventManager = $this->get('pjm.services.evenement_manager');
+
+        if (!$eventManager->canTriggerPayment($this->getUser(), $event)) {
+            return array(
+                'auth' => false,
+            );
+        }
+
+        $form = $this->get('form.factory')->createNamedBuilder('form_paiement')
+            ->setAction($this->generateUrl(
+                'pjm_app_event_paiement',
+                array('slug' => $event->getSlug())
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $eventManager->paiement($event);
+            } else {
+                $request->getSession()->getFlashBag()->add(
+                    'danger',
+                    'Tes données ne sont pas valides.'
+                );
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+        }
+
+        return array(
+            'auth' => true,
+            'form' => $form->createView(),
+        );
     }
 }
