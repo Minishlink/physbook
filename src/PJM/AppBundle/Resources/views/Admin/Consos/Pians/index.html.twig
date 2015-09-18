@@ -34,7 +34,7 @@
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     {{ render(url('pjm_app_admin_boquette_gestionCredits', {slug: boquetteSlug})) }}
-    {% if is_granted('ROLE_HARPAGS') %}
+    {% if is_granted('ROLE_HARPAGS') or is_granted('ROLE_ZIPIANS') %}
     {{ render(url('pjm_app_admin_boquette_voirAchats', {slug: boquetteSlug})) }}
     {{ render(url('pjm_app_admin_boquette_voirComptes', {slug: boquetteSlug})) }}
     {% endif %}
