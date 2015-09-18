@@ -103,7 +103,7 @@ class InvitationManager
 
         $this->notification->sendFlash(
             'success',
-            'Tes invitations ont bien à l\'évènement '.$event->getNom().' ont été envoyées.'
+            'Tes invitations à l\'évènement '.$event->getNom().' ont été envoyées.'
         );
     }
 }
