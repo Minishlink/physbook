@@ -607,4 +607,14 @@ class Evenement
     {
         return $this->item;
     }
+
+    /**
+     * Is the event paid ?
+     *
+     * @return bool
+     */
+    public function isPaid()
+    {
+        return isset($this->item);
+    }
 }

@@ -245,20 +245,27 @@ class EventController extends Controller
      */
     public function etatPaiementUserAction(Event\Evenement $event)
     {
+        // on va chercher l'invitation de l'utilisateur
+        $invitation = $this->get('pjm.services.invitation_manager')->getInvitationFromUserToEvent($this->getUser(), $event);
+        $inscrit = isset($invitation) && $invitation->getEstPresent();
+
+        if ($event->isPaid()) {
+            return array(
+                'inscrit' => $inscrit,
+                'event' => $event
+            );
+        }
+
         // on va chercher le compte de l'utilisateur
         $compte = $this->get('pjm.services.boquette.pians')->getCompte($this->getUser());
 
         // on regarde si l'utilisateur a assez d'argent
         $montantRechargement = $event->getPrix() - $compte->getSolde();
 
-        // on va chercher l'invitation de l'utilisateur
-        $invitation = $this->get('pjm.services.invitation_manager')->getInvitationFromUserToEvent($this->getUser(), $event);
-
         return array(
-            'inscrit' => isset($invitation) && $invitation->getEstPresent(),
-            'prix' => $event->getPrix(),
-            'date' => $event->getDateFin()->add(new \DateInterval('P2D')),
-            'montantRechargement' => $montantRechargement,
+            'inscrit' => $inscrit,
+            'event' => $event,
+            'montantRechargement' => $montantRechargement
         );
     }
 

@@ -1,13 +1,19 @@
 {% if inscrit %}
-<div class="alert alert-{{ montantRechargement < 0 ? "info" : "warning" }}">
-        <p>Tu es inscrit à cet évènement <strong>payant</strong>.
-            Tu seras débité d'environ {{ prix|prix }} après la fin de celui-ci.
-            Le prix peut changer jusque là (tu seras notifié).
-        </p>
+    {% if not event.isPaid %}
+        <div class="alert alert-{{ montantRechargement < 0 ? "info" : "warning" }}">
+                <p>Tu es inscrit à cet évènement <strong>payant</strong>.
+                    Tu seras débité d'environ {{ event.prix|prix }} après la fin de celui-ci.
+                    Le prix peut changer jusque là (tu seras notifié).
+                </p>
 
-        {% if montantRechargement > 0 %}
-            <p><strong>Attention !</strong> Tu vas entrer en négat's ! Recharge ton compte :</p>
-            {{ render(url('pjm_app_boquette_rechargement', {'slug': 'pians', 'montant': montantRechargement})) }}
-        {% endif %}
-</div>
+                {% if montantRechargement > 0 %}
+                    <p><strong>Attention !</strong> Tu vas entrer en négat's ! Recharge ton compte :</p>
+                    {{ render(url('pjm_app_boquette_rechargement', {'slug': 'pians', 'montant': montantRechargement})) }}
+                {% endif %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>Cet évènement est passé et tu as été débité de {{ event.prix|prix }} le {{ event.item.date|localizeddate('short', 'none') }}.</p>
+        </div>
+    {% endif %}
 {% endif %}
