@@ -3,7 +3,6 @@
 namespace PJM\AppBundle\Services\Consos;
 
 use Doctrine\ORM\EntityManager;
-use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;

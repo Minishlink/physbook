@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Services\Event;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Event\Evenement;
-use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Consos\HistoriqueManager;
