@@ -249,6 +249,10 @@ class EventController extends Controller
         $invitation = $this->get('pjm.services.invitation_manager')->getInvitationFromUserToEvent($this->getUser(), $event);
         $inscrit = isset($invitation) && $invitation->getEstPresent();
 
+        if (!$inscrit) {
+            return array('inscrit' => false);
+        }
+
         if ($event->isPaid()) {
             return array(
                 'inscrit' => $inscrit,
@@ -342,7 +346,7 @@ class EventController extends Controller
     {
         $eventManager = $this->get('pjm.services.evenement_manager');
 
-        if (!$eventManager->canTriggerPayment($this->getUser(), $event)) {
+        if (!$eventManager->canUserTriggerPayment($this->getUser(), $event) || $event->isPaid() || !$event->getPrix()) {
             return array();
         }
 
