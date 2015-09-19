@@ -13,7 +13,7 @@
         </div>
     {% else %}
         <div class="alert alert-info">
-            <p>Cet évènement est passé et tu as été débité de {{ event.prix|prix }} le {{ event.item.date|localizeddate('short', 'none') }}.</p>
+            <p>Cet évènement est passé et le paiement de {{ event.prix|prix }} a été déclenché le {{ event.item.date|localizeddate('short', 'none') }}. Tu peux voir si ton paiement a déjà été effectué dans les Achats de la Banque.</p>
         </div>
     {% endif %}
 {% endif %}
