@@ -167,12 +167,12 @@ class Utils
                 // on met à jour le solde du compte associé sur la base R&z@l
                 if ($transaction->getMoyenPaiement() != 'operation') {
                     $status = $this->rezal->crediteSolde(
-                        $this->getTrueID($transaction->getCompte()->getUser()),
+                        $transaction->getCompte()->getUser(),
                         $transaction->getMontant()
                     );
                 } else {
                     $status = $this->rezal->debiteSolde(
-                        $this->getTrueID($transaction->getCompte()->getUser()),
+                        $transaction->getCompte()->getUser(),
                         -$transaction->getMontant()
                     );
                 }
@@ -219,7 +219,7 @@ class Utils
         )) {
             // on met à jour le solde des comptes associés sur la base R&z@l
             $status = $this->rezal->debiteSolde(
-                $this->getTrueID($transfert->getEmetteur()->getUser()),
+                $transfert->getEmetteur()->getUser(),
                 $transfert->getMontant()
             );
 
@@ -233,7 +233,7 @@ class Utils
                 $transfert->finaliser('1. '.$status);
             } else {
                 $status = $this->rezal->crediteSolde(
-                    $this->getTrueID($transfert->getReceveur()->getUser()),
+                    $transfert->getReceveur()->getUser(),
                     $transfert->getMontant()
                 );
 
@@ -247,7 +247,7 @@ class Utils
 
                     // on recrédite l'émetteur sur le pians
                     $status = $this->rezal->crediteSolde(
-                        $this->getTrueID($transfert->getEmetteur()->getUser()),
+                        $transfert->getEmetteur()->getUser(),
                         $transfert->getMontant()
                     );
 
@@ -263,14 +263,6 @@ class Utils
         }
 
         return $transfert;
-    }
-
-    public function getTrueID(User $user)
-    {
-        $keys = array('fams', 'tabagns', 'proms');
-        $values = preg_split('/(bo|li|an|me|ch|cl|ai|ka|pa)/', $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
-
-        return array_combine($keys, $values);
     }
 
     public function bucquage($boquetteSlug, $itemSlug)
