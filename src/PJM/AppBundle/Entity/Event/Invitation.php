@@ -27,13 +27,6 @@ class Invitation
     /**
      * @var bool
      *
-     * @ORM\Column(name="hasPaid", type="boolean")
-     */
-    private $hasPaid;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="estPresent", type="boolean", nullable=true)
      */
     private $estPresent;
@@ -65,30 +58,6 @@ class Invitation
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set hasPaid.
-     *
-     * @param bool $hasPaid
-     *
-     * @return Invitation
-     */
-    public function setHasPaid($hasPaid)
-    {
-        $this->hasPaid = $hasPaid;
-
-        return $this;
-    }
-
-    /**
-     * Get hasPaid.
-     *
-     * @return bool
-     */
-    public function getHasPaid()
-    {
-        return $this->hasPaid;
     }
 
     /**
