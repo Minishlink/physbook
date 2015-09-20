@@ -7,6 +7,7 @@ use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Consos\HistoriqueManager;
+use PJM\AppBundle\Services\Consos\TransactionManager;
 use PJM\AppBundle\Services\Notification;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
@@ -16,13 +17,15 @@ class EvenementManager
     private $notification;
     private $authChecker;
     private $historiqueManager;
+    private $transactionManager;
 
-    public function __construct(EntityManager $em, Notification $notification, AuthorizationChecker $authChecker, HistoriqueManager $historiqueManager)
+    public function __construct(EntityManager $em, AuthorizationChecker $authChecker, Notification $notification, HistoriqueManager $historiqueManager, TransactionManager $transactionManager)
     {
         $this->em = $em;
-        $this->notification = $notification;
         $this->authChecker = $authChecker;
+        $this->notification = $notification;
         $this->historiqueManager = $historiqueManager;
+        $this->transactionManager = $transactionManager;
     }
 
     public function create(User $createur)

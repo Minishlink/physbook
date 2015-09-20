@@ -31,12 +31,18 @@ services:
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
     pjm.services.evenement_manager:
         class: PJM\AppBundle\Services\Event\EvenementManager
-        arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @security.authorization_checker, @pjm.services.historique_manager]
+        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @pjm.services.notification, @pjm.services.historique_manager, @pjm.services.transaction_manager]
     pjm.services.invitation_manager:
         class: PJM\AppBundle\Services\Event\InvitationManager
         arguments: [@doctrine.orm.entity_manager, @pjm.services.notification]
     pjm.services.historique_manager:
             class: PJM\AppBundle\Services\Consos\HistoriqueManager
+            arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
+    pjm.services.transaction_manager:
+            class: PJM\AppBundle\Services\Consos\TransactionManager
+            arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal, @pjm.services.transfert_manager]
+    pjm.services.transfert_manager:
+            class: PJM\AppBundle\Services\Consos\TransfertManager
             arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
     pjm.services.notification:
                 class: PJM\AppBundle\Services\Notification

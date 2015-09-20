@@ -104,8 +104,7 @@ class RechargementController extends Controller
                         }
                     }
 
-                    $utils = $this->get('pjm.services.utils');
-                    $utils->traiterTransaction($transaction);
+                    $this->get('pjm.services.transaction_manager')->traiter($transaction);
                     $em->persist($transaction);
                     $em->flush();
 
