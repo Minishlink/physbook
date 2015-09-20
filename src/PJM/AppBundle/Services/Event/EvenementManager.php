@@ -190,11 +190,15 @@ class EvenementManager
             return false;
         }
 
-        // TODO on crédite le créateur
+        // on crédite le créateur
+        $compteCreateur = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($event->getCreateur(), 'pians');
+        $transaction = $this->transactionManager->create($compteCreateur, $event->getPrix()*count($inscrits), 'event');
+        $transaction->setStatus('OK');
+        $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
+        $this->transactionManager->traiter($transaction);
+        $this->em->persist($transaction);
 
         $this->em->flush();
-
-        // TODO envoyer notification débit + alerte négat's
 
         $this->notification->sendFlash(
             'success',

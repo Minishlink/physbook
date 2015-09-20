@@ -63,7 +63,7 @@ class HistoriqueManager
             $this->em->flush();
         }
 
-        // TODO notification achat user
+        // TODO notification achat user (+ alerte négats)
 
         return true;
     }

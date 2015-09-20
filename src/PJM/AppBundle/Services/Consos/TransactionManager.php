@@ -29,6 +29,7 @@ class TransactionManager
      */
     public function traiter(Transaction $transaction)
     {
+        // TODO notification
         if ($transaction->getStatus() == 'OK') {
             // si la transaction est bonne
             // on met à jour le solde du compte associé sur la base Phy'sbook
@@ -79,6 +80,16 @@ class TransactionManager
                 }
             }
         }
+
+        return $transaction;
+    }
+
+    public function create($compte, $montant, $moyenPaiement)
+    {
+        $transaction = new Transaction();
+        $transaction->setCompte($compte);
+        $transaction->setMontant($montant);
+        $transaction->setMoyenPaiement($moyenPaiement);
 
         return $transaction;
     }

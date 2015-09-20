@@ -26,6 +26,7 @@ class TransfertManager
      */
     public function traiter(Transfert $transfert)
     {
+        // TODO notification destinataire
         // on met à jour le solde des comptes associés sur la base Phy'sbook
         $transfert->finaliser();
 

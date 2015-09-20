@@ -16,6 +16,7 @@ class TransactionEnum
             'initial' => 'Solde initial',
             'operation' => 'Opération',
             'autre' => 'Autre',
+            'event' => 'Évènement',
         );
 
         if ($withValues) {

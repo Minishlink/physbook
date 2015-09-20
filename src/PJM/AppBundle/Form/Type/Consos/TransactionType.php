@@ -20,6 +20,7 @@ class TransactionType extends AbstractType
         $moyenPaiementsChoices = $enum->getMoyenPaiementChoices(true);
         unset($moyenPaiementsChoices['smoney']);
         unset($moyenPaiementsChoices['initial']);
+        unset($moyenPaiementsChoices['event']);
 
         $builder
             ->add('compte', 'pjm_select2_entity', array(
