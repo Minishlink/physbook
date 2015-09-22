@@ -388,8 +388,6 @@ class EventController extends Controller
      */
     public function exportAction(Request $request, Event\Evenement $event)
     {
-        $eventManager = $this->get('pjm.services.evenement_manager');
-
         $form = $this->get('form.factory')->createNamedBuilder('form_export')
             ->setAction($this->generateUrl(
                 'pjm_app_event_export',
