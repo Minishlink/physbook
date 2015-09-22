@@ -37,6 +37,11 @@ pjm_app_event_paiement:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:paiement }
 
+pjm_app_event_export:
+    path:     /{slug}/export
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:export }
+
 pjm_app_event_index:
     path:     /{slug}
     methods: [ get ]

@@ -50,6 +50,17 @@ class Invitation
         $this->hasPaid = false;
     }
 
+    public function toArray()
+    {
+        return array(
+            'username' => $this->invite->getUsername(),
+            'bucque' => $this->invite->getBucque(),
+            'prenom' => $this->invite->getPrenom(),
+            'nom' => $this->invite->getNom(),
+            'presence' => (null !== $this->getEstPresent()) ? ($this->getEstPresent()) ? "Oui" : "Non" : "Invité"
+        );
+    }
+
     /**
      * Get id.
      *

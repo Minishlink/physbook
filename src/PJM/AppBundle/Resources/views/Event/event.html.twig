@@ -62,6 +62,7 @@
         {% if event.prix > 0 %}
             {{ render(url('pjm_app_event_paiement', {'slug': event.slug})) }}
         {% endif %}
+        {{ render(url('pjm_app_event_export', {'slug': event.slug})) }}
     </div>
 </div>
 {% endif %}

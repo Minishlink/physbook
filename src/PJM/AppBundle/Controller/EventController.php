@@ -376,4 +376,61 @@ class EventController extends Controller
             'form' => $form->createView(),
         );
     }
+
+    /**
+     * Affiche et gère l'exportation de l'évènement.
+     *
+     * @param Request $request
+     * @param Event\Evenement $event
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Template
+     */
+    public function exportAction(Request $request, Event\Evenement $event)
+    {
+        $eventManager = $this->get('pjm.services.evenement_manager');
+
+        $form = $this->get('form.factory')->createNamedBuilder('form_export')
+            ->setAction($this->generateUrl(
+                'pjm_app_event_export',
+                array('slug' => $event->getSlug())
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $excel = $this->get('pjm.services.excel');
+                $excel->create(
+                    '[Event] '.$event->getNom()
+                );
+
+                $entetes = array(
+                    'Username',
+                    'Bucque',
+                    'Prénom',
+                    'Nom',
+                    'Présence'
+                );
+
+                $tableau = array();
+                foreach ($event->getInvitations() as $invitation) {
+                    $tableau[] = $invitation->toArray();
+                }
+
+                $excel->setData($entetes, $tableau, 'A', '1', 'Evenement');
+
+                return $excel->download(
+                    'event-'.$event->getSlug().'-'.date('d/m/Y')
+                );
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 }
