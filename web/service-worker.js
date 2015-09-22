@@ -53,7 +53,7 @@ self.addEventListener('push', function (event) {
 
     var title = data.title || "Phy'sbook",
         message = data.message || 'Il y a du neuf !',
-        icon = 'images/favicon/favicon-192x192.png',
+        icon = 'images/icons/icon-192.png',
         tag = 'general';
 
     event.waitUntil(

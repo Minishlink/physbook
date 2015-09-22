@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Choice;
 
 class CommandeType extends AbstractType
@@ -39,16 +38,23 @@ class CommandeType extends AbstractType
     /** Get nombre de baguettes par jour possibles
      * @return array
      */
-    public static function getRangeBaguettes($keys = false)
+    public static function getRangeBaguettes($withValues = false)
     {
-        // min, max, step
-        $range = range(0, 5, 0.5);
+        $choices = array(
+            '0' => 'Aucune baguette',
+            '0.5' => 'Une demi-baguette',
+            '1' => 'Une baguette',
+            '1.5' => '1.5 baguettes',
+            '2' => '2 baguettes',
+            '2.5' => '2.5 baguettes',
+            '3' => '3 baguettes',
+        );
 
-        if ($keys) {
-            return array_combine($range, $range);
+        if ($withValues) {
+            return $choices;
         }
 
-        return $range;
+        return array_keys($choices);
     }
 
     /**
