@@ -97,7 +97,7 @@ class BoquetteService
         }
 
         $nb = $this->em->getRepository('PJMAppBundle:Historique')
-            ->countByBoquetteSlug($boquetteSlug, $month, $year);
+            ->countByBoquetteSlug($this->slug, $month, $year);
 
         return $nb;
     }
