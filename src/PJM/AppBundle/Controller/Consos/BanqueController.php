@@ -10,7 +10,7 @@ use PJM\AppBundle\Form\Type\Consos\TransfertType;
 
 class BanqueController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $datatable_transactions = $this->get('pjm.datatable.credits');
         $datatable_transactions->setAdmin(false);
@@ -63,8 +63,7 @@ class BanqueController extends Controller
                     ));
                     $transfert->setReceveur($receveur);
 
-                    $utils = $this->get('pjm.services.utils');
-                    $utils->traiterTransfert($transfert);
+                    $this->get('pjm.services.transfert_manager')->traiter($transfert);
 
                     $em->persist($transfert);
                     $em->flush();

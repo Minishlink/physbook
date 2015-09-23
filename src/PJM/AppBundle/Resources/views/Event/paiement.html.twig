@@ -1,0 +1,9 @@
+{% if form is defined %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+    <button onclick="return confirm ('Sûr de vouloir déclencher le paiement ?');" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-eur"></span> Paiement</button>
+
+    {{ form_end(form) }}
+{% endif %}
+

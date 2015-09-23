@@ -5,8 +5,6 @@ namespace PJM\AppBundle\Services;
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Historique;
-use PJM\AppBundle\Entity\Transaction;
-use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Twig\IntranetExtension;
 
@@ -148,129 +146,6 @@ class Utils
         }
 
         return false;
-    }
-
-    public function traiterTransaction(Transaction $transaction)
-    {
-        if ($transaction->getStatus() == 'OK') {
-            // si la transaction est bonne
-            // on met à jour le solde du compte associé sur la base Phy'sbook
-            $transaction->finaliser();
-
-            // si la transaction concerne la BDD R&z@l
-            if (in_array(
-                $transaction->getCompte()->getBoquette()->getSlug(), array(
-                    'cvis',
-                    'pians',
-                )
-            )) {
-                // on met à jour le solde du compte associé sur la base R&z@l
-                if ($transaction->getMoyenPaiement() != 'operation') {
-                    $status = $this->rezal->crediteSolde(
-                        $this->getTrueID($transaction->getCompte()->getUser()),
-                        $transaction->getMontant()
-                    );
-                } else {
-                    $status = $this->rezal->debiteSolde(
-                        $this->getTrueID($transaction->getCompte()->getUser()),
-                        -$transaction->getMontant()
-                    );
-                }
-
-                // si une erreur survient
-                if ($status !== true) {
-                    if ($status === false) {
-                        $status = 'REZAL_LIAISON_TRANSACTION';
-                    }
-                    // on annule la transaction
-                    $transaction->finaliser($status);
-                }
-            }
-
-            if (null !== $transaction->getCompteLie()) {
-                // si on fait un crédit pour quelqu'un d'autre
-                // le compte lie et le compte sont déjà inversés (voir Entité)
-                if ($transaction->getStatus() == 'OK') {
-                    // s'il n'y a pas eu d'erreur avant
-                    // on effectue le transfert vers compteLie
-                    $transfert = new Transfert($transaction);
-                    $this->traiterTransfert($transfert);
-                    $this->em->persist($transfert);
-
-                    return $transfert;
-                }
-            }
-        }
-
-        return $transaction;
-    }
-
-    public function traiterTransfert(Transfert $transfert)
-    {
-        // on met à jour le solde des comptes associés sur la base Phy'sbook
-        $transfert->finaliser();
-
-        // si le transfert concerne la BDD R&z@l
-        if (in_array(
-            $transfert->getReceveur()->getBoquette()->getSlug(), array(
-                'cvis',
-                'pians',
-            )
-        )) {
-            // on met à jour le solde des comptes associés sur la base R&z@l
-            $status = $this->rezal->debiteSolde(
-                $this->getTrueID($transfert->getEmetteur()->getUser()),
-                $transfert->getMontant()
-            );
-
-            // si une erreur survient
-            if ($status !== true) {
-                if ($status === false) {
-                    $status = 'REZAL_LIAISON_TRANSACTION';
-                }
-
-                // on annule la transaction
-                $transfert->finaliser('1. '.$status);
-            } else {
-                $status = $this->rezal->crediteSolde(
-                    $this->getTrueID($transfert->getReceveur()->getUser()),
-                    $transfert->getMontant()
-                );
-
-                // si une erreur survient
-                if ($status !== true) {
-                    if ($status === false) {
-                        $status = 'REZAL_LIAISON_TRANSACTION';
-                    }
-                    // on annule la transaction
-                    $transfert->finaliser('2. '.$status);
-
-                    // on recrédite l'émetteur sur le pians
-                    $status = $this->rezal->crediteSolde(
-                        $this->getTrueID($transfert->getEmetteur()->getUser()),
-                        $transfert->getMontant()
-                    );
-
-                    if ($status !== true) {
-                        if ($status === false) {
-                            $status = 'REZAL_LIAISON_TRANSACTION';
-                        }
-
-                        $transfert->setStatus('3. '.$status);
-                    }
-                }
-            }
-        }
-
-        return $transfert;
-    }
-
-    public function getTrueID(User $user)
-    {
-        $keys = array('fams', 'tabagns', 'proms');
-        $values = preg_split('/(bo|li|an|me|ch|cl|ai|ka|pa)/', $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
-
-        return array_combine($keys, $values);
     }
 
     public function bucquage($boquetteSlug, $itemSlug)

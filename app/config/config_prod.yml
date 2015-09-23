@@ -29,7 +29,7 @@ monolog:
             from_email:         error@physbook.fr
             to_email:           error@physbook.fr
             subject:            "[Phy'sbook] Oops"
-            level:              error
+            level:              critical
         login:
             type:               stream
             path:               "%kernel.logs_dir%/auth.log"

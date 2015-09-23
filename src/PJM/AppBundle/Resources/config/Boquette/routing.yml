@@ -31,9 +31,9 @@ pjm_app_boquette_boquette_historique:
     defaults: { _controller: PJMAppBundle:Consos/Boquette:historique }
 
 pjm_app_boquette_rechargement:
-    path:     /{slug}/rechargement
+    path:     /{slug}/rechargement/{montant}
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement }
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement, montant: null }
 
 pjm_app_boquette_pians:
     resource: "@PJMAppBundle/Resources/config/Boquette/Pians/routing.yml"

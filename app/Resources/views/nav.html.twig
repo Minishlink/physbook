@@ -26,7 +26,7 @@
                         {% if section == "vie" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-vie" class="sous-menu">
                             <li><a href="{{ path('pjm_profil_annuaire') }}" title="Annuaire"><img src="{{ asset('images/header/Perso-' ~ (random(5) + 1) ~ '.png') }}" alt="Annuaire"></a></li>
-                            <li><a href="{{ path('pjm_app_event_fins_index') }}" title="Fin's"><img src="{{ asset('images/header/Fins-B.png') }}" alt="Fin's"></a></li>
+                            <li><a href="{{ path('pjm_app_event_index') }}" title="Évènements"><span class="glyphicon glyphicon-calendar"></span></a></li>
                             <li><a href="{{ path('pjm_app_event_elections_index') }}" title="Élections"><img src="{{ asset('images/header/Elections-BR.png') }}" alt="Élections"></a></li>
                             <li><a href="{{ path('pjm_app_actus_index') }}" title="Actus"><img src="{{ asset('images/header/Infos-B.png') }}" alt="Actus"></a></li>
                             <li><a href="{{ path('pjm_app_media_index') }}" title="Média"><img src="{{ asset('images/header/Media-B.png') }}" alt="Média"></a></li>

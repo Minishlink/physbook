@@ -188,12 +188,16 @@ class BoquetteController extends Controller
     /**
      * Gère le rechargement d'une boquette.
      */
-    public function rechargementAction(Request $request, Boquette $boquette)
+    public function rechargementAction(Request $request, Boquette $boquette, $montant = null)
     {
         $em = $this->getDoctrine()->getManager();
 
         $transaction = new Transaction();
         $transaction->setMoyenPaiement('smoney');
+
+        if ($montant !== null) {
+            $transaction->setMontant($montant);
+        }
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',

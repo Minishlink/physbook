@@ -27,13 +27,6 @@ class Invitation
     /**
      * @var bool
      *
-     * @ORM\Column(name="hasPaid", type="boolean")
-     */
-    private $hasPaid;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="estPresent", type="boolean", nullable=true)
      */
     private $estPresent;
@@ -57,6 +50,17 @@ class Invitation
         $this->hasPaid = false;
     }
 
+    public function toArray()
+    {
+        return array(
+            'username' => $this->invite->getUsername(),
+            'bucque' => $this->invite->getBucque(),
+            'prenom' => $this->invite->getPrenom(),
+            'nom' => $this->invite->getNom(),
+            'presence' => (null !== $this->getEstPresent()) ? ($this->getEstPresent()) ? "Oui" : "Non" : "Invité"
+        );
+    }
+
     /**
      * Get id.
      *
@@ -65,30 +69,6 @@ class Invitation
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set hasPaid.
-     *
-     * @param bool $hasPaid
-     *
-     * @return Invitation
-     */
-    public function setHasPaid($hasPaid)
-    {
-        $this->hasPaid = $hasPaid;
-
-        return $this;
-    }
-
-    /**
-     * Get hasPaid.
-     *
-     * @return bool
-     */
-    public function getHasPaid()
-    {
-        return $this->hasPaid;
     }
 
     /**

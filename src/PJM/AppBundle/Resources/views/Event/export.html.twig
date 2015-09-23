@@ -1,0 +1,9 @@
+{% if form is defined %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <button class="btn btn-default" type="submit" title=".xlsx"><span class="glyphicon glyphicon-export"></span> Exporter</button>
+
+    {{ form_end(form) }}
+{% endif %}
+

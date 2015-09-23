@@ -3,15 +3,6 @@ pjm_app_event_nouveau:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:nouveau }
 
-pjm_app_event_fins_index:
-    path:     /fins
-    methods: [ get ]
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template: 'PJMAppBundle:App:en_construction.html.twig'
-        maxAge: 86400
-        sharedMaxAge: 86400
-
 pjm_app_event_elections_index:
     path:     /elections
     methods: [ get ]
@@ -40,6 +31,16 @@ pjm_app_event_modifier:
     path:     /{slug}/modifier
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:modifier }
+
+pjm_app_event_paiement:
+    path:     /{slug}/paiement
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:paiement }
+
+pjm_app_event_export:
+    path:     /{slug}/export
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:export }
 
 pjm_app_event_index:
     path:     /{slug}

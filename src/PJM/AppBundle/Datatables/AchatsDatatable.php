@@ -39,6 +39,13 @@ class AchatsDatatable extends BaseDatatable
             ->add('item.libelle', 'column', array('title' => 'Item'))
             ->add('nombre', 'column', array('title' => 'Nombre'))
             ->add('item.prix', 'column', array('title' => 'Prix'))
+            ->add('valid', 'boolean', array(
+                'title' => 'Effectué',
+                'true_icon' => 'glyphicon glyphicon-ok',
+                'false_icon' => 'glyphicon glyphicon-remove',
+                'true_label' => 'Oui',
+                'false_label' => 'Non',
+            ))
         ;
     }
 

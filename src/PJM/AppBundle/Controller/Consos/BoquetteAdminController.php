@@ -58,8 +58,7 @@ class BoquetteAdminController extends Controller
             if ($form->isValid()) {
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus('OK');
-                $utils = $this->get('pjm.services.utils');
-                $retour = $utils->traiterTransaction($credit);
+                $retour = $this->get('pjm.services.transaction_manager')->traiter($credit);
                 $em->persist($credit);
                 $em->flush();
 

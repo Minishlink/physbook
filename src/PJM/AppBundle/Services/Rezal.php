@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use PJM\AppBundle\Entity\User;
 
 /**
  * Ce fichier rassemble l'ensemble des fonctions relatives à la connexion et au dialogue
@@ -26,6 +27,20 @@ class Rezal
         $this->db_host = $db_host;
         $this->db_user = $db_user;
         $this->db_pass = $db_pass;
+    }
+
+    /**
+     * Donne un tableau avec clés fams, tabagns, proms à partir d'un User
+     *
+     * @param User $user
+     * @return array
+     */
+    public function getTrueID(User $user)
+    {
+        $keys = array('fams', 'tabagns', 'proms');
+        $values = preg_split('/(bo|li|an|me|ch|cl|ai|ka|pa)/', $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
+
+        return array_combine($keys, $values);
     }
 
     /**
@@ -146,15 +161,15 @@ class Rezal
 
         $this->deconnexion();
 
-        return;
+        return null;
     }
 
     /**
      * Edite le montant du solde d’un pg.
      *
      * @param array $user Tableau ayant comme clés fams, tabagns et proms
-     * @param $montant montant à ajouter ou soustraire
-     * @param $add si addition
+     * @param int $montant montant à ajouter ou soustraire
+     * @param boolean $add si addition
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
@@ -208,27 +223,27 @@ class Rezal
     /**
      * Ajoute un montant au solde d’un pg.
      *
-     * @param array $user Tableau ayant comme clés fams, tabagns et proms
-     * @param $montant montant à ajouter
+     * @param User $user Tableau ayant comme clés fams, tabagns et proms
+     * @param int $montant montant à ajouter
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
-    public function crediteSolde($user, $montant)
+    public function crediteSolde(User $user, $montant)
     {
-        return $this->editSolde($user, $montant, true);
+        return $this->editSolde($this->getTrueID($user), $montant, true);
     }
 
     /**
      * Soustrait un montant au solde d’un pg.
      *
-     * @param array $user Tableau ayant comme clés fams, tabagns et proms
-     * @param $montant montant à soustraire
+     * @param User $user Tableau ayant comme clés fams, tabagns et proms
+     * @param int $montant montant à soustraire
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
-    public function debiteSolde($user, $montant)
+    public function debiteSolde(User $user, $montant)
     {
-        return $this->editSolde($user, $montant, false);
+        return $this->editSolde($this->getTrueID($user), $montant, false);
     }
 
     private function convertBoquetteSlug($boquetteSlug)
@@ -239,7 +254,7 @@ class Rezal
             return 1;
         }
 
-        return;
+        return null;
     }
 
     /**

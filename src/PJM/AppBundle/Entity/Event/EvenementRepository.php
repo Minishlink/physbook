@@ -47,12 +47,12 @@ class EvenementRepository extends EntityRepository
 
         if ($user === null) {
             $qb
-                ->where('e.isPublic = true')
+                ->where('e.public = true')
             ;
         } else {
             $qb
                 ->innerJoin('e.invitations', 'i')
-                ->where('e.isPublic = false')
+                ->where('e.public = false')
                 ->andWhere('i.invite = :user')
                 ->setParameter('user', $user)
             ;

@@ -49,9 +49,9 @@ class Evenement
     /**
      * @var bool
      *
-     * @ORM\Column(name="isJournee", type="boolean")
+     * @ORM\Column(name="day", type="boolean")
      */
-    private $isJournee;
+    private $day;
 
     /**
      * @var \DateTime
@@ -112,9 +112,9 @@ class Evenement
     /**
      * @var bool
      *
-     * @ORM\Column(name="isPublic", type="boolean")
+     * @ORM\Column(name="public", type="boolean")
      */
-    private $isPublic;
+    private $public;
 
     /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Event\Invitation", mappedBy="event", cascade={"remove"})
@@ -132,6 +132,13 @@ class Evenement
      */
     private $prix;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="majeur", type="boolean")
+     */
+    private $majeur;
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
@@ -139,10 +146,11 @@ class Evenement
         $this->dateDebut->setTime($this->dateCreation->format('H'), 0);
         $this->dateFin = new \DateTime();
         $this->dateFin->setTime($this->dateCreation->format('H') + 1, '0');
-        $this->isJournee = false;
-        $this->isPublic = true;
+        $this->day = false;
+        $this->public = true;
         $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->majeur = true;
     }
 
     /**
@@ -228,27 +236,27 @@ class Evenement
     }
 
     /**
-     * Set isJournee.
+     * Set day.
      *
-     * @param bool $isJournee
+     * @param bool $day
      *
      * @return Evenement
      */
-    public function setJournee($isJournee)
+    public function setDay($day)
     {
-        $this->isJournee = $isJournee;
+        $this->day = $day;
 
         return $this;
     }
 
     /**
-     * Get isJournee.
+     * Get day.
      *
      * @return bool
      */
-    public function isJournee()
+    public function isDay()
     {
-        return $this->isJournee;
+        return $this->day;
     }
 
     /**
@@ -348,27 +356,27 @@ class Evenement
     }
 
     /**
-     * Set isPublic.
+     * Set public.
      *
-     * @param bool $isPublic
+     * @param bool $public
      *
      * @return Evenement
      */
-    public function setPublic($isPublic)
+    public function setPublic($public)
     {
-        $this->isPublic = $isPublic;
+        $this->public = $public;
 
         return $this;
     }
 
     /**
-     * Get isPublic.
+     * Get public.
      *
      * @return bool
      */
     public function isPublic()
     {
-        return $this->isPublic;
+        return $this->public;
     }
 
     /**
@@ -482,6 +490,30 @@ class Evenement
     }
 
     /**
+     * Set majeur.
+     *
+     * @param bool $majeur
+     *
+     * @return Evenement
+     */
+    public function setMajeur($majeur)
+    {
+        $this->majeur = $majeur;
+
+        return $this;
+    }
+
+    /**
+     * Get majeur.
+     *
+     * @return bool
+     */
+    public function isMajeur()
+    {
+        return $this->majeur;
+    }
+
+    /**
      * Add invitation.
      *
      * @param \PJM\AppBundle\Entity\Event\Invitation $invitation
@@ -574,5 +606,15 @@ class Evenement
     public function getItem()
     {
         return $this->item;
+    }
+
+    /**
+     * Is the event paid ?
+     *
+     * @return bool
+     */
+    public function isPaid()
+    {
+        return isset($this->item);
     }
 }
