@@ -50,6 +50,20 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                 "genre" => 0,
                 "roles" => array(),
             ),
+            // membre conscrit (aucun rôles et pas inscrit dans la BDD R&z@l)
+            array(
+                "username" => "bizut",
+                "bucque" => "Bizut",
+                "fams" => "6",
+                "tabagns" => "bo",
+                "proms" => $proms,
+                "prenom" => "Pas",
+                "nom" => "au R&z@l",
+                "appartement" => "A119",
+                "classe" => "SI1",
+                "genre" => 0,
+                "roles" => array(),
+            ),
             // membre ancien (admin)
             array(
                 "username" => "ancien",
