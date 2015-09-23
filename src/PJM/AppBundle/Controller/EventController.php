@@ -124,12 +124,12 @@ class EventController extends Controller
             'label_submit' => 'Modifier',
         ));
 
-        $isMajeurOriginal = $event->isMajeur();
+        $oldEvent = clone $event;
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $eventManager->update($event, $isMajeurOriginal);
+                $eventManager->update($event, $oldEvent);
 
                 return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
             } else {

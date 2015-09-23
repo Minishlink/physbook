@@ -52,9 +52,9 @@ class EvenementManager
         $this->em->flush();
     }
 
-    public function update(Evenement $event, $isMajeurOriginal)
+    public function update(Evenement $event, Evenement $oldEvent)
     {
-        if (!$event->isMajeur() && $isMajeurOriginal && !$this->authChecker->isGranted('ROLE_ASSO_TRESORS')) {
+        if (!$event->isMajeur() && $oldEvent->isMajeur() && !$this->authChecker->isGranted('ROLE_ASSO_TRESORS')) {
             $this->notification->sendFlash(
                 'danger',
                 'Seuls les Harpag\'s Asso peuvent changer un évènement majeur en un évènement mineur.'
@@ -62,7 +62,13 @@ class EvenementManager
             return;
         }
 
-        // TODO validation changement de prix pas possible après paiement
+        if ($event->getPrix() != $oldEvent->getPrix() && $event->isPaid()) {
+            $this->notification->sendFlash(
+                'danger',
+                'L\'évènement a déjà été payé : tu ne peux plus changer son prix.'
+            );
+            return;
+        }
 
         $this->persist($event);
 
