@@ -3,8 +3,6 @@
 namespace PJM\AppBundle\Form\Type\Boquette;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
@@ -17,17 +15,8 @@ class BoquetteByResponsableType extends AbstractType
         $this->options = $options;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        parent::buildView($view, $form, $options);
-
-        $view->vars = array_merge($view->vars, array(
-            'help_label' => $options['help_label'],
-        ));
-    }
-
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
