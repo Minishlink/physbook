@@ -203,3 +203,8 @@ services:
         class: PJM\AppBundle\Form\Type\Select2EntityType
         tags:
             - { name: form.type, alias: pjm_select2_entity }
+    pjm.form.extension.helpLabel:
+            class: PJM\AppBundle\Form\Extension\HelpLabelExtension
+            tags:
+                - { name: form.type_extension, alias: form }
+
