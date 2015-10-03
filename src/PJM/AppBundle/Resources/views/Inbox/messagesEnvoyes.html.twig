@@ -13,7 +13,7 @@
                     <a class="btn btn-default btn-xs cancel" title="Supprime pour tous les destinataires" data-message="{{ message.id }}"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
                 </div>
                 <p>
-                    {{ message.contenu|nl2br|citationUsers|purify }}
+                    {{ message.contenu|show }}
                 </p>
             </div>
             <div class="panel-footer">

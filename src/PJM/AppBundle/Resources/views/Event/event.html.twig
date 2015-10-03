@@ -40,7 +40,7 @@
             </li>
             <li>C'est un évènement <strong>{{ event.isPublic ? "public" : "privé" }}</strong>.</li>
         </ul>
-        {% if event.description %}<blockquote><p>{{ event.description|md2html|citationUsers|purify }}</p></blockquote>{% endif %}
+        {% if event.description %}<blockquote><p>{{ event.description|show }}</p></blockquote>{% endif %}
 
         <div class="pull-right">
             <small>créé par {{ render(url('pjm_profil_encart', {'username': event.createur.username})) }} le {{ event.dateCreation|date('d/m/Y') }}</small>
