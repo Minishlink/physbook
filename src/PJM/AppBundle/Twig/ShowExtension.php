@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Twig;
 
 use HTMLPurifier;
+use PJM\AppBundle\Services\EmoticonParser;
 use PJM\AppBundle\Twig\CitationExtension;
 use PJM\AppBundle\Services\LinkParser;
 
@@ -11,12 +12,14 @@ class ShowExtension extends \Twig_Extension
     private $citation;
     private $purifier;
     private $linkParser;
+    private $emoticonParser;
 
-    public function __construct(CitationExtension $citation, LinkParser $linkParser, HTMLPurifier $purifier)
+    public function __construct(CitationExtension $citation, LinkParser $linkParser, EmoticonParser $emoticonParser, HTMLPurifier $purifier)
     {
         $this->citation = $citation;
         $this->purifier = $purifier;
         $this->linkParser = $linkParser;
+        $this->emoticonParser = $emoticonParser;
     }
 
     public function getFilters()
@@ -38,12 +41,13 @@ class ShowExtension extends \Twig_Extension
      */
     public function showFilter(\Twig_Environment $twig, $texte)
     {
-        // FUTURE emojis/emoticons ? More appropriate on client side ?
         return $this->citation->citationUsersFilter(
             $twig,
             $this->purifier->purify(
                 nl2br(
-                    $this->linkParser->parse($texte)
+                    $this->emoticonParser->parse(
+                        $this->linkParser->parse($texte)
+                    )
                 )
             )
         );

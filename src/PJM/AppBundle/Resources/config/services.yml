@@ -18,7 +18,7 @@ services:
             - { name: twig.extension }
     pjm.twig.show_extension:
         class: PJM\AppBundle\Twig\ShowExtension
-        arguments: [@pjm.twig.citation_extension, @pjm.services.linkParser, @exercise_html_purifier.default]
+        arguments: [@pjm.twig.citation_extension, @pjm.services.linkParser, @pjm.services.emoticonParser, @exercise_html_purifier.default]
         tags:
             - { name: twig.extension }
     pjm.twig.markdown_extension:
@@ -33,6 +33,8 @@ services:
             - { name: twig.extension }
     pjm.services.linkParser:
         class: PJM\AppBundle\Services\LinkParser
+    pjm.services.emoticonParser:
+        class: PJM\AppBundle\Services\EmoticonParser
     pjm.services.user_manager:
         class: PJM\AppBundle\Services\UserManager
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
