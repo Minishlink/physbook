@@ -16,7 +16,7 @@
     <div class="space"></div>
     <div class="well">
         <div class="froala-view">
-            {{ article.contenu|show }}
+            {{ article.contenu|purify|citationUsers }}
         </div>
     </div>
 	<div>
