@@ -30,7 +30,7 @@ class ShowExtension extends \Twig_Extension
     }
 
     /**
-     * Wrappe le parser de nom d'utilisateur, de liens, d'emojis et applique le HTMLPurifier
+     * Wrappe le parser de nom d'utilisateur, de liens, et applique le HTMLPurifier
      *
      * @param string $texte Texte à traiter
      *
@@ -38,8 +38,7 @@ class ShowExtension extends \Twig_Extension
      */
     public function showFilter(\Twig_Environment $twig, $texte)
     {
-        // TODO emojis
-
+        // FUTURE emojis/emoticons ? More appropriate on client side ?
         return $this->citation->citationUsersFilter(
             $twig,
             $this->purifier->purify(
