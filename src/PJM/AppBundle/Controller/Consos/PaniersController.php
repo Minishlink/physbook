@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use PJM\AppBundle\Entity\Historique;
@@ -15,18 +16,24 @@ class PaniersController extends Controller
         $this->slug = 'paniers';
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Template
+     */
     public function indexAction(Request $request)
     {
         $paniersService = $this->get('pjm.services.boquette.paniers');
         $panier = $paniersService->getCurrentPanier();
-        $commande = $paniersService->getCommande($panier, $this->getUser());
+        $commande = isset($panier) ? $paniersService->getCommande($panier, $this->getUser()) : null;
 
-        return $this->render('PJMAppBundle:Consos:Paniers/index.html.twig', array(
+        return array(
             'boquetteSlug' => $this->slug,
             'panier' => $panier,
             'dejaCommande' => isset($commande),
             'solde' => $paniersService->getSolde($this->getUser()),
-        ));
+        );
     }
 
     public function commanderAction(Request $request)
