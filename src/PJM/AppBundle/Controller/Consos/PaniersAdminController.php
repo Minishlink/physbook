@@ -113,8 +113,17 @@ class PaniersAdminController extends Controller
             if (empty($commandes)) {
                 $request->getSession()->getFlashBag()->add(
                     'warning',
-                    "Il n'y a pas encore eu de commandes pour ce panier."
+                    "Il n'y a pas eu de commandes pour ce panier."
                 );
+
+                if ($download) {
+                    // on arrête les commandes
+                    if ($panier->getValid()) {
+                        $panier->setValid(false);
+                        $em->persist($panier);
+                        $em->flush();
+                    }
+                }
 
                 return $this->redirect($this->generateUrl('pjm_app_admin_boquette_paniers_index'));
             }
@@ -129,19 +138,8 @@ class PaniersAdminController extends Controller
                 $tableau[] = $row;
             }
 
-            /*
-             * Si on veut télécharger le fichier Excel
-             * alors on arrête les commandes de ce panier
-             * et on fait télécharger le fichier
-             */
+            // Si on veut télécharger le fichier Excel
             if ($download) {
-                // on arrête les commandes
-                if ($panier->getValid()) {
-                    $panier->setValid(false);
-                    $em->persist($panier);
-                    $em->flush();
-                }
-
                 // on appelle le service PHPExcel
                 $excel = $this->get('pjm.services.excel');
                 $excel->create($panier->getLibelle());
