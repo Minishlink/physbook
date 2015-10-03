@@ -28,34 +28,48 @@ class HistoriqueManager
      * @param bool $flush
      * @return bool
      */
-    public function paiement(User $user, Item $item, $flush = true)
+    public function paiement(User $user, Item $item, $verifyEnoughMoney = false, $flush = true)
     {
+        if ($verifyEnoughMoney &&
+            null === $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteAndMinSolde($user, $item->getBoquette(), $item->getPrix())) {
+            $this->notification->sendFlash(
+                'danger',
+                'Tu n\'as pas assez d\'argent sur ton compte '.$item->getBoquette()->getNom().' pour acheter '.$item->getLibelle().'.'
+            );
+
+            return false;
+        }
+
         $historique = new Historique();
         $historique->setItem($item);
         $historique->setUser($user);
         $historique->setValid(null);
 
-        // on met à jour le solde du compte associé sur la base R&z@l
-        $status = $this->rezal->debiteSolde(
-            $historique->getUser(),
-            $historique->getPrix()
-        );
+        // si la boquette concernée débite sur le R&zal
+        if (in_array($item->getBoquette()->getSlug(), array('pians', 'cvis'))) {
+            // on met à jour le solde du compte associé sur la base R&z@l
+            $status = $this->rezal->debiteSolde(
+                $historique->getUser(),
+                $historique->getPrix()
+            );
 
-        // si une erreur survient
-        if ($status !== true) {
-            $historique->setValid(false);
-            $this->em->persist($historique);
+            // si une erreur survient
+            if ($status !== true) {
+                $historique->setValid(false);
+                $this->em->persist($historique);
 
-            if ($flush) {
-                $this->em->flush();
+                if ($flush) {
+                    $this->em->flush();
+                }
+
+                // TODO notification échec user + harpag's
+
+                return false;
             }
 
-            // TODO notification échec user + harpag's
-
-            return false;
+            // si pas d'erreur coté R&z@l, débiter compte
         }
 
-        // si pas d'erreur coté R&z@l, débiter compte
         $historique->setValid(true);
         $this->em->persist($historique);
 

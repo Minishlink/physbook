@@ -167,7 +167,7 @@ class EvenementManager
         // on fait payer chaque inscrit
         $success = 0;
         foreach ($inscrits as $inscrit) {
-            $success += $this->historiqueManager->paiement($inscrit, $item, false);
+            $success += $this->historiqueManager->paiement($inscrit, $item, false, false);
         }
 
         if (!$success) {

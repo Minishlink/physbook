@@ -38,37 +38,18 @@ class PaniersController extends Controller
 
     public function commanderAction(Request $request)
     {
-        $paniersService = $this->get('pjm.services.boquette.paniers');
         // on va chercher le dernier panier
-        $panier = $paniersService->getCurrentPanier();
+        $panier = $this->get('pjm.services.boquette.paniers')->getCurrentPanier();
 
         // si le panier est bien actif
         if (isset($panier) && $panier->getValid()) {
             // on vérifie si l'utilisateur n'a pas déjà commandé un panier
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Historique');
-            $commandes = $repository->findByUserAndItem($this->getUser(), $panier);
+            $commandes = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Historique')->findByUserAndItem($this->getUser(), $panier);
             if (empty($commandes)) {
-                // on vérifie que l'utilisateur ait assez d'argent
-                $repository = $em->getRepository('PJMAppBundle:Compte');
-                if (null !== $repository->findOneByUserAndBoquetteAndMinSolde($this->getUser(), $panier->getBoquette(), $panier->getPrix())) {
-                    // on enregistre dans l'historique
-                    $achat = new Historique();
-                    $achat->setUser($this->getUser());
-                    $achat->setItem($panier);
-                    $achat->setValid(true);
-
-                    $em->persist($achat);
-                    $em->flush();
-
+                if ($this->get('pjm.services.historique_manager')->paiement($this->getUser(), $panier, true)) {
                     $request->getSession()->getFlashBag()->add(
                         'success',
                         'Le panier a été commandé. Tu pourras le récupérer chez le ZiPaniers ou dans le local du C\'vis. N\'oublie pas ce jour-là d\'indiquer que tu l\'as récupéré en signant la feuille de reçu.'
-                    );
-                } else {
-                    $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        'Tu n\'as pas assez d\'argent sur ton compte.'
                     );
                 }
             } else {
