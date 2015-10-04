@@ -54,8 +54,8 @@ services:
             class: PJM\AppBundle\Services\Consos\TransfertManager
             arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
     pjm.services.notification:
-                class: PJM\AppBundle\Services\Notification
-                arguments: [@request_stack, @pjm.services.push]
+                class: PJM\AppBundle\Services\NotificationManager
+                arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]

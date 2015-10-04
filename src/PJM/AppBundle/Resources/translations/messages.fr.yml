@@ -1,0 +1,6 @@
+notifications:
+  content:
+    bank:
+      money:
+        buy:
+          item: Tu as été débité de <strong>%prix%€</strong> pour l'achat de <strong>%item%</strong>.

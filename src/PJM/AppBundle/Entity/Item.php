@@ -148,11 +148,21 @@ class Item
     /**
      * Get prix.
      *
-     * @return int
+     * @return int cents
      */
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Show prix.
+     *
+     * @return int euros
+     */
+    public function showPrix()
+    {
+        return $this->prix/100;
     }
 
     /**

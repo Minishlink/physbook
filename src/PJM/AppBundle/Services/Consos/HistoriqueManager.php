@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use PJM\AppBundle\Services\Rezal;
 
 class HistoriqueManager
@@ -15,7 +15,7 @@ class HistoriqueManager
     private $notification;
     private $rezal;
 
-    public function __construct(EntityManager $em, Notification $notification, Rezal $rezal)
+    public function __construct(EntityManager $em, NotificationManager $notification, Rezal $rezal)
     {
         $this->em = $em;
         $this->notification = $notification;
@@ -77,7 +77,12 @@ class HistoriqueManager
             $this->em->flush();
         }
 
-        // TODO notification achat user (+ alerte négats)
+        $this->notification->send('bank.money.buy.item', array(
+            'item' => $item->getLibelle(),
+            'prix' => $item->showPrix(),
+        ), $user, $flush);
+
+        // TODO si négat's, send notification
 
         return true;
     }

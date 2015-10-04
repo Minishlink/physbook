@@ -157,6 +157,11 @@ class User extends BaseUser
     private $pushSubscriptions;
 
     /**
+     * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Notifications\Notification", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     **/
+    private $notifications;
+
+    /**
      * Réglages des notifications.
      *
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
@@ -715,5 +720,40 @@ class User extends BaseUser
         }
 
         return $this->reglagesNotifications;
+    }
+
+    /**
+     * Add notification
+     *
+     * @param \PJM\AppBundle\Entity\Notifications\Notification $notification
+     *
+     * @return User
+     */
+    public function addNotification(\PJM\AppBundle\Entity\Notifications\Notification $notification)
+    {
+        $notification->setUser($this);
+        $this->notifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification
+     *
+     * @param \PJM\AppBundle\Entity\Notifications\Notification $notification
+     */
+    public function removeNotification(\PJM\AppBundle\Entity\Notifications\Notification $notification)
+    {
+        $this->notifications->removeElement($notification);
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }
