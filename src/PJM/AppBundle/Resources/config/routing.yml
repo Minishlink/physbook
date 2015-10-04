@@ -42,6 +42,10 @@ pjm_app_push:
     resource: "@PJMAppBundle/Resources/config/Push/routing.yml"
     prefix:   /push
 
+pjm_app_notifications:
+    resource: "@PJMAppBundle/Resources/config/Notifications/routing.yml"
+    prefix:   /notifications
+
 pjm_app_admin:
     resource: "@PJMAppBundle/Resources/config/Admin/routing.yml"
     prefix:   /admin

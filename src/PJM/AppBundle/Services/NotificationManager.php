@@ -69,4 +69,29 @@ class NotificationManager
     {
         $this->push->sendNotificationToUser($user, $message, $type);
     }
+
+    public function get(User $user)
+    {
+        $notifications = $user->getNotifications();
+
+        // on remplace les infos par %infos%
+        $notifications = $notifications->map(function(Notification $notification) {
+            $infos = $notification->getInfos();
+
+            $newKeys = array_map(function($k) {
+                return "%".$k."%";
+            }, array_keys($infos));
+
+            $notification->setInfos(array_combine(
+                    $newKeys,
+                    array_values($infos)
+            ));
+
+            return $notification;
+        });
+
+        // TODO on vérifie que l'utilisateur est abonné ou non à chaque type de notification, et si oui on indique "important"
+
+        return $notifications;
+    }
 }

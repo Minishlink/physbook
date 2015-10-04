@@ -1,0 +1,4 @@
+pjm_app_notifications_index:
+    path:     /
+    methods: [ get ]
+    defaults: { _controller: PJMAppBundle:Notifications:index }
