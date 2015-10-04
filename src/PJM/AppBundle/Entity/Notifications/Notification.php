@@ -57,11 +57,29 @@ class Notification
      */
     private $date;
 
+    /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $path;
+
+    /**
+     * @var boolean
+     */
+    private $important;
+
 
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->received = false;
+        $this->important = false;
+        $this->path = "";
+        $this->type = "";
     }
 
     /**
@@ -192,5 +210,53 @@ class Notification
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isImportant()
+    {
+        return $this->important;
+    }
+
+    /**
+     * @param boolean $important
+     */
+    public function setImportant($important)
+    {
+        $this->important = $important;
     }
 }

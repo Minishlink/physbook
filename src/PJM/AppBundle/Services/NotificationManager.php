@@ -74,8 +74,8 @@ class NotificationManager
     {
         $notifications = $user->getNotifications();
 
-        // on remplace les infos par %infos%
         $notifications = $notifications->map(function(Notification $notification) {
+            // on remplace les infos par %infos%
             $infos = $notification->getInfos();
 
             $newKeys = array_map(function($k) {
@@ -87,10 +87,16 @@ class NotificationManager
                     array_values($infos)
             ));
 
+            // on ajoute le type et le path
+            $notificationType = $this->notificationsList[$notification->getKey()];
+
+            $notification->setType($notificationType['type']);
+            $notification->setPath($notificationType['path']);
+
+            // TODO on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
+
             return $notification;
         });
-
-        // TODO on vérifie que l'utilisateur est abonné ou non à chaque type de notification, et si oui on indique "important"
 
         return $notifications;
     }

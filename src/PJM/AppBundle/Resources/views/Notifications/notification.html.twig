@@ -1,1 +1,9 @@
-{{ ("notifications.content." ~ notification.key)|trans(notification.infos)|purify }}<br>
+{% set content %}[{{ notification.type }}] {{ ("notifications.content." ~ notification.key)|trans(notification.infos)|purify }}{% endset %}
+
+{% if notification.path != "" %}
+    <a href="{{ path(notification.path) }}">{{ content }}</a>
+{% else %}
+    {{ content }}
+{% endif %}
+<br>
+
