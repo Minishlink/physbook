@@ -5,7 +5,6 @@ namespace PJM\AppBundle\Controller\Consos;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use PJM\AppBundle\Entity\Historique;
 
 class PaniersController extends Controller
 {
