@@ -31,7 +31,7 @@ class Notification
     private $key;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="notifications")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

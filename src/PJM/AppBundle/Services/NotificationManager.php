@@ -83,8 +83,8 @@ class NotificationManager
             }, array_keys($infos));
 
             $notification->setInfos(array_combine(
-                    $newKeys,
-                    array_values($infos)
+                $newKeys,
+                array_values($infos)
             ));
 
             // on ajoute le type et le path
