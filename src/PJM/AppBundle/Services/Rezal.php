@@ -40,6 +40,10 @@ class Rezal
         $keys = array('fams', 'tabagns', 'proms');
         $values = preg_split('/(bo|li|an|me|ch|cl|ai|ka|pa)/', $user->getUsername(), 0, PREG_SPLIT_DELIM_CAPTURE);
 
+        if (count($values) != 3 || empty($values[0])) { // si on n'arrive pas à parser on essaye avec juste le username
+            $values = array($user->getUsername(), '', '');
+        }
+
         return array_combine($keys, $values);
     }
 
