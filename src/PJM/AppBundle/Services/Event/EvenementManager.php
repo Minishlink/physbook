@@ -196,19 +196,21 @@ class EvenementManager
             return false;
         }
 
-        // on crédite le créateur
-        $compteCreateur = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($event->getCreateur(), 'pians');
-        $transaction = $this->transactionManager->create($compteCreateur, $event->getPrix()*count($inscrits), 'event');
-        $transaction->setStatus('OK');
-        $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
-        $this->transactionManager->traiter($transaction);
-        $this->em->persist($transaction);
+        if (!$event->isMajeur()) {
+            // on crédite le créateur
+            $compteCreateur = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($event->getCreateur(), 'pians');
+            $transaction = $this->transactionManager->create($compteCreateur, $event->getPrix()*count($inscrits), 'event');
+            $transaction->setStatus('OK');
+            $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
+            $this->transactionManager->traiter($transaction);
+            $this->em->persist($transaction);
+        }
 
         $this->em->flush();
 
         $this->notification->sendFlash(
             'success',
-            'L\'évènement '.$event->getNom().' a été débité sur les comptes des inscrits et crédité sur le compte de l\'organisateur.'
+            'L\'évènement '.$event->getNom().' a été débité sur les comptes des inscrits'.($event->isMajeur() ? '' : ' et crédité sur le compte de l\'organisateur').'.'
         );
 
         return true;
