@@ -215,4 +215,14 @@ class EvenementManager
 
         return true;
     }
+
+    public function checkPassageMajeur(Evenement $event, $limit)
+    {
+        if (!$event->isMajeur()) {
+            if ($this->em->getRepository('PJMAppBundle:Event\Invitation')->countParticipations($event) > $limit) {
+                $event->setMajeur(true);
+                $this->persist($event);
+            }
+        }
+    }
 }

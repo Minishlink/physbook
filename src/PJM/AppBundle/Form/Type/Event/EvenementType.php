@@ -43,7 +43,8 @@ class EvenementType extends AbstractType
                 'label' => 'Evènement majeur',
                 'help_label' => 'Un évènement majeur concerne beaucoup de personnes et est important (ex. grosses manips) : le débit sera effectué par un Harpag\'s après vérification des factures.
                 Un évènement mineur concerne la plupart du temps un petit groupe de personnes et est souvent un évènement privé (ex. fin\'s entre chicop\'s) : le débit pourra être effectué par l\'organisateur et celui-ci sera crédité directement.
-                Les Harpag\'s peuvent rendre un évènement mineur majeur, et vice-versa s\'il a été défini majeur par inadvertance.',
+                Les Harpag\'s peuvent rendre un évènement mineur majeur, et vice-versa s\'il a été défini majeur par inadvertance.
+                Un évènement mineur deviendra majeur automatiquement lorsqu\'il y a plus de 10 participants.',
                 'required' => false,
             ))
             ->add('boquette', new BoquetteByResponsableType(array('user' => $options['user'])))
