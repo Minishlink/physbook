@@ -39,7 +39,7 @@ class Item
     /**
      * @var int
      *
-     * @ORM\Column(name="prix", type="smallint")
+     * @ORM\Column(name="prix", type="integer")
      */
     private $prix;
 
