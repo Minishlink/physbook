@@ -6,14 +6,14 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Event\Invitation;
 use PJM\AppBundle\Entity\User;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 
 class InvitationManager
 {
     private $em;
     private $notification;
 
-    public function __construct(EntityManager $em, Notification $notification)
+    public function __construct(EntityManager $em, NotificationManager $notification)
     {
         $this->em = $em;
         $this->notification = $notification;

@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Services\Consos;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Consos\Transfert;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use PJM\AppBundle\Services\Rezal;
 
 class TransfertManager
@@ -13,7 +13,7 @@ class TransfertManager
     private $notification;
     private $rezal;
 
-    public function __construct(EntityManager $em, Notification $notification, Rezal $rezal)
+    public function __construct(EntityManager $em, NotificationManager $notification, Rezal $rezal)
     {
         $this->em = $em;
         $this->notification = $notification;
