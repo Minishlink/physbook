@@ -25,7 +25,7 @@ class Compte
     /**
      * @var int
      *
-     * @ORM\Column(name="solde", type="smallint")
+     * @ORM\Column(name="solde", type="integer")
      */
     private $solde;
 
