@@ -14,12 +14,14 @@ class NotificationManager
     private $requestStack;
     private $push;
     private $notificationsList;
+    private $mailer;
 
-    public function __construct(EntityManager $em, RequestStack $requestStack, Push $push)
+    public function __construct(EntityManager $em, RequestStack $requestStack, Push $push, Mailer $mailer)
     {
         $this->em = $em;
         $this->requestStack = $requestStack;
         $this->push = $push;
+        $this->mailer = $mailer;
         $this->notificationsList = NotificationEnum::$list;
     }
 
@@ -68,6 +70,10 @@ class NotificationManager
     public function sendPushToUser(User $user, $message, $type)
     {
         $this->push->sendNotificationToUser($user, $message, $type);
+    }
+
+    public function sendMessageToEmail($message, $email) {
+        $this->mailer->sendMessageToEmail($message, $email);
     }
 
     public function get(User $user)

@@ -4,3 +4,4 @@ notifications:
       money:
         buy:
           item: Tu as été débité de <strong>%prix%€</strong> pour l'achat de <strong>%item%</strong>.
+        negats: Tu es en négat's de <strong>%montant%€</strong> sur ton compte <strong>%boquette%</strong>.

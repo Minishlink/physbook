@@ -17,6 +17,11 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('item', 'prix')
         ),
+        'bank.money.negats' => array(
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant')
+        ),
     );
 
     public function getKeys() {

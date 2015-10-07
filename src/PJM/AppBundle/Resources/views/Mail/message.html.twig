@@ -1,0 +1,20 @@
+{# src/PJM/AppBundle/Resources/views/Mail/message.html.twig #}
+
+{% extends "PJMAppBundle:Mail:layout.html.twig" %}
+
+{% block subject %}{{ parent() }} Notification importante{% endblock %}
+
+{% block content_text %}
+    Sal's, tu as reçu cette notification importante :
+
+    {{ message }}
+{% endblock %}
+
+{% block content_html %}
+    <h2>Notification importante</h2>
+
+    <h3>Sal's,</h3>
+    <p>Tu as reçu cette notification importante :</p>
+
+    <p>{{ message }}</p>
+{% endblock %}
