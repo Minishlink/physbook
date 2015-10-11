@@ -22,11 +22,11 @@ class TransfertManager
 
     /**
      * @param Transfert $transfert
+     * @param bool $flush
      * @return Transfert
      */
-    public function traiter(Transfert $transfert)
+    public function traiter(Transfert $transfert, $flush = true)
     {
-        // TODO notification destinataire
         // on met à jour le solde des comptes associés sur la base Phy'sbook
         $transfert->finaliser();
 
@@ -80,6 +80,28 @@ class TransfertManager
                     }
                 }
             }
+        }
+
+        $this->em->persist($transfert);
+
+        if ($flush) {
+            $this->em->flush();
+        }
+
+        if ($transfert->getStatus() === 'OK') {
+            // notifier réceptionneur
+            $this->notification->send('bank.money.transfert.reception', array(
+                'boquette' => $transfert->getReceveur()->getBoquette()->getNom(),
+                'montant' => $transfert->showMontant(),
+                'user' => $transfert->getEmetteur()->getUser(),
+            ), $transfert->getReceveur()->getUser(), $flush);
+
+            // notifier émetteur
+            $this->notification->send('bank.money.transfert.envoi', array(
+                'boquette' => $transfert->getReceveur()->getBoquette()->getNom(),
+                'montant' => $transfert->showMontant(),
+                'user' => $transfert->getReceveur()->getUser(),
+            ), $transfert->getEmetteur()->getUser(), $flush);
         }
 
         return $transfert;

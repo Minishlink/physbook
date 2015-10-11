@@ -144,6 +144,14 @@ class Transfert
     }
 
     /**
+     * @return string
+     */
+    public function showMontant()
+    {
+        return (string) ($this->getMontant() / 100);
+    }
+
+    /**
      * Set raison.
      *
      * @param string $raison

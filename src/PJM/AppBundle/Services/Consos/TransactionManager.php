@@ -67,25 +67,26 @@ class TransactionManager
 
             // s'il n'y a pas eu d'erreur avant
             if ($transaction->getStatus() == 'OK') {
-                // on notifie que la transaction a été réalisée
-                $this->notification->send('bank.money.transaction', array(
-                    'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
-                    'montant' => $transaction->showMontant(),
-                ), $transaction->getCompte()->getUser(), false);
-
                 // si on fait un crédit pour quelqu'un d'autre
                 // le compte lie et le compte sont déjà inversés (voir Entité)
                 if (null !== $transaction->getCompteLie()) {
                     // on effectue le transfert vers compteLie
                     $transfert = new Transfert($transaction);
-                    $this->transfertManager->traiter($transfert);
-                    $this->em->persist($transfert);
+                    $this->transfertManager->traiter($transfert, false);
                 }
             }
         }
 
         $this->em->persist($transaction);
         $this->em->flush();
+
+        if ($transaction->getStatus() == 'OK') {
+            // on notifie que si la transaction a été réalisée
+            $this->notification->send('bank.money.transaction', array(
+                'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
+                'montant' => $transaction->showMontant(),
+            ), $transaction->getCompte()->getUser());
+        }
 
         return isset($transfert) ? $transfert : $transaction;
     }

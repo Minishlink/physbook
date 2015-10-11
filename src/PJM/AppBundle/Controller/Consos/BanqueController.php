@@ -65,9 +65,6 @@ class BanqueController extends Controller
 
                     $this->get('pjm.services.transfert_manager')->traiter($transfert);
 
-                    $em->persist($transfert);
-                    $em->flush();
-
                     if ($transfert->getStatus() == 'OK') {
                         $success = true;
 

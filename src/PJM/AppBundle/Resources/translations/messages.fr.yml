@@ -2,6 +2,9 @@ notifications:
   content:
     bank:
       money:
-        achat: Tu as été débité de <strong>%prix%€</strong> pour l'achat de <strong>%item%</strong>.
-        negats: Tu es en négat's de <strong>%montant%€</strong> sur ton compte <strong>%boquette%</strong>.
-        transaction: Une transaction de <strong>%montant%€</strong> a été effectuée sur ton compte <strong>%boquette%</strong>.
+        achat: Tu as été débité de <span class="info">%prix%€</span> pour l'achat de <span class="info">%item%</span>.
+        negats: Tu es en négat's de <span class="info">%montant%€</span> sur ton compte <span class="info">%boquette%</span>.
+        transaction: Une transaction de <span class="info">%montant%€</span> a été effectuée sur ton compte <span>%boquette%</span>.
+        transfert:
+          envoi: Tu as envoyé <span class="info">%montant%€</span> à <span class="info">%user%</span> depuis ton compte <span class="info">%boquette%</span>.
+          reception: Tu as reçu <span class="info">%montant%€</span> de <span class="info">%user%</span> sur ton compte <span class="info">%boquette%</span>.
