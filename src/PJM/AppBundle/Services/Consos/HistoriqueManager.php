@@ -82,7 +82,7 @@ class HistoriqueManager
             $this->em->flush();
         }
 
-        $this->notification->send('bank.money.buy.item', array(
+        $this->notification->send('bank.money.achat', array(
             'item' => $item->getLibelle(),
             'prix' => $item->showPrix(),
         ), $user, $flush);

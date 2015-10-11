@@ -13,7 +13,7 @@ class NotificationEnum
      *    infos = correspond aux variables utilisées dans le message situé dans le fichier des traductions
      */
     public static $list = array(
-        'bank.money.buy.item' => array(
+        'bank.money.achat' => array(
             'titre' => 'Achat d\'un item',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',

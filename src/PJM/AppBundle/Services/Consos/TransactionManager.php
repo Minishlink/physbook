@@ -70,7 +70,7 @@ class TransactionManager
                 // on notifie que la transaction a été réalisée
                 $this->notification->send('bank.money.transaction', array(
                     'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
-                    'montant' => (($transaction->getMoyenPaiement() == 'operation') ? '-' : '').$transaction->getMontant(),
+                    'montant' => $transaction->showMontant(),
                 ), $transaction->getCompte()->getUser(), false);
 
                 // si on fait un crédit pour quelqu'un d'autre
