@@ -43,6 +43,24 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant', 'user')
         ),
+        'event.changement.prix' => array(
+            'titre' => 'Changement de prix d\'un évènement',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event', 'prix')
+        ),
+        'event.changement.date' => array(
+            'titre' => 'Changement de date d\'un évènement',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event', 'date')
+        ),
+        'event.suppression' => array(
+            'titre' => 'Suppression d\'un évènement',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event')
+        ),
     );
 
     public function getKeys() {

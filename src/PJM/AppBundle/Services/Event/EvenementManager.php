@@ -10,6 +10,8 @@ use PJM\AppBundle\Services\Consos\HistoriqueManager;
 use PJM\AppBundle\Services\Consos\TransactionManager;
 use PJM\AppBundle\Services\NotificationManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class EvenementManager
 {
@@ -77,20 +79,41 @@ class EvenementManager
             'L\'évènement '.$event->getNom().' a été modifié.'
         );
 
-        // TODO envoyer notifications aux invités
+        // envoyer notifications aux invités
+        $invites = array_merge($event->getInvites(true), $event->getInvites(null));
+
+        if ($event->getDateDebut() != $oldEvent->getDateDebut()) {
+            $this->notification->send('event.changement.date', array(
+                'event' => $event->getNom(),
+                'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+            ), $invites);
+        }
+
+        if ($event->getPrix() != $oldEvent->getPrix()) {
+            $this->notification->send('event.changement.prix', array(
+                'event' => $event->getNom(),
+                'prix' => $event->showPrix(),
+            ), $invites);
+        }
     }
 
     public function remove(Evenement $event)
     {
+        $inscrits = $event->getInvites(true);
+
         $this->em->remove($event);
-        $this->em->flush();
 
         $this->notification->sendFlash(
             'success',
             'L\'évènement '.$event->getNom().' a été supprimé.'
         );
 
-        // TODO envoyer notifications aux inscrits
+        if (new \DateTime() < $event->getDateFin()) {
+            // envoyer notifications aux inscrits
+            $this->notification->send('event.suppression', array(
+                'event' => $event->getNom(),
+            ), $inscrits);
+        }
     }
 
     public function get(Evenement $event = null, User $user, $nombreMax)

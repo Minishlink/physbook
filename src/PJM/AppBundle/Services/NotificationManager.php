@@ -25,8 +25,14 @@ class NotificationManager
         $this->notificationsList = NotificationEnum::$list;
     }
 
-    public function send($key, $infos, User $user, $flush = true)
-    {
+    /**
+     * @param $key
+     * @param $infos
+     * @param array|User $users
+     * @param bool|true $flush
+     * @return bool
+     */
+    public function send($key, $infos, $users, $flush = true) {
         $notificationType = isset($this->notificationsList[$key]) ? $this->notificationsList[$key] : null;
 
         // on vérifie que ce type de notification existe
@@ -40,24 +46,31 @@ class NotificationManager
             return false;
         }
 
-        // on enregistre la notification en BDD
-        $notification = new Notification();
-        $notification->setKey($key);
-        $notification->setInfos($infos);
-        $user->addNotification($notification);
-
-        // on regarde si l'utilisateur a plus de 50 notifications, si oui on supprime la première
-        if (count($user->getNotifications()) > 50) {
-            $user->removeNotification($user->getNotifications()->first());
+        if ($users instanceof User) {
+            $users = array($users);
         }
 
-        $this->em->persist($user);
+        /** @var User $user */
+        foreach($users as $user) {
+            // on enregistre la notification en BDD
+            $notification = new Notification();
+            $notification->setKey($key);
+            $notification->setInfos($infos);
+            $user->addNotification($notification);
 
-        // si l'utilisateur est abonné à ce type de notification, on envoit un push
-        $settings = $user->getNotificationSettings();
-        if ($settings->has($notificationType['type'])) {
-            // pour l'instant il n'y a pas de payload dans une notification Push, donc on passe la clé en argument
-            $this->sendPushToUser($user, $key);
+            // on regarde si l'utilisateur a plus de 50 notifications, si oui on supprime la première
+            if (count($user->getNotifications()) > 50) {
+                $user->removeNotification($user->getNotifications()->first());
+            }
+
+            $this->em->persist($user);
+
+            // si l'utilisateur est abonné à ce type de notification, on envoit un push
+            $settings = $user->getNotificationSettings();
+            if ($settings->has($notificationType['type'])) {
+                // pour l'instant il n'y a pas de payload dans une notification Push, donc on passe la clé en argument
+                $this->sendPushToUser($user, $key);
+            }
         }
 
         if ($flush) {

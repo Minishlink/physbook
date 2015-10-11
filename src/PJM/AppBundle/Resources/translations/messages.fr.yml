@@ -8,3 +8,8 @@ notifications:
         transfert:
           envoi: Tu as envoyé <span class="info">%montant%€</span> à <span class="info">%user%</span> depuis ton compte <span class="info">%boquette%</span>.
           reception: Tu as reçu <span class="info">%montant%€</span> de <span class="info">%user%</span> sur ton compte <span class="info">%boquette%</span>.
+    event:
+      changement:
+        date: L'évènement <span class="info">%event%</span> a maintenant lieu le <span class="info">%date%</span>.
+        prix: Le prix de l'évènement <span class="info">%event%</span> est passé à <span class="info">%prix%€</span>.
+      suppression: L'évènement <span class="info">%event%</span> a été supprimé.

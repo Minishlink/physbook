@@ -91,7 +91,7 @@ class Evenement
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Item", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Item", cascade={"persist"})
      * @Assert\Valid()
      **/
     private $item;
@@ -490,6 +490,14 @@ class Evenement
     }
 
     /**
+     * @return string
+     */
+    public function showPrix()
+    {
+        return (string) ($this->getPrix() / 100);
+    }
+
+    /**
      * Set majeur.
      *
      * @param bool $majeur
@@ -551,6 +559,7 @@ class Evenement
     {
         $invites = array();
 
+        /** @var Invitation $invitation */
         foreach ($this->invitations as $invitation) {
             if ($invitation->getEstPresent() === $statut || $tous) {
                 $invites[] = $invitation->getInvite();
