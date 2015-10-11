@@ -57,7 +57,7 @@ class Transaction
     /**
      * @var int
      *
-     * @ORM\Column(name="montant", type="smallint")
+     * @ORM\Column(name="montant", type="integer")
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(
      *      value = 0,
@@ -209,30 +209,6 @@ class Transaction
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set caisseSMoney.
-     *
-     * @param string $caisseSMoney
-     *
-     * @return Transaction
-     */
-    public function setCaisseSMoney($caisseSMoney)
-    {
-        $this->caisseSMoney = $caisseSMoney;
-
-        return $this;
-    }
-
-    /**
-     * Get caisseSMoney.
-     *
-     * @return string
-     */
-    public function getCaisseSMoney()
-    {
-        return $this->caisseSMoney;
     }
 
     /**

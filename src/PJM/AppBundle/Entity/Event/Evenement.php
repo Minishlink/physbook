@@ -124,7 +124,7 @@ class Evenement
     /**
      * @var int
      *
-     * @ORM\Column(name="prix", type="smallint"))
+     * @ORM\Column(name="prix", type="integer"))
      * @Assert\GreaterThanOrEqual(
      *      value = 0,
      *      message = "Le prix doit être supérieur ou égal à 0€."
