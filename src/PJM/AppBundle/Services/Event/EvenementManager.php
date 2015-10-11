@@ -10,8 +10,6 @@ use PJM\AppBundle\Services\Consos\HistoriqueManager;
 use PJM\AppBundle\Services\Consos\TransactionManager;
 use PJM\AppBundle\Services\NotificationManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class EvenementManager
 {
