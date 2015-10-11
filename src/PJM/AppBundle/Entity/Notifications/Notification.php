@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Notification
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="NotificationRepository", )
  */
 class Notification
 {

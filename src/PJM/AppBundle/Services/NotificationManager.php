@@ -129,4 +129,23 @@ class NotificationManager
 
         return $notifications;
     }
+
+    /**
+     * @param User $user
+     */
+    public function markAllAsRead(User $user)
+    {
+        $notifications = $this->em->getRepository("PJMAppBundle:Notifications\Notification")->findBy(array(
+            'user' => $user,
+            'received' => false,
+        ));
+
+        /** @var Notification $notification */
+        foreach ($notifications as $notification) {
+            $notification->setReceived(true);
+            $this->em->persist($notification);
+        }
+
+        $this->em->flush();
+    }
 }

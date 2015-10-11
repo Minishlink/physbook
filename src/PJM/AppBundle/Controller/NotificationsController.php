@@ -16,6 +16,7 @@ class NotificationsController extends Controller
      */
     public function indexAction() {
         $notificationManager = $this->get('pjm.services.notification');
+        $notificationManager->markAllAsRead($this->getUser());
         $notifications = $notificationManager->get($this->getUser());
         return array(
             'notifications' => $notifications
@@ -24,6 +25,15 @@ class NotificationsController extends Controller
 
     public function extraitAction() {
 
+    }
+
+    /**
+     * @Template
+     */
+    public function navAction() {
+        return array(
+            'nbNotReceived' => $this->getDoctrine()->getRepository('PJMAppBundle:Notifications\Notification')->countNotReceived($this->getUser())
+        );
     }
 
     /**
