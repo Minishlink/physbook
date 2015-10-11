@@ -29,7 +29,6 @@ class TransactionManager
      */
     public function traiter(Transaction $transaction)
     {
-        // TODO notification
         if ($transaction->getStatus() == 'OK') {
             // si la transaction est bonne
             // on met à jour le solde du compte associé sur la base Phy'sbook
@@ -66,22 +65,29 @@ class TransactionManager
                 }
             }
 
-            if (null !== $transaction->getCompteLie()) {
+            // s'il n'y a pas eu d'erreur avant
+            if ($transaction->getStatus() == 'OK') {
+                // on notifie que la transaction a été réalisée
+                $this->notification->send('bank.money.transaction', array(
+                    'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
+                    'montant' => (($transaction->getMoyenPaiement() == 'operation') ? '-' : '').$transaction->getMontant(),
+                ), $transaction->getCompte()->getUser(), false);
+
                 // si on fait un crédit pour quelqu'un d'autre
                 // le compte lie et le compte sont déjà inversés (voir Entité)
-                if ($transaction->getStatus() == 'OK') {
-                    // s'il n'y a pas eu d'erreur avant
+                if (null !== $transaction->getCompteLie()) {
                     // on effectue le transfert vers compteLie
                     $transfert = new Transfert($transaction);
                     $this->transfertManager->traiter($transfert);
                     $this->em->persist($transfert);
-
-                    return $transfert;
                 }
             }
         }
 
-        return $transaction;
+        $this->em->persist($transaction);
+        $this->em->flush();
+
+        return isset($transfert) ? $transfert : $transaction;
     }
 
     public function create($compte, $montant, $moyenPaiement)

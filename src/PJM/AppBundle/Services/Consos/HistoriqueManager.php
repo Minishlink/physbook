@@ -87,7 +87,6 @@ class HistoriqueManager
             'prix' => $item->showPrix(),
         ), $user, $flush);
 
-
         if (!$verifyEnoughMoney) {
             $compte = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($user, $item->getBoquette()->getSlug());
             if ($compte->getSolde() < 0) {

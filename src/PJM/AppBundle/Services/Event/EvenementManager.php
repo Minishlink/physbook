@@ -202,7 +202,6 @@ class EvenementManager
         $transaction->setStatus('OK');
         $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
         $this->transactionManager->traiter($transaction);
-        $this->em->persist($transaction);
 
         $this->em->flush();
 

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use PJM\AppBundle\Entity\PushSubscription;
-use PJM\AppBundle\Form\Type\NotificationSettingsType;
 
 class PushController extends Controller
 {
@@ -73,16 +72,11 @@ class PushController extends Controller
         );
 
         if (empty($subscription['id']) && empty($subscription['endpoint'])) {
-            $json = array(
+            return new JsonResponse(array(
                 'success' => false,
                 'done' => $action,
                 'subscription' => $subscription,
-            );
-
-            $response = new JsonResponse();
-            $response->setData($json);
-
-            return $response;
+            ));
         }
 
         // on va chercher la pushSubscription avec le même subscriptionId et endpoint
@@ -126,23 +120,10 @@ class PushController extends Controller
             }
         }
 
-        $json = array(
+        return new JsonResponse(array(
             'success' => true,
             'done' => $action,
             'subscription' => $subscription,
-        );
-
-        $response = new JsonResponse();
-        $response->setData($json);
-
-        return $response;
-    }
-
-    public function sendNotificationAction(Request $request)
-    {
-        $push = $this->get('pjm.services.push');
-        $push->sendNotificationToUser($this->getUser(), 'test');
-
-        return new Response('OK');
+        ));
     }
 }

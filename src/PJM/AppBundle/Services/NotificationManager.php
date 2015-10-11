@@ -35,6 +35,7 @@ class NotificationManager
         }
 
         // on vérifie qu'il y a les bonnes infos pour remplir le message
+        // attention là il faut mettre les clés dans le bon ordre aussi...
         if ($notificationType['infos'] != array_keys($infos)) {
             return false;
         }

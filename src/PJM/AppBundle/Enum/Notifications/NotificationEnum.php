@@ -25,6 +25,24 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant')
         ),
+        'bank.money.transaction' => array(
+            'titre' => 'Transaction effectuée',
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant')
+        ),
+        'bank.money.transfert.reception' => array(
+            'titre' => 'Transfert reçu',
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant', 'user')
+        ),
+        'bank.money.transfert.envoi' => array(
+            'titre' => 'Transfert envoyé',
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant', 'user')
+        ),
     );
 
     public function getKeys() {
