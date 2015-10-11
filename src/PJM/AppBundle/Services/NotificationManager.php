@@ -52,8 +52,12 @@ class NotificationManager
 
         $this->em->persist($user);
 
-        // TODO si l'utilisateur est abonné à ce type de notification, on envoit un push
-        // si notificationType['type'] dans tableau des notifications abonnées de l'utilisateur, on envoit
+        // si l'utilisateur est abonné à ce type de notification, on envoit un push
+        $settings = $user->getNotificationSettings();
+        if ($settings->has($notificationType['type'])) {
+            // pour l'instant il n'y a pas de payload dans une notification Push, donc on passe la clé en argument
+            $this->sendPushToUser($user, $key);
+        }
 
         if ($flush) {
             $this->em->flush();
@@ -67,9 +71,9 @@ class NotificationManager
         $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add($type, $message);
     }
 
-    public function sendPushToUser(User $user, $message, $type)
+    public function sendPushToUser(User $user, $message)
     {
-        $this->push->sendNotificationToUser($user, $message, $type);
+        $this->push->sendNotificationToUser($user, $message);
     }
 
     public function sendMessageToEmail($message, $email) {
@@ -79,8 +83,9 @@ class NotificationManager
     public function get(User $user)
     {
         $notifications = $user->getNotifications();
+        $settings = $user->getNotificationSettings();
 
-        $notifications = $notifications->map(function(Notification $notification) {
+        $notifications = $notifications->map(function(Notification $notification) use ($settings) {
             // on remplace les infos par %infos%
             $infos = $notification->getInfos();
 
@@ -99,7 +104,8 @@ class NotificationManager
             $notification->setType($notificationType['type']);
             $notification->setPath($notificationType['path']);
 
-            // TODO on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
+            // on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
+            $notification->setImportant($settings->has($notificationType['type']));
 
             return $notification;
         });

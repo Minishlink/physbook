@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Entity;
 
+use PJM\AppBundle\Entity\Notifications\NotificationSettings;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -164,9 +165,9 @@ class User extends BaseUser
     /**
      * Réglages des notifications.
      *
-     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\ReglagesNotifications", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\Notifications\NotificationSettings", mappedBy="user", cascade={"persist", "remove"})
      **/
-    private $reglagesNotifications;
+    private $notificationSettings;
 
     public function __toString()
     {
@@ -695,31 +696,33 @@ class User extends BaseUser
     }
 
     /**
-     * Set reglagesNotifications.
+     * Set notificationSettings.
      *
-     * @param \PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications
+     * @param NotificationSettings $notificationSettings
      *
      * @return User
      */
-    public function setReglagesNotifications(\PJM\AppBundle\Entity\ReglagesNotifications $reglagesNotifications = null)
+    public function setNotificationSettings(NotificationSettings $notificationSettings = null)
     {
-        $this->reglagesNotifications = $reglagesNotifications;
+        $this->notificationSettings = $notificationSettings;
 
         return $this;
     }
 
     /**
-     * Get reglagesNotifications.
+     * Get notificationSettings.
      *
-     * @return \PJM\AppBundle\Entity\ReglagesNotifications
+     * @return NotificationSettings
      */
-    public function getReglagesNotifications()
+    public function getNotificationSettings()
     {
-        if ($this->reglagesNotifications === null) {
-            return new \PJM\AppBundle\Entity\ReglagesNotifications();
+        if ($this->notificationSettings === null) {
+            $defaultSettings = new NotificationSettings();
+            $defaultSettings->setUser($this);
+            return $defaultSettings;
         }
 
-        return $this->reglagesNotifications;
+        return $this->notificationSettings;
     }
 
     /**
