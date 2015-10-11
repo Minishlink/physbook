@@ -99,14 +99,17 @@ class NotificationManager
                 array_values($infos)
             ));
 
-            // on ajoute le type et le path
-            $notificationType = $this->notificationsList[$notification->getKey()];
 
-            $notification->setType($notificationType['type']);
-            $notification->setPath($notificationType['path']);
+            if (isset($this->notificationsList[$notification->getKey()])) {
+                $notificationType = $this->notificationsList[$notification->getKey()];
 
-            // on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
-            $notification->setImportant($settings->has($notificationType['type']));
+                // on ajoute le type et le path
+                $notification->setType($notificationType['type']);
+                $notification->setPath($notificationType['path']);
+
+                // on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
+                $notification->setImportant($settings->has($notificationType['type']));
+            }
 
             return $notification;
         });
