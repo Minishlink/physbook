@@ -159,6 +159,7 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="PJM\AppBundle\Entity\Notifications\Notification", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"date" = "DESC"})
      **/
     private $notifications;
 
