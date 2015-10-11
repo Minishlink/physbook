@@ -61,6 +61,12 @@ class NotificationEnum
             'path' => 'pjm_app_event_index',
             'infos' => array('event')
         ),
+        'event.invitation' => array(
+            'titre' => 'Invitation à un évènement',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event', 'date')
+        ),
     );
 
     public function getKeys() {

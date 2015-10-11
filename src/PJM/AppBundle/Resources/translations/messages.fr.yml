@@ -13,3 +13,4 @@ notifications:
         date: L'évènement <span class="info">%event%</span> a maintenant lieu le <span class="info">%date%</span>.
         prix: Le prix de l'évènement <span class="info">%event%</span> est passé à <span class="info">%prix%€</span>.
       suppression: L'évènement <span class="info">%event%</span> a été supprimé.
+      invitation: Tu as été invité à l'évènement <span class="info">%event%</span> du <span class="info">%date%</span>.

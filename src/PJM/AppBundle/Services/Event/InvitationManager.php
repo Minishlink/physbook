@@ -81,6 +81,8 @@ class InvitationManager
     }
 
     public function sendInvitations($users, Evenement $event) {
+        $notifUsers = array();
+
         foreach ($users as $user) {
             // on vérifie que c'est un utilisateur
             if ('PJM\AppBundle\Entity\User' == get_class($user)) {
@@ -94,12 +96,17 @@ class InvitationManager
                     $this->em->persist($invitation);
 
                     // on envoit la notification
-                    $this->notification->sendPushToUser($user, 'Invitation à un évènement', 'events');
+                    $notifUsers[] = $user;
                 }
             }
         }
 
         $this->em->flush();
+
+        $this->notification->send('event.invitation', array(
+            'event' => $event->getNom(),
+            'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+        ), $notifUsers);
 
         $this->notification->sendFlash(
             'success',
