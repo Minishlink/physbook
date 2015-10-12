@@ -88,9 +88,7 @@ class RechargementController extends Controller
             $status = $request->request->get('status');
             $errorCode = $request->request->get('errorCode');
 
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('PJMAppBundle:Transaction');
-            $transaction = $repository->findOneById(substr($transactionId, 7));
+            $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
 
             if (isset($transaction)) {
                 if (null === $transaction->getStatus()) {
@@ -105,8 +103,6 @@ class RechargementController extends Controller
                     }
 
                     $this->get('pjm.services.transaction_manager')->traiter($transaction);
-                    $em->persist($transaction);
-                    $em->flush();
 
                     return new Response($transaction->getStatus() === 'OK' ? 'OK' : 'NOK');
                 } else {

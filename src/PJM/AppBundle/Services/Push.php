@@ -19,31 +19,22 @@ class Push
         $this->rms_push_notifications = $rms_push_notifications;
     }
 
-    public function sendNotificationToUsers(ArrayCollection $users, $message, $type = null)
+    public function sendNotificationToUsers(ArrayCollection $users, $message)
     {
         foreach ($users as $user) {
-            $this->sendNotificationToUser($user, $message, $type);
+            $this->sendNotificationToUser($user, $message);
         }
     }
 
     /**
-     * Envoit une Notification Push à l'utilisateur en vérifiant que l'utilisateur a accepté ce type de notification.
+     * Envoit une Notification Push à l'utilisateur.
      *
-     * @param object User $user    L'utilisateur destinataire
-     * @param string      $message Le message "body" de la notification
-     * @param string      $type    Le type de notification
+     * @param User $user L'utilisateur destinataire
+     * @param string $message Le message "body" de la notification
      */
-    public function sendNotificationToUser(User $user, $message, $type = null)
+    public function sendNotificationToUser(User $user, $message)
     {
-        if ($type !== null) {
-            // on vérifie que l'utilisateur accepte ce type de notification
-            $reglages = $user->getReglagesNotifications();
-            if (!$reglages->has($type)) {
-                return;
-            }
-        }
-
-        // aller chercher tous les subscriptionId de l''utilisateur
+        // aller chercher tous les subscriptionId de l'utilisateur
         $subscriptions = $user->getPushSubscriptions();
 
         // on envoit une notif pour chaque
@@ -60,12 +51,12 @@ class Push
 
     public function sendNotificationToSubscriptionId($subscriptionId, $message)
     {
-        $message = new AndroidMessage();
-        $message->setGCM(true);
+        $notification = new AndroidMessage();
+        $notification->setGCM(true);
 
-        $message->setMessage($message);
-        $message->setDeviceIdentifier($subscriptionId);
+        $notification->setMessage($message);
+        $notification->setDeviceIdentifier($subscriptionId);
 
-        $this->rms_push_notifications->send($message);
+        $this->rms_push_notifications->send($notification);
     }
 }

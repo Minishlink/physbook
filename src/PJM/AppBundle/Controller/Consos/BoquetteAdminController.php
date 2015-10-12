@@ -39,8 +39,6 @@ class BoquetteAdminController extends Controller
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $credit = new Transaction();
 
         $form = $this->createForm(new TransactionType(), $credit, array(
@@ -59,8 +57,6 @@ class BoquetteAdminController extends Controller
                 // on enregistre le crédit dans l'historique
                 $credit->setStatus('OK');
                 $retour = $this->get('pjm.services.transaction_manager')->traiter($credit);
-                $em->persist($credit);
-                $em->flush();
 
                 if ($credit->getStatus() == 'OK') {
                     if ($credit->getMoyenPaiement() != 'operation') {

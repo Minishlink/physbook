@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Services\Consos;
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Consos\Transfert;
 use PJM\AppBundle\Entity\Transaction;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use PJM\AppBundle\Services\Rezal;
 
 class TransactionManager
@@ -15,7 +15,7 @@ class TransactionManager
     private $rezal;
     private $transfertManager;
 
-    public function __construct(EntityManager $em, Notification $notification, Rezal $rezal, TransfertManager $transfertManager)
+    public function __construct(EntityManager $em, NotificationManager $notification, Rezal $rezal, TransfertManager $transfertManager)
     {
         $this->em = $em;
         $this->notification = $notification;
@@ -29,7 +29,6 @@ class TransactionManager
      */
     public function traiter(Transaction $transaction)
     {
-        // TODO notification
         if ($transaction->getStatus() == 'OK') {
             // si la transaction est bonne
             // on met à jour le solde du compte associé sur la base Phy'sbook
@@ -66,22 +65,30 @@ class TransactionManager
                 }
             }
 
-            if (null !== $transaction->getCompteLie()) {
+            // s'il n'y a pas eu d'erreur avant
+            if ($transaction->getStatus() == 'OK') {
                 // si on fait un crédit pour quelqu'un d'autre
                 // le compte lie et le compte sont déjà inversés (voir Entité)
-                if ($transaction->getStatus() == 'OK') {
-                    // s'il n'y a pas eu d'erreur avant
+                if (null !== $transaction->getCompteLie()) {
                     // on effectue le transfert vers compteLie
                     $transfert = new Transfert($transaction);
-                    $this->transfertManager->traiter($transfert);
-                    $this->em->persist($transfert);
-
-                    return $transfert;
+                    $this->transfertManager->traiter($transfert, false);
                 }
             }
         }
 
-        return $transaction;
+        $this->em->persist($transaction);
+        $this->em->flush();
+
+        if ($transaction->getStatus() == 'OK') {
+            // on notifie que si la transaction a été réalisée
+            $this->notification->send('bank.money.transaction', array(
+                'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
+                'montant' => $transaction->showMontant(),
+            ), $transaction->getCompte()->getUser());
+        }
+
+        return isset($transfert) ? $transfert : $transaction;
     }
 
     public function create($compte, $montant, $moyenPaiement)

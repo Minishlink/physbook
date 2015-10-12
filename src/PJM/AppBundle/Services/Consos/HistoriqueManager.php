@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Historique;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use PJM\AppBundle\Services\Rezal;
 
 class HistoriqueManager
@@ -15,7 +15,7 @@ class HistoriqueManager
     private $notification;
     private $rezal;
 
-    public function __construct(EntityManager $em, Notification $notification, Rezal $rezal)
+    public function __construct(EntityManager $em, NotificationManager $notification, Rezal $rezal)
     {
         $this->em = $em;
         $this->notification = $notification;
@@ -25,6 +25,7 @@ class HistoriqueManager
     /**
      * @param User $user
      * @param Item $item
+     * @param bool $verifyEnoughMoney
      * @param bool $flush
      * @return bool
      */
@@ -62,7 +63,11 @@ class HistoriqueManager
                     $this->em->flush();
                 }
 
-                // TODO notification échec user + harpag's
+                // notify ZiPhy'sbook
+                $this->notification->sendMessageToEmail(
+                    'Il y a eu une erreur R&z@l lors de l\'achat de '.$item->getLibelle().' ('.$item->showPrix().'€) à la date du '.$historique->getDate()->format('d/m/Y H:i:s').' par '.$user.'.',
+                    'zi@physbook.fr'
+                );
 
                 return false;
             }
@@ -77,7 +82,20 @@ class HistoriqueManager
             $this->em->flush();
         }
 
-        // TODO notification achat user (+ alerte négats)
+        $this->notification->send('bank.money.achat', array(
+            'item' => $item->getLibelle(),
+            'prix' => $item->showPrix(),
+        ), $user, $flush);
+
+        if (!$verifyEnoughMoney) {
+            $compte = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($user, $item->getBoquette()->getSlug());
+            if ($compte->getSolde() < 0) {
+                $this->notification->send('bank.money.negats', array(
+                    'boquette' => $item->getBoquette()->getNom(),
+                    'montant' => -$compte->getSolde()/100,
+                ), $user, $flush);
+            }
+        }
 
         return true;
     }

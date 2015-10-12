@@ -1,13 +1,3 @@
-pjm_app_push_index:
-    path:     /
-    methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Push:index }
-
-pjm_app_push_reglages:
-    path:     /reglages
-    methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Push:reglages }
-
 pjm_app_push_subscriptionResults:
     path:     /subscription/results
     methods: [ get, post ]
@@ -27,7 +17,3 @@ pjm_app_push_deleteSubscription:
     options:
         expose: true
 
-pjm_app_push_sendNotification:
-    path:     /notification/send
-    methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Push:sendNotification }

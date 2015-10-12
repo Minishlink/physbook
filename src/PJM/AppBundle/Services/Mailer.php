@@ -98,6 +98,24 @@ class Mailer
     }
 
     /**
+     * Envoie un simple $message de admin@physbook.fr à $mail
+     */
+    public function sendMessageToEmail($message, $email)
+    {
+        $template = $this->parameters['template']['message'];
+
+        $from = array(
+            $this->parameters['contactEmail'] => $this->parameters['notificationSender'],
+        );
+
+        $to = array(
+            $email => $email,
+        );
+
+        $this->sendMessage($template, array('message' => $message), $from, $to);
+    }
+
+    /**
      * @param string $templateName
      * @param array  $context
      * @param string $fromEmail

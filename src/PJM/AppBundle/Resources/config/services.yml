@@ -54,8 +54,8 @@ services:
             class: PJM\AppBundle\Services\Consos\TransfertManager
             arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
     pjm.services.notification:
-                class: PJM\AppBundle\Services\Notification
-                arguments: [@request_stack, @pjm.services.push]
+                class: PJM\AppBundle\Services\NotificationManager
+                arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -84,6 +84,7 @@ services:
                 layout: 'PJMAppBundle:Mail:layout.html.twig'
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
                 error: 'PJMAppBundle:Mail:error.html.twig'
+                message: 'PJMAppBundle:Mail:message.html.twig'
               notificationEmail: "notification@physbook.fr"
               contactEmail: "contact@physbook.fr"
               notificationSender: "Phy'sbook"

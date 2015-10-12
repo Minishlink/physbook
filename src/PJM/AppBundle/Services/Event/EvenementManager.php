@@ -8,7 +8,7 @@ use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Consos\HistoriqueManager;
 use PJM\AppBundle\Services\Consos\TransactionManager;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class EvenementManager
@@ -19,7 +19,7 @@ class EvenementManager
     private $historiqueManager;
     private $transactionManager;
 
-    public function __construct(EntityManager $em, AuthorizationChecker $authChecker, Notification $notification, HistoriqueManager $historiqueManager, TransactionManager $transactionManager)
+    public function __construct(EntityManager $em, AuthorizationChecker $authChecker, NotificationManager $notification, HistoriqueManager $historiqueManager, TransactionManager $transactionManager)
     {
         $this->em = $em;
         $this->authChecker = $authChecker;
@@ -77,20 +77,41 @@ class EvenementManager
             'L\'évènement '.$event->getNom().' a été modifié.'
         );
 
-        // TODO envoyer notifications aux invités
+        // envoyer notifications aux invités
+        $invites = array_merge($event->getInvites(true), $event->getInvites(null));
+
+        if ($event->getDateDebut() != $oldEvent->getDateDebut()) {
+            $this->notification->send('event.changement.date', array(
+                'event' => $event->getNom(),
+                'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+            ), $invites);
+        }
+
+        if ($event->getPrix() != $oldEvent->getPrix()) {
+            $this->notification->send('event.changement.prix', array(
+                'event' => $event->getNom(),
+                'prix' => $event->showPrix(),
+            ), $invites);
+        }
     }
 
     public function remove(Evenement $event)
     {
+        $inscrits = $event->getInvites(true);
+
         $this->em->remove($event);
-        $this->em->flush();
 
         $this->notification->sendFlash(
             'success',
             'L\'évènement '.$event->getNom().' a été supprimé.'
         );
 
-        // TODO envoyer notifications aux inscrits
+        if (new \DateTime() < $event->getDateFin()) {
+            // envoyer notifications aux inscrits
+            $this->notification->send('event.suppression', array(
+                'event' => $event->getNom(),
+            ), $inscrits);
+        }
     }
 
     public function get(Evenement $event = null, User $user, $nombreMax)
@@ -203,7 +224,6 @@ class EvenementManager
             $transaction->setStatus('OK');
             $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
             $this->transactionManager->traiter($transaction);
-            $this->em->persist($transaction);
         }
 
         $this->em->flush();

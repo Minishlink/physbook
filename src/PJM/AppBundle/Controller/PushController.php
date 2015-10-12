@@ -7,87 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use PJM\AppBundle\Entity\PushSubscription;
-use PJM\AppBundle\Form\Type\ReglagesNotificationsType;
 
 class PushController extends Controller
 {
-    /**
-     * Action d'affichage de la page des réglages des notifications.
-     */
-    public function indexAction(Request $request)
-    {
-        $datatable_push = $this->get('pjm.datatable.pushsubscription');
-        $datatable_push->buildDatatable();
-
-        return $this->render('PJMAppBundle:Notifications:reglages.html.twig', array(
-            'datatable_push' => $datatable_push,
-        ));
-    }
-
-    /**
-     * Action du formulaire des réglages des notifications.
-     */
-    public function reglagesAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
-
-        $reglagesNotifications = $user->getReglagesNotifications();
-        if ($reglagesNotifications->getUser() === null) {
-            // si l'utilisateur n'a pas déjà de réglages
-            $reglagesNotifications->setUser($user);
-        }
-
-        $form = $this->createForm(new ReglagesNotificationsType(), $reglagesNotifications, array(
-            'method' => 'POST',
-            'action' => $this->generateUrl('pjm_app_push_reglages'),
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $em->persist($reglagesNotifications);
-                $em->flush();
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu. Réessaye.'
-                );
-
-                foreach ($form->getErrors() as $error) {
-                    $request->getSession()->getFlashBag()->add(
-                        'warning',
-                        $error->getMessage()
-                    );
-                }
-            }
-
-            if ($request->isXmlHttpRequest()) {
-                $formView = $this->renderView('PJMAppBundle::form_only.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-
-                $flashBagView = $this->renderView('PJMAppBundle:App:flashBag.html.twig');
-
-                $response = new JsonResponse();
-                $response->setData(array(
-                    'formView' => $formView,
-                    'flashBagView' => $flashBagView,
-                    'success' => isset($success),
-                ));
-
-                return $response;
-            }
-
-            return $this->redirect($this->generateUrl('pjm_app_push_index'));
-        }
-
-        return $this->render('PJMAppBundle::form_only.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
     /**
      * Action ajax de rendu de la liste des pushSubscriptions.
      */
@@ -150,16 +72,11 @@ class PushController extends Controller
         );
 
         if (empty($subscription['id']) && empty($subscription['endpoint'])) {
-            $json = array(
+            return new JsonResponse(array(
                 'success' => false,
                 'done' => $action,
                 'subscription' => $subscription,
-            );
-
-            $response = new JsonResponse();
-            $response->setData($json);
-
-            return $response;
+            ));
         }
 
         // on va chercher la pushSubscription avec le même subscriptionId et endpoint
@@ -203,23 +120,10 @@ class PushController extends Controller
             }
         }
 
-        $json = array(
+        return new JsonResponse(array(
             'success' => true,
             'done' => $action,
             'subscription' => $subscription,
-        );
-
-        $response = new JsonResponse();
-        $response->setData($json);
-
-        return $response;
-    }
-
-    public function sendNotificationAction(Request $request)
-    {
-        $push = $this->get('pjm.services.push');
-        $push->sendNotificationToUser($this->getUser(), 'test');
-
-        return new Response('OK');
+        ));
     }
 }

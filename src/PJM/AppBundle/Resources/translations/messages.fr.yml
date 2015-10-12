@@ -1,0 +1,16 @@
+notifications:
+  content:
+    bank:
+      money:
+        achat: Tu as été débité de <span class="info">%prix%€</span> pour l'achat de <span class="info">%item%</span>.
+        negats: Tu es en négat's de <span class="info">%montant%€</span> sur ton compte <span class="info">%boquette%</span>.
+        transaction: Une transaction de <span class="info">%montant%€</span> a été effectuée sur ton compte <span class="info">%boquette%</span>.
+        transfert:
+          envoi: Tu as envoyé <span class="info">%montant%€</span> à <span class="info">%user%</span> depuis ton compte <span class="info">%boquette%</span>.
+          reception: Tu as reçu <span class="info">%montant%€</span> de <span class="info">%user%</span> sur ton compte <span class="info">%boquette%</span>.
+    event:
+      changement:
+        date: L'évènement <span class="info">%event%</span> a maintenant lieu le <span class="info">%date%</span>.
+        prix: Le prix de l'évènement <span class="info">%event%</span> est passé à <span class="info">%prix%€</span>.
+      suppression: L'évènement <span class="info">%event%</span> a été supprimé.
+      invitation: Tu as été invité à l'évènement <span class="info">%event%</span> du <span class="info">%date%</span>.

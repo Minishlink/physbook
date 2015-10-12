@@ -6,14 +6,14 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Event\Invitation;
 use PJM\AppBundle\Entity\User;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 
 class InvitationManager
 {
     private $em;
     private $notification;
 
-    public function __construct(EntityManager $em, Notification $notification)
+    public function __construct(EntityManager $em, NotificationManager $notification)
     {
         $this->em = $em;
         $this->notification = $notification;
@@ -81,6 +81,8 @@ class InvitationManager
     }
 
     public function sendInvitations($users, Evenement $event) {
+        $notifUsers = array();
+
         foreach ($users as $user) {
             // on vérifie que c'est un utilisateur
             if ('PJM\AppBundle\Entity\User' == get_class($user)) {
@@ -94,12 +96,17 @@ class InvitationManager
                     $this->em->persist($invitation);
 
                     // on envoit la notification
-                    $this->notification->sendPushToUser($user, 'Invitation à un évènement', 'events');
+                    $notifUsers[] = $user;
                 }
             }
         }
 
         $this->em->flush();
+
+        $this->notification->send('event.invitation', array(
+            'event' => $event->getNom(),
+            'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+        ), $notifUsers);
 
         $this->notification->sendFlash(
             'success',

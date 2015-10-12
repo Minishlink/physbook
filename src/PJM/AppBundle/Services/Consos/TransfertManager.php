@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Services\Consos;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Consos\Transfert;
-use PJM\AppBundle\Services\Notification;
+use PJM\AppBundle\Services\NotificationManager;
 use PJM\AppBundle\Services\Rezal;
 
 class TransfertManager
@@ -13,7 +13,7 @@ class TransfertManager
     private $notification;
     private $rezal;
 
-    public function __construct(EntityManager $em, Notification $notification, Rezal $rezal)
+    public function __construct(EntityManager $em, NotificationManager $notification, Rezal $rezal)
     {
         $this->em = $em;
         $this->notification = $notification;
@@ -22,11 +22,11 @@ class TransfertManager
 
     /**
      * @param Transfert $transfert
+     * @param bool $flush
      * @return Transfert
      */
-    public function traiter(Transfert $transfert)
+    public function traiter(Transfert $transfert, $flush = true)
     {
-        // TODO notification destinataire
         // on met à jour le solde des comptes associés sur la base Phy'sbook
         $transfert->finaliser();
 
@@ -80,6 +80,28 @@ class TransfertManager
                     }
                 }
             }
+        }
+
+        $this->em->persist($transfert);
+
+        if ($flush) {
+            $this->em->flush();
+        }
+
+        if ($transfert->getStatus() === 'OK') {
+            // notifier réceptionneur
+            $this->notification->send('bank.money.transfert.reception', array(
+                'boquette' => $transfert->getReceveur()->getBoquette()->getNom(),
+                'montant' => $transfert->showMontant(),
+                'user' => $transfert->getEmetteur()->getUser(),
+            ), $transfert->getReceveur()->getUser(), $flush);
+
+            // notifier émetteur
+            $this->notification->send('bank.money.transfert.envoi', array(
+                'boquette' => $transfert->getReceveur()->getBoquette()->getNom(),
+                'montant' => $transfert->showMontant(),
+                'user' => $transfert->getReceveur()->getUser(),
+            ), $transfert->getEmetteur()->getUser(), $flush);
         }
 
         return $transfert;
