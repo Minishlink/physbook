@@ -16,15 +16,13 @@ class NotificationsController extends Controller
      */
     public function indexAction() {
         $notificationManager = $this->get('pjm.services.notification');
-        $notificationManager->markAllAsRead($this->getUser());
         $notifications = $notificationManager->get($this->getUser());
+
+        $notificationManager->markAllAsRead($this->getUser());
+
         return array(
             'notifications' => $notifications
         );
-    }
-
-    public function extraitAction() {
-
     }
 
     /**

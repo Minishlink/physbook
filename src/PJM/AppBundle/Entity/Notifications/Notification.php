@@ -72,6 +72,18 @@ class Notification
      */
     private $important;
 
+    /**
+     * Same array as infos but with '%' around the keys in order to comply with the message translation
+     *
+     * @var array
+     */
+    private $variables;
+
+    /**
+     * @var boolean
+     */
+    private $new;
+
 
     public function __construct()
     {
@@ -258,5 +270,37 @@ class Notification
     public function setImportant($important)
     {
         $this->important = $important;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
+    }
+
+    /**
+     * @param array $variables
+     */
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param boolean $new
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
     }
 }

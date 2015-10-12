@@ -100,18 +100,20 @@ class NotificationManager
         $settings = $user->getNotificationSettings();
 
         $notifications = $notifications->map(function(Notification $notification) use ($settings) {
-            // on remplace les infos par %infos%
+            // on remplace les variables par %infos%
             $infos = $notification->getInfos();
 
             $newKeys = array_map(function($k) {
                 return "%".$k."%";
             }, array_keys($infos));
 
-            $notification->setInfos(array_combine(
+            $notification->setVariables(array_combine(
                 $newKeys,
                 array_values($infos)
             ));
 
+            // on indique comme non lue ou pas (pour pas que cela soit changé ensuite quand on marque comme lu)
+            $notification->setNew(!$notification->getReceived());
 
             if (isset($this->notificationsList[$notification->getKey()])) {
                 $notificationType = $this->notificationsList[$notification->getKey()];
