@@ -1,7 +1,11 @@
 {% set content %}[{{ notification.type }}] {{ ("notifications.content." ~ notification.key)|trans(notification.infos)|purify }}{% endset %}
-{% if notification.path != "" %}
-    <a href="{{ path(notification.path) }}">{{ content }}</a>
-{% else %}
-    {{ content }}
-{% endif %}
-<br>
+<div class="notification panel {% if notification.important %} panel-primary{% endif %}">
+  <div class="message panel-body">
+    {% if notification.path != "" %}
+        <a href="{{ path(notification.path) }}">{{ content }}</a>
+    {% else %}
+        {{ content }}
+    {% endif %}
+  </div>
+  <div class="date panel-footer">le {{ notification.date|localizeddate('medium', 'short') }}</div>
+</div>

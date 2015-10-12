@@ -3,14 +3,9 @@
 {% block pjm_app_body_content %}
     {% include "PJMAppBundle:Notifications:togglePush.html.twig" %}
     <div class="space"></div>
-    <div class="panel panel-primary">
-        <div class="panel-body">
-            {% for notification in notifications %}
-                {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
-            {% else %}
-                Tu n'as pas encore de notifications.
-            {% endfor %}
-        </div>
-    </div>
-
+    {% for notification in notifications %}
+        {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
+    {% else %}
+        Tu n'as pas encore de notifications.
+    {% endfor %}
 {% endblock %}
