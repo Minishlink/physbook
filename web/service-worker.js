@@ -51,6 +51,8 @@ self.addEventListener('push', function (event) {
         data = event.data.json();
     }
 
+    // fetch last notification
+
     var title = data.title || "Phy'sbook",
         message = data.message || 'Il y a du neuf !',
         icon = 'images/icons/icon-192.png',
@@ -74,13 +76,24 @@ self.addEventListener('notificationclick', function (event) {
             type: "window"
         })
         .then(function (clientList) {
+            // si la page des notifications est ouverte on la recharge et on l'affiche
             for (var i = 0; i < clientList.length; i++) {
                 var client = clientList[i];
-                if (client.url == '/' && 'focus' in client)
+                if (client.url.search(/notifications/i) >= 0 && 'focus' in client) {
+                    // on devrait pouvoir recharger la page ici (postMessage ?)
                     return client.focus();
+                }
             }
+
+            // sinon s'il y a quand même une page du site ouverte on la recharge et on l'affiche
+            if (clientList.length && 'focus' in client) {
+                // on devrait pouvoir recharger la page ici (postMessage ?)
+                return client.focus();
+            }
+
+            // sinon on ouvre la page des notifications
             if (clients.openWindow) {
-                return clients.openWindow('/');
+                return clients.openWindow('/notifications');
             }
         })
     );
