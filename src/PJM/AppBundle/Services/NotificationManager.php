@@ -2,11 +2,13 @@
 
 namespace PJM\AppBundle\Services;
 
+use Buzz\Browser;
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Notifications\Notification;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Enum\Notifications\NotificationEnum;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class NotificationManager
 {
@@ -15,14 +17,18 @@ class NotificationManager
     private $push;
     private $notificationsList;
     private $mailer;
+    private $buzz;
+    private $translator;
 
-    public function __construct(EntityManager $em, RequestStack $requestStack, Push $push, Mailer $mailer)
+    public function __construct(EntityManager $em, RequestStack $requestStack, Push $push, Mailer $mailer, Browser $buzz, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->requestStack = $requestStack;
         $this->push = $push;
         $this->mailer = $mailer;
         $this->notificationsList = NotificationEnum::$list;
+        $this->buzz = $buzz;
+        $this->translator = $translator;
     }
 
     /**
@@ -60,16 +66,19 @@ class NotificationManager
 
             // on regarde si l'utilisateur a plus de 50 notifications, si oui on supprime la première
             if (count($user->getNotifications()) > 50) {
-                $user->removeNotification($user->getNotifications()->first());
+                $user->removeNotification($user->getNotifications()->first()); //TODO last ?
             }
 
             $this->em->persist($user);
 
-            // si l'utilisateur est abonné à ce type de notification, on envoit un push
+            // si l'utilisateur est abonné à ce type de notification, on envoit un push ou un webhook
             $settings = $user->getNotificationSettings();
             if ($settings->has($notificationType['type'])) {
-                // pour l'instant il n'y a pas de payload dans une notification Push, donc on passe la clé en argument
-                $this->sendPushToUser($user, $key);
+                $message = $this->getMessage($notification);
+                $this->sendPushToUser($user, $message);
+                $this->sendToWebhook($user, $message);
+
+                // TODO n'envoyer que sur webhook si aussi abonné aux push
             }
         }
 
@@ -88,6 +97,25 @@ class NotificationManager
     public function sendPushToUser(User $user, $message)
     {
         $this->push->sendNotificationToUser($user, $message);
+    }
+
+    public function sendToWebhook(User $user, $message) {
+        // format message
+        $message = "[Phy'sbook] ".$message." https://physbook.fr";
+
+        // get webhook endpoint of User
+        $webhook = '';
+        $webhook .= $message;
+
+        $headers = array(
+            'content-type' => 'text/plain; charset=utf-8',
+        );
+
+        $response = $this->buzz->post($webhook, $headers);
+
+        if ($response->getStatusCode() != 200) {
+            // log error and user
+        }
     }
 
     public function sendMessageToEmail($message, $email) {
@@ -130,6 +158,24 @@ class NotificationManager
         });
 
         return $notifications;
+    }
+
+    private function getMessage(Notification $notification, $strip = true) {
+        // on remplace les variables par %infos%
+        $infos = $notification->getInfos();
+
+        $newKeys = array_map(function($k) {
+            return "%".$k."%";
+        }, array_keys($infos));
+
+        $infos = array_combine(
+            $newKeys,
+            array_values($infos)
+        );
+
+        $message = $this->translator->trans('notifications.content.'.$notification->getKey(), $infos);
+
+        return $strip ? strip_tags($message) : $message;
     }
 
     /**
