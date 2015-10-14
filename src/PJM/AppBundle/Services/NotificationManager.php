@@ -65,8 +65,8 @@ class NotificationManager
             $user->addNotification($notification);
 
             // on regarde si l'utilisateur a plus de 50 notifications, si oui on supprime la première
-            if (count($user->getNotifications()) > 50) {
-                $user->removeNotification($user->getNotifications()->first()); //TODO last ?
+            if ($this->count($user) > 50) {
+                $user->removeNotification($this->em->getRepository('PJMAppBundle:Notifications\Notification')->getFirst($user));
             }
 
             $this->em->persist($user);
@@ -76,7 +76,7 @@ class NotificationManager
             if ($settings->has($notificationType['type'])) {
                 $message = $this->getMessage($notification);
                 $this->sendPushToUser($user, $message);
-                $this->sendToWebhook($user, $message);
+                //$this->sendToWebhook($user, $message);
 
                 // TODO n'envoyer que sur webhook si aussi abonné aux push
             }
@@ -195,5 +195,10 @@ class NotificationManager
         }
 
         $this->em->flush();
+    }
+
+    public function count(User $user, $received = null)
+    {
+        return $this->em->getRepository('PJMAppBundle:Notifications\Notification')->count($user, $received);
     }
 }

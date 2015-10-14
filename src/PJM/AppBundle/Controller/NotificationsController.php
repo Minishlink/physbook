@@ -30,7 +30,7 @@ class NotificationsController extends Controller
      */
     public function navAction() {
         return array(
-            'nbNotReceived' => $this->getDoctrine()->getRepository('PJMAppBundle:Notifications\Notification')->countNotReceived($this->getUser())
+            'nbNotReceived' => $this->get('pjm.services.notification')->count($this->getUser(), false)
         );
     }
 
