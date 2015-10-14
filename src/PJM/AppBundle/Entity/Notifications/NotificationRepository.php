@@ -33,15 +33,25 @@ class NotificationRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @param User $user
+     * @return null|Notification
+     */
     public function getFirst(User $user)
     {
-        $qb = $this->createQueryBuilder('n')
-            ->where('n.user = :user')
-            ->setParameter('user', $user)
-            ->orderBy('n.date', 'asc')
-            ->setMaxResults(1)
-        ;
+        return $this->findOneBy(array(
+            'user' => $user
+        ), array('date' => 'asc'));
+    }
 
-        return $qb->getQuery()->getSingleResult();
+    /**
+     * @param User $user
+     * @return null|Notification
+     */
+    public function getLast(User $user)
+    {
+        return $this->findOneBy(array(
+            'user' => $user
+        ), array('date' => 'desc'));
     }
 }

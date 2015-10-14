@@ -5,6 +5,7 @@ namespace PJM\AppBundle\Controller;
 use PJM\AppBundle\Form\Type\NotificationSettingsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotificationsController extends Controller
@@ -32,6 +33,24 @@ class NotificationsController extends Controller
         return array(
             'nbNotReceived' => $this->get('pjm.services.notification')->count($this->getUser(), false)
         );
+    }
+
+    public function lastAction(Request $request) {
+        $endpoint = $request->query->get('endpoint');
+
+        if (empty($endpoint)) {
+            throw $this->createAccessDeniedException('Endpoint missing.');
+        }
+
+        $notification = $this->get('pjm.services.notification')->getLastNotificationByPushEndpoint($endpoint);
+
+        if (!$notification) {
+            throw $this->createAccessDeniedException('Cannot retrieve notification.');
+        }
+
+        return new JsonResponse(array(
+            'notification' => $notification
+        ));
     }
 
     /**

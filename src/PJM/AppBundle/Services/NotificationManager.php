@@ -201,4 +201,26 @@ class NotificationManager
     {
         return $this->em->getRepository('PJMAppBundle:Notifications\Notification')->count($user, $received);
     }
+
+    public function getLastNotificationByPushEndpoint($endpoint)
+    {
+        // on va chercher l'user qui a cet endpoint
+        $pushSubscription = $this->em->getRepository('PJMAppBundle:PushSubscription')->findOneBy(array(
+            'endpoint' => $endpoint
+        ));
+
+        if (empty($pushSubscription)) {
+            return false;
+        }
+
+        $notification = $this->em->getRepository('PJMAppBundle:Notifications\Notification')->getLast($pushSubscription->getUser());
+
+        if (empty($notification)) {
+            return false;
+        }
+
+        return array(
+            'message' => $this->getMessage($notification)
+        );
+    }
 }

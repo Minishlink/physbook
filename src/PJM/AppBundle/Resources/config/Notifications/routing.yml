@@ -8,3 +8,7 @@ pjm_app_notifications_reglages:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Notifications:reglages }
 
+pjm_app_notifications_last:
+    path:     /last
+    methods: [ get ]
+    defaults: { _controller: PJMAppBundle:Notifications:last }

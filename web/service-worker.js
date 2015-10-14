@@ -46,25 +46,51 @@ self.addEventListener('push', function (event) {
         return;
     }
 
-    var data = {};
-    if (event.data) {
-        data = event.data.json();
-    }
+    var sendNotification = function(message, tag) {
+        var title = "Phy'sbook",
+            icon = 'images/icons/icon-192.png';
 
-    // fetch last notification
+        message = message || 'Il y a du neuf !';
+        tag = tag || 'general';
 
-    var title = data.title || "Phy'sbook",
-        message = data.message || 'Il y a du neuf !',
-        icon = 'images/icons/icon-192.png',
-        tag = 'general';
-
-    event.waitUntil(
-        self.registration.showNotification(title, {
+        return self.registration.showNotification(title, {
             body: message,
             icon: icon,
             tag: tag
-        })
-    );
+        });
+    };
+
+    if (event.data) {
+        var data = event.data.json();
+        event.waitUntil(
+            sendNotification(data.message, data.tag)
+        );
+    } else {
+        event.waitUntil(
+            self.registration.pushManager.getSubscription().then(function(subscription) {
+                if (!subscription) {
+                    return;
+                }
+
+                fetch('notifications/last?endpoint=' + encodeURIComponent(subscription.endpoint)).then(function (response) {
+                    if (response.status !== 200) {
+                        throw new Error();
+                    }
+
+                    // Examine the text in the response
+                    return response.json().then(function (data) {
+                        if (data.error || !data.notification) {
+                            throw new Error();
+                        }
+
+                        return sendNotification(data.notification.message);
+                    });
+                }).catch(function () {
+                    return sendNotification();
+                });
+            })
+        );
+    }
 });
 
 self.addEventListener('notificationclick', function (event) {
@@ -87,13 +113,13 @@ self.addEventListener('notificationclick', function (event) {
 
             // sinon s'il y a quand même une page du site ouverte on la recharge et on l'affiche
             if (clientList.length && 'focus' in client) {
-                // on devrait pouvoir recharger la page ici (postMessage ?)
+                // on devrait pouvoir recharger le compteur de notifications sur la page (postMessage ?)
                 return client.focus();
             }
 
             // sinon on ouvre la page des notifications
             if (clients.openWindow) {
-                return clients.openWindow('/notifications');
+                return clients.openWindow('notifications');
             }
         })
     );
