@@ -30,6 +30,21 @@ window.addEventListener('load', function() {
 });
 
 function initPostMessageListener() {
+    var onRefreshNotifications = function () {
+        var notificationCounter = document.getElementById('notificationCounter');
+
+        if (!notificationCounter) {
+            var notificationCounterWrapper = document.getElementById('notificationCounterWrapper');
+            notificationCounter = document.createElement('span');
+            notificationCounter.id = 'notificationCounter';
+            notificationCounter.className = 'badge badge-notification';
+            notificationCounter.textContent = '0';
+            notificationCounterWrapper.appendChild(notificationCounter);
+        }
+
+        notificationCounter.textContent++;
+    };
+
     navigator.serviceWorker.addEventListener('message', function(e) {
         var message = e.data;
 
@@ -38,10 +53,10 @@ function initPostMessageListener() {
                 window.location.reload(true);
                 break;
             case 'refreshNotifications':
-                console.log("TODO refresh Notifications"); //TODO
+                onRefreshNotifications();
                 break;
             default:
-                console.warn("Message '" + message + "' not handled.")
+                console.warn("Message '" + message + "' not handled.");
                 break;
         }
     });

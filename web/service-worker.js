@@ -42,6 +42,9 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('push', function (event) {
+    // on actualise la page des notifications ou/et le compteur de notifications
+    self.refreshNotifications();
+
     if (!(self.Notification && self.Notification.permission === 'granted')) {
         return;
     }
@@ -93,6 +96,25 @@ self.addEventListener('push', function (event) {
     }
 });
 
+self.refreshNotifications = function(clientList) {
+    if (clientList == undefined) {
+        clients.matchAll({ type: "window" }).then(function (clientList) {
+            self.refreshNotifications(clientList);
+        });
+    } else {
+        for (var i = 0; i < clientList.length; i++) {
+            var client = clientList[i];
+            if (client.url.search(/notifications/i) >= 0) {
+                // si la page des notifications est ouverte on la recharge
+                client.postMessage('reload');
+            }
+
+            // si on n'est pas sur la page des notifications on recharge le compteur
+            client.postMessage('refreshNotifications');
+        }
+    }
+};
+
 self.addEventListener('notificationclick', function (event) {
     // fix http://crbug.com/463146
     event.notification.close();
@@ -101,29 +123,33 @@ self.addEventListener('notificationclick', function (event) {
         clients.matchAll({
             type: "window"
         })
-        .then(function (clientList) {
-            // si la page des notifications est ouverte on la recharge et on l'affiche
-            for (var i = 0; i < clientList.length; i++) {
-                var client = clientList[i];
-                if (client.url.search(/notifications/i) >= 0 && 'focus' in client) {
-                    // on recharge la page
-                    client.postMessage('reload');
+            .then(function (clientList) {
+                // si la page des notifications est ouverte on l'affiche en priorité
+                for (var i = 0; i < clientList.length; i++) {
+                    var client = clientList[i];
+                    if (client.url.search(/notifications/i) >= 0 && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+
+                // sinon s'il y a quand même une page du site ouverte on l'affiche
+                if (clientList.length && 'focus' in client) {
                     return client.focus();
                 }
-            }
 
-            // sinon s'il y a quand même une page du site ouverte on la recharge et on l'affiche
-            if (clientList.length && 'focus' in client) {
-                // on recharge le compteur de notifications sur la page
-                client.postMessage('refreshNotifications');
-                return client.focus();
-            }
-
-            // sinon on ouvre la page des notifications
-            if (clients.openWindow) {
-                return clients.openWindow('notifications');
-            }
-        })
+                // sinon on ouvre la page des notifications
+                if (clients.openWindow) {
+                    return clients.openWindow('notifications');
+                }
+            })
     );
 });
 
+self.addEventListener('notificationclose', function (event) {
+    console.log('notificationclose, yay !');
+    // mark notification as read
+    /*event.waitUntil(
+        // refreshnotifications + reload /notifications
+        fetch('notifications/read')
+    );*/
+});
