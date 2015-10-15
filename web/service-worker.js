@@ -106,14 +106,16 @@ self.addEventListener('notificationclick', function (event) {
             for (var i = 0; i < clientList.length; i++) {
                 var client = clientList[i];
                 if (client.url.search(/notifications/i) >= 0 && 'focus' in client) {
-                    // on devrait pouvoir recharger la page ici (postMessage ?)
+                    // on recharge la page
+                    client.postMessage('reload');
                     return client.focus();
                 }
             }
 
             // sinon s'il y a quand même une page du site ouverte on la recharge et on l'affiche
             if (clientList.length && 'focus' in client) {
-                // on devrait pouvoir recharger le compteur de notifications sur la page (postMessage ?)
+                // on recharge le compteur de notifications sur la page
+                client.postMessage('refreshNotifications');
                 return client.focus();
             }
 
@@ -124,3 +126,4 @@ self.addEventListener('notificationclick', function (event) {
         })
     );
 });
+

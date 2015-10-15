@@ -19,6 +19,7 @@ window.addEventListener('load', function() {
         .then(function(sw) {
             console.log('[SW] Service worker enregistré');
             push_initialiseState();
+            initPostMessageListener();
         }, function (e) {
             console.error('[SW] Oups...');
             console.error(e);
@@ -27,6 +28,24 @@ window.addEventListener('load', function() {
         console.warn('[SW] Les service workers ne sont pas encore supportés par ce navigateur.');
     }
 });
+
+function initPostMessageListener() {
+    navigator.serviceWorker.addEventListener('message', function(e) {
+        var message = e.data;
+
+        switch (message) {
+            case 'reload':
+                window.location.reload(true);
+                break;
+            case 'refreshNotifications':
+                console.log("TODO refresh Notifications"); //TODO
+                break;
+            default:
+                console.warn("Message '" + message + "' not handled.")
+                break;
+        }
+    });
+}
 
 function push_initialiseState() {
     // Are Notifications supported in the service worker?
