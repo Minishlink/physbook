@@ -14,6 +14,21 @@ window.addEventListener('load', function() {
         });
     }
 
+    // double notification badge only on mobile layout
+    var navbarToggle = $('.navbar-toggle:visible');
+    if(navbarToggle) {
+        var notificationCounters = document.getElementsByClassName('notificationCounter');
+
+        if (notificationCounters.length) {
+            var notificationCounterWrapperNavbar = document.querySelector('.navbar-toggle .notificationCounterWrapper');
+
+            var notificationCounter = document.createElement('span');
+            notificationCounter.className = 'notificationCounter badge badge-notification';
+            notificationCounter.textContent = notificationCounters[0].textContent;
+            notificationCounterWrapperNavbar.appendChild(notificationCounter);
+        }
+    }
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register(window.swPath)
         .then(function(sw) {
@@ -31,18 +46,22 @@ window.addEventListener('load', function() {
 
 function initPostMessageListener() {
     var onRefreshNotifications = function () {
-        var notificationCounter = document.getElementById('notificationCounter');
+        var notificationCounters = document.getElementsByClassName('notificationCounter');
 
-        if (!notificationCounter) {
-            var notificationCounterWrapper = document.getElementById('notificationCounterWrapper');
-            notificationCounter = document.createElement('span');
-            notificationCounter.id = 'notificationCounter';
-            notificationCounter.className = 'badge badge-notification';
-            notificationCounter.textContent = '0';
-            notificationCounterWrapper.appendChild(notificationCounter);
+        if (!notificationCounters.length) {
+            var notificationCounterWrappers = document.getElementsByClassName('notificationCounterWrapper');
+
+            for (var i = 0; i < notificationCounterWrappers.length; i++) {
+                var notificationCounter = document.createElement('span');
+                notificationCounter.className = 'notificationCounter badge badge-notification';
+                notificationCounter.textContent = '0';
+                notificationCounterWrappers[i].appendChild(notificationCounter);
+            }
         }
 
-        notificationCounter.textContent++;
+        for (var i = 0; i < notificationCounters.length; i++) {
+            notificationCounters[i].textContent++;
+        }
     };
 
     navigator.serviceWorker.addEventListener('message', function(e) {
