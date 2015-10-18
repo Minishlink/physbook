@@ -23,16 +23,3 @@
 </div>
 
 {% endblock %}
-
-
-{% block javascripts %}
-{{ parent() }}
-{% javascripts
-    '%kernel.root_dir%/../app/Resources/public/js/event.js'
-    filter='?yui_js'
-    output='js/event.js'
-    package='js'
-%}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-{% endblock %}
