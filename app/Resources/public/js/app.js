@@ -64,6 +64,10 @@ function initPostMessageListener() {
         }
     };
 
+    var onRemoveNotifications = function() {
+        $('.notificationCounter').remove();
+    };
+
     navigator.serviceWorker.addEventListener('message', function(e) {
         var message = e.data;
 
@@ -73,6 +77,9 @@ function initPostMessageListener() {
                 break;
             case 'refreshNotifications':
                 onRefreshNotifications();
+                break;
+            case 'removeNotifications':
+                onRemoveNotifications();
                 break;
             default:
                 console.warn("Message '" + message + "' not handled.");

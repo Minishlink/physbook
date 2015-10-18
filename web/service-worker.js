@@ -153,3 +153,22 @@ self.addEventListener('notificationclose', function (event) {
         fetch('notifications/read')
     );*/
 });
+
+self.addEventListener('message', function (event) {
+    var message = event.data;
+
+    switch (message) {
+        case 'dispatchRemoveNotifications':
+            clients.matchAll({ type: "window" }).then(function (clientList) {
+                for (var i = 0; i < clientList.length; i++) {
+                    clientList[i].postMessage('removeNotifications');
+                }
+            });
+            break;
+        default:
+            console.warn("Message '" + message + "' not handled.");
+            break;
+    }
+});
+
+

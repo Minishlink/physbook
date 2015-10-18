@@ -9,3 +9,13 @@
         Tu n'as pas encore de notifications.
     {% endfor %}
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function () {
+    // dispatch event notification read when arriving on this page
+    navigator.serviceWorker.controller.postMessage('dispatchRemoveNotifications');
+});
+</script>
+{% endblock %}
