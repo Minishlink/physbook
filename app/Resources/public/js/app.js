@@ -14,11 +14,27 @@ window.addEventListener('load', function() {
         });
     }
 
+    // double notification badge only on mobile layout
+    var navbarToggle = $('.navbar-toggle:visible');
+    if(navbarToggle) {
+        var notificationCounters = document.getElementsByClassName('notificationCounter');
+
+        if (notificationCounters.length) {
+            var notificationCounterWrapperNavbar = document.querySelector('.navbar-toggle .notificationCounterWrapper');
+
+            var notificationCounter = document.createElement('span');
+            notificationCounter.className = 'notificationCounter badge badge-notification';
+            notificationCounter.textContent = notificationCounters[0].textContent;
+            notificationCounterWrapperNavbar.appendChild(notificationCounter);
+        }
+    }
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register(window.swPath)
         .then(function(sw) {
             console.log('[SW] Service worker enregistré');
             push_initialiseState();
+            initPostMessageListener();
         }, function (e) {
             console.error('[SW] Oups...');
             console.error(e);
@@ -27,6 +43,50 @@ window.addEventListener('load', function() {
         console.warn('[SW] Les service workers ne sont pas encore supportés par ce navigateur.');
     }
 });
+
+function initPostMessageListener() {
+    var onRefreshNotifications = function () {
+        var notificationCounters = document.getElementsByClassName('notificationCounter');
+
+        if (!notificationCounters.length) {
+            var notificationCounterWrappers = document.getElementsByClassName('notificationCounterWrapper');
+
+            for (var i = 0; i < notificationCounterWrappers.length; i++) {
+                var notificationCounter = document.createElement('span');
+                notificationCounter.className = 'notificationCounter badge badge-notification';
+                notificationCounter.textContent = '0';
+                notificationCounterWrappers[i].appendChild(notificationCounter);
+            }
+        }
+
+        for (var i = 0; i < notificationCounters.length; i++) {
+            notificationCounters[i].textContent++;
+        }
+    };
+
+    var onRemoveNotifications = function() {
+        $('.notificationCounter').remove();
+    };
+
+    navigator.serviceWorker.addEventListener('message', function(e) {
+        var message = e.data;
+
+        switch (message) {
+            case 'reload':
+                window.location.reload(true);
+                break;
+            case 'refreshNotifications':
+                onRefreshNotifications();
+                break;
+            case 'removeNotifications':
+                onRemoveNotifications();
+                break;
+            default:
+                console.warn("Message '" + message + "' not handled.");
+                break;
+        }
+    });
+}
 
 function push_initialiseState() {
     // Are Notifications supported in the service worker?

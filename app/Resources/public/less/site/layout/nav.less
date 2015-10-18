@@ -147,4 +147,44 @@
             text-transform: uppercase;
         }
     }
+
+    .navbar-toggle {
+        background: transparent;
+        border: none;
+
+        &:hover {
+            background: transparent;
+        }
+
+        .icon-bar {
+            transition: all 0.2s;
+            width: 22px;
+
+            &.top-bar {
+                transform: translateX(3.2px) rotate(45deg);
+                transform-origin: 10% 10%;
+            }
+
+            &.middle-bar {
+                opacity: 0;
+                transform: translateX(0);
+            }
+
+            &.bottom-bar {
+                transform: translateX(3.2px) rotate(-45deg);
+                transform-origin: 10% 90%;
+            }
+        }
+
+        &.collapsed .icon-bar {
+            &.top-bar, &.bottom-bar {
+                transform: rotate(0);
+            }
+
+            &.middle-bar {
+                opacity: 1;
+                background-color: #888;
+            }
+        }
+    }
 }

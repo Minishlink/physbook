@@ -1,7 +1,7 @@
 <li id="navNotifications">
     <a href="{{ path('pjm_app_notifications_index') }}" title="Notifications">
         <span class="glyphicon glyphicon-bell"></span>
-        {% if nbNotReceived > 0 %}<span class="badge badge-notification">{{ nbNotReceived }}</span>{% endif %}
+        <span class="notificationCounterWrapper">{% if nbNotReceived > 0 %}<span class="notificationCounter badge badge-notification">{{ nbNotReceived }}</span>{% endif %}</span>
         <span class="visible-collapsed-inline">Notifications</span>
     </a>
 </li>

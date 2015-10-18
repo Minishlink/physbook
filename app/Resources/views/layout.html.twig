@@ -38,7 +38,6 @@
 
 {% javascripts
     'bundles/fosjsrouting/js/router.js'
-    'js/fos_js_routes.js'
     '%kernel.root_dir%/../app/Resources/public/js/app.js'
     '%kernel.root_dir%/../app/Resources/public/lib/moment/min/moment.min.js'
     '%kernel.root_dir%/../app/Resources/public/lib/moment/locale/fr.js'
@@ -61,9 +60,7 @@
 %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-{% if app.environment == 'dev' %}
 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-{% endif %}
 {% endblock %}
 
 {% block body %}

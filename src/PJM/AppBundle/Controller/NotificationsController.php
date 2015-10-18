@@ -5,6 +5,7 @@ namespace PJM\AppBundle\Controller;
 use PJM\AppBundle\Form\Type\NotificationSettingsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotificationsController extends Controller
@@ -16,15 +17,13 @@ class NotificationsController extends Controller
      */
     public function indexAction() {
         $notificationManager = $this->get('pjm.services.notification');
-        $notificationManager->markAllAsRead($this->getUser());
         $notifications = $notificationManager->get($this->getUser());
+
+        $notificationManager->markAllAsRead($this->getUser());
+
         return array(
             'notifications' => $notifications
         );
-    }
-
-    public function extraitAction() {
-
     }
 
     /**
@@ -32,8 +31,26 @@ class NotificationsController extends Controller
      */
     public function navAction() {
         return array(
-            'nbNotReceived' => $this->getDoctrine()->getRepository('PJMAppBundle:Notifications\Notification')->countNotReceived($this->getUser())
+            'nbNotReceived' => $this->get('pjm.services.notification')->count($this->getUser(), false)
         );
+    }
+
+    public function lastAction(Request $request) {
+        $endpoint = $request->query->get('endpoint');
+
+        if (empty($endpoint)) {
+            throw $this->createAccessDeniedException('Endpoint missing.');
+        }
+
+        $notification = $this->get('pjm.services.notification')->getLastNotificationByPushEndpoint($endpoint);
+
+        if (!$notification) {
+            throw $this->createAccessDeniedException('Cannot retrieve notification.');
+        }
+
+        return new JsonResponse(array(
+            'notification' => $notification
+        ));
     }
 
     /**

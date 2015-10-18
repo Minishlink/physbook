@@ -42,28 +42,78 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('push', function (event) {
+    // on actualise la page des notifications ou/et le compteur de notifications
+    self.refreshNotifications();
+
     if (!(self.Notification && self.Notification.permission === 'granted')) {
         return;
     }
 
-    var data = {};
-    if (event.data) {
-        data = event.data.json();
-    }
+    var sendNotification = function(message, tag) {
+        var title = "Phy'sbook",
+            icon = 'images/icons/icon-192.png';
 
-    var title = data.title || "Phy'sbook",
-        message = data.message || 'Il y a du neuf !',
-        icon = 'images/icons/icon-192.png',
-        tag = 'general';
+        message = message || 'Il y a du neuf !';
+        tag = tag || 'general';
 
-    event.waitUntil(
-        self.registration.showNotification(title, {
+        return self.registration.showNotification(title, {
             body: message,
             icon: icon,
             tag: tag
-        })
-    );
+        });
+    };
+
+    if (event.data) {
+        var data = event.data.json();
+        event.waitUntil(
+            sendNotification(data.message, data.tag)
+        );
+    } else {
+        event.waitUntil(
+            self.registration.pushManager.getSubscription().then(function(subscription) {
+                if (!subscription) {
+                    return;
+                }
+
+                fetch('notifications/last?endpoint=' + encodeURIComponent(subscription.endpoint)).then(function (response) {
+                    if (response.status !== 200) {
+                        throw new Error();
+                    }
+
+                    // Examine the text in the response
+                    return response.json().then(function (data) {
+                        if (data.error || !data.notification) {
+                            throw new Error();
+                        }
+
+                        return sendNotification(data.notification.message);
+                    });
+                }).catch(function () {
+                    return sendNotification();
+                });
+            })
+        );
+    }
 });
+
+self.refreshNotifications = function(clientList) {
+    if (clientList == undefined) {
+        clients.matchAll({ type: "window" }).then(function (clientList) {
+            self.refreshNotifications(clientList);
+        });
+    } else {
+        for (var i = 0; i < clientList.length; i++) {
+            var client = clientList[i];
+            if (client.url.search(/notifications/i) >= 0) {
+                // si la page des notifications est ouverte on la recharge
+                client.postMessage('reload');
+            }
+
+            // si on n'est pas sur la page des notifications on recharge le compteur
+            client.postMessage('refreshNotifications');
+        }
+    }
+};
 
 self.addEventListener('notificationclick', function (event) {
     // fix http://crbug.com/463146
@@ -73,15 +123,52 @@ self.addEventListener('notificationclick', function (event) {
         clients.matchAll({
             type: "window"
         })
-        .then(function (clientList) {
-            for (var i = 0; i < clientList.length; i++) {
-                var client = clientList[i];
-                if (client.url == '/' && 'focus' in client)
+            .then(function (clientList) {
+                // si la page des notifications est ouverte on l'affiche en priorité
+                for (var i = 0; i < clientList.length; i++) {
+                    var client = clientList[i];
+                    if (client.url.search(/notifications/i) >= 0 && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+
+                // sinon s'il y a quand même une page du site ouverte on l'affiche
+                if (clientList.length && 'focus' in client) {
                     return client.focus();
-            }
-            if (clients.openWindow) {
-                return clients.openWindow('/');
-            }
-        })
+                }
+
+                // sinon on ouvre la page des notifications
+                if (clients.openWindow) {
+                    return clients.openWindow('notifications');
+                }
+            })
     );
 });
+
+self.addEventListener('notificationclose', function (event) {
+    console.log('notificationclose, yay !');
+    // mark notification as read
+    /*event.waitUntil(
+        // refreshnotifications + reload /notifications
+        fetch('notifications/read')
+    );*/
+});
+
+self.addEventListener('message', function (event) {
+    var message = event.data;
+
+    switch (message) {
+        case 'dispatchRemoveNotifications':
+            clients.matchAll({ type: "window" }).then(function (clientList) {
+                for (var i = 0; i < clientList.length; i++) {
+                    clientList[i].postMessage('removeNotifications');
+                }
+            });
+            break;
+        default:
+            console.warn("Message '" + message + "' not handled.");
+            break;
+    }
+});
+
+
