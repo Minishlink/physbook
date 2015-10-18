@@ -40,6 +40,10 @@
     <p>
         Tu peux définir quelles sont les notifications que tu veux être sûr de ne pas rater ci-dessous. De cette façon, tu peux éviter de recevoir certaines notifications de bureau/mobile. De plus, elles ne seront pas mises en avant dans l'onglet Notifications de Phy'sbook. Tu recevras dans tous les cas les annonces.
     </p>
+    <p>
+        Attention, les webhooks conviennent plus aux utilisateurs "avancés". Tu peux recevoir tes notifications via SMS (si par exemple ton navigateur n'est pas encore supporté pour les notifications push) ou par un autre moyen en utilisant une "webhook". Il y a pleins de services sur Internet qui supportent cela. Chez Free Mobile par exemple, tu peux aller dans les options de ta ligne et activer la dernière option "Notifications par SMS". Le message sera ajouté à la fin de la webhook.<br>
+        Exemple: <em>https://smsapi.free-mobile.fr/sendmsg?user=21300040&pass=laBo213pine&msg=</em>
+    </p>
 
     {{ form_stylesheet(form) }}
     {{ form_javascript(form) }}

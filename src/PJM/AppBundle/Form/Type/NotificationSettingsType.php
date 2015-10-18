@@ -25,6 +25,11 @@ class NotificationSettingsType extends AbstractType
                 'required' => false,
                 'multiple' => true,
             ))
+            ->add('webhook', 'text', array(
+                'label' => 'Webhook',
+                'help_label' => 'Attention, cette URL ne sera pas chiffrée.',
+                'required' => false
+            ))
             ->add('save', 'submit', array(
                 'label' => 'Sauvegarder',
             ))

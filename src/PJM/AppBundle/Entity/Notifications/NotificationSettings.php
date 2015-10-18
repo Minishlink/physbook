@@ -37,6 +37,13 @@ class NotificationSettings
      */
     private $user;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="webhook", type="string", length=255, nullable=true)
+     */
+    private $webhook;
+
     public function __construct()
     {
         $enum = new NotificationSettingsEnum();
@@ -107,5 +114,29 @@ class NotificationSettings
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set webhook.
+     *
+     * @param string $webhook
+     *
+     * @return NotificationSettings
+     */
+    public function setWebhook($webhook)
+    {
+        $this->webhook = $webhook;
+
+        return $this;
+    }
+
+    /**
+     * Get webhook.
+     *
+     * @return string
+     */
+    public function getWebhook()
+    {
+        return $this->webhook;
     }
 }

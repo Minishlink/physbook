@@ -71,14 +71,12 @@ class NotificationManager
 
             $this->em->persist($user);
 
-            // si l'utilisateur est abonné à ce type de notification, on envoit un push ou un webhook
+            // si l'utilisateur est abonné à ce type de notification, on envoit un push ou/et un webhook
             $settings = $user->getNotificationSettings();
             if ($settings->has($notificationType['type'])) {
                 $message = $this->getMessage($notification);
                 $this->sendPushToUser($user, $message);
-                //$this->sendToWebhook($user, $message);
-
-                // TODO n'envoyer que sur webhook si aussi abonné aux push
+                $this->sendToWebhook($settings->getWebhook(), $message);
             }
         }
 
@@ -99,23 +97,32 @@ class NotificationManager
         $this->push->sendNotificationToUser($user, $message);
     }
 
-    public function sendToWebhook(User $user, $message) {
+    public function sendToWebhook($webhook, $message) {
+        if (empty($webhook)) {
+            return false;
+        }
+
         // format message
         $message = "[Phy'sbook] ".$message." https://physbook.fr";
 
-        // get webhook endpoint of User
-        $webhook = '';
         $webhook .= $message;
 
         $headers = array(
             'content-type' => 'text/plain; charset=utf-8',
         );
 
+        // TODO set curl download limit
+        $curl = $this->buzz->getClient();
+
         $response = $this->buzz->post($webhook, $headers);
 
         if ($response->getStatusCode() != 200) {
             // log error and user
+
+            return false;
         }
+
+        return true;
     }
 
     public function sendMessageToEmail($message, $email) {
