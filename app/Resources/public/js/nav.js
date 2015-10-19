@@ -29,30 +29,32 @@ $(document).ready(function () {
             $(this).children('img').hide(0);
             $(this).children('img.active').show(0);
 
+            var navSlider = $('#nav-slider');
+
             // on colore le slider en fonction du lien visé
             var target = $(this).attr('data-target');
             switch(target) {
                 case '#menu-vie':
-                    $('#nav-slider').css('background-color', '#b63938');
+                    navSlider.css('background-color', '#b63938');
                     break;
                 case '#menu-assos':
-                    $('#nav-slider').css('background-color', '#febf00');
+                    navSlider.css('background-color', '#febf00');
                     break;
                 case '#menu-consos':
-                    $('#nav-slider').css('background-color', '#eb661d');
+                    navSlider.css('background-color', '#eb661d');
                     break;
                 case '#menu-thuyss':
-                    $('#nav-slider').css('background-color', '#6a8fda');
+                    navSlider.css('background-color', '#6a8fda');
                     break;
                 case '#menu-tutos':
-                    $('#nav-slider').css('background-color', '#804faa');
+                    navSlider.css('background-color', '#804faa');
                     break;
             }
 
             // on place le slider coloré à l'endroit de la souris
             var left = $(this).parent().position().left;
             var width = $(this).parent().width()+1;
-            $('#nav-slider').stop().animate({
+            navSlider.stop().animate({
                 'left' : left,
                 'width' : width,
                 'opacity': 100
@@ -81,7 +83,7 @@ $(document).ready(function () {
     });
 
     // sous-menu
-    $('#liste-menu > ul > li > a.disable-fade').click(function(e) {
+    $('#liste-menu').find('> ul > li > a.disable-fade').click(function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 
@@ -137,7 +139,6 @@ $(document).ready(function () {
                 $('ul[id^="menu-"]').removeClass('afficher');
             }
         }, 1000);
-        ;
     });
 
     /*
@@ -174,17 +175,23 @@ function initSlider() {
 
     $('#nav-slider').css({
         'left' : target[0],
-        'width' : target[1],
+        'width' : target[1]
     });
 }
 
 function getSliderTargetPos() {
-    if($('ul.enable-slider > li.active').length) {
-        var left = $('ul.enable-slider > li.active').position().left;
-        var width = $('ul.enable-slider > li.active').width()+1;
+    var activeMenu = $('ul.enable-slider > li.active'),
+        left, width;
+
+    if(activeMenu.length) {
+        left = activeMenu.position().left;
+        width = activeMenu.width()+1;
     } else {
-        var left = $('ul.enable-slider > li.default').position().left;
-        var width = $('ul.enable-slider > li.default').width()+1;
+        var defaultMenu = $('ul.enable-slider > li.default');
+        if (defaultMenu.length) {
+            left = defaultMenu.position().left;
+            width = defaultMenu.width() + 1;
+        }
     }
 
     return [left, width];
