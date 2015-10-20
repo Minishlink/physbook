@@ -8,6 +8,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var less = require('gulp-less');
 var rework = require('gulp-rework');
 var reworkUrl = require('rework-plugin-url');
+var shell = require('gulp-shell');
 
 var path = {
     app: "app/Resources/public/",
@@ -62,9 +63,40 @@ var paths = {
     }
 };
 
-gulp.task('default', ['copy', 'compress', 'watch'], function() {
+gulp.task('default', ['dev']);
+
+gulp.task('dev', ['generate', 'watch'], function() {
     return gulp.src('')
         .pipe(notify("Ready :)"));
+});
+
+gulp.task('prod', ['generate'], shell.task([
+  'php app/console fos:js-routing:dump --env=prod', // generate JS routes
+  'php app/console assetic:dump --env=prod --no-debug' // for 3rd party bundles (eg. FOSCommentBundle)
+]));
+
+gulp.task('watch', function () {
+    var onChange = function (event) {
+        console.log('File ' + event.path + ' has been ' + event.type + '.');
+    };
+
+    gulp.watch(paths.js.site, ['compress:js:site'])
+        .on('change', onChange);
+    gulp.watch(path.app + "less/**/*.less", ['compress:css:site'])
+        .on('change', onChange);
+    gulp.watch(paths.css.connexion, ['compress:css:connexion'])
+        .on('change', onChange);
+});
+
+gulp.task('generate', ['copy', 'compress']);
+gulp.task('copy', ['copy:js']);
+gulp.task('compress', ['compress:js', 'compress:css']);
+gulp.task('compress:js', ['compress:js:site', 'compress:js:ext']);
+gulp.task('compress:css', ['compress:css:site', 'compress:css:connexion', 'compress:css:ext']);
+
+gulp.task('copy:js', function() {
+   return gulp.src(paths.js.bigExt)
+       .pipe(gulp.dest(path.web + 'js/ext'))
 });
 
 gulp.task('compress:js:site', function () {
@@ -81,18 +113,6 @@ gulp.task('compress:js:ext', function () {
         .pipe(concat('ext.js'))
         .pipe(uglify())
         .pipe(gulp.dest(path.web + 'js'));
-});
-
-gulp.task('compress:js', ['compress:js:site', 'compress:js:ext']);
-
-gulp.task('compress:css:ext', function() {
-    return gulp.src(paths.css.ext)
-        .pipe(sourcemaps.init())
-        .pipe(minifyCSS())
-        .pipe(autoprefixer('last 2 versions'))
-        .pipe(concat('ext.css'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(path.web + 'css'))
 });
 
 gulp.task('compress:css:site', function() {
@@ -123,26 +143,12 @@ gulp.task('compress:css:connexion', function() {
         .pipe(gulp.dest(path.web + 'css'))
 });
 
-gulp.task('compress:css', ['compress:css:site', 'compress:css:connexion', 'compress:css:ext']);
-
-gulp.task('compress', ['compress:js', 'compress:css']);
-
-gulp.task('copy:js', function() {
-   return gulp.src(paths.js.bigExt)
-       .pipe(gulp.dest(path.web + 'js/ext'))
-});
-
-gulp.task('copy', ['copy:js']);
-
-gulp.task('watch', function () {
-    var onChange = function (event) {
-        console.log('File ' + event.path + ' has been ' + event.type + '.');
-    };
-
-    gulp.watch(paths.js.site, ['compress:js:site'])
-        .on('change', onChange);
-    gulp.watch(path.app + "less/**/*.less", ['compress:css:site'])
-        .on('change', onChange);
-    gulp.watch(paths.css.connexion, ['compress:css:connexion'])
-        .on('change', onChange);
+gulp.task('compress:css:ext', function() {
+    return gulp.src(paths.css.ext)
+        .pipe(sourcemaps.init())
+        .pipe(minifyCSS())
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(concat('ext.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.web + 'css'))
 });
