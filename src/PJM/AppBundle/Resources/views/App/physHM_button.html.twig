@@ -1,0 +1,8 @@
+{{  form_start(form) }}
+<input type="image"
+       src="{{ barre is defined ? asset('images/general/PhysHM-barre-R.png') :  asset('images/general/PhysHM-R.png') }}"
+       name="save"
+       class="physHM"
+       alt="Phy's{% if barre is defined %} barre{% endif %} HM" />
+{{ form_rest(form) }}
+
