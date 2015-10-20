@@ -15,8 +15,6 @@ var path = {
     web: "web/"
 };
 
-// TODO fix Phy's HM icon
-
 var paths = {
     js: {
         site: [
@@ -44,8 +42,7 @@ var paths = {
     css: {
         site: [
             path.app + 'less/design.less',
-            path.app + 'css/font-physbook.css',
-
+            path.app + 'css/font-physbook.css'
         ],
         connexion: [
             path.app + 'less/design-connexion.less',
