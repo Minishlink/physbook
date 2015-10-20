@@ -24,4 +24,5 @@ desktop.ini
 /composer.phar
 /node_modules
 /web/maps/
+/tmp
 
