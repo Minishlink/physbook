@@ -12,10 +12,8 @@ Note that these steps are not necessary if this release has not changed your ass
   * Delete app/cache
 3. Clean your web assets
   * Delete web/css/* and web/js/*
-4. Generate javascript routes
-  * php app/console fos:js-routing:dump --env=prod
-5. Generate your assets
-  * php app/console assetic:dump --env=prod
+4. Generate assets
+  * gulp prod
 
 ## Uploading
 You should transfer the modified files, using your favorite FTP client (eg. FileZilla), overwriting every files that is newer. Most common files and folders are:
@@ -43,4 +41,5 @@ Every logic in Symfony controllers should be updated now, but you should update 
 2. Clear your cache
   * php app/console cache:clear --env=prod
 3. Update composer dependencies (Symfony and bundles)
-  * php composer.phar install
+  * php composer.phar self-update
+  * php composer.phar install --optimize-autoloader
