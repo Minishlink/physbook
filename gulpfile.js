@@ -3,11 +3,18 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
+var minifyCSS = require('gulp-minify-css');
+var autoprefixer = require('gulp-autoprefixer');
+var less = require('gulp-less');
+var rework = require('gulp-rework');
+var reworkUrl = require('rework-plugin-url');
 
 var path = {
     app: "app/Resources/public/",
     web: "web/"
 };
+
+// TODO fix Phy's HM icon
 
 var paths = {
     js: {
@@ -32,12 +39,32 @@ var paths = {
             path.app + 'lib/datatables/media/js/jquery.dataTables.min.js',
             path.app + 'lib/select2/dist/js/select2.min.js'
         ]
+    },
+    css: {
+        site: [
+            path.app + 'less/design.less',
+            path.app + 'css/font-physbook.css',
+
+        ],
+        connexion: [
+            path.app + 'less/design-connexion.less',
+            path.app + 'css/font-physbook.css'
+        ],
+        ext: [
+            path.app + 'css/animations.css',
+            path.app + 'css/dataTables.bootstrap.css',
+            path.app + 'lib/datatables-responsive/css/dataTables.responsive.css',
+            path.app + 'lib/select2/dist/css/select2.css',
+            path.app + 'lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css',
+            path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.css',
+            path.app + 'lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
+        ]
     }
 };
 
-gulp.task('default', ['copy', 'compress'], function() {
+gulp.task('default', ['copy', 'compress', 'watch'], function() {
     return gulp.src('')
-        .pipe(notify("Finished :)"));
+        .pipe(notify("Ready :)"));
 });
 
 gulp.task('compress:js:site', function () {
@@ -45,7 +72,7 @@ gulp.task('compress:js:site', function () {
         .pipe(sourcemaps.init())
         .pipe(concat('site.js'))
         .pipe(uglify())
-        .pipe(sourcemaps.write('../maps'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.web + 'js'));
 });
 
@@ -56,12 +83,49 @@ gulp.task('compress:js:ext', function () {
         .pipe(gulp.dest(path.web + 'js'));
 });
 
-gulp.task('compress:js', ['compress:js:site', 'compress:js:ext'], function() {
-    return gulp.src('')
-        .pipe(notify('Finished minifying JavaScript'));
+gulp.task('compress:js', ['compress:js:site', 'compress:js:ext']);
+
+gulp.task('compress:css:ext', function() {
+    return gulp.src(paths.css.ext)
+        .pipe(sourcemaps.init())
+        .pipe(minifyCSS())
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(concat('ext.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.web + 'css'))
 });
 
-gulp.task('compress', ['compress:js']);
+gulp.task('compress:css:site', function() {
+    return gulp.src(paths.css.site)
+        .pipe(sourcemaps.init())
+        .pipe(less())
+        .pipe(rework(reworkUrl(function(url) {
+            return '../' + url;
+        })))
+        .pipe(minifyCSS())
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(concat('site.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.web + 'css'))
+});
+
+gulp.task('compress:css:connexion', function() {
+    return gulp.src(paths.css.connexion)
+        .pipe(sourcemaps.init())
+        .pipe(less())
+        .pipe(rework(reworkUrl(function(url) {
+            return '../' + url;
+        })))
+        .pipe(minifyCSS())
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(concat('connexion.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.web + 'css'))
+});
+
+gulp.task('compress:css', ['compress:css:site', 'compress:css:connexion', 'compress:css:ext']);
+
+gulp.task('compress', ['compress:js', 'compress:css']);
 
 gulp.task('copy:js', function() {
    return gulp.src(paths.js.bigExt)
@@ -72,9 +136,13 @@ gulp.task('copy', ['copy:js']);
 
 gulp.task('watch', function () {
     var onChange = function (event) {
-        console.log('File ' + event.path + ' has been ' + event.type);
+        console.log('File ' + event.path + ' has been ' + event.type + '.');
     };
 
     gulp.watch(paths.js.site, ['compress:js:site'])
+        .on('change', onChange);
+    gulp.watch(path.app + "less/**/*.less", ['compress:css:site'])
+        .on('change', onChange);
+    gulp.watch(paths.css.connexion, ['compress:css:connexion'])
         .on('change', onChange);
 });

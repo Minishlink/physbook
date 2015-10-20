@@ -1,16 +1,8 @@
 {% extends "::layout.html.twig" %}
 
 {% block stylesheets %}
-{% stylesheets
-    '%kernel.root_dir%/../app/Resources/public/less/design-connexion.less'
-    '%kernel.root_dir%/../app/Resources/public/css/animations.css'
-    '%kernel.root_dir%/../app/Resources/public/css/font-physbook.css'
-    filter='less,cssrewrite,?yui_css'
-    output='css/design-connexion.css'
-    package='css'
-%}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ext.css', 'css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/connexion.css', 'css') }}" />
 {% endblock %}
 
 {% block body %}
