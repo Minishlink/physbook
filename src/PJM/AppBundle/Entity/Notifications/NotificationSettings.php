@@ -41,6 +41,7 @@ class NotificationSettings
      * @var string
      *
      * @ORM\Column(name="webhook", type="string", length=255, nullable=true)
+     * @Assert\Url()
      */
     private $webhook;
 
