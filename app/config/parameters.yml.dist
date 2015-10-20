@@ -1,17 +1,17 @@
 parameters:
     database_driver: pdo_mysql
-    database_host: localhost
+    database_host: 127.0.0.1
     database_port: null
     database_name: physbook
     database_user: root
     database_password: null
     
-    db_rezal_host: localhost
+    db_rezal_host: 127.0.0.1
     db_rezal_user: user
     db_rezal_pass: password
 
     mailer_transport: smtp
-    mailer_host: localhost
+    mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     mailer_encryption: ~
@@ -22,9 +22,6 @@ parameters:
 
     debug_toolbar:          true
     debug_redirects:        false
-    use_assetic_controller: true
-    
-    java_path: java
     
     paiement.smoney.url: urlSmoneyAChanger
     paiement.smoney.auth: Bearer clef
@@ -32,6 +29,3 @@ parameters:
     android_gcm_api_key: clefAChanger
     
     canal: https
-    
-    node: C:\Users\Louis\AppData\Roaming\nodejs\node.exe
-    node_paths: [C:\Users\Louis\AppData\Roaming\npm\node_modules]

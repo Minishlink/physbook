@@ -22,4 +22,7 @@
 desktop.ini
 /npm-debug.log
 /composer.phar
+/node_modules
+/web/maps/
+/tmp
 

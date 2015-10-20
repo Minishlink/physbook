@@ -76,20 +76,11 @@ class AppController extends Controller
                 array('usersHM' => $usersHM->getId())
             ))
             ->setMethod('POST')
-            ->add('save', 'submit', array(
-                'label' => "Phy's HM",
-                'attr' => array(
-                    'class' => 'physHM',
-                    'title' => "Phy's HM",
-                ),
-            ))
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $json = array();
-
             if ($form->isValid()) {
                 if (!$usersHM->getUsers()->contains($this->getUser())) {
                     $usersHM->addUser($this->getUser());
@@ -107,6 +98,7 @@ class AppController extends Controller
                 }
             } else {
                 // erreur dans le formulaire
+                $reason = array();
                 foreach ($form->getErrors() as $error) {
                     $reason[] = $error->getMessage();
                 }
@@ -117,13 +109,10 @@ class AppController extends Controller
                 );
             }
 
-            $response = new JsonResponse();
-            $response->setData($json);
-
-            return $response;
+            return new JsonResponse($json);
         }
 
-        return $this->render('PJMAppBundle::form_standard.html.twig', array(
+        return $this->render('@PJMApp/App/physHM_button.html.twig', array(
             'form' => $form->createView(),
         ));
     }

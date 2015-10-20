@@ -111,9 +111,6 @@ class NotificationManager
             'content-type' => 'text/plain; charset=utf-8',
         );
 
-        // TODO set curl download limit
-        $curl = $this->buzz->getClient();
-
         $response = $this->buzz->post($webhook, $headers);
 
         if ($response->getStatusCode() != 200) {

@@ -2,11 +2,13 @@
 This guide will help you setup your development environment.
 
 ## Mandatory tools ##
-Here is the list of the tools you need to make this application work:
+Download and install [Node+NPM](https://nodejs.org/download/) and [Composer](https://getcomposer.org/download/).
 
-* composer
-* bower
-* lesscss
+Then:
+* npm install
+* npm install -g gulp
+* npm install -g bower
+* npm install -g less
 
 ## Recommended environment ##
 If you already have an environment you are familiar with, keep it. You just have to make sure your app/config/parameters.yml is well configured.
@@ -30,9 +32,9 @@ Windows : [WampServer](http://www.wampserver.com/) (make sure your PATH environm
 
 Mac : [XAMPP](https://www.apachefriends.org/fr/download.html)
 
-### Brackets ###
-Use [Brackets](http://brackets.io) (Windows/Mac/Linux)
-recommended with extensions :
+### Code editor ###
+Either use [Brackets](http://brackets.io) (Windows/Mac/Linux)
+recommended with extensions:
 
 * Brackets Git
 * PHP Code Quality Tools (check PSR-1 and PSR-2 in the options)
@@ -41,25 +43,10 @@ recommended with extensions :
 * Exclude File Tree (exclude vendor, cache, logs)
 * Todo
 
-### Package managers ###
-
-#### Composer ####
-[Download](https://getcomposer.org/download/)
-
-#### npm (+ node.js)) ####
-[Download](https://nodejs.org/download/)
-
-#### Bower ####
-[Bower website](http://bower.io/#install-bower)
-
-* npm install -g bower
-
-### Tools ###
-
-#### Less ####
-[Less website](http://lesscss.org/)
-
-* npm install -g less
+Or [PhpStorm](https://www.jetbrains.com/phpstorm/) (free 1 year license for students) with these plugins:
+* Symfony
+* PHP Annotations
+* SensioLabsInsight
 
 ## Configure the repository ##
 
@@ -70,9 +57,4 @@ recommended with extensions :
   * When asked about parameters, leave the default ones. (press ENTER again and again for each parameter)
 * php app/console doctrine:create:database
 * php app/console doctrine:schema:update --force
-* create 4 "Boquette" with slugs "pians", "paniers", "brags", "cvis" in phpmyadmin.
-* create the test users
-  * php app/console fos:user:create admin --super-admin
-  * php app/console fos:user:create user
-  * php app/console users:create:inbox
-  * php app/console users:create:compte
+* php app/console doctrine:fixtures:load -n

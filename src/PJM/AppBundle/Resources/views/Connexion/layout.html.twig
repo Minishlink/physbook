@@ -1,16 +1,8 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block stylesheets %}
-{% stylesheets
-    '%kernel.root_dir%/../app/Resources/public/less/design-connexion.less'
-    '%kernel.root_dir%/../app/Resources/public/css/animations.css'
-    '%kernel.root_dir%/../app/Resources/public/css/font-physbook.css'
-    filter='less,cssrewrite,?yui_css'
-    output='css/design-connexion.css'
-    package='css'
-%}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ext.css', 'css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/connexion.css', 'css') }}" />
 {% endblock %}
 
 {% block body %}
@@ -41,26 +33,4 @@
     </div>
 </div>
 
-{% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-{% javascripts
-    '%kernel.root_dir%/../app/Resources/public/lib/jquery/dist/jquery.min.js'
-    output='js/jquery.js'
-%}
-    <script>window.jQuery || document.write('<script src="{{ asset_url }}"><\/script>');</script>
-{% endjavascripts %}
-
-{% javascripts
-    '%kernel.root_dir%/../app/Resources/public/js/app.js'
-    '%kernel.root_dir%/../app/Resources/public/js/connexion.js'
-    '%kernel.root_dir%/../app/Resources/public/js/piwik.js'
-    filter='?yui_js'
-    output='js/connexion.js'
-    package='js'
-%}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
 {% endblock %}
