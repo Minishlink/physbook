@@ -77,6 +77,7 @@ class NotificationManager
                 $message = $this->getMessage($notification);
                 $this->sendPushToUser($user, $message);
                 $this->sendToWebhook($settings->getWebhook(), $message);
+                $this->sendToEmail($user->getEmail(), $message);
             }
         }
 
@@ -105,16 +106,17 @@ class NotificationManager
         // format message
         $message = "[Phy'sbook] ".$message." https://physbook.fr";
 
-        $webhook .= $message;
-
         $headers = array(
             'content-type' => 'text/plain; charset=utf-8',
         );
 
-        $response = $this->buzz->post($webhook, $headers);
+        $response = $this->buzz->post($webhook.$message, $headers);
 
         if ($response->getStatusCode() != 200) {
-            // log error and user
+            $this->sendToEmail(
+                'error@physbook.fr',
+                'Erreur '.$response->getStatusCode().' lors de l\'accès au webhook "'.$webhook.'"."'
+            );
 
             return false;
         }
@@ -122,7 +124,7 @@ class NotificationManager
         return true;
     }
 
-    public function sendMessageToEmail($message, $email) {
+    public function sendToEmail($email, $message) {
         $this->mailer->sendMessageToEmail($message, $email);
     }
 

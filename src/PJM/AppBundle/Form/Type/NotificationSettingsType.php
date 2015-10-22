@@ -20,10 +20,14 @@ class NotificationSettingsType extends AbstractType
 
         $builder
             ->add('subscriptions', 'pjm_select2_choice', array(
-                'label' => 'Abonnements',
+                'label' => 'Notifications à ne pas rater',
                 'choices' => $subscriptionsChoices,
                 'required' => false,
                 'multiple' => true,
+            ))
+            ->add('email', 'checkbox', array(
+                'label' => 'Envoi d\'e-mail',
+                'required' => false
             ))
             ->add('webhook', 'url', array(
                 'label' => 'Webhook',

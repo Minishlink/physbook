@@ -45,10 +45,18 @@ class NotificationSettings
      */
     private $webhook;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="email", type="boolean")
+     */
+    private $email;
+
     public function __construct()
     {
         $enum = new NotificationSettingsEnum();
         $this->subscriptions = $enum->getDefaultSubscriptionsChoices();
+        $this->email = false;
 
         return $this;
     }
@@ -139,5 +147,24 @@ class NotificationSettings
     public function getWebhook()
     {
         return $this->webhook;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param boolean $email
+     * @return NotificationSettings
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

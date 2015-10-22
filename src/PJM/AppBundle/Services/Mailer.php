@@ -75,7 +75,7 @@ class Mailer
     }
 
     /**
-     * Envoie un mail de admin@physbook.fr.
+     * Envoie un mail de notification@physbook.fr.
      *
      * @param object User $user    L'utilisateur inscrit
      * @param array       $context Un tableau des variables utilisées dans le template
@@ -88,7 +88,7 @@ class Mailer
         }
 
         $from = array(
-            $this->parameters['contactEmail'] => $this->parameters['notificationSender'],
+            $this->parameters['notificationEmail'] => $this->parameters['notificationSender'],
         );
         $to = array(
             $user->getEmail() => $user->getPrenom().' '.$user->getNom(),
@@ -98,14 +98,14 @@ class Mailer
     }
 
     /**
-     * Envoie un simple $message de admin@physbook.fr à $mail
+     * Envoie un simple $message de notification@physbook.fr à $mail
      */
     public function sendMessageToEmail($message, $email)
     {
         $template = $this->parameters['template']['message'];
 
         $from = array(
-            $this->parameters['contactEmail'] => $this->parameters['notificationSender'],
+            $this->parameters['notificationEmail'] => $this->parameters['notificationSender'],
         );
 
         $to = array(

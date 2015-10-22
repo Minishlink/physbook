@@ -64,9 +64,9 @@ class HistoriqueManager
                 }
 
                 // notify ZiPhy'sbook
-                $this->notification->sendMessageToEmail(
-                    'Il y a eu une erreur R&z@l lors de l\'achat de '.$item->getLibelle().' ('.$item->showPrix().'€) à la date du '.$historique->getDate()->format('d/m/Y H:i:s').' par '.$user.'.',
-                    'zi@physbook.fr'
+                $this->notification->sendToEmail(
+                    'zi@physbook.fr',
+                    'Il y a eu une erreur R&z@l lors de l\'achat de '.$item->getLibelle().' ('.$item->showPrix().'€) à la date du '.$historique->getDate()->format('d/m/Y H:i:s').' par '.$user.'.'
                 );
 
                 return false;
