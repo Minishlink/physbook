@@ -22,7 +22,7 @@ self.addEventListener('fetch', function (event) {
     if (event.request.method === 'GET'
             && event.request.headers.get('accept').includes('text/html')) {
 
-        // a request should not have any body (blob), but sometimes it does
+        // a GET request should not have any body (blob), but sometimes it does
         event.request.blob().then(function(blob) {
             if (blob.size == 0) {
                 event.respondWith(
@@ -33,9 +33,6 @@ self.addEventListener('fetch', function (event) {
                         });
                     })
                 );
-            } else {
-                console.warn("Bad GET request with body : " + event.request.url);
-                console.warn(blob);
             }
         });
     }
