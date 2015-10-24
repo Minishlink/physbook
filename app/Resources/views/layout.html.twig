@@ -2,26 +2,6 @@
 
 {% set error_page = false %}
 
-{% block base_javascripts %}
-    {{ parent() }}
-
-    {% if offline is not defined %}<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>{% endif %}
-    <script>window.jQuery || document.write('<script src="{{ asset('js/ext/jquery.min.js', 'js') }}"><\/script>');</script>
-
-    {% if offline is not defined %}<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>{% endif %}
-    <script>$.fn.modal || document.write('<script src="{{ asset('js/ext/bootstrap.min.js', 'js') }}"><\/script>');</script>
-
-    {% if offline is not defined %}<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>{% endif %}
-    <script>$.fn.dataTable || document.write('<script src="{{ asset('js/ext/jquery.dataTables.min.js', 'js') }}"><\/script>');</script>
-
-    {% if offline is not defined %}<script src="//cdn.jsdelivr.net/select2/4.0.0/js/select2.min.js"></script>{% endif %}
-    <script>$.fn.select2 || document.write('<script src="{{ asset('js/ext/select2.min.js', 'js') }}"><\/script>');</script>
-
-    <script type="text/javascript" src="{{ asset('js/ext.js', 'js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/site.js', 'js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-{% endblock %}
-
 {% block body %}
 {# modals #}
 <div id="modals">

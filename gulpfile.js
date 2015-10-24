@@ -19,8 +19,7 @@ var paths = {
     js: {
         site: [
             path.app + 'js/**/*.js',
-            '!' + path.app + 'js/ext/**/*.js',
-            path.web + 'bundles/fosjsrouting/js/router.js'
+            '!' + path.app + 'js/ext/**/*.js'
         ],
         ext: [
             path.app + 'lib/moment/min/moment.min.js',
@@ -30,6 +29,7 @@ var paths = {
             path.app + 'lib/datatables-responsive/js/dataTables.responsive.js',
             path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.js',
             path.app + 'lib/select2/dist/js/i18n/fr.js',
+            path.web + 'bundles/fosjsrouting/js/router.js',
             path.app + 'js/ext/**/*.js'
         ],
         bigExt: [
