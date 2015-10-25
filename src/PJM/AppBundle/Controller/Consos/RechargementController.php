@@ -23,7 +23,7 @@ class RechargementController extends Controller
         $curl->setVerifyPeer(false);
         $curl->setTimeout(30);
 
-        $authToken = $this->container->getParameter('paiement.smoney.auth'); //test
+        $authToken = $this->container->getParameter('paiement.smoney.auth');
         $urlSMoney = $this->container->getParameter('paiement.smoney.url');
 
         $agent = 'web';
