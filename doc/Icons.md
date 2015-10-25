@@ -5,7 +5,7 @@ Phy'sbook uses [Gulpicon](https://github.com/filamentgroup/gulpicon) for generat
 SVG 1.1 with or without artworks. 
 
 ## Installation ##
-Copy from Google Drive the SVGs to the directory `app/Resources/public/icons/svg`.
+Copy from Google Drive (`Programmation/Site/`) the directory `app/Resources/public/icons/svg`.
 Then `gulp icons`.
 
 ## Usage ##
