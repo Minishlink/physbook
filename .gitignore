@@ -13,7 +13,7 @@
 /app/cache/*
 /app/logs/*
 /app/Resources/public/lib/
-/app/Resources/java/
+/app/Resources/public/icons/
 /app/config/parameters.yml
 /app/config/parameters_dev.yml
 /vendor/
@@ -25,4 +25,3 @@ desktop.ini
 /node_modules
 /web/maps/
 /tmp
-

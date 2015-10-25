@@ -9,8 +9,9 @@
         <!-- créé par Louis Lagrange, Etienne Blanc, Louis Brillot, Alice Calès et Stéphie Noailles -->
         <title>{% block title %}Phy'sbook{% endblock %}</title>
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/ext.css', 'css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/site.css', 'css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/ext.css', 'css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/site.css', 'css') }}" />
+            <noscript><link rel="stylesheet" href="{{ asset('css/icons.fallback.css') }}"></noscript>
         {% endblock %}
 
         <!-- WebApp Manifest -->
@@ -67,6 +68,9 @@
             <script type="text/javascript" src="{{ asset('js/ext.js', 'js') }}"></script>
             <script type="text/javascript" src="{{ app.environment == 'dev' ? path('fos_js_routing_js', {"callback": "fos.Router.setData"}) : asset('js/fos_js_routes.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/site.js', 'js') }}"></script>
+            <script type="text/javascript">
+                grunticon(["{{ asset('css/icons.data.svg.css') }}", "{{ asset('css/icons.data.png.css') }}", "{{ asset('css/icons.fallback.css') }}"], grunticon.svgLoadedCallback);
+            </script>
         {% endblock %}
     </head>
     <body{% if block('pageName') != "" %} class="{{ block('pageName') }}"{% endif %}>
