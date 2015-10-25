@@ -20,7 +20,7 @@ $(document).ready(function () {
     {% if mazoutage %}{% include 'PJMAppBundle:Accueil:mazoutage.html.twig' %}{% endif %}
     <div class="row text-center bg-rouge">
         <div class="col-md-offset-4 col-md-4">
-            <img id="brand" src="{{ asset('images/general/brand-text.svg') }}" onerror="this.src='{{ asset('images/general/brand-text.png') }}'" />
+            <div id="brand" class="phys-brand" data-grunticon-embed></div>
         </div>
     </div>
     <div class="space"></div>

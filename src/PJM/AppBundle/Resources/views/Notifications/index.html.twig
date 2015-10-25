@@ -15,7 +15,11 @@
 <script type="text/javascript">
 $(document).ready(function () {
     // dispatch event notification read when arriving on this page
-    navigator.serviceWorker.controller.postMessage('dispatchRemoveNotifications');
+    if ('serviceWorker' in navigator) {
+        if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage('dispatchRemoveNotifications');
+        }
+    }
 });
 </script>
 {% endblock %}

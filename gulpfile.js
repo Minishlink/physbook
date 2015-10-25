@@ -9,6 +9,7 @@ var less = require('gulp-less');
 var rework = require('gulp-rework');
 var reworkUrl = require('rework-plugin-url');
 var shell = require('gulp-shell');
+var gulpicon = require("gulpicon/tasks/gulpicon");
 
 var path = {
     app: "app/Resources/public/",
@@ -19,7 +20,8 @@ var paths = {
     js: {
         site: [
             path.app + 'js/**/*.js',
-            '!' + path.app + 'js/ext/**/*.js'
+            '!' + path.app + 'js/ext/**/*.js',
+            path.app + 'icons/*.js'
         ],
         ext: [
             path.app + 'lib/moment/min/moment.min.js',
@@ -41,12 +43,10 @@ var paths = {
     },
     css: {
         site: [
-            path.app + 'less/design.less',
-            path.app + 'css/font-physbook.css'
+            path.app + 'less/design.less'
         ],
         connexion: [
-            path.app + 'less/design-connexion.less',
-            path.app + 'css/font-physbook.css'
+            path.app + 'less/design-connexion.less'
         ],
         ext: [
             path.app + 'css/animations.css',
@@ -57,6 +57,11 @@ var paths = {
             path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.css',
             path.app + 'lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
         ]
+    },
+    icons: {
+        svg: path.app + 'icons/svg/*.svg',
+        css: path.app + 'icons/*.css',
+        png: path.app + 'icons/png/*.png'
     }
 };
 
@@ -149,3 +154,36 @@ gulp.task('compress:css:ext', function() {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.web + 'css'))
 });
+
+// task shortcut (waiting for a gulpicon with streams)
+var gulpiconTask = function() {
+    var glob = require("glob");
+    var files = glob.sync(paths.icons.svg);
+    var config = {
+        dest: path.app + "icons/",
+        enhanceSVG: true,
+        cssprefix: ".phys-",
+        compressPNG: true,
+        colors: {
+            rouge: "#B63938",
+            gris: "#505050"
+        }
+    };
+
+    return gulpicon(files, config);
+};
+gulp.task('icons:task', gulpiconTask());
+gulp.task('icons:copy', ['icons:copy:css', 'icons:copy:png']);
+
+gulp.task('icons:copy:css', ['icons:task'], function() {
+    return gulp.src(paths.icons.css)
+        .pipe(minifyCSS())
+        .pipe(gulp.dest(path.web + 'css'))
+});
+
+gulp.task('icons:copy:png', ['icons:task'], function() {
+    return gulp.src(paths.icons.png)
+        .pipe(gulp.dest(path.web + 'css/png'))
+});
+
+gulp.task('icons', ['icons:task', 'icons:copy']);
