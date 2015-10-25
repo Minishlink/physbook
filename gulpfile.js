@@ -20,8 +20,7 @@ var paths = {
     js: {
         site: [
             path.app + 'js/**/*.js',
-            '!' + path.app + 'js/ext/**/*.js',
-            path.app + 'icons/*.js'
+            '!' + path.app + 'js/ext/**/*.js'
         ],
         ext: [
             path.app + 'lib/moment/min/moment.min.js',
