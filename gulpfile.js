@@ -60,8 +60,8 @@ var paths = {
     },
     icons: {
         svg: path.app + 'icons/svg/*.svg',
-        css: path.app + 'icons/png',
-        pngDir: path.app + 'icons/png'
+        css: path.app + 'icons/*.css',
+        png: path.app + 'icons/png/*.png'
     }
 };
 
@@ -173,9 +173,17 @@ var gulpiconTask = function() {
     return gulpicon(files, config);
 };
 gulp.task('icons:task', gulpiconTask());
-gulp.task('icons', ['icons:task'], function() {
+gulp.task('icons:copy', ['icons:copy:css', 'icons:copy:png']);
+
+gulp.task('icons:copy:css', ['icons:task'], function() {
     return gulp.src(paths.icons.css)
         .pipe(minifyCSS())
         .pipe(gulp.dest(path.web + 'css'))
 });
 
+gulp.task('icons:copy:png', ['icons:task'], function() {
+    return gulp.src(paths.icons.png)
+        .pipe(gulp.dest(path.web + 'css/png'))
+});
+
+gulp.task('icons', ['icons:task', 'icons:copy']);
