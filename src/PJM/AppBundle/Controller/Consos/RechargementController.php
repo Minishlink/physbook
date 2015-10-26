@@ -21,29 +21,26 @@ class RechargementController extends Controller
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
         $curl->setVerifyPeer(false);
-        $curl->setTimeout(30);
 
-        $authToken = $this->container->getParameter('paiement.smoney.auth');
-        $urlSMoney = $this->container->getParameter('paiement.smoney.url');
+        $vendorToken = $this->container->getParameter('paiement.lydia.auth');
+        $urlLydia = $this->container->getParameter('paiement.lydia.url');
 
-        $agent = 'web';
-
-        $headers = array(
-            'Authorization' => $authToken,
-        );
         $content = array(
-            'amount' => $transaction->getMontant(),
-            'receiver' => $transaction->getCompte()->getBoquette()->getCaisseSMoney(),
-            'transactionId' => substr(uniqid(), 0, 6).'_'.$transaction->getId(),
-            'amountEditable' => false,
-            'receiverEditable' => false,
-            'agent' => $agent,
-            'source' => 'web',
-            'identifier' => '',
+            'vendor_token' => $vendorToken,
+            'recipient' => '',
+            'type' => 'phone',
             'message' => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom().' - '.$transaction->getCompte()->getUser()->getUsername(),
+            'amount' => $transaction->getMontant(),
+            'currency' => 'EUR',
+            'expire_time' => 30,
+            'browser_success_url' => '',
+            'browser_fail_url' => '',
+            'notify' => 'yes',
+            'notify_collector' => 'no',
+            'order_ref' => substr(uniqid(), 0, 6).'_'.$transaction->getId(),
         );
 
-        $response = $buzz->post($urlSMoney, $headers, $content);
+        $response = $buzz->post($urlLydia, $content);
 
         if ($response->getStatusCode() != 200) {
             // si échec
