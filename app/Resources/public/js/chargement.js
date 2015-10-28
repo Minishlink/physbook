@@ -38,12 +38,14 @@ $(document).ready(function () {
 });
 
 function chargement(commencer) {
+    var $chargement = $('#chargement');
+
     if (commencer) {
-        $('#chargement').css('visibility', 'visible');
-        $('#chargement').fadeTo(200, 1);
+        $chargement.css('visibility', 'visible');
+        $chargement.fadeTo(200, 1);
     } else {
-        $('#chargement').fadeTo(200, 0, function() {
-            $('#chargement').css('visibility', 'hidden');
+        $chargement.fadeTo(200, 0, function() {
+            $chargement.css('visibility', 'hidden');
         });
     }
 }

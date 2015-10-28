@@ -1,16 +1,15 @@
 $(document).ready(function () {
-    $('#content').on('submit', '.ajax-form form', function(e) {
+    $('#content').on('submit', '.ajax-form > form', function(e) {
+        e.stopImmediatePropagation();
         e.preventDefault();
         var $this = $(this);
-        var button = $(this).find('button');
+        var button = $this.find('button');
 
         if(!button.hasClass('disabled')) {
             button.addClass('disabled');
             chargement(true);
 
             var formData = new FormData($this[0]);
-
-
 
             $.ajax({
                 url: $this.attr('action'),
