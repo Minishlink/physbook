@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Services;
 
 use Buzz\Browser;
+use Buzz\Exception\RequestException;
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Notifications\Notification;
 use PJM\AppBundle\Entity\User;
@@ -110,7 +111,11 @@ class NotificationManager
             'content-type' => 'text/plain; charset=utf-8',
         );
 
-        $response = $this->buzz->post($webhook.$message, $headers);
+        try {
+            $response = $this->buzz->post($webhook.$message, $headers);
+        } catch(RequestException $e) {
+            return false;
+        }
 
         if ($response->getStatusCode() != 200) {
             $this->sendToEmail(
