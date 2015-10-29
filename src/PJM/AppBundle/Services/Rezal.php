@@ -30,9 +30,10 @@ class Rezal
     }
 
     /**
-     * Donne un tableau avec clés fams, tabagns, proms à partir d'un User
+     * Donne un tableau avec clés fams, tabagns, proms à partir d'un User.
      *
      * @param User $user
+     *
      * @return array
      */
     public function getTrueID(User $user)
@@ -165,15 +166,15 @@ class Rezal
 
         $this->deconnexion();
 
-        return null;
+        return;
     }
 
     /**
      * Edite le montant du solde d’un pg.
      *
-     * @param array $user Tableau ayant comme clés fams, tabagns et proms
-     * @param int $montant montant à ajouter ou soustraire
-     * @param boolean $add si addition
+     * @param array $user    Tableau ayant comme clés fams, tabagns et proms
+     * @param int   $montant montant à ajouter ou soustraire
+     * @param bool  $add     si addition
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
@@ -227,8 +228,8 @@ class Rezal
     /**
      * Ajoute un montant au solde d’un pg.
      *
-     * @param User $user Tableau ayant comme clés fams, tabagns et proms
-     * @param int $montant montant à ajouter
+     * @param User $user    Tableau ayant comme clés fams, tabagns et proms
+     * @param int  $montant montant à ajouter
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
@@ -240,8 +241,8 @@ class Rezal
     /**
      * Soustrait un montant au solde d’un pg.
      *
-     * @param User $user Tableau ayant comme clés fams, tabagns et proms
-     * @param int $montant montant à soustraire
+     * @param User $user    Tableau ayant comme clés fams, tabagns et proms
+     * @param int  $montant montant à soustraire
      *
      * @return true si l'opération s'est bien déroulée, false sinon
      */
@@ -258,7 +259,7 @@ class Rezal
             return 1;
         }
 
-        return null;
+        return;
     }
 
     /**

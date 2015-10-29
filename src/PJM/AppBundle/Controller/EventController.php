@@ -15,8 +15,9 @@ class EventController extends Controller
     /**
      * Accueil des évènements.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return object HTML Response
      *
      * @Template
@@ -33,11 +34,11 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
-        $evenements = $this->get("pjm.services.evenement_manager")->get($event, $this->getUser(), 6);
+        $evenements = $this->get('pjm.services.evenement_manager')->get($event, $this->getUser(), 6);
 
         return array(
             'listeEvents' => $evenements['listeEvents'],
-            'event' => $evenements['event']
+            'event' => $evenements['event'],
         );
     }
 
@@ -45,7 +46,9 @@ class EventController extends Controller
      * Ajout d'un évènement.
      *
      * @param Request $request
+     *
      * @return object HTML Response
+     *
      * @throws \Exception
      *
      * @Template
@@ -70,7 +73,7 @@ class EventController extends Controller
                 $this->get('pjm.services.invitation_manager')->toggleInscriptionFromUserToEvent(null, $this->getUser(), $event);
 
                 $data = array(
-                    'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug()))
+                    'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())),
                 );
             } else {
                 $request->getSession()->getFlashBag()->add(
@@ -98,15 +101,16 @@ class EventController extends Controller
     /**
      * Ajout d'un évènement.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return object HTML Response
      *
      * @Template
      */
     public function modifierAction(Request $request, Event\Evenement $event)
     {
-        $eventManager = $this->get("pjm.services.evenement_manager");
+        $eventManager = $this->get('pjm.services.evenement_manager');
 
         // on regarde si l'utilisateur est créateur
         if (!$eventManager->canEdit($this->getUser(), $event)) {
@@ -149,15 +153,16 @@ class EventController extends Controller
     /**
      * Affiche et gère le bouton de suppression.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
      * @Template
      */
     public function suppressionAction(Request $request, Event\Evenement $event)
     {
-        $eventManager = $this->get("pjm.services.evenement_manager");
+        $eventManager = $this->get('pjm.services.evenement_manager');
 
         // on regarde si l'utilisateur est créateur
         if (!$eventManager->canEdit($this->getUser(), $event)) {
@@ -194,8 +199,9 @@ class EventController extends Controller
     /**
      * Affiche et gère le bouton d'inscription.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
      * @Template
@@ -240,6 +246,7 @@ class EventController extends Controller
      * Affiche l'état du paiement (côté utilisateur).
      *
      * @param Event\Evenement $event
+     *
      * @return Response
      *
      * @Template
@@ -257,7 +264,7 @@ class EventController extends Controller
         if ($event->isPaid()) {
             return array(
                 'inscrit' => $inscrit,
-                'event' => $event
+                'event' => $event,
             );
         }
 
@@ -270,15 +277,16 @@ class EventController extends Controller
         return array(
             'inscrit' => $inscrit,
             'event' => $event,
-            'montantRechargement' => $montantRechargement
+            'montantRechargement' => $montantRechargement,
         );
     }
 
     /**
      * Affiche et gère le formulaire d'invitations.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
      * @Template
@@ -337,8 +345,9 @@ class EventController extends Controller
     /**
      * Affiche et gère le formulaire de déclenchement des paiements.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
      * @Template
@@ -381,8 +390,9 @@ class EventController extends Controller
     /**
      * Affiche et gère l'exportation de l'évènement.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param Event\Evenement $event
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Template
@@ -410,7 +420,7 @@ class EventController extends Controller
                     'Bucque',
                     'Prénom',
                     'Nom',
-                    'Présence'
+                    'Présence',
                 );
 
                 $tableau = array();

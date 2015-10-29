@@ -36,10 +36,12 @@ class NotificationManager
      * @param $key
      * @param $infos
      * @param array|User $users
-     * @param bool|true $flush
+     * @param bool|true  $flush
+     *
      * @return bool
      */
-    public function send($key, $infos, $users, $flush = true) {
+    public function send($key, $infos, $users, $flush = true)
+    {
         $notificationType = isset($this->notificationsList[$key]) ? $this->notificationsList[$key] : null;
 
         // on vérifie que ce type de notification existe
@@ -58,7 +60,7 @@ class NotificationManager
         }
 
         /** @var User $user */
-        foreach($users as $user) {
+        foreach ($users as $user) {
             // on enregistre la notification en BDD
             $notification = new Notification();
             $notification->setKey($key);
@@ -99,13 +101,14 @@ class NotificationManager
         $this->push->sendNotificationToUser($user, $message);
     }
 
-    public function sendToWebhook($webhook, $message) {
+    public function sendToWebhook($webhook, $message)
+    {
         if (empty($webhook)) {
             return false;
         }
 
         // format message
-        $message = "[Phy'sbook] ".$message." https://physbook.fr";
+        $message = "[Phy'sbook] ".$message.' https://physbook.fr';
 
         $headers = array(
             'content-type' => 'text/plain; charset=utf-8',
@@ -113,7 +116,7 @@ class NotificationManager
 
         try {
             $response = $this->buzz->post($webhook.$message, $headers);
-        } catch(RequestException $e) {
+        } catch (RequestException $e) {
             return false;
         }
 
@@ -129,7 +132,8 @@ class NotificationManager
         return true;
     }
 
-    public function sendToEmail($email, $message) {
+    public function sendToEmail($email, $message)
+    {
         $this->mailer->sendMessageToEmail($message, $email);
     }
 
@@ -138,12 +142,12 @@ class NotificationManager
         $notifications = $user->getNotifications();
         $settings = $user->getNotificationSettings();
 
-        $notifications = $notifications->map(function(Notification $notification) use ($settings) {
+        $notifications = $notifications->map(function (Notification $notification) use ($settings) {
             // on remplace les variables par %infos%
             $infos = $notification->getInfos();
 
-            $newKeys = array_map(function($k) {
-                return "%".$k."%";
+            $newKeys = array_map(function ($k) {
+                return '%'.$k.'%';
             }, array_keys($infos));
 
             $notification->setVariables(array_combine(
@@ -171,12 +175,13 @@ class NotificationManager
         return $notifications;
     }
 
-    private function getMessage(Notification $notification, $strip = true) {
+    private function getMessage(Notification $notification, $strip = true)
+    {
         // on remplace les variables par %infos%
         $infos = $notification->getInfos();
 
-        $newKeys = array_map(function($k) {
-            return "%".$k."%";
+        $newKeys = array_map(function ($k) {
+            return '%'.$k.'%';
         }, array_keys($infos));
 
         $infos = array_combine(
@@ -217,7 +222,7 @@ class NotificationManager
     {
         // on va chercher l'user qui a cet endpoint
         $pushSubscription = $this->em->getRepository('PJMAppBundle:PushSubscription')->findOneBy(array(
-            'endpoint' => $endpoint
+            'endpoint' => $endpoint,
         ));
 
         if (empty($pushSubscription)) {
@@ -231,7 +236,7 @@ class NotificationManager
         }
 
         return array(
-            'message' => $this->getMessage($notification)
+            'message' => $this->getMessage($notification),
         );
     }
 }

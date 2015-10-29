@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class InvitationRepository extends EntityRepository
 {
-    public function countParticipations(Evenement $event) {
+    public function countParticipations(Evenement $event)
+    {
         $qb = $this->createQueryBuilder('i');
 
         $qb

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Louis
  * Date: 21/10/2015
- * Time: 21:03
+ * Time: 21:03.
  */
-
 namespace PJM\AppBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -17,7 +16,7 @@ abstract class BaseTest extends WebTestCase
     {
         return self::createClient(array(), array(
             'PHP_AUTH_USER' => $username,
-            'PHP_AUTH_PW'   => 'test',
+            'PHP_AUTH_PW' => 'test',
         ));
     }
 
@@ -25,7 +24,7 @@ abstract class BaseTest extends WebTestCase
     {
         $client->request($method, $url, $parameters, array(), array(
             'PHP_AUTH_USER' => $username,
-            'PHP_AUTH_PW'   => 'test',
+            'PHP_AUTH_PW' => 'test',
         ));
     }
 }

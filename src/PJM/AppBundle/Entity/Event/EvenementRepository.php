@@ -25,8 +25,7 @@ class EvenementRepository extends EntityRepository
         $res = array_merge($eventsPublics, $eventsPrives);
 
         $reverse = ($quand == 'before');
-        usort($res, function(Evenement $a, Evenement $b) use($reverse)
-        {
+        usort($res, function (Evenement $a, Evenement $b) use ($reverse) {
             if ($reverse) {
                 return $a->getDateDebut() < $b->getDateDebut();
             }

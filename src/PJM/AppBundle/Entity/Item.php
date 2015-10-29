@@ -162,7 +162,7 @@ class Item
      */
     public function showPrix()
     {
-        return $this->prix/100;
+        return $this->prix / 100;
     }
 
     /**

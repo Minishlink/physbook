@@ -57,7 +57,7 @@ class Invitation
             'bucque' => $this->invite->getBucque(),
             'prenom' => $this->invite->getPrenom(),
             'nom' => $this->invite->getNom(),
-            'presence' => (null !== $this->getEstPresent()) ? ($this->getEstPresent()) ? "Oui" : "Non" : "Invité"
+            'presence' => (null !== $this->getEstPresent()) ? ($this->getEstPresent()) ? 'Oui' : 'Non' : 'Invité',
         );
     }
 

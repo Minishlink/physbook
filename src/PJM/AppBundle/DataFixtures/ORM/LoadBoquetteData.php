@@ -10,7 +10,7 @@ use PJM\AppBundle\Entity\Boquette;
 class LoadBoquetteData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -18,10 +18,10 @@ class LoadBoquetteData extends AbstractFixture implements OrderedFixtureInterfac
         $this->loadBoquette($manager, "Pian's", 'pians', 'aeensampian', 'orange');
         $this->loadBoquette($manager, "C'vis", 'cvis', 'aeensampian', 'rouge');
         $this->loadBoquette($manager, "Brag's", 'brags', 'aeensambrags', 'jaune');
-        $this->loadBoquette($manager, "Paniers de fruits et légumes", 'paniers', 'aeensampanier', 'vert');
-        $this->loadBoquette($manager, "AMJE Bordeaux", 'amje-bordeaux', null, 'blanc');
-        $this->loadBoquette($manager, "Asso", 'asso', null, 'bleu');
-        $this->loadBoquette($manager, "UAI", 'uai', null, 'rose');
+        $this->loadBoquette($manager, 'Paniers de fruits et légumes', 'paniers', 'aeensampanier', 'vert');
+        $this->loadBoquette($manager, 'AMJE Bordeaux', 'amje-bordeaux', null, 'blanc');
+        $this->loadBoquette($manager, 'Asso', 'asso', null, 'bleu');
+        $this->loadBoquette($manager, 'UAI', 'uai', null, 'rose');
     }
 
     private function loadBoquette(ObjectManager $manager, $nom, $slug, $caisse, $couleur)
@@ -39,7 +39,7 @@ class LoadBoquetteData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

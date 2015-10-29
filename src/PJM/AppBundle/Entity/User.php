@@ -720,6 +720,7 @@ class User extends BaseUser
         if ($this->notificationSettings === null) {
             $defaultSettings = new NotificationSettings();
             $defaultSettings->setUser($this);
+
             return $defaultSettings;
         }
 
@@ -727,7 +728,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add notification
+     * Add notification.
      *
      * @param \PJM\AppBundle\Entity\Notifications\Notification $notification
      *
@@ -742,7 +743,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove notification
+     * Remove notification.
      *
      * @param \PJM\AppBundle\Entity\Notifications\Notification $notification
      */
@@ -752,7 +753,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get notifications
+     * Get notifications.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

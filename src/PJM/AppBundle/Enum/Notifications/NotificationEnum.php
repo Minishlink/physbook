@@ -17,59 +17,60 @@ class NotificationEnum
             'titre' => 'Achat d\'un item',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('item', 'prix')
+            'infos' => array('item', 'prix'),
         ),
         'bank.money.negats' => array(
             'titre' => 'Alerte de négat\'s',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant')
+            'infos' => array('boquette', 'montant'),
         ),
         'bank.money.transaction' => array(
             'titre' => 'Transaction effectuée',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant')
+            'infos' => array('boquette', 'montant'),
         ),
         'bank.money.transfert.reception' => array(
             'titre' => 'Transfert reçu',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant', 'user')
+            'infos' => array('boquette', 'montant', 'user'),
         ),
         'bank.money.transfert.envoi' => array(
             'titre' => 'Transfert envoyé',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant', 'user')
+            'infos' => array('boquette', 'montant', 'user'),
         ),
         'event.changement.prix' => array(
             'titre' => 'Changement de prix d\'un évènement',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'prix')
+            'infos' => array('event', 'prix'),
         ),
         'event.changement.date' => array(
             'titre' => 'Changement de date d\'un évènement',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'date')
+            'infos' => array('event', 'date'),
         ),
         'event.suppression' => array(
             'titre' => 'Suppression d\'un évènement',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event')
+            'infos' => array('event'),
         ),
         'event.invitation' => array(
             'titre' => 'Invitation à un évènement',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'date')
+            'infos' => array('event', 'date'),
         ),
     );
 
-    public function getKeys() {
+    public function getKeys()
+    {
         return array_keys($this::$list);
     }
 }

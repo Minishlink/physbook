@@ -59,6 +59,7 @@ class EvenementManager
                 'danger',
                 'Seuls les Harpag\'s Asso peuvent changer un évènement majeur en un évènement mineur.'
             );
+
             return;
         }
 
@@ -67,6 +68,7 @@ class EvenementManager
                 'danger',
                 'L\'évènement a déjà été payé : tu ne peux plus changer son prix.'
             );
+
             return;
         }
 
@@ -83,7 +85,7 @@ class EvenementManager
         if ($event->getDateDebut() != $oldEvent->getDateDebut()) {
             $this->notification->send('event.changement.date', array(
                 'event' => $event->getNom(),
-                'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+                'date' => $event->getDateDebut()->format('d/m/Y à H:i'),
             ), $invites);
         }
 
@@ -147,7 +149,7 @@ class EvenementManager
 
         return array(
             'listeEvents' => $listeEvents,
-            'event' => $event
+            'event' => $event,
         );
     }
 
@@ -174,10 +176,10 @@ class EvenementManager
 
         // on crée l'item associé
         $item = new Item();
-        $item->setLibelle("Évènement ".$event->getNom()." (".$event->getDateDebut()->format("d/m").")");
+        $item->setLibelle('Évènement '.$event->getNom().' ('.$event->getDateDebut()->format('d/m').')');
         $item->setPrix($event->getPrix());
         $item->setImage($event->getImage());
-        $item->setSlug("event_".$event->getSlug()."_".$event->getDateDebut()->format("YmdHis"));
+        $item->setSlug('event_'.$event->getSlug().'_'.$event->getDateDebut()->format('YmdHis'));
         $item->setInfos(array('event'));
         $item->setValid(true);
         $item->setBoquette($this->em->getRepository('PJMAppBundle:Boquette')->findOneBySlug('pians')); // bucquage sur compte Pi
@@ -220,9 +222,9 @@ class EvenementManager
         if (!$event->isMajeur()) {
             // on crédite le créateur
             $compteCreateur = $this->em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($event->getCreateur(), 'pians');
-            $transaction = $this->transactionManager->create($compteCreateur, $event->getPrix()*count($inscrits), 'event');
+            $transaction = $this->transactionManager->create($compteCreateur, $event->getPrix() * count($inscrits), 'event');
             $transaction->setStatus('OK');
-            $transaction->setInfos($event->getNom()." (".$event->getDateDebut()->format("d/m").")");
+            $transaction->setInfos($event->getNom().' ('.$event->getDateDebut()->format('d/m').')');
             $this->transactionManager->traiter($transaction);
         }
 

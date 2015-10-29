@@ -22,8 +22,9 @@ class InvitationManager
     /**
      * Returns the invitation to an event for a specific user.
      *
-     * @param User $user
+     * @param User      $user
      * @param Evenement $event
+     *
      * @return Invitation
      */
     public function getInvitationFromUserToEvent(User $user, Evenement $event)
@@ -34,8 +35,9 @@ class InvitationManager
 
     /**
      * @param Invitation $invitation
-     * @param User $user
-     * @param Evenement $event
+     * @param User       $user
+     * @param Evenement  $event
+     *
      * @return Invitation
      */
     public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event)
@@ -80,7 +82,8 @@ class InvitationManager
         return $invitation;
     }
 
-    public function sendInvitations($users, Evenement $event) {
+    public function sendInvitations($users, Evenement $event)
+    {
         $notifUsers = array();
 
         foreach ($users as $user) {
@@ -105,7 +108,7 @@ class InvitationManager
 
         $this->notification->send('event.invitation', array(
             'event' => $event->getNom(),
-            'date' => $event->getDateDebut()->format("d/m/Y à H:i"),
+            'date' => $event->getDateDebut()->format('d/m/Y à H:i'),
         ), $notifUsers);
 
         $this->notification->sendFlash(

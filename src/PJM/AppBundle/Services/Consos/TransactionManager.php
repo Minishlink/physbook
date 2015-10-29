@@ -25,6 +25,7 @@ class TransactionManager
 
     /**
      * @param Transaction $transaction
+     *
      * @return Transaction|Transfert
      */
     public function traiter(Transaction $transaction)

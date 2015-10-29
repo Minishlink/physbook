@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Twig;
 
 use HTMLPurifier;
 use PJM\AppBundle\Services\EmoticonParser;
-use PJM\AppBundle\Twig\CitationExtension;
 use PJM\AppBundle\Services\LinkParser;
 
 class ShowExtension extends \Twig_Extension
@@ -33,7 +32,7 @@ class ShowExtension extends \Twig_Extension
     }
 
     /**
-     * Wrappe le parser de nom d'utilisateur, de liens, et applique le HTMLPurifier
+     * Wrappe le parser de nom d'utilisateur, de liens, et applique le HTMLPurifier.
      *
      * @param string $texte Texte à traiter
      *
