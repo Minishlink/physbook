@@ -107,7 +107,11 @@ $(document).ready(function () {
 
     // si on clique sur le bouton navbar-toggle on cache les menus visibles
     $('.navbar-toggle, .navbar-header').click(function () {
-        $('ul[id^="menu-"].afficher').removeClass('afficher');
+        var $sousMenus = $('ul[id^="menu-"].afficher');
+        if ($sousMenus.length > 0) {
+            $sousMenus.removeClass('afficher');
+            $('.navbar-brand.active').removeClass('active');
+        }
     });
 
     // si on clique sur une zone pas du menu quand le menu est ouvert
