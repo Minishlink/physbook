@@ -5,17 +5,19 @@ $(document).ready(function () {
 
     $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").not('[href^="#"]').click(function(e) {
         if (e.ctrlKey === false && e.button === 0) {
+            e.preventDefault();
+
+            if (iOSMobile()) {
+                window.location = e.target.href;
+                return;
+            }
+
             $('#content').fadeOut(200);
 
             $('ul[id^="menu-"]:visible').slideUp(100);
             $('.collapse.in:visible').toggle('hide');
 
             chargement(true);
-
-            if (iOSMobile()) {
-                e.preventDefault();
-                window.location = e.target.href;
-            }
         }
     });
 
