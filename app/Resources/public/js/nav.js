@@ -29,10 +29,8 @@ $(document).ready(function () {
     $('ul.enable-slider > li > a').hover(
         function(e) {
             // lorsque la souris survole le lien, on affiche l'icône correspondante en rouge
-            if (!iOS) {
-                $(this).children('img').hide(0);
-                $(this).children('img.active').show(0);
-            }
+            $(this).children('img').hide(0);
+            $(this).children('img.active').show(0);
 
             var navSlider = $('#nav-slider');
 
@@ -67,10 +65,8 @@ $(document).ready(function () {
         },
         function() {
             // lorsque la souris quitte le lien, on affiche l'icône correspondante en noir
-            if (!iOS) {
-                $(this).children('img').not('.active').show(0);
-                $(this).children('img.active').hide(0);
-            }
+            $(this).children('img').not('.active').show(0);
+            $(this).children('img.active').hide(0);
 
             // on remet le slider en place
             var target = getSliderTargetPos();
@@ -86,7 +82,7 @@ $(document).ready(function () {
     // sous-menu
     var nav_timer = false; // timer pour l'affichage du sous-menu
     var $listeMenu = $('#liste-menu');
-    $listeMenu.find('> ul > li > a.disable-fade').on('click', function(e) {
+    $listeMenu.find('> ul > li > a.disable-fade').on('click' + (!iOS ? '' : 'touchend'), function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 
