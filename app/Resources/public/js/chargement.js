@@ -11,6 +11,11 @@ $(document).ready(function () {
             $('.collapse.in:visible').toggle('hide');
 
             chargement(true);
+
+            if (iOSMobile()) {
+                e.preventDefault();
+                window.location = e.target.href;
+            }
         }
     });
 

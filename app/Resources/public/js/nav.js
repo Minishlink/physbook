@@ -1,11 +1,14 @@
+function iOSMobile () {
+    return /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
+}
+
 $(document).ready(function () {
     if (window.disableNav) {
         return;
     }
 
     // fix safari ios web app
-    var userAgent = window.navigator.userAgent.toLowerCase();
-    var iOS = /iphone|ipod|ipad/.test(userAgent);
+    var iOS = iOSMobile();
     if (window.navigator.standalone && iOS) {
         console.warn('iOS standalone webapp fix');
         $('a').on('click', function(e) {
