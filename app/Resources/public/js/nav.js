@@ -2,6 +2,10 @@ function iOSMobile () {
     return /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
 }
 
+function clickEventName() {
+    return 'click' + (!iOSMobile() ? '' : ' touchend');
+}
+
 $(document).ready(function () {
     if (window.disableNav) {
         return;
@@ -85,7 +89,7 @@ $(document).ready(function () {
     // sous-menu
     var nav_timer = false; // timer pour l'affichage du sous-menu
     var $listeMenu = $('#liste-menu');
-    $listeMenu.find('> ul > li > a.disable-fade').on('click' + (!iOS ? '' : ' touchend'), function(e) {
+    $listeMenu.find('> ul > li > a.disable-fade').on(clickEventName(), function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 

@@ -20,7 +20,7 @@ framework:
         version: v1r20151018
         packages:
             js:
-                version: v1r20151030e
+                version: v1r20151030g
             css:
                 version: v1r20151030c
             sw:
