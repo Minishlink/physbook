@@ -5,7 +5,8 @@ $(document).ready(function () {
 
     // fix safari ios web app
     var userAgent = window.navigator.userAgent.toLowerCase();
-    if (window.navigator.standalone && /iphone|ipod|ipad/.test(userAgent)) {
+    var iOS = /iphone|ipod|ipad/.test(userAgent);
+    if (window.navigator.standalone && iOS) {
         console.warn('iOS standalone webapp fix');
         $('a').on('click', function(e) {
             var new_location = $(this).attr('href');
@@ -20,14 +21,18 @@ $(document).ready(function () {
     $('ul.enable-slider').append('<div id="nav-slider" class="hidden-collapsed"></div>');
 
     initSlider();
-    // timer pour l'affichage du sous-menu
-    nav_timer = false;
+
+    $(window).resize(function() {
+        initSlider();
+    });
 
     $('ul.enable-slider > li > a').hover(
-        function() {
+        function(e) {
             // lorsque la souris survole le lien, on affiche l'icône correspondante en rouge
-            $(this).children('img').hide(0);
-            $(this).children('img.active').show(0);
+            if (!iOS) {
+                $(this).children('img').hide(0);
+                $(this).children('img.active').show(0);
+            }
 
             var navSlider = $('#nav-slider');
 
@@ -62,8 +67,10 @@ $(document).ready(function () {
         },
         function() {
             // lorsque la souris quitte le lien, on affiche l'icône correspondante en noir
-            $(this).children('img').not('.active').show(0);
-            $(this).children('img.active').hide(0);
+            if (!iOS) {
+                $(this).children('img').not('.active').show(0);
+                $(this).children('img.active').hide(0);
+            }
 
             // on remet le slider en place
             var target = getSliderTargetPos();
@@ -75,16 +82,11 @@ $(document).ready(function () {
             });
         }
     );
-    $(window).resize(function() {
-        initSlider();
-    });
-    $(window).load(function() {
-        initSlider();
-    });
 
     // sous-menu
+    var nav_timer = false; // timer pour l'affichage du sous-menu
     var $listeMenu = $('#liste-menu');
-    $listeMenu.find('> ul > li > a.disable-fade').click(function(e) {
+    $listeMenu.find('> ul > li > a.disable-fade').on('click', function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 
@@ -155,10 +157,9 @@ $(document).ready(function () {
      * Les liens avec ancres sont atteints de façon progressive
      */
     $("a[href^='#']").on('click', function(e) {
-        e.preventDefault();
-
         var hash = this.hash;
         if (hash != "") {
+            e.preventDefault();
             var el = $(this.hash);
             var elOffset = el.offset().top;
             var elHeight = el.height();
