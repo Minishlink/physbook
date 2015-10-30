@@ -67,30 +67,24 @@
             }
         }
 
-        position: fixed;
-        top: @navbar-height;
         width: 100%;
         z-index: 1;
         margin-left: 0;
 
         transition: all 0.4s ease-in-out;
         max-height: 0;
-        max-width: 0;
         overflow: hidden;
 
         right: 0;
 
+        position: relative;
         @media @tablet {
-            max-width: 100%;
+            position: fixed;
+            top: @navbar-height;
         }
 
         &.afficher {
             max-height: 20em;
-            max-width: 60vw;
-
-            @media @tablet {
-                max-width: 100%;
-            }
         }
     }
 
