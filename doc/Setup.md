@@ -18,7 +18,9 @@ If you already have an environment you are familiar with, keep it. You just have
 Git is a distributed version control system. It allows to collaborate more easily. 
 Download Git for [Windows](http://msysgit.github.io) or for [Mac](http://git-scm.com/download/mac).
 
-On Windows, if asked, check "Use Git From the Windows Command Prompt" then "Checkout as-is, commit Unix style endings".
+On Windows, if asked, check "Use Git From the Windows Command Prompt"
+
+Then, if asked, Git should "Checkout as-is, commit Unix style endings".
 
 You should have access to git on your console.
 
