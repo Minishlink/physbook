@@ -18,9 +18,7 @@ If you already have an environment you are familiar with, keep it. You just have
 Git is a distributed version control system. It allows to collaborate more easily. 
 Download Git for [Windows](http://msysgit.github.io) or for [Mac](http://git-scm.com/download/mac).
 
-On Windows, if asked, add Git to the Windows Command Prompt.
-
-If asked, Git should "Checkout as-is, commit Unix style endings".
+On Windows, if asked, check "Use Git From the Windows Command Prompt" then "Checkout as-is, commit Unix style endings".
 
 You should have access to git on your console.
 
@@ -55,6 +53,6 @@ Or [PhpStorm](https://www.jetbrains.com/phpstorm/) (free 1 year license for stud
 * bower install
 * php composer.phar install
   * When asked about parameters, leave the default ones. (press ENTER again and again for each parameter)
-* php app/console doctrine:create:database
+* php app/console doctrine:database:create
 * php app/console doctrine:schema:update --force
 * php app/console doctrine:fixtures:load -n
