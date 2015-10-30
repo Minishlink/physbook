@@ -83,7 +83,8 @@ $(document).ready(function () {
     });
 
     // sous-menu
-    $('#liste-menu').find('> ul > li > a.disable-fade').click(function(e) {
+    var $listeMenu = $('#liste-menu');
+    $listeMenu.find('> ul > li > a.disable-fade').click(function(e) {
         // le lien ne pointe plus vers #
         e.preventDefault();
 
@@ -106,19 +107,24 @@ $(document).ready(function () {
     });
 
     // si on clique sur le bouton navbar-toggle on cache les menus visibles
-    $('.navbar-toggle, .navbar-header').click(function () {
-        var $sousMenus = $('ul[id^="menu-"].afficher');
-        if ($sousMenus.length > 0) {
-            $sousMenus.removeClass('afficher');
-            $('.navbar-brand.active').removeClass('active');
-        }
+    $('.navbar-header').click(function () {
+        $('ul[id^="menu-"].afficher').removeClass('afficher');
+    });
+
+    $listeMenu.on('hide.bs.collapse', function () {
+        $('.navbar-brand').removeClass('active');
+    });
+
+    $listeMenu.on('show.bs.collapse', function () {
+        $('.navbar-brand').addClass('active');
     });
 
     // si on clique sur une zone pas du menu quand le menu est ouvert
     $('#content').click(function() {
-        if($('#liste-menu').is('.in')) {
+        var $listeMenu = $('#liste-menu');
+        if($listeMenu.is('.in')) {
             $('ul[id^="menu-"]').removeClass('afficher');
-            $('#liste-menu').collapse('hide');
+            $listeMenu.collapse('hide');
         }
     });
 
