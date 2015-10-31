@@ -39,14 +39,14 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('push', function (event) {
-    // on actualise la page des notifications ou/et le compteur de notifications
-    self.refreshNotifications();
-
     if (!(self.Notification && self.Notification.permission === 'granted')) {
         return;
     }
 
     var sendNotification = function(message, tag) {
+        // on actualise la page des notifications ou/et le compteur de notifications
+        self.refreshNotifications();
+
         var title = "Phy'sbook",
             icon = 'images/icons/icon-192.png';
 
@@ -72,7 +72,7 @@ self.addEventListener('push', function (event) {
                     return;
                 }
 
-                fetch('notifications/last?endpoint=' + encodeURIComponent(subscription.endpoint)).then(function (response) {
+                return fetch('notifications/last?endpoint=' + encodeURIComponent(subscription.endpoint)).then(function (response) {
                     if (response.status !== 200) {
                         throw new Error();
                     }
