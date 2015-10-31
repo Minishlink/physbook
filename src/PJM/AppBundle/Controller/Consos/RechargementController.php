@@ -20,19 +20,21 @@ class RechargementController extends Controller
 
         $buzz = $this->container->get('buzz');
         $curl = $buzz->getClient();
-        $curl->setVerifyPeer(false);
+        $curl->setTimeout(30);
 
-        $vendorToken = $this->container->getParameter('paiement.lydia.auth');
+        $vendorToken = $this->container->getParameter('paiement.lydia.vendorToken');
+        $providerToken = $this->container->getParameter('paiement.lydia.providerToken');
         $urlLydia = $this->container->getParameter('paiement.lydia.url');
 
         $content = array(
             'vendor_token' => $vendorToken,
+            'provider_token' => $providerToken,
             'recipient' => '',
-            'type' => 'phone',
+            'type' => 'email',
             'message' => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom().' - '.$transaction->getCompte()->getUser()->getUsername(),
             'amount' => $transaction->getMontant(),
             'currency' => 'EUR',
-            'expire_time' => 30,
+            'expire_time' => 300,
             'browser_success_url' => '',
             'browser_fail_url' => '',
             'notify' => 'yes',
