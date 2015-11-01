@@ -3,7 +3,6 @@ body {
     background-color: @blanc-casse;
 
     #legende {
-      text-transform: uppercase;
       font-weight: bold;
       border-bottom: 0.1em solid @gris-tres-clair;
       text-align: center;
@@ -16,6 +15,8 @@ body {
       button {
         background-color: transparent;
         border: 0;
+        text-transform: uppercase;
+        .font-klavika();
 
         &.disableType {
           color: @gris;
@@ -24,6 +25,10 @@ body {
 
         &:hover {
           opacity: 0.8;
+        }
+
+        &:focus {
+          outline: none;
         }
       }
 
@@ -121,6 +126,8 @@ body {
           white-space: nowrap;
 
           .importance {
+            cursor: default;
+
             position: absolute;
             top: 0;
             bottom: 0;
@@ -152,6 +159,10 @@ body {
           span.info {
             font-weight: bold;
           }
+
+          font-size: 1.1em;
+          padding: 1em 4em;
+          text-align: center;
         }
 
         .date {
