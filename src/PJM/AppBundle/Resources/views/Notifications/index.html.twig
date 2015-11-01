@@ -5,14 +5,14 @@
     <div class="space"></div>
     <div class="row">
         <ul id="legende" class="list-inline">
-            <li class="banque">
-                B<span class="phys-AM" data-grunticon-embed></span>k</button>
+            <li class="bank">
+                <button data-type="bank">B<span class="phys-AM" data-grunticon-embed></span>k</button>
             </li>
             <li class="event">
-                Évènements
+                <button data-type="event">Évènements</button>
             </li>
             <li class="actus">
-                Actus
+                <button data-type="actus">Actus</button>
             </li>
         </ul>
     </div>
@@ -38,6 +38,16 @@ $(document).ready(function () {
             navigator.serviceWorker.controller.postMessage('dispatchRemoveNotifications');
         }
     }
+
+    // toggle display notifications by type
+    $('#legende').find('button').on('click', function(e) {
+        var button = e.currentTarget;
+
+        $(button).toggleClass('disableType');
+        var type = button.getAttribute("data-type");
+
+        $('.notification[data-type="' + type + '"]').toggle(200);
+    });
 });
 </script>
 {% endblock %}

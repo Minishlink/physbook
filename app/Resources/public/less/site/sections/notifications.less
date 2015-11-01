@@ -13,18 +13,25 @@ body {
         font-size: 3em;
       }
 
-      li {
-        cursor: pointer;
+      button {
+        background-color: transparent;
+        border: 0;
+
+        &.disableType {
+          color: @gris;
+          fill: @gris;
+        }
 
         &:hover {
           opacity: 0.8;
         }
       }
 
-      .banque {
+      .bank {
         color: @vert;
+        fill: @vert;
+
         .phys-AM {
-          fill: @vert;
           font-size: 1.2em;
           vertical-align: text-bottom;
         }
@@ -46,14 +53,8 @@ body {
         border-right: 0;
         background-color: white;
 
-        &.type-event {
-          @primary-color: @bleu;
-          @secondary-color: @rose;
-          border-color: @bleu;
-
-          &.important {
-
-          }
+        .customizePerType(@primary-color, @secondary-color) {
+          border-color: @primary-color;
 
           .entete {
             background-color: @primary-color;
@@ -68,6 +69,18 @@ body {
           .date {
             color: @primary-color;
           }
+        }
+
+        &[data-type="bank"] {
+          .customizePerType(@vert, @rose);
+        }
+
+        &[data-type="event"] {
+          .customizePerType(@bleu, @orange);
+        }
+
+        &[data-type="actus"] {
+          .customizePerType(@mauve, @rouge);
         }
 
         &.important {
