@@ -36,7 +36,7 @@ class LoadNotificationsData extends AbstractFixture  implements OrderedFixtureIn
             ),
             'actus' => array(
                 'titre' => 'L\'homme moderne face à un défi majeur : les tâches ménagères',
-                'auteur' => 'I\'m&ro',
+                'auteur' => 'Ilton²',
             ),
         );
 
