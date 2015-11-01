@@ -20,22 +20,27 @@ body {
         margin-bottom: 2em;
         padding-bottom: @line-height-computed/2;
 
-        @height: 3*@font-size-h1;
-
         h1 {
             .font-klavika();
             font-size: 3em;
+            text-align: center;
 
-            @media @tablet {
-                font-size: 5em;
+            @media @phone {
+                text-align: right;
             }
-
-            text-align: right;
         }
 
         #logoPage {
-            float: left;
-            height: @height;
+            @media @phone {
+                float: left;
+            }
+            height: 1.2em;
+        }
+
+        @media @tablet {
+            h1 {
+                font-size: 5em;
+            }
         }
     }
 }
