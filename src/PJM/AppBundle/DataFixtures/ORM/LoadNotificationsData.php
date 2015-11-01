@@ -24,13 +24,13 @@ class LoadNotificationsData extends AbstractFixture  implements OrderedFixtureIn
             'event' => array(
                 'date' => '',
                 'heure' => '00:40',
-                'prix' => '26.68€',
-                'event' => 'Evènement 106',
+                'prix' => '26.68',
+                'event' => 'Évènement 106',
             ),
             'bank' => array(
                 'boquette' => 'Phy\'sbook',
-                'montant' => '95.157€',
-                'prix' => '27.149€',
+                'montant' => '95.157',
+                'prix' => '27.149',
                 'user' => 'Gorg\'s',
                 'item' => 'Pingou',
             )
@@ -54,9 +54,10 @@ class LoadNotificationsData extends AbstractFixture  implements OrderedFixtureIn
 
         $rand = $received ? rand(4,30) : rand(0,4);
         $date = new \DateTime($rand.' days ago');
+        $date->setTime(rand(0,23), rand(0,59));
 
         if (array_key_exists('date', $infos)) {
-            $infos['date'] = $date;
+            $infos['date'] = $date->format('d/m/Y à H:i');
         }
 
         foreach ($users as $user) {
