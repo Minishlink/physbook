@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div id="legende" class="col-md-8 col-md-offset-2">
-                <p>{% if photo is not null %}{{ photo.legende }}{% else %}Pas encore de photo !{% endif %}</p>
+                <p>{% if photo is not null %}{% if photo.legende %}&laquo;{{ photo.legende }}&raquo;{% endif %}{% if photo.proprietaire %} de {{ photo.proprietaire.bucque }} {{ photo.proprietaire.fams }}{% endif %}{% else %}Pas encore de photo !{% endif %}</p>
             </div>
         </div>
     </div>
