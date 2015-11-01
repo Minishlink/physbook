@@ -2,12 +2,22 @@
 
 namespace PJM\AppBundle\Services;
 
+use Doctrine\ORM\EntityManager;
+
 class Group
 {
+    /** @var EntityManager */
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * Retourne la prom's des 1A actuels.
      *
-     * @return string Prom's des 1A actuels
+     * @return int Prom's des 1A actuels
      */
     public function getProms1A()
     {
@@ -25,10 +35,15 @@ class Group
     /**
      * Retourne la prom's des P"N" par rapport aux conscrits actuels (ex. P3 des 213 est 211).
      *
-     * @return string Prom's des PN
+     * @return int Prom's des PN
      */
     public function getPromsPN($n)
     {
         return $this->getProms1A() + 1 - $n;
+    }
+
+    public function getUsersAuTabagns() {
+        $promo = $this->getProms1A();
+        return $this->em->getRepository('PJMAppBundle:User')->getByProms(array($promo, --$promo, --$promo));
     }
 }

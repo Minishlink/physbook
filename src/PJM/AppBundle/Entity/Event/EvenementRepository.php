@@ -86,4 +86,18 @@ class EvenementRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getNextEvents()
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb
+            ->where('e.dateDebut > :now')
+            ->andWhere('e.dateDebut < :day')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('day', new \DateTime('+1 day'))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -17,14 +17,14 @@ framework:
     templating:
         engines: ['twig']
     assets:
-        version: v1r20151018
+        version: v1r20151031
         packages:
             js:
-                version: v1r20151030g
+                version: v1r20151031
             css:
-                version: v1r20151030c
+                version: v1r20151031
             sw:
-                version: v1r20151018
+                version: v1r20151031
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~

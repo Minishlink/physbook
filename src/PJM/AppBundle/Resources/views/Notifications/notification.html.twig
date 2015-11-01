@@ -1,12 +1,11 @@
-{% set content %}[{{ notification.type }}] {{ ("notifications.content." ~ notification.key)|trans(notification.variables)|purify }}{% endset %}
-<div class="notification panel panel-{% if notification.important and notification.new %}primary{% elseif not notification.important and notification.new %}info{% else %}default{% endif %}">
-    <div class="message panel-body">
-        {% if notification.path != "" %}
-            <a href="{{ path(notification.path) }}">{{ content }}</a>
-        {% else %}
-            {{ content }}
-        {% endif %}
-        {% if notification.new %}<br>(nouveau){% endif %}
+<div class="notification {{ notification.new ? 'nouvelle' : 'ancienne' }} panel slideUp" data-type="{{ notification.type }}">
+    <div class="entete panel-heading">
+        {% if notification.important %}<div class="importance"><span class="glyphicon glyphicon-star"></span></div>{% endif %}
+        <h3 class="panel-title">{{ notification.titre }}</h3>
     </div>
-    <div class="date panel-footer">le {{ notification.date|localizeddate('medium', 'short') }}</div>
+    <div class="message">
+        {{ ("notifications.content." ~ notification.key)|trans(notification.variables)|purify }}
+        {% if notification.path != "" %}<a href="{{ path(notification.path) }}" title="Plus d'infos"><span class="glyphicon glyphicon-link"></span></a>{% endif %}
+    </div>
+    <div class="date">{{ notification.date|localizeddate('full', 'none') }} <span class="heure">{{ notification.date|localizeddate('none', 'short') }}</span></div>
 </div>

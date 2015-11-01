@@ -3,11 +3,29 @@
 {% block pjm_app_body_content %}
     {% include "PJMAppBundle:Notifications:togglePush.html.twig" %}
     <div class="space"></div>
-    {% for notification in notifications %}
-        {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
-    {% else %}
-        Tu n'as pas encore de notifications.
-    {% endfor %}
+    <div class="row">
+        <ul id="legende" class="list-inline">
+            <li class="bank">
+                <button data-type="bank">B<span class="phys-AM" data-grunticon-embed></span>k</button>
+            </li>
+            <li class="actus">
+                <button data-type="actus">Actus</button>
+            </li>
+            <li class="event">
+                <button data-type="event">Évènements</button>
+            </li>
+        </ul>
+    </div>
+    <div class="space"></div>
+    <div id="notifications" class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+        {% for notification in notifications %}
+            {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
+        {% else %}
+            Tu n'as pas encore de notifications.
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -20,6 +38,16 @@ $(document).ready(function () {
             navigator.serviceWorker.controller.postMessage('dispatchRemoveNotifications');
         }
     }
+
+    // toggle display notifications by type
+    $('#legende').find('button').on('click', function(e) {
+        var button = e.currentTarget;
+
+        $(button).toggleClass('disableType');
+        var type = button.getAttribute("data-type");
+
+        $('.notification[data-type="' + type + '"]').toggleClass('cacher');
+    });
 });
 </script>
 {% endblock %}

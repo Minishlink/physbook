@@ -161,7 +161,8 @@ class NotificationManager
             if (isset($this->notificationsList[$notification->getKey()])) {
                 $notificationType = $this->notificationsList[$notification->getKey()];
 
-                // on ajoute le type et le path
+                // on ajoute les infos non variables
+                $notification->setTitre($notificationType['titre']);
                 $notification->setType($notificationType['type']);
                 $notification->setPath($notificationType['path']);
 

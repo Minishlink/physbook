@@ -44,28 +44,40 @@ class NotificationEnum
             'infos' => array('boquette', 'montant', 'user'),
         ),
         'event.changement.prix' => array(
-            'titre' => 'Changement de prix d\'un évènement',
+            'titre' => 'Changement de prix',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
             'infos' => array('event', 'prix'),
         ),
         'event.changement.date' => array(
-            'titre' => 'Changement de date d\'un évènement',
+            'titre' => 'Changement de date',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
             'infos' => array('event', 'date'),
         ),
         'event.suppression' => array(
-            'titre' => 'Suppression d\'un évènement',
+            'titre' => 'Suppression',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
             'infos' => array('event'),
         ),
         'event.invitation' => array(
-            'titre' => 'Invitation à un évènement',
+            'titre' => 'Invitation',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
             'infos' => array('event', 'date'),
+        ),
+        'event.incoming' => array(
+            'titre' => 'Évènement à venir',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event', 'heure'),
+        ),
+        'actus.nouvelle' => array(
+            'titre' => 'Nouvelle actu',
+            'type' => 'actus',
+            'path' => 'pjm_app_actus_index',
+            'infos' => array('titre', 'auteur'),
         ),
     );
 

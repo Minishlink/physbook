@@ -247,4 +247,26 @@ class EvenementManager
             }
         }
     }
+
+    /**
+     * Notify users of incoming events (24h).
+     *
+     * This is called by NotificationsCommand every day with a cron task.
+     */
+    public function notifyForNextEvents()
+    {
+        $nextEvents = $this->em->getRepository('PJMAppBundle:Event\Evenement')->getNextEvents();
+
+        /** @var Evenement $event */
+        foreach ($nextEvents as $event) {
+            $participants = $event->getParticipants();
+
+            if (!empty($participants)) {
+                $this->notification->send('event.incoming', array(
+                    'event' => $event->getNom(),
+                    'heure' => $event->getDateDebut()->format('H\hi'),
+                ), $participants);
+            }
+        }
+    }
 }
