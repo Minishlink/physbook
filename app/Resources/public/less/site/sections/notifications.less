@@ -48,6 +48,7 @@ body {
 
     #notifications {
       .notification {
+        border-top: 0;
         border-bottom: 0.5em solid;
         border-left: 0;
         border-right: 0;
@@ -58,6 +59,16 @@ body {
 
           .entete {
             background-color: @primary-color;
+
+            .importance {
+              background-color: @secondary-color;
+
+              &:before {
+                border-left-color: @primary-color;
+                border-top-color: @secondary-color;
+                border-bottom-color: @secondary-color;
+              }
+            }
           }
 
           .message {
@@ -83,14 +94,42 @@ body {
           .customizePerType(@mauve, @rouge);
         }
 
-        &.important {
-
-        }
-
         .entete {
           color: white;
           text-transform: uppercase;
           font-weight: bold;
+          position: relative;
+          border: 0;
+
+          white-space: nowrap;
+
+          .importance {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+
+            font-size: 1.4em;
+            text-align: center;
+            width: 3.5em;
+
+            &:before {
+              content: "";
+              //display: block;
+              position: absolute;
+              left: 0;
+              width: 0;
+              height: 0;
+              border-top: 1em solid;
+              border-bottom: 0.95em solid;
+              border-left: 1em solid;
+            }
+
+            span {
+              vertical-align: bottom;
+              padding-left: 0.5em;
+            }
+          }
         }
 
         .message {
