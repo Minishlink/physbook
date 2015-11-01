@@ -53,6 +53,14 @@ class ActusController extends Controller
                 $em->persist($article);
                 $em->flush();
 
+                if ($article->getPublication()) {
+                    // pour l'instant on notifie juste les gens des promos n-1, n, n+1
+                    $this->get('pjm.services.notification')->send('actus.nouvelle', array(
+                        'titre' => $article->getTitre(),
+                        'auteur' => $article->getAuteur()->getBucque(),
+                    ), $this->get('pjm.services.group')->getUsersAuTabagns());
+                }
+
                 return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
             }
 
@@ -85,6 +93,15 @@ class ActusController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($article);
                     $em->flush();
+
+                    // TODO le faire que si l'article a pas déjà été publié
+                    if ($article->getPublication()) {
+                        // pour l'instant on notifie juste les gens des promos n-1, n, n+1
+                        $this->get('pjm.services.notification')->send('actus.nouvelle', array(
+                            'titre' => $article->getTitre(),
+                            'auteur' => $article->getAuteur()->getBucque(),
+                        ), $this->get('pjm.services.group')->getUsersAuTabagns());
+                    }
 
                     return $this->redirect($this->generateUrl('pjm_app_actus_voir', array(
                         'slug' => $article->getSlug(),
