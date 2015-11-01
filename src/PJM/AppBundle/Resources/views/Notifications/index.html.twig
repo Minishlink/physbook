@@ -46,7 +46,7 @@ $(document).ready(function () {
         $(button).toggleClass('disableType');
         var type = button.getAttribute("data-type");
 
-        $('.notification[data-type="' + type + '"]').toggle(200);
+        $('.notification[data-type="' + type + '"]').toggleClass('cacher');
     });
 });
 </script>

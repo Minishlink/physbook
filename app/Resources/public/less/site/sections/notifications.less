@@ -101,6 +101,16 @@ body {
           }
         }
 
+        transition: all 0.2s ease-in-out;
+        max-height: 20em;
+        overflow: hidden;
+        &.cacher {
+          opacity: 0;
+          max-height: 0;
+          margin: 0;
+          border: 0;
+        }
+
         .entete {
           color: white;
           text-transform: uppercase;
