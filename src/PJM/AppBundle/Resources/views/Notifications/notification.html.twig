@@ -1,6 +1,6 @@
 <div class="notification {{ notification.new ? 'nouvelle' : 'ancienne' }} panel slideUp" data-type="{{ notification.type }}">
     <div class="entete panel-heading">
-        {% if notification.important %}<div class="importance"><span class="glyphicon glyphicon-star"></span></div>{% endif %}
+        {% if notification.important %}<div class="importance"><span class="glyphicon glyphicon-star" title="Notification importante"></span></div>{% endif %}
         <h3 class="panel-title">{{ notification.titre }}</h3>
     </div>
     <div class="message">
