@@ -3,11 +3,29 @@
 {% block pjm_app_body_content %}
     {% include "PJMAppBundle:Notifications:togglePush.html.twig" %}
     <div class="space"></div>
-    {% for notification in notifications %}
-        {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
-    {% else %}
-        Tu n'as pas encore de notifications.
-    {% endfor %}
+    <div class="row">
+        <ul id="legende" class="list-inline">
+            <li class="banque">
+                B<span class="phys-AM" data-grunticon-embed></span>k</button>
+            </li>
+            <li class="event">
+                Évènements
+            </li>
+            <li class="actus">
+                Actus
+            </li>
+        </ul>
+    </div>
+    <div class="space"></div>
+    <div id="notifications" class="row">
+        <div class="col-md-6 col-md-offset-3">
+        {% for notification in notifications %}
+            {% include 'PJMAppBundle:Notifications:notification.html.twig' %}
+        {% else %}
+            Tu n'as pas encore de notifications.
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

@@ -1,5 +1,8 @@
 {% set content %}[{{ notification.type }}] {{ ("notifications.content." ~ notification.key)|trans(notification.variables)|purify }}{% endset %}
-<div class="notification panel panel-{% if notification.important and notification.new %}primary{% elseif not notification.important and notification.new %}info{% else %}default{% endif %}">
+<div class="notification{{ notification.important ? ' importante' : ''}} type-{{ notification.type }} panel">
+    <div class="entete panel-heading">
+        <h3 class="panel-title">{{ notification.titre }}</h3>
+    </div>
     <div class="message panel-body">
         {% if notification.path != "" %}
             <a href="{{ path(notification.path) }}">{{ content }}</a>
@@ -8,5 +11,5 @@
         {% endif %}
         {% if notification.new %}<br>(nouveau){% endif %}
     </div>
-    <div class="date panel-footer">le {{ notification.date|localizeddate('medium', 'short') }}</div>
+    <div class="date">{{ notification.date|localizeddate('full', 'none') }} <span class="heure">{{ notification.date|localizeddate('none', 'short') }}</span></div>
 </div>

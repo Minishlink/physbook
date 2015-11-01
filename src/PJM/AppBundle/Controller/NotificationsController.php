@@ -20,7 +20,7 @@ class NotificationsController extends Controller
         $notificationManager = $this->get('pjm.services.notification');
         $notifications = $notificationManager->get($this->getUser());
 
-        $notificationManager->markAllAsRead($this->getUser());
+        //$notificationManager->markAllAsRead($this->getUser());
 
         return array(
             'notifications' => $notifications,

@@ -60,6 +60,11 @@ class Notification
     /**
      * @var string
      */
+    private $titre;
+
+    /**
+     * @var string
+     */
     private $type;
 
     /**
@@ -301,5 +306,21 @@ class Notification
     public function setNew($new)
     {
         $this->new = $new;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * @param string $titre
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
     }
 }

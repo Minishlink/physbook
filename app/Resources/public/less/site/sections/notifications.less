@@ -1,18 +1,101 @@
 body {
   &.notifications {
-    .notification {
-      &.important {
+    background-color: @blanc-casse;
 
+    #legende {
+      text-transform: uppercase;
+      font-weight: bold;
+      border-bottom: 0.1em solid @gris-tres-clair;
+      text-align: center;
+      font-size: 1.5em;
+
+      @media @tablet {
+        font-size: 3em;
       }
 
-      .message {
-        span.info {
-          font-weight: bold;
+      li {
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
         }
       }
 
-      .date {
-        font-size: 0.8em;
+      .banque {
+        color: @vert;
+        .phys-AM {
+          fill: @vert;
+          font-size: 1.2em;
+          vertical-align: text-bottom;
+        }
+      }
+
+      .event {
+        color: @bleu;
+      }
+
+      .actus {
+        color: @mauve;
+      }
+    }
+
+    #notifications {
+      .notification {
+        border-bottom: 0.5em solid;
+        border-left: 0;
+        border-right: 0;
+        background-color: white;
+
+        &.type-event {
+          @primary-color: @bleu;
+          @secondary-color: @rose;
+          border-color: @bleu;
+
+          &.important {
+
+          }
+
+          .entete {
+            background-color: @primary-color;
+          }
+
+          .message {
+            span.info {
+              color: @primary-color;
+            }
+          }
+
+          .date {
+            color: @primary-color;
+          }
+        }
+
+        &.important {
+
+        }
+
+        .entete {
+          color: white;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+
+        .message {
+          span.info {
+            font-weight: bold;
+          }
+        }
+
+        .date {
+          font-size: 0.9em;
+          border-top: dashed 1px;
+          border-bottom: 0;
+          padding: 0.2em 1em;
+
+          .heure {
+            color: @gris;
+          }
+        }
       }
     }
   }
