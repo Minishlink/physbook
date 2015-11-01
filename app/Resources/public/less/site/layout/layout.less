@@ -18,23 +18,31 @@ body {
         background-color: @gris-tres-clair;
         color: #505050;
         margin-bottom: 2em;
-        padding-bottom: @line-height-computed/2;
+
+        @media @phone {
+            padding-bottom: @line-height-computed/2;
+        }
 
         h1 {
             .font-klavika();
             font-size: 3em;
             text-align: center;
+            margin-bottom: 0;
+            margin-top: 0.2em;
 
             @media @phone {
                 text-align: right;
+                margin-top: 20px;
             }
         }
 
         #logoPage {
             @media @phone {
                 float: left;
+                margin-bottom: 0;
             }
-            height: 1.2em;
+            height: 1em;
+            margin-bottom: 0.2em;
         }
 
         @media @tablet {
