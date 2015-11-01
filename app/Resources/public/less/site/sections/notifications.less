@@ -82,16 +82,23 @@ body {
           }
         }
 
-        &[data-type="bank"] {
-          .customizePerType(@vert, @rose);
+        &.ancienne {
+          .customizePerType(@gris, @gris-tres-clair);
+          opacity: 0.7;
         }
 
-        &[data-type="event"] {
-          .customizePerType(@bleu, @orange);
-        }
+        &.nouvelle {
+          &[data-type="bank"] {
+            .customizePerType(@vert, @rose);
+          }
 
-        &[data-type="actus"] {
-          .customizePerType(@mauve, @rouge);
+          &[data-type="event"] {
+            .customizePerType(@bleu, @orange);
+          }
+
+          &[data-type="actus"] {
+            .customizePerType(@mauve, @rouge);
+          }
         }
 
         .entete {
