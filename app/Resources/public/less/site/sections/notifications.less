@@ -88,22 +88,20 @@ body {
         }
 
         &.ancienne {
-          .customizePerType(@gris, @gris-tres-clair);
-          opacity: 0.7;
+          opacity: 0.8;
+          filter: grayscale(70%);
         }
 
-        &.nouvelle {
-          &[data-type="bank"] {
-            .customizePerType(@vert, @rose);
-          }
+        &[data-type="bank"] {
+          .customizePerType(@vert, @rose);
+        }
 
-          &[data-type="event"] {
-            .customizePerType(@bleu, @orange);
-          }
+        &[data-type="event"] {
+          .customizePerType(@bleu, @orange);
+        }
 
-          &[data-type="actus"] {
-            .customizePerType(@mauve, @rouge);
-          }
+        &[data-type="actus"] {
+          .customizePerType(@mauve, @rouge);
         }
 
         transition: all 0.2s ease-in-out;
