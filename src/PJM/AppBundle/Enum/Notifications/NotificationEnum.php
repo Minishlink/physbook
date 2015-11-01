@@ -73,6 +73,12 @@ class NotificationEnum
             'path' => 'pjm_app_event_index',
             'infos' => array('event', 'heure'),
         ),
+        'actus.nouvelle' => array(
+            'titre' => 'Nouvelle actu',
+            'type' => 'actus',
+            'path' => 'pjm_app_actus_index',
+            'infos' => array('titre', 'auteur'),
+        ),
     );
 
     public function getKeys()

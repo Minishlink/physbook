@@ -15,3 +15,5 @@ notifications:
       suppression: L'évènement <span class="info">%event%</span> a été supprimé.
       invitation: Tu as été invité à l'évènement <span class="info">%event%</span> du <span class="info">%date%</span>.
       incoming: L'évènement <span class="info">%event%</span> va avoir lieu dans les prochaines 24h, à <span class="info">%heure%</span>.
+    actus:
+      nouvelle: <span class="info">%auteur%</span> a publié un nouvel article intitulé <span class="info">%titre%</span>.
