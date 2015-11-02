@@ -22,7 +22,7 @@ framework:
             js:
                 version: v1r20151031
             css:
-                version: v1r20151031b
+                version: v1r20151101
             sw:
                 version: v1r20151031
     default_locale:  "%locale%"
