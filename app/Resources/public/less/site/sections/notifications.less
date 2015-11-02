@@ -2,6 +2,14 @@ body {
   &.notifications {
     background-color: @blanc-casse;
 
+    .notificationsButtons {
+      text-align: center;
+
+      @media @phone {
+        text-align: right;
+      }
+    }
+
     #legende {
       font-weight: bold;
       border-bottom: 0.1em solid @gris-tres-clair;
@@ -195,3 +203,57 @@ body {
   background-color: @rouge;
   color: white;
 }
+
+@sizePush: 40px;
+.js-push-button {
+  background-color: @gris-tres-clair;
+  border-radius: @sizePush;
+  height: @sizePush;
+}
+
+.notificationsButtons {
+  .notificationsButton-settings {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align:center;
+
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-color: @gris-tres-clair;
+    color: white;
+
+    width: @sizePush;
+    height: @sizePush;
+    font-size: @sizePush*0.75;
+    line-height: @sizePush*0.75;
+
+    text-shadow: 0 0 6px #333;
+
+    &:before {
+      content: "";
+      position: absolute;
+      @size: 4px;
+      height: @size;
+      width: @size;
+      @place: 50% ~"-" @size/2;
+      top: calc(@place);
+      left: calc(@place);
+
+      background-color: @gris;
+
+      border-radius: 50%;
+      text-shadow: 0 0 1px #333;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    span {
+      vertical-align: middle;
+      top: 0.5px; // hack difference Chrome/Firefox
+    }
+  }
+}
+
