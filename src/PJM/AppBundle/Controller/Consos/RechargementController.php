@@ -22,8 +22,8 @@ class RechargementController extends Controller
         $curl = $buzz->getClient();
         $curl->setTimeout(30);
 
-        $vendorToken = $this->container->getParameter('paiement.lydia.vendorToken');
-        $providerToken = $this->container->getParameter('paiement.lydia.providerToken');
+        $vendorToken = $this->container->getParameter('paiement.lydia.vendortoken');
+        $providerToken = $this->container->getParameter('paiement.lydia.providertoken');
         $urlLydia = $this->container->getParameter('paiement.lydia.url');
 
         $content = array(
