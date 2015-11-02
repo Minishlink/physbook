@@ -1,0 +1,46 @@
+{% extends "::layout.html.twig" %}
+
+{% block stylesheets %}
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+
+        background-color: #B63938;
+        color: white;
+        fill: white;
+    }
+
+    #content {
+        padding: 1em;
+        text-align: center;
+    }
+
+    #brand svg {
+        max-width: 100%;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="content">
+    <a href="https://physbook.fr" title="Phy'sbook"><div id="brand" class="phys-brand" data-grunticon-embed></div></a>
+
+    <p>
+        <a href="https://physbook.fr" title="Phy'sbook">Phy'sbook</a> is developed by <a href="http://ensam.eu">Arts et Métiers</a> students.<br>
+        It is an open-source project. <a href="https://github.com/Minishlink/physbook" title="GitHub">Want to contribute?</a>
+    </p>
+</div>
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+

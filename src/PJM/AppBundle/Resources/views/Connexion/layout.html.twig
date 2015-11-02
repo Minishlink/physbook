@@ -24,8 +24,13 @@
                         <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook"><span class="phys-brand-logo-white"></span><span class="sr-only">Phy'sbook</span></a>
                     </div>
 
-                    {% block fos_user_content %}
-                    {% endblock fos_user_content %}
+                    {% block fos_user_content %}{% endblock fos_user_content %}
+
+                    <div id="about">
+                        <p>
+                            <a href="{{ path('pjm_public_about') }}">About / &Agrave; propos</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

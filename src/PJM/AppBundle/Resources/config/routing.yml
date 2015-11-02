@@ -59,6 +59,15 @@ pjm_app_logo:
         maxAge: 86400
         sharedMaxAge: 86400
 
+pjm_public_about:
+      path:     /about
+      methods: [ get ]
+      defaults:
+          _controller: FrameworkBundle:Template:template
+          template: 'PJMAppBundle:Public:about.html.twig'
+          maxAge: 86400
+          sharedMaxAge: 86400
+
 pjm_app_a_propos:
     path:     /a-propos
     methods: [ get ]
