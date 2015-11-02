@@ -70,7 +70,7 @@ function changePushButtonState(state) {
                 break;
             case 'incompatible':
                 pushButton.disabled = true;
-                pushButton.title = "Notifications Push non disponibles (problème de permission ou navigateur non compatible)";
+                pushButton.title = "Notifications Push non disponibles (navigateur non compatible)";
                 break;
             default:
                 console.error('Unhandled push button state', state);
@@ -127,6 +127,7 @@ function push_initialiseState() {
     // Are Notifications supported in the service worker?
     if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
         console.warn('[SW] Les notifications ne sont pas supportées par ce navigateur.');
+        changePushButtonState('incompatible');
         return;
     }
 
@@ -135,12 +136,14 @@ function push_initialiseState() {
     // user changes the permission
     if (Notification.permission === 'denied') {
         console.warn('[SW] Les notifications ne sont pas autorisées par l\'utilisateur.');
+        changePushButtonState('disabled');
         return;
     }
 
     // Check if push messaging is supported
     if (!('PushManager' in window)) {
         console.warn('[SW] Les messages Push ne sont pas supportés par ce navigateur.');
+        changePushButtonState('incompatible');
         return;
     }
 
