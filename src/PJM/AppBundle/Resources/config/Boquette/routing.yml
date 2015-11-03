@@ -35,6 +35,31 @@ pjm_app_boquette_rechargement:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement, montant: null }
 
+pjm_app_boquette_rechargement_confirm:
+    path:     /{slug}/rechargement/confirm
+    methods: [ post ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement:sucess }
+
+pjm_app_boquette_rechargement_cancel:
+    path:     /{slug}/rechargement/cancel
+    methods: [ post ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement:cancel }
+
+pjm_app_boquette_rechargement_expire:
+    path:     /{slug}/rechargement/expire
+    methods: [ post ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement:expire }
+
+pjm_app_boquette_rechargement_success:
+    path:     /{slug}/rechargement/success
+    methods: [ post ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement:expire }
+
+pjm_app_boquette_rechargement_fail:
+    path:     /{slug}/rechargement/fail
+    methods: [ post ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement:expire }
+
 pjm_app_boquette_pians:
     resource: "@PJMAppBundle/Resources/config/Boquette/Pians/routing.yml"
     prefix:   /pians

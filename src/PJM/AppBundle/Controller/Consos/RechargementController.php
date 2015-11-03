@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use PJM\AppBundle\Entity\Transaction;
@@ -35,8 +34,9 @@ class RechargementController extends Controller
             'amount' => $transaction->getMontant(),
             'currency' => 'EUR',
             'expire_time' => 300,
-            'browser_success_url' => '',
-            'browser_fail_url' => '',
+            'confirm_url' => $this->generateUrl('pjm_app_boquette_rechargement_confirm'),
+            'cancel_url' => $this->generateUrl('pjm_app_boquette_rechargement_cancel'),
+            'expire_url' => $this->generateUrl('pjm_app_boquette_rechargement_expire'),
             'notify' => 'yes',
             'notify_collector' => 'no',
             'order_ref' => substr(uniqid(), 0, 6).'_'.$transaction->getId(),
@@ -54,30 +54,79 @@ class RechargementController extends Controller
                 'warning',
                 'Erreur '.$response->getStatusCode().': '.$response->getReasonPhrase()
             );
-        } else {
-            // si on a une réponse valide de la part de S-Money
-            $data = json_decode($response->getContent(), true);
-            if (isset($data['url'])) {
-                $resData = array(
-                    'valid' => true,
-                    'url' => $data['url'],
-                );
-            } else {
-                $resData = array(
-                    'valid' => false,
-                );
 
+            return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_fail')); //TODO ajouter URL (Retour direct à la page de boquette ?)
+
+        } else {
+            // si on a une réponse valide de la part de Lydia
+            if ($response->request->get('error') == 0) {
+                //S'il n'y a pas d'erreur
+
+                return $this->redirect($this->generateUrl('')); //TODO ajouter URL (Pas trouvé de browser_url pour le moment)
+            } else {
+                //Si Lydia retourne une erreur
                 $this->get('session')->getFlashBag()->add(
                     'warning',
-                    'Erreur '.$data['Code'].': '.$data['ErrorMessage']
+                    'Erreur '.$response->request->get('error').': '.$response->request->get('message')
                 );
+
+                return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_fail')); //TODO ajouter URL (Retour direct à la page de boquette ?)
             }
         }
+    }
 
-        $res = new JsonResponse();
-        $res->setData($resData);
+    public function confirmAction(Request $request)
+    {
+        //TODO
+    }
 
-        return $res;
+    public function cancelAction(Request $request)
+    {
+        //TODO
+    }
+
+    public function expireAction(Request $request)
+    {
+        $this->get('session')->getFlashBag()->add(
+            'warning',
+            'Erreur : Le délai de paiement a expiré'
+        );
+    }
+
+    public function successAction(Request $request)
+    {
+        $transactionId = $request->query->get('order_ref');
+
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('PJMAppBundle:Transaction');
+        $transaction = $repository->findOneById(substr($transactionId, 7));
+
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
+    }
+
+    public function failAction(Request $request)
+    {
+        $transactionId = $request->query->get('order_ref');
+
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('PJMAppBundle:Transaction');
+        $transaction = $repository->findOneById(substr($transactionId, 7));
+
+        $this->get('session')->getFlashBag()->add(
+            'warning',
+            'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
     }
 
     public function retourSMoneyAction(Request $request)
@@ -115,14 +164,6 @@ class RechargementController extends Controller
 
     public function redirectionDepuisSMoneyAction(Request $request)
     {
-        $transactionId = $request->query->get('transactionId');
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 7));
-
         if (isset($transaction)) {
             if ($this->getUser() == $transaction->getCompte()->getUser()) {
                 if (null !== $transaction->getStatus()) {
@@ -130,29 +171,14 @@ class RechargementController extends Controller
                         // si le paiement a été complété
                         $this->get('session')->getFlashBag()->add(
                             'success',
-                            'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
+                            'Tu as bien rechargé ton compte de ' . $transaction->showMontant() . '€.'
                         );
                     } else {
                         // si le paiement a été annulé
                         $this->get('session')->getFlashBag()->add(
                             'danger',
-                            'Le rechargement de '.$transaction->showMontant().'€ n\'a pu être effectué.'
+                            'Le rechargement de ' . $transaction->showMontant() . '€ n\'a pu être effectué.'
                         );
-
-                        switch ($transaction->getStatus()) {
-                            case '623':
-                                $source = "Phy'sbook";
-                                break;
-                            case '624':
-                                $source = 'S-Money';
-                                break;
-                            case '625':
-                                $source = 'Utilisateur';
-                                break;
-                            default:
-                                $source = 'inconnue';
-                                break;
-                        }
 
                         if (substr($transaction->getStatus(), 0, 5) == 'REZAL') {
                             $source = 'Serveur R&z@l';
@@ -162,18 +188,7 @@ class RechargementController extends Controller
                                 "Attention, l'erreur vient du serveur du R&z@l. Par conséquent, tu as été débité sur ton compte S-Money, mais pas crédité sur le serveur du R&z@l (relié aux bucqueurs au Pian's et au C'vis). Va voir l'harpag's pour te faire créditer ou rembourser."
                             );
                         }
-
-                        $this->get('session')->getFlashBag()->add(
-                            'warning',
-                            'Code d\'erreur : '.$transaction->getStatus().' ('.$source.')'
-                        );
                     }
-                } else {
-                    // si l'utilisateur n'est pas allé plus loin que la page sur S-Money
-                    $this->get('session')->getFlashBag()->add(
-                        'info',
-                        'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
-                    );
                 }
 
                 return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
