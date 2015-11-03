@@ -225,8 +225,6 @@ body {
 
     width: @sizePush;
     height: @sizePush;
-    font-size: @sizePush*0.75;
-    line-height: @sizePush*0.75;
 
     text-shadow: 0 0 6px #333;
 
@@ -251,8 +249,13 @@ body {
     }
 
     span {
-      vertical-align: middle;
-      top: 0.5px; // hack difference Chrome/Firefox
+      @cogSize: @sizePush*0.75;
+      @place: 50% ~"-" @cogSize/2;
+
+      position: absolute;
+      font-size: @cogSize;
+      top: calc(@place);
+      left: calc(@place);
     }
   }
 }
