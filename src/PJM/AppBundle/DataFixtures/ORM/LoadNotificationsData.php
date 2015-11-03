@@ -2,14 +2,13 @@
 
 namespace PJM\AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PJM\AppBundle\Entity\Notifications\Notification;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Enum\Notifications\NotificationEnum;
 
-class LoadNotificationsData extends AbstractFixture  implements OrderedFixtureInterface
+class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritdoc}
@@ -56,9 +55,7 @@ class LoadNotificationsData extends AbstractFixture  implements OrderedFixtureIn
             $users = array($users);
         }
 
-        $rand = $received ? rand(4,30) : rand(0,4);
-        $date = new \DateTime($rand.' days ago');
-        $date->setTime(rand(0,23), rand(0,59));
+        $date = $received ? $this->getRandomDateAgo(5, 30) : $this->getRandomDateAgo(0, 4);
 
         if (array_key_exists('date', $infos)) {
             $infos['date'] = $date->format('d/m/Y à H:i');
