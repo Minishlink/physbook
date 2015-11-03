@@ -30,8 +30,8 @@ pjm_app_media:
     resource: "@PJMAppBundle/Resources/config/Media/routing.yml"
     prefix:   /media
 
-pjm_app_smoney:
-    resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
+pjm_app_lydia:
+    resource: "@PJMAppBundle/Resources/config/Lydia/routing.yml"
     prefix:   /smoney
 
 pjm_app_banque:
