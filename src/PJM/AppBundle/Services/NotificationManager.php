@@ -79,10 +79,7 @@ class NotificationManager
             if ($settings->has($notificationType['type'])) {
                 $message = $this->getMessage($notification);
                 $this->sendPushToUser($user, $message);
-
-                if (!empty($settings->getWebhook())) {
-                    $this->sendToWebhook($settings->getWebhook(), $message);
-                }
+                $this->sendToWebhook($settings->getWebhook(), $message);
 
                 if ($settings->isEmail()) {
                     $this->sendToEmail($user->getEmail(), $message);
@@ -109,6 +106,10 @@ class NotificationManager
 
     public function sendToWebhook($webhook, $message)
     {
+        if (empty($webhook)) {
+            return false;
+        }
+
         // format message
         $message = "[Phy'sbook] ".$message.' https://physbook.fr';
 
