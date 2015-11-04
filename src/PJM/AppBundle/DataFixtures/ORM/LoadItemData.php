@@ -2,10 +2,8 @@
 
 namespace PJM\AppBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
 
 class LoadItemData extends BaseFixture implements OrderedFixtureInterface
@@ -18,7 +16,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
         $items = array(
             array(
                 'libelle' => 'Panier de fruits et légumes',
-                'slug' => 'paniers',
+                'slug' => 'panier',
                 'prix' => '300',
                 'infos' => array('1 botte de radis roses', '1 salade batavia', '1 oignon jaune sec', '4 tomates rondes', '2 kiwis ', '2 pommes goldrush'),
                 'boquette' => 'paniers',
@@ -42,7 +40,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Saucisson',
-                'slug' => '',
+                'slug' => 'saucisson',
                 'prix' => '2',
                 'infos' => null,
                 'boquette' => 'cvis',
@@ -50,7 +48,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Cheese Burger',
-                'slug' => '',
+                'slug' => 'cheeseBurger',
                 'prix' => '150',
                 'infos' => null,
                 'boquette' => 'cvis',
@@ -58,7 +56,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Brioche',
-                'slug' => '',
+                'slug' => 'brioche',
                 'prix' => '100',
                 'infos' => null,
                 'boquette' => 'cvis',
@@ -66,7 +64,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Petits pois',
-                'slug' => '',
+                'slug' => 'petitsPois',
                 'prix' => '159',
                 'infos' => null,
                 'boquette' => 'cvis',
@@ -74,7 +72,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Chouffe',
-                'slug' => '',
+                'slug' => 'chouffe',
                 'prix' => '147',
                 'infos' => null,
                 'boquette' => 'pians',
@@ -82,7 +80,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
             ),
             array(
                 'libelle' => 'Corsendonk',
-                'slug' => '',
+                'slug' => 'corsendonk',
                 'prix' => '149',
                 'infos' => null,
                 'boquette' => 'pians',
@@ -110,7 +108,6 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
         $item = new Item();
         $item->setLibelle($libelle);
         $item->setSlug($slug);
-
         $item->setPrix($prix);
         $item->setInfos($infos);
         $item->setBoquette($this->getBoquette($boquette));
@@ -118,6 +115,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
         $item->setDate($valid ? $this->getRandomDateAgo(0, 4) : $this->getRandomDateAgo(5, 30));
 
         $manager->persist($item);
+        $this->addReference($slug.($valid ? '-valid' : '').'-item', $item);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use joshtronic\LoremIpsum;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 
 abstract class BaseFixture extends AbstractFixture
@@ -14,7 +15,7 @@ abstract class BaseFixture extends AbstractFixture
     /**
      * Get User by username
      *
-     * @param $username
+     * @param string $username
      * @return User
      */
     protected function getUser($username)
@@ -25,12 +26,24 @@ abstract class BaseFixture extends AbstractFixture
     /**
      * Get Boquette by slug
      *
-     * @param $slug
+     * @param string $slug
      * @return Boquette
      */
     protected function getBoquette($slug)
     {
         return $this->getReference($slug."-boquette");
+    }
+
+    /**
+     * Get Item by slug and valid
+     *
+     * @param string $slug
+     * @param bool $valid
+     * @return Item
+     */
+    protected function getItem($slug, $valid = true)
+    {
+        return $this->getReference($slug.($valid ? '-valid' : '').'-item');
     }
 
     /**
