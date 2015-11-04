@@ -88,7 +88,7 @@ class RechargementController extends Controller
             $status = $request->request->get('status');
             $errorCode = $request->request->get('errorCode');
 
-            $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
+            $transaction = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Transaction')->findOneById(substr($transactionId, 7));
 
             if (isset($transaction)) {
                 if (null === $transaction->getStatus()) {
