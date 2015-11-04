@@ -4,6 +4,7 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use joshtronic\LoremIpsum;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\User;
 
 abstract class BaseFixture extends AbstractFixture
@@ -11,12 +12,25 @@ abstract class BaseFixture extends AbstractFixture
     private $loremIpsum;
 
     /**
-     * @param $user
+     * Get User by username
+     *
+     * @param $username
      * @return User
      */
-    protected function getUser($user)
+    protected function getUser($username)
     {
-        return $this->getReference($user."-user");
+        return $this->getReference($username."-user");
+    }
+
+    /**
+     * Get Boquette by slug
+     *
+     * @param $slug
+     * @return Boquette
+     */
+    protected function getBoquette($slug)
+    {
+        return $this->getReference($slug."-boquette");
     }
 
     /**
@@ -26,7 +40,29 @@ abstract class BaseFixture extends AbstractFixture
      */
     protected function getRandomDateAgo($min, $max)
     {
-        $date = new \DateTime(rand($min, $max).' days ago');
+        return $this->getRandomDate($min, $max, true);
+    }
+
+    /**
+     * @param $min
+     * @param $max
+     * @return \DateTime
+     */
+    protected function getRandomDateLater($min, $max)
+    {
+        return $this->getRandomDate($min, $max, false);
+    }
+
+    /**
+     * @param $min
+     * @param $max
+     * @param bool $ago
+     * @return \DateTime
+     */
+    protected function getRandomDate($min, $max, $ago)
+    {
+        $sign = $ago ? '-' : '+';
+        $date = new \DateTime($sign.rand($min, $max).' days');
         $date->setTime(rand(0,23), rand(0,59));
 
         return $date;
