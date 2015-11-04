@@ -5,6 +5,7 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use joshtronic\LoremIpsum;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
 
@@ -44,6 +45,17 @@ abstract class BaseFixture extends AbstractFixture
     protected function getItem($slug, $valid = true)
     {
         return $this->getReference($slug.($valid ? '-valid' : '').'-item');
+    }
+
+    /**
+     * Get Evenement by name
+     *
+     * @param string $name
+     * @return Evenement
+     */
+    protected function getEvenement($name)
+    {
+        return $this->getReference($name.'-event');
     }
 
     /**

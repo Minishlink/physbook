@@ -114,6 +114,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
         $event->setDay($day);
 
         $manager->persist($event);
+        $this->addReference($nom.'-event', $event);
     }
 
     /**
