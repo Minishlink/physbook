@@ -46,105 +46,66 @@ class RechargementController extends Controller
 
         if ($response->getStatusCode() != 200) {
             // si échec
-            $resData = array(
-                'valid' => false,
-            );
 
-            $this->get('session')->getFlashBag()->add(
+            $this->get('pjm.services.notification')->sendFlash(
                 'warning',
                 'Erreur '.$response->getStatusCode().': '.$response->getReasonPhrase()
             );
 
-            return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_fail')); //TODO ajouter URL (Retour direct à la page de boquette ?)
+            return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
 
         } else {
-            // si on a une réponse valide de la part de Lydia
-            if ($response->request->get('error') == 0) {
-                //S'il n'y a pas d'erreur
 
-                return $this->redirect($this->generateUrl('')); //TODO ajouter URL (Pas trouvé de browser_url pour le moment)
-            } else {
-                //Si Lydia retourne une erreur
-                $this->get('session')->getFlashBag()->add(
-                    'warning',
-                    'Erreur '.$response->request->get('error').': '.$response->request->get('message')
-                );
+            return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_confirm'));
 
-                return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_fail')); //TODO ajouter URL (Retour direct à la page de boquette ?)
-            }
         }
     }
 
     public function confirmAction(Request $request)
     {
-        //TODO
-    }
+        if (isset($transaction)) {
+            if ($this->getUser() == $transaction->getCompte()->getUser()) {
+                if (null !== $transaction->getStatus()) {
+                    if ($transaction->getStatus() == 'OK') {
+                        // si le paiement a été complété
 
-    public function cancelAction(Request $request)
-    {
-        //TODO
-    }
+                    } else {
+                        // si le paiement a été annulé
+                        $this->get('pjm.services.notification')->sendFlash(
+                            'danger',
+                            'Le rechargement de ' . $transaction->showMontant() . '€ n\'a pu être effectué.'
+                        );
 
-    public function expireAction(Request $request)
-    {
-        $this->get('session')->getFlashBag()->add(
-            'warning',
-            'Erreur : Le délai de paiement a expiré'
-        );
-    }
+                        if (substr($transaction->getStatus(), 0, 5) == 'REZAL') {
 
-    public function successAction(Request $request)
-    {
-        $transactionId = $request->query->get('order_ref');
+                            $this->get('pjm.services.notification')->sendFlash(
+                                'danger',
+                                "Attention, l'erreur vient du serveur du R&z@l. Par conséquent, tu as été débité sur ton compte S-Money, mais pas crédité sur le serveur du R&z@l (relié aux bucqueurs au Pian's et au C'vis). Va voir l'harpag's pour te faire créditer ou rembourser."
+                            );
+                        }
+                    }
+                }
 
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 7));
+                return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
+            } else {
+                throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
+            }
+        }
+        throw new HttpException(404, "La transaction n'existe pas.");
 
-        $this->get('session')->getFlashBag()->add(
-            'success',
-            'Tu as bien rechargé ton compte de '.$transaction->showMontant().'€.'
-        );
-
-        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
-    }
-
-    public function failAction(Request $request)
-    {
-        $transactionId = $request->query->get('order_ref');
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('PJMAppBundle:Transaction');
-        $transaction = $repository->findOneById(substr($transactionId, 7));
-
-        $this->get('session')->getFlashBag()->add(
-            'warning',
-            'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
-        );
-
-        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
-    }
-
-    public function retourSMoneyAction(Request $request)
-    {
         if ($request->request->get('transactionId')) {
             $transactionId = $request->request->get('transactionId');
-            $status = $request->request->get('status');
-            $errorCode = $request->request->get('errorCode');
+            $error = $request->request->get('error');
 
             $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
 
             if (isset($transaction)) {
                 if (null === $transaction->getStatus()) {
-                    if ($status == 'OK') {
+                    if ($error == 0) {
                         $transaction->setStatus('OK');
                     } else {
-                        if ($errorCode !== null) {
-                            $transaction->setStatus($errorCode);
+                        if ($error !== null) {
+                            $transaction->setStatus($error);
                         } else {
                             $transaction->setStatus('NOK');
                         }
@@ -162,41 +123,51 @@ class RechargementController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
-    public function redirectionDepuisSMoneyAction(Request $request)
+    public function cancelAction(Request $request)
     {
-        if (isset($transaction)) {
-            if ($this->getUser() == $transaction->getCompte()->getUser()) {
-                if (null !== $transaction->getStatus()) {
-                    if ($transaction->getStatus() == 'OK') {
-                        // si le paiement a été complété
-                        $this->get('session')->getFlashBag()->add(
-                            'success',
-                            'Tu as bien rechargé ton compte de ' . $transaction->showMontant() . '€.'
-                        );
-                    } else {
-                        // si le paiement a été annulé
-                        $this->get('session')->getFlashBag()->add(
-                            'danger',
-                            'Le rechargement de ' . $transaction->showMontant() . '€ n\'a pu être effectué.'
-                        );
+        $transactionId = $request->query->get('order_ref');
+        $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
 
-                        if (substr($transaction->getStatus(), 0, 5) == 'REZAL') {
-                            $source = 'Serveur R&z@l';
+        $transaction->setStatus('LYDIA_ANNULATION');
 
-                            $this->get('session')->getFlashBag()->add(
-                                'danger',
-                                "Attention, l'erreur vient du serveur du R&z@l. Par conséquent, tu as été débité sur ton compte S-Money, mais pas crédité sur le serveur du R&z@l (relié aux bucqueurs au Pian's et au C'vis). Va voir l'harpag's pour te faire créditer ou rembourser."
-                            );
-                        }
-                    }
-                }
-
-                return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
-            } else {
-                throw new HttpException(403, "Tu n'es pas l'auteur de cette transaction.");
-            }
-        }
-
-        throw new HttpException(404, "La transaction n'existe pas.");
+        return $this->redirect($this->generateUrl('pjm_app_lydia_rechargement_fail'));
     }
+
+    public function expireAction(Request $request)
+    {
+        $transactionId = $request->query->get('order_ref');
+        $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
+
+        $transaction->setStatus('LYDIA_EXPIRE');
+
+        return $this->redirect($this->generateUrl('pjm_app_lydia_rechargement_fail'));
+    }
+
+    public function successAction(Request $request)
+    {
+        $transactionId = $request->query->get('order_ref');
+        $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
+
+        $this->get('pjm.services.notification')->sendFlash(
+            'success',
+            'Tu as bien rechargé ton compte de ' . $transaction->showMontant() . '€.'
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
+    }
+
+    public function failAction(Request $request)
+    {
+        $transactionId = $request->query->get('order_ref');
+        $transaction = $this->getDoctrine()->getRepository('PJMAppBundle:Transaction')->getManager()->findOneById(substr($transactionId, 7));
+
+        $this->get('pjm.services.notification')->sendFlash(
+            'warning',
+            'Il n\'y a pas eu de suite à ta demande de rechargement de '.$transaction->showMontant().'€.'
+        );
+
+        return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
+    }
+
+
 }
