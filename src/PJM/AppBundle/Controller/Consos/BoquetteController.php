@@ -212,24 +212,24 @@ class BoquetteController extends Controller
                 $transaction->setCompte($compte);
                 $transaction->setInfos($boquette->getCaisseSMoney());
 
-                // on redirige vers S-Money
-                $resRechargement = json_decode(
-                    $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
-                        'transaction' => $transaction,
-                    ))->getContent(),
-                    true
-                );
+                $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
+                    'confirm_url' => $this->generateUrl('pjm_app_consos_rechargement_confirm'),
+                    'cancel_url' => $this->generateUrl('pjm_app_consos_rechargement_cancel'),
+                    'expire_url' => $this->generateUrl('pjm_app_consos_rechargement_expire'),
+                    'browser_success_url' => $this->generateUrl('pjm_app_consos_rechargement_success'),
+                    'browser_fail_url' => $this->generateUrl('pjm_app_consos_rechargement_fail'),
+                ));
 
-                if ($resRechargement['valid'] === true) {
-                    // succès, on redirige vers l'URL de paiement
-                    return $this->redirect($resRechargement['url']);
-                } else {
+                if (!$resInitPayment['success']) {
                     // erreur
-                    $request->getSession()->getFlashBag()->add(
+                    $this->get('pjm.services.notification')->sendFlash(
                         'danger',
-                        'Il y a eu une erreur lors de la communication avec S-Money.'
+                        'Il y a eu une erreur lors de la communication avec Lydia. Erreur '.$resInitPayment['errorCode'].' : '.$resInitPayment['errorMessage']
                     );
                 }
+
+                // succès, on redirige vers l'URL de paiement
+                return $this->redirect($resInitPayment['url']);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',

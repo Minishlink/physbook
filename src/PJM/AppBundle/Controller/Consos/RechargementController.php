@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,57 +11,12 @@ use PJM\AppBundle\Entity\Transaction;
 
 class RechargementController extends Controller
 {
-    public function getURLAction(Transaction $transaction)
-    {
-        $em = $this->getDoctrine()->getManager();
-        // on met la transaction en queue pour récupérer l'id
-        $em->persist($transaction);
-        $em->flush();
-
-        $buzz = $this->container->get('buzz');
-        $curl = $buzz->getClient();
-        $curl->setTimeout(30);
-
-        $vendorToken = $this->container->getParameter('paiement.lydia.vendortoken');
-        $providerToken = $this->container->getParameter('paiement.lydia.providertoken');
-        $urlLydia = $this->container->getParameter('paiement.lydia.url');
-
-        $content = array(
-            'vendor_token' => $vendorToken,
-            'provider_token' => $providerToken,
-            'recipient' => '',
-            'type' => 'email',
-            'message' => "[Phy'sbook] ".$transaction->getCompte()->getBoquette()->getNom().' - '.$transaction->getCompte()->getUser()->getUsername(),
-            'amount' => $transaction->getMontant(),
-            'currency' => 'EUR',
-            'expire_time' => 300,
-            'confirm_url' => $this->generateUrl('pjm_app_boquette_rechargement_confirm'),
-            'cancel_url' => $this->generateUrl('pjm_app_boquette_rechargement_cancel'),
-            'expire_url' => $this->generateUrl('pjm_app_boquette_rechargement_expire'),
-            'notify' => 'yes',
-            'notify_collector' => 'no',
-            'order_ref' => substr(uniqid(), 0, 6).'_'.$transaction->getId(),
-        );
-
-        $response = $buzz->post($urlLydia, $content);
-
-        if ($response->getStatusCode() != 200) {
-            // si échec
-
-            $this->get('pjm.services.notification')->sendFlash(
-                'warning',
-                'Erreur '.$response->getStatusCode().': '.$response->getReasonPhrase()
-            );
-
-            return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
-
-        } else {
-
-            return $this->redirect($this->generateUrl('pjm_app_boquette_rechargement_confirm'));
-
-        }
-    }
-
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Route("/confirm")
+     */
     public function confirmAction(Request $request)
     {
         if (isset($transaction)) {
@@ -123,6 +79,12 @@ class RechargementController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_homepage'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/cancel")
+     */
     public function cancelAction(Request $request)
     {
         $transactionId = $request->query->get('order_ref');
@@ -133,6 +95,12 @@ class RechargementController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_lydia_rechargement_fail'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/expire")
+     */
     public function expireAction(Request $request)
     {
         $transactionId = $request->query->get('order_ref');
@@ -143,6 +111,12 @@ class RechargementController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_lydia_rechargement_fail'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/success")
+     */
     public function successAction(Request $request)
     {
         $transactionId = $request->query->get('order_ref');
@@ -156,6 +130,12 @@ class RechargementController extends Controller
         return $this->redirect($this->generateUrl('pjm_app_boquette_'.$transaction->getCompte()->getBoquette()->getSlug().'_index'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/fail")
+     */
     public function failAction(Request $request)
     {
         $transactionId = $request->query->get('order_ref');

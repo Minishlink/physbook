@@ -100,4 +100,13 @@ class TransactionManager
 
         return $transaction;
     }
+
+    public function persist(Transaction $transaction, $flush = false)
+    {
+        $this->em->persist($transaction);
+
+        if ($flush) {
+            $this->em->flush();
+        }
+    }
 }
