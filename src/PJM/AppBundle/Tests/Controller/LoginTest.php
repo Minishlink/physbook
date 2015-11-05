@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Tests;
+namespace PJM\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
