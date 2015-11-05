@@ -90,7 +90,6 @@ services:
             - template:
                 layout: 'PJMAppBundle:Mail:layout.html.twig'
                 alerteSolde: 'PJMAppBundle:Mail:alerteSolde.html.twig'
-                error: 'PJMAppBundle:Mail:error.html.twig'
                 message: 'PJMAppBundle:Mail:message.html.twig'
               notificationEmail: "notification@physbook.fr"
               contactEmail: "contact@physbook.fr"
