@@ -11,7 +11,11 @@ namespace PJM\AppBundle\Tests\Services;
 use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class BaseTest extends KernelTestCase
+/**
+ * Class BaseTest for helper functions in unit tests
+ * @package PJM\AppBundle\Tests\Services
+ */
+abstract class BaseTest extends KernelTestCase
 {
     /**
      * Get a private method from a class
