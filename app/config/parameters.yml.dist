@@ -25,6 +25,10 @@ parameters:
     
     paiement.smoney.url: urlSmoneyAChanger
     paiement.smoney.auth: Bearer clef
+
+    paiement.lydia.url: 'aChanger'
+    paiement.lydia.provider_token: 'aChanger'
+    paiement.lydia.vendor_token: 'aChanger'
     
     android_gcm_api_key: clefAChanger
     

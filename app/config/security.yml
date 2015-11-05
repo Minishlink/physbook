@@ -56,9 +56,8 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: %canal% }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: %canal% }
-        - { path: ^/smoney/retour, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/boquette/rezal/internet, roles: IS_AUTHENTICATED_ANONYMOUSLY, allow_if: "'127.0.0.1' == request.getClientIp() or '::1' == request.getClientIp() or '82.233.82.103' == request.getClientIp()" }
-        - { path: ^/notifications/last, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logo, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/about, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/boquette/brags/, roles: ROLE_ZIBRAGS }

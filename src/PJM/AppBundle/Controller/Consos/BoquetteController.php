@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -190,14 +191,8 @@ class BoquetteController extends Controller
      */
     public function rechargementAction(Request $request, Boquette $boquette, $montant = null)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $transaction = new Transaction();
-        $transaction->setMoyenPaiement('smoney');
-
-        if ($montant !== null) {
-            $transaction->setMontant($montant);
-        }
+        $transaction->setMontant($montant);
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',
@@ -208,34 +203,27 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug());
-                $transaction->setCompte($compte);
-                $transaction->setInfos($boquette->getCaisseSMoney());
+                $transaction->setCompte($this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug()));
 
-                // on redirige vers S-Money
-                $resRechargement = json_decode(
-                    $this->forward('PJMAppBundle:Consos/Rechargement:getURL', array(
-                        'transaction' => $transaction,
-                    ))->getContent(),
-                    true
-                );
+                $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
+                    'confirm_url' => $this->generateUrl('pjm_app_api_rechargement_confirm', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'cancel_url' => $this->generateUrl('pjm_app_api_rechargement_cancel', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'expire_url' => $this->generateUrl('pjm_app_api_rechargement_expire', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'browser_success_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'browser_fail_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                ));
 
-                if ($resRechargement['valid'] === true) {
-                    // succès, on redirige vers l'URL de paiement
-                    return $this->redirect($resRechargement['url']);
-                } else {
+                if (!$resInitPayment['success']) {
                     // erreur
-                    $request->getSession()->getFlashBag()->add(
+                    $this->get('pjm.services.notification')->sendFlash(
                         'danger',
-                        'Il y a eu une erreur lors de la communication avec S-Money.'
+                        'Il y a eu une erreur lors de la communication avec Lydia. Erreur '.$resInitPayment['errorCode'].' : '.$resInitPayment['errorMessage']
                     );
                 }
-            } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de l\'envoi du formulaire de rechargement. Réessaye.'
-                );
 
+                // succès, on redirige vers l'URL de paiement
+                return $this->redirect($resInitPayment['url']);
+            } else {
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',

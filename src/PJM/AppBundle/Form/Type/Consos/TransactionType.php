@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Form\Type\Consos;
 
+use PJM\AppBundle\Enum\TransactionEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,9 +17,10 @@ class TransactionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $enum = new \PJM\AppBundle\Enum\TransactionEnum();
+        $enum = new TransactionEnum();
         $moyenPaiementsChoices = $enum->getMoyenPaiementChoices(true);
         unset($moyenPaiementsChoices['smoney']);
+        unset($moyenPaiementsChoices['lydia']);
         unset($moyenPaiementsChoices['initial']);
         unset($moyenPaiementsChoices['event']);
 
