@@ -6,12 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Buzz\Browser;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Services\Consos\TransactionManager;
+use Symfony\Component\HttpFoundation\Request;
 
 class LydiaProvider
 {
-    /** @var EntityManager */
-    private $em;
-
     /** @var Browser */
     private $buzz;
 
@@ -22,9 +20,8 @@ class LydiaProvider
     private $vendorToken;
     private $providerToken;
 
-    public function __construct(EntityManager $em, Browser $buzz, TransactionManager $transactionManager, $url, $providerToken, $vendorToken)
+    public function __construct(Browser $buzz, TransactionManager $transactionManager, $url, $providerToken, $vendorToken)
     {
-        $this->em = $em;
         $this->buzz = $buzz;
         $this->transactionManager = $transactionManager;
         $this->url = $url;
@@ -34,6 +31,11 @@ class LydiaProvider
         $this->buzz->getClient()->setTimeout(30);
     }
 
+    /**
+     * @param Transaction $transaction
+     * @param array $callbacks
+     * @return array
+     */
     public function requestRemote(Transaction $transaction, array $callbacks)
     {
         $endpoint = $this->url."/api/request/do.json";
@@ -92,6 +94,88 @@ class LydiaProvider
             'success' => true,
             'url' => $content['mobile_url']
         );
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function confirmPayment(Request $request)
+    {
+        $transaction = $this->getTransactionFromRequest($request);
+        if (!$transaction) {
+            return false;
+        }
+
+        if ($transaction->getStatus() !== null) {
+            // if already processed
+            return false;
+        }
+
+        $transaction->setStatus('OK');
+        $this->transactionManager->traiter($transaction);
+
+        return true;
+    }
+
+    /**
+     * @param Request $request
+     * @param string $status
+     * @return bool
+     */
+    public function cancelPayment(Request $request, $status)
+    {
+        $transaction = $this->getTransactionFromRequest($request);
+        if (!$transaction) {
+            return false;
+        }
+
+        $transaction->setStatus($status);
+        $this->transactionManager->persist($transaction, true);
+
+        return true;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool|Transaction
+     */
+    private function getTransactionFromRequest(Request $request)
+    {
+        $params = $this->getParamsCallback($request);
+        if (!$params) {
+            return false;
+        }
+
+        $transactionId = substr($params['order_ref'], 7);
+        $transaction = $this->transactionManager->getById($transactionId);
+
+        if (!($transaction instanceof Transaction)) {
+            return false;
+        }
+
+        return $transaction;
+    }
+
+    private function getParamsCallback(Request $request)
+    {
+        $params = array(
+            'order_ref' => $request->query->get('order_ref'),
+            'request_id' => $request->query->get('request_id'),
+            'transaction_identifier' => $request->query->get('transaction_identifier'),
+            'amount' => $request->query->get('amount'),
+            'currency' => $request->query->get('currency'),
+            'vendor_token' => $request->query->get('vendor_token'),
+            'signed' => $request->query->get('signed'),
+        );
+
+        $sig = $request->query->get('sig');
+
+        if ($this->getCallSignature($params) !== $sig) {
+            return false;
+        }
+
+        return $params;
     }
 
     private function getCallSignature($params)
