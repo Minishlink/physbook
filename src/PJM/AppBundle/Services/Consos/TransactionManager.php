@@ -86,6 +86,16 @@ class TransactionManager
                 'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
                 'montant' => $transaction->showMontant(),
             ), $transaction->getCompte()->getUser());
+        } else {
+            // on notifie qu'il y a eu une erreur
+            $notificationKey = 'bank.money.transaction.fail';
+            $notificationKey .= (substr($transaction->getStatus(), 0, 5) == 'REZAL') ? '.rezal' : '.default';
+
+            $this->notification->send($notificationKey, array(
+                'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
+                'montant' => $transaction->showMontant(),
+                'erreur' => $transaction->getStatus(),
+            ), $transaction->getCompte()->getUser());
         }
 
         return isset($transfert) ? $transfert : $transaction;
@@ -108,5 +118,14 @@ class TransactionManager
         if ($flush) {
             $this->em->flush();
         }
+    }
+
+    /**
+     * @param $id
+     * @return null|Transaction
+     */
+    public function getById($id)
+    {
+        return $this->em->getRepository('PJMAppBundle:Transaction')->find($id);
     }
 }

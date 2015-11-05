@@ -31,6 +31,18 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant')
         ),
+        'bank.money.transaction.fail.default' => array(
+            'titre' => 'Transaction annulée',
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant', 'erreur')
+        ),
+        'bank.money.transaction.fail.rezal' => array(
+            'titre' => 'Transaction annulée (R&z@l)',
+            'type' => 'bank',
+            'path' => 'pjm_app_banque_index',
+            'infos' => array('boquette', 'montant', 'erreur')
+        ),
         'bank.money.transfert.reception' => array(
             'titre' => 'Transfert reçu',
             'type' => 'bank',

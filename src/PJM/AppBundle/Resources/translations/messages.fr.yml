@@ -5,6 +5,10 @@ notifications:
         achat: Tu as été débité de <span class="info">%prix%€</span> pour l'achat de <span class="info">%item%</span>.
         negats: Tu es en négat's de <span class="info">%montant%€</span> sur ton compte <span class="info">%boquette%</span>.
         transaction: Une transaction de <span class="info">%montant%€</span> a été effectuée sur ton compte <span class="info">%boquette%</span>.
+          success:
+          fail:
+            default: Ta transaction de <span class="info">%montant%€</span> sur ton compte <span class="info">%boquette%</span> a été annulée ! Erreur : <span class="info">%erreur%</span>.
+            rezal: Ta transaction de <span class="info">%montant%€</span> sur ton compte <span class="info">%boquette%</span> a été annulée ! Erreur : <span class="info">%erreur%</span>. Attention, l'erreur vient du serveur du R&z@l. Par conséquent, tu as été débité sur ton compte Lydia, mais pas crédité sur le serveur du R&z@l (relié aux bucqueurs au Pian's et au C'vis). Va voir l'harpag's pour te faire créditer ou rembourser.
         transfert:
           envoi: Tu as envoyé <span class="info">%montant%€</span> à <span class="info">%user%</span> depuis ton compte <span class="info">%boquette%</span>.
           reception: Tu as reçu <span class="info">%montant%€</span> de <span class="info">%user%</span> sur ton compte <span class="info">%boquette%</span>.
