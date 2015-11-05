@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Controller\Consos;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -213,11 +214,11 @@ class BoquetteController extends Controller
                 $transaction->setInfos($boquette->getCaisseSMoney());
 
                 $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
-                    'confirm_url' => $this->generateUrl('pjm_app_consos_rechargement_confirm'),
-                    'cancel_url' => $this->generateUrl('pjm_app_consos_rechargement_cancel'),
-                    'expire_url' => $this->generateUrl('pjm_app_consos_rechargement_expire'),
-                    'browser_success_url' => $this->generateUrl('pjm_app_consos_rechargement_success'),
-                    'browser_fail_url' => $this->generateUrl('pjm_app_consos_rechargement_fail'),
+                    'confirm_url' => $this->generateUrl('pjm_app_consos_rechargement_confirm', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'cancel_url' => $this->generateUrl('pjm_app_consos_rechargement_cancel', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'expire_url' => $this->generateUrl('pjm_app_consos_rechargement_expire', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'browser_success_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'browser_fail_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                 ));
 
                 if (!$resInitPayment['success']) {
