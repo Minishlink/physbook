@@ -10,6 +10,8 @@ use FOS\UserBundle\Doctrine\UserManager as BaseUserManager;
 class UserManager extends BaseUserManager
 {
     private $boquettesComptes;
+
+    /** @var Mailer */
     private $mailer;
 
     public function setMailer(Mailer $mailer)

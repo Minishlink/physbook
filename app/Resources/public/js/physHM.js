@@ -1,10 +1,11 @@
 $(document).ready(function () {
-    $('#content').on('submit', '.physHMcontainer form', function(e) {
+    $('#content').on('submit', '.physHMcontainer > form', function(e) {
+        e.stopImmediatePropagation();
         e.preventDefault();
         var $this = $(this);
-        var button = $(this).find('input');
+        var button = $this.find('input');
 
-        if(!$this.hasClass('disabled') && !button.hasClass('disabled')) {
+        if(!button.hasClass('disabled')) {
             button.addClass('disabled');
 
             $.ajax({

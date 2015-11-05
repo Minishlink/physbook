@@ -59,6 +59,9 @@ services:
     pjm.services.payments.lydia:
                 class: PJM\AppBundle\Services\Payments\LydiaProvider
                 arguments: [@buzz, @pjm.services.transaction_manager, %paiement.lydia.url%, %paiement.lydia.provider_token%, %paiement.lydia.vendor_token%]
+    pjm.services.article_manager:
+                class: PJM\AppBundle\Services\Actus\ArticleManager
+                arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -67,6 +70,7 @@ services:
         arguments: [@doctrine.orm.entity_manager, @pjm.services.mailer, @pjm.twig.intranet_extension, @pjm.services.rezal]
     pjm.services.group:
         class:  PJM\AppBundle\Services\Group
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.random:
         class:  PJM\AppBundle\Services\Random
     pjm.services.rezal:

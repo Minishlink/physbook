@@ -27,6 +27,7 @@ class HistoriqueManager
      * @param Item $item
      * @param bool $verifyEnoughMoney
      * @param bool $flush
+     *
      * @return bool
      */
     public function paiement(User $user, Item $item, $verifyEnoughMoney = false, $flush = true)
@@ -92,7 +93,7 @@ class HistoriqueManager
             if ($compte->getSolde() < 0) {
                 $this->notification->send('bank.money.negats', array(
                     'boquette' => $item->getBoquette()->getNom(),
-                    'montant' => -$compte->getSolde()/100,
+                    'montant' => -$compte->getSolde() / 100,
                 ), $user, $flush);
             }
         }

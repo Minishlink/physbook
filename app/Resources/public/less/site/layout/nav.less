@@ -20,18 +20,43 @@
             display: inline-block;
             min-width: 3em;
 
+            &:hover {
+                opacity: 0.8;
+                text-decoration: none;
+            }
+
             @media @tablet {
                 min-width: 4em;
             }
         }
 
+        .logo {
+            display: block;
+            margin-bottom: 0.2em;
+            margin-left: auto;
+            margin-right: auto;
+            text-decoration: none;
+
+            &:hover {
+                border-bottom: none;
+            }
+        }
+
         img {
-            height: 4em;
+            height: 3em;
+
+            @media @tablet {
+                height: 4em;
+            }
         }
 
         .glyphicon {
-            font-size: 4em;
+            font-size: 3em;
             vertical-align: middle;
+
+            @media @tablet {
+                font-size: 4em;
+            }
         }
 
         > li {
@@ -42,16 +67,21 @@
             }
         }
 
-        position: fixed;
-        top: @navbar-height;
-        left: 0;
         width: 100%;
         z-index: 1;
-        margin-left: 0px;
+        margin-left: 0;
 
         transition: all 0.4s ease-in-out;
         max-height: 0;
         overflow: hidden;
+
+        right: 0;
+
+        position: relative;
+        @media @tablet {
+            position: fixed;
+            top: @navbar-height;
+        }
 
         &.afficher {
             max-height: 20em;
@@ -187,4 +217,8 @@
             }
         }
     }
+}
+
+.navbar-collapse.in {
+    max-height: 70vh; // hack fix Safari Mobile (can't scroll navbar)
 }

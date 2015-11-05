@@ -111,4 +111,21 @@ class UserRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param array $proms
+     * @return array
+     */
+    public function getByProms(array $proms)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        foreach ($proms as $promo) {
+            $qb
+                ->orWhere('u.proms = '.$promo) // can't set parameter
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

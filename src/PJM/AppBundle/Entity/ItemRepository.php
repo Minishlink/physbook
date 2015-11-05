@@ -37,7 +37,7 @@ class ItemRepository extends EntityRepository
             $this->findBy(array('slug' => $slug, 'valid' => $valid), array('date' => 'DESC'), 1);
 
         if (empty($res)) {
-            return null;
+            return;
         }
 
         return $res[0];

@@ -18,24 +18,37 @@ body {
         background-color: @gris-tres-clair;
         color: #505050;
         margin-bottom: 2em;
-        padding-bottom: @line-height-computed/2;
 
-        @height: 3*@font-size-h1;
+        @media @phone {
+            padding-bottom: @line-height-computed/2;
+        }
 
         h1 {
             .font-klavika();
             font-size: 3em;
+            text-align: center;
+            margin-bottom: 0;
+            margin-top: 0.2em;
 
-            @media @tablet {
-                font-size: 5em;
+            @media @phone {
+                text-align: right;
+                margin-top: 20px;
             }
-
-            text-align: right;
         }
 
         #logoPage {
-            float: left;
-            height: @height;
+            @media @phone {
+                float: left;
+                margin-bottom: 0;
+            }
+            height: 1em;
+            margin-bottom: 0.2em;
+        }
+
+        @media @tablet {
+            h1 {
+                font-size: 5em;
+            }
         }
     }
 }

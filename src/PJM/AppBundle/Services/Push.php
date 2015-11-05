@@ -29,7 +29,7 @@ class Push
     /**
      * Envoit une Notification Push à l'utilisateur.
      *
-     * @param User $user L'utilisateur destinataire
+     * @param User   $user    L'utilisateur destinataire
      * @param string $message Le message "body" de la notification
      */
     public function sendNotificationToUser(User $user, $message)

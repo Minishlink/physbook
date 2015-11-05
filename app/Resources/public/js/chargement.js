@@ -3,12 +3,11 @@ $(document).ready(function () {
 
     $('#content').fadeIn(400);
 
-    $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").not('[href^="#"]').click(function(e) {
+    $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").not('[href^="#"]').on(clickEventName(), function(e) {
         if (e.ctrlKey === false && e.button === 0) {
             $('#content').fadeOut(200);
-
-            $('ul[id^="menu-"]:visible').slideUp(100);
-            $('.collapse.in:visible').toggle('hide');
+            $('ul[id^="menu-"].afficher').removeClass('afficher');
+            $('.collapse.in').toggle('hide');
 
             chargement(true);
         }
@@ -38,12 +37,14 @@ $(document).ready(function () {
 });
 
 function chargement(commencer) {
+    var $chargement = $('#chargement');
+
     if (commencer) {
-        $('#chargement').css('visibility', 'visible');
-        $('#chargement').fadeTo(200, 1);
+        $chargement.css('visibility', 'visible');
+        $chargement.fadeTo(200, 1);
     } else {
-        $('#chargement').fadeTo(200, 0, function() {
-            $('#chargement').css('visibility', 'hidden');
+        $chargement.fadeTo(200, 0, function() {
+            $chargement.css('visibility', 'hidden');
         });
     }
 }

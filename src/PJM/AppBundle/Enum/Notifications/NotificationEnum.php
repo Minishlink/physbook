@@ -17,19 +17,19 @@ class NotificationEnum
             'titre' => 'Achat d\'un item',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('item', 'prix')
+            'infos' => array('item', 'prix'),
         ),
         'bank.money.negats' => array(
             'titre' => 'Alerte de négat\'s',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant')
+            'infos' => array('boquette', 'montant'),
         ),
         'bank.money.transaction.success' => array(
             'titre' => 'Transaction effectuée',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant')
+            'infos' => array('boquette', 'montant'),
         ),
         'bank.money.transaction.fail.default' => array(
             'titre' => 'Transaction annulée',
@@ -47,41 +47,54 @@ class NotificationEnum
             'titre' => 'Transfert reçu',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant', 'user')
+            'infos' => array('boquette', 'montant', 'user'),
         ),
         'bank.money.transfert.envoi' => array(
             'titre' => 'Transfert envoyé',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
-            'infos' => array('boquette', 'montant', 'user')
+            'infos' => array('boquette', 'montant', 'user'),
         ),
         'event.changement.prix' => array(
-            'titre' => 'Changement de prix d\'un évènement',
+            'titre' => 'Changement de prix',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'prix')
+            'infos' => array('event', 'prix'),
         ),
         'event.changement.date' => array(
-            'titre' => 'Changement de date d\'un évènement',
+            'titre' => 'Changement de date',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'date')
+            'infos' => array('event', 'date'),
         ),
         'event.suppression' => array(
-            'titre' => 'Suppression d\'un évènement',
+            'titre' => 'Suppression',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event')
+            'infos' => array('event'),
         ),
         'event.invitation' => array(
-            'titre' => 'Invitation à un évènement',
+            'titre' => 'Invitation',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
-            'infos' => array('event', 'date')
+            'infos' => array('event', 'date'),
+        ),
+        'event.incoming' => array(
+            'titre' => 'Évènement à venir',
+            'type' => 'event',
+            'path' => 'pjm_app_event_index',
+            'infos' => array('event', 'heure'),
+        ),
+        'actus.nouvelle' => array(
+            'titre' => 'Nouvelle actu',
+            'type' => 'actus',
+            'path' => 'pjm_app_actus_index',
+            'infos' => array('titre', 'auteur'),
         ),
     );
 
-    public function getKeys() {
+    public function getKeys()
+    {
         return array_keys($this::$list);
     }
 }

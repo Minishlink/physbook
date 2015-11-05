@@ -3,8 +3,9 @@ pjm_app_accueil:
     prefix:   /
 
 pjm_app_actus:
-    resource: "@PJMAppBundle/Resources/config/Actus/routing.yml"
+    resource: "@PJMAppBundle/Controller/ActusController.php"
     prefix:   /actus
+    type:     annotation
 
 pjm_app_profil:
     resource: "@PJMAppBundle/Resources/config/Profil/routing.yml"
@@ -59,6 +60,15 @@ pjm_app_logo:
         template: 'PJMAppBundle:App:logo.html.twig'
         maxAge: 86400
         sharedMaxAge: 86400
+
+pjm_public_about:
+      path:     /about
+      methods: [ get ]
+      defaults:
+          _controller: FrameworkBundle:Template:template
+          template: 'PJMAppBundle:Public:about.html.twig'
+          maxAge: 86400
+          sharedMaxAge: 86400
 
 pjm_app_a_propos:
     path:     /a-propos

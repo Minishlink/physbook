@@ -34,7 +34,7 @@ class HistoriqueListener implements EventSubscriber
 
         if ($entity instanceof Historique) {
             $historique = $entity;
-            if ($historique->getItem()->getBoquette()->getSlug() != 'cvis' && $historique->getItem()->getBoquette()->getSlug() != 'pians' || in_array("event", $historique->getItem()->getInfos())) {
+            if ($historique->getItem()->getBoquette()->getSlug() != 'cvis' && $historique->getItem()->getBoquette()->getSlug() != 'pians' || in_array('event', $historique->getItem()->getInfos())) {
                 if ($historique->getValid()) {
                     $repository = $em->getRepository('PJMAppBundle:Compte');
                     $compte = $repository->findOneByUserAndBoquetteSlug($historique->getUser(), $historique->getItem()->getBoquette()->getSlug());

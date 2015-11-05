@@ -22,7 +22,8 @@ class TransfertManager
 
     /**
      * @param Transfert $transfert
-     * @param bool $flush
+     * @param bool      $flush
+     *
      * @return Transfert
      */
     public function traiter(Transfert $transfert, $flush = true)

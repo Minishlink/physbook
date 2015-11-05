@@ -4,12 +4,15 @@ body {
         color: white;
 
         #brand {
-            max-height: 10vh;
             max-width: 100%;
-            font-size: 5em;
+            font-size: 3em;
             margin-bottom: 0.2em;
             margin-top: 0.2em;
             fill: white;
+
+            @media @phone {
+                font-size: 4em;
+            }
 
             //lag sur mobile
             @media @desktop {

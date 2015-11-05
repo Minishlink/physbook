@@ -7,3 +7,12 @@
 {% block categorieLogo %}{{ asset('images/consos/paniers/Fruits-et-legumes-V.png') }}{% endblock %}
 
 {% block pjm_app_body %}{{ parent() }}{% endblock %}
+
+{% block javascripts %}
+{{  parent() }}
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#logoPage').addClass("pulse");
+});
+</script>
+{% endblock %}

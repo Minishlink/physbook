@@ -25,8 +25,7 @@ class EvenementRepository extends EntityRepository
         $res = array_merge($eventsPublics, $eventsPrives);
 
         $reverse = ($quand == 'before');
-        usort($res, function(Evenement $a, Evenement $b) use($reverse)
-        {
+        usort($res, function (Evenement $a, Evenement $b) use ($reverse) {
             if ($reverse) {
                 return $a->getDateDebut() < $b->getDateDebut();
             }
@@ -84,6 +83,20 @@ class EvenementRepository extends EntityRepository
                 ->setMaxResults($max)
             ;
         }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getNextEvents()
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb
+            ->where('e.dateDebut > :now')
+            ->andWhere('e.dateDebut < :day')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('day', new \DateTime('+1 day'))
+        ;
 
         return $qb->getQuery()->getResult();
     }

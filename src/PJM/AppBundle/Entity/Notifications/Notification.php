@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Notification
+ * Notification.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="NotificationRepository", )
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Notification
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -44,7 +44,7 @@ class Notification
     private $infos;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="received", type="boolean")
      */
@@ -60,6 +60,11 @@ class Notification
     /**
      * @var string
      */
+    private $titre;
+
+    /**
+     * @var string
+     */
     private $type;
 
     /**
@@ -68,36 +73,35 @@ class Notification
     private $path;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $important;
 
     /**
-     * Same array as infos but with '%' around the keys in order to comply with the message translation
+     * Same array as infos but with '%' around the keys in order to comply with the message translation.
      *
      * @var array
      */
     private $variables;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $new;
-
 
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->received = false;
         $this->important = false;
-        $this->path = "";
-        $this->type = "";
+        $this->path = '';
+        $this->type = '';
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -105,7 +109,7 @@ class Notification
     }
 
     /**
-     * Set key
+     * Set key.
      *
      * @param string $key
      *
@@ -119,7 +123,7 @@ class Notification
     }
 
     /**
-     * Get key
+     * Get key.
      *
      * @return string
      */
@@ -129,7 +133,7 @@ class Notification
     }
 
     /**
-     * Set infos
+     * Set infos.
      *
      * @param array $infos
      *
@@ -143,7 +147,7 @@ class Notification
     }
 
     /**
-     * Get infos
+     * Get infos.
      *
      * @return array
      */
@@ -153,9 +157,9 @@ class Notification
     }
 
     /**
-     * Set received
+     * Set received.
      *
-     * @param boolean $received
+     * @param bool $received
      *
      * @return Notification
      */
@@ -167,9 +171,9 @@ class Notification
     }
 
     /**
-     * Get received
+     * Get received.
      *
-     * @return boolean
+     * @return bool
      */
     public function getReceived()
     {
@@ -177,7 +181,7 @@ class Notification
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
      *
@@ -191,7 +195,7 @@ class Notification
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -201,7 +205,7 @@ class Notification
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \PJM\AppBundle\Entity\User $user
      *
@@ -215,7 +219,7 @@ class Notification
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \PJM\AppBundle\Entity\User
      */
@@ -257,7 +261,7 @@ class Notification
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isImportant()
     {
@@ -265,7 +269,7 @@ class Notification
     }
 
     /**
-     * @param boolean $important
+     * @param bool $important
      */
     public function setImportant($important)
     {
@@ -289,7 +293,7 @@ class Notification
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isNew()
     {
@@ -297,10 +301,26 @@ class Notification
     }
 
     /**
-     * @param boolean $new
+     * @param bool $new
      */
     public function setNew($new)
     {
         $this->new = $new;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * @param string $titre
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
     }
 }

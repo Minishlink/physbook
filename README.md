@@ -31,6 +31,13 @@ Otherwise, if you are a collaborator, please read [Collaborating.md](https://git
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
+## Thanks ##
+We would like to thank the following companies for their sponsorship of open-source licences:
+- [BrowserStack](https://www.browserstack.com)
+- [DeployBot](http://deploybot.com/)
+- [SensioLabs Insight](https://insight.sensiolabs.com)
+- [Travis-CI](https://travis-ci.org/)
+
 ## Who do I talk to? ##
 
 Louis Lagrange : <louis.lagrange@gadz.org>

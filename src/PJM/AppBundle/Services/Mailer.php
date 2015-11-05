@@ -98,7 +98,7 @@ class Mailer
     }
 
     /**
-     * Envoie un simple $message de notification@physbook.fr à $mail
+     * Envoie un simple $message de notification@physbook.fr à $mail.
      */
     public function sendMessageToEmail($message, $email)
     {

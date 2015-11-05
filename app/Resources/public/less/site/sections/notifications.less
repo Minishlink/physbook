@@ -1,23 +1,190 @@
 body {
   &.notifications {
-    .notification {
-      &.important {
+    background-color: @blanc-casse;
 
+    .notificationsButtons {
+      text-align: center;
+
+      @media @phone {
+        text-align: right;
+      }
+    }
+
+    #legende {
+      font-weight: bold;
+      border-bottom: 0.1em solid @gris-tres-clair;
+      text-align: center;
+      font-size: 2em;
+
+      @media @tablet {
+        font-size: 3em;
       }
 
-      .message {
-        span.info {
-          font-weight: bold;
+      button {
+        background-color: transparent;
+        border: 0;
+        text-transform: uppercase;
+        .font-klavika();
+
+        &.disableType {
+          color: @gris;
+          fill: @gris;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &:focus {
+          outline: none;
         }
       }
 
-      .date {
-        font-size: 0.8em;
+      .bank {
+        color: @vert;
+        fill: @vert;
+
+        .phys-AM {
+          font-size: 1.2em;
+          vertical-align: text-bottom;
+        }
+      }
+
+      .event {
+        color: @bleu;
+      }
+
+      .actus {
+        color: @mauve;
+      }
+    }
+
+    #notifications {
+      .notification {
+        border-top: 0;
+        border-bottom: 0.5em solid;
+        border-left: 0;
+        border-right: 0;
+        background-color: white;
+
+        .customizePerType(@primary-color, @secondary-color) {
+          border-color: @primary-color;
+
+          .entete {
+            background-color: @primary-color;
+
+            .importance {
+              background-color: @secondary-color;
+
+              &:before {
+                border-left-color: @primary-color;
+                border-top-color: @secondary-color;
+                border-bottom-color: @secondary-color;
+              }
+            }
+          }
+
+          .message {
+            span.info {
+              color: @primary-color;
+            }
+          }
+
+          .date {
+            color: @secondary-color;
+          }
+        }
+
+        &.ancienne {
+          opacity: 0.8;
+          filter: grayscale(70%);
+        }
+
+        &[data-type="bank"] {
+          .customizePerType(@vert, @rose);
+        }
+
+        &[data-type="event"] {
+          .customizePerType(@bleu, @orange);
+        }
+
+        &[data-type="actus"] {
+          .customizePerType(@mauve, @rouge);
+        }
+
+        transition: all 0.2s ease-in-out;
+        max-height: 20em;
+        overflow: hidden;
+        &.cacher {
+          opacity: 0;
+          max-height: 0;
+          margin: 0;
+          border: 0;
+        }
+
+        .entete {
+          color: white;
+          text-transform: uppercase;
+          font-weight: bold;
+          position: relative;
+          border: 0;
+
+          white-space: nowrap;
+
+          .importance {
+            cursor: default;
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+
+            font-size: 1.4em;
+            text-align: center;
+            width: 3.5em;
+
+            &:before {
+              content: "";
+              position: absolute;
+              left: 0;
+              width: 0;
+              height: 0;
+              border-top: 1em solid;
+              border-bottom: 0.95em solid;
+              border-left: 1em solid;
+            }
+
+            span {
+              vertical-align: bottom;
+              padding-left: 0.5em;
+            }
+          }
+        }
+
+        .message {
+          span.info {
+            font-weight: bold;
+          }
+
+          font-size: 1.1em;
+          padding: 1em 4em;
+          text-align: center;
+        }
+
+        .date {
+          font-size: 0.9em;
+          border-top: dashed 1px;
+          border-bottom: 0;
+          padding: 0.2em 1em;
+
+          .heure {
+            color: @gris;
+          }
+        }
       }
     }
   }
 }
-
 
 .navbar-toggle {
   .badge-notification {
@@ -35,3 +202,61 @@ body {
   background-color: @rouge;
   color: white;
 }
+
+@sizePush: 40px;
+.js-push-button {
+  background-color: @gris-tres-clair;
+  border-radius: @sizePush;
+  height: @sizePush;
+  box-shadow: 0 0 5px @gris-clair;
+}
+
+.notificationsButtons {
+  .notificationsButton-settings {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align:center;
+
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-color: @gris-tres-clair;
+    color: white;
+
+    width: @sizePush;
+    height: @sizePush;
+
+    text-shadow: 0 0 6px #333;
+
+    &:before {
+      content: "";
+      position: absolute;
+      @size: 4px;
+      height: @size;
+      width: @size;
+      @place: 50% ~"-" @size/2;
+      top: calc(@place);
+      left: calc(@place);
+
+      background-color: @gris;
+
+      border-radius: 50%;
+      text-shadow: 0 0 1px #333;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    span {
+      @cogSize: @sizePush*0.75;
+      @place: 50% ~"-" @cogSize/2;
+
+      position: absolute;
+      font-size: @cogSize;
+      top: calc(@place);
+      left: calc(@place);
+    }
+  }
+}
+

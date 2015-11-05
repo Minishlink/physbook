@@ -15,27 +15,30 @@ class NotificationsController extends Controller
      *
      * @Template
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $notificationManager = $this->get('pjm.services.notification');
         $notifications = $notificationManager->get($this->getUser());
 
         $notificationManager->markAllAsRead($this->getUser());
 
         return array(
-            'notifications' => $notifications
+            'notifications' => $notifications,
         );
     }
 
     /**
      * @Template
      */
-    public function navAction() {
+    public function navAction()
+    {
         return array(
-            'nbNotReceived' => $this->get('pjm.services.notification')->count($this->getUser(), false)
+            'nbNotReceived' => $this->get('pjm.services.notification')->count($this->getUser(), false),
         );
     }
 
-    public function lastAction(Request $request) {
+    public function lastAction(Request $request)
+    {
         $endpoint = $request->query->get('endpoint');
 
         if (empty($endpoint)) {
@@ -49,12 +52,12 @@ class NotificationsController extends Controller
         }
 
         return new JsonResponse(array(
-            'notification' => $notification
+            'notification' => $notification,
         ));
     }
 
     /**
-     * Affichage et gestion des réglages
+     * Affichage et gestion des réglages.
      *
      * @return array
      *

@@ -6,13 +6,14 @@ use Doctrine\ORM\EntityRepository;
 use PJM\AppBundle\Entity\User;
 
 /**
- * NotificationRepository
+ * NotificationRepository.
  */
 class NotificationRepository extends EntityRepository
 {
     /**
      * @param User $user
      * @param $received
+     *
      * @return mixed
      */
     public function count(User $user, $received)
@@ -35,23 +36,25 @@ class NotificationRepository extends EntityRepository
 
     /**
      * @param User $user
+     *
      * @return null|Notification
      */
     public function getFirst(User $user)
     {
         return $this->findOneBy(array(
-            'user' => $user
+            'user' => $user,
         ), array('date' => 'asc'));
     }
 
     /**
      * @param User $user
+     *
      * @return null|Notification
      */
     public function getLast(User $user)
     {
         return $this->findOneBy(array(
-            'user' => $user
+            'user' => $user,
         ), array('date' => 'desc'));
     }
 }

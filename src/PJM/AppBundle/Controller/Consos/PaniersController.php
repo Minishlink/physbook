@@ -17,6 +17,7 @@ class PaniersController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Template

@@ -46,7 +46,7 @@ class NotificationSettings
     private $webhook;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="email", type="boolean")
      */
@@ -150,7 +150,7 @@ class NotificationSettings
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEmail()
     {
@@ -158,7 +158,8 @@ class NotificationSettings
     }
 
     /**
-     * @param boolean $email
+     * @param bool $email
+     *
      * @return NotificationSettings
      */
     public function setEmail($email)
