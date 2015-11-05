@@ -40,6 +40,7 @@ class LydiaProvider
         $endpoint = $this->url."/api/request/do.json";
 
         // persist the $transaction to store ID
+        $transaction->setMoyenPaiement('lydia');
         $this->transactionManager->persist($transaction, true);
 
         $boquette = $transaction->getCompte()->getBoquette();

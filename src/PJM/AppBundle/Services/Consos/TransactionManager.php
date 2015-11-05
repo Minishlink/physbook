@@ -89,9 +89,8 @@ class TransactionManager
             ), $transaction->getCompte()->getUser());
         } else {
             // on notifie qu'il y a eu une erreur
-            $notificationKey = 'bank.money.transaction.fail';
-            $notificationKey .= (substr($transaction->getStatus(), 0, 5) == 'REZAL') ? '.rezal' : '.default';
-
+            $notificationKey = 'bank.money.transaction.fail.';
+            $notificationKey .= ((substr($transaction->getStatus(), 0, 5) == 'REZAL') ? 'rezal' : 'default');
             $this->notification->send($notificationKey, array(
                 'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
                 'montant' => $transaction->showMontant(),

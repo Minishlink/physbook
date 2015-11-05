@@ -191,14 +191,8 @@ class BoquetteController extends Controller
      */
     public function rechargementAction(Request $request, Boquette $boquette, $montant = null)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $transaction = new Transaction();
-        $transaction->setMoyenPaiement('smoney');
-
-        if ($montant !== null) {
-            $transaction->setMontant($montant);
-        }
+        $transaction->setMontant($montant);
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',
@@ -209,9 +203,7 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $compte = $em->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug());
-                $transaction->setCompte($compte);
-                $transaction->setInfos($boquette->getCaisseSMoney());
+                $transaction->setCompte($this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug()));
 
                 $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
                     'confirm_url' => $this->generateUrl('pjm_app_consos_rechargement_confirm', array(), UrlGeneratorInterface::ABSOLUTE_URL),
@@ -232,11 +224,6 @@ class BoquetteController extends Controller
                 // succès, on redirige vers l'URL de paiement
                 return $this->redirect($resInitPayment['url']);
             } else {
-                $request->getSession()->getFlashBag()->add(
-                    'danger',
-                    'Un problème est survenu lors de l\'envoi du formulaire de rechargement. Réessaye.'
-                );
-
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
                         'warning',

@@ -11,6 +11,7 @@ class TransactionEnum
     {
         $choices = array(
             'smoney' => 'S-Money',
+            'lydia' => 'Lydia',
             'cheque' => 'Chèque',
             'monnaie' => 'Monnaie',
             'initial' => 'Solde initial',
