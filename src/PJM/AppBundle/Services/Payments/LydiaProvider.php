@@ -160,16 +160,16 @@ class LydiaProvider
     private function getParamsCallback(Request $request)
     {
         $params = array(
-            'order_ref' => $request->query->get('order_ref'),
-            'request_id' => $request->query->get('request_id'),
-            'transaction_identifier' => $request->query->get('transaction_identifier'),
-            'amount' => $request->query->get('amount'),
-            'currency' => $request->query->get('currency'),
-            'vendor_token' => $request->query->get('vendor_token'),
-            'signed' => $request->query->get('signed'),
+            'order_ref' => $request->request->get('order_ref'),
+            'request_id' => $request->request->get('request_id'),
+            'transaction_identifier' => $request->request->get('transaction_identifier'),
+            'amount' => $request->request->get('amount'),
+            'currency' => $request->request->get('currency'),
+            'vendor_token' => $request->request->get('vendor_token'),
+            'signed' => $request->request->get('signed'),
         );
 
-        $sig = $request->query->get('sig');
+        $sig = $request->request->get('sig');
 
         if ($this->getCallSignature($params) !== $sig) {
             return false;
