@@ -2,7 +2,6 @@
 
 namespace PJM\AppBundle\Services\Payments;
 
-use Doctrine\ORM\EntityManager;
 use Buzz\Browser;
 use PJM\AppBundle\Entity\Transaction;
 use PJM\AppBundle\Services\Consos\TransactionManager;

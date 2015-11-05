@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ class RechargementController extends Controller
      * @return Response
      *
      * @Route("/confirm")
+     * @Method("POST")
      */
     public function confirmAction(Request $request)
     {
@@ -26,6 +28,7 @@ class RechargementController extends Controller
      * @return Response
      *
      * @Route("/cancel")
+     * @Method("POST")
      */
     public function cancelAction(Request $request)
     {
@@ -38,6 +41,7 @@ class RechargementController extends Controller
      * @return Response
      *
      * @Route("/expire")
+     * @Method("POST")
      */
     public function expireAction(Request $request)
     {
