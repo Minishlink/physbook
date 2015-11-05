@@ -206,9 +206,9 @@ class BoquetteController extends Controller
                 $transaction->setCompte($this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug()));
 
                 $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
-                    'confirm_url' => $this->generateUrl('pjm_app_consos_rechargement_confirm', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'cancel_url' => $this->generateUrl('pjm_app_consos_rechargement_cancel', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                    'expire_url' => $this->generateUrl('pjm_app_consos_rechargement_expire', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'confirm_url' => $this->generateUrl('pjm_app_api_rechargement_confirm', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'cancel_url' => $this->generateUrl('pjm_app_api_rechargement_cancel', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'expire_url' => $this->generateUrl('pjm_app_api_rechargement_expire', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                     'browser_success_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                     'browser_fail_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                 ));

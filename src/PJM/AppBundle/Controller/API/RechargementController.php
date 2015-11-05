@@ -1,6 +1,6 @@
 <?php
 
-namespace PJM\AppBundle\Controller\Consos;
+namespace PJM\AppBundle\Controller\API;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/rechargement")
+ */
 class RechargementController extends Controller
 {
     /**
