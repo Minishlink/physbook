@@ -192,7 +192,9 @@ class BoquetteController extends Controller
     public function rechargementAction(Request $request, Boquette $boquette, $montant = null)
     {
         $transaction = new Transaction();
-        $transaction->setMontant($montant);
+        if ($montant !== null) {
+            $transaction->setMontant($montant);
+        }
 
         $form = $this->createForm(new MontantType(), $transaction, array(
             'method' => 'POST',
