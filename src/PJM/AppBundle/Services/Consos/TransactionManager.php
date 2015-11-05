@@ -82,7 +82,7 @@ class TransactionManager
 
         if ($transaction->getStatus() == 'OK') {
             // on notifie que si la transaction a été réalisée
-            $this->notification->send('bank.money.transaction', array(
+            $this->notification->send('bank.money.transaction.success', array(
                 'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
                 'montant' => $transaction->showMontant(),
             ), $transaction->getCompte()->getUser());

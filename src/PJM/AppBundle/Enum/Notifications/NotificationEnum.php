@@ -25,7 +25,7 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant')
         ),
-        'bank.money.transaction' => array(
+        'bank.money.transaction.success' => array(
             'titre' => 'Transaction effectuée',
             'type' => 'bank',
             'path' => 'pjm_app_banque_index',
