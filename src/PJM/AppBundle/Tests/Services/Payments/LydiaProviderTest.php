@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Tests;
 
 use PJM\AppBundle\Services\Payments\LydiaProvider;
 use PJM\AppBundle\Tests\Services\BaseTest;
+use Symfony\Component\HttpFoundation\Request;
 
 class LydiaProviderTest extends BaseTest
 {
@@ -16,24 +17,26 @@ class LydiaProviderTest extends BaseTest
         $this->lydiaProvider = static::$kernel->getContainer()->get('pjm.services.payments.lydia');
     }
 
-    public function testGetCallSignature()
+    public function testGetParamsCallback()
     {
         // it is a private method
-        $getCallSignature = self::getMethodFromClass('getCallSignature', get_class($this->lydiaProvider));
-        $vendorToken = self::getPropertyFromClass('vendorToken', get_class($this->lydiaProvider))->getValue($this->lydiaProvider);
+        $getParamsCallback = self::getMethodFromClass('getParamsCallback', get_class($this->lydiaProvider));
+        $auth = self::getPropertyFromClass('auth', get_class($this->lydiaProvider))->getValue($this->lydiaProvider);
 
-        $sig = '123951c14b17c2068223e93d47f15696';
         $params = array(
             'order_ref' => '563bcc_9',
             'request_id' => '3338',
-            'transaction_identifier' => '',
             'amount' => '10.00',
             'currency' => 'EUR',
-            'vendor_token' => $vendorToken,
+            'vendor_token' => $auth['pians']['public_token'],
             'signed' => '0',
-            'sig' => $sig,
+            'sig' => '8e12f4f8b681307f4c0888a14f35f012',
         );
+        $request = new Request(array(), $params);
 
-        $this->assertTrue($getCallSignature->invokeArgs($this->lydiaProvider, array($params)) == $sig);
+        $expectedParams = $params;
+        unset($expectedParams['sig']);
+
+        $this->assertEquals($getParamsCallback->invokeArgs($this->lydiaProvider, array($request)), $expectedParams);
     }
 }

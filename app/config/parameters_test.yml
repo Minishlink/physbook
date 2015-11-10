@@ -1,0 +1,9 @@
+parameters:
+    paiement.lydia.auth:
+        provider_token: 'testProvider'
+        pians:
+            public_token: 'testPublic'
+            private_token: 'testPrivate'
+        vie_courante:
+            public_token: 'testPublic'
+            private_token: 'testPrivate'
