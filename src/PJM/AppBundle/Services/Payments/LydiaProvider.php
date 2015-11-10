@@ -77,12 +77,24 @@ class LydiaProvider
 
         $content = json_decode($response->getContent(), true);
 
+        // from Lydia doc
         if (array_key_exists('error', $content)) {
             $error = $content['error'];
             if ($error > 0) {
                 return array(
                     'success' => false,
                     'errorCode' => $content['message'],
+                    'errorMessage' => $content['message']
+                );
+            }
+        }
+
+        // from experimentation
+        if (array_key_exists('status', $content)) {
+            if($content['status'] === "error") {
+                return array(
+                    'success' => false,
+                    'errorCode' => $content['code'],
                     'errorMessage' => $content['message']
                 );
             }

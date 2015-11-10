@@ -213,16 +213,16 @@ class BoquetteController extends Controller
                     'browser_fail_url' => $this->generateUrl('pjm_app_notifications_index', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                 ));
 
-                if (!$resInitPayment['success']) {
-                    // erreur
-                    $this->get('pjm.services.notification')->sendFlash(
-                        'danger',
-                        'Il y a eu une erreur lors de la communication avec Lydia. Erreur '.$resInitPayment['errorCode'].' : '.$resInitPayment['errorMessage']
-                    );
+                if ($resInitPayment['success']) {
+                    // succès, on redirige vers l'URL de paiement
+                    return $this->redirect($resInitPayment['url']);
                 }
 
-                // succès, on redirige vers l'URL de paiement
-                return $this->redirect($resInitPayment['url']);
+                // erreur
+                $this->get('pjm.services.notification')->sendFlash(
+                    'danger',
+                    'Il y a eu une erreur lors de la communication avec Lydia. Erreur '.$resInitPayment['errorCode'].' : '.$resInitPayment['errorMessage']
+                );
             } else {
                 foreach ($form->getErrors() as $error) {
                     $request->getSession()->getFlashBag()->add(
