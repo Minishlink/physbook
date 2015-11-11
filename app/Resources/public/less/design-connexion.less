@@ -1,110 +1,79 @@
-@import "../lib/bootstrap/less/bootstrap.less";
+@import "lib.less";
 @import "variables.less";
 @import "site/icons.less";
 
 body {
-    background-color: #e1e1e1;
-}
-
-#connexion_wrapper {
     background-color: @rouge;
-    border: 0.5em solid lighten(@rouge, 10%);
-    padding-bottom: 1.5em;
-
     color: white;
     text-align: center;
 }
 
-#pingouin {
-    text-align: center;
+#welcome {
+    .customizePerSize(@taille) {
+        padding: @taille/4;
 
-    #pingouin-ferme {
-        display: none;
-    }
+        h1 {
+            font-size: @taille/3;
+        }
 
-    img {
-        width: 60%;
-    }
-}
-
-#logo {
-    padding: 1em 0 0.1em;
-
-    a {
-        top: -0.2em;
-        position: relative;
-        color: white;
-        font-size: 4em;
-
-        &:hover {
-            color: #eee;
+        .phys-brand-text-white {
+            height: 2*@taille/3;
+            width: (2*@taille/3)*4 - 2/3em; // 4*height - un petit bout pour bien le placer à côté du texte Bienvenue
         }
     }
 
-    .glyphicon-refresh {
-        font-size: 2em;
-        margin-bottom: 0.5em;
+    background-color: @rouge;
+    @taille: 5em;
+
+    .customizePerSize(@taille);
+
+    .phys-brand-logo-white {
+        height: 2*@taille/3;
+        width: 2*@taille/3;
+        margin-right: @taille/20;
     }
-}
 
-#about {
-    margin-top: 1em;
-
-    a {
-        color: white;
+    .phys-brand-text-white {
+        max-width: 100%;
     }
-}
 
-#forgottenPwd {
-    text-align: right;
-
-    a {
-        color: white;
-    }
-}
-
-.form-control {
-    background-color: white;
-    border:0.25em solid #e6e6e6;
-}
-
-.form-group {
-    ul { // erreur formulaire inscription
-        color: orange;
+    h1 {
         padding: 0;
-        font-weight: 400;
-        list-style: none;
+        margin: 0;
+    }
+
+    @media @tablet {
+        @taille: 10em;
+        .customizePerSize(@taille);
         text-align: left;
-        &:extend(.clearfix all);
+
+        .phys-brand-logo-white {
+            margin-right: @taille/2;
+            float: left;
+
+            height: @taille;
+            width: @taille;
+        }
     }
 }
 
-#contenu {
-    margin: 2em 0 2em 0;
+#ciel {
+    background-color: @bleu-tres-clair;
 }
 
-.vertical-center {
-    min-height: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
+#eau {
+    background-color: @bleu;
 }
 
-.input-group-addon {
-    background-color: #949494;
-    border:0;
-    color: white;
-}
 
-.aide-form {
-    font-size: x-small;
-    text-align: left;
-    display:block;
-}
+#pingouin {
+    img {
+        max-height: 10vh;
 
-.btn {
-    background-color: orange;
+        &.ferme {
+            display: none;
+        }
+    }
 }
 
 .glyphicon-refresh-animate {

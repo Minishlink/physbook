@@ -7,33 +7,33 @@
 
 {% block body %}
 
-<div class="container">
-    <div id="contenu" class="row vertical-center">
-        <div class="sr-only">Phy'sbook</div>
-        <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
-            <div class="col-md-10 col-md-offset-1" id="pingouin">
-                <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook">
-                    <img id="pingouin-ouvert" class="img-responsive center-block tossing" src="{{ asset('images/login/pingouin_yeux_ouverts.png') }}" />
-                    <img id="pingouin-ferme" class="img-responsive center-block" src="{{ asset('images/login/pingouin_yeux_caches.png') }}" />
-                </a>
-            </div>
-
-            <div class="col-md-10 col-md-offset-1" id="connexion_wrapper">
-                <div >
-                    <div id="logo" class="fadeIn">
-                        <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook"><span class="phys-brand-logo-white"></span><span class="sr-only">Phy'sbook</span></a>
-                    </div>
-
-                    {% block fos_user_content %}{% endblock fos_user_content %}
-
-                    <div id="about">
-                        <p>
-                            <a href="{{ path('pjm_public_about') }}">About / &Agrave; propos</a>
-                        </p>
-                    </div>
-                </div>
+<div id="connexion">
+    <div id="welcome">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <span class="phys-brand-logo-white hidden-xs"></span>
+                <h1>Bienvenue sur <span class="sr-only">Phy'sbook</span></h1>
+                <span class="phys-brand-logo-white visible-xs-inline-block"></span><span class="phys-brand-text-white"></span>
             </div>
         </div>
+    </div>
+    <div id="ciel">
+        <div class="iceberg">
+            <div id="pingouin">
+                <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook">
+                    <img  class="ouvert img-responsive center-block tossing" src="{{ asset('images/login/pingouin_yeux_ouverts.png') }}" />
+                    <img class="ferme img-responsive center-block" src="{{ asset('images/login/pingouin_yeux_caches.png') }}" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="eau">
+        <div class="iceberg">
+            {% block fos_user_content %}{% endblock fos_user_content %}
+        </div>
+    </div>
+    <div id="about">
+        <a href="{{ path('pjm_public_about') }}">About / &Agrave; propos</a>
     </div>
 </div>
 
@@ -45,13 +45,13 @@ $(document).ready(function () {
     // pingouin
     var $password = $('#password');
     $password.focus(function () {
-        $('#pingouin-ouvert').hide(0, function () {
-            $('#pingouin-ferme').show(0);
+        $('#pingouin').find('img.ouvert').hide(0, function () {
+            $('#pingouin').find('img.ferme').show(0);
         });
     });
     $password.focusout(function () {
-        $('#pingouin-ferme').hide(0, function () {
-            $('#pingouin-ouvert').show(0);
+        $('#pingouin').find('img.ferme').hide(0, function () {
+            $('#pingouin').find('img.ouvert').show(0);
         });
     });
 
