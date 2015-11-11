@@ -78,8 +78,7 @@ class TransactionManager
             }
         }
 
-        $this->em->persist($transaction);
-        $this->em->flush();
+        $this->persist($transaction, true);
 
         if ($transaction->getStatus() == 'OK') {
             // on notifie que si la transaction a été réalisée

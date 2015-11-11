@@ -58,7 +58,7 @@ services:
                 arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer, @buzz, @translator]
     pjm.services.payments.lydia:
                 class: PJM\AppBundle\Services\Payments\LydiaProvider
-                arguments: [@buzz, @pjm.services.transaction_manager, %paiement.lydia.url%, %paiement.lydia.provider_token%, %paiement.lydia.vendor_token%]
+                arguments: [@buzz, @pjm.services.transaction_manager, %paiement.lydia.url%, %paiement.lydia.auth%]
     pjm.services.article_manager:
                 class: PJM\AppBundle\Services\Actus\ArticleManager
                 arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]

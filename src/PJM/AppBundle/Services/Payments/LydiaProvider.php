@@ -16,16 +16,14 @@ class LydiaProvider
     private $transactionManager;
 
     private $url;
-    private $vendorToken;
-    private $providerToken;
+    private $auth;
 
-    public function __construct(Browser $buzz, TransactionManager $transactionManager, $url, $providerToken, $vendorToken)
+    public function __construct(Browser $buzz, TransactionManager $transactionManager, $url, array $auth)
     {
         $this->buzz = $buzz;
         $this->transactionManager = $transactionManager;
         $this->url = $url;
-        $this->providerToken = $providerToken;
-        $this->vendorToken = $vendorToken;
+        $this->auth = $auth;
 
         $this->buzz->getClient()->setTimeout(30);
     }
@@ -47,8 +45,8 @@ class LydiaProvider
         $user = $transaction->getCompte()->getUser();
 
         $content = array(
-            'vendor_token' => $this->vendorToken,
-            //'provider_token' => $this->providerToken, // ?? optional ??
+            'vendor_token' => $this->getPublicVendorToken($boquette->getSlug()),
+            'provider_token' => $this->auth['provider_token'], // ?? optional ??
             'recipient' => $user->getEmail(),
             'type' => 'email',
             'message' => "[Phy'sbook] ".$boquette->getNom().' - '.$user->getUsername(),
@@ -79,12 +77,24 @@ class LydiaProvider
 
         $content = json_decode($response->getContent(), true);
 
+        // from Lydia doc
         if (array_key_exists('error', $content)) {
             $error = $content['error'];
             if ($error > 0) {
                 return array(
                     'success' => false,
                     'errorCode' => $content['message'],
+                    'errorMessage' => $content['message']
+                );
+            }
+        }
+
+        // from experimentation
+        if (array_key_exists('status', $content)) {
+            if($content['status'] === "error") {
+                return array(
+                    'success' => false,
+                    'errorCode' => $content['code'],
                     'errorMessage' => $content['message']
                 );
             }
@@ -98,9 +108,10 @@ class LydiaProvider
 
     /**
      * @param Request $request
+     * @param string $status
      * @return bool
      */
-    public function confirmPayment(Request $request)
+    public function handlePayment(Request $request, $status)
     {
         $transaction = $this->getTransactionFromRequest($request);
         if (!$transaction) {
@@ -112,28 +123,48 @@ class LydiaProvider
             return false;
         }
 
-        $transaction->setStatus('OK');
+        $transaction->setStatus($status);
         $this->transactionManager->traiter($transaction);
 
         return true;
     }
 
     /**
-     * @param Request $request
-     * @param string $status
-     * @return bool
+     * Get public vendor token (vendor_token) from Boquette slug
+     *
+     * @param $slug
+     * @return mixed
      */
-    public function cancelPayment(Request $request, $status)
+    private function getPublicVendorToken($slug)
     {
-        $transaction = $this->getTransactionFromRequest($request);
-        if (!$transaction) {
-            return false;
+        switch($slug) {
+            case 'pians':
+                $auth = $this->auth['pians'];
+                break;
+            default:
+                $auth = $this->auth['vie_courante'];
+                break;
         }
 
-        $transaction->setStatus($status);
-        $this->transactionManager->persist($transaction, true);
+        return $auth['public_token'];
+    }
 
-        return true;
+    /**
+     * Get private vendor token (token_api) from public vendor token (vendor_token)
+     * @param $publicVendorToken
+     * @return bool
+     */
+    private function getPrivateVendorToken($publicVendorToken)
+    {
+        foreach ($this->auth as $type) {
+            if (!(is_array($type) && array_key_exists('private_token', $type) && array_key_exists('public_token', $type)))
+                continue;
+
+            if ($type['public_token'] === $publicVendorToken)
+                return $type['private_token'];
+        }
+
+        return false;
     }
 
     /**
@@ -159,17 +190,9 @@ class LydiaProvider
 
     private function getParamsCallback(Request $request)
     {
-        $params = array(
-            'order_ref' => $request->request->get('order_ref'),
-            'request_id' => $request->request->get('request_id'),
-            'transaction_identifier' => $request->request->get('transaction_identifier'),
-            'amount' => $request->request->get('amount'),
-            'currency' => $request->request->get('currency'),
-            'vendor_token' => $request->request->get('vendor_token'),
-            'signed' => $request->request->get('signed'),
-        );
-
-        $sig = $request->request->get('sig');
+        $params = $request->request->all();
+        $sig = $params['sig'];
+        unset($params['sig']);
 
         if ($this->getCallSignature($params) !== $sig) {
             return false;
@@ -178,7 +201,13 @@ class LydiaProvider
         return $params;
     }
 
-    private function getCallSignature($params)
+    /**
+     * From Lydia API documentation v1.9.9
+     *
+     * @param array $params Every posted paramater of the request without signature 'sig'
+     * @return string
+     */
+    private function getCallSignature(array $params)
     {
         ksort($params); // Tri par ordre alphabétique sur le nom des paramètres.
 
@@ -187,6 +216,6 @@ class LydiaProvider
             $sig[] .= $key.'='.$val;
         }
 
-        return md5(implode('&', $sig).'&'.$this->providerToken);
+        return md5(implode('&', $sig).'&'.$this->getPrivateVendorToken($params['vendor_token']));
     }
 }
