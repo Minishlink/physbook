@@ -108,9 +108,10 @@ class LydiaProvider
 
     /**
      * @param Request $request
+     * @param string $status
      * @return bool
      */
-    public function confirmPayment(Request $request)
+    public function handlePayment(Request $request, $status)
     {
         $transaction = $this->getTransactionFromRequest($request);
         if (!$transaction) {
@@ -122,26 +123,8 @@ class LydiaProvider
             return false;
         }
 
-        $transaction->setStatus('OK');
-        $this->transactionManager->traiter($transaction);
-
-        return true;
-    }
-
-    /**
-     * @param Request $request
-     * @param string $status
-     * @return bool
-     */
-    public function cancelPayment(Request $request, $status)
-    {
-        $transaction = $this->getTransactionFromRequest($request);
-        if (!$transaction) {
-            return false;
-        }
-
         $transaction->setStatus($status);
-        $this->transactionManager->persist($transaction, true);
+        $this->transactionManager->traiter($transaction);
 
         return true;
     }
