@@ -9,6 +9,13 @@ body {
 }
 
 #welcome {
+    display: block;
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+
     .customizePerSize(@taille) {
         padding: @taille/4;
 
@@ -59,21 +66,63 @@ body {
 
 #ciel {
     background-color: @bleu-tres-clair;
-}
 
-#eau {
-    background-color: @bleu;
+    .iceberg {
+        background: url('images/login/iceberg-haut.png') no-repeat center bottom;
+    }
 }
-
 
 #pingouin {
+    @taille: 10vh;
+    padding-top: @taille/2;
+    padding-bottom: @taille/2;
+
     img {
-        max-height: 10vh;
+        max-height: @taille;
 
         &.ferme {
             display: none;
         }
     }
+}
+
+#eau {
+    background-color: @bleu;
+    color: @gris;
+
+    .iceberg {
+        min-height: 80vh;
+        background: url('images/login/iceberg-bas.png') no-repeat center top;
+        padding-top: 1em;
+    }
+
+    form {
+        margin-bottom: 1em;
+
+        input {
+            &[type="text"], &[type="password"] {
+                display: block;
+                margin: 0.5em auto;
+
+                background-color: transparent;
+                border: 0;
+                border-bottom: 1px solid @rouge;
+
+                text-align: center;
+            }
+
+            &:focus {
+                border-radius: 1em;
+                background-color: @rouge;
+                color: white;
+            }
+        }
+    }
+}
+
+#about {
+    background-color: white;
+    min-height: 50vh; // temp
 }
 
 .glyphicon-refresh-animate {

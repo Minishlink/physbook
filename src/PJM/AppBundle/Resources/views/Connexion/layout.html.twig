@@ -8,7 +8,7 @@
 {% block body %}
 
 <div id="connexion">
-    <div id="welcome">
+    <a id="welcome" href="{{ path("pjm_app_homepage") }}" title="Phy'sbook">
         <div class="container-fluid">
             <div class="col-md-12">
                 <span class="phys-brand-logo-white hidden-xs"></span>
@@ -16,7 +16,7 @@
                 <span class="phys-brand-logo-white visible-xs-inline-block"></span><span class="phys-brand-text-white"></span>
             </div>
         </div>
-    </div>
+    </a>
     <div id="ciel">
         <div class="iceberg">
             <div id="pingouin">
@@ -29,7 +29,14 @@
     </div>
     <div id="eau">
         <div class="iceberg">
-            {% block fos_user_content %}{% endblock fos_user_content %}
+            <div class="col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5">
+                {% block fos_user_content %}{% endblock fos_user_content %}
+
+                <div id="links">
+                    <span class="glyphicon glyphicon-question-sign"></span> <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a><br>
+                    <span class="glyphicon glyphicon-info-sign"></span> <a href="#about">About / à propos</a>
+                </div>
+            </div>
         </div>
     </div>
     <div id="about">
