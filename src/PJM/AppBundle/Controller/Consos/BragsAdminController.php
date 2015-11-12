@@ -82,6 +82,10 @@ class BragsAdminController extends Controller
                         // on valide la commande demandée
                         $commande->valider();
 
+                        $this->get('pjm.services.notification')->send('bank.brags.commande.valider', array(
+                            'quantite' => $commande->getNombre()/10
+                        ), $commande->getUser());
+
                         // on met à jour le prix de la commande car il pourrait avoir changé
                         $commande->setItem($this->get('pjm.services.boquette.brags')->getCurrentBaguette());
 
@@ -115,6 +119,11 @@ class BragsAdminController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     if ($commande->getValid() === true) {
                         $commande->resilier();
+
+                        $this->get('pjm.services.notification')->send('bank.brags.commande.resilier', array(
+                            'quantite' => $commande->getNombre()/10
+                        ), $commande->getUser());
+
                         $em->persist($commande);
                     } elseif (null === $commande->getValid()) {
                         $em->remove($commande);

@@ -43,6 +43,18 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant', 'user'),
         ),
+        'bank.brags.commande.valider' => array(
+            'titre' => 'Commande validée',
+            'type' => 'bank',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array('quantite'),
+        ),
+        'bank.brags.commande.resilier' => array(
+            'titre' => 'Commande résiliée',
+            'type' => 'bank',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array('quantite'),
+        ),
         'event.changement.prix' => array(
             'titre' => 'Changement de prix',
             'type' => 'event',
