@@ -2,9 +2,15 @@ pjm_app_accueil:
     resource: "@PJMAppBundle/Resources/config/Accueil/routing.yml"
     prefix:   /
 
+pjm_app_api:
+    resource: "@PJMAppBundle/Controller/API"
+    prefix:   /api
+    type: annotation
+
 pjm_app_actus:
-    resource: "@PJMAppBundle/Resources/config/Actus/routing.yml"
+    resource: "@PJMAppBundle/Controller/ActusController.php"
     prefix:   /actus
+    type:     annotation
 
 pjm_app_profil:
     resource: "@PJMAppBundle/Resources/config/Profil/routing.yml"
@@ -29,10 +35,6 @@ pjm_app_inbox:
 pjm_app_media:
     resource: "@PJMAppBundle/Resources/config/Media/routing.yml"
     prefix:   /media
-
-pjm_app_smoney:
-    resource: "@PJMAppBundle/Resources/config/SMoney/routing.yml"
-    prefix:   /smoney
 
 pjm_app_banque:
     resource: "@PJMAppBundle/Resources/config/Banque/routing.yml"

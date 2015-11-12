@@ -50,31 +50,6 @@ class Mailer
     }
 
     /**
-     * Envoie un mail d'erreur à la fois à l'utilisateur et à l'admin Phy'sbook.
-     *
-     * @param object User $user    L'utilisateur qui a rencontré l'erreur
-     * @param array       $context Un tableau contenant le message d'erreur sous la clef "errorMsg"
-     * @param string [$template = null] Un template autre que le layout d'erreur par défaut
-     */
-    public function sendError(User $user, $context, $template = null)
-    {
-        if (!isset($template)) {
-            $template = $this->parameters['template']['error'];
-        }
-
-        $from = array(
-            $this->parameters['errorEmail'] => $this->parameters['notificationSender'],
-        );
-        $to = array(
-            $user->getEmail() => $user,
-            $this->parameters['errorEmail'] => $this->parameters['notificationSender'],
-
-        );
-
-        $this->sendMessage($template, $context, $from, $to);
-    }
-
-    /**
      * Envoie un mail de notification@physbook.fr.
      *
      * @param object User $user    L'utilisateur inscrit

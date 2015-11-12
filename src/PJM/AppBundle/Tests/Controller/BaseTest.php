@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Louis
- * Date: 21/10/2015
- * Time: 21:03.
- */
-namespace PJM\AppBundle\Tests;
+
+namespace PJM\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
+/**
+ * Class BaseTest for helper functions in functional tests
+ * @package PJM\AppBundle\Tests\Controller
+ */
 abstract class BaseTest extends WebTestCase
 {
     protected function createAuthenticatedClient($username = 'ancien')

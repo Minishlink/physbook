@@ -80,7 +80,10 @@ class NotificationManager
                 $message = $this->getMessage($notification);
                 $this->sendPushToUser($user, $message);
                 $this->sendToWebhook($settings->getWebhook(), $message);
-                $this->sendToEmail($user->getEmail(), $message);
+
+                if ($settings->isEmail()) {
+                    $this->sendToEmail($user->getEmail(), $message);
+                }
             }
         }
 

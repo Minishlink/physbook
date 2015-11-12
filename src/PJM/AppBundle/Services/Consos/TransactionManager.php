@@ -78,14 +78,22 @@ class TransactionManager
             }
         }
 
-        $this->em->persist($transaction);
-        $this->em->flush();
+        $this->persist($transaction, true);
 
         if ($transaction->getStatus() == 'OK') {
             // on notifie que si la transaction a été réalisée
-            $this->notification->send('bank.money.transaction', array(
+            $this->notification->send('bank.money.transaction.success', array(
                 'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
                 'montant' => $transaction->showMontant(),
+            ), $transaction->getCompte()->getUser());
+        } else {
+            // on notifie qu'il y a eu une erreur
+            $notificationKey = 'bank.money.transaction.fail.';
+            $notificationKey .= ((substr($transaction->getStatus(), 0, 5) == 'REZAL') ? 'rezal' : 'default');
+            $this->notification->send($notificationKey, array(
+                'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
+                'montant' => $transaction->showMontant(),
+                'erreur' => $transaction->getStatus(),
             ), $transaction->getCompte()->getUser());
         }
 
@@ -100,5 +108,23 @@ class TransactionManager
         $transaction->setMoyenPaiement($moyenPaiement);
 
         return $transaction;
+    }
+
+    public function persist(Transaction $transaction, $flush = false)
+    {
+        $this->em->persist($transaction);
+
+        if ($flush) {
+            $this->em->flush();
+        }
+    }
+
+    /**
+     * @param $id
+     * @return null|Transaction
+     */
+    public function getById($id)
+    {
+        return $this->em->getRepository('PJMAppBundle:Transaction')->find($id);
     }
 }
