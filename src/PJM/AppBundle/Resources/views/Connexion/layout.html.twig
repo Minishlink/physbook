@@ -8,20 +8,20 @@
 {% block body %}
 
 <div id="connexion">
-    <a id="welcome" href="{{ path("pjm_app_homepage") }}" title="Phy'sbook">
+    <div id="welcome">
         <div class="container-fluid">
-            <div class="col-md-12">
+            <a href="{{ path("pjm_app_homepage") }}" title="Phy'sbook" class="lienContainer col-md-12">
                 <span class="phys-brand-logo-white hidden-xs"></span>
                 <h1>Bienvenue sur <span class="sr-only">Phy'sbook</span></h1>
                 <span class="phys-brand-logo-white visible-xs-inline-block"></span><span class="phys-brand-text-white"></span>
-            </div>
+            </a>
         </div>
-    </a>
+    </div>
     <div id="ciel">
         <div class="iceberg">
             <div id="pingouin">
                 <a href="{{ path('pjm_app_homepage') }}" title="Phy'sbook">
-                    <img  class="ouvert img-responsive center-block tossing" src="{{ asset('images/login/pingouin_yeux_ouverts.png') }}" />
+                    <img class="ouvert img-responsive center-block tossing" src="{{ asset('images/login/pingouin_yeux_ouverts.png') }}" />
                     <img class="ferme img-responsive center-block" src="{{ asset('images/login/pingouin_yeux_caches.png') }}" />
                 </a>
             </div>
@@ -53,12 +53,12 @@ $(document).ready(function () {
     var $password = $('#password');
     $password.focus(function () {
         $('#pingouin').find('img.ouvert').hide(0, function () {
-            $('#pingouin').find('img.ferme').show(0);
+            $('#pingouin').find('img.ferme').show(0).css("display", "inline-block");
         });
     });
     $password.focusout(function () {
         $('#pingouin').find('img.ferme').hide(0, function () {
-            $('#pingouin').find('img.ouvert').show(0);
+            $('#pingouin').find('img.ouvert').show(0).css("display", "inline-block");
         });
     });
 

@@ -3,12 +3,12 @@
 
 {% block fos_user_content %}
 
-<form action="{{ path('fos_user_security_check') }}" method="post" class="form-signin" role="form">
+<form action="{{ path('fos_user_security_check') }}" method="post" class="form-signin" role="form" autocomplete="off">
     {% if error %}
         <div id="alert" class="alert alert-warning" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Identifiant" required="required" autofocus>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Identifiant" required="required" autocorrect="off" autocapitalize="off" spellcheck="false" >
     <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required">
 
     <div class="checkbox">

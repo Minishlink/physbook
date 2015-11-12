@@ -9,11 +9,14 @@ body {
 }
 
 #welcome {
-    display: block;
-    color: white;
-
-    &:hover {
+    .lienContainer {
+        display: inline-block;
         color: white;
+
+        &:hover {
+            color: white;
+            text-decoration: none;
+        }
     }
 
     .customizePerSize(@taille) {
@@ -30,7 +33,7 @@ body {
     }
 
     background-color: @rouge;
-    @taille: 5em;
+    @taille: 4em;
 
     .customizePerSize(@taille);
 
@@ -78,6 +81,7 @@ body {
     padding-bottom: @taille/2;
 
     img {
+        display: inline-block;
         max-height: @taille;
 
         &.ferme {
@@ -94,6 +98,16 @@ body {
         min-height: 80vh;
         background: url('images/login/iceberg-bas.png') no-repeat center top;
         padding-top: 1em;
+
+        font-size: 1.2em;
+
+        @media @tablet {
+            font-size: 1.1em;
+        }
+
+        @media @desktop {
+            font-size: 1em;
+        }
     }
 
     form {
@@ -103,18 +117,20 @@ body {
             &[type="text"], &[type="password"] {
                 display: block;
                 margin: 0.5em auto;
+                padding: 0.25em;
 
                 background-color: transparent;
                 border: 0;
                 border-bottom: 1px solid @rouge;
 
                 text-align: center;
-            }
 
-            &:focus {
-                border-radius: 1em;
-                background-color: @rouge;
-                color: white;
+                &:focus {
+                    outline: 0;
+                    border-radius: 1.5em;
+                    background-color: @rouge;
+                    color: white;
+                }
             }
         }
     }
