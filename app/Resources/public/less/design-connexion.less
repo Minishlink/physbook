@@ -72,22 +72,22 @@ body {
 
     .iceberg {
         background: url('images/login/iceberg-haut.png') no-repeat center bottom;
+        padding-top: 2em;
     }
 }
 
 #pingouin {
     .customizePerSize(@taille) {
-        padding-top: @taille/2;
-        padding-bottom: @taille/2;
+        padding-bottom: @taille/3;
 
         img {
             max-height: @taille;
         }
     }
 
-    .customizePerSize(4em);
+    .customizePerSize(5em);
     @media @tablet {
-        .customizePerSize(6em);
+        .customizePerSize(7em);
     }
 
     img {
