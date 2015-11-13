@@ -1,14 +1,20 @@
 {% extends "PJMAppBundle:Connexion:layout.html.twig" %}
 {% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'form_div_layout.html.twig' %}
 
 {% block fos_user_content %}
 
 {{ form_start(form) }}
     {{ form_errors(form) }}
-    {{ form_row(form.plainPassword) }}
     <div>
-        <button class="btn" id="_submit" name="_submit" type="submit">Modifier le mot de passe</button>
+        {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Nouveau'}}) }}
+        {{ form_errors(form.plainPassword.first) }}
     </div>
+    <div>
+        {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Vérification'}}) }}
+        {{ form_errors(form.plainPassword.second) }}
+    </div>
+    <button class="btn btn-primary" id="_submit" name="_submit" type="submit">Modifier le mot de passe</button>
 {{ form_end(form) }}
 
 {% endblock fos_user_content %}

@@ -7,12 +7,9 @@
     {% if invalid_username is defined %}
     <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
     {% endif %}
-    <div class="form-group">
-            <input type="text" id="username" name="username" class="form-control" placeholder="E-mail ou Nom d'utilisateur" required="required">
-    </div>
-    <div>
-        <button class="btn" id="_submit" name="_submit" type="submit">Réinitialiser le mot de passe</button>
-    </div>
+
+    <input type="text" id="username" name="username" placeholder="Identifiant" required="required">
+    <button class="btn btn-primary" id="_submit" name="_submit" type="submit">Réinitialiser le mot de passe</button>
 </form>
 
 {% endblock fos_user_content %}

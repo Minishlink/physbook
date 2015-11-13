@@ -1,40 +1,4 @@
-{% extends "::layout.html.twig" %}
-
-{% block stylesheets %}
-<style>
-    html, body {
-        height: 100%;
-        width: 100%;
-    }
-
-    body {
-        padding: 0;
-        margin: 0;
-
-        background-color: #B63938;
-        color: white;
-        fill: white;
-    }
-
-    #content {
-        padding: 1em;
-        text-align: center;
-    }
-
-    #brand svg {
-        max-width: 100%;
-    }
-
-    a {
-        color: white;
-    }
-</style>
-{% endblock %}
-
-{% block body %}
-<div id="content">
-    <a href="https://physbook.fr" title="Phy'sbook"><div id="brand" class="phys-brand" data-grunticon-embed></div></a>
-
+<div class="col-md-6 col-md-offset-3">
     <p>
         <a href="https://physbook.fr" title="Phy'sbook">Phy'sbook</a> is developed by <a href="http://ensam.eu">Arts et Métiers</a> students.<br>
         It is an open-source project. <a href="https://github.com/Minishlink/physbook" title="GitHub">Want to contribute?</a>
@@ -42,16 +6,11 @@
     <p>
         We would like to thank the following companies for their sponsorship of open-source licences for this project:
     </p>
-    <ul>
+    <ul class="list-unstyled">
         <li><a href="https://www.browserstack.com">BrowserStack</a></li>
         <li><a href="http://deploybot.com">DeployBot</a></li>
         <li><a href="https://insight.sensiolabs.com">SensioLabs Insight</a></li>
         <li><a href="https://travis-ci.org">Travis-CI</a></li>
     </ul>
     <p><img style="height: 3em; margin-top: 0.5em;" src="{{ asset('images/BrowserStack.svg') }}" alt="Logo BrowserStack" /></p>
-
 </div>
-{% endblock %}
-
-{% block javascripts %}{% endblock %}
-

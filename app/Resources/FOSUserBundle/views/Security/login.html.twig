@@ -3,24 +3,13 @@
 
 {% block fos_user_content %}
 
-<form action="{{ path('fos_user_security_check') }}" method="post" class="form-signin" role="form">
+<form action="{{ path('fos_user_security_check') }}" method="post" class="form-signin" role="form" autocomplete="off">
     {% if error %}
         <div id="alert" class="alert alert-warning" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="E-mail ou Nom d'utilisateur" required="required" autofocus>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-            <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required="required">
-        </div>
-    </div>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Identifiant" required="required" autocorrect="off" autocapitalize="off" spellcheck="false" >
+    <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required">
 
     <div class="checkbox">
         <label>
@@ -30,10 +19,7 @@
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-    <button class="btn" id="_submit" name="_submit" type="submit">Connexion</button>
-    <br>
-    <br>
-    <div id="forgottenPwd"><span style="color:rgb(160,160,160)" class="glyphicon glyphicon-question-sign"></span> <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a></div>
+    <button class="btn btn-primary" id="_submit" name="_submit" type="submit">Connexion</button>
 </form>
 
 {% endblock fos_user_content %}

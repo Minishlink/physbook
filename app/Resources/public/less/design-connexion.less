@@ -1,110 +1,162 @@
-@import "../lib/bootstrap/less/bootstrap.less";
+@import "lib.less";
 @import "variables.less";
 @import "site/icons.less";
 
 body {
-    background-color: #e1e1e1;
-}
-
-#connexion_wrapper {
     background-color: @rouge;
-    border: 0.5em solid lighten(@rouge, 10%);
-    padding-bottom: 1.5em;
-
     color: white;
     text-align: center;
 }
 
-#pingouin {
-    text-align: center;
-
-    #pingouin-ferme {
-        display: none;
-    }
-
-    img {
-        width: 60%;
-    }
-}
-
-#logo {
-    padding: 1em 0 0.1em;
-
-    a {
-        top: -0.2em;
-        position: relative;
+#welcome {
+    .lienContainer {
+        display: inline-block;
         color: white;
-        font-size: 4em;
 
         &:hover {
-            color: #eee;
+            color: white;
+            text-decoration: none;
         }
     }
 
-    .glyphicon-refresh {
-        font-size: 2em;
-        margin-bottom: 0.5em;
+    .customizePerSize(@taille) {
+        padding: @taille/4;
+
+        h1 {
+            font-size: @taille/3;
+        }
+
+        .phys-brand-text-white {
+            height: 2*@taille/3;
+            width: (2*@taille/3)*4 - 2/3em; // 4*height - un petit bout pour bien le placer à côté du texte Bienvenue
+        }
+    }
+
+    background-color: @rouge;
+    @taille: 4em;
+
+    .customizePerSize(@taille);
+
+    .phys-brand-logo-white {
+        height: 2*@taille/3;
+        width: 2*@taille/3;
+        margin-right: @taille/20;
+    }
+
+    .phys-brand-text-white {
+        max-width: 100%;
+    }
+
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+
+    @media @tablet {
+        @taille: 10em;
+        .customizePerSize(@taille);
+        text-align: left;
+
+        .phys-brand-logo-white {
+            margin-right: @taille/2;
+            float: left;
+
+            height: @taille;
+            width: @taille;
+        }
+    }
+}
+
+#ciel {
+    background-color: @bleu-tres-clair;
+
+    .iceberg {
+        background: url('images/login/iceberg-haut.png') no-repeat center bottom;
+    }
+}
+
+#pingouin {
+    .customizePerSize(@taille) {
+        padding-top: @taille/2;
+        padding-bottom: @taille/2;
+
+        img {
+            max-height: @taille;
+        }
+    }
+
+    .customizePerSize(4em);
+    @media @tablet {
+        .customizePerSize(6em);
+    }
+
+    img {
+        display: inline-block;
+
+        &.ferme {
+            display: none;
+        }
+    }
+}
+
+#eau {
+    background-color: @bleu;
+    color: @gris;
+
+    .iceberg {
+        min-height: 80vh;
+        background: url('images/login/iceberg-bas.png') no-repeat center top;
+        padding-top: 1em;
+
+        font-size: 1.2em;
+
+        @media @tablet {
+            font-size: 1.1em;
+        }
+
+        @media @desktop {
+            font-size: 1em;
+        }
+    }
+
+    form {
+        margin-bottom: 1em;
+
+        input {
+            &[type="text"], &[type="password"] {
+                display: block;
+                margin: 0.5em auto;
+                padding: 0.25em;
+
+                background-color: transparent;
+                border: 0;
+                border-bottom: 1px solid @rouge;
+
+                text-align: center;
+
+                &:focus {
+                    outline: 0;
+                    border-radius: 1.5em;
+                    background-color: @rouge;
+                    color: white;
+                }
+
+                &:-webkit-autofill {
+                    box-shadow:0 0 0 500px white inset;
+                }
+            }
+        }
     }
 }
 
 #about {
-    margin-top: 1em;
-
-    a {
-        color: white;
-    }
-}
-
-#forgottenPwd {
-    text-align: right;
-
-    a {
-        color: white;
-    }
-}
-
-.form-control {
     background-color: white;
-    border:0.25em solid #e6e6e6;
-}
+    min-height: 101vh;
+    color: @gris;
 
-.form-group {
-    ul { // erreur formulaire inscription
-        color: orange;
-        padding: 0;
-        font-weight: 400;
-        list-style: none;
-        text-align: left;
-        &:extend(.clearfix all);
+    div {
+        padding-top: 5em;
     }
-}
-
-#contenu {
-    margin: 2em 0 2em 0;
-}
-
-.vertical-center {
-    min-height: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-}
-
-.input-group-addon {
-    background-color: #949494;
-    border:0;
-    color: white;
-}
-
-.aide-form {
-    font-size: x-small;
-    text-align: left;
-    display:block;
-}
-
-.btn {
-    background-color: orange;
 }
 
 .glyphicon-refresh-animate {
