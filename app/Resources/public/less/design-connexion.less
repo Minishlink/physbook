@@ -76,13 +76,22 @@ body {
 }
 
 #pingouin {
-    @taille: 10vh;
-    padding-top: @taille/2;
-    padding-bottom: @taille/2;
+    .customizePerSize(@taille) {
+        padding-top: @taille/2;
+        padding-bottom: @taille/2;
+
+        img {
+            max-height: @taille;
+        }
+    }
+
+    .customizePerSize(4em);
+    @media @tablet {
+        .customizePerSize(6em);
+    }
 
     img {
         display: inline-block;
-        max-height: @taille;
 
         &.ferme {
             display: none;
