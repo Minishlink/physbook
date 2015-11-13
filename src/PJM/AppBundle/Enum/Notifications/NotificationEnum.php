@@ -55,13 +55,13 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant', 'user'),
         ),
-        'bank.brags.commande.valider' => array(
+        'bank.commande.valider' => array(
             'titre' => 'Commande validée',
             'type' => 'bank',
             'path' => 'pjm_app_boquette_brags_index',
             'infos' => array('quantite'),
         ),
-        'bank.brags.commande.resilier' => array(
+        'bank.commande.resilier' => array(
             'titre' => 'Commande résiliée',
             'type' => 'bank',
             'path' => 'pjm_app_boquette_brags_index',
