@@ -12,9 +12,6 @@ notifications:
         transfert:
           envoi: Tu as envoyé <span class="info">%montant%€</span> à <span class="info">%user%</span> depuis ton compte <span class="info">%boquette%</span>.
           reception: Tu as reçu <span class="info">%montant%€</span> de <span class="info">%user%</span> sur ton compte <span class="info">%boquette%</span>.
-      commande:
-        valider: Ta commande de Brag's a été validée. Tu recevras désormais <span class="info">%quantite%</span> baguette(s) par jour.
-        resilier: Ta commande Brag's de <span class="info">%quantite%</span> baguette(s) par jour a été résiliée.
     event:
       changement:
         date: L'évènement <span class="info">%event%</span> a maintenant lieu le <span class="info">%date%</span>.
@@ -24,3 +21,7 @@ notifications:
       incoming: L'évènement <span class="info">%event%</span> va avoir lieu dans les prochaines 24h, à <span class="info">%heure%</span>.
     actus:
       nouvelle: <span class="info">%auteur%</span> a publié un nouvel article intitulé <span class="info">%titre%</span>.
+    consos:
+      commande:
+        valider: Ta commande de Brag's a été validée. Tu recevras désormais <span class="info">%quantite%</span> baguette(s) par jour.
+        resilier: Ta commande Brag's de <span class="info">%quantite%</span> baguette(s) par jour a été résiliée.

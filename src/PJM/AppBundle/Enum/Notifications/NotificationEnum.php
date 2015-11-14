@@ -55,19 +55,7 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant', 'user'),
         ),
-        'bank.commande.valider' => array(
-            'titre' => 'Commande validée',
-            'type' => 'bank',
-            'path' => 'pjm_app_boquette_brags_index',
-            'infos' => array('quantite'),
-        ),
-        'bank.commande.resilier' => array(
-            'titre' => 'Commande résiliée',
-            'type' => 'bank',
-            'path' => 'pjm_app_boquette_brags_index',
-            'infos' => array('quantite'),
-        ),
-        'event.changement.prix' => array(
+            'event.changement.prix' => array(
             'titre' => 'Changement de prix',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
@@ -102,6 +90,18 @@ class NotificationEnum
             'type' => 'actus',
             'path' => 'pjm_app_actus_index',
             'infos' => array('titre', 'auteur'),
+        ),
+        'consos.commande.valider' => array(
+            'titre' => 'Commande validée',
+            'type' => 'consos',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array('quantite'),
+        ),
+        'consos.commande.resilier' => array(
+            'titre' => 'Commande résiliée',
+            'type' => 'consos',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array('quantite'),
         ),
     );
 

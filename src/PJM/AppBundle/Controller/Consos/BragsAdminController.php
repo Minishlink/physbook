@@ -82,7 +82,7 @@ class BragsAdminController extends Controller
                         // on valide la commande demandée
                         $commande->valider();
 
-                        $this->get('pjm.services.notification')->send('bank.commande.valider', array(
+                        $this->get('pjm.services.notification')->send('consos.commande.valider', array(
                             'quantite' => $commande->getNombre()/10
                         ), $commande->getUser());
 
@@ -120,7 +120,7 @@ class BragsAdminController extends Controller
                     if ($commande->getValid() === true) {
                         $commande->resilier();
 
-                        $this->get('pjm.services.notification')->send('bank.commande.resilier', array(
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
                             'quantite' => $commande->getNombre()/10
                         ), $commande->getUser());
 
