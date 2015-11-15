@@ -101,7 +101,7 @@ class NotificationEnum
             'titre' => 'Commande résiliée',
             'type' => 'consos',
             'path' => 'pjm_app_boquette_brags_index',
-            'infos' => array('quantite'),
+            'infos' => array(),
         ),
     );
 

@@ -24,4 +24,4 @@ notifications:
     consos:
       commande:
         valider: Ta commande de Brag's a été validée. Tu recevras désormais <span class="info">%quantite%</span> baguette(s) par jour.
-        resilier: Ta commande Brag's de <span class="info">%quantite%</span> baguette(s) par jour a été résiliée.
+        resilier: Ta commande de Brag's a été résiliée.

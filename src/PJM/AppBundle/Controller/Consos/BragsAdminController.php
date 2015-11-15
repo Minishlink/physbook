@@ -93,6 +93,8 @@ class BragsAdminController extends Controller
 
                         $em->persist($commande);
                     } else {
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
+
                         // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
                         $em->remove($commande);
                     }
@@ -122,9 +124,7 @@ class BragsAdminController extends Controller
                     if ($commande->getValid() === true) {
                         $commande->resilier();
 
-                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
-                            'quantite' => $commande->showNombre()
-                        ), $commande->getUser(), false);
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
 
                         $em->persist($commande);
                     } elseif (null === $commande->getValid()) {
