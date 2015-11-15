@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use PJM\AppBundle\Entity\Commande;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,7 @@ class BragsAdminController extends Controller
                     $commandes = $repository->findByUserAndItemSlug($commande->getUser(), $this->itemSlug);
 
                     // on résilie les précédentes commandes
+                    /** @var Commande $c */
                     foreach ($commandes as $c) {
                         if ($c != $commande && (null === $c->getValid() || $c->getValid() === true)) {
                             $c->resilier();
@@ -82,11 +84,17 @@ class BragsAdminController extends Controller
                         // on valide la commande demandée
                         $commande->valider();
 
+                        $this->get('pjm.services.notification')->send('consos.commande.valider', array(
+                            'quantite' => $commande->showNombre()
+                        ), $commande->getUser(), false);
+
                         // on met à jour le prix de la commande car il pourrait avoir changé
                         $commande->setItem($this->get('pjm.services.boquette.brags')->getCurrentBaguette());
 
                         $em->persist($commande);
                     } else {
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
+
                         // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
                         $em->remove($commande);
                     }
@@ -115,6 +123,9 @@ class BragsAdminController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     if ($commande->getValid() === true) {
                         $commande->resilier();
+
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
+
                         $em->persist($commande);
                     } elseif (null === $commande->getValid()) {
                         $em->remove($commande);

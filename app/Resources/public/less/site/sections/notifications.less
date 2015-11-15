@@ -57,6 +57,10 @@ body {
       .actus {
         color: @mauve;
       }
+
+      .consos {
+        color: @orange;
+      }
     }
 
     #notifications {
@@ -110,6 +114,10 @@ body {
 
         &[data-type="actus"] {
           .customizePerType(@mauve, @rouge);
+        }
+
+        &[data-type="consos"] {
+          .customizePerType(@orange, @rouge);
         }
 
         transition: all 0.2s ease-in-out;

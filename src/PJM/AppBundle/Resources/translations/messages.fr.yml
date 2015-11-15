@@ -21,3 +21,7 @@ notifications:
       incoming: L'évènement <span class="info">%event%</span> va avoir lieu dans les prochaines 24h, à <span class="info">%heure%</span>.
     actus:
       nouvelle: <span class="info">%auteur%</span> a publié un nouvel article intitulé <span class="info">%titre%</span>.
+    consos:
+      commande:
+        valider: Ta commande de Brag's a été validée. Tu recevras désormais <span class="info">%quantite%</span> baguette(s) par jour.
+        resilier: Ta commande de Brag's a été résiliée.

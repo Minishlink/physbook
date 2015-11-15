@@ -91,6 +91,18 @@ class NotificationEnum
             'path' => 'pjm_app_actus_index',
             'infos' => array('titre', 'auteur'),
         ),
+        'consos.commande.valider' => array(
+            'titre' => 'Commande validée',
+            'type' => 'consos',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array('quantite'),
+        ),
+        'consos.commande.resilier' => array(
+            'titre' => 'Commande résiliée',
+            'type' => 'consos',
+            'path' => 'pjm_app_boquette_brags_index',
+            'infos' => array(),
+        ),
     );
 
     public function getKeys()

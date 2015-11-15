@@ -14,6 +14,7 @@ class NotificationSettingsEnum
             'actus' => 'Actualités',
             'event' => 'Évènements',
             'message' => 'Messages',
+            'consos' => 'Consommations',
         );
 
         if ($withValues) {
@@ -29,6 +30,7 @@ class NotificationSettingsEnum
             'bank',
             'actus',
             'event',
+            'consos',
         );
     }
 }

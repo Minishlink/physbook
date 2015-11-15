@@ -37,6 +37,9 @@ class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterfa
                 'titre' => 'L\'homme moderne face à un défi majeur : les tâches ménagères',
                 'auteur' => 'Ilton²',
             ),
+            'consos' => array(
+                'quantite' => '1.5',
+            ),
         );
 
         $users = array('ancien', 'p3');
