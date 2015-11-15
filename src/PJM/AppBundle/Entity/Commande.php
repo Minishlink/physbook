@@ -148,6 +148,16 @@ class Commande
     }
 
     /**
+     * Show nombre.
+     *
+     * @return string
+     */
+    public function showNombre()
+    {
+        return $this->nombre/10;
+    }
+
+    /**
      * Set item.
      *
      * @param \PJM\AppBundle\Entity\Item $item

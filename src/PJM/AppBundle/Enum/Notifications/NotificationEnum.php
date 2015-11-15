@@ -55,7 +55,7 @@ class NotificationEnum
             'path' => 'pjm_app_banque_index',
             'infos' => array('boquette', 'montant', 'user'),
         ),
-            'event.changement.prix' => array(
+        'event.changement.prix' => array(
             'titre' => 'Changement de prix',
             'type' => 'event',
             'path' => 'pjm_app_event_index',
