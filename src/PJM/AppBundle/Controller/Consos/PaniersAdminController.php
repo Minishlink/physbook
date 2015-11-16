@@ -110,20 +110,20 @@ class PaniersAdminController extends Controller
             $repository = $em->getRepository('PJMAppBundle:Historique');
             $commandes = $repository->findByItem($panier, null, true);
 
+            if ($download) {
+                // on arrête les commandes
+                if ($panier->getValid()) {
+                    $panier->setValid(false);
+                    $em->persist($panier);
+                    $em->flush();
+                }
+            }
+
             if (empty($commandes)) {
                 $request->getSession()->getFlashBag()->add(
                     'warning',
                     "Il n'y a pas eu de commandes pour ce panier."
                 );
-
-                if ($download) {
-                    // on arrête les commandes
-                    if ($panier->getValid()) {
-                        $panier->setValid(false);
-                        $em->persist($panier);
-                        $em->flush();
-                    }
-                }
 
                 return $this->redirect($this->generateUrl('pjm_app_admin_boquette_paniers_index'));
             }
