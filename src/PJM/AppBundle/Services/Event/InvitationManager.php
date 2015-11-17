@@ -109,6 +109,7 @@ class InvitationManager
         $this->notification->send('event.invitation', array(
             'event' => $event->getNom(),
             'date' => $event->getDateDebut()->format('d/m/Y à H:i'),
+            'path_params' => array('slug' => $event->getSlug()),
         ), $notifUsers);
 
         $this->notification->sendFlash(

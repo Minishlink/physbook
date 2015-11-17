@@ -85,7 +85,9 @@ class BragsAdminController extends Controller
                         $commande->valider();
 
                         $this->get('pjm.services.notification')->send('consos.commande.valider', array(
-                            'quantite' => $commande->showNombre()
+                            'quantite' => $commande->showNombre(),
+                            'item' => $commande->getItem()->getLibelle(),
+                            'path_params' => array('slug' => $this->slug),
                         ), $commande->getUser(), false);
 
                         // on met à jour le prix de la commande car il pourrait avoir changé
@@ -93,7 +95,10 @@ class BragsAdminController extends Controller
 
                         $em->persist($commande);
                     } else {
-                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
+                            'item' => $commande->getItem()->getLibelle(),
+                            'path_params' => array('slug' => $this->slug),
+                        ), $commande->getUser(), false);
 
                         // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
                         $em->remove($commande);
@@ -124,7 +129,10 @@ class BragsAdminController extends Controller
                     if ($commande->getValid() === true) {
                         $commande->resilier();
 
-                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(), $commande->getUser(), false);
+                        $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
+                            'item' => $commande->getItem()->getLibelle(),
+                            'path_params' => array('slug' => $this->slug),
+                        ), $commande->getUser(), false);
 
                         $em->persist($commande);
                     } elseif (null === $commande->getValid()) {

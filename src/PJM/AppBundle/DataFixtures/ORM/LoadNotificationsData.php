@@ -39,6 +39,8 @@ class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterfa
             ),
             'consos' => array(
                 'quantite' => '1.5',
+                'item' => 'Baguette de pain',
+                'path_params' => array('slug' => 'brags'),
             ),
         );
 

@@ -50,9 +50,9 @@ class NotificationManager
         }
 
         // on vérifie qu'il y a les bonnes infos pour remplir le message
-        // attention là il faut mettre les clés dans le bon ordre aussi...
-        if ($notificationType['infos'] != array_keys($infos)) {
-            return false;
+        foreach ($notificationType['infos'] as $k_infos) {
+            if (!array_key_exists($k_infos, $infos))
+                return false;
         }
 
         if ($users instanceof User) {
@@ -148,15 +148,7 @@ class NotificationManager
         $notifications = $notifications->map(function (Notification $notification) use ($settings) {
             // on remplace les variables par %infos%
             $infos = $notification->getInfos();
-
-            $newKeys = array_map(function ($k) {
-                return '%'.$k.'%';
-            }, array_keys($infos));
-
-            $notification->setVariables(array_combine(
-                $newKeys,
-                array_values($infos)
-            ));
+            $notification->setVariables($this->transformInfosToVariables($infos));
 
             // on indique comme non lue ou pas (pour pas que cela soit changé ensuite quand on marque comme lu)
             $notification->setNew(!$notification->getReceived());
@@ -173,6 +165,16 @@ class NotificationManager
                 $notification->setImportant($settings->has($notificationType['type']));
             }
 
+            if (array_key_exists('path', $infos)) {
+                // si la notification a un custom path
+                $notification->setPath($infos['path']);
+            }
+
+            if (array_key_exists('path_params', $infos)) {
+                // si le path de la notification a des paramètres
+                $notification->setPathParams($infos['path_params']);
+            }
+
             return $notification;
         });
 
@@ -182,20 +184,26 @@ class NotificationManager
     private function getMessage(Notification $notification, $strip = true)
     {
         // on remplace les variables par %infos%
-        $infos = $notification->getInfos();
-
-        $newKeys = array_map(function ($k) {
-            return '%'.$k.'%';
-        }, array_keys($infos));
-
-        $infos = array_combine(
-            $newKeys,
-            array_values($infos)
-        );
+        $infos = $this->transformInfosToVariables($notification->getInfos());
 
         $message = $this->translator->trans('notifications.content.'.$notification->getKey(), $infos);
 
         return $strip ? strip_tags($message) : $message;
+    }
+
+    private function transformInfosToVariables(array $infos)
+    {
+        $filter = array('path', 'path_params');
+
+        $variables = array();
+        foreach($infos as $k => $v) {
+            if (in_array($k, $filter))
+                continue;
+
+            $variables['%'.$k.'%'] = $v;
+        }
+
+        return $variables;
     }
 
     /**

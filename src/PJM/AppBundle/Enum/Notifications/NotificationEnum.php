@@ -94,14 +94,14 @@ class NotificationEnum
         'consos.commande.valider' => array(
             'titre' => 'Commande validée',
             'type' => 'consos',
-            'path' => 'pjm_app_boquette_brags_index',
-            'infos' => array('quantite'),
+            'path' => 'pjm_app_boquette_default',
+            'infos' => array('quantite', 'item'),
         ),
         'consos.commande.resilier' => array(
             'titre' => 'Commande résiliée',
             'type' => 'consos',
-            'path' => 'pjm_app_boquette_brags_index',
-            'infos' => array(),
+            'path' => 'pjm_app_boquette_default',
+            'infos' => array('item'),
         ),
     );
 

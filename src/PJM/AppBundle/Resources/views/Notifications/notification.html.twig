@@ -5,7 +5,7 @@
     </div>
     <div class="message">
         {{ ("notifications.content." ~ notification.key)|trans(notification.variables)|purify }}
-        {% if notification.path != "" %}<a href="{{ path(notification.path) }}" title="Plus d'infos"><span class="glyphicon glyphicon-link"></span></a>{% endif %}
+        {% if notification.path != "" %}<a href="{{ path(notification.path, notification.pathParams) }}" title="Plus d'infos"><span class="glyphicon glyphicon-link"></span></a>{% endif %}
     </div>
     <div class="date">{{ notification.date|localizeddate('full', 'none') }} <span class="heure">{{ notification.date|localizeddate('none', 'short') }}</span></div>
 </div>
