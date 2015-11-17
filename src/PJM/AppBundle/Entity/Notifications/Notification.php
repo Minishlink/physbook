@@ -70,7 +70,12 @@ class Notification
     /**
      * @var string
      */
-    private $path;
+    private $path = '';
+
+    /**
+     * @var array
+     */
+    private $pathParams = array();
 
     /**
      * @var bool
@@ -94,7 +99,6 @@ class Notification
         $this->date = new \DateTime();
         $this->received = false;
         $this->important = false;
-        $this->path = '';
         $this->type = '';
     }
 
@@ -322,5 +326,21 @@ class Notification
     public function setTitre($titre)
     {
         $this->titre = $titre;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPathParams()
+    {
+        return $this->pathParams;
+    }
+
+    /**
+     * @param array $pathParams
+     */
+    public function setPathParams($pathParams)
+    {
+        $this->pathParams = $pathParams;
     }
 }

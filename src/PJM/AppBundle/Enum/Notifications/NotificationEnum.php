@@ -94,13 +94,13 @@ class NotificationEnum
         'consos.commande.valider' => array(
             'titre' => 'Commande validée',
             'type' => 'consos',
-            'path' => 'pjm_app_banque_index',
+            'path' => 'pjm_app_boquette_default',
             'infos' => array('quantite', 'item'),
         ),
         'consos.commande.resilier' => array(
             'titre' => 'Commande résiliée',
             'type' => 'consos',
-            'path' => 'pjm_app_banque_index',
+            'path' => 'pjm_app_boquette_default',
             'infos' => array('item'),
         ),
     );
