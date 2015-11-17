@@ -87,7 +87,7 @@ class BragsAdminController extends Controller
                         $this->get('pjm.services.notification')->send('consos.commande.valider', array(
                             'quantite' => $commande->showNombre(),
                             'item' => $commande->getItem()->getLibelle(),
-                            'path' => 'pjm_app_boquette_brags_index'
+                            'path_params' => array('slug' => $this->slug),
                         ), $commande->getUser(), false);
 
                         // on met à jour le prix de la commande car il pourrait avoir changé
@@ -97,7 +97,7 @@ class BragsAdminController extends Controller
                     } else {
                         $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
                             'item' => $commande->getItem()->getLibelle(),
-                            'path' => 'pjm_app_boquette_brags_index',
+                            'path_params' => array('slug' => $this->slug),
                         ), $commande->getUser(), false);
 
                         // si c'est une demande de résiliation on supprime pour pas embrouiller l'historique
@@ -131,7 +131,7 @@ class BragsAdminController extends Controller
 
                         $this->get('pjm.services.notification')->send('consos.commande.resilier', array(
                             'item' => $commande->getItem()->getLibelle(),
-                            'path' => 'pjm_app_boquette_brags_index',
+                            'path_params' => array('slug' => $this->slug),
                         ), $commande->getUser(), false);
 
                         $em->persist($commande);
