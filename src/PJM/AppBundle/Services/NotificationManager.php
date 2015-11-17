@@ -50,9 +50,9 @@ class NotificationManager
         }
 
         // on vérifie qu'il y a les bonnes infos pour remplir le message
-        // attention là il faut mettre les clés dans le bon ordre aussi...
-        if ($notificationType['infos'] != array_keys($infos)) {
-            return false;
+        foreach (array_keys($notificationType['infos']) as $key) {
+            if (!array_key_exists($key, $infos))
+                return false;
         }
 
         if ($users instanceof User) {
@@ -171,6 +171,11 @@ class NotificationManager
 
                 // on vérifie que l'utilisateur est abonné ou non au type de notification, et si oui on indique "important"
                 $notification->setImportant($settings->has($notificationType['type']));
+            }
+
+            if (array_key_exists('path', $infos)) {
+                // si la notification a un custom path
+                $notification->setPath($infos['path']);
             }
 
             return $notification;
