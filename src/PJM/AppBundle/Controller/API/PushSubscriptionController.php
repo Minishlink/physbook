@@ -19,34 +19,22 @@ class PushSubscriptionController extends Controller
 {
     /**
      * @param Request $request
-     * @param bool|false $action
+     * @param bool    $action
+     * @param string  $endpoint
      * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("/manage/{action}", options={"expose"=true})
+     * @Route("/manage/{action}/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function manageAction(Request $request, $action)
+    public function manageAction(Request $request, $action, $endpoint)
     {
         $annuler = ($action == 'annuler') ? true : false;
-        $subscription = array(
-            'id' => $request->request->get('id'),
-            'endpoint' => $request->request->get('endpoint'),
-        );
-
-        if (empty($subscription['id']) && empty($subscription['endpoint'])) {
-            return new JsonResponse(array(
-                'success' => false,
-                'done' => $action,
-                'subscription' => $subscription,
-            ));
-        }
 
         // on va chercher la pushSubscription avec le même subscriptionId et endpoint
         $em = $this->getDoctrine()->getManager();
         $pushSubscription = $em->getRepository('PJMAppBundle:PushSubscription')
             ->findOneBy(array(
-                'subscriptionId' => $subscription['id'],
-                'endpoint' => $subscription['endpoint'],
+                'endpoint' => $endpoint,
             ))
         ;
 
@@ -71,8 +59,7 @@ class PushSubscriptionController extends Controller
                 // si non, on l'ajoute
                 $pushSubscription = new PushSubscription();
                 $pushSubscription
-                    ->setSubscriptionId($subscription['id'])
-                    ->setEndpoint($subscription['endpoint'])
+                    ->setEndpoint($endpoint)
                     ->setUser($this->getUser())
                     ->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'))
                 ;
@@ -83,9 +70,7 @@ class PushSubscriptionController extends Controller
         }
 
         return new JsonResponse(array(
-            'success' => true,
-            'done' => $action,
-            'subscription' => $subscription,
+            'success' => true
         ));
     }
 

@@ -244,11 +244,10 @@ function push_unsubscribe() {
 }
 
 function push_sendSubscriptionToServer(subscription, action) {
-    subscription = getSubscriptionInfos(subscription);
     var req = new XMLHttpRequest();
-    var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
     var url = Routing.generate('pjm_app_api_pushsubscription_manage', {
-        'action': action
+        'action': action,
+        'endpoint': encodeURIComponent(getEndpoint(subscription))
     });
     req.open('POST', url, true);
     req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -263,25 +262,19 @@ function push_sendSubscriptionToServer(subscription, action) {
     req.onerror = function (e) {
         console.error("[SW] Erreur :" + e.target.status);
     };
-    req.send(params);
+    req.send();
 
     return true;
 }
 
-function getSubscriptionInfos(pushSubscription) {
+function getEndpoint(pushSubscription) {
     var endpoint = pushSubscription.endpoint;
+    var subscriptionId = pushSubscription.subscriptionId;
 
     // fix Chrome < 45
-    if (pushSubscription.subscriptionId &&
-        pushSubscription.endpoint.indexOf(pushSubscription.subscriptionId) === -1) {
-        endpoint = pushSubscription.endpoint + '/' + pushSubscription.subscriptionId;
+    if (subscriptionId && endpoint.indexOf(subscriptionId) === -1) {
+        endpoint += '/' + subscriptionId;
     }
 
-    var endpointSections = endpoint.split('/');
-    var subscriptionId = endpointSections[endpointSections.length - 1];
-
-    return {
-        subscriptionId: subscriptionId,
-        endpoint: endpoint
-    };
+    return endpoint;
 }

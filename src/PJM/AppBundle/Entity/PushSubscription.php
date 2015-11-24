@@ -22,13 +22,6 @@ class PushSubscription
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="subscriptionId", type="string", length=255)
-     */
-    private $subscriptionId;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="lastSubscribed", type="datetime")
@@ -38,7 +31,7 @@ class PushSubscription
     /**
      * @var string
      *
-     * @ORM\Column(name="endpoint", type="string", length=255)
+     * @ORM\Column(name="endpoint", type="string", length=255, unique=true)
      */
     private $endpoint;
 
@@ -68,30 +61,6 @@ class PushSubscription
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set subscriptionId.
-     *
-     * @param string $subscriptionId
-     *
-     * @return PushSubscription
-     */
-    public function setSubscriptionId($subscriptionId)
-    {
-        $this->subscriptionId = $subscriptionId;
-
-        return $this;
-    }
-
-    /**
-     * Get subscriptionId.
-     *
-     * @return string
-     */
-    public function getSubscriptionId()
-    {
-        return $this->subscriptionId;
     }
 
     /**
