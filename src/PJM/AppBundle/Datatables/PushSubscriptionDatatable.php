@@ -22,7 +22,7 @@ class PushSubscriptionDatatable extends BaseDatatable
             ->add(null, 'multiselect', array(
                 'actions' => array(
                     array(
-                        'route' => 'pjm_app_api_pushsubscription_delete',
+                        'route' => 'pjm_app_api_pushsubscription_bulkdelete',
                         'label' => 'Supprimer',
                         'icon' => 'glyphicon glyphicon-remove',
                         'attributes' => array(

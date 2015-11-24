@@ -162,8 +162,8 @@ function push_initialiseState() {
                 return;
             }
 
-            // Keep your server in sync with the latest subscriptionId
-            push_sendSubscriptionToServer(subscription, 'maj');
+            // Keep your server in sync with the latest endpoint
+            push_sendSubscriptionToServer(subscription, 'update');
 
             // Set your UI to show they have subscribed for push messages
             changePushButtonState('enabled');
@@ -186,7 +186,7 @@ function push_subscribe() {
             changePushButtonState('enabled');
 
             // on a la subscription, il faut l'enregistrer en BDD
-            return push_sendSubscriptionToServer(subscription, 'new');
+            return push_sendSubscriptionToServer(subscription, 'create');
         })
         ['catch'](function(e) {
             if (Notification.permission === 'denied') {
@@ -223,7 +223,7 @@ function push_unsubscribe() {
           return;
         }
 
-        push_sendSubscriptionToServer(pushSubscription, 'annuler');
+        push_sendSubscriptionToServer(pushSubscription, 'delete');
 
         // We have a subscription, so call unsubscribe on it
         pushSubscription.unsubscribe().then(function(successful) {
@@ -245,8 +245,7 @@ function push_unsubscribe() {
 
 function push_sendSubscriptionToServer(subscription, action) {
     var req = new XMLHttpRequest();
-    var url = Routing.generate('pjm_app_api_pushsubscription_manage', {
-        'action': action,
+    var url = Routing.generate('pjm_app_api_pushsubscription_' + action, {
         'endpoint': encodeURIComponent(getEndpoint(subscription))
     });
     req.open('POST', url, true);

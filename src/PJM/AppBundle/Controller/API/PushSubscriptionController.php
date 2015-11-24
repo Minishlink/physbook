@@ -19,54 +19,70 @@ class PushSubscriptionController extends Controller
 {
     /**
      * @param Request $request
-     * @param bool    $action
-     * @param string  $endpoint
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @param string $endpoint
+     * @return JsonResponse
      *
-     * @Route("/manage/{action}/{endpoint}", options={"expose"=true})
+     * @Route("/create/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function manageAction(Request $request, $action, $endpoint)
+    public function createAction(Request $request, $endpoint)
     {
-        $annuler = ($action == 'annuler') ? true : false;
-
-        // on va chercher la pushSubscription avec le même subscriptionId et endpoint
-        $em = $this->getDoctrine()->getManager();
-        $pushSubscription = $em->getRepository('PJMAppBundle:PushSubscription')
-            ->findOneBy(array(
-                'endpoint' => $endpoint,
-            ))
+        $pushSubscription = new PushSubscription();
+        $pushSubscription
+            ->setEndpoint($endpoint)
+            ->setUser($this->getUser())
+            ->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'))
         ;
 
-        if ($annuler) {
-            // on annule
-            if ($pushSubscription !== null) {
-                if ($pushSubscription->getUser() == $this->getUser()) {
-                    $em->remove($pushSubscription);
-                    $em->flush();
-                }
-            }
-        } else {
-            // on vérifie que le subscription est déjà enregistrée
-            if ($pushSubscription !== null) {
-                // si oui, on met à jour le lastSubscribed
-                if ($pushSubscription->getUser() == $this->getUser()) {
-                    $pushSubscription->refreshLastSubscribed();
-                    $em->persist($pushSubscription);
-                    $em->flush();
-                }
-            } else {
-                // si non, on l'ajoute
-                $pushSubscription = new PushSubscription();
-                $pushSubscription
-                    ->setEndpoint($endpoint)
-                    ->setUser($this->getUser())
-                    ->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'))
-                ;
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($pushSubscription);
+        $em->flush();
 
-                $em->persist($pushSubscription);
-                $em->flush();
-            }
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * @param PushSubscription|null $pushSubscription
+     * @param string $endpoint
+     * @return JsonResponse
+     *
+     * @Route("/update/{endpoint}", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function updateAction(PushSubscription $pushSubscription = null, $endpoint)
+    {
+        if (!$pushSubscription) {
+            return $this->forward('PJMAppBundle:API/PushSubscription:create', array('endpoint' => $endpoint));
+        }
+
+        // on met à jour le lastSubscribed
+        if ($pushSubscription->getUser() == $this->getUser()) {
+            $pushSubscription->refreshLastSubscribed();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($pushSubscription);
+            $em->flush();
+        }
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * @param PushSubscription  $pushSubscription
+     * @return JsonResponse
+     *
+     * @Route("/delete/{endpoint}", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function deleteAction(PushSubscription $pushSubscription)
+    {
+        if ($pushSubscription->getUser() == $this->getUser()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($pushSubscription);
+            $em->flush();
         }
 
         return new JsonResponse(array(
@@ -99,10 +115,10 @@ class PushSubscriptionController extends Controller
      * @param Request $request
      * @return Response
      *
-     * @Route("/delete", options={"expose"=true})
+     * @Route("/bulk/delete", options={"expose"=true})
      * @Method("POST")
      */
-    public function deleteAction(Request $request)
+    public function bulkDeleteAction(Request $request)
     {
         $list = $request->request->get('data');
 
