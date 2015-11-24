@@ -113,7 +113,7 @@ class PushSubscriptionController extends Controller
      * (DataTable) Delete choices.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      *
      * @Route("/bulk/delete", options={"expose"=true})
      * @Method("POST")
@@ -137,6 +137,6 @@ class PushSubscriptionController extends Controller
 
         $em->flush();
 
-        return new Response('PushSubscription(s) removed.');
+        return new JsonResponse(array('msg' => 'PushSubscription(s) removed.'));
     }
 }
