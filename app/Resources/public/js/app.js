@@ -247,7 +247,7 @@ function push_sendSubscriptionToServer(subscription, action) {
     subscription = getSubscriptionInfos(subscription);
     var req = new XMLHttpRequest();
     var params = "id=" + subscription.subscriptionId + "&endpoint="+ subscription.endpoint;
-    var url = Routing.generate('pjm_app_push_manageSubscription', {
+    var url = Routing.generate('pjm_app_api_pushsubscription_manage', {
         'action': action
     });
     req.open('POST', url, true);
