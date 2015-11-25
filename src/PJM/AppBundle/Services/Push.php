@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use PJM\AppBundle\Entity\PushSubscription;
 use PJM\AppBundle\Entity\User;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Service\Notifications;
@@ -40,20 +41,23 @@ class Push
         // on envoit une notif pour chaque
         if ($subscriptions !== null) {
             $dateLimite = new \DateTime('3 months ago');
+            /** @var PushSubscription $subscription */
             foreach ($subscriptions as $subscription) {
                 // on vérifie que la subscription est pas trop vieille pour éviter d'exploser le quota
                 if ($subscription->getLastSubscribed() > $dateLimite) {
-                    $this->sendNotificationToSubscriptionId($subscription->getSubscriptionId(), $message);
+                    $this->sendNotification($subscription->getEndpoint(), $message);
                 }
             }
         }
     }
 
-    public function sendNotificationToSubscriptionId($subscriptionId, $message)
+    public function sendNotification($endpoint, $message)
     {
+        $endpointsSections = explode('/', $endpoint);
+        $subscriptionId = $endpointsSections[count($endpointsSections) - 1];
+
         $notification = new AndroidMessage();
         $notification->setGCM(true);
-
         $notification->setMessage($message);
         $notification->setDeviceIdentifier($subscriptionId);
 
