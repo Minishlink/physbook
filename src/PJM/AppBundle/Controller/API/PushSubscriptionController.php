@@ -44,6 +44,7 @@ class PushSubscriptionController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param PushSubscription|null $pushSubscription
      * @param string $endpoint
      * @return JsonResponse
@@ -51,7 +52,7 @@ class PushSubscriptionController extends Controller
      * @Route("/update/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function updateAction(PushSubscription $pushSubscription = null, $endpoint)
+    public function updateAction(Request $request, PushSubscription $pushSubscription = null, $endpoint)
     {
         if (!$pushSubscription) {
             return $this->forward('PJMAppBundle:API/PushSubscription:create', array('endpoint' => $endpoint));
@@ -60,6 +61,7 @@ class PushSubscriptionController extends Controller
         // on met à jour le lastSubscribed
         if ($pushSubscription->getUser() == $this->getUser()) {
             $pushSubscription->refreshLastSubscribed();
+            $pushSubscription->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($pushSubscription);
             $em->flush();
