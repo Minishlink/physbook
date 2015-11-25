@@ -18,25 +18,15 @@ use Symfony\Component\HttpFoundation\Response;
 class PushSubscriptionController extends Controller
 {
     /**
-     * @param Request $request
      * @param string $endpoint
      * @return JsonResponse
      *
      * @Route("/create/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function createAction(Request $request, $endpoint)
+    public function createAction($endpoint)
     {
-        $pushSubscription = new PushSubscription();
-        $pushSubscription
-            ->setEndpoint($endpoint)
-            ->setUser($this->getUser())
-            ->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'))
-        ;
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($pushSubscription);
-        $em->flush();
+        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint);
 
         return new JsonResponse(array(
             'success' => true
@@ -44,7 +34,6 @@ class PushSubscriptionController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param PushSubscription|null $pushSubscription
      * @param string $endpoint
      * @return JsonResponse
@@ -52,23 +41,18 @@ class PushSubscriptionController extends Controller
      * @Route("/update/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function updateAction(Request $request, PushSubscription $pushSubscription = null, $endpoint)
+    public function updateAction(PushSubscription $pushSubscription = null, $endpoint)
     {
-        if (!$pushSubscription) {
-            return $this->forward('PJMAppBundle:API/PushSubscription:create', array('endpoint' => $endpoint));
-        }
+        $pushSubscriptionManager = $this->get('pjm.services.pushsubscriptions_manager');
 
-        // on met à jour le lastSubscribed
-        if ($pushSubscription->getUser() == $this->getUser()) {
-            $pushSubscription->refreshLastSubscribed();
-            $pushSubscription->setBrowserUA($request->server->get('HTTP_USER_AGENT', 'Unknown'));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($pushSubscription);
-            $em->flush();
+        if (!$pushSubscription) {
+            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), $endpoint);
+        } else {
+            $pushSubscription = $pushSubscriptionManager->update($this->getUser(), $pushSubscription);
         }
 
         return new JsonResponse(array(
-            'success' => true
+            'success' => isset($pushSubscription)
         ));
     }
 
@@ -81,14 +65,10 @@ class PushSubscriptionController extends Controller
      */
     public function deleteAction(PushSubscription $pushSubscription)
     {
-        if ($pushSubscription->getUser() == $this->getUser()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($pushSubscription);
-            $em->flush();
-        }
+        $success = $this->get('pjm.services.pushsubscriptions_manager')->delete($this->getUser(), $pushSubscription);
 
         return new JsonResponse(array(
-            'success' => true
+            'success' => $success
         ));
     }
 
@@ -109,7 +89,6 @@ class PushSubscriptionController extends Controller
         $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
         return $query->getResponse();
     }
-
 
     /**
      * (DataTable) Delete choices.
