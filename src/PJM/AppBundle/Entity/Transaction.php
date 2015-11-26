@@ -4,7 +4,7 @@ namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Transaction.
@@ -111,67 +111,56 @@ class Transaction
 
     /**
      * @Assert\Callback
+     * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
     {
         $moyenPaiement = $this->getMoyenPaiement();
         $montant = $this->getMontant();
         $infos = $this->getInfos();
-        if ($moyenPaiement == 'cheque' && empty($infos)) {
-            $context->addViolationAt(
-                'infos',
-                'Merci de renseigner le n° du chèque.',
-                array(),
-                null
-            );
+        $doTransfert = (null !== $this->getCompteLie());
+
+        if ($moyenPaiement === 'cheque' && empty($infos)) {
+            $context->buildViolation('Merci de renseigner le n° du chèque.')
+                ->atPath('infos')
+                ->addViolation();
         }
 
-        if (in_array($moyenPaiement, array('autre', 'operation')) && empty($infos)) {
-            $context->addViolationAt(
-                'infos',
-                'Merci de préciser la raison.',
-                array(),
-                null
-            );
-        }
-
-        if ($moyenPaiement == 'operation') {
-            if ($montant >= 0) {
-                $context->addViolationAt(
-                    'montant',
-                    'Une opération doit avoir un montant négatif.',
-                    array(),
-                    null
-                );
+        // opération de crédit ou débit
+        if (in_array($moyenPaiement, array('autre', 'operation'))) {
+            if(empty($infos)) {
+                $context->buildViolation('Merci de préciser la raison.')
+                    ->atPath('infos')
+                    ->addViolation();
             }
 
-            if (null !== $this->getCompteLie()) {
-                $context->addViolationAt(
-                    'compte',
-                    "Le transfert n'est pas possible pour une opération.",
-                    array(),
-                    null
-                );
+            if ($doTransfert) {
+                $context->buildViolation('Le transfert automatique n\'est pas possible pour les opérations.')
+                    ->atPath('compte')
+                    ->addViolation();
+            }
+        }
+
+        // on vérifie le signe du montant
+        if ($moyenPaiement === 'operation') {
+            if ($montant >= 0) {
+                $context->buildViolation('Une opération de débit doit avoir un montant négatif.')
+                    ->atPath('montant')
+                    ->addViolation();
             }
         } else {
             if ($montant <= 0) {
-                $context->addViolationAt(
-                    'montant',
-                    'Le montant doit être positif.',
-                    array(),
-                    null
-                );
+                $context->buildViolation('Le montant doit être positif.')
+                    ->atPath('montant')
+                    ->addViolation();
             }
         }
 
-        if (null !== $this->getCompteLie()) {
+        if ($doTransfert) {
             if ($this->getCompteLie() === $this->getCompte()) {
-                $context->addViolationAt(
-                    'compte',
-                    'Le compte de destination et le compte créditeur ne peuvent pas être les mêmes.',
-                    array(),
-                    null
-                );
+                $context->buildViolation('Le compte de destination et le compte créditeur ne peuvent pas être les mêmes.')
+                    ->atPath('compte')
+                    ->addViolation();
             }
         }
     }
