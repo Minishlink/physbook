@@ -15,8 +15,8 @@ class TransactionEnum
             'cheque' => 'Chèque',
             'monnaie' => 'Monnaie',
             'initial' => 'Solde initial',
-            'operation' => 'Opération',
-            'autre' => 'Autre',
+            'operation' => 'Opération de débit',
+            'autre' => 'Opération de crédit',
             'event' => 'Évènement',
         );
 
