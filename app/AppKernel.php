@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
-            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
+            new Minishlink\Bundle\WebPushBundle\MinishlinkWebPushBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new PJM\AppBundle\PJMAppBundle(),

@@ -160,9 +160,6 @@ fos_comment:
 lexik_form_filter:
     where_method: and
 
-rms_push_notifications:
-  android:
-      timeout: 10
-      gcm:
-          api_key: %android_gcm_api_key%
-          use_multi_curl: true
+minishlink_web_push:
+  api_keys:
+    GCM: %android_gcm_api_key%

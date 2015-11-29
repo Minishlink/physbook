@@ -2,7 +2,9 @@
 
 namespace PJM\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -21,5 +23,32 @@ class PushSubscriptionRepository extends EntityRepository
                 ->setParameter('user', $user)
             ;
         };
+    }
+
+    /**
+     * @param ArrayCollection $users
+     * @param \DateTime|null $limitDate Too old subscriptions will be filtered.
+     *
+     * @return array|null
+     */
+    public function findByUsers(ArrayCollection $users, \DateTime $limitDate = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.user IN (:users)')
+            ->setParameter('users', $users);
+
+        if (isset($limitDate)) {
+            $qb
+                ->andWhere('p.lastSubscribed > :limitDate')
+                ->setParameter('limitDate', $limitDate);
+        }
+
+        try {
+            $res = $qb->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $res = null;
+        }
+
+        return $res;
     }
 }

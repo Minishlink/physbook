@@ -100,7 +100,7 @@ services:
               errorEmail: "error@physbook.fr"
     pjm.services.push:
         class: PJM\AppBundle\Services\Push
-        arguments: [@doctrine.orm.entity_manager, @rms_push_notifications]
+        arguments: [@doctrine.orm.entity_manager, @web_push]
     pjm.services.file_manager:
         class: PJM\AppBundle\Services\FileManager
         arguments: [%kernel.root_dir%]
