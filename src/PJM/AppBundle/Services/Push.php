@@ -4,59 +4,57 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Minishlink\WebPush\WebPush;
+use PJM\AppBundle\Entity\PushSubscription;
 use PJM\AppBundle\Entity\User;
-use RMS\PushNotificationsBundle\Message\AndroidMessage;
-use RMS\PushNotificationsBundle\Service\Notifications;
 
 class Push
 {
     protected $em;
-    protected $rms_push_notifications;
+    protected $webPush;
 
-    public function __construct(EntityManager $em, Notifications $rms_push_notifications)
+    public function __construct(EntityManager $em, WebPush $webPush)
     {
         $this->em = $em;
-        $this->rms_push_notifications = $rms_push_notifications;
+        $this->webPush = $webPush;
     }
 
-    public function sendNotificationToUsers(ArrayCollection $users, $message)
+    /**
+     * Envoit des notifications Push aux utilisateurs.
+     *
+     * @param ArrayCollection $users Les utilisateurs destinataires.
+     * @param string $payload Le message de la notification.
+     */
+    public function sendNotificationToUsers(ArrayCollection $users, $payload)
     {
-        foreach ($users as $user) {
-            $this->sendNotificationToUser($user, $message);
+        // aller chercher tous les endpoints des Users en filtrant les vieilles subscriptions
+        $subscriptions = $this->em->getRepository('PJMAppBundle:PushSubscription')->findByUsers($users, new \DateTime('3 months ago'));
+
+        if (!$subscriptions) {
+            return;
         }
+
+        $endpoints = array();
+        $payloads = array();
+        $userPublicKeys = array();
+        /** @var PushSubscription $subscription */
+        foreach ($subscriptions as $subscription) {
+            $endpoints[] = $subscription->getEndpoint();
+            $payloads[] = $payload;
+            $userPublicKeys[] = '';
+        }
+
+        $this->webPush->sendNotifications($endpoints, $payloads, $userPublicKeys);
     }
 
     /**
      * Envoit une Notification Push à l'utilisateur.
      *
      * @param User   $user    L'utilisateur destinataire
-     * @param string $message Le message "body" de la notification
+     * @param string $payload Le message de la notification
      */
-    public function sendNotificationToUser(User $user, $message)
+    public function sendNotificationToUser(User $user, $payload)
     {
-        // aller chercher tous les subscriptionId de l'utilisateur
-        $subscriptions = $user->getPushSubscriptions();
-
-        // on envoit une notif pour chaque
-        if ($subscriptions !== null) {
-            $dateLimite = new \DateTime('3 months ago');
-            foreach ($subscriptions as $subscription) {
-                // on vérifie que la subscription est pas trop vieille pour éviter d'exploser le quota
-                if ($subscription->getLastSubscribed() > $dateLimite) {
-                    $this->sendNotificationToSubscriptionId($subscription->getSubscriptionId(), $message);
-                }
-            }
-        }
-    }
-
-    public function sendNotificationToSubscriptionId($subscriptionId, $message)
-    {
-        $notification = new AndroidMessage();
-        $notification->setGCM(true);
-
-        $notification->setMessage($message);
-        $notification->setDeviceIdentifier($subscriptionId);
-
-        $this->rms_push_notifications->send($notification);
+        $this->sendNotificationToUsers(new ArrayCollection(array($user)), $payload);
     }
 }

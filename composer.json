@@ -30,11 +30,11 @@
         "liuggio/excelbundle": "~2.0",
         "kms/froala-editor-bundle": "dev-master#63f4797e8d9593110c8a27b58c0693461b7478c9",
         "friendsofsymfony/comment-bundle": "2.0.x-dev",
-        "richsage/rms-push-notifications-bundle": "~0.1",
         "lexik/form-filter-bundle": "~3.0",
         "erusev/parsedown": "^1.5",
         "exercise/htmlpurifier-bundle": "1.0.x-dev",
-        "joshtronic/php-loremipsum": "^1.0"
+        "joshtronic/php-loremipsum": "^1.0",
+        "minishlink/web-push-bundle": "^0.2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -40,10 +40,6 @@ pjm_app_banque:
     resource: "@PJMAppBundle/Resources/config/Banque/routing.yml"
     prefix:   /banque
 
-pjm_app_push:
-    resource: "@PJMAppBundle/Resources/config/Push/routing.yml"
-    prefix:   /push
-
 pjm_app_notifications:
     resource: "@PJMAppBundle/Resources/config/Notifications/routing.yml"
     prefix:   /notifications

@@ -62,6 +62,9 @@ services:
     pjm.services.article_manager:
                 class: PJM\AppBundle\Services\Actus\ArticleManager
                 arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]
+    pjm.services.pushsubscriptions_manager:
+        class: PJM\AppBundle\Services\PushSubscriptionManager
+        arguments: [@doctrine.orm.entity_manager, @request_stack]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -97,7 +100,7 @@ services:
               errorEmail: "error@physbook.fr"
     pjm.services.push:
         class: PJM\AppBundle\Services\Push
-        arguments: [@doctrine.orm.entity_manager, @rms_push_notifications]
+        arguments: [@doctrine.orm.entity_manager, @minishlink_web_push]
     pjm.services.file_manager:
         class: PJM\AppBundle\Services\FileManager
         arguments: [%kernel.root_dir%]

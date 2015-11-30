@@ -16,14 +16,13 @@ class PushSubscriptionDatatable extends BaseDatatable
 
         $this->options->setOption('order', [[1, 'desc']]);
 
-        $this->ajax->setOptions(array('url' => $this->router->generate('pjm_app_push_subscriptionResults'),
-        ));
+        $this->ajax->setOptions(array('url' => $this->router->generate('pjm_app_api_pushsubscription_results')));
 
         $this->columnBuilder
             ->add(null, 'multiselect', array(
                 'actions' => array(
                     array(
-                        'route' => 'pjm_app_push_deleteSubscription',
+                        'route' => 'pjm_app_api_pushsubscription_bulkdelete',
                         'label' => 'Supprimer',
                         'icon' => 'glyphicon glyphicon-remove',
                         'attributes' => array(
