@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7fe5c32e67025a610052d98df6b5cd1f",
-    "content-hash": "dfd4c5fc88d4dd4fcd7dacd6f18c264d",
+    "hash": "31a4746870a8a58367841bbcdb362dbf",
+    "content-hash": "4791d9474fefdb8529b902e4d3846aba",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2268,22 +2268,25 @@
         },
         {
             "name": "minishlink/web-push-bundle",
-            "version": "0.1.0",
+            "version": "dev-master",
             "target-dir": "Minishlink/Bundle/WebPushBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Minishlink/web-push-bundle.git",
-                "reference": "0e8d9c99a18f5d52bb7d9d88ee78c067a298c52b"
+                "reference": "9119d533cede658e152283733bb412f5e60574bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Minishlink/web-push-bundle/zipball/0e8d9c99a18f5d52bb7d9d88ee78c067a298c52b",
-                "reference": "0e8d9c99a18f5d52bb7d9d88ee78c067a298c52b",
+                "url": "https://api.github.com/repos/Minishlink/web-push-bundle/zipball/9119d533cede658e152283733bb412f5e60574bf",
+                "reference": "9119d533cede658e152283733bb412f5e60574bf",
                 "shasum": ""
             },
             "require": {
                 "minishlink/web-push": ">= 0.1",
                 "php": ">=5.4"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^2.7"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2310,7 +2313,7 @@
                 "push",
                 "web"
             ],
-            "time": "2015-11-28 09:14:24"
+            "time": "2015-11-30 19:05:19"
         },
         {
             "name": "monolog/monolog",
@@ -3533,7 +3536,8 @@
         "friendsofsymfony/user-bundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
-        "exercise/htmlpurifier-bundle": 20
+        "exercise/htmlpurifier-bundle": 20,
+        "minishlink/web-push-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
