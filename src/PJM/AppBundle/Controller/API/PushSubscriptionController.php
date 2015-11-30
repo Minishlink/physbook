@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PushSubscriptionController extends Controller
 {
     /**
-     * @param string $endpoint
+     * @param string $endpoint URL percent encoded
      * @return JsonResponse
      *
      * @Route("/create/{endpoint}", options={"expose"=true})
@@ -26,7 +26,7 @@ class PushSubscriptionController extends Controller
      */
     public function createAction($endpoint)
     {
-        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint);
+        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), urldecode($endpoint));
 
         return new JsonResponse(array(
             'success' => true
@@ -35,18 +35,19 @@ class PushSubscriptionController extends Controller
 
     /**
      * @param PushSubscription|null $pushSubscription
-     * @param string $endpoint
+     * @param string $endpoint URL percent encoded
      * @return JsonResponse
      *
      * @Route("/update/{endpoint}", options={"expose"=true})
      * @Method("POST")
      */
-    public function updateAction(PushSubscription $pushSubscription = null, $endpoint)
+    public function updateAction($endpoint)
     {
         $pushSubscriptionManager = $this->get('pjm.services.pushsubscriptions_manager');
+        $pushSubscription = $pushSubscriptionManager->find(urldecode($endpoint));
 
         if (!$pushSubscription) {
-            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), $endpoint);
+            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), urldecode($endpoint));
         } else {
             $pushSubscription = $pushSubscriptionManager->update($this->getUser(), $pushSubscription);
         }

@@ -21,7 +21,7 @@ class PushSubscriptionManager
 
     /**
      * @param User $user
-     * @param $endpoint
+     * @param string $endpoint
      * @return null|PushSubscription
      */
     public function create(User $user, $endpoint)
@@ -33,6 +33,15 @@ class PushSubscriptionManager
         ;
 
         return $this->update($user, $pushSubscription);
+    }
+
+    /**
+     * @param string $endpoint
+     * @return null|PushSubscription
+     */
+    public function find($endpoint)
+    {
+        return $this->em->getRepository('PJMAppBundle:PushSubscription')->findOneBy(array('endpoint' => $endpoint));
     }
 
     /**
