@@ -41,7 +41,7 @@ class Push
         foreach ($subscriptions as $subscription) {
             $endpoints[] = $subscription->getEndpoint();
             $payloads[] = $payload;
-            $userPublicKeys[] = ''; // $subscription->getUserPublicKeys();
+            $userPublicKeys[] = '';
         }
 
         $this->webPush->sendNotifications($endpoints, $payloads, $userPublicKeys);

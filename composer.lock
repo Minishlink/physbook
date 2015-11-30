@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "31a4746870a8a58367841bbcdb362dbf",
-    "content-hash": "4791d9474fefdb8529b902e4d3846aba",
+    "hash": "734f02400bc2910d1cfbc8377f8090f1",
+    "content-hash": "85a9b82760f38850ca62b3dc1041bfa7",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2268,7 +2268,7 @@
         },
         {
             "name": "minishlink/web-push-bundle",
-            "version": "dev-master",
+            "version": "0.2.0",
             "target-dir": "Minishlink/Bundle/WebPushBundle",
             "source": {
                 "type": "git",
@@ -3536,8 +3536,7 @@
         "friendsofsymfony/user-bundle": 20,
         "kms/froala-editor-bundle": 20,
         "friendsofsymfony/comment-bundle": 20,
-        "exercise/htmlpurifier-bundle": 20,
-        "minishlink/web-push-bundle": 20
+        "exercise/htmlpurifier-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
