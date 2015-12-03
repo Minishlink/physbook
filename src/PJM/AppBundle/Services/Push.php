@@ -34,17 +34,12 @@ class Push
             return;
         }
 
-        $endpoints = array();
-        $payloads = array();
-        $userPublicKeys = array();
         /** @var PushSubscription $subscription */
         foreach ($subscriptions as $subscription) {
-            $endpoints[] = $subscription->getEndpoint();
-            $payloads[] = $payload;
-            $userPublicKeys[] = '';
+            $this->webPush->sendNotification($subscription->getEndpoint(), $payload, '');
         }
 
-        $this->webPush->sendNotifications($endpoints, $payloads, $userPublicKeys);
+        $this->webPush->flush();
     }
 
     /**
