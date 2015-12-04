@@ -13,8 +13,20 @@ use PJM\AppBundle\Entity\User;
  */
 class EvenementRepository extends EntityRepository
 {
+    /**
+     * @param User $user
+     * @param int $max
+     * @param string $quand 'after' or 'before'
+     * @param \DateTime|null $date
+     * @param Evenement|null $eventExclure
+     * @return array
+     */
     public function getEvents(User $user, $max = 6, $quand = 'after', \DateTime $date = null, Evenement $eventExclure = null)
     {
+        if ($max <= 0) {
+            return array();
+        }
+
         if ($date === null) {
             $date = new \DateTime();
         }
