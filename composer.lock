@@ -2224,16 +2224,16 @@
         },
         {
             "name": "minishlink/web-push",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Minishlink/web-push.git",
-                "reference": "d7fb74b7c3a0c860d0b736aafe62b40b62f12762"
+                "reference": "c25ea2769f9b8a73997e4aed0e0ac8288c423527"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Minishlink/web-push/zipball/d7fb74b7c3a0c860d0b736aafe62b40b62f12762",
-                "reference": "d7fb74b7c3a0c860d0b736aafe62b40b62f12762",
+                "url": "https://api.github.com/repos/Minishlink/web-push/zipball/c25ea2769f9b8a73997e4aed0e0ac8288c423527",
+                "reference": "c25ea2769f9b8a73997e4aed0e0ac8288c423527",
                 "shasum": ""
             },
             "require": {
@@ -2267,7 +2267,7 @@
                 "push",
                 "web"
             ],
-            "time": "2015-12-03 17:51:36"
+            "time": "2015-12-04 12:44:36"
         },
         {
             "name": "minishlink/web-push-bundle",
