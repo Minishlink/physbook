@@ -18,15 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 class PushSubscriptionController extends Controller
 {
     /**
-     * @param string $endpoint URL percent encoded
+     * @param Request $request
      * @return JsonResponse
      *
-     * @Route("/create/{endpoint}", options={"expose"=true})
+     * @Route("/create", options={"expose"=true})
      * @Method("POST")
      */
-    public function createAction($endpoint)
+    public function createAction(Request $request)
     {
-        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), urldecode($endpoint));
+        $endpoint = $request->request->get('endpoint');
+
+        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint);
 
         return new JsonResponse(array(
             'success' => true
@@ -34,20 +36,21 @@ class PushSubscriptionController extends Controller
     }
 
     /**
-     * @param PushSubscription|null $pushSubscription
-     * @param string $endpoint URL percent encoded
+     * @param Request $request
      * @return JsonResponse
      *
-     * @Route("/update/{endpoint}", options={"expose"=true})
+     * @Route("/update", options={"expose"=true})
      * @Method("POST")
      */
-    public function updateAction($endpoint)
+    public function updateAction(Request $request)
     {
+        $endpoint = $request->request->get('endpoint');
+
         $pushSubscriptionManager = $this->get('pjm.services.pushsubscriptions_manager');
-        $pushSubscription = $pushSubscriptionManager->find(urldecode($endpoint));
+        $pushSubscription = $pushSubscriptionManager->find($endpoint);
 
         if (!$pushSubscription) {
-            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), urldecode($endpoint));
+            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), $endpoint);
         } else {
             $pushSubscription = $pushSubscriptionManager->update($this->getUser(), $pushSubscription);
         }
@@ -58,15 +61,20 @@ class PushSubscriptionController extends Controller
     }
 
     /**
-     * @param PushSubscription  $pushSubscription
+     * @param Request $request
      * @return JsonResponse
      *
-     * @Route("/delete/{endpoint}", options={"expose"=true})
+     * @Route("/delete", options={"expose"=true})
      * @Method("POST")
      */
-    public function deleteAction(PushSubscription $pushSubscription)
+    public function deleteAction(Request $request)
     {
-        $success = $this->get('pjm.services.pushsubscriptions_manager')->delete($this->getUser(), $pushSubscription);
+        $endpoint = $request->request->get('endpoint');
+
+        $pushSubscriptionManager = $this->get('pjm.services.pushsubscriptions_manager');
+        $pushSubscription = $pushSubscriptionManager->find($endpoint);
+
+        $success = $pushSubscription ? $this->get('pjm.services.pushsubscriptions_manager')->delete($this->getUser(), $pushSubscription) : false;
 
         return new JsonResponse(array(
             'success' => $success

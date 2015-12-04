@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\PushSubscription;
 use PJM\AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Validation;
 
 class PushSubscriptionManager
 {
@@ -57,6 +58,14 @@ class PushSubscriptionManager
 
         $pushSubscription->refreshLastSubscribed();
         $pushSubscription->setBrowserUA($this->requestStack->getCurrentRequest()->server->get('HTTP_USER_AGENT', 'Unknown'));
+
+        $validator = Validation::createValidatorBuilder()
+            ->enableAnnotationMapping()
+            ->getValidator();
+
+        if ($validator->validate($pushSubscription)->count()) {
+            return null;
+        }
 
         $this->persist($pushSubscription);
 

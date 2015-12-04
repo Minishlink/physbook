@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PushSubscription.
@@ -31,6 +32,7 @@ class PushSubscription
     /**
      * @var string
      *
+     * @Assert\Url
      * @ORM\Column(name="endpoint", type="string", length=255, unique=true)
      */
     private $endpoint;

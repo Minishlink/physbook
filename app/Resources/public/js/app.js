@@ -245,12 +245,11 @@ function push_unsubscribe() {
 
 function push_sendSubscriptionToServer(subscription, action) {
     var req = new XMLHttpRequest();
-    var url = Routing.generate('pjm_app_api_pushsubscription_' + action, {
-        'endpoint': encodeURIComponent(getEndpoint(subscription))
-    });
+    var url = Routing.generate('pjm_app_api_pushsubscription_' + action);
     req.open('POST', url, true);
     req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-type", "application/json");
+    req.setRequestHeader("Connection", "close");
     req.onreadystatechange = function (e) {
         if (req.readyState == 4) {
             if(req.status != 200) {
@@ -261,7 +260,10 @@ function push_sendSubscriptionToServer(subscription, action) {
     req.onerror = function (e) {
         console.error("[SW] Erreur :" + e.target.status);
     };
-    req.send();
+
+    req.send(JSON.stringify({
+        'endpoint': getEndpoint(subscription)
+    }));
 
     return true;
 }
