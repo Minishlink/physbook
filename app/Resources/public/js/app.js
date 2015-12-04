@@ -249,7 +249,6 @@ function push_sendSubscriptionToServer(subscription, action) {
     req.open('POST', url, true);
     req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     req.setRequestHeader("Content-type", "application/json");
-    req.setRequestHeader("Connection", "close");
     req.onreadystatechange = function (e) {
         if (req.readyState == 4) {
             if(req.status != 200) {
