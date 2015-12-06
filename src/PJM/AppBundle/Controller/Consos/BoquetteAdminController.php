@@ -177,6 +177,13 @@ class BoquetteAdminController extends Controller
                         'credits-'.$boquette->getSlug().'-'.date('d/m/Y')
                     );
                 }
+            } else {
+                foreach ($filterForm->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
+                    );
+                }
             }
 
             return $this->redirect($this->generateUrl('pjm_app_admin_boquette_default', array('slug' => $boquette->getSlug())));
@@ -388,6 +395,13 @@ class BoquetteAdminController extends Controller
 
                     return $excel->download(
                         'comptes-'.$boquette->getSlug().'-'.date('d/m/Y')
+                    );
+                }
+            } else {
+                foreach ($filterForm->getErrors() as $error) {
+                    $request->getSession()->getFlashBag()->add(
+                        'warning',
+                        $error->getMessage()
                     );
                 }
             }

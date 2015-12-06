@@ -18,9 +18,11 @@ class TransactionFilterType extends AbstractType
                 'label' => 'Date (intervalle ouvert)',
                 'left_date_options' => array(
                     'label' => 'De',
+                    'error_bubbling' => true,
                 ),
                 'right_date_options' => array(
                     'label' => 'A',
+                    'error_bubbling' => true,
                 ),
             ))
             ->add('moyenPaiement', 'filter_choice', array(
