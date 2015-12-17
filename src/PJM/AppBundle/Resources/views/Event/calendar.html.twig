@@ -1,0 +1,22 @@
+{% extends "PJMAppBundle:Event:layout.html.twig" %}
+
+{% block title %}Calendrier - {{ parent() }}{% endblock %}
+
+{% block pjm_app_body_content %}
+    <div id="calendrier" class="calendrier-fullCalendar"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#calendrier').fullCalendar({
+                lang: 'fr',
+                eventSources: [
+                    Routing.generate('pjm_app_api_event_calendar')
+                ]
+            }).fullCalendar('gotoDate', '{{ defaultDate }}');
+        });
+    </script>
+{% endblock %}

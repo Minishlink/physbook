@@ -23,10 +23,11 @@
     "eonasdan-bootstrap-datetimepicker": "~4.7.14",
     "jquery": "~2.1.4",
     "datatables": "~1.10.7",
-    "datatables-responsive" : "1.0.6",
+    "datatables-responsive": "1.0.6",
     "select2": "~4.0.0",
     "select2-bootstrap-theme": "~0.1.0",
-    "webui-popover": "1.1.4"
+    "webui-popover": "1.1.4",
+    "fullcalendar": "~2.5.0"
   },
   "resolutions": {
     "jquery": "~2.1.4"

@@ -153,6 +153,37 @@ class EvenementManager
         );
     }
 
+    /**
+     * Get the events between these dates.
+     * If the user is specified, then informations that he should not see will be deleted: in this case,
+     * you should NEVER persist these events!
+     *
+     * @param \DateTime $dateDebut
+     * @param \DateTime $dateFin
+     * @param User $user
+     *
+     * @return \PJM\AppBundle\Entity\Event\Evenement[]
+     */
+    public function getBetweenDates(\DateTime $dateDebut, \DateTime $dateFin, User $user = null)
+    {
+        // trouver tous les évènements de ce mois
+        $events = $this->em->getRepository('PJMAppBundle:Event\Evenement')->findBetweenDates($dateDebut, $dateFin);
+
+        // on filtre si l'utilisateur est spécifié
+        if (isset($user)) {
+            /** @var Evenement $event */
+            foreach ($events as $event) {
+                if (!$event->canBeSeenByUser($user)) {
+                    $event->setNom('Évènement privé');
+                    $event->setSlug('');
+                    $event->setDescription('');
+                }
+            }
+        }
+
+        return $events;
+    }
+
     public function canEdit(User $user, Evenement $event)
     {
         return ($event->getCreateur() === $user

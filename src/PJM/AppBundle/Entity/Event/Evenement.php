@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\Mapping as ORM;
+use PJM\AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use PJM\AppBundle\Validator\Constraints as PJMAssert;
@@ -579,7 +580,7 @@ class Evenement
         return $this->getInvites(false);
     }
 
-    public function canBeSeenByUser(\PJM\AppBundle\Entity\User $user)
+    public function canBeSeenByUser(User $user)
     {
         // FUTURE visibilité conscrits/anciens/P3/archis
 
