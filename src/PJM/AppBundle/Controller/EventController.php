@@ -224,7 +224,13 @@ class EventController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $invitationManager->toggleInscriptionFromUserToEvent($invitation, $this->getUser(), $event);
+                $invitationManager->toggleInscriptionFromUserToEvent(
+                    $invitation,
+                    $this->getUser(),
+                    $event,
+                    $this->get('pjm.services.boquette.pians')->getCompte($this->getUser())->getSolde()
+                );
+
                 $this->get('pjm.services.evenement_manager')->checkPassageMajeur($event, 10);
             } else {
                 $request->getSession()->getFlashBag()->add(

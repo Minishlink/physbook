@@ -35,26 +35,19 @@ class InvitationManager
 
     /**
      * @param Invitation $invitation
-     * @param User       $user
-     * @param Evenement  $event
+     * @param User $user
+     * @param Evenement $event
+     * @param integer $solde
      *
      * @return Invitation
      */
-    public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event)
+    public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event, $solde = null)
     {
         if ($invitation !== null) {
             // si on est déjà un invité
             // on annule si on participait et si c'est payant on rembourse si la deadline de paiement n'est pas passée (sinon on dit à l'utilisateur de s'arranger avec l'organisateur)
             // on s'inscrit si on était juste invité et on paye si c'est payant
             $invitation->setEstPresent(null === $invitation->getEstPresent() || !$invitation->getEstPresent());
-
-            $this->em->persist($invitation);
-            $this->em->flush();
-
-            $this->notification->sendFlash(
-                'success',
-                'Ton changement de participation à l\'évènement '.$event->getNom().' a bien été pris en compte.'
-            );
         } else {
             // sinon on vérifie que l'on peut accéder à cet évènement
             if ($event->isPublic() || $event->getCreateur() == $user) {
@@ -63,20 +56,43 @@ class InvitationManager
                 $invitation->setEvent($event);
                 $invitation->setInvite($user);
                 $invitation->setEstPresent(true);
-
-                $this->em->persist($invitation);
-                $this->em->flush();
-
-                $this->notification->sendFlash(
-                    'success',
-                    'Tu participes à l\'évènement '.$event->getNom().'.'
-                );
             } else {
                 $this->notification->sendFlash(
                     'warning',
                     'Tu n\'as pas accès à l\'évènement '.$event->getNom().'.'
                 );
+
+                return $invitation;
             }
+        }
+
+        if ($event->getPrix() && isset($solde) && $invitation->getEstPresent()) {
+            // si l'évènement est payant et que l'utilisateur veut s'inscrire
+            // on vérifie qu'il a assez d'argent sur son compte
+            $need = $event->getPrix() - $solde;
+            if ($need > 0) {
+                $this->notification->sendFlash(
+                    'warning',
+                    'Tu n\'as pas assez d\'argent sur ton compte. Recharge-le d\'au moins '.($need/100).'€.'
+                );
+
+                return $invitation;
+            }
+        }
+
+        $this->em->persist($invitation);
+        $this->em->flush();
+
+        if ($invitation->getEstPresent()) {
+            $this->notification->sendFlash(
+                'success',
+                'Tu participes à l\'évènement '.$event->getNom().'.'
+            );
+        } else {
+            $this->notification->sendFlash(
+                'success',
+                'Tu ne participes pas à l\'évènement '.$event->getNom().'.'
+            );
         }
 
         return $invitation;
