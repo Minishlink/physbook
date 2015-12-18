@@ -43,6 +43,15 @@ class InvitationManager
      */
     public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event, $solde = null)
     {
+        if (new \DateTime('now') > $event->getDateDeadline()) {
+            $this->notification->sendFlash(
+                'warning',
+                'La deadline de l\'évènement '.$event->getNom().' est passée.'
+            );
+
+            return null;
+        }
+
         if ($invitation !== null) {
             // si on est déjà un invité
             // on annule si on participait et si c'est payant on rembourse si la deadline de paiement n'est pas passée (sinon on dit à l'utilisateur de s'arranger avec l'organisateur)

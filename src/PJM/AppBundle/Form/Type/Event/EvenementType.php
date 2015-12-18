@@ -44,6 +44,11 @@ class EvenementType extends AbstractType
                 'help_label' => 'Toi y compris',
                 'required' => false,
             ))
+            ->add('dateDeadline', 'datetimePicker', array(
+                'label' => 'Deadline',
+                'help_label' => 'Personne ne pourra s\'inscrire ou se désinscrire après cette date.',
+                'required' => false,
+            ))
             ->add('majeur', null, array(
                 'label' => 'Evènement majeur',
                 'help_label' => 'Un évènement majeur concerne beaucoup de personnes et est important (ex. grosses manips) : le débit sera effectué par un Harpag\'s après vérification des factures.

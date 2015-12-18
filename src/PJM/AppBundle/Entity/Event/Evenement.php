@@ -78,6 +78,14 @@ class Evenement
     private $dateFin;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_deadline", type="datetime", nullable=true)
+     * @Assert\DateTime()
+     */
+    private $dateDeadline;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="lieu", type="string", length=255, nullable=true)
@@ -651,6 +659,25 @@ class Evenement
     public function setMaxParticipants($maxParticipants)
     {
         $this->maxParticipants = $maxParticipants;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateDeadline()
+    {
+        return $this->dateDeadline;
+    }
+
+    /**
+     * @param \DateTime $dateDeadline
+     * @return Evenement
+     */
+    public function setDateDeadline($dateDeadline)
+    {
+        $this->dateDeadline = $dateDeadline;
 
         return $this;
     }
