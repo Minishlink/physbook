@@ -40,16 +40,22 @@ div.dataTables_info {
 }
 
 // --- Panel ---
-.panel-default {
-    a {
-        color: @rouge;
+.panel {
+    .panel-heading[data-toggle="collapse"] {
+        cursor: pointer;
+    }
 
-        &.btn-default {
-            color: #333;
-        }
-
-        &.show_users {
+    &.panel-default {
+        a {
             color: @rouge;
+
+            &.btn-default {
+                color: #333;
+            }
+
+            &.show_users {
+                color: @rouge;
+            }
         }
     }
 }

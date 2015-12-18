@@ -1,0 +1,27 @@
+{{ form_stylesheet(form) }}
+{{ form_javascript(form) }}
+{{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.dateDebut) }}
+    {{ form_row(form.dateFin) }}
+    {{ form_row(form.day) }}
+
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#reglagesAvances">
+            <span class="panel-title"><span class="glyphicon glyphicon-cog"></span> Réglages avancés</span>
+        </div>
+        <div id="reglagesAvances" class="panel-collapse collapse">
+            <div class="panel-body">
+                {{ form_row(form.image) }}
+                {{ form_row(form.lieu) }}
+                {{ form_row(form.public) }}
+                {{ form_row(form.majeur) }}
+                {{ form_row(form.prix) }}
+                {{ form_row(form.maxParticipants) }}
+                {{ form_row(form.dateDeadline) }}
+                {{ form_row(form.boquette) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}
