@@ -177,6 +177,7 @@ class EvenementManager
                     $event->setNom('Évènement privé');
                     $event->setSlug('');
                     $event->setDescription('');
+                    $event->setLieu('');
                 }
             }
         }

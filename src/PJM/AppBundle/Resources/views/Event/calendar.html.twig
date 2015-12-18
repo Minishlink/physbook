@@ -20,6 +20,20 @@
                 loading: function(isLoading, view) {
                     chargement(isLoading);
                 },
+                eventMouseover: function(event, jsEvent, view) {
+                    var infos = '';
+
+                    if (event.lieu) {
+                        infos += '<strong>Lieu : </strong>' + event.lieu;
+                    }
+
+                    if (infos !== '') {
+                        $(this).append('<div class="infos">' + infos + '</div>');
+                    }
+                },
+                eventMouseout: function(event, jsEvent, view) {
+                    $(this).find('div.infos').remove();
+                },
                 eventSources: [
                     Routing.generate('pjm_app_api_event_calendar')
                 ]
