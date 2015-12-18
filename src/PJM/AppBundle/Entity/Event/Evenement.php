@@ -139,6 +139,14 @@ class Evenement
      */
     private $majeur;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="max_participants", type="integer", nullable=true)
+     * @Assert\GreaterThan(0)
+     */
+    private $maxParticipants;
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
@@ -151,6 +159,7 @@ class Evenement
         $this->prix = 0;
         $this->invitations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->majeur = true;
+        $this->maxParticipants = null;
     }
 
     /**
@@ -625,5 +634,24 @@ class Evenement
     public function isPaid()
     {
         return isset($this->item);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxParticipants()
+    {
+        return $this->maxParticipants;
+    }
+
+    /**
+     * @param int $maxParticipants
+     * @return Evenement
+     */
+    public function setMaxParticipants($maxParticipants)
+    {
+        $this->maxParticipants = $maxParticipants;
+
+        return $this;
     }
 }

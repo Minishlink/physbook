@@ -39,6 +39,11 @@ class EvenementType extends AbstractType
                 'label' => 'Prix par personne',
                 'divisor' => 100,
             ))
+            ->add('maxParticipants', null, array(
+                'label' => 'Nombre de participants maximum',
+                'help_label' => 'Toi y compris',
+                'required' => false,
+            ))
             ->add('majeur', null, array(
                 'label' => 'Evènement majeur',
                 'help_label' => 'Un évènement majeur concerne beaucoup de personnes et est important (ex. grosses manips) : le débit sera effectué par un Harpag\'s après vérification des factures.

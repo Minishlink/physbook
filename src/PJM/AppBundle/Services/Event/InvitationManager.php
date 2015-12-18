@@ -62,21 +62,37 @@ class InvitationManager
                     'Tu n\'as pas accès à l\'évènement '.$event->getNom().'.'
                 );
 
-                return $invitation;
+                return null;
             }
         }
 
-        if ($event->getPrix() && isset($solde) && $invitation->getEstPresent()) {
-            // si l'évènement est payant et que l'utilisateur veut s'inscrire
-            // on vérifie qu'il a assez d'argent sur son compte
-            $need = $event->getPrix() - $solde;
-            if ($need > 0) {
-                $this->notification->sendFlash(
-                    'warning',
-                    'Tu n\'as pas assez d\'argent sur ton compte. Recharge-le d\'au moins '.($need/100).'€.'
-                );
+        if ($invitation->getEstPresent()) {
+            // si l'utilisateur veut s'inscrire
+            if ($event->getMaxParticipants()) {
+                // si il y a un nombre de participants maximum
+                // on vérifie qu'il reste des places
+                if (count($event->getParticipants()) > $event->getMaxParticipants()) {
+                    $this->notification->sendFlash(
+                        'warning',
+                        'Tu ne peux pas participer car il n\'y a plus de places disponibles.'
+                    );
 
-                return $invitation;
+                    return null;
+                }
+            }
+
+            if ($event->getPrix() && isset($solde)) {
+                // si l'évènement est payant
+                // on vérifie qu'il a assez d'argent sur son compte
+                $need = $event->getPrix() - $solde;
+                if ($need > 0) {
+                    $this->notification->sendFlash(
+                        'warning',
+                        'Tu n\'as pas assez d\'argent sur ton compte. Recharge-le d\'au moins ' . ($need / 100) . '€.'
+                    );
+
+                    return null;
+                }
             }
         }
 
