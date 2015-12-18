@@ -37,6 +37,7 @@ class EventController extends Controller
                 'start' => $event->getDateDebut()->format('c'),
                 'end' => $event->getDateFin()->format('c'),
                 'url' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL),
+                'className' => !$event->isPublic() ? 'prive' : ($event->isMajeur() ? 'majeur' : 'mineur'),
                 'lieu' => $event->getLieu(),
             );
         }, $this->get('pjm.services.evenement_manager')->getBetweenDates($start, $end, $this->getUser())));

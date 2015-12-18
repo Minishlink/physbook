@@ -19,11 +19,26 @@ body {
         .fc-view-container {
             background-color: white;
             color: #333;
+            box-shadow: 0 0 1.5em black;
         }
 
         .fc-event {
             background-color: @rouge;
             border-color: @rouge;
+
+            &.mineur {
+                background-color: @orange;
+                border-color: @orange;
+            }
+
+            &.prive {
+                background-color: @gris-clair;
+                border-color: @gris-clair;
+            }
+
+            &:hover {
+                opacity: 0.9;
+            }
 
             &:focus {
                 color: white;
