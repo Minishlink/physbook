@@ -58,6 +58,7 @@ class ApplicationAvailabilityFunctionalTest extends BaseTest
             array('/event'),
             array('/event/elections'),
             array('/event/nouveau'),
+            array('/event/calendrier'),
             array('/media/'),
             array('/media/bonjourGadzart'),
             array('/notifications/'),
