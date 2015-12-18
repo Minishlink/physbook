@@ -3,10 +3,13 @@
 {% block title %}{% if event is not null %}{{ event.nom }} - {% endif %}{{ parent() }}{% endblock %}
 
 {% block pjm_app_body_content %}
+<p>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creation" aria-expanded="false" aria-controls="creation">
+        <span class="glyphicon glyphicon-plus"></span> Créer
+    </button>
 
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creation" aria-expanded="false" aria-controls="creation">
-    <span class="glyphicon glyphicon-plus"></span> Créer
-</button>
+    <a href="{{ path('pjm_app_event_calendar') }}" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span> Calendrier</a>
+</p>
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
