@@ -36,6 +36,20 @@ body {
                 border-color: @gris-clair;
             }
 
+            &.anniversaire {
+                background-color: @rose;
+                border-color: @rose;
+
+                position:relative;
+                padding-left: 1.2em;
+
+                &::before {
+                    content: "\1F382";
+                    position: absolute;
+                    left: 0;
+                }
+            }
+
             &:hover {
                 opacity: 0.9;
             }

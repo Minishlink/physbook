@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * UserRepository.
@@ -127,5 +128,38 @@ class UserRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getByBirthdayBetweenDates(\DateTime $debut, \DateTime $fin, $proms)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        //$this->filterByCloseProms($qb, $proms);
+
+        $month_debut = $month = (int)$debut->format('m');
+        $month_fin = (int)$fin->format('m');
+        $months[] = $month_debut;
+        while ($month !== $month_fin) {
+            if(++$month === 13) {
+                $month = 1;
+            }
+
+            $months[] = $month;
+        }
+
+        $qb
+            ->andWhere('MONTH(u.anniversaire) IN (:months)')
+            ->setParameter('months', $months)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function filterByCloseProms(QueryBuilder $qb, $proms) {
+        $qb
+            ->andWhere('u.proms >= :proms - 2')
+            ->andWhere('u.proms <= :proms + 2')
+            ->setParameter('proms', $proms)
+        ;
     }
 }
