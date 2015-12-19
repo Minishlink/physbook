@@ -37,6 +37,8 @@ class TradsTest extends BaseTest
             array('5!', array(120)),
             array('4!-43-92', array(24, 43, 92)),
             array('168bis', array(169)),
+            array('1#-2', array(1, 2)),
+            array('1 2', array(1, 2)),
         );
     }
 }

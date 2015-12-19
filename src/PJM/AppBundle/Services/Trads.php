@@ -21,7 +21,7 @@ class Trads
             }
 
             return (int)$fam;
-        },  preg_split('/[:#-]/', $fams));
+        },  preg_split('/[\s:#-]+/', $fams));
     }
 
     private function fact($n) {
