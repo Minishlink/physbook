@@ -39,6 +39,7 @@ class TradsTest extends BaseTest
             array('168bis', array(169)),
             array('1#-2', array(1, 2)),
             array('1 2', array(1, 2)),
+            array('2-1', array(1, 2)),
         );
     }
 }

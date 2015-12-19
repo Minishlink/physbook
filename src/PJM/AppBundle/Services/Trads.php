@@ -5,7 +5,7 @@ namespace PJM\AppBundle\Services;
 class Trads
 {
     public function getNums($fams) {
-        return array_map(function($fam) {
+        $nums = array_map(function($fam) {
             if ($fam === 'XIII') {
                 return 13;
             }
@@ -22,6 +22,10 @@ class Trads
 
             return (int)$fam;
         },  preg_split('/[\s:#-]+/', $fams));
+
+        sort($nums);
+
+        return $nums;
     }
 
     private function fact($n) {
