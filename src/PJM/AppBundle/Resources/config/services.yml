@@ -74,6 +74,8 @@ services:
     pjm.services.group:
         class:  PJM\AppBundle\Services\Group
         arguments: [@doctrine.orm.entity_manager]
+    pjm.services.trads:
+        class:  PJM\AppBundle\Services\Trads
     pjm.services.random:
         class:  PJM\AppBundle\Services\Random
     pjm.services.rezal:
