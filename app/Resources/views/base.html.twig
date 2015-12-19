@@ -47,21 +47,13 @@
         {% include '::startup.html.twig' %}
 
         {% block base_javascripts %}
-            {% if offline is not defined %}
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-            <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-            <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" src="//cdn.jsdelivr.net/select2/4.0.0/js/select2.min.js"></script>
-            {% endif %}
+            <script type="text/javascript" src="{{ asset('js/ext/jquery.min.js', 'js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/ext/bootstrap.min.js', 'js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/ext/jquery.dataTables.min.js', 'js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/ext/select2.min.js', 'js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/ext/fullcalendar.min.js', 'js') }}" async></script>
 
             <script type="text/javascript">
-                if (!window.jQuery) {
-                    document.write('<script src="{{ asset('js/ext/jquery.min.js', 'js') }}"><\/script>');
-                    document.write('<script src="{{ asset('js/ext/bootstrap.min.js', 'js') }}"><\/script>');
-                    document.write('<script src="{{ asset('js/ext/jquery.dataTables.min.js', 'js') }}"><\/script>');
-                    document.write('<script src="{{ asset('js/ext/select2.min.js', 'js') }}"><\/script>');
-                }
-
                 var swPath = "{{ asset('service-worker.js', 'sw') }}";
             </script>
 

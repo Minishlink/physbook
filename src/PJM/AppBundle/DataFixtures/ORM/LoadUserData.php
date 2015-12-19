@@ -160,6 +160,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $user->setTabagns($userData['tabagns']);
             $user->setProms($userData['proms']);
 
+            $user->setNums($this->container->get('pjm.services.trads')->getNums($userData['fams']));
+
             $user->setPrenom($userData['prenom']);
             $user->setNom($userData['nom']);
 

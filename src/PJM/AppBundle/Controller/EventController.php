@@ -43,6 +43,28 @@ class EventController extends Controller
     }
 
     /**
+     * Calendar view (month).
+     *
+     * @param integer $month
+     * @param integer $year
+     * @return array
+     *
+     * @Template
+     */
+    public function calendarAction($year = null, $month = null)
+    {
+        $year = isset($year) ? $year : date('Y');
+        $month = isset($month) ? $month : date('m');
+        $day = date('d');
+
+        $defaultDate = new \DateTime($year."-".$month."-".$day);
+
+        return array(
+            'defaultDate' => $defaultDate->format('c')
+        );
+    }
+
+    /**
      * Ajout d'un évènement.
      *
      * @param Request $request

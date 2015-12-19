@@ -2,10 +2,13 @@
 
 namespace PJM\AppBundle\Services;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use FOS\UserBundle\Util\CanonicalizerInterface;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Entity\Inbox\Inbox;
 use PJM\AppBundle\Entity\Compte;
 use FOS\UserBundle\Doctrine\UserManager as BaseUserManager;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager extends BaseUserManager
 {
@@ -13,6 +16,22 @@ class UserManager extends BaseUserManager
 
     /** @var Mailer */
     private $mailer;
+
+    /** @var Trads */
+    private $trads;
+
+    public function __construct(
+        EncoderFactoryInterface $encoderFactory,
+        CanonicalizerInterface $usernameCanonicalizer,
+        CanonicalizerInterface $emailCanonicalizer,
+        ObjectManager $om,
+        $class,
+        Trads $trads
+    ) {
+        parent::__construct($encoderFactory, $usernameCanonicalizer, $emailCanonicalizer, $om, $class);
+
+        $this->trads = $trads;
+    }
 
     public function setMailer(Mailer $mailer)
     {
@@ -35,6 +54,7 @@ class UserManager extends BaseUserManager
         }
 
         $user->setUsername($user->getFams().$user->getTabagns().$user->getProms());
+        $user->setNums($this->trads->getNums($user->getFams()));
 
         $this->updateUser($user, false);
 

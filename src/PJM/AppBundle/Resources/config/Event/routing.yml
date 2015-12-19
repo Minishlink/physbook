@@ -3,6 +3,11 @@ pjm_app_event_nouveau:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:nouveau }
 
+pjm_app_event_calendar:
+    path:     /calendrier/{month}-{year}
+    methods: [ get ]
+    defaults: { _controller: PJMAppBundle:Event:calendar, year: null, month: null }
+
 pjm_app_event_elections_index:
     path:     /elections
     methods: [ get ]

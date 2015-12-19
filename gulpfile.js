@@ -38,6 +38,11 @@ var paths = {
             path.app + 'lib/bootstrap/dist/js/bootstrap.min.js',
             path.app + 'lib/datatables/media/js/jquery.dataTables.min.js',
             path.app + 'lib/select2/dist/js/select2.min.js'
+
+        ],
+        fullCalendar: [
+            path.app + 'lib/fullcalendar/dist/fullcalendar.min.js',
+            path.app + 'lib/fullcalendar/dist/lang/fr.js'
         ]
     },
     css: {
@@ -54,7 +59,8 @@ var paths = {
             path.app + 'lib/select2/dist/css/select2.css',
             path.app + 'lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css',
             path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.css',
-            path.app + 'lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
+            path.app + 'lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+            path.app + 'lib/fullcalendar/dist/fullcalendar.min.css'
         ]
     },
     icons: {
@@ -109,11 +115,18 @@ gulp.task('compress:js:site', function () {
         .pipe(gulp.dest(path.web + 'js'));
 });
 
-gulp.task('compress:js:ext', function () {
+gulp.task('compress:js:ext', ['compress:js:fullcalendar'], function () {
     return gulp.src(paths.js.ext)
         .pipe(concat('ext.js'))
         .pipe(uglify())
         .pipe(gulp.dest(path.web + 'js'));
+});
+
+gulp.task('compress:js:fullcalendar', function () {
+    return gulp.src(paths.js.fullCalendar)
+        .pipe(concat('fullcalendar.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(path.web + 'js/ext'));
 });
 
 gulp.task('compress:css:site', function() {

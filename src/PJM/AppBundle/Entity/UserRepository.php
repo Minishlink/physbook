@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * UserRepository.
@@ -100,10 +101,16 @@ class UserRepository extends EntityRepository
         return $res;
     }
 
-    public function getByDateAnniversaire(\DateTime $date)
+    public function getByDateAnniversaire(\DateTime $date, $closeProms = null)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->where('MONTH(u.anniversaire) = :mois')
+        $qb = $this->createQueryBuilder('u');
+
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
+
+        $qb
+            ->andWhere('MONTH(u.anniversaire) = :mois')
             ->andWhere('DAY(u.anniversaire) = :jour')
             ->setParameter('mois', $date->format('m'))
             ->setParameter('jour', $date->format('d'))
@@ -125,6 +132,57 @@ class UserRepository extends EntityRepository
                 ->orWhere('u.proms = '.$promo) // can't set parameter
             ;
         }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getByBirthdayBetweenDates(\DateTime $debut, \DateTime $fin, $closeProms = null)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
+
+        $month_debut = $month = (int)$debut->format('m');
+        $month_fin = (int)$fin->format('m');
+        $months[] = $month_debut;
+        while ($month !== $month_fin) {
+            if(++$month === 13) {
+                $month = 1;
+            }
+
+            $months[] = $month;
+        }
+
+        $qb
+            ->andWhere('MONTH(u.anniversaire) IN (:months)')
+            ->setParameter('months', $months)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function filterByCloseProms(QueryBuilder $qb, $proms) {
+        $qb
+            ->andWhere('u.proms >= :proms - 2')
+            ->andWhere('u.proms <= :proms + 2')
+            ->setParameter('proms', $proms)
+        ;
+    }
+
+    public function findByNums($nums, $closeProms = null)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
+
+        $qb
+            ->andWhere('u.nums LIKE :nums')
+            ->setParameter('nums', '%'.$nums.'%')
+        ;
 
         return $qb->getQuery()->getResult();
     }

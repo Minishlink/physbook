@@ -112,4 +112,18 @@ class EvenementRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findBetweenDates(\DateTime $debut, \DateTime $fin)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb
+            ->where('e.dateDebut <= :fin')
+            ->andWhere('e.dateFin >= :debut')
+            ->setParameter('debut', $debut)
+            ->setParameter('fin', $fin)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
