@@ -134,7 +134,7 @@ class UserRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('u');
 
-        //$this->filterByCloseProms($qb, $proms);
+        $this->filterByCloseProms($qb, $proms);
 
         $month_debut = $month = (int)$debut->format('m');
         $month_fin = (int)$fin->format('m');
