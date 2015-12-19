@@ -43,6 +43,13 @@ class User extends BaseUser
     private $fams;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="nums", type="simple_array", length=20, nullable=true)
+     */
+    private $nums;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="tabagns", type="string", length=5, nullable=true)
@@ -110,7 +117,7 @@ class User extends BaseUser
     private $classe;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(name="anniversaire", type="date", nullable=true)
      * @Assert\Date()
@@ -760,5 +767,21 @@ class User extends BaseUser
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNums()
+    {
+        return $this->nums;
+    }
+
+    /**
+     * @param array $nums
+     */
+    public function setNums(array $nums)
+    {
+        $this->nums = $nums;
     }
 }
