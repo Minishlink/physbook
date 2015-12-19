@@ -42,4 +42,11 @@ class TradsTest extends BaseTest
             array('2-1', array(1, 2)),
         );
     }
+
+    public function testGetExanceFromDate()
+    {
+        $this->assertEquals(0, $this->trads->getExanceFromDate(new \DateTime('June 6th')));
+        $this->assertEquals(1, $this->trads->getExanceFromDate(new \DateTime('June 5th')));
+        $this->assertGreaterThan(360, $this->trads->getExanceFromDate(new \DateTime('June 7th')));
+    }
 }

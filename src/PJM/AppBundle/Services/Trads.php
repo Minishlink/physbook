@@ -31,4 +31,14 @@ class Trads
     private function fact($n) {
         return $n ? ($n * $this->fact($n-1)) : 1;
     }
+
+    public function getExanceFromDate(\DateTime $date) {
+        $dateExanceZero = new \DateTime($date->format('Y').'-06-06');
+
+        if ($date > $dateExanceZero) {
+            $dateExanceZero->modify('+1 year');
+        }
+
+        return $dateExanceZero->diff($date)->days;
+    }
 }
