@@ -1,0 +1,8 @@
+{% if listeExances|length != 0 %}
+    <div id="exances">
+        <div>
+            <h1 class="font-zagots">Ex <strong>{{ exance }}</strong>:</h1>
+            <span class="text-large text-noir">{% for user in listeExances %}{{ render(url('pjm_profil_encart', {'username': user.username})) }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
+        </div>
+    </div>
+{% endif %}

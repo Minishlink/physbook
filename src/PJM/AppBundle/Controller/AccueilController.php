@@ -15,8 +15,13 @@ class AccueilController extends Controller
         $mazoutage = ($solde['pians'] < -300);
 
         $em = $this->getDoctrine()->getManager();
+        $now = new \DateTime();
         $repository = $em->getRepository('PJMAppBundle:User');
-        $listeAnniv = $repository->getByDateAnniversaire(new \DateTime());
+        $listeAnniv = $repository->getByDateAnniversaire($now);
+
+        $exance = $this->get('pjm.services.trads')->getExanceFromDate($now);
+        $listeExances = $repository->findByNums($exance);
+
         $listeConnectes = $repository->getActive($this->getUser());
 
         $photo = $em->getRepository('PJMAppBundle:Media\Photo')
@@ -33,6 +38,8 @@ class AccueilController extends Controller
             'mazoutage' => $mazoutage,
             'photo' => $photo,
             'listeAnniv' => $listeAnniv,
+            'exance' => $exance,
+            'listeExances' => $listeExances,
             'listeConnectes' => $listeConnectes,
             'listeEvents' => $listeEvents,
             'annonces' => $annonces,
