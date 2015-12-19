@@ -64,8 +64,8 @@ class AnnuaireDatatable extends BaseDatatable
             ->add('bucque', 'column', array(
                 'title' => 'Bucque',
             ))
-            ->add('fams', 'column', array(
-                'title' => "Fam's",
+            ->add('nums', 'column', array(
+                'title' => "Num's",
             ))
             ->add('tabagns', 'column', array(
                 'title' => "Tabagn's",
@@ -108,6 +108,7 @@ class AnnuaireDatatable extends BaseDatatable
             }
 
             $line['tabagns'] = $this->intranetExt->tabagnsFilter($line['tabagns']);
+            $line['nums'] = implode('-', $line['nums']);
 
             if ($line['telephone'] != '') {
                 $line['telephone'] = '<a href="tel:'.$line['telephone'].'" title="Appeler">'.$this->intranetExt->telephoneFilter($line['telephone']).'</a>';
