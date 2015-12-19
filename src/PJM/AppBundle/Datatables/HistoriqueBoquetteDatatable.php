@@ -21,7 +21,7 @@ class HistoriqueBoquetteDatatable extends BaseDatatable
         $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'date_format' => 'lll',
+                'date_format' => 'YYYY-MM-DD HH:mm',
             ))
             ->add('nom', 'column', array(
                 'title' => 'Nom',
