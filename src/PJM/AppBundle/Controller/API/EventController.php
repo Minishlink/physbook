@@ -43,7 +43,7 @@ class EventController extends Controller
             );
         }, $this->get('pjm.services.evenement_manager')->getBetweenDates($start, $end, $this->getUser()));
 
-        $em = $this->getDoctrine()->getManager();
+        $repoUsers = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:User');
 
         $annee_debut = $start->format('Y');
         $annee_fin = $end->format('Y');
@@ -65,9 +65,31 @@ class EventController extends Controller
                 'end' => $anniversaire->format('c'),
                 'className' => 'anniversaire',
             );
-        }, $em->getRepository('PJMAppBundle:User')->getByBirthdayBetweenDates($start, $end, $this->getUser()->getProms()));
+        }, $repoUsers->getByBirthdayBetweenDates($start, $end, $this->getUser()->getProms()));
 
-        return new JsonResponse(array_merge($events, $anniversaires));
+        $trads = $this->get('pjm.services.trads');
+        $exances = array();
+        for($date_exance = $start; $date_exance < $end; $date_exance->modify('+1 day')) {
+            $exance = $trads->getExanceFromDate($date_exance);
+
+            // on vérifie que l'exance existe
+            $users = $repoUsers->findByNums($exance, $this->getUser()->getProms());
+            if (!empty($users)) {
+                $users = array_map(function(User $user) {
+                    return $user->getBucque();
+                }, $users);
+
+                $exances[] = array(
+                    'title' => 'Ex '.$exance.' : '.implode(', ', $users),
+                    'allDay' => true,
+                    'start' => $date_exance->format('c'),
+                    'end' => $date_exance->format('c'),
+                    'className' => 'exance',
+                );
+            }
+        }
+
+        return new JsonResponse(array_merge($events, $anniversaires, $exances));
     }
 }
 

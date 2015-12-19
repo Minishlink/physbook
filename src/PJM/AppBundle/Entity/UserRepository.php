@@ -101,10 +101,16 @@ class UserRepository extends EntityRepository
         return $res;
     }
 
-    public function getByDateAnniversaire(\DateTime $date)
+    public function getByDateAnniversaire(\DateTime $date, $closeProms = null)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->where('MONTH(u.anniversaire) = :mois')
+        $qb = $this->createQueryBuilder('u');
+
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
+
+        $qb
+            ->andWhere('MONTH(u.anniversaire) = :mois')
             ->andWhere('DAY(u.anniversaire) = :jour')
             ->setParameter('mois', $date->format('m'))
             ->setParameter('jour', $date->format('d'))
@@ -130,11 +136,13 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getByBirthdayBetweenDates(\DateTime $debut, \DateTime $fin, $proms)
+    public function getByBirthdayBetweenDates(\DateTime $debut, \DateTime $fin, $closeProms = null)
     {
         $qb = $this->createQueryBuilder('u');
 
-        $this->filterByCloseProms($qb, $proms);
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
 
         $month_debut = $month = (int)$debut->format('m');
         $month_fin = (int)$fin->format('m');
@@ -161,5 +169,21 @@ class UserRepository extends EntityRepository
             ->andWhere('u.proms <= :proms + 2')
             ->setParameter('proms', $proms)
         ;
+    }
+
+    public function findByNums($nums, $closeProms = null)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        if (isset($closeProms)) {
+            $this->filterByCloseProms($qb, $closeProms);
+        }
+
+        $qb
+            ->andWhere('u.nums LIKE :nums')
+            ->setParameter('nums', '%'.$nums.'%')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }
