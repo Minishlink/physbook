@@ -180,8 +180,8 @@ class UserRepository extends EntityRepository
         }
 
         $qb
-            ->andWhere('u.nums LIKE :nums')
-            ->setParameter('nums', '%'.$nums.'%')
+            ->andWhere('REGEXP(u.nums, :nums) = 1')
+            ->setParameter('nums', '^'.$nums.'$|^'.$nums.',|,'.$nums.'$|,'.$nums.',')
         ;
 
         return $qb->getQuery()->getResult();
