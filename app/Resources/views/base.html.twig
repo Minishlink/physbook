@@ -51,13 +51,13 @@
             <script type="text/javascript" src="{{ asset('js/ext/bootstrap.min.js', 'js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/ext/jquery.dataTables.min.js', 'js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/ext/select2.min.js', 'js') }}"></script>
-            <script type="text/javascript" src="{{ asset('js/ext/fullcalendar.min.js', 'js') }}" async></script>
 
             <script type="text/javascript">
                 var swPath = "{{ asset('service-worker.js', 'sw') }}";
             </script>
 
             <script type="text/javascript" src="{{ asset('js/ext.js', 'js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/ext/fullcalendar.min.js', 'js') }}"></script>
             <script type="text/javascript" src="{{ app.environment == 'dev' ? path('fos_js_routing_js', {"callback": "fos.Router.setData"}) : asset('js/fos_js_routes.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/site.js', 'js') }}"></script>
             <script type="text/javascript">
