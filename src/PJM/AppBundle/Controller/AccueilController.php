@@ -17,10 +17,10 @@ class AccueilController extends Controller
         $em = $this->getDoctrine()->getManager();
         $now = new \DateTime();
         $repository = $em->getRepository('PJMAppBundle:User');
-        $listeAnniv = $repository->getByDateAnniversaire($now);
+        $listeAnniv = $repository->getByDateAnniversaire($now, $this->getUser()->getProms());
 
         $exance = $this->get('pjm.services.trads')->getExanceFromDate($now);
-        $listeExances = $repository->findByNums($exance);
+        $listeExances = $repository->findByNums($exance, $this->getUser()->getProms());
 
         $listeConnectes = $repository->getActive($this->getUser());
 

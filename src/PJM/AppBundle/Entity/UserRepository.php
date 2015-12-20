@@ -165,8 +165,8 @@ class UserRepository extends EntityRepository
 
     private function filterByCloseProms(QueryBuilder $qb, $proms) {
         $qb
-            ->andWhere('u.proms >= :proms - 2')
-            ->andWhere('u.proms <= :proms + 2')
+            ->andWhere('u.proms >= :proms - 1')
+            ->andWhere('u.proms <= :proms + 1')
             ->setParameter('proms', $proms)
         ;
     }
