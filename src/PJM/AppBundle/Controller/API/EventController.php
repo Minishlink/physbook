@@ -80,7 +80,7 @@ class EventController extends Controller
                 }, $users);
 
                 $exances[] = array(
-                    'title' => 'Ex '.$exance.' : '.implode(', ', $users),
+                    'title' => 'Ex '.$exance. ($exance ? (' : '.implode(', ', $users)) : ''),
                     'allDay' => true,
                     'start' => $date_exance->format('c'),
                     'end' => $date_exance->format('c'),
