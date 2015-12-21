@@ -33,7 +33,7 @@ class Trads
     }
 
     public function getExanceFromDate(\DateTime $date) {
-        $dateExanceZero = new \DateTime($date->format('Y').'-06-06');
+        $dateExanceZero = new \DateTime('first friday of june '.$date->format('Y'));
 
         if ($date > $dateExanceZero) {
             $dateExanceZero->modify('+1 year');
