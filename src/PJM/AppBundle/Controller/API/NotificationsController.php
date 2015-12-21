@@ -15,6 +15,7 @@ class NotificationsController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/last")

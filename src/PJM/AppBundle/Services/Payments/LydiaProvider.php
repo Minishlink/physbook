@@ -30,12 +30,13 @@ class LydiaProvider
 
     /**
      * @param Transaction $transaction
-     * @param array $callbacks
+     * @param array       $callbacks
+     *
      * @return array
      */
     public function requestRemote(Transaction $transaction, array $callbacks)
     {
-        $endpoint = $this->url."/api/request/do.json";
+        $endpoint = $this->url.'/api/request/do.json';
 
         // persist the $transaction to store ID
         $transaction->setMoyenPaiement('lydia');
@@ -50,7 +51,7 @@ class LydiaProvider
             'recipient' => $user->getEmail(),
             'type' => 'email',
             'message' => "[Phy'sbook] ".$boquette->getNom().' - '.$user->getUsername(),
-            'amount' => $transaction->getMontant()/100,
+            'amount' => $transaction->getMontant() / 100,
             'currency' => 'EUR',
             'expire_time' => 300,
             'confirm_url' => $callbacks['confirm_url'],
@@ -71,7 +72,7 @@ class LydiaProvider
             return array(
                 'success' => false,
                 'errorCode' => $response->getStatusCode(),
-                'errorMessage' => $response->getReasonPhrase()
+                'errorMessage' => $response->getReasonPhrase(),
             );
         }
 
@@ -84,31 +85,32 @@ class LydiaProvider
                 return array(
                     'success' => false,
                     'errorCode' => $content['message'],
-                    'errorMessage' => $content['message']
+                    'errorMessage' => $content['message'],
                 );
             }
         }
 
         // from experimentation
         if (array_key_exists('status', $content)) {
-            if($content['status'] === "error") {
+            if ($content['status'] === 'error') {
                 return array(
                     'success' => false,
                     'errorCode' => $content['code'],
-                    'errorMessage' => $content['message']
+                    'errorMessage' => $content['message'],
                 );
             }
         }
 
         return array(
             'success' => true,
-            'url' => $content['mobile_url']
+            'url' => $content['mobile_url'],
         );
     }
 
     /**
      * @param Request $request
-     * @param string $status
+     * @param string  $status
+     *
      * @return bool
      */
     public function handlePayment(Request $request, $status)
@@ -130,14 +132,15 @@ class LydiaProvider
     }
 
     /**
-     * Get public vendor token (vendor_token) from Boquette slug
+     * Get public vendor token (vendor_token) from Boquette slug.
      *
      * @param $slug
+     *
      * @return mixed
      */
     private function getPublicVendorToken($slug)
     {
-        switch($slug) {
+        switch ($slug) {
             case 'pians':
                 $auth = $this->auth['pians'];
                 break;
@@ -150,18 +153,22 @@ class LydiaProvider
     }
 
     /**
-     * Get private vendor token (token_api) from public vendor token (vendor_token)
+     * Get private vendor token (token_api) from public vendor token (vendor_token).
+     *
      * @param $publicVendorToken
+     *
      * @return bool
      */
     private function getPrivateVendorToken($publicVendorToken)
     {
         foreach ($this->auth as $type) {
-            if (!(is_array($type) && array_key_exists('private_token', $type) && array_key_exists('public_token', $type)))
+            if (!(is_array($type) && array_key_exists('private_token', $type) && array_key_exists('public_token', $type))) {
                 continue;
+            }
 
-            if ($type['public_token'] === $publicVendorToken)
+            if ($type['public_token'] === $publicVendorToken) {
                 return $type['private_token'];
+            }
         }
 
         return false;
@@ -169,6 +176,7 @@ class LydiaProvider
 
     /**
      * @param Request $request
+     *
      * @return bool|Transaction
      */
     private function getTransactionFromRequest(Request $request)
@@ -202,9 +210,10 @@ class LydiaProvider
     }
 
     /**
-     * From Lydia API documentation v1.9.9
+     * From Lydia API documentation v1.9.9.
      *
      * @param array $params Every posted paramater of the request without signature 'sig'
+     *
      * @return string
      */
     private function getCallSignature(array $params)

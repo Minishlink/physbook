@@ -149,7 +149,7 @@ class Evenement
     private $majeur;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_participants", type="integer", nullable=true)
      * @Assert\GreaterThan(0)
@@ -655,6 +655,7 @@ class Evenement
 
     /**
      * @param int $maxParticipants
+     *
      * @return Evenement
      */
     public function setMaxParticipants($maxParticipants)
@@ -674,6 +675,7 @@ class Evenement
 
     /**
      * @param \DateTime $dateDeadline
+     *
      * @return Evenement
      */
     public function setDateDeadline($dateDeadline)

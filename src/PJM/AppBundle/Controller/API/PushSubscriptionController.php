@@ -18,6 +18,7 @@ class PushSubscriptionController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/create", options={"expose"=true})
@@ -30,12 +31,13 @@ class PushSubscriptionController extends Controller
         $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint);
 
         return new JsonResponse(array(
-            'success' => true
+            'success' => true,
         ));
     }
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/update", options={"expose"=true})
@@ -55,12 +57,13 @@ class PushSubscriptionController extends Controller
         }
 
         return new JsonResponse(array(
-            'success' => isset($pushSubscription)
+            'success' => isset($pushSubscription),
         ));
     }
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/delete", options={"expose"=true})
@@ -76,7 +79,7 @@ class PushSubscriptionController extends Controller
         $success = $pushSubscription ? $this->get('pjm.services.pushsubscriptions_manager')->delete($this->getUser(), $pushSubscription) : false;
 
         return new JsonResponse(array(
-            'success' => $success
+            'success' => $success,
         ));
     }
 
@@ -95,6 +98,7 @@ class PushSubscriptionController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
         $repository = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:PushSubscription');
         $query->addWhereAll($repository->callbackFindByUser($this->getUser()));
+
         return $query->getResponse();
     }
 
@@ -102,6 +106,7 @@ class PushSubscriptionController extends Controller
      * (DataTable) Delete choices.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/bulk/delete", options={"expose"=true})

@@ -51,8 +51,9 @@ class NotificationManager
 
         // on vérifie qu'il y a les bonnes infos pour remplir le message
         foreach ($notificationType['infos'] as $k_infos) {
-            if (!array_key_exists($k_infos, $infos))
+            if (!array_key_exists($k_infos, $infos)) {
                 return false;
+            }
         }
 
         if ($users instanceof User) {
@@ -196,9 +197,10 @@ class NotificationManager
         $filter = array('path', 'path_params');
 
         $variables = array();
-        foreach($infos as $k => $v) {
-            if (in_array($k, $filter))
+        foreach ($infos as $k => $v) {
+            if (in_array($k, $filter)) {
                 continue;
+            }
 
             $variables['%'.$k.'%'] = $v;
         }

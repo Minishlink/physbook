@@ -5,8 +5,6 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PJM\AppBundle\Entity\Actus\Article;
-use PJM\AppBundle\Entity\Notifications\Notification;
-use PJM\AppBundle\Entity\User;
 
 class LoadArticleData extends BaseFixture implements OrderedFixtureInterface
 {
@@ -46,7 +44,7 @@ class LoadArticleData extends BaseFixture implements OrderedFixtureInterface
     private function loadArticle(ObjectManager $manager, $auteur, $titre, $contenu, $publication)
     {
         if (empty($contenu)) {
-            $contenu = $this->getLoremIpsum(rand(1,4), "paragraphs");
+            $contenu = $this->getLoremIpsum(rand(1, 4), 'paragraphs');
         }
 
         $article = new Article();
@@ -64,7 +62,7 @@ class LoadArticleData extends BaseFixture implements OrderedFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

@@ -17,6 +17,7 @@ class EventController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      * @Route("/calendrier", options={"expose"=true})
@@ -40,4 +41,3 @@ class EventController extends Controller
         return new JsonResponse(array_merge($events, $anniversaires, $exances));
     }
 }
-

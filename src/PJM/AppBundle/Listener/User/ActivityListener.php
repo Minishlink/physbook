@@ -2,7 +2,6 @@
 
 // http://www.symfony-grenoble.fr/238/lister-les-utilisateurs-en-ligne/
 
-
 namespace PJM\AppBundle\Listener\User;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;

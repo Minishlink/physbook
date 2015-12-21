@@ -20,7 +20,7 @@ class TradsTest extends BaseTest
      * @dataProvider famsProvider
      *
      * @param string $fams
-     * @param array $expectedNums
+     * @param array  $expectedNums
      */
     public function testGetNums($fams, array $expectedNums)
     {

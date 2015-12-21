@@ -45,8 +45,9 @@ class EventController extends Controller
     /**
      * Calendar view (month).
      *
-     * @param integer $month
-     * @param integer $year
+     * @param int $month
+     * @param int $year
+     *
      * @return array
      *
      * @Template
@@ -57,10 +58,10 @@ class EventController extends Controller
         $month = isset($month) ? $month : date('m');
         $day = date('d');
 
-        $defaultDate = new \DateTime($year."-".$month."-".$day);
+        $defaultDate = new \DateTime($year.'-'.$month.'-'.$day);
 
         return array(
-            'defaultDate' => $defaultDate->format('c')
+            'defaultDate' => $defaultDate->format('c'),
         );
     }
 

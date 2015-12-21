@@ -14,6 +14,7 @@ class ActusController extends Controller
 {
     /**
      * @param $page
+     *
      * @return array
      *
      * @Route("/{page}", requirements={"page" = "\d*"})
@@ -36,6 +37,7 @@ class ActusController extends Controller
 
     /**
      * @param Article $article
+     *
      * @return array
      *
      * @Route("/article/{slug}")
@@ -51,6 +53,7 @@ class ActusController extends Controller
 
     /**
      * @param $nombre
+     *
      * @return array
      *
      * @Route("/extrait/{nombre}", requirements={"nombre" = "\d*"})
@@ -66,6 +69,7 @@ class ActusController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/ajouter")
@@ -86,6 +90,7 @@ class ActusController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $articleManager->update($article, true);
+
                 return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
             }
 
@@ -103,6 +108,7 @@ class ActusController extends Controller
     /**
      * @param Request $request
      * @param Article $article
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/modifier/{slug}")
@@ -118,6 +124,7 @@ class ActusController extends Controller
                 'danger',
                 "Tu ne peux pas modifier cet article car tu n'en es pas l'auteur."
             );
+
             return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
         }
 
@@ -134,7 +141,8 @@ class ActusController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $articleManager->update($article, $wasDraft);
-                return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug(),)));
+
+                return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
             }
 
             $this->get('pjm.services.notification')->sendFlash(
@@ -152,6 +160,7 @@ class ActusController extends Controller
     /**
      * @param Request $request
      * @param Article $article
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/supprimer/{slug}")
@@ -167,6 +176,7 @@ class ActusController extends Controller
                 'danger',
                 "Tu ne peux pas supprimer cet article car tu n'en es pas l'auteur ou tu n'es pas ZiCom Asso."
             );
+
             return $this->redirect($this->generateUrl('pjm_app_actus_voir', array('slug' => $article->getSlug())));
         }
 

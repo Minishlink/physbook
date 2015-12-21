@@ -6,8 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
- * Class BaseTest for helper functions in functional tests
- * @package PJM\AppBundle\Tests\Controller
+ * Class BaseTest for helper functions in functional tests.
  */
 abstract class BaseTest extends WebTestCase
 {

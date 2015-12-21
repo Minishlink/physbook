@@ -121,6 +121,7 @@ class TransactionManager
 
     /**
      * @param $id
+     *
      * @return null|Transaction
      */
     public function getById($id)

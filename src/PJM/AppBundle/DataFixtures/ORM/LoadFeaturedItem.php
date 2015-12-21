@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PJM\AppBundle\Entity\FeaturedItem;
 
-class LoadFeaturedItemData extends BaseFixture implements OrderedFixtureInterface
+class LoadFeaturedItem extends BaseFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class LoadFeaturedItemData extends BaseFixture implements OrderedFixtureInterfac
     {
         $featuredItems = array(
             'brioche',
-            'chouffe'
+            'chouffe',
         );
 
         foreach ($featuredItems as $featuredItem) {
@@ -37,7 +37,7 @@ class LoadFeaturedItemData extends BaseFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

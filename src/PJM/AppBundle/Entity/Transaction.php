@@ -111,6 +111,7 @@ class Transaction
 
     /**
      * @Assert\Callback
+     *
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
@@ -128,7 +129,7 @@ class Transaction
 
         // opération de crédit ou débit
         if (in_array($moyenPaiement, array('autre', 'operation'))) {
-            if(empty($infos)) {
+            if (empty($infos)) {
                 $context->buildViolation('Merci de préciser la raison.')
                     ->atPath('infos')
                     ->addViolation();

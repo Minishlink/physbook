@@ -25,6 +25,7 @@ class ArticleManager
 
     /**
      * @param User $user
+     *
      * @return Article
      */
     public function create(User $user)
@@ -37,6 +38,7 @@ class ArticleManager
 
     /**
      * @param $page
+     *
      * @return \Doctrine\ORM\Tools\Pagination\Paginator
      */
     public function getByPage($page)
@@ -46,6 +48,7 @@ class ArticleManager
 
     /**
      * @param User $user
+     *
      * @return array
      */
     public function getDrafts(User $user)
@@ -55,6 +58,7 @@ class ArticleManager
 
     /**
      * @param $count
+     *
      * @return array|\PJM\AppBundle\Entity\Actus\Article[]
      */
     public function getSome($count)
@@ -68,8 +72,8 @@ class ArticleManager
     }
 
     /**
-     * @param Article $article
-     * @param bool|false $new Is the article not yet published ?
+     * @param Article    $article
+     * @param bool|false $new     Is the article not yet published ?
      */
     public function update(Article $article, $new = false)
     {
@@ -96,11 +100,11 @@ class ArticleManager
 
     public function canEdit(User $user, Article $article)
     {
-        return ($article->getAuteur() === $user);
+        return $article->getAuteur() === $user;
     }
 
     public function canDelete(User $user, Article $article)
     {
-        return ($article->getAuteur() === $user || $user->hasRole('ROLE_ASSO_COM'));
+        return $article->getAuteur() === $user || $user->hasRole('ROLE_ASSO_COM');
     }
 }

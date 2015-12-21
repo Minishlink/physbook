@@ -154,7 +154,7 @@ class Commande
      */
     public function showNombre()
     {
-        return $this->nombre/10;
+        return $this->nombre / 10;
     }
 
     /**

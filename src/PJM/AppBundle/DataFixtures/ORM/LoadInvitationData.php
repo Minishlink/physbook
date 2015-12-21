@@ -18,7 +18,7 @@ class LoadInvitationData extends BaseFixture implements OrderedFixtureInterface
         $events = array('Nuit des Fignos', 'Bap\'s des 215', 'Apéro Phy\'sbook');
 
         foreach ($events as $event) {
-            foreach($users as $user) {
+            foreach ($users as $user) {
                 $this->loadInvitation(
                     $manager,
                     $event,
@@ -43,7 +43,7 @@ class LoadInvitationData extends BaseFixture implements OrderedFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

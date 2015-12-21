@@ -22,8 +22,8 @@ class Push
     /**
      * Envoit des notifications Push aux utilisateurs.
      *
-     * @param ArrayCollection $users Les utilisateurs destinataires.
-     * @param string $payload Le message de la notification.
+     * @param ArrayCollection $users   Les utilisateurs destinataires.
+     * @param string          $payload Le message de la notification.
      */
     public function sendNotificationToUsers(ArrayCollection $users, $payload)
     {

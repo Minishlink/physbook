@@ -48,7 +48,7 @@ class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterfa
 
         foreach ($keys as $key) {
             $type = $notificationEnum[$key]['type'];
-            $this->loadNotification($manager, $key, $infos[$type], $users, rand(0,1));
+            $this->loadNotification($manager, $key, $infos[$type], $users, rand(0, 1));
         }
 
         $manager->flush();
@@ -68,7 +68,7 @@ class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterfa
 
         foreach ($users as $user) {
             /** @var User $user */
-            $user = $this->getReference($user."-user");
+            $user = $this->getReference($user.'-user');
 
             $notification = new Notification();
             $notification->setKey($key);
@@ -82,7 +82,7 @@ class LoadNotificationsData extends BaseFixture implements OrderedFixtureInterfa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

@@ -96,8 +96,8 @@ class UserManager extends BaseUserManager
      *
      * @param \DateTime $dateDebut
      * @param \DateTime $dateFin
-     * @param User $currentUser If set, users will be filtered by prom's +-1 the one of this user
-     * @param bool $forFullCalendar If true, return an array compatible with FullCalendar
+     * @param User      $currentUser     If set, users will be filtered by prom's +-1 the one of this user
+     * @param bool      $forFullCalendar If true, return an array compatible with FullCalendar
      *
      * @return User[]|array
      */
@@ -135,8 +135,8 @@ class UserManager extends BaseUserManager
      *
      * @param \DateTime $dateDebut
      * @param \DateTime $dateFin
-     * @param User $currentUser If set, users will be filtered by prom's +-1 the one of this user
-     * @param bool $forFullCalendar If true, return an array compatible with FullCalendar
+     * @param User      $currentUser     If set, users will be filtered by prom's +-1 the one of this user
+     * @param bool      $forFullCalendar If true, return an array compatible with FullCalendar
      *
      * @return User[]|array
      */
@@ -155,7 +155,7 @@ class UserManager extends BaseUserManager
                 if (!$forFullCalendar) {
                     $exances[$exance] = $users;
                 } else {
-                    $users = array_map(function(User $user) {
+                    $users = array_map(function (User $user) {
                         return $user->getBucque();
                     }, $users);
 

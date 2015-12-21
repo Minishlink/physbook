@@ -119,7 +119,7 @@ class LoadItemData extends BaseFixture implements OrderedFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

@@ -165,8 +165,8 @@ class EvenementManager
      *
      * @param \DateTime $dateDebut
      * @param \DateTime $dateFin
-     * @param User $user
-     * @param bool $forFullCalendar If true, return an array compatible with FullCalendar
+     * @param User      $user
+     * @param bool      $forFullCalendar If true, return an array compatible with FullCalendar
      *
      * @return \PJM\AppBundle\Entity\Event\Evenement[]|array
      */
@@ -177,7 +177,7 @@ class EvenementManager
 
         // si c'est pour être utilisé ensuite comme source de FullCalendar
         if ($forFullCalendar) {
-            $events = array_map(function(Evenement $event) use ($user) {
+            $events = array_map(function (Evenement $event) use ($user) {
                 // on filtre si l'utilisateur est spécifié
                 if (isset($user)) {
                     if (!$event->canBeSeenByUser($user)) {
@@ -205,15 +205,15 @@ class EvenementManager
 
     public function canEdit(User $user, Evenement $event)
     {
-        return ($event->getCreateur() === $user
-            || $this->authChecker->isGranted('ROLE_ADMIN'));
+        return $event->getCreateur() === $user
+            || $this->authChecker->isGranted('ROLE_ADMIN');
     }
 
     public function canUserTriggerPayment(User $user, Evenement $event)
     {
-        return ($this->authChecker->isGranted('ROLE_ADMIN')
+        return $this->authChecker->isGranted('ROLE_ADMIN')
             || ($event->isMajeur() && $this->authChecker->isGranted('ROLE_ZIPIANS_HARPAGS'))
-            || (!$event->isMajeur() && $event->getCreateur() == $user));
+            || (!$event->isMajeur() && $event->getCreateur() == $user);
     }
 
     public function paiement(Evenement $event)

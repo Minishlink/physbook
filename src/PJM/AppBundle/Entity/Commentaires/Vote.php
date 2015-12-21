@@ -2,7 +2,6 @@
 
 // src/PJM/AppBundle/Entity/Commentaires/Vote.php
 
-
 namespace PJM\AppBundle\Entity\Commentaires;
 
 use Doctrine\ORM\Mapping as ORM;

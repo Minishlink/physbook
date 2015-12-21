@@ -2,7 +2,6 @@
 
 namespace PJM\AppBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PJM\AppBundle\Entity\Event\Evenement;
@@ -21,7 +20,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
                 'description' => 'Dans la bonne humeur !',
                 'lieu' => 'Pian\'s',
                 'day' => false,
-                'boquette' => $this->getBoquette("pians"),
+                'boquette' => $this->getBoquette('pians'),
                 'public' => true,
                 'prix' => '0',
                 'majeur' => false,
@@ -32,7 +31,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
                 'description' => '',
                 'lieu' => 'Chez le phy\'sss',
                 'day' => false,
-                'boquette' => $this->getBoquette("physbook"),
+                'boquette' => $this->getBoquette('physbook'),
                 'public' => true,
                 'prix' => '0',
                 'majeur' => false,
@@ -92,7 +91,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
     private function loadEvenement(ObjectManager $manager, $createur, $nom, $description, $day, $boquette, $public, $prix, $majeur)
     {
         if (empty($description)) {
-            $description = $this->getLoremIpsum(rand(1,2), "paragraphs");
+            $description = $this->getLoremIpsum(rand(1, 2), 'paragraphs');
         }
 
         $event = new Evenement();
@@ -105,10 +104,10 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
         $event->setPrix($prix);
         $event->setMajeur($majeur);
 
-        $dateDebut = $this->getRandomDate(0, 30, rand(0,1));
+        $dateDebut = $this->getRandomDate(0, 30, rand(0, 1));
         $event->setDateDebut($dateDebut);
 
-        $intervalDebutFin = $day ? "P".rand(1,2)."D" : "PT".rand(1,12)."H";
+        $intervalDebutFin = $day ? 'P'.rand(1, 2).'D' : 'PT'.rand(1, 12).'H';
         $event->setDateFin($dateDebut->add(new \DateInterval($intervalDebutFin)));
 
         $event->setDay($day);
@@ -118,7 +117,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

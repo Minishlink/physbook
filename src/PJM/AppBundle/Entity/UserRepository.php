@@ -121,6 +121,7 @@ class UserRepository extends EntityRepository
 
     /**
      * @param array $proms
+     *
      * @return array
      */
     public function getByProms(array $proms)
@@ -144,11 +145,11 @@ class UserRepository extends EntityRepository
             $this->filterByCloseProms($qb, $closeProms);
         }
 
-        $month_debut = $month = (int)$debut->format('m');
-        $month_fin = (int)$fin->format('m');
+        $month_debut = $month = (int) $debut->format('m');
+        $month_fin = (int) $fin->format('m');
         $months[] = $month_debut;
         while ($month !== $month_fin) {
-            if(++$month === 13) {
+            if (++$month === 13) {
                 $month = 1;
             }
 
@@ -163,7 +164,8 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function filterByCloseProms(QueryBuilder $qb, $proms) {
+    private function filterByCloseProms(QueryBuilder $qb, $proms)
+    {
         $qb
             ->andWhere('u.proms >= :proms - 1')
             ->andWhere('u.proms <= :proms + 1')

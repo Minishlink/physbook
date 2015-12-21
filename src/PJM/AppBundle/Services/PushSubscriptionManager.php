@@ -2,7 +2,6 @@
 
 namespace PJM\AppBundle\Services;
 
-
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\PushSubscription;
 use PJM\AppBundle\Entity\User;
@@ -21,8 +20,9 @@ class PushSubscriptionManager
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $endpoint
+     *
      * @return null|PushSubscription
      */
     public function create(User $user, $endpoint)
@@ -38,6 +38,7 @@ class PushSubscriptionManager
 
     /**
      * @param string $endpoint
+     *
      * @return null|PushSubscription
      */
     public function find($endpoint)
@@ -46,14 +47,15 @@ class PushSubscriptionManager
     }
 
     /**
-     * @param User $user
+     * @param User             $user
      * @param PushSubscription $pushSubscription
+     *
      * @return null|PushSubscription
      */
     public function update(User $user, PushSubscription $pushSubscription)
     {
         if (!$this->canAccess($user, $pushSubscription)) {
-            return null;
+            return;
         }
 
         $pushSubscription->refreshLastSubscribed();
@@ -64,7 +66,7 @@ class PushSubscriptionManager
             ->getValidator();
 
         if ($validator->validate($pushSubscription)->count()) {
-            return null;
+            return;
         }
 
         $this->persist($pushSubscription);
@@ -73,8 +75,9 @@ class PushSubscriptionManager
     }
 
     /**
-     * @param User $user
+     * @param User             $user
      * @param PushSubscription $pushSubscription
+     *
      * @return bool Success
      */
     public function delete(User $user, PushSubscription $pushSubscription)
@@ -90,8 +93,9 @@ class PushSubscriptionManager
     }
 
     /**
-     * @param User $user
+     * @param User             $user
      * @param PushSubscription $pushSubscription
+     *
      * @return bool
      */
     private function canAccess(User $user, PushSubscription $pushSubscription)
@@ -101,13 +105,13 @@ class PushSubscriptionManager
 
     /**
      * @param PushSubscription $pushSubscription
-     * @param bool|true $flush
+     * @param bool|true        $flush
      */
     private function persist(PushSubscription $pushSubscription, $flush = true)
     {
         $this->em->persist($pushSubscription);
 
-        if($flush) {
+        if ($flush) {
             $this->em->flush();
         }
     }

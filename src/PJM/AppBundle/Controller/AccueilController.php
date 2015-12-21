@@ -20,13 +20,8 @@ class AccueilController extends Controller
         $listeAnniv = $repository->getByDateAnniversaire($now, $this->getUser()->getProms());
 
         $trads = $this->get('pjm.services.trads');
-        if ($trads->isExanceEnabled()) {
-            $exance = $trads->getExanceFromDate($now);
-            $listeExances = $repository->findByNums($exance, $this->getUser()->getProms());
-        } else {
-            $exance = null;
-            $listeExances = null;
-        }
+        $exance = $trads->isExanceEnabled() ? $trads->getExanceFromDate($now) : null;
+        $listeExances = $exance ? $repository->findByNums($exance, $this->getUser()->getProms()) : null;
 
         $listeConnectes = $repository->getActive($this->getUser());
 

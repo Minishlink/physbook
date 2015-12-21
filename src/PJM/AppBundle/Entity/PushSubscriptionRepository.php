@@ -27,7 +27,7 @@ class PushSubscriptionRepository extends EntityRepository
 
     /**
      * @param ArrayCollection $users
-     * @param \DateTime|null $limitDate Too old subscriptions will be filtered.
+     * @param \DateTime|null  $limitDate Too old subscriptions will be filtered.
      *
      * @return array|null
      */

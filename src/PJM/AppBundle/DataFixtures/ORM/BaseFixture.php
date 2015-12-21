@@ -14,32 +14,35 @@ abstract class BaseFixture extends AbstractFixture
     private $loremIpsum;
 
     /**
-     * Get User by username
+     * Get User by username.
      *
      * @param string $username
+     *
      * @return User
      */
     protected function getUser($username)
     {
-        return $this->getReference($username."-user");
+        return $this->getReference($username.'-user');
     }
 
     /**
-     * Get Boquette by slug
+     * Get Boquette by slug.
      *
      * @param string $slug
+     *
      * @return Boquette
      */
     protected function getBoquette($slug)
     {
-        return $this->getReference($slug."-boquette");
+        return $this->getReference($slug.'-boquette');
     }
 
     /**
-     * Get Item by slug and valid
+     * Get Item by slug and valid.
      *
      * @param string $slug
-     * @param bool $valid
+     * @param bool   $valid
+     *
      * @return Item
      */
     protected function getItem($slug, $valid = true)
@@ -48,9 +51,10 @@ abstract class BaseFixture extends AbstractFixture
     }
 
     /**
-     * Get Evenement by name
+     * Get Evenement by name.
      *
      * @param string $name
+     *
      * @return Evenement
      */
     protected function getEvenement($name)
@@ -61,6 +65,7 @@ abstract class BaseFixture extends AbstractFixture
     /**
      * @param $min
      * @param $max
+     *
      * @return \DateTime
      */
     protected function getRandomDateAgo($min, $max)
@@ -71,6 +76,7 @@ abstract class BaseFixture extends AbstractFixture
     /**
      * @param $min
      * @param $max
+     *
      * @return \DateTime
      */
     protected function getRandomDateLater($min, $max)
@@ -82,20 +88,22 @@ abstract class BaseFixture extends AbstractFixture
      * @param $min
      * @param $max
      * @param bool $ago
+     *
      * @return \DateTime
      */
     protected function getRandomDate($min, $max, $ago)
     {
         $sign = $ago ? '-' : '+';
         $date = new \DateTime($sign.rand($min, $max).' days');
-        $date->setTime(rand(0,23), rand(0,59));
+        $date->setTime(rand(0, 23), rand(0, 59));
 
         return $date;
     }
 
     /**
-     * @param int $nb
+     * @param int    $nb
      * @param string $type
+     *
      * @return mixed
      */
     protected function getLoremIpsum($nb = 1, $type = 'sentences')

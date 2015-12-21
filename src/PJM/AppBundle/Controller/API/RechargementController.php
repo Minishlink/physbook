@@ -15,6 +15,7 @@ class RechargementController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/confirm")
@@ -23,11 +24,13 @@ class RechargementController extends Controller
     public function confirmAction(Request $request)
     {
         $this->get('pjm.services.payments.lydia')->handlePayment($request, 'OK');
+
         return new Response();
     }
 
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/cancel")
@@ -36,11 +39,13 @@ class RechargementController extends Controller
     public function cancelAction(Request $request)
     {
         $this->get('pjm.services.payments.lydia')->handlePayment($request, 'LYDIA_ANNULATION');
+
         return new Response();
     }
 
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/expire")
@@ -49,6 +54,7 @@ class RechargementController extends Controller
     public function expireAction(Request $request)
     {
         $this->get('pjm.services.payments.lydia')->handlePayment($request, 'LYDIA_EXPIRE');
+
         return new Response();
     }
 }

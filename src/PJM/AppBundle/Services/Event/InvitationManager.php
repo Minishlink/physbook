@@ -35,9 +35,9 @@ class InvitationManager
 
     /**
      * @param Invitation $invitation
-     * @param User $user
-     * @param Evenement $event
-     * @param integer $solde
+     * @param User       $user
+     * @param Evenement  $event
+     * @param int        $solde
      *
      * @return Invitation
      */
@@ -49,7 +49,7 @@ class InvitationManager
                 'La deadline de l\'évènement '.$event->getNom().' est passée.'
             );
 
-            return null;
+            return;
         }
 
         if ($invitation !== null) {
@@ -71,7 +71,7 @@ class InvitationManager
                     'Tu n\'as pas accès à l\'évènement '.$event->getNom().'.'
                 );
 
-                return null;
+                return;
             }
         }
 
@@ -86,7 +86,7 @@ class InvitationManager
                         'Tu ne peux pas participer car il n\'y a plus de places disponibles.'
                     );
 
-                    return null;
+                    return;
                 }
             }
 
@@ -97,10 +97,10 @@ class InvitationManager
                 if ($need > 0) {
                     $this->notification->sendFlash(
                         'warning',
-                        'Tu n\'as pas assez d\'argent sur ton compte. Recharge-le d\'au moins ' . ($need / 100) . '€.'
+                        'Tu n\'as pas assez d\'argent sur ton compte. Recharge-le d\'au moins '.($need / 100).'€.'
                     );
 
-                    return null;
+                    return;
                 }
             }
         }

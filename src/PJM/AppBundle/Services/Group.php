@@ -42,8 +42,10 @@ class Group
         return $this->getProms1A() + 1 - $n;
     }
 
-    public function getUsersAuTabagns() {
+    public function getUsersAuTabagns()
+    {
         $promo = $this->getProms1A();
+
         return $this->em->getRepository('PJMAppBundle:User')->getByProms(array($promo, --$promo, --$promo));
     }
 }
