@@ -68,24 +68,27 @@ class EventController extends Controller
         }, $repoUsers->getByBirthdayBetweenDates($start, $end, $this->getUser()->getProms()));
 
         $trads = $this->get('pjm.services.trads');
+
         $exances = array();
-        for($date_exance = $start; $date_exance < $end; $date_exance->modify('+1 day')) {
-            $exance = $trads->getExanceFromDate($date_exance);
+        if ($trads->isExanceEnabled()) {
+            for($date_exance = $start; $date_exance < $end; $date_exance->modify('+1 day')) {
+                $exance = $trads->getExanceFromDate($date_exance);
 
-            // on vérifie que l'exance existe
-            $users = $repoUsers->findByNums($exance, $this->getUser()->getProms());
-            if (!empty($users)) {
-                $users = array_map(function(User $user) {
-                    return $user->getBucque();
-                }, $users);
+                // on vérifie que l'exance existe
+                $users = $repoUsers->findByNums($exance, $this->getUser()->getProms());
+                if (!empty($users)) {
+                    $users = array_map(function(User $user) {
+                        return $user->getBucque();
+                    }, $users);
 
-                $exances[] = array(
-                    'title' => 'Ex '.$exance.' : '.implode(', ', $users),
-                    'allDay' => true,
-                    'start' => $date_exance->format('c'),
-                    'end' => $date_exance->format('c'),
-                    'className' => 'exance',
-                );
+                    $exances[] = array(
+                        'title' => 'Ex '.$exance.' : '.implode(', ', $users),
+                        'allDay' => true,
+                        'start' => $date_exance->format('c'),
+                        'end' => $date_exance->format('c'),
+                        'className' => 'exance',
+                    );
+                }
             }
         }
 

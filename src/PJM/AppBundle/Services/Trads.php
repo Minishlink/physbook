@@ -4,6 +4,13 @@ namespace PJM\AppBundle\Services;
 
 class Trads
 {
+    /** @var boolean */
+    private $exanceEnabled;
+
+    public function __construct($exanceEnabled) {
+        $this->exanceEnabled = $exanceEnabled;
+    }
+
     public function getNums($fams) {
         $nums = array_map(function($fam) {
             if ($fam === 'XIII') {
@@ -40,5 +47,13 @@ class Trads
         }
 
         return $dateExanceZero->diff($date)->days;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExanceEnabled()
+    {
+        return $this->exanceEnabled;
     }
 }

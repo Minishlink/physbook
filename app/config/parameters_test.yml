@@ -7,3 +7,4 @@ parameters:
         vie_courante:
             public_token: 'testPublic'
             private_token: 'testPrivate'
+    exances: true

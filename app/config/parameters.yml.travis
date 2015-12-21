@@ -39,3 +39,5 @@ parameters:
     android_gcm_api_key: clefAChanger
 
     canal: http
+
+    exances: false

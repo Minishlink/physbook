@@ -19,8 +19,14 @@ class AccueilController extends Controller
         $repository = $em->getRepository('PJMAppBundle:User');
         $listeAnniv = $repository->getByDateAnniversaire($now, $this->getUser()->getProms());
 
-        $exance = $this->get('pjm.services.trads')->getExanceFromDate($now);
-        $listeExances = $repository->findByNums($exance, $this->getUser()->getProms());
+        $trads = $this->get('pjm.services.trads');
+        if ($trads->isExanceEnabled()) {
+            $exance = $trads->getExanceFromDate($now);
+            $listeExances = $repository->findByNums($exance, $this->getUser()->getProms());
+        } else {
+            $exance = null;
+            $listeExances = null;
+        }
 
         $listeConnectes = $repository->getActive($this->getUser());
 
