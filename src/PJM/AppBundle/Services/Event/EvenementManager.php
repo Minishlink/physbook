@@ -9,6 +9,8 @@ use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Consos\HistoriqueManager;
 use PJM\AppBundle\Services\Consos\TransactionManager;
 use PJM\AppBundle\Services\NotificationManager;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class EvenementManager
@@ -16,13 +18,16 @@ class EvenementManager
     private $em;
     private $notification;
     private $authChecker;
+    private $router;
     private $historiqueManager;
     private $transactionManager;
 
-    public function __construct(EntityManager $em, AuthorizationChecker $authChecker, NotificationManager $notification, HistoriqueManager $historiqueManager, TransactionManager $transactionManager)
+    public function __construct(EntityManager $em, AuthorizationChecker $authChecker, Router $router,
+        NotificationManager $notification, HistoriqueManager $historiqueManager, TransactionManager $transactionManager)
     {
         $this->em = $em;
         $this->authChecker = $authChecker;
+        $this->router = $router;
         $this->notification = $notification;
         $this->historiqueManager = $historiqueManager;
         $this->transactionManager = $transactionManager;
@@ -161,25 +166,38 @@ class EvenementManager
      * @param \DateTime $dateDebut
      * @param \DateTime $dateFin
      * @param User $user
+     * @param bool $forFullCalendar If true, return an array compatible with FullCalendar
      *
-     * @return \PJM\AppBundle\Entity\Event\Evenement[]
+     * @return \PJM\AppBundle\Entity\Event\Evenement[]|array
      */
-    public function getBetweenDates(\DateTime $dateDebut, \DateTime $dateFin, User $user = null)
+    public function getBetweenDates(\DateTime $dateDebut, \DateTime $dateFin, User $user = null, $forFullCalendar = false)
     {
-        // trouver tous les évènements de ce mois
+        // trouver tous les évènements correspondants
         $events = $this->em->getRepository('PJMAppBundle:Event\Evenement')->findBetweenDates($dateDebut, $dateFin);
 
-        // on filtre si l'utilisateur est spécifié
-        if (isset($user)) {
-            /** @var Evenement $event */
-            foreach ($events as $event) {
-                if (!$event->canBeSeenByUser($user)) {
-                    $event->setNom('Évènement privé');
-                    $event->setSlug('');
-                    $event->setDescription('');
-                    $event->setLieu('');
+        // si c'est pour être utilisé ensuite comme source de FullCalendar
+        if ($forFullCalendar) {
+            $events = array_map(function(Evenement $event) use ($user) {
+                // on filtre si l'utilisateur est spécifié
+                if (isset($user)) {
+                    if (!$event->canBeSeenByUser($user)) {
+                        $event->setNom('Évènement privé');
+                        $event->setSlug('');
+                        $event->setDescription('');
+                        $event->setLieu('');
+                    }
                 }
-            }
+
+                return array(
+                    'title' => $event->getNom(),
+                    'allDay' => $event->isDay(),
+                    'start' => $event->getDateDebut()->format('c'),
+                    'end' => $event->getDateFin()->format('c'),
+                    'url' => $this->router->generate('pjm_app_event_index', array('slug' => $event->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'className' => !$event->isPublic() ? 'prive' : ($event->isMajeur() ? 'majeur' : 'mineur'),
+                    'lieu' => $event->getLieu(),
+                );
+            }, $events);
         }
 
         return $events;

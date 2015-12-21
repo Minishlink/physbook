@@ -40,7 +40,7 @@ services:
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%, @pjm.services.trads]
     pjm.services.evenement_manager:
         class: PJM\AppBundle\Services\Event\EvenementManager
-        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @pjm.services.notification, @pjm.services.historique_manager, @pjm.services.transaction_manager]
+        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @router, @pjm.services.notification, @pjm.services.historique_manager, @pjm.services.transaction_manager]
     pjm.services.invitation_manager:
         class: PJM\AppBundle\Services\Event\InvitationManager
         arguments: [@doctrine.orm.entity_manager, @pjm.services.notification]
