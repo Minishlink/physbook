@@ -33,13 +33,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#calendrier">
                         <img src="{{ asset('images/consos/pians/Calendrier-G.png') }}"><br>
                         Calendrier
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#calendrier">
                         <img src="{{ asset('images/consos/pians/Nettoyage-R.png') }}"><br>
                         D'reunssage
                     </a>
@@ -90,7 +90,7 @@
         <div class="col-md-4 text-center">
             {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
         </div>
-        <div class="col-md-4">
+        <div id="calendrier" class="col-md-4">
             {{ include('@PJMApp/Event/fullCalendar.html.twig') }}
         </div>
         <div class="col-md-4">
