@@ -12,30 +12,20 @@ body.modal-open {
 }
 
 // --- DataTables ---
-.dataTables_scroll {
-        background-color: white !important;
-        color: black !important;
-}
+.dataTables_wrapper {
+    overflow-x: hidden;
 
-div.dataTables_info {
-    white-space: normal;
-}
-
-.dataTable {
-    img, > img {
-        max-height: 4em;
+    .dataTables_info {
+        white-space: normal;
     }
 }
 
-@media @phone-strict, @miniphone {
-    .dataTables_filter {
-        label {
-            text-align: center !important;
-        }
+.dataTable {
+    background-color: white;
+    color: black;
 
-        input {
-            display: block !important;
-        }
+    img, > img {
+        max-height: 4em;
     }
 }
 
