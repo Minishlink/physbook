@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "99914e366e5c0662dca693bd0d41435f",
-    "content-hash": "5d70379d2850d5079560e5c43cd8f99c",
+    "hash": "094788b4bfd1a1dde506257ebfd48289",
+    "content-hash": "46ebd2432712a32d56f01cb0e8376939",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2802,17 +2802,17 @@
         },
         {
             "name": "sg/datatablesbundle",
-            "version": "v0.7.1",
+            "version": "v0.8",
             "target-dir": "Sg/DatatablesBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stwe/DatatablesBundle.git",
-                "reference": "c85b626e094df48634c06e3d6dd3365319ee9e87"
+                "reference": "379c58d62c487eb998881106d73f73dc1a96201a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/c85b626e094df48634c06e3d6dd3365319ee9e87",
-                "reference": "c85b626e094df48634c06e3d6dd3365319ee9e87",
+                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/379c58d62c487eb998881106d73f73dc1a96201a",
+                "reference": "379c58d62c487eb998881106d73f73dc1a96201a",
                 "shasum": ""
             },
             "require": {
@@ -2825,8 +2825,9 @@
             },
             "suggest": {
                 "components/jquery": "1.11.3",
-                "datatables/datatables": "1.10.7",
-                "moment/moment": "2.10.2"
+                "datatables/datatables": "1.10.10",
+                "liip/imagine-bundle": "^1.3",
+                "moment/moment": "2.10.6"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2857,7 +2858,7 @@
                 "pagination",
                 "table"
             ],
-            "time": "2015-07-05 18:01:31"
+            "time": "2015-11-29 16:44:13"
         },
         {
             "name": "stof/doctrine-extensions-bundle",

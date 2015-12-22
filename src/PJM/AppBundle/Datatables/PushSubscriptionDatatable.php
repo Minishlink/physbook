@@ -10,13 +10,13 @@ class PushSubscriptionDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         $this->options->setOption('order', [[1, 'desc']]);
 
-        $this->ajax->setOptions(array('url' => $this->router->generate('pjm_app_api_pushsubscription_results')));
+        $this->ajax->set(array('url' => $this->router->generate('pjm_app_api_pushsubscription_results')));
 
         $this->columnBuilder
             ->add(null, 'multiselect', array(

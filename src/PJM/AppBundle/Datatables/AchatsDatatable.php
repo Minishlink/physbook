@@ -10,11 +10,11 @@ class AchatsDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
-        $this->ajax->setOptions(array(
+        $this->ajax->set(array(
             'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
         ));
 

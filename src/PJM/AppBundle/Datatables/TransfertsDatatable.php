@@ -10,13 +10,13 @@ class TransfertsDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         $this->options->setOption('individual_filtering', true);
 
-        $this->ajax->setOptions(array(
+        $this->ajax->set(array(
             'url' => $this->ajaxUrl ? $this->ajaxUrl : '',
         ));
 

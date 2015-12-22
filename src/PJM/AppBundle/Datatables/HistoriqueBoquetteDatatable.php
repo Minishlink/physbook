@@ -10,18 +10,18 @@ class HistoriqueBoquetteDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
-        $this->features->setFeatures(array(
+        $this->features->set(array(
             'server_side' => false,
         ));
 
         $this->columnBuilder
             ->add('date', 'datetime', array(
                 'title' => 'Date',
-                'date_format' => 'YYYY-MM-DD HH:mm',
+                'date_format' => 'lll',
             ))
             ->add('nom', 'column', array(
                 'title' => 'Nom',

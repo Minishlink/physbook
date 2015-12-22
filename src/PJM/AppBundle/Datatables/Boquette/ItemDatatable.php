@@ -26,14 +26,14 @@ class ItemDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         $this->options->setOption('order', [[6, 'desc']]);
 
         if (isset($this->boquetteSlug)) {
-            $this->ajax->setOptions(array(
+            $this->ajax->set(array(
                 'url' => $this->router->generate('pjm_app_boquette_itemResults', array(
                     'boquette_slug' => $this->boquetteSlug,
                 )),

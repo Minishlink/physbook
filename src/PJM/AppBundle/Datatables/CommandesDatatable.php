@@ -10,13 +10,13 @@ class CommandesDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         $this->options->setOption('order', [[8, 'asc']]);
 
-        $this->ajax->setOptions(array(
+        $this->ajax->set(array(
             'url' => $this->router->generate('pjm_app_admin_boquette_brags_commandesResults'),
         ));
 

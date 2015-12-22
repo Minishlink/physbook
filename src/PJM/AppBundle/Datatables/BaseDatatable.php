@@ -30,13 +30,18 @@ abstract class BaseDatatable extends AbstractDatatableView
         $this->admin = $admin;
     }
 
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        $this->options->setOptions(array(
+        $this->options->set(array(
             'order' => [[0, 'desc']],
             'class' => Style::BOOTSTRAP_3_STYLE,
             'use_integration_options' => true,
-            'responsive' => true,
+        ));
+
+        $this->features->set(array(
+            'extensions' => array(
+                'responsive' => true,
+            ),
         ));
     }
 }

@@ -163,3 +163,7 @@ lexik_form_filter:
 minishlink_web_push:
   api_keys:
     GCM: %android_gcm_api_key%
+
+sg_datatables:
+  query:
+    search_on_non_visible_columns: true

@@ -19,12 +19,12 @@ class FeaturedItemDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         if (isset($this->boquetteSlug)) {
-            $this->ajax->setOptions(array(
+            $this->ajax->set(array(
                 'url' => $this->router->generate('pjm_app_admin_boquette_featuredItemResults', array(
                     'boquette_slug' => $this->boquetteSlug,
                 )),

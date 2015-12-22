@@ -10,15 +10,15 @@ class AnnuaireDatatable extends BaseDatatable
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable($locale = null)
     {
-        parent::buildDatatable();
+        parent::buildDatatable($locale);
 
         $this->options->setOption('order', [[2, 'asc']]);
         $this->options->setOption('page_length', 25);
         $this->options->setOption('individual_filtering', true);
 
-        $this->ajax->setOptions(array(
+        $this->ajax->set(array(
             'url' => $this->router->generate('pjm_profil_annuaireResults'),
         ));
 
