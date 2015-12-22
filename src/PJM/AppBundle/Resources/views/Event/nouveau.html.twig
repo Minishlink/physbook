@@ -1,10 +1,17 @@
-<div id="creation" class="collapse">
+{% extends standalone ? "PJMAppBundle::minimum.html.twig" : "PJMAppBundle:Event:layout.html.twig" %}
+
+{% block title %}Nouveau - {{ parent() }}{% endblock %}
+
+{% block pjm_app_body_content %}
+<div id="creation"{% if standalone %} class="collapse"{% endif %}>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h2 class="panel-title">Nouvel évènement
-                <button type="button" class="close" data-toggle="collapse" data-target="#creation" aria-label="Annuler" title="Annuler">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                {% if standalone %}
+                    <button type="button" class="close" data-toggle="collapse" data-target="#creation" aria-label="Annuler" title="Annuler">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                {% endif %}
             </h2>
         </div>
         <div class="panel-body">
@@ -15,3 +22,4 @@
         </div>
     </div>
 </div>
+{% endblock %}

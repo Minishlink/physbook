@@ -8,6 +8,19 @@
             loading: function(isLoading, view) {
                 chargement(isLoading);
             },
+            customButtons: {
+                nouveau: {
+                    text: 'Nouveau',
+                    click: function() {
+                        window.location.assign("{{ path('pjm_app_event_nouveau') }}");
+                    }
+                }
+            },
+            header: {
+                left: 'title',
+                center: '',
+                right: 'nouveau prev,today,next'
+            },
             eventMouseover: function(event, jsEvent, view) {
                 var infos = '';
 

@@ -69,14 +69,13 @@ class EventController extends Controller
      * Ajout d'un évènement.
      *
      * @param Request $request
+     * @param bool $formulaire
      *
      * @return object HTML Response
      *
-     * @throws \Exception
-     *
      * @Template
      */
-    public function nouveauAction(Request $request)
+    public function nouveauAction(Request $request, $standalone = false)
     {
         $eventManager = $this->get('pjm.services.evenement_manager');
         $event = $eventManager->create($this->getUser());
@@ -95,29 +94,30 @@ class EventController extends Controller
                 // on fait participer le créateur
                 $this->get('pjm.services.invitation_manager')->toggleInscriptionFromUserToEvent(null, $this->getUser(), $event);
 
-                $data = array(
-                    'redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())),
-                );
+                return $request->isXmlHttpRequest() ?
+                    new JsonResponse(array('redirectURL' => $this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())))) :
+                    $this->redirect($this->generateUrl('pjm_app_event_index'));
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
                     "Un problème est survenu lors de la création de l'évènement. Réessaye."
                 );
 
-                $data = array(
-                    'formView' => $this->renderView('PJMAppBundle::form_only.html.twig', array(
-                        'form' => $form->createView(),
-                    )),
-                    'flashBagView' => $this->renderView('PJMAppBundle:App:flashBag.html.twig'),
-                    'success' => false,
-                );
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse(array(
+                        'formView' => $this->renderView('@PJMApp/Event/form_event.html.twig', array(
+                            'form' => $form->createView(),
+                        )),
+                        'flashBagView' => $this->renderView('PJMAppBundle:App:flashBag.html.twig'),
+                        'success' => false,
+                    ));
+                }
             }
-
-            return $request->isXmlHttpRequest() ? new JsonResponse($data) : $this->redirect($this->generateUrl('pjm_app_event_index'));
         }
 
         return array(
             'form' => $form->createView(),
+            'standalone' => $standalone,
         );
     }
 
