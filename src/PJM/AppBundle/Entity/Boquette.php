@@ -62,6 +62,13 @@ class Boquette
      */
     private $couleur;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="lieux", type="array", nullable=true)
+     */
+    private $lieux;
+
     public function __construct()
     {
         $this->responsabilites = new \Doctrine\Common\Collections\ArrayCollection();
@@ -244,5 +251,25 @@ class Boquette
     public function getCouleur()
     {
         return $this->couleur;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLieux()
+    {
+        return $this->lieux;
+    }
+
+    /**
+     * @param array $lieux
+     *
+     * @return Boquette
+     */
+    public function setLieux($lieux)
+    {
+        $this->lieux = $lieux;
+
+        return $this;
     }
 }
