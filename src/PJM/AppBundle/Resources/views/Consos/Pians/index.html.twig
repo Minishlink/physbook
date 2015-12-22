@@ -55,7 +55,7 @@
     </div>
     <div class="space"></div>
     <div class="row">
-        <div class="col-lg-3 col-lg-offset-1 col-sm-5 col-sm-offset-1">
+        <div class="col-lg-4 col-lg-offset-0 col-lg-push-4 col-sm-5 col-sm-offset-1">
             {% include "PJMAppBundle:Consos:Pians/extraitHistorique.html.twig" %}
         </div>
         <div class="space visible-xs-block visible-sm-block"></div>
@@ -76,12 +76,12 @@
             </div>
         </div>
         <div class="space visible-xs-block visible-sm-block"></div>
-        <div class="col-lg-3 col-lg-offset-1 col-lg-pull-4 col-sm-8 col-sm-offset-2">
+        <div class="col-lg-4 col-lg-offset-0 col-lg-pull-8 col-sm-8 col-sm-offset-2">
             {%
-                include "PJMAppBundle:Consos:Pians/boissonDuMoment.html.twig"
-                with {
-                    'boisson': boissonDuMois,
-                }
+            include "PJMAppBundle:Consos:Pians/boissonDuMoment.html.twig"
+            with {
+            'boisson': boissonDuMois,
+            }
             %}
         </div>
     </div>
@@ -94,13 +94,7 @@
             {{ include('@PJMApp/Event/fullCalendar.html.twig') }}
         </div>
         <div class="col-md-4">
-            {# Réserver pian's #}
-        </div>
-    </div>
-    <div class="space visible-xs-block visible-sm-block"></div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            {# Statistiques #}
+            {# Liste HPi #}
         </div>
     </div>
 </div>
