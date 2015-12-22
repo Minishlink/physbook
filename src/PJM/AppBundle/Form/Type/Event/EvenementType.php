@@ -34,7 +34,9 @@ class EvenementType extends AbstractType
                 'required' => false,
                 'linkedTo' => 'dateDebut',
             ))
-            ->add('lieu')
+            ->add('lieu', null, array(
+                'help_label' => 'Si tu renseignes "Pian\'s", "C\'vis", ou encore "Gymnase", ton évènement apparaîtra sur la page de la boquette correspondante.',
+            ))
             ->add('prix', 'money', array(
                 'label' => 'Prix par personne',
                 'divisor' => 100,
