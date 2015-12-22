@@ -22,6 +22,7 @@ class LoadBoquetteData extends AbstractFixture implements OrderedFixtureInterfac
         $this->loadBoquette($manager, 'AMJE Bordeaux', 'amje-bordeaux', null, 'blanc');
         $this->loadBoquette($manager, 'Asso', 'asso', null, 'bleu');
         $this->loadBoquette($manager, 'UAI', 'uai', null, 'rose', array('Gymnase'));
+        $this->loadBoquette($manager, 'CdF', 'cdf', null, 'jaune');
     }
 
     private function loadBoquette(ObjectManager $manager, $nom, $slug, $caisse, $couleur, $lieux = null)

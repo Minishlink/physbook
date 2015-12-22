@@ -69,6 +69,17 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
                 'prix' => '0',
                 'majeur' => true,
             ),
+            array(
+                'createur' => 'conscrit',
+                'nom' => 'Soirée HM CdF',
+                'description' => '',
+                'lieu' => 'Pian\'s',
+                'day' => false,
+                'boquette' => $this->getBoquette('cdf'),
+                'public' => true,
+                'prix' => '0',
+                'majeur' => true,
+            ),
         );
 
         foreach ($events as $event) {
@@ -77,6 +88,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
                 $event['createur'],
                 $event['nom'],
                 $event['description'],
+                $event['lieu'],
                 $event['day'],
                 $event['boquette'],
                 $event['public'],
@@ -88,7 +100,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
-    private function loadEvenement(ObjectManager $manager, $createur, $nom, $description, $day, $boquette, $public, $prix, $majeur)
+    private function loadEvenement(ObjectManager $manager, $createur, $nom, $description, $lieu, $day, $boquette, $public, $prix, $majeur)
     {
         if (empty($description)) {
             $description = $this->getLoremIpsum(rand(1, 2), 'paragraphs');
@@ -98,6 +110,7 @@ class LoadEvenementData extends BaseFixture implements OrderedFixtureInterface
         $event->setCreateur($this->getUser($createur));
         $event->setNom($nom);
         $event->setDescription($description);
+        $event->setLieu($lieu);
         $event->setBoquette($boquette);
         $event->setPublic($public);
 
