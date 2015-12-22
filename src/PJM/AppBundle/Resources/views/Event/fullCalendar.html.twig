@@ -1,0 +1,34 @@
+<div id="fullCalendar" class="calendrier-fullCalendar"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $calendar = $('#fullCalendar');
+
+        $calendar.fullCalendar({
+            lang: 'fr',
+            loading: function(isLoading, view) {
+                chargement(isLoading);
+            },
+            eventMouseover: function(event, jsEvent, view) {
+                var infos = '';
+
+                if (event.lieu) {
+                    infos += '<strong>Lieu : </strong>' + event.lieu;
+                }
+
+                if (infos !== '') {
+                    $(this).append('<div class="infos">' + infos + '</div>');
+                }
+            },
+            eventMouseout: function(event, jsEvent, view) {
+                $(this).find('div.infos').remove();
+            },
+            eventSources: [
+                Routing.generate('pjm_app_api_event_calendar', {slug: '{{ boquette is defined ? boquette.slug : ""}}'})
+            ]
+        });
+
+        {% if defaultDate is defined %}
+        $calendar.fullCalendar('gotoDate', '{{ defaultDate }}');
+        {% endif %}
+    });
+</script>

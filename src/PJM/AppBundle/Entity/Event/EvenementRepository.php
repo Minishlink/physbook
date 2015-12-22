@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Entity\Event;
 
 use Doctrine\ORM\EntityRepository;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\User;
 
 /**
@@ -114,7 +115,7 @@ class EvenementRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findBetweenDates(\DateTime $debut, \DateTime $fin)
+    public function findBetweenDates(\DateTime $debut, \DateTime $fin, Boquette $boquette = null)
     {
         $qb = $this->createQueryBuilder('e');
 
@@ -124,6 +125,12 @@ class EvenementRepository extends EntityRepository
             ->setParameter('debut', $debut)
             ->setParameter('fin', $fin)
         ;
+
+        if (isset($boquette)) {
+            $qb
+                ->andWhere('e.boquette = :boquette')
+                ->setParameter('boquette', $boquette);
+        }
 
         return $qb->getQuery()->getResult();
     }

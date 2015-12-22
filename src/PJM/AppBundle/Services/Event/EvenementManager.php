@@ -3,6 +3,7 @@
 namespace PJM\AppBundle\Services\Event;
 
 use Doctrine\ORM\EntityManager;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
 use PJM\AppBundle\Entity\User;
@@ -165,15 +166,16 @@ class EvenementManager
      *
      * @param \DateTime $dateDebut
      * @param \DateTime $dateFin
-     * @param User      $user
-     * @param bool      $forFullCalendar If true, return an array compatible with FullCalendar
+     * @param User $user
+     * @param Boquette $boquette If specified, events will be filtered by this Boquette
+     * @param bool $forFullCalendar If true, return an array compatible with FullCalendar
      *
-     * @return \PJM\AppBundle\Entity\Event\Evenement[]|array
+     * @return array|\PJM\AppBundle\Entity\Event\Evenement[]
      */
-    public function getBetweenDates(\DateTime $dateDebut, \DateTime $dateFin, User $user = null, $forFullCalendar = false)
+    public function getBetweenDates(\DateTime $dateDebut, \DateTime $dateFin, User $user = null, Boquette $boquette = null, $forFullCalendar = false)
     {
         // trouver tous les évènements correspondants
-        $events = $this->em->getRepository('PJMAppBundle:Event\Evenement')->findBetweenDates($dateDebut, $dateFin);
+        $events = $this->em->getRepository('PJMAppBundle:Event\Evenement')->findBetweenDates($dateDebut, $dateFin, $boquette);
 
         // si c'est pour être utilisé ensuite comme source de FullCalendar
         if ($forFullCalendar) {
