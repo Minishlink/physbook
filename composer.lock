@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "094788b4bfd1a1dde506257ebfd48289",
+    "hash": "ed245e7758244aa04e5e8b38bc29020f",
     "content-hash": "46ebd2432712a32d56f01cb0e8376939",
     "packages": [
         {
@@ -1198,17 +1198,17 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "1.7.4",
+            "version": "1.7.6",
             "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "64ba918b1eb47acb5aa7fef1ce95623235b53775"
+                "reference": "f95b2f141748e9a5e2ddae833f60c38417aee8c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/64ba918b1eb47acb5aa7fef1ce95623235b53775",
-                "reference": "64ba918b1eb47acb5aa7fef1ce95623235b53775",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/f95b2f141748e9a5e2ddae833f60c38417aee8c3",
+                "reference": "f95b2f141748e9a5e2ddae833f60c38417aee8c3",
                 "shasum": ""
             },
             "require": {
@@ -1275,12 +1275,12 @@
                     "email": "ever.zet@gmail.com"
                 }
             ],
-            "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony2",
+            "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony",
             "homepage": "http://friendsofsymfony.github.com",
             "keywords": [
                 "rest"
             ],
-            "time": "2015-12-05 14:55:07"
+            "time": "2015-12-20 13:45:30"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -2163,32 +2163,31 @@
         },
         {
             "name": "liuggio/ExcelBundle",
-            "version": "v2.0.2",
-            "target-dir": "Liuggio/ExcelBundle",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liuggio/ExcelBundle.git",
-                "reference": "33ce101e5fb76786ea05da350ab394b596d7ee52"
+                "reference": "a6424eef60d5a9201146d6820de7d75bb2be79bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liuggio/ExcelBundle/zipball/33ce101e5fb76786ea05da350ab394b596d7ee52",
-                "reference": "33ce101e5fb76786ea05da350ab394b596d7ee52",
+                "url": "https://api.github.com/repos/liuggio/ExcelBundle/zipball/a6424eef60d5a9201146d6820de7d75bb2be79bc",
+                "reference": "a6424eef60d5a9201146d6820de7d75bb2be79bc",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "phpoffice/phpexcel": "~1.8.0",
-                "symfony/framework-bundle": "~2.6"
+                "symfony/framework-bundle": "~2.6|~3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.6",
-                "sensio/framework-extra-bundle": "~2.3",
-                "symfony/browser-kit": "~2.6",
-                "symfony/class-loader": "~2.6",
-                "symfony/finder": "~2.6",
-                "symfony/form": "~2.6",
-                "symfony/validator": "~2.6"
+                "sensio/framework-extra-bundle": "~2.3|~3.0",
+                "symfony/browser-kit": "~2.6|~3.0",
+                "symfony/class-loader": "~2.6|~3.0",
+                "symfony/finder": "~2.6|~3.0",
+                "symfony/form": "~2.6|~3.0",
+                "symfony/validator": "~2.6|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2197,8 +2196,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Liuggio\\ExcelBundle": ""
+                "psr-4": {
+                    "Liuggio\\ExcelBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2223,7 +2222,7 @@
                 "excel",
                 "xls"
             ],
-            "time": "2015-05-15 09:50:11"
+            "time": "2015-12-22 11:22:03"
         },
         {
             "name": "minishlink/web-push",
