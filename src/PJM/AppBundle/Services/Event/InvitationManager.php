@@ -43,7 +43,7 @@ class InvitationManager
      */
     public function toggleInscriptionFromUserToEvent(Invitation $invitation = null, User $user, Evenement $event, $solde = null)
     {
-        if (new \DateTime('now') > $event->getDateDeadline()) {
+        if ($event->getDateDeadline() !== null && new \DateTime('now') > $event->getDateDeadline()) {
             $this->notification->sendFlash(
                 'warning',
                 'La deadline de l\'évènement '.$event->getNom().' est passée.'
