@@ -20,6 +20,7 @@ class PiansController extends Controller
         $boissonDuMois = $utils->getFeaturedItem($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
+            'boquette' => $piansService->getBoquette(),
             'boquetteSlug' => $this->slug,
             'solde' => $piansService->getSolde($this->getUser()),
             'listeHistoriques' => $listeHistoriques,

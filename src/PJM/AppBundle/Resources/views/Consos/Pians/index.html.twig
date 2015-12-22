@@ -91,7 +91,7 @@
             {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
         </div>
         <div class="col-md-4">
-            {# Calendrier #}
+            {{ include('@PJMApp/Event/fullCalendar.html.twig') }}
         </div>
         <div class="col-md-4">
             {# Réserver pian's #}
