@@ -27,7 +27,9 @@ var paths = {
             path.app + 'lib/moment/locale/fr.js',
             path.app + 'lib/bootstrap-progressbar/bootstrap-progressbar.min.js',
             path.app + 'lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-            path.app + 'lib/datatables-responsive/js/dataTables.responsive.js',
+            path.app + 'lib/datatables.net-bs/js/dataTables.bootstrap.min.js',
+            path.app + 'lib/datatables.net-responsive/js/dataTables.responsive.min.js',
+            path.app + 'lib/datatables.net-responsive-bs/js/responsive.bootstrap.js',
             path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.js',
             path.app + 'lib/select2/dist/js/i18n/fr.js',
             path.web + 'bundles/fosjsrouting/js/router.js',
@@ -36,7 +38,7 @@ var paths = {
         bigExt: [
             path.app + 'lib/jquery/dist/jquery.min.js',
             path.app + 'lib/bootstrap/dist/js/bootstrap.min.js',
-            path.app + 'lib/datatables/media/js/jquery.dataTables.min.js',
+            path.app + 'lib/datatables.net/js/jquery.dataTables.min.js',
             path.app + 'lib/select2/dist/js/select2.min.js'
 
         ],
@@ -54,8 +56,8 @@ var paths = {
         ],
         ext: [
             path.app + 'css/animations.css',
-            path.app + 'css/dataTables.bootstrap.css',
-            path.app + 'lib/datatables-responsive/css/dataTables.responsive.css',
+            path.app + 'lib/datatables.net-bs/css/dataTables.bootstrap.min.css',
+            path.app + 'lib/datatables.net-responsive-bs/css/responsive.bootstrap.min.css',
             path.app + 'lib/select2/dist/css/select2.css',
             path.app + 'lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css',
             path.app + 'lib/webui-popover/dist/jquery.webui-popover.min.css',

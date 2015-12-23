@@ -54,10 +54,13 @@ function resizeSelect2() {
 }
 
 function resizeDataTables() {
-    var tables = $.fn.dataTable.tables(true);
-    $(tables).DataTable().columns.adjust();
-    $('.dataTables_scrollHeadInner, .dataTable').css('width', '100%');
-    $(tables).css('width', '100%');
+    setTimeout(function() {
+        var $tables = $($.fn.dataTable.tables(true));
+
+        $tables.DataTable()
+            .columns.adjust()
+            .responsive.recalc();
+    }, 200);
 }
 
 function resizeComponents() {
