@@ -36,12 +36,16 @@ class BoquetteAdminController extends Controller
 
     /**
      * Gère la liste des crédits et opérations (débits) pour une boquette.
+     * @param Request $request
+     * @param Boquette $boquette
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function gestionCreditsAction(Request $request, Boquette $boquette)
     {
-        $credit = new Transaction();
+        $transactionForm = new Transaction();
 
-        $form = $this->createForm(new TransactionType(), $credit, array(
+        $form = $this->createForm(new TransactionType(), $transactionForm, array(
             'method' => 'POST',
             'action' => $this->generateUrl(
                 'pjm_app_admin_boquette_gestionCredits',
@@ -54,44 +58,20 @@ class BoquetteAdminController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                // on enregistre le crédit dans l'historique
-                $credit->setStatus('OK');
-                $retour = $this->get('pjm.services.transaction_manager')->traiter($credit);
+                $transactionManager = $this->get('pjm.services.transaction_manager');
+                foreach ($transactionForm->getComptes() as $compte) {
+                    $transaction = clone $transactionForm;
+                    $transaction->setCompte($compte);
 
-                if ($credit->getStatus() == 'OK') {
-                    if ($credit->getMoyenPaiement() != 'operation') {
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            'La transaction a été enregistrée et le compte a été crédité.'
-                        );
-                    } else {
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            'La transaction a été enregistrée et le compte a été débité.'
-                        );
-                    }
-                } else {
-                    // si une erreur est survenue pendant le process de mise à jour du compte
-                    $request->getSession()->getFlashBag()->add(
-                        'danger',
-                        'Un problème est survenu lors de la transaction, note bien le code d\'erreur : '.$credit->getStatus()
-                    );
+                    // on enregistre le crédit dans l'historique
+                    $transaction->setStatus('OK');
+                    $transactionManager->traiter($transaction, true);
                 }
 
-                if ($retour instanceof Transfert) {
-                    if ($retour->getStatus() == 'OK') {
-                        $request->getSession()->getFlashBag()->add(
-                            'success',
-                            'Le transfert a été effectué.'
-                        );
-                    } else {
-                        // si une erreur est survenue pendant le process de mise à jour du compte
-                        $request->getSession()->getFlashBag()->add(
-                            'warning',
-                            'Le transfert n\'a pas été effectué (code d\'erreur : '.$retour->getStatus().').'
-                        );
-                    }
-                }
+                $request->getSession()->getFlashBag()->add(
+                    'success',
+                    'Les transactions ont été traitées. S\'il y a une erreur, préviens un ZiPhy\'sbook.'
+                );
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',

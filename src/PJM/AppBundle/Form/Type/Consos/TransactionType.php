@@ -25,8 +25,8 @@ class TransactionType extends AbstractType
         unset($moyenPaiementsChoices['event']);
 
         $builder
-            ->add('compte', 'pjm_select2_entity', array(
-                'label' => 'Destinataire',
+            ->add('comptes', 'pjm_select2_entity', array(
+                'label' => 'Destinataire(s)',
                 'class' => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
                 'query_builder' => function (EntityRepository $er) use ($options) {
@@ -36,12 +36,14 @@ class TransactionType extends AbstractType
                         ->orderBy('u.fams', 'ASC')
                         ->addOrderBy('u.proms', 'DESC')
                         ->setParameter('boquette', $options['boquette'])
-                    ;
+                        ;
                 },
                 'choice_label' => 'user',
+                'multiple' => true,
             ))
             ->add('compteLie', 'pjm_select2_entity', array(
-                'label' => 'De la part de',
+                'label' => 'Transfert vers (optionnel)',
+                'help_label' => 'Si renseigné, les différents crédits seront transférés ensuite à cette personne.',
                 'class' => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
                 'query_builder' => function (EntityRepository $er) use ($options) {
@@ -53,7 +55,7 @@ class TransactionType extends AbstractType
                         ->setParameter('boquette', $options['boquette'])
                     ;
                 },
-                'empty_value' => "Choisir le vrai créditeur, s'il y a lieu",
+                'empty_value' => "Choisir un receveur",
                 'choice_label' => 'user',
                 'required' => false,
             ))
@@ -63,7 +65,8 @@ class TransactionType extends AbstractType
                 'choices' => $moyenPaiementsChoices,
             ))
             ->add('infos', null, array(
-                'label' => 'Infos (n° de chèque/raison)',
+                'label' => 'Infos',
+                'help_label' => 'N° de chèque, ou raison en cas d\'opération',
                 'error_bubbling' => true,
                 'constraints' => array(
                     new Assert\Length(array(
@@ -74,6 +77,7 @@ class TransactionType extends AbstractType
             ))
             ->add('montant', 'money', array(
                 'label' => 'Montant',
+                'help_label' => 'Positif pour un crédit, négatif pour un débit',
                 'error_bubbling' => true,
                 'divisor' => 100,
                 'constraints' => array(
@@ -90,7 +94,7 @@ class TransactionType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

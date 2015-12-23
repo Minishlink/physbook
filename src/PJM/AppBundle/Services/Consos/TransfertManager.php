@@ -22,11 +22,12 @@ class TransfertManager
 
     /**
      * @param Transfert $transfert
-     * @param bool      $flush
+     * @param bool $flush
      *
+     * @param bool $notifyFlash
      * @return Transfert
      */
-    public function traiter(Transfert $transfert, $flush = true)
+    public function traiter(Transfert $transfert, $flush = true, $notifyFlash = false)
     {
         // on met à jour le solde des comptes associés sur la base Phy'sbook
         $transfert->finaliser();
@@ -103,6 +104,22 @@ class TransfertManager
                 'montant' => $transfert->showMontant(),
                 'user' => $transfert->getReceveur()->getUser(),
             ), $transfert->getEmetteur()->getUser(), $flush);
+
+            // si on notifie flash
+            if ($notifyFlash) {
+                $this->notification->sendFlash(
+                    'success',
+                    'Le transfert du compte '.$transfert->getReceveur()->getBoquette()->getNomCourt().
+                    ' de '.$transfert->getEmetteur()->getUser().' vers '.$transfert->getReceveur()->getUser().' a été effectué.'
+                );
+            }
+        } else if ($notifyFlash) {
+            $this->notification->sendFlash(
+                'danger',
+                'Le transfert du compte '.$transfert->getReceveur()->getBoquette()->getNomCourt().
+                ' de '.$transfert->getEmetteur()->getUser().' vers '.$transfert->getReceveur()->getUser().' a échoué'.
+                ' pour la raison suivante : '.$transfert->getStatus().'.'
+            );
         }
 
         return $transfert;

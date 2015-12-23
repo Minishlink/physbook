@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -76,7 +77,11 @@ class Transaction
      */
     private $status;
 
+    /** @var Compte */
     private $compteLie;
+
+    /** @var ArrayCollection<Compte> */
+    private $comptes;
 
     public function __construct()
     {
@@ -309,11 +314,11 @@ class Transaction
     /**
      * Set compte.
      *
-     * @param \PJM\AppBundle\Entity\Compte $compte
+     * @param Compte $compte
      *
      * @return Transaction
      */
-    public function setCompte(\PJM\AppBundle\Entity\Compte $compte)
+    public function setCompte(Compte $compte)
     {
         $this->compte = $compte;
 
@@ -323,7 +328,7 @@ class Transaction
     /**
      * Get compte.
      *
-     * @return \PJM\AppBundle\Entity\Compte
+     * @return Compte
      */
     public function getCompte()
     {
@@ -331,16 +336,15 @@ class Transaction
     }
 
     /**
-     * Set compteLie.
+     * Set compteLie. Le compte receveur du transfert.
      *
-     * @param \PJM\AppBundle\Entity\Compte $compteLie
+     * @param Compte $compteLie
      *
      * @return Transaction
      */
-    public function setCompteLie(\PJM\AppBundle\Entity\Compte $compteLie)
+    public function setCompteLie(Compte $compteLie)
     {
-        $this->compteLie = $this->compte;
-        $this->compte = $compteLie;
+        $this->compteLie = $compteLie;
 
         return $this;
     }
@@ -348,10 +352,30 @@ class Transaction
     /**
      * Get compteLie.
      *
-     * @return \PJM\AppBundle\Entity\Compte
+     * @return Compte
      */
     public function getCompteLie()
     {
         return $this->compteLie;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getComptes()
+    {
+        return $this->comptes;
+    }
+
+    /**
+     * @param ArrayCollection $comptes
+     *
+     * @return Transaction
+     */
+    public function setComptes(ArrayCollection $comptes)
+    {
+        $this->comptes = $comptes;
+
+        return $this;
     }
 }

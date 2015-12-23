@@ -25,10 +25,11 @@ class TransactionManager
 
     /**
      * @param Transaction $transaction
+     * @param bool $notifyFlash If true, a flash notification will also be sent
      *
-     * @return Transaction|Transfert
+     * @return Transfert|Transaction
      */
-    public function traiter(Transaction $transaction)
+    public function traiter(Transaction $transaction, $notifyFlash = false)
     {
         if ($transaction->getStatus() == 'OK') {
             // si la transaction est bonne
@@ -69,11 +70,10 @@ class TransactionManager
             // s'il n'y a pas eu d'erreur avant
             if ($transaction->getStatus() == 'OK') {
                 // si on fait un crédit pour quelqu'un d'autre
-                // le compte lie et le compte sont déjà inversés (voir Entité)
                 if (null !== $transaction->getCompteLie()) {
                     // on effectue le transfert vers compteLie
                     $transfert = new Transfert($transaction);
-                    $this->transfertManager->traiter($transfert, false);
+                    $this->transfertManager->traiter($transfert, false, $notifyFlash);
                 }
             }
         }
@@ -86,6 +86,16 @@ class TransactionManager
                 'boquette' => $transaction->getCompte()->getBoquette()->getNom(),
                 'montant' => $transaction->showMontant(),
             ), $transaction->getCompte()->getUser());
+
+            // si aussi notification flash
+            if ($notifyFlash) {
+                $this->notification->sendFlash('success',
+                    'La transaction a été enregistrée et le compte '.$transaction->getCompte()->getBoquette()->getNomCourt().
+                    ' de '.$transaction->getCompte()->getUser().' a été '.
+                    ($transaction->getMoyenPaiement() != 'operation' ? 'crédité' : 'débité').
+                    '.'
+                );
+            }
         } else {
             // on notifie qu'il y a eu une erreur
             $notificationKey = 'bank.money.transaction.fail.';
@@ -95,6 +105,15 @@ class TransactionManager
                 'montant' => $transaction->showMontant(),
                 'erreur' => $transaction->getStatus(),
             ), $transaction->getCompte()->getUser());
+
+            // si aussi notification flash
+            if ($notifyFlash) {
+                $this->notification->sendFlash('danger',
+                    'La transaction a échouée et le compte '.$transaction->getCompte()->getBoquette()->getNomCourt().
+                    ' de '.$transaction->getCompte()->getUser().' n\'a pas été modifié pour la raison suivante : '.
+                    $transaction->getStatus().'.'
+                );
+            }
         }
 
         return isset($transfert) ? $transfert : $transaction;
