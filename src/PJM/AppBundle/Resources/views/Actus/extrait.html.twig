@@ -7,6 +7,8 @@
     </li>
 {% endfor %}
 </ul>
+{% else %}
+    <p>Il n'y a pas d'articles ! <a href="{{ path('pjm_app_actus_ajouter') }}">En ajouter un ?</a></p>
 {% endif %}
 <div class="space mini bordered"></div>
 <div class="space mini"></div>
