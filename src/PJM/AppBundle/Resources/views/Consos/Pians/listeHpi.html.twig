@@ -1,0 +1,12 @@
+<div id="listeHpi">
+    <h2>Liste HPi</h2>
+    {% if listeHpi|length == 0 %}
+        <p>Il n'y a pas de Hors Pi, merci !</p>
+    {% else %}
+        <ul class="list-unstyled">
+        {% for hpi in listeHpi %}
+        <li>{% include("@PJMApp/Profil/encart.html.twig") with {'user': hpi.user} %}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>

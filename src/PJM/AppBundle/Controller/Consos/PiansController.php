@@ -16,15 +16,17 @@ class PiansController extends Controller
     {
         $utils = $this->get('pjm.services.utils');
         $piansService = $this->get('pjm.services.boquette.pians');
+        $boquette = $piansService->getBoquette();
         $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
         $boissonDuMois = $utils->getFeaturedItem($this->slug);
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
-            'boquette' => $piansService->getBoquette(),
+            'boquette' => $boquette,
             'boquetteSlug' => $this->slug,
             'solde' => $piansService->getSolde($this->getUser()),
             'listeHistoriques' => $listeHistoriques,
             'boissonDuMois' => $boissonDuMois,
+            'listeHpi' => $this->get('pjm.services.compte_manager')->getComptesWithLessThan(-3000, $boquette),
         ));
     }
 }

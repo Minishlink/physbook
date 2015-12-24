@@ -53,6 +53,9 @@ services:
     pjm.services.transfert_manager:
             class: PJM\AppBundle\Services\Consos\TransfertManager
             arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
+    pjm.services.compte_manager:
+        class: PJM\AppBundle\Services\Consos\CompteManager
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.notification:
                 class: PJM\AppBundle\Services\NotificationManager
                 arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer, @buzz, @translator]

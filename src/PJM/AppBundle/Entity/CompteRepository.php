@@ -121,6 +121,19 @@ class CompteRepository extends EntityRepository
         return $compte;
     }
 
+    public function findByBoquetteAndMaxSolde(Boquette $boquette, $solde)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('c.boquette = :boquette')
+            ->andWhere('c.solde < :solde')
+            ->setParameters(array(
+                'boquette' => $boquette,
+                'solde' => $solde,
+            ));
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function buildFindByBoquette(Boquette $boquette)
     {
         $qb = $this->createQueryBuilder('c')
