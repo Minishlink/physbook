@@ -1,0 +1,19 @@
+{% extends "PJMAppBundle::layout.html.twig" %}
+
+{% block pageName %}boquette{% endblock %}
+
+{% block categorieName %}Boquettes{% endblock %}
+{% block categorieLogo %}{{ asset('images/boquettes/logo_boquettes.png') }}{% endblock %}
+
+{% block pjm_app_body_content %}
+    <h2>Liste des boquettes</h2>
+    {% if boquettes|length > 0 %}
+        <ul>
+        {% for boquette in boquettes %}
+            <li><a href="{{ path('pjm_app_boquette_default', {slug: boquette.slug}) }}">{{ boquette.nom }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    <p>Il n'y a pas de boquette.</p>
+    {% endif %}
+{% endblock %}

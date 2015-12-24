@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -47,6 +48,16 @@ class BoquetteController extends Controller
         return $this->render('PJMAppBundle:Boquette:default.html.twig', array(
             'boquette' => $boquette,
         ));
+    }
+
+    /**
+     * @Template("PJMAppBundle:Boquette:liste.html.twig")
+     */
+    public function listeAction()
+    {
+        return array(
+            'boquettes' => $this->get('pjm.services.boquette_manager')->getAll(false),
+        );
     }
 
     /*

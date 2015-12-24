@@ -71,6 +71,11 @@
                         {% if section == "assos" %}<div id="nav-slider-active"></div>{% endif %}
                         <ul id="menu-assos" class="sous-menu">
                             <li>
+                                <a href="{{ path('pjm_app_boquette_liste') }}" title="Liste complète">
+                                    <img class="logo" src="{{ asset('images/boquettes/logo_boquettes.png') }}" alt="Liste complète" />
+                                </a>
+                            </li>
+                            <li>
                                 <a href="http://amje-bordeaux.fr/intranet/web" title="AMJE Bordeaux">
                                     <img class="logo" src="{{ asset('images/header/AMJE-B.png') }}" alt="AMJE Bordeaux" style="padding: 3px;" />
                                 </a>

@@ -67,6 +67,11 @@ pjm_app_boquette_rezal:
     resource: "@PJMAppBundle/Resources/config/Boquette/Rezal/routing.yml"
     prefix:   /rezal
 
+pjm_app_boquette_liste:
+    path:     /liste
+    methods: [ get ]
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:liste }
+
 pjm_app_boquette_default:
     path:     /{slug}
     methods: [ get ]

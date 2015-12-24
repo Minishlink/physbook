@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Boquette.
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PJM\AppBundle\Entity\BoquetteRepository")
  */
 class Boquette
 {

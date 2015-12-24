@@ -56,6 +56,9 @@ services:
     pjm.services.compte_manager:
         class: PJM\AppBundle\Services\Consos\CompteManager
         arguments: [@doctrine.orm.entity_manager]
+    pjm.services.boquette_manager:
+        class: PJM\AppBundle\Services\BoquetteManager
+        arguments: [@doctrine.orm.entity_manager]
     pjm.services.notification:
                 class: PJM\AppBundle\Services\NotificationManager
                 arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer, @buzz, @translator]
