@@ -6,9 +6,21 @@
 {% block categorieLogo %}{% if boquette.image is not null %}{{ asset(boquette.image.webPath) }}" alt="{{ asset(boquette.image.alt) }}{% endif %}{% endblock %}
 
 {% block pjm_app_body_content %}
-    <h2>Calendrier</h2>
-    {{ include("@PJMApp/Event/fullCalendar.html.twig") }}
-
-    <h2>Responsables</h2>
-    {{ render(url('pjm_app_boquette_voirHistoriqueResponsables', {'slug': boquette.slug })) }}
+    <div class="row">
+        {# inscription à la boquette #}
+        {# liste des membres #}
+        {# gestion #}
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {% include("@PJMApp/Actus/extrait.html.twig") with {'liste_articles': articles} %}
+        </div>
+        <div class="col-md-6">
+            {{ include("@PJMApp/Event/fullCalendar.html.twig") }}
+        </div>
+    </div>
+    <div class="row">
+        <h2>Responsables</h2>
+        {{ render(url('pjm_app_boquette_voirHistoriqueResponsables', {'slug': boquette.slug })) }}
+    </div>
 {% endblock %}

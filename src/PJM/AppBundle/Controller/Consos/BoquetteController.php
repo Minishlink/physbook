@@ -47,6 +47,7 @@ class BoquetteController extends Controller
     {
         return $this->render('PJMAppBundle:Boquette:default.html.twig', array(
             'boquette' => $boquette,
+            'articles' => $this->get('pjm.services.article_manager')->getSome(4, $boquette)
         ));
     }
 

@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Entity\Actus;
 
+use PJM\AppBundle\Entity\Boquette;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -85,6 +86,11 @@ class Article
      * @ORM\OneToOne(targetEntity="PJM\AppBundle\Entity\UsersHM", cascade={"persist", "remove"})
      **/
     private $usersHM;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\Boquette")
+     */
+    private $boquette;
 
     public function __construct()
     {
@@ -347,5 +353,21 @@ class Article
     public function getUsersHM()
     {
         return $this->usersHM;
+    }
+
+    /**
+     * @return Boquette
+     */
+    public function getBoquette()
+    {
+        return $this->boquette;
+    }
+
+    /**
+     * @param Boquette $boquette
+     */
+    public function setBoquette(Boquette $boquette)
+    {
+        $this->boquette = $boquette;
     }
 }

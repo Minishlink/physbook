@@ -83,6 +83,7 @@ class ActusController extends Controller
 
         $form = $this->createForm(new ArticleType(), $article, array(
             'action' => $this->generateUrl('pjm_app_actus_ajouter'),
+            'user' => $this->getUser(),
         ));
 
         $form->handleRequest($request);
@@ -132,6 +133,7 @@ class ActusController extends Controller
             'action' => $this->generateUrl('pjm_app_actus_modifier', array(
                 'slug' => $article->getSlug(),
             )),
+            'user' => $this->getUser(),
             'ajout' => false,
         ));
 

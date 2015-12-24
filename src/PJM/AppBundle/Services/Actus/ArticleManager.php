@@ -4,6 +4,7 @@ namespace PJM\AppBundle\Services\Actus;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Actus\Article;
+use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Services\Group;
 use PJM\AppBundle\Services\NotificationManager;
@@ -58,13 +59,20 @@ class ArticleManager
 
     /**
      * @param $count
+     * @param Boquette $boquette
      *
      * @return array|\PJM\AppBundle\Entity\Actus\Article[]
      */
-    public function getSome($count)
+    public function getSome($count, Boquette $boquette = null)
     {
+        $criteria = array('publication' => true);
+
+        if (isset($boquette)) {
+            $criteria['boquette'] = $boquette;
+        }
+
         return $this->em->getRepository('PJMAppBundle:Actus\Article')->findBy(
-            array('publication' => true),
+            $criteria,
             array('date' => 'desc'), // on trie par date décroissante
             $count, // on sélectionne $count articles
             0 // à partir du premier
