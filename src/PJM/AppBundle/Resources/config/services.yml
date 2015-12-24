@@ -1,5 +1,6 @@
 imports:
     - { resource: Boquette/services.yml }
+    - { resource: voters.yml }
 
 services:
     twig.extension.intl:
