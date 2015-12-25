@@ -18,7 +18,6 @@ use PJM\AppBundle\Form\Type\Admin\FeaturedItemType;
 use PJM\AppBundle\Form\Type\Admin\ItemType;
 use PJM\AppBundle\Form\Type\Filter\TransactionFilterType;
 use PJM\AppBundle\Form\Type\Filter\CompteFilterType;
-use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteAdminController extends Controller
 {
