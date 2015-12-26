@@ -1,77 +1,22 @@
 imports:
-    - { resource: Boquette/services.yml }
-    - { resource: voters.yml }
+  - { resource: Boquette/services.yml }
+  - { resource: voters.yml }
+  - { resource: managers.yml }
+  - { resource: twig.yml }
+  - { resource: listeners.yml }
+  - { resource: datatables.yml }
+  - { resource: forms.yml }
 
 services:
-    twig.extension.intl:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-            - { name: twig.extension }
-    twig.extension.text:
-       class: Twig_Extensions_Extension_Text
-       tags:
-            - { name: twig.extension }
     doctrine_dbal_platform:
         class: Doctrine\DBAL\Platforms\MySqlPlatform
-    pjm.twig.intranet_extension:
-        class: PJM\AppBundle\Twig\IntranetExtension
-        tags:
-            - { name: twig.extension }
-    pjm.twig.show_extension:
-        class: PJM\AppBundle\Twig\ShowExtension
-        arguments: [@pjm.twig.citation_extension, @pjm.services.linkParser, @pjm.services.emoticonParser, @exercise_html_purifier.default]
-        tags:
-            - { name: twig.extension }
-    pjm.twig.markdown_extension:
-        class: PJM\AppBundle\Twig\MarkdownExtension
-        arguments: [@pjm.services.markdown]
-        tags:
-            - { name: twig.extension }
-    pjm.twig.citation_extension:
-        class: PJM\AppBundle\Twig\CitationExtension
-        arguments: [@doctrine.orm.entity_manager]
-        tags:
-            - { name: twig.extension }
     pjm.services.linkParser:
         class: PJM\AppBundle\Services\LinkParser
     pjm.services.emoticonParser:
         class: PJM\AppBundle\Services\EmoticonParser
-    pjm.services.user_manager:
-        class: PJM\AppBundle\Services\UserManager
-        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%, @pjm.services.trads]
-    pjm.services.evenement_manager:
-        class: PJM\AppBundle\Services\Event\EvenementManager
-        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @router, @pjm.services.notification, @pjm.services.historique_manager, @pjm.services.transaction_manager]
-    pjm.services.invitation_manager:
-        class: PJM\AppBundle\Services\Event\InvitationManager
-        arguments: [@doctrine.orm.entity_manager, @pjm.services.notification]
-    pjm.services.historique_manager:
-            class: PJM\AppBundle\Services\Consos\HistoriqueManager
-            arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
-    pjm.services.transaction_manager:
-            class: PJM\AppBundle\Services\Consos\TransactionManager
-            arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal, @pjm.services.transfert_manager]
-    pjm.services.transfert_manager:
-            class: PJM\AppBundle\Services\Consos\TransfertManager
-            arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
-    pjm.services.compte_manager:
-        class: PJM\AppBundle\Services\Consos\CompteManager
-        arguments: [@doctrine.orm.entity_manager]
-    pjm.services.boquette_manager:
-        class: PJM\AppBundle\Services\BoquetteManager
-        arguments: [@doctrine.orm.entity_manager]
-    pjm.services.notification:
-                class: PJM\AppBundle\Services\NotificationManager
-                arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer, @buzz, @translator]
     pjm.services.payments.lydia:
-                class: PJM\AppBundle\Services\Payments\LydiaProvider
-                arguments: [@buzz, @pjm.services.transaction_manager, %paiement.lydia.url%, %paiement.lydia.auth%]
-    pjm.services.article_manager:
-                class: PJM\AppBundle\Services\Actus\ArticleManager
-                arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]
-    pjm.services.pushsubscriptions_manager:
-        class: PJM\AppBundle\Services\PushSubscriptionManager
-        arguments: [@doctrine.orm.entity_manager, @request_stack]
+        class: PJM\AppBundle\Services\Payments\LydiaProvider
+        arguments: [@buzz, @pjm.services.transaction_manager, %paiement.lydia.url%, %paiement.lydia.auth%]
     pjm.services.image:
         class: PJM\AppBundle\Services\Image
         arguments: [@templating.helper.assets=]
@@ -114,126 +59,5 @@ services:
     pjm.services.file_manager:
         class: PJM\AppBundle\Services\FileManager
         arguments: [%kernel.root_dir%]
-    pjm.listener.consos.historique:
-        class: PJM\AppBundle\Listener\Consos\HistoriqueListener
-        tags:
-            - { name: doctrine.event_subscriber }
-    pjm.listener.activity:
-        class: PJM\AppBundle\Listener\User\ActivityListener
-        arguments: [@security.token_storage, @doctrine.orm.default_entity_manager]
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
-    pjm.datatable.achats:
-        class: PJM\AppBundle\Datatables\AchatsDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.transferts:
-        class: PJM\AppBundle\Datatables\TransfertsDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.vacances:
-        class: PJM\AppBundle\Datatables\VacancesDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.prix:
-        class: PJM\AppBundle\Datatables\PrixDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.commandes:
-        class: PJM\AppBundle\Datatables\CommandesDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.credits:
-        class: PJM\AppBundle\Datatables\CreditsDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.boquette.historique:
-        class: PJM\AppBundle\Datatables\HistoriqueBoquetteDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.paniers.liste:
-        class: PJM\AppBundle\Datatables\Admin\PaniersDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.responsabilites:
-        class: PJM\AppBundle\Datatables\ResponsabilitesDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.boquettes:
-        class: PJM\AppBundle\Datatables\Admin\BoquettesDatatable
-        calls:
-            - [setImageExt, ["@pjm.services.image"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.responsable:
-        class: PJM\AppBundle\Datatables\ResponsableDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.consos.comptes:
-        class: PJM\AppBundle\Datatables\Admin\ComptesDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.boquette.item:
-        class: PJM\AppBundle\Datatables\Boquette\ItemDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-            - [setImageExt, ["@pjm.services.image"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.featuredItem:
-        class: PJM\AppBundle\Datatables\Admin\FeaturedItemDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.admin.media.photos:
-        class: PJM\AppBundle\Datatables\Admin\Media\PhotoDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-            - [setImageExt, ["@pjm.services.image"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.pushsubscription:
-        class: PJM\AppBundle\Datatables\PushSubscriptionDatatable
-        tags:
-            - { name: sg.datatable.view }
-    pjm.datatable.annuaire:
-        class: PJM\AppBundle\Datatables\AnnuaireDatatable
-        calls:
-            - [setIntranetExt, ["@pjm.twig.intranet_extension"]]
-        tags:
-            - { name: sg.datatable.view }
-    pjm.form.type.userFileParser:
-        class: PJM\AppBundle\Form\Type\Parser\UserFileParserType
-        arguments: ["@pjm.services.user_manager", "@pjm.services.file_manager", "@pjm.services.excel"]
-        tags:
-            - { name: form.type, alias: userFileParser }
-    pjm.form.type.datetimePicker:
-        class: PJM\AppBundle\Form\Type\DateTimePickerType
-        tags:
-            - { name: form.type, alias: datetimePicker }
-    pjm.form.type.select2Choice:
-        class: PJM\AppBundle\Form\Type\Select2ChoiceType
-        tags:
-            - { name: form.type, alias: pjm_select2_choice }
-    pjm.form.type.select2Entity:
-        class: PJM\AppBundle\Form\Type\Select2EntityType
-        tags:
-            - { name: form.type, alias: pjm_select2_entity }
-    pjm.form.extension.helpLabel:
-            class: PJM\AppBundle\Form\Extension\HelpLabelExtension
-            tags:
-                - { name: form.type_extension, alias: form }
+
 

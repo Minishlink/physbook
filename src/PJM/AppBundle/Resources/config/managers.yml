@@ -1,0 +1,34 @@
+services:
+  pjm.services.article_manager:
+    class: PJM\AppBundle\Services\Actus\ArticleManager
+    arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]
+  pjm.services.boquette_manager:
+    class: PJM\AppBundle\Services\BoquetteManager
+    arguments: [@doctrine.orm.entity_manager]
+  pjm.services.compte_manager:
+    class: PJM\AppBundle\Services\Consos\CompteManager
+    arguments: [@doctrine.orm.entity_manager]
+  pjm.services.evenement_manager:
+    class: PJM\AppBundle\Services\Event\EvenementManager
+    arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @router, @pjm.services.notification, @pjm.services.historique_manager, @pjm.services.transaction_manager]
+  pjm.services.historique_manager:
+    class: PJM\AppBundle\Services\Consos\HistoriqueManager
+    arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
+  pjm.services.invitation_manager:
+    class: PJM\AppBundle\Services\Event\InvitationManager
+    arguments: [@doctrine.orm.entity_manager, @pjm.services.notification]
+  pjm.services.notification:
+    class: PJM\AppBundle\Services\NotificationManager
+    arguments: [@doctrine.orm.entity_manager, @request_stack, @pjm.services.push, @pjm.services.mailer, @buzz, @translator]
+  pjm.services.pushsubscriptions_manager:
+    class: PJM\AppBundle\Services\PushSubscriptionManager
+    arguments: [@doctrine.orm.entity_manager, @request_stack]
+  pjm.services.transaction_manager:
+    class: PJM\AppBundle\Services\Consos\TransactionManager
+    arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal, @pjm.services.transfert_manager]
+  pjm.services.transfert_manager:
+    class: PJM\AppBundle\Services\Consos\TransfertManager
+    arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal]
+  pjm.services.user_manager:
+    class: PJM\AppBundle\Services\UserManager
+    arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%, @pjm.services.trads]

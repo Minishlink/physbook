@@ -1,0 +1,10 @@
+services:
+  pjm.listener.consos.historique:
+    class: PJM\AppBundle\Listener\Consos\HistoriqueListener
+    tags:
+      - { name: doctrine.event_subscriber }
+  pjm.listener.activity:
+    class: PJM\AppBundle\Listener\User\ActivityListener
+    arguments: [@security.token_storage, @doctrine.orm.default_entity_manager]
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }

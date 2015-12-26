@@ -1,0 +1,28 @@
+services:
+  twig.extension.intl:
+    class: Twig_Extensions_Extension_Intl
+    tags:
+      - { name: twig.extension }
+  twig.extension.text:
+    class: Twig_Extensions_Extension_Text
+    tags:
+      - { name: twig.extension }
+  pjm.twig.intranet_extension:
+    class: PJM\AppBundle\Twig\IntranetExtension
+    tags:
+      - { name: twig.extension }
+  pjm.twig.show_extension:
+    class: PJM\AppBundle\Twig\ShowExtension
+    arguments: [@pjm.twig.citation_extension, @pjm.services.linkParser, @pjm.services.emoticonParser, @exercise_html_purifier.default]
+    tags:
+      - { name: twig.extension }
+  pjm.twig.markdown_extension:
+    class: PJM\AppBundle\Twig\MarkdownExtension
+    arguments: [@pjm.services.markdown]
+    tags:
+      - { name: twig.extension }
+  pjm.twig.citation_extension:
+    class: PJM\AppBundle\Twig\CitationExtension
+    arguments: [@doctrine.orm.entity_manager]
+    tags:
+      - { name: twig.extension }
