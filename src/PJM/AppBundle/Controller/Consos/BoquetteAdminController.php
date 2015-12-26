@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,6 @@ use PJM\AppBundle\Form\Type\Admin\FeaturedItemType;
 use PJM\AppBundle\Form\Type\Admin\ItemType;
 use PJM\AppBundle\Form\Type\Filter\TransactionFilterType;
 use PJM\AppBundle\Form\Type\Filter\CompteFilterType;
-use PJM\AppBundle\Entity\Consos\Transfert;
 
 class BoquetteAdminController extends Controller
 {
@@ -26,6 +26,9 @@ class BoquetteAdminController extends Controller
      * Page par défaut d'admin des boquettes.
      *
      * @param object   Boquette $boquette
+     * @return Response
+     *
+     * @Security("is_granted('manage', boquette) or has_role('ROLE_ADMIN')")
      */
     public function defaultAdminAction(Boquette $boquette)
     {
@@ -196,7 +199,6 @@ class BoquetteAdminController extends Controller
      */
     public function gestionResponsablesAction(Request $request, Boquette $boquette)
     {
-        $utils = $this->get('pjm.services.utils');
         $responsable = new Responsable();
 
         $form = $this->createForm(new ResponsableType(), $responsable, array(
@@ -213,7 +215,7 @@ class BoquetteAdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if (!$utils->estNiveauUn($this->getUser(), $boquette)) {
+            if (!$this->get('pjm.services.responsable_manager')->estNiveauUn($this->getUser(), $boquette)) {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
                     'Il faut que tu ait un niveau hiérarchique plus haut pour faire cette action.'

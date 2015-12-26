@@ -4,16 +4,16 @@ namespace PJM\AppBundle\Security;
 
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\User;
-use PJM\AppBundle\Services\BoquetteManager;
+use PJM\AppBundle\Services\ResponsableManager;
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 
 class BoquetteVoter extends AbstractVoter
 {
-    private $boquetteManager;
+    private $responsableManager;
 
-    public function __construct(BoquetteManager $boquetteManager)
+    public function __construct(ResponsableManager $responsableManager)
     {
-        $this->boquetteManager = $boquetteManager;
+        $this->responsableManager = $responsableManager;
     }
 
     const MANAGE = 'manage';
@@ -39,7 +39,7 @@ class BoquetteVoter extends AbstractVoter
     {
         switch ($attribute) {
             case self::MANAGE:
-                if ($this->boquetteManager->canManage($user, $boquette)) {
+                if ($this->responsableManager->estNiveauUn($user, $boquette)) {
                     return true;
                 }
                 break;

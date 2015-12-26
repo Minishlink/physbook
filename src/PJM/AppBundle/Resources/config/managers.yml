@@ -23,6 +23,9 @@ services:
   pjm.services.pushsubscriptions_manager:
     class: PJM\AppBundle\Services\PushSubscriptionManager
     arguments: [@doctrine.orm.entity_manager, @request_stack]
+  pjm.services.responsable_manager:
+    class: PJM\AppBundle\Services\ResponsableManager
+    arguments: [@doctrine.orm.entity_manager]
   pjm.services.transaction_manager:
     class: PJM\AppBundle\Services\Consos\TransactionManager
     arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.rezal, @pjm.services.transfert_manager]

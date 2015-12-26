@@ -4,7 +4,6 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
-use PJM\AppBundle\Entity\User;
 
 class BoquetteManager
 {
@@ -37,10 +36,4 @@ class BoquetteManager
     {
         return $this->em->getRepository('PJMAppBundle:Boquette');
     }
-
-    public function canManage(User $user, Boquette $boquette)
-    {
-        return $this->em->getRepository('PJMAppBundle:Responsable')->estNiveauUn($user, $boquette);
-    }
-
 }

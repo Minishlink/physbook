@@ -134,20 +134,6 @@ class Utils
         return (isset($featuredItem)) ? $featuredItem->getItem() : null;
     }
 
-    public function estNiveauUn(User $user, Boquette $boquette)
-    {
-        $respo = $this->em
-            ->getRepository('PJMAppBundle:Responsable')
-            ->estNiveauUn($user, $boquette)
-        ;
-
-        if ($respo !== null && $respo != array() || $user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_SUPER_ADMIN')) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function bucquage($boquetteSlug, $itemSlug)
     {
         $boquette = $this->em->getRepository('PJMAppBundle:Boquette')
