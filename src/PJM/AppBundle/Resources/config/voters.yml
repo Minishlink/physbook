@@ -1,7 +1,7 @@
 services:
   security.access.boquette_voter:
     class: PJM\AppBundle\Security\BoquetteVoter
-    arguments: [@pjm.services.boquette_manager]
+    arguments: [@pjm.services.responsable_manager]
     public: false
     tags:
       - { name: security.voter }

@@ -18,7 +18,7 @@ class BoquetteManager
      * Get all boquettes
      * @param bool $withSpecial If true, includes special boquettes (pians, cvis, brags, paniers)
      *
-     * @return array|\PJM\AppBundle\Entity\Boquette[]
+     * @return array|Boquette[]
      */
     public function getAll($withSpecial = true)
     {
