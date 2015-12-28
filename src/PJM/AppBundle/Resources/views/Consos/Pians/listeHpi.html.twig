@@ -1,12 +1,16 @@
 <div id="listeHpi">
-    <h2>Liste HPi</h2>
-    {% if listeHpi|length == 0 %}
-        <p>Il n'y a pas de Hors Pi, merci !</p>
-    {% else %}
-        <ul class="list-unstyled">
-        {% for hpi in listeHpi %}
-        <li>{% include("@PJMApp/Profil/encart.html.twig") with {'user': hpi.user} %}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="haut"><img class="img-responsive" src="{{ asset('images/consos/pians/Liste-HPi-haut.png') }}" alt="Wanted" /></div>
+    <div class="milieu">
+        {% if listeHpi|length == 0 %}
+            <p>Il n'y a pas de Hors Pi, merci !</p>
+        {% else %}
+            <ul class="list-unstyled">
+                {% for hpi in listeHpi %}
+                    <li>{% include("@PJMApp/Profil/encart.html.twig") with {'user': hpi.user} %}</li>
+                    {% if not loop.last %}<hr>{% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="bas"><img class="img-responsive" src="{{ asset('images/consos/pians/Liste-HPi-bas.png') }}" /></div>
 </div>
