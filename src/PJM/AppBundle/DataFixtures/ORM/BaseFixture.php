@@ -7,6 +7,7 @@ use joshtronic\LoremIpsum;
 use PJM\AppBundle\Entity\Boquette;
 use PJM\AppBundle\Entity\Event\Evenement;
 use PJM\AppBundle\Entity\Item;
+use PJM\AppBundle\Entity\Responsabilite;
 use PJM\AppBundle\Entity\User;
 
 abstract class BaseFixture extends AbstractFixture
@@ -60,6 +61,19 @@ abstract class BaseFixture extends AbstractFixture
     protected function getEvenement($name)
     {
         return $this->getReference($name.'-event');
+    }
+
+    /**
+     * Get Responsabilite
+     *
+     * @param string $libelle
+     * @param string $boquette
+     *
+     * @return Responsabilite
+     */
+    protected function getResponsabilite($libelle, $boquette)
+    {
+        return $this->getReference($libelle.'-'.$boquette.'-responsabilite');
     }
 
     /**
