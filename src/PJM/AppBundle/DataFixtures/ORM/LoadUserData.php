@@ -91,7 +91,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                 'appartement' => 'B106',
                 'classe' => 'ST1, GM2',
                 'genre' => 1,
-                'roles' => array('ROLE_ASSO_COM'),
+                'roles' => array(),
             ),
 
             // membre ancien de Angers (aucun rôle)

@@ -4,10 +4,24 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PJM\AppBundle\Entity\Responsable;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadResponsableData extends BaseFixture implements OrderedFixtureInterface
+class LoadResponsableData extends BaseFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -46,27 +60,18 @@ class LoadResponsableData extends BaseFixture implements OrderedFixtureInterface
             ),
         );
 
+        $responsableManager = $this->container->get('pjm.services.responsable_manager');
+
         foreach ($objects as $object) {
-            $this->loadResponsable(
-                $manager,
-                $object['user'],
-                $object['libelle'],
-                $object['boquette'],
-                $object['active']
+            $responsableManager->create(
+                $this->getUser($object['user']),
+                $this->getResponsabilite($object['libelle'], $object['boquette']),
+                $object['active'],
+                false
             );
         }
 
         $manager->flush();
-    }
-
-    private function loadResponsable(ObjectManager $manager, $user, $libelle, $boquette, $active)
-    {
-        $responsable = new Responsable();
-        $responsable->setUser($this->getUser($user));
-        $responsable->setResponsabilite($this->getResponsabilite($libelle, $boquette));
-        $responsable->setActive($active);
-
-        $manager->persist($responsable);
     }
 
     /**

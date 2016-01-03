@@ -27,9 +27,6 @@ class ResponsabiliteType extends AbstractType
             ->add('libelle', null, array(
                 'label' => 'Libellé',
             ))
-            ->add('role', null, array(
-                'label' => 'Rôle',
-            ))
             ->add('niveau', null, array(
                 'attr' => array('placeholder' => 'ex. 0'),
             ))

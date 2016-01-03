@@ -222,22 +222,11 @@ class BoquetteAdminController extends Controller
                 );
             } else {
                 if ($form->isValid()) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($responsable);
-
-                    $userManager = $this->get('fos_user.user_manager');
-                    $user = $responsable->getUser();
-                    $role = $responsable->getResponsabilite()->getRole();
-
-                    if (!empty($role) && !$user->hasRole($role) && $responsable->getActive()) {
-                        $user->addRole($role);
-                    }
-
-                    $userManager->updateUser($user);
+                    $this->get('pjm.services.responsable_manager')->update($responsable);
 
                     $request->getSession()->getFlashBag()->add(
                         'success',
-                        $user.' est indiqué '.$responsable->getResponsabilite()->getLibelle().' dans '.$boquette.'.'
+                        $responsable->getUser().' est indiqué '.$responsable->getResponsabilite()->getLibelle().' dans '.$boquette.'.'
                     );
                 } else {
                     $request->getSession()->getFlashBag()->add(
@@ -300,10 +289,12 @@ class BoquetteAdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('PJMAppBundle:Responsable');
 
+            $responsableManager = $this->get('pjm.services.responsable_manager');
+
             foreach ($listeResponsables as $responsableChoice) {
                 $responsable = $repository->find($responsableChoice['value']);
                 $responsable->toggleActive();
-                $em->persist($responsable);
+                $responsableManager->update($responsable, false);
             }
 
             $em->flush();

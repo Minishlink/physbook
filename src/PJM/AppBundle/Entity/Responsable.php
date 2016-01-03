@@ -155,11 +155,11 @@ class Responsable
     /**
      * Set user.
      *
-     * @param \PJM\AppBundle\Entity\User $user
+     * @param User $user
      *
      * @return Responsable
      */
-    public function setUser(\PJM\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -169,7 +169,7 @@ class Responsable
     /**
      * Get user.
      *
-     * @return \PJM\AppBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {

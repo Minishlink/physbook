@@ -33,13 +33,6 @@ class Responsabilite
     private $libelle;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255, nullable=true)
-     */
-    private $role;
-
-    /**
      * Niveau hiérarchique de la responsabilité, 0 étant le plus important.
      *
      * @var int
@@ -111,30 +104,6 @@ class Responsabilite
     public function getLibelle()
     {
         return $this->libelle;
-    }
-
-    /**
-     * Set role.
-     *
-     * @param string $role
-     *
-     * @return Responsabilite
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role.
-     *
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
     }
 
     /**

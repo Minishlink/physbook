@@ -4,6 +4,8 @@ namespace PJM\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use PJM\AppBundle\Entity\Boquette;
+use PJM\AppBundle\Entity\Responsabilite;
+use PJM\AppBundle\Entity\Responsable;
 use PJM\AppBundle\Entity\User;
 
 class ResponsableManager
@@ -13,6 +15,34 @@ class ResponsableManager
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    public function create(User $user, Responsabilite $responsabilite, $active = true, $flush = true)
+    {
+        $responsable = new Responsable();
+        $responsable->setUser($user);
+        $responsable->setResponsabilite($responsabilite);
+        $responsable->setActive($active);
+
+        $this->update($responsable, $flush);
+    }
+
+    public function update(Responsable $responsable, $flush = true)
+    {
+        $role = 'ROLE_RESPONSABLE';
+
+        $user = $responsable->getUser();
+        if ($responsable->getActive()) {
+            $user->addRole($role);
+        } else {
+            $user->removeRole($role);
+        }
+
+        $this->em->persist($responsable);
+
+        if ($flush) {
+            $this->em->flush();
+        }
     }
 
     public function estNiveauUn(User $user, Boquette $boquette)
