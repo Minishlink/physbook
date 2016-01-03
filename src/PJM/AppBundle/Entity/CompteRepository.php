@@ -129,7 +129,8 @@ class CompteRepository extends EntityRepository
             ->setParameters(array(
                 'boquette' => $boquette,
                 'solde' => $solde,
-            ));
+            ))
+            ->orderBy("c.solde");
 
         return $qb->getQuery()->getResult();
     }
