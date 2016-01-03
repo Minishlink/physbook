@@ -148,6 +148,12 @@ body {
 
             .milieu {
                 background-color: #f8e8c2;
+                @colorText: #42321d;
+
+                p {
+                    margin: 0;
+                    color: @colorText;
+                }
 
                 ul {
                     margin-bottom: 0;
@@ -156,12 +162,12 @@ body {
                         display: block;
                         margin: 0.5em auto;
                         width: 50%;
-                        border-top: 2px solid #42321d;
+                        border-top: 2px solid @colorText;
                     }
                 }
 
                 a {
-                    color: #42321d;
+                    color: @colorText;
                     font-size: 1.5em;
                 }
             }
