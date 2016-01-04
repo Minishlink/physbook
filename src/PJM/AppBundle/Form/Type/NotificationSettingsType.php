@@ -19,7 +19,7 @@ class NotificationSettingsType extends AbstractType
         $subscriptionsChoices = $enum->getSubscriptionsChoices(true);
 
         $builder
-            ->add('subscriptions', 'pjm_select2_choice', array(
+            ->add('subscriptions', 'genemu_jqueryselect2_choice', array(
                 'label' => 'Notifications à ne pas rater',
                 'choices' => $subscriptionsChoices,
                 'required' => false,

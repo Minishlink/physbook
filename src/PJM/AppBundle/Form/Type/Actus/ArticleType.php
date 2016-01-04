@@ -17,7 +17,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre', 'text')
             ->add('contenu', 'froala')
-            ->add('categories', 'pjm_select2_entity', array(
+            ->add('categories', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Catégories',
                 'class' => 'PJMAppBundle:Actus\Categorie',
                 'choice_label' => 'nom',
@@ -35,7 +35,7 @@ class ArticleType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

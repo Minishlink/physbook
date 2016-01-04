@@ -16,7 +16,7 @@ class ResponsabiliteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('boquette', 'pjm_select2_entity', array(
+            ->add('boquette', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Boquette',
                 'class' => 'PJMAppBundle:Boquette',
                 'query_builder' => function (EntityRepository $er) {
