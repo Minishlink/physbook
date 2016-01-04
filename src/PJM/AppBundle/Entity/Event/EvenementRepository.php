@@ -131,10 +131,11 @@ class EvenementRepository extends EntityRepository
                 ->andWhere('e.boquette = :boquette')
                 ->setParameter('boquette', $boquette);
 
-            if (null !== $boquette->getLieux()) {
+            $lieux = $boquette->getLieux();
+            if (!empty($lieux)) {
                 $qb
                     ->orWhere('e.lieu IN(:lieux)')
-                    ->setParameter('lieux', $boquette->getLieux());
+                    ->setParameter('lieux', $lieux);
             }
         }
 
