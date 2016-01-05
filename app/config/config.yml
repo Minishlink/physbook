@@ -20,9 +20,9 @@ framework:
         version: v1r20151219
         packages:
             js:
-                version: v1r20151219
+                version: v1r20160105
             css:
-                version: v1r20151219
+                version: v1r20160105
             sw:
                 version: v1r20151219
     default_locale:  "%locale%"
