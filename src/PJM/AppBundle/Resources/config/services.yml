@@ -224,4 +224,8 @@ services:
             class: PJM\AppBundle\Form\Extension\HelpLabelExtension
             tags:
                 - { name: form.type_extension, alias: form }
+    pjm.form.extension.select:
+      class: PJM\AppBundle\Form\Extension\Select2TagsExtension
+      tags:
+        - { name: form.type_extension, alias: genemu_jqueryselect2_choice }
 

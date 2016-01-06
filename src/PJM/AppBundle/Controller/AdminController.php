@@ -133,7 +133,7 @@ class AdminController extends Controller
                     'La boquette a bien été ajoutée ou modifiée.'
                 );
 
-                return $this->gestionBoquettesAction(new Request());
+                return $this->redirect($urlAction);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
