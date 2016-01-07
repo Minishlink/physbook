@@ -59,5 +59,3 @@ services:
     pjm.services.file_manager:
         class: PJM\AppBundle\Services\FileManager
         arguments: [%kernel.root_dir%]
-
-

@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Form\Type\Admin;
 
+use PJM\AppBundle\Entity\Boquette;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,13 @@ class BoquetteType extends AbstractType
         $builder
             ->add('nom')
             ->add('slug')
+            ->add('lieux', 'genemu_jqueryselect2_choice', array(
+                'configs' => array(
+                    'tags' => true,
+                ),
+                'multiple' => true,
+                'required' => false,
+            ))
             ->add('image', new ImageType(), array(
                 'label' => 'Logo',
                 'required' => false,
@@ -39,7 +47,7 @@ class BoquetteType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

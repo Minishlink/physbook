@@ -90,10 +90,12 @@
         <div class="col-md-4 text-center">
             {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
         </div>
+        <div class="space visible-xs-block visible-sm-block"></div>
         <div id="calendrier" class="col-md-4">
             {{ include('@PJMApp/Event/fullCalendar.html.twig') }}
         </div>
-        <div class="col-md-4">
+        <div class="space visible-xs-block visible-sm-block"></div>
+        <div class="col-sm-8 col-sm-offset-2 col-md-2 col-md-offset-1">
             {{ include('@PJMApp/Consos/Pians/listeHpi.html.twig') }}
         </div>
     </div>

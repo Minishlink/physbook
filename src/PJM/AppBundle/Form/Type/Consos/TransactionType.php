@@ -25,7 +25,7 @@ class TransactionType extends AbstractType
         unset($moyenPaiementsChoices['event']);
 
         $builder
-            ->add('comptes', 'pjm_select2_entity', array(
+            ->add('comptes', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Destinataire(s)',
                 'class' => 'PJMAppBundle:Compte',
                 'error_bubbling' => true,
@@ -41,7 +41,7 @@ class TransactionType extends AbstractType
                 'choice_label' => 'user',
                 'multiple' => true,
             ))
-            ->add('compteLie', 'pjm_select2_entity', array(
+            ->add('compteLie', 'genemu_jqueryselect2_entity', array(
                 'label' => 'Transfert vers (optionnel)',
                 'help_label' => 'Si renseigné, les différents crédits seront transférés ensuite à cette personne.',
                 'class' => 'PJMAppBundle:Compte',

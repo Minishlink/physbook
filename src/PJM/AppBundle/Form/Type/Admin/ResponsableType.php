@@ -16,7 +16,7 @@ class ResponsableType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', 'pjm_select2_entity', array(
+            ->add('user', 'genemu_jqueryselect2_entity', array(
                 'error_bubbling' => true,
                 'label' => 'Utilisateur',
                 'class' => 'PJMAppBundle:User',
@@ -25,7 +25,7 @@ class ResponsableType extends AbstractType
                         ->orderBy('u.username', 'ASC');
                 },
             ))
-            ->add('responsabilite', 'pjm_select2_entity', array(
+            ->add('responsabilite', 'genemu_jqueryselect2_entity', array(
                 'error_bubbling' => true,
                 'label' => 'Responsabilité',
                 'class' => 'PJMAppBundle:Responsabilite',

@@ -4,6 +4,7 @@ namespace PJM\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use PJM\AppBundle\Entity\Boquette;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -172,9 +173,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $inbox = new Inbox();
             $user->setInbox($inbox);
 
+            /** @var Boquette $boquette */
             foreach ($boquetteComptes as $boquette) {
                 $compte = new Compte($user, $boquette);
-                $compte->setSolde(2000);
+
+                if (in_array($user->getUsername(), array("conscrit", "p3")) && $boquette->getSlug() === "pians") {
+                    $compte->setSolde(-3100);
+                } else {
+                    $compte->setSolde(2000);
+                }
+
                 $manager->persist($compte);
             }
 

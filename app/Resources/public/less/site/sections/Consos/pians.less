@@ -88,10 +88,6 @@ body {
             }
 
             .physHMcontainer {
-
-            }
-
-            .physHMcontainer {
                 .counterHM {
                     display: inline-block;
                     color: white;
@@ -122,14 +118,13 @@ body {
 
                 img, > img {
                     .img-responsive();
-                    max-height: 12em;
+                    max-height: 7em;
                 }
             }
         }
 
         #solde {
             #soldeContainer {
-                @taille: 20em;
                 .pull-right();
                 max-width: 80%;
                 margin-right: 2.5em;
@@ -137,7 +132,7 @@ body {
 
                 img, > img  {
                     .img-responsive();
-                    max-height: @taille;
+                    max-height: 14em;
                 }
 
                 span {
@@ -150,6 +145,32 @@ body {
 
         #listeHpi {
             text-align: center;
+
+            .milieu {
+                background-color: #f8e8c2;
+                @colorText: #42321d;
+
+                p {
+                    margin: 0;
+                    color: @colorText;
+                }
+
+                ul {
+                    margin-bottom: 0;
+
+                    hr {
+                        display: block;
+                        margin: 0.5em auto;
+                        width: 50%;
+                        border-top: 2px solid @colorText;
+                    }
+                }
+
+                a {
+                    color: @colorText;
+                    font-size: 1.5em;
+                }
+            }
         }
     }
 }

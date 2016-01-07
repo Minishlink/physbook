@@ -8,15 +8,11 @@ services:
     class: PJM\AppBundle\Form\Type\DateTimePickerType
     tags:
       - { name: form.type, alias: datetimePicker }
-  pjm.form.type.select2Choice:
-    class: PJM\AppBundle\Form\Type\Select2ChoiceType
-    tags:
-      - { name: form.type, alias: pjm_select2_choice }
-  pjm.form.type.select2Entity:
-    class: PJM\AppBundle\Form\Type\Select2EntityType
-    tags:
-      - { name: form.type, alias: pjm_select2_entity }
   pjm.form.extension.helpLabel:
     class: PJM\AppBundle\Form\Extension\HelpLabelExtension
     tags:
       - { name: form.type_extension, alias: form }
+  pjm.form.extension.select2tags:
+    class: PJM\AppBundle\Form\Extension\Select2TagsExtension
+    tags:
+      - { name: form.type_extension, alias: genemu_jqueryselect2_choice }
