@@ -2,7 +2,6 @@
 
 namespace PJM\AppBundle\Form\Type\Admin;
 
-use PJM\AppBundle\Entity\Boquette;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
