@@ -1,38 +1,39 @@
 <div id="form_invite">
-{{ form_stylesheet(form) }}
-{{ form_javascript(form) }}
-
-{{ form_start(form) }}
     <div class="modal fade text-left" id="userFilterModal" tabindex="-1" role="dialog" aria-labelledby="labelUserFilterModalModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                {{ form_stylesheet(formFilter) }}
+                {{ form_javascript(formFilter) }}
+                {{ form_start(formFilter) }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="labelUserFilterModalModal">Recherche avancée</h4>
                 </div>
                 <div class="modal-body">
-                        {{ form_row(form.fams) }}
-                        {{ form_row(form.tabagns, {value: app.user.tabagns}) }}
-                        {{ form_row(form.proms, {value: app.user.proms}) }}
-                        {{ form_row(form.appartement) }}
-                        {{ form_row(form.classe) }}
-                        {{ form_row(form.genre) }}
-                        {{ form_row(form.responsables) }}
+                    {{ form_row(formFilter.fams) }}
+                    {{ form_row(formFilter.tabagns, {value: app.user.tabagns}) }}
+                    {{ form_row(formFilter.proms, {value: app.user.proms}) }}
+                    {{ form_row(formFilter.appartement) }}
+                    {{ form_row(formFilter.classe) }}
+                    {{ form_row(formFilter.genre) }}
+                    {{ form_row(formFilter.responsables) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    {{ form_widget(form.filtre) }}
+                    {{ form_widget(formFilter.submit) }}
                 </div>
+                {{ form_end(formFilter) }}
             </div>
         </div>
     </div>
 
     <div style="position:relative;" class="form-inline">
-        {{ form_errors(form) }}
-        {{ form_row(form.users) }}
-
-        <button class="btn btn-default" type="submit" title="Inviter"><span class="glyphicon glyphicon-user"></span><small><small><span class="glyphicon glyphicon-plus"></span></small></small><span class="sr-only">Inviter</span></button>
-
+        {{ form_stylesheet(form) }}
+        {{ form_javascript(form) }}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.users) }}
+            <button class="btn btn-default" type="submit" title="Inviter"><span class="glyphicon glyphicon-user"></span><small><small><span class="glyphicon glyphicon-plus"></span></small></small><span class="sr-only">Inviter</span></button>
+        {{ form_end(form) }}
     </div>
-{{ form_end(form) }}
 </div>

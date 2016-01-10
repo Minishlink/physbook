@@ -19,7 +19,7 @@ class UserFilterType extends AbstractType
             $builder
                 ->add('fams', 'filter_text', array(
                     'label' => "Fam's",
-                    'condition_pattern' => FilterOperands::OPERAND_SELECTOR,
+                    'condition_pattern' => FilterOperands::STRING_EQUALS,
                 ))
                 ->add('tabagns', 'filter_choice', array(
                     'label' => "Tabagn's",
@@ -61,10 +61,16 @@ class UserFilterType extends AbstractType
                 ))
             ;
         }
+
+        if ($options['submit']) {
+            $builder->add('submit', 'submit', array(
+                'label' => $options['submit'],
+            ));
+        }
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -72,6 +78,7 @@ class UserFilterType extends AbstractType
             'csrf_protection' => false,
             'validation_groups' => array('filtering'),
             'simple' => false,
+            'submit' => false,
         ));
     }
 

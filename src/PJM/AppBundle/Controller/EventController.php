@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller;
 
+use PJM\AppBundle\Form\Type\Filter\UserFilterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -330,25 +331,20 @@ class EventController extends Controller
                 array('slug' => $event->getSlug())
             ),
         ));
-
         $form->handleRequest($request);
+
+        $formFilter = $this->createForm(new UserFilterType(), null, array(
+            'submit' => 'Filtrer',
+            'action' => $this->generateUrl(
+                'pjm_app_event_invite',
+                array('slug' => $event->getSlug())
+            ),
+        ));
+        $formFilter->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($form->get('filtre')->isClicked()) {
-                    // on traite le filtre
-                    $filterBuilder = $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:User')->createQueryBuilder('u');
-                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-                    $usersFilter = $filterBuilder->getQuery()->getResult();
-                }
-
-                $this->get('pjm.services.invitation_manager')->sendInvitations(
-                    array_unique(array_merge(
-                        $form->getData()['users']->toArray(),
-                        isset($usersFilter) ? $usersFilter : array()
-                    )),
-                    $event
-                );
+                $this->get('pjm.services.invitation_manager')->sendInvitations($form->getData()['users']->toArray(), $event);
             } else {
                 $request->getSession()->getFlashBag()->add(
                     'danger',
@@ -364,10 +360,23 @@ class EventController extends Controller
             }
 
             return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
+        } else if ($formFilter->isSubmitted()) {
+            if ($formFilter->isValid()) {
+                // on traite le filtre
+                $usersFilter = $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions(
+                    $formFilter,
+                    $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:User')->createQueryBuilder('u')
+                )->getQuery()->getResult();
+
+                $this->get('pjm.services.invitation_manager')->sendInvitations($usersFilter, $event);
+            }
+
+            return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
         }
 
         return array(
             'form' => $form->createView(),
+            'formFilter' => $formFilter->createView(),
         );
     }
 
