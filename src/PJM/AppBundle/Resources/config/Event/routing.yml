@@ -27,6 +27,11 @@ pjm_app_event_invite:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Event:invite }
 
+pjm_app_event_inviteBatch:
+    path:     /{slug}/invite/batch
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event:inviteBatch }
+
 pjm_app_event_suppression:
     path:     /{slug}/suppression
     methods: [ get, post ]

@@ -331,16 +331,8 @@ class EventController extends Controller
                 array('slug' => $event->getSlug())
             ),
         ));
-        $form->handleRequest($request);
 
-        $formFilter = $this->createForm(new UserFilterType(), null, array(
-            'submit' => 'Filtrer',
-            'action' => $this->generateUrl(
-                'pjm_app_event_invite',
-                array('slug' => $event->getSlug())
-            ),
-        ));
-        $formFilter->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -360,11 +352,40 @@ class EventController extends Controller
             }
 
             return $this->redirect($this->generateUrl('pjm_app_event_index', array('slug' => $event->getSlug())));
-        } else if ($formFilter->isSubmitted()) {
-            if ($formFilter->isValid()) {
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Affiche et gère le formulaire d'invitations par filtre.
+     *
+     * @param Request         $request
+     * @param Event\Evenement $event
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Template
+     */
+    public function inviteBatchAction(Request $request, Event\Evenement $event)
+    {
+        $form = $this->createForm(new UserFilterType(), null, array(
+            'submit' => 'Filtrer',
+            'action' => $this->generateUrl(
+                'pjm_app_event_inviteBatch',
+                array('slug' => $event->getSlug())
+            ),
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
                 // on traite le filtre
                 $usersFilter = $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions(
-                    $formFilter,
+                    $form,
                     $this->getDoctrine()->getManager()->getRepository('PJMAppBundle:User')->createQueryBuilder('u')
                 )->getQuery()->getResult();
 
@@ -376,7 +397,6 @@ class EventController extends Controller
 
         return array(
             'form' => $form->createView(),
-            'formFilter' => $formFilter->createView(),
         );
     }
 
