@@ -1,6 +1,6 @@
 {% if event is not null %}
 <h2>{{ event.nom }}</h2>
-{% if event.prix > 0 %}{{ render(controller('PJMAppBundle:Event:etatPaiementUser', { 'event': event })) }}{% endif %}
+{% if event.prix > 0 %}{{ render(controller('PJMAppBundle:Event/Evenement:etatPaiementUser', { 'event': event })) }}{% endif %}
 <div class="panel panel-default">
     <div class="panel-body">
         {% if event.image is not null %}<img class="affiche" src="{{ asset(event.image.webPath) }}" alt="Affiche">{% endif %}
@@ -48,13 +48,13 @@
     </div>
     <div class="panel-footer clearfix">
         <div class="pull-right">
-            {{ render(url('pjm_app_event_inscription', {'slug': event.slug})) }}
+            {{ render(controller('PJMAppBundle:Event/Invitation:inscription', {event: event})) }}
         </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-body text-center">
-        {{ render(controller("PJMAppBundle:Event:inviteBatch", {event: event})) }}
+        {{ render(controller("PJMAppBundle:Event/Invitation:inviteBatch", {event: event})) }}
         {{ render(url('pjm_app_event_invite', {'slug': event.slug})) }}
         {% if event.createur == app.user or is_granted('ROLE_ADMIN') %}
             <br><a href="{{ path('pjm_app_event_modifier', {'slug': event.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier</a>

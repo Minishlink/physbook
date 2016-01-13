@@ -7,7 +7,7 @@
 
 {% block pjm_app_body_content %}
     <h2>Calendrier</h2>
-    {{ include("@PJMApp/Event/fullCalendar.html.twig") }}
+    {{ include("@PJMApp/Event/Evenement/fullCalendar.html.twig") }}
 
     <h2>Responsables</h2>
     {{ render(url('pjm_app_boquette_voirHistoriqueResponsables', {'slug': boquette.slug })) }}
