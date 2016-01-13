@@ -13,15 +13,15 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        {{ render(controller('PJMAppBundle:Event:nouveau', {standalone: true})) }}
+        {{ render(controller('PJMAppBundle:Event/Evenement:nouveau', {standalone: true})) }}
     </div>
 </div>
 <div class="row">
     <div class="col-md-6 col-md-push-6">
-        {% include "PJMAppBundle:Event:event.html.twig" %}
+        {% include "PJMAppBundle:Event/Evenement:event.html.twig" %}
     </div>
     <div class="col-md-6 col-md-pull-6">
-        {% include "PJMAppBundle:Event:timeline.html.twig" %}
+        {% include "PJMAppBundle:Event/Evenement:timeline.html.twig" %}
     </div>
 </div>
 

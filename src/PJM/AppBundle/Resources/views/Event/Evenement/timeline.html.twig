@@ -4,7 +4,7 @@
     </div>
     {% if listeEvents|length > 0 %}
     {% for evenement in listeEvents %}
-    {% include "PJMAppBundle:Event:timelineItem.html.twig" with {'event': evenement, 'active': (event is defined and evenement == event) } %}
+    {% include "PJMAppBundle:Event/Evenement:timelineItem.html.twig" with {'event': evenement, 'active': (event is defined and evenement == event) } %}
     {% endfor %}
     {% else %}
     <div class="timeline-block">
