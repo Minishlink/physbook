@@ -28,7 +28,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var datetime
+     * @var \DateTime
      *
      * @ORM\Column(name="lastActivity", type="datetime", nullable=true)
      */
@@ -112,7 +112,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="classe", type="string", length=10, nullable=true)
+     * @ORM\Column(name="classe", type="string", length=20, nullable=true)
      */
     private $classe;
 

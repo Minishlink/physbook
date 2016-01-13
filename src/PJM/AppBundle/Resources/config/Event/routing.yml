@@ -1,12 +1,12 @@
 pjm_app_event_nouveau:
     path:     /nouveau
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:nouveau }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:nouveau }
 
 pjm_app_event_calendar:
     path:     /calendrier/{month}-{year}
     methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Event:calendar, year: null, month: null }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:calendar, year: null, month: null }
 
 pjm_app_event_elections_index:
     path:     /elections
@@ -20,34 +20,39 @@ pjm_app_event_elections_index:
 pjm_app_event_inscription:
     path:     /{slug}/inscription
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:inscription }
+    defaults: { _controller: PJMAppBundle:Event\Invitation:inscription }
 
 pjm_app_event_invite:
     path:     /{slug}/invite
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:invite }
+    defaults: { _controller: PJMAppBundle:Event\Invitation:invite }
+
+pjm_app_event_inviteBatch:
+    path:     /{slug}/invite/batch
+    methods: [ get, post ]
+    defaults: { _controller: PJMAppBundle:Event\Invitation:inviteBatch }
 
 pjm_app_event_suppression:
     path:     /{slug}/suppression
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:suppression }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:suppression }
 
 pjm_app_event_modifier:
     path:     /{slug}/modifier
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:modifier }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:modifier }
 
 pjm_app_event_paiement:
     path:     /{slug}/paiement
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:paiement }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:paiement }
 
 pjm_app_event_export:
     path:     /{slug}/export
     methods: [ get, post ]
-    defaults: { _controller: PJMAppBundle:Event:export }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:export }
 
 pjm_app_event_index:
     path:     /{slug}
     methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Event:index, slug: null }
+    defaults: { _controller: PJMAppBundle:Event\Evenement:index, slug: null }

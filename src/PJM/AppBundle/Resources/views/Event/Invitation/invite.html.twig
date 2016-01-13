@@ -1,0 +1,9 @@
+<div style="position:relative;" class="form-inline">
+    {{ form_stylesheet(form) }}
+    {{ form_javascript(form) }}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.users) }}
+        <button class="btn btn-default" type="submit" title="Inviter"><span class="glyphicon glyphicon-user"></span><small><small><span class="glyphicon glyphicon-plus"></span></small></small><span class="sr-only">Inviter</span></button>
+    {{ form_end(form) }}
+</div>
