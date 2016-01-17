@@ -1,8 +1,0 @@
-{
-    "jwolfe.file-tree-exclude.list": [
-        ".git",
-        "vendor",
-        "cache",
-        "logs"
-    ]
-}
