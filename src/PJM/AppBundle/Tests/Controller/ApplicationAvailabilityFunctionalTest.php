@@ -4,14 +4,24 @@ namespace PJM\AppBundle\Tests\Controller;
 
 class ApplicationAvailabilityFunctionalTest extends BaseTest
 {
+    /** @var \Symfony\Bundle\FrameworkBundle\Client */
+    private static $client;
+
+
+    public static function setUpBeforeClass()
+    {
+        self::$client = self::createAuthenticatedClient();
+    }
+
     /**
      * @dataProvider urlProvider
+     *
+     * @param $url
      */
     public function testPageIsSuccessful($url)
     {
-        $client = $this->createAuthenticatedClient();
-        $client->request('GET', $url);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::$client->request('GET', $url);
+        $this->assertTrue(self::$client->getResponse()->isSuccessful());
     }
 
     public function urlProvider()
