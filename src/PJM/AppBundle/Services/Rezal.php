@@ -193,7 +193,7 @@ class Rezal
                     $sqlCompte = 'UPDATE compte AS c
                         INNER JOIN pg AS p ON p.compte = c.idCompte
                         SET c.montant = c.montant '.($add ? '+' : '-').' :montant,
-                        c.estMazoute = IF(c.montant '.($add ? '+' : '-').' :montant >= 0, 0, 1)
+                        c.estMazoute = IF(c.montant '.($add ? '+' : '-').' :montant >= -1500, 0, 1)
                         WHERE p.idPg = :idPg;';
 
                     $sth = $this->dbh->prepare($sqlCompte);

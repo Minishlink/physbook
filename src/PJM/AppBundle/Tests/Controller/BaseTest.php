@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
  */
 abstract class BaseTest extends WebTestCase
 {
-    protected function createAuthenticatedClient($username = 'ancien')
+    protected static function createAuthenticatedClient($username = 'ancien')
     {
         return self::createClient(array(), array(
             'PHP_AUTH_USER' => $username,

@@ -21,7 +21,7 @@
     "bootstrap": "~3.3.5",
     "moment": "2.10.6",
     "eonasdan-bootstrap-datetimepicker": "~4.7.14",
-    "jquery": "~2.1.4",
+    "jquery": "~2.2",
     "datatables.net-bs": "~1.10.10",
     "datatables.net-responsive-bs": "~1.0.7",
     "datatables.net-responsive": "~1.0.7",
@@ -31,6 +31,6 @@
     "fullcalendar": "~2.5.0"
   },
   "resolutions": {
-    "jquery": "~2.1.4"
+    "jquery": "~2.2"
   }
 }
