@@ -58,6 +58,36 @@ class LoadResponsableData extends BaseFixture implements OrderedFixtureInterface
                 'boquette' => 'asso',
                 'active' => true,
             ),
+            array(
+                'user' => 'ancienne',
+                'libelle' => 'ZiPian\'s',
+                'boquette' => 'pians',
+                'active' => true,
+            ),
+            array(
+                'user' => 'ancienne',
+                'libelle' => 'ZiC\'vis',
+                'boquette' => 'cvis',
+                'active' => true,
+            ),
+            array(
+                'user' => 'ancienne',
+                'libelle' => 'ZiBrag\'s',
+                'boquette' => 'brags',
+                'active' => true,
+            ),
+            array(
+                'user' => 'ancienne',
+                'libelle' => 'ZiPaniers',
+                'boquette' => 'paniers',
+                'active' => true,
+            ),
+            array(
+                'user' => 'p3',
+                'libelle' => 'ZiBrag\'s',
+                'boquette' => 'brags',
+                'active' => false,
+            ),
         );
 
         $responsableManager = $this->container->get('pjm.services.responsable_manager');

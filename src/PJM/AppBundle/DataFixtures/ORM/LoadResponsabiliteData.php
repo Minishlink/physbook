@@ -44,6 +44,28 @@ class LoadResponsabiliteData extends BaseFixture implements OrderedFixtureInterf
                 'niveau' => 1,
                 'active' => true,
             ),
+            array(
+                'libelle' => 'ZiPian\'s',
+                'boquette' => 'pians',
+                'niveau' => 1,
+                'active' => true,
+            ),
+            array(
+                'libelle' => 'ZiC\'vis',
+                'boquette' => 'cvis',
+                'niveau' => 1,
+                'active' => true,
+            ),array(
+                'libelle' => 'ZiBrag\'s',
+                'boquette' => 'brags',
+                'niveau' => 1,
+                'active' => true,
+            ),array(
+                'libelle' => 'ZiPaniers',
+                'boquette' => 'paniers',
+                'niveau' => 1,
+                'active' => true,
+            ),
         );
 
         foreach ($objects as $object) {
