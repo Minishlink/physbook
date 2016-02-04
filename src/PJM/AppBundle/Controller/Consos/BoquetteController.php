@@ -39,13 +39,27 @@ class BoquetteController extends Controller
     }
 
     /**
-     * Page par défaut des boquettes.
+     * Page d'accueil d'une boquette.
      *
      * @param object   Boquette $boquette
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function defaultAction(Boquette $boquette)
+    public function indexAction(Boquette $boquette)
     {
-        return $this->render('PJMAppBundle:Boquette:default.html.twig', array(
+        $boquetteManager = $this->get('pjm.services.boquette_manager');
+
+        switch($boquetteManager->getType($boquette)) {
+            case 'bar':
+                return $this->forward('PJMAppBundle:Consos/Pians:index');
+            case 'epicerie':
+                return $this->forward('PJMAppBundle:Consos/Cvis:index');
+            case 'boulangerie':
+                return $this->forward('PJMAppBundle:Consos/Brags:index');
+            case 'paniers':
+                return $this->forward('PJMAppBundle:Consos/Paniers:index');
+        }
+
+        return $this->render('@PJMApp/Boquette/default.html.twig', array(
             'boquette' => $boquette,
             'articles' => $this->get('pjm.services.article_manager')->getSome(4, $boquette)
         ));

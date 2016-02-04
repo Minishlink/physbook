@@ -2,6 +2,7 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use PJM\AppBundle\Entity\Commande;
@@ -9,8 +10,10 @@ use PJM\AppBundle\Form\Type\Consos\CommandeType;
 
 class BragsController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
+        $boquette = $this->getBoquette();
+
         $nbCommandes = $this->getDoctrine()->getManager()
             ->getRepository('PJMAppBundle:Commande')
             ->getTotalCommandes();
@@ -23,7 +26,7 @@ class BragsController extends Controller
             new \DateTime(date('Y').'-06-12'); // conscrits
 
         return $this->render('PJMAppBundle:Consos:Brags/index.html.twig', array(
-            'boquetteSlug' => 'brags',
+            'boquette' => $boquette,
             'solde' => $bragsService->getSolde($this->getUser()),
             'prixBaguette' => $bragsService->getCurrentBaguette()->getPrix(),
             'commande' => $bragsService->getCommande($this->getUser()),
@@ -35,6 +38,8 @@ class BragsController extends Controller
 
     public function commandeAction(Request $request)
     {
+        $boquette = $this->getBoquette();
+
         $em = $this->getDoctrine()->getManager();
 
         $commande = new Commande();
@@ -56,7 +61,7 @@ class BragsController extends Controller
                         "Il faut que tu indiques au moins ton étage (ex. \"B2\") dans ton profil pour pouvoir commander du brag's. Si tu es SKF, mets l'étage auquel tu veux aller chercher ton pain. Tu peux mettre n'importe quoi après les deux premières lettres comme par ex. \"B2 d'hons (SFK)\"."
                     );
 
-                    return $this->redirect($this->generateUrl('pjm_app_boquette_brags_index'));
+                    return $this->redirectToRoute('pjm_app_boquette_index', array('slug' => $boquette->getSlug()));
                 }
 
                 $commande->setItem($bragsService->getCurrentBaguette());
@@ -90,12 +95,30 @@ class BragsController extends Controller
                 }
             }
 
-            return $this->redirect($this->generateUrl('pjm_app_boquette_brags_index'));
+            return $this->redirectToRoute('pjm_app_boquette_index', array('slug' => $boquette->getSlug()));
         }
 
         return $this->render('PJMAppBundle:Consos:Brags/commande.html.twig', array(
             'form' => $form->createView(),
             'commande' => $bragsService->getCommande($this->getUser()),
         ));
+    }
+
+    /**
+     * @Template("PJMAppBundle:Boquette:nav.html.twig")
+     *
+     * @return array
+     */
+    public function navAction()
+    {
+        return array(
+            'boquette' => $this->getBoquette(),
+            'logo' => 'images/header/Brags-B.png',
+        );
+    }
+
+    private function getBoquette()
+    {
+        return $this->get('pjm.services.boquette_manager')->getByType('boulangerie');
     }
 }

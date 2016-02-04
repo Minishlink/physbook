@@ -8,10 +8,12 @@ use PJM\AppBundle\Entity\Boquette;
 class BoquetteManager
 {
     private $em;
+    private static $specialBoquettes;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $specialBoquettes)
     {
         $this->em = $em;
+        self::$specialBoquettes = $specialBoquettes;
     }
 
     /**
@@ -24,12 +26,53 @@ class BoquetteManager
     {
         return $withSpecial ?
             $this->getRepository()->findAll() :
-            $this->getRepository()->getAllExceptSlugs($this->getSpecialBoquettesSlugs());
+            $this->getRepository()->getAllExceptSlugs(self::getSpecialBoquettesSlugs());
     }
 
-    private function getSpecialBoquettesSlugs()
+    public function isSpecialBoquette(Boquette $boquette)
     {
-        return array('pians', 'cvis', 'brags', 'paniers');
+        return in_array($boquette->getSlug(), self::getSpecialBoquettesSlugs());
+    }
+
+    public function getType(Boquette $boquette) {
+        foreach(self::$specialBoquettes as $type => $specialBoquette) {
+            if ($specialBoquette && ($boquette->getSlug() === $specialBoquette['slug'])) {
+                return $type;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $type bar/epicerie/boulangerie/paniers/journal/bde/bds
+     *
+     * @return Boquette
+     */
+    public function getByType($type)
+    {
+        if (array_key_exists($type, self::$specialBoquettes)) {
+            $boquette = self::$specialBoquettes[$type];
+
+            if ($boquette) {
+                return $this->getRepository()->findOneBy(array('slug' => $boquette['slug']));
+            }
+        }
+
+        return null;
+    }
+
+    private static function getSpecialBoquettesSlugs()
+    {
+        $slugs = array();
+
+        foreach (self::$specialBoquettes as $specialBoquette) {
+            if ($specialBoquette && array_key_exists('slug', $specialBoquette)) {
+                $slugs[] = $specialBoquette['slug'];
+            }
+        }
+
+        return $slugs;
     }
 
     private function getRepository()

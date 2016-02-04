@@ -1,8 +1,3 @@
-pjm_app_boquette_paniers_index:
-    path:     /
-    methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Consos/Paniers:index }
-
 pjm_app_boquette_paniers_commander:
     path:     /commander
     methods: [ get, post ]

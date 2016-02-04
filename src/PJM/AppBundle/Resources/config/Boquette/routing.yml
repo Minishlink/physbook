@@ -35,14 +35,6 @@ pjm_app_boquette_rechargement:
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:rechargement, montant: null }
 
-pjm_app_boquette_pians:
-    resource: "@PJMAppBundle/Resources/config/Boquette/Pians/routing.yml"
-    prefix:   /pians
-
-pjm_app_boquette_cvis:
-    resource: "@PJMAppBundle/Resources/config/Boquette/Cvis/routing.yml"
-    prefix:   /cvis
-
 pjm_app_boquette_brags:
     resource: "@PJMAppBundle/Resources/config/Boquette/Brags/routing.yml"
     prefix:   /brags
@@ -72,7 +64,7 @@ pjm_app_boquette_liste:
     methods: [ get ]
     defaults: { _controller: PJMAppBundle:Consos/Boquette:liste }
 
-pjm_app_boquette_default:
+pjm_app_boquette_index:
     path:     /{slug}
     methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Consos/Boquette:default }
+    defaults: { _controller: PJMAppBundle:Consos/Boquette:index }

@@ -8,13 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PaniersController extends Controller
 {
-    private $slug;
-
-    public function __construct()
-    {
-        $this->slug = 'paniers';
-    }
-
     /**
      * @param Request $request
      *
@@ -22,14 +15,14 @@ class PaniersController extends Controller
      *
      * @Template
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $paniersService = $this->get('pjm.services.boquette.paniers');
         $panier = $paniersService->getCurrentPanier();
         $commande = isset($panier) ? $paniersService->getCommande($panier, $this->getUser()) : null;
 
         return array(
-            'boquetteSlug' => $this->slug,
+            'boquette' => $this->getBoquette(),
             'panier' => $panier,
             'dejaCommande' => isset($commande),
             'solde' => $paniersService->getSolde($this->getUser()),
@@ -65,7 +58,7 @@ class PaniersController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('pjm_app_boquette_paniers_index'));
+        return $this->redirect($this->generateUrl('pjm_app_boquette_index', array('slug' => $this->getBoquette()->getSlug())));
     }
 
     public function annulerAction(Request $request)
@@ -99,6 +92,24 @@ class PaniersController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('pjm_app_boquette_paniers_index'));
+        return $this->redirect($this->generateUrl('pjm_app_boquette_index', array('slug' => $this->getBoquette()->getSlug())));
+    }
+
+    /**
+     * @Template("PJMAppBundle:Boquette:nav.html.twig")
+     *
+     * @return array
+     */
+    public function navAction()
+    {
+        return array(
+            'boquette' => $this->getBoquette(),
+            'logo' => 'images/header/Fruits-et-legumes-B.png',
+        );
+    }
+
+    private function getBoquette()
+    {
+        return $this->get('pjm.services.boquette_manager')->getByType('paniers');
     }
 }

@@ -2,24 +2,19 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class CvisController extends Controller
 {
-    private $slug;
-
-    public function __construct()
+    public function indexAction()
     {
-        $this->slug = 'cvis';
-    }
+        $boquette = $this->getBoquette();
 
-    public function indexAction(Request $request)
-    {
         $utils = $this->get('pjm.services.utils');
         $cvisService = $this->get('pjm.services.boquette.cvis');
-        $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
-        $produitMoment = $utils->getFeaturedItem($this->slug);
+        $listeHistoriques = $utils->getHistorique($this->getUser(), $boquette->getSlug(), 5);
+        $produitMoment = $utils->getFeaturedItem($boquette->getSlug());
         $ziConsommateurs = $cvisService->getTopConsommateurs(date('m')); // top du mois en cours
         $listeProduits = $cvisService->getItems(true, 5);
 
@@ -30,7 +25,7 @@ class CvisController extends Controller
         );
 
         return $this->render('PJMAppBundle:Consos:Cvis/index.html.twig', array(
-            'boquetteSlug' => $this->slug,
+            'boquette' => $boquette,
             'solde' => $cvisService->getSolde($this->getUser()),
             'listeHistoriques' => $listeHistoriques,
             'ziConsommateurs' => $ziConsommateurs,
@@ -38,5 +33,23 @@ class CvisController extends Controller
             'listeProduits' => $listeProduits,
             'stats' => $stats,
         ));
+    }
+
+    /**
+     * @Template("PJMAppBundle:Boquette:nav.html.twig")
+     *
+     * @return array
+     */
+    public function navAction()
+    {
+        return array(
+            'boquette' => $this->getBoquette(),
+            'logo' => 'images/header/Cvis-B.png',
+        );
+    }
+
+    private function getBoquette()
+    {
+        return $this->get('pjm.services.boquette_manager')->getByType('epicerie');
     }
 }

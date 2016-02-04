@@ -1,0 +1,9 @@
+{% if boquette is not null %}
+<li>
+    <a href="{{ path('pjm_app_boquette_index', {slug: boquette.slug}) }}" title="{{ boquette.nom }}">
+        <img class="logo" src="{{ asset(logo) }}" alt="{{ boquette.nomCourt }}" />
+        {{ boquette.nomCourt }}
+    </a>
+</li>
+{% endif %}
+

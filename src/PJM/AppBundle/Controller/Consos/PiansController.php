@@ -2,31 +2,44 @@
 
 namespace PJM\AppBundle\Controller\Consos;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class PiansController extends Controller
 {
-    public function __construct()
+    public function indexAction()
     {
-        $this->slug = 'pians';
-    }
+        $boquette = $this->getBoquette();
 
-    public function indexAction(Request $request)
-    {
         $utils = $this->get('pjm.services.utils');
         $piansService = $this->get('pjm.services.boquette.pians');
-        $boquette = $piansService->getBoquette();
-        $listeHistoriques = $utils->getHistorique($this->getUser(), $this->slug, 5);
-        $boissonDuMois = $utils->getFeaturedItem($this->slug);
+        $listeHistoriques = $utils->getHistorique($this->getUser(), $boquette->getSlug(), 5);
+        $boissonDuMois = $utils->getFeaturedItem($boquette->getSlug());
 
         return $this->render('PJMAppBundle:Consos:Pians/index.html.twig', array(
             'boquette' => $boquette,
-            'boquetteSlug' => $this->slug,
             'solde' => $piansService->getSolde($this->getUser()),
             'listeHistoriques' => $listeHistoriques,
             'boissonDuMois' => $boissonDuMois,
             'listeHpi' => $this->get('pjm.services.compte_manager')->getComptesWithLessThan(-3000, $boquette),
         ));
+    }
+
+    /**
+     * @Template("PJMAppBundle:Boquette:nav.html.twig")
+     *
+     * @return array
+     */
+    public function navAction()
+    {
+        return array(
+            'boquette' => $this->getBoquette(),
+            'logo' => 'images/header/Pians-B.png',
+        );
+    }
+
+    private function getBoquette()
+    {
+        return $this->get('pjm.services.boquette_manager')->getByType('bar');
     }
 }

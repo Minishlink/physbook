@@ -107,30 +107,10 @@
                                     B<span class="phys-AM" style="fill: white; font-size: 1.1em;" data-grunticon-embed></span>k
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ path('pjm_app_boquette_pians_index') }}" title="Pian's">
-                                    <img class="logo" src="{{ asset('images/header/Pians-B.png') }}" alt="Pian's" />
-                                    Pian's
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('pjm_app_boquette_cvis_index') }}" title="C'vis">
-                                    <img class="logo" src="{{ asset('images/header/Cvis-B.png') }}" alt="C'vis" />
-                                    C'vis
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('pjm_app_boquette_brags_index') }}" title="Brag's">
-                                    <img class="logo" src="{{ asset('images/header/Brags-B.png') }}" alt="Brag's" />
-                                    Brag's
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('pjm_app_boquette_paniers_index') }}" title="Paniers de fruits et légumes">
-                                    <img class="logo" src="{{ asset('images/header/Fruits-et-legumes-B.png') }}" alt="Paniers" />
-                                    Paniers
-                                </a>
-                            </li>
+                            {{ render(controller('PJMAppBundle:Consos/Pians:nav')) }}
+                            {{ render(controller('PJMAppBundle:Consos/Cvis:nav')) }}
+                            {{ render(controller('PJMAppBundle:Consos/Brags:nav')) }}
+                            {{ render(controller('PJMAppBundle:Consos/Paniers:nav')) }}
                         </ul>
                     </li>
                     <li{% if section == "thuyss" %} class="active"{% endif %}>

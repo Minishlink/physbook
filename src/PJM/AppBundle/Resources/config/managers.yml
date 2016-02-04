@@ -4,7 +4,7 @@ services:
     arguments: [@doctrine.orm.entity_manager, @pjm.services.notification, @pjm.services.group]
   pjm.services.boquette_manager:
     class: PJM\AppBundle\Services\BoquetteManager
-    arguments: [@doctrine.orm.entity_manager]
+    arguments: [@doctrine.orm.entity_manager, %special_boquettes%]
   pjm.services.compte_manager:
     class: PJM\AppBundle\Services\Consos\CompteManager
     arguments: [@doctrine.orm.entity_manager]

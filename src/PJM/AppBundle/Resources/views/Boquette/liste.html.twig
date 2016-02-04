@@ -10,7 +10,7 @@
     {% if boquettes|length > 0 %}
         <ul>
         {% for boquette in boquettes %}
-            <li><a href="{{ path('pjm_app_boquette_default', {slug: boquette.slug}) }}">{{ boquette.nom }}</a></li>
+            <li><a href="{{ path('pjm_app_boquette_index', {slug: boquette.slug}) }}">{{ boquette.nom }}</a></li>
         {% endfor %}
         </ul>
     {% else %}

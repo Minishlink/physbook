@@ -1,8 +1,3 @@
-pjm_app_boquette_brags_index:
-    path:     /
-    methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Consos/Brags:index }
-
 pjm_app_boquette_brags_commande:
     path:     /commande
     methods: [ get, post ]
