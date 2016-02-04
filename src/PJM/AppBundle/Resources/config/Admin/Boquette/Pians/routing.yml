@@ -1,4 +1,0 @@
-pjm_app_admin_boquette_pians_index:
-    path:     /
-    methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Consos/PiansAdmin:index }

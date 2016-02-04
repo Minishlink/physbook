@@ -13,19 +13,12 @@ use PJM\AppBundle\Form\Type\Consos\PrixBaguetteType;
 
 class BragsAdminController extends Controller
 {
-    private $slug;
-    private $itemSlug;
-
-    public function __construct()
-    {
-        $this->slug = 'brags';
-        $this->itemSlug = 'baguette';
-    }
+    private $itemSlug = 'baguette';
 
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:Consos/Brags/index.html.twig', array(
-            'boquetteSlug' => $this->slug,
+            'boquette' => $this->get('pjm.services.boquette.brags')->getBoquette(),
         ));
     }
 
@@ -237,7 +230,6 @@ class BragsAdminController extends Controller
     public function listePrixAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('PJMAppBundle:Item');
 
         $nouveauPrix = new Item();
         $nouveauPrix->setLibelle('Baguette de pain');

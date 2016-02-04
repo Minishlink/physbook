@@ -6,10 +6,8 @@ use Doctrine\ORM\EntityManager;
 
 class PiansService extends BoquetteService
 {
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $specialBoquettes)
     {
-        parent::__construct($em);
-
-        $this->slug = 'pians';
+        parent::__construct($em, $specialBoquettes['bar']);
     }
 }

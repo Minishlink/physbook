@@ -9,7 +9,7 @@ pjm_app_admin_boquette_gestionResponsables:
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionResponsables }
 
 pjm_app_admin_boquette_responsablesResults:
-    path:     /{boquette_slug}/responsables/results
+    path:     /{slug}/responsables/results
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:responsablesResults }
 
@@ -24,7 +24,7 @@ pjm_app_admin_boquette_gestionFeaturedItem:
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionFeaturedItem }
 
 pjm_app_admin_boquette_featuredItemResults:
-    path:     /{boquette_slug}/featuredItem/results
+    path:     /{slug}/featuredItem/results
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:featuredItemResults }
 
@@ -41,7 +41,7 @@ pjm_app_admin_boquette_gestionCredits:
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:gestionCredits }
 
 pjm_app_admin_boquette_creditsResults:
-    path:     /{boquette_slug}/gestionCredits/results
+    path:     /{slug}/gestionCredits/results
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:creditsResults }
 
@@ -56,7 +56,7 @@ pjm_app_admin_boquette_voirAchats:
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:voirAchats }
 
 pjm_app_admin_boquette_achatsResults:
-    path:     /{boquette_slug}/achats/results
+    path:     /{slug}/achats/results
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:achatsResults }
 
@@ -71,13 +71,9 @@ pjm_app_admin_boquette_exportComptes:
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:exportComptes }
 
 pjm_app_admin_boquette_comptesResults:
-    path:     /{boquette_slug}/comptes/results
+    path:     /{slug}/comptes/results
     methods: [ get, post ]
     defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:comptesResults }
-
-pjm_app_admin_boquette_pians:
-    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Pians/routing.yml"
-    prefix:   /pians
 
 pjm_app_admin_boquette_brags:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Brags/routing.yml"
@@ -87,15 +83,7 @@ pjm_app_admin_boquette_paniers:
     resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Paniers/routing.yml"
     prefix:   /paniers
 
-pjm_app_admin_boquette_cvis:
-    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Cvis/routing.yml"
-    prefix:   /cvis
-
-pjm_app_admin_boquette_asso:
-    resource: "@PJMAppBundle/Resources/config/Admin/Boquette/Asso/routing.yml"
-    prefix:   /asso
-
-pjm_app_admin_boquette_default:
+pjm_app_admin_boquette_index:
     path:     /{slug}
     methods: [ get ]
-    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:defaultAdmin }
+    defaults: { _controller: PJMAppBundle:Consos/BoquetteAdmin:index }

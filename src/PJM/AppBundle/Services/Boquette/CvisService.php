@@ -6,10 +6,8 @@ use Doctrine\ORM\EntityManager;
 
 class CvisService extends BoquetteService
 {
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $specialBoquettes)
     {
-        parent::__construct($em);
-
-        $this->slug = 'cvis';
+        parent::__construct($em, $specialBoquettes['epicerie']);
     }
 }

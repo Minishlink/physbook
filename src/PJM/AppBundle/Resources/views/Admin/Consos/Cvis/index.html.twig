@@ -4,7 +4,7 @@
 
 {% block pjm_app_body_content %}
 <p>
-    <small><a href="{{ path('pjm_app_boquette_cvis_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
+    <small><a href="{{ path('pjm_app_boquette_index', {slug: boquette.slug}) }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a></small>
 </p>
 <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingManuel" data-toggle="collapse" data-target="#collapseManuel" aria-expanded="true" aria-controls="collapseManuel">
@@ -30,11 +30,11 @@
     </div>
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {{ render(url('pjm_app_admin_boquette_gestionFeaturedItem', {slug: boquetteSlug})) }}
-    {{ render(url('pjm_app_admin_boquette_gestionItem', {slug: boquetteSlug})) }}
+    {{ render(url('pjm_app_admin_boquette_gestionFeaturedItem', {slug: boquette.slug})) }}
+    {{ render(url('pjm_app_admin_boquette_gestionItem', {slug: boquette.slug})) }}
     {% if is_granted('ROLE_HARPAGS') %}
-    {{ render(url('pjm_app_admin_boquette_voirAchats', {slug: boquetteSlug})) }}
+    {{ render(url('pjm_app_admin_boquette_voirAchats', {slug: boquette.slug})) }}
     {% endif %}
-    {{ render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquetteSlug})) }}
+    {{ render(url('pjm_app_admin_boquette_gestionResponsables', {slug: boquette.slug})) }}
 </div>
 {% endblock %}

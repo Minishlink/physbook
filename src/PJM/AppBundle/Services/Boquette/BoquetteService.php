@@ -11,9 +11,10 @@ class BoquetteService
     protected $em;
     protected $slug;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $config = null)
     {
         $this->em = $em;
+        $this->slug = isset($config) ? $config['slug'] : null;
     }
 
     public function getItem($itemSlug, $valid = true)

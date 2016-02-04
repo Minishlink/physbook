@@ -8,14 +8,11 @@ use PJM\AppBundle\Entity\Item;
 
 class BragsService extends BoquetteService
 {
-    private $itemSlug;
+    private $itemSlug = 'baguette';
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $specialBoquettes)
     {
-        parent::__construct($em);
-
-        $this->slug = 'brags';
-        $this->itemSlug = 'baguette';
+        parent::__construct($em, $specialBoquettes['boulangerie']);
     }
 
     public function getCurrentBaguette()

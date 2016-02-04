@@ -10,19 +10,12 @@ use PJM\AppBundle\Form\Type\Consos\PanierType;
 
 class PaniersAdminController extends Controller
 {
-    private $slug;
-    private $itemSlug;
-
-    public function __construct()
-    {
-        $this->slug = 'paniers';
-        $this->itemSlug = 'panier';
-    }
+    private $itemSlug = 'panier';
 
     public function indexAction()
     {
         return $this->render('PJMAppBundle:Admin:Consos/Paniers/index.html.twig', array(
-            'boquetteSlug' => $this->slug,
+            'boquette' => $this->get('pjm.services.boquette.paniers')->getBoquette(),
         ));
     }
 

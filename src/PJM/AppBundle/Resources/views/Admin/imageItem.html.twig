@@ -7,7 +7,7 @@
 {% block pjm_app_body_content %}
 <h2>Image de {{ item }}</h2>
 <p>
-    <a href="{{ path('pjm_app_admin_boquette_default', {slug: item.boquette.slug}) }}" class="btn btn-primary">
+    <a href="{{ path('pjm_app_admin_boquette_index', {slug: item.boquette.slug}) }}" class="btn btn-primary">
         <span class="glyphicon glyphicon-chevron-left"></span>
         Retour
     </a>

@@ -8,14 +8,11 @@ use PJM\AppBundle\Entity\Item;
 
 class PaniersService extends BoquetteService
 {
-    private $itemSlug;
+    private $itemSlug = 'panier';
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $specialBoquettes)
     {
-        parent::__construct($em);
-
-        $this->slug = 'paniers';
-        $this->itemSlug = 'panier';
+        parent::__construct($em, $specialBoquettes['paniers']);
     }
 
     public function getCurrentPanier()

@@ -28,7 +28,7 @@ class ComptesDatatable extends BaseDatatable
         if (isset($this->boquetteSlug)) {
             $this->ajax->set(array(
                 'url' => $this->router->generate('pjm_app_admin_boquette_comptesResults', array(
-                    'boquette_slug' => $this->boquetteSlug,
+                    'slug' => $this->boquetteSlug,
                 )),
             ));
         }
