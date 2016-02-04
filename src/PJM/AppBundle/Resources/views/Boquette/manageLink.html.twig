@@ -1,0 +1,5 @@
+{% if is_granted('manage', boquette) %}
+    <p>
+        <small><a href="{{ path('pjm_app_admin_boquette_default', {slug: boquette.slug}) }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
+    </p>
+{% endif %}

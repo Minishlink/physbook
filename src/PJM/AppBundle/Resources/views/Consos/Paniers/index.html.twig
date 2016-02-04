@@ -8,11 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            {% if is_granted('ROLE_ZIPANIERS') %}
-            <p>
-                <small><a href="{{ path('pjm_app_admin_boquette_paniers_index') }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
-            </p>
-            {% endif %}
+            {% include("@PJMApp/Boquette/manageLink.html.twig") %}
             <p>Parce qu’ils sont riches en vitamines, en minéraux, en fibres et parce que leur effet favorable sur la santé a été démontré, il te faut manger {{ app.user.fams }} fruits et légumes par jour. De plus, ils offrent une incroyable variété de saveurs, tout ce qu’il faut pour conjuguer santé et plaisir. C’est pourquoi les Gadz ont inventé <strong><span class="text-larger">le panier de fruits et légumes</span></strong>.</p>
         </div>
     </div>
@@ -39,7 +35,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('pjm_app_boquette_boquette_historique', {'slug': boquetteSlug}) }}">
+                    <a href="{{ path('pjm_app_boquette_boquette_historique', {'slug': boquette.slug}) }}">
                         <img src="{{ asset('images/consos/paniers/Historique-VB.png') }}"><br>
                         Historique
                     </a>
@@ -132,7 +128,7 @@
                             {% if dejaCommande %}Récupère ton panier chez le ZiPaniers ou au local du C'vis en n'oubliant pas d'indiquer que tu l'as pris. Si tu attends trop, il sera redistribué à une autre personne.<br>{% endif %}
                             Un problème ? Contacte :
                         </p>
-                        {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquetteSlug})) }}
+                        {{ render(url('pjm_app_boquette_voirResponsables', {'slug': boquette.slug})) }}
                     </div>
                 </div>
                 <div id="com3pom" class="col-sm-5 text-center">

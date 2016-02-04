@@ -9,11 +9,7 @@
     <div class="row">
         {# inscription à la boquette #}
         {# liste des membres #}
-        {% if is_granted('manage', boquette) %}
-            <p>
-                <small><a href="{{ path('pjm_app_admin_boquette_default', {slug: boquette.slug}) }}"><span class="glyphicon glyphicon-cog"></span> Gestion</a></small>
-            </p>
-        {% endif %}
+        {% include("@PJMApp/Boquette/manageLink.html.twig") %}
     </div>
     <div class="row">
         <div class="col-md-6">

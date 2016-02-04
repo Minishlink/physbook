@@ -20,6 +20,12 @@ use PJM\AppBundle\Form\Type\Admin\ItemType;
 use PJM\AppBundle\Form\Type\Filter\TransactionFilterType;
 use PJM\AppBundle\Form\Type\Filter\CompteFilterType;
 
+/**
+ * Class BoquetteAdminController
+ * @package PJM\AppBundle\Controller\Consos
+ *
+ * @Security("is_granted('manage', boquette)")
+ */
 class BoquetteAdminController extends Controller
 {
     /**
@@ -28,7 +34,7 @@ class BoquetteAdminController extends Controller
      * @param object   Boquette $boquette
      * @return Response
      *
-     * @Security("is_granted('manage', boquette) or has_role('ROLE_ADMIN')")
+     * @Security("is_granted('manage', boquette)")
      */
     public function defaultAdminAction(Boquette $boquette)
     {

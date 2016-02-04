@@ -29,15 +29,6 @@ class ResponsableManager
 
     public function update(Responsable $responsable, $flush = true)
     {
-        $role = 'ROLE_RESPONSABLE';
-
-        $user = $responsable->getUser();
-        if ($responsable->getActive()) {
-            $user->addRole($role);
-        } else {
-            $user->removeRole($role);
-        }
-
         $this->em->persist($responsable);
 
         if ($flush) {
