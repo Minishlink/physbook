@@ -9,10 +9,9 @@ class PiansController extends Controller
 {
     public function indexAction()
     {
-        $boquette = $this->getBoquette();
-
         $utils = $this->get('pjm.services.utils');
         $piansService = $this->get('pjm.services.boquette.pians');
+        $boquette = $piansService->getBoquette();
         $listeHistoriques = $utils->getHistorique($this->getUser(), $boquette->getSlug(), 5);
         $boissonDuMois = $utils->getFeaturedItem($boquette->getSlug());
 
@@ -33,13 +32,8 @@ class PiansController extends Controller
     public function navAction()
     {
         return array(
-            'boquette' => $this->getBoquette(),
+            'boquette' => $this->get('pjm.services.boquette.pians')->getBoquette(),
             'logo' => 'images/header/Pians-B.png',
         );
-    }
-
-    private function getBoquette()
-    {
-        return $this->get('pjm.services.boquette_manager')->getByType('bar');
     }
 }

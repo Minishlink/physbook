@@ -9,10 +9,9 @@ class CvisController extends Controller
 {
     public function indexAction()
     {
-        $boquette = $this->getBoquette();
-
         $utils = $this->get('pjm.services.utils');
         $cvisService = $this->get('pjm.services.boquette.cvis');
+        $boquette = $cvisService->getBoquette();
         $listeHistoriques = $utils->getHistorique($this->getUser(), $boquette->getSlug(), 5);
         $produitMoment = $utils->getFeaturedItem($boquette->getSlug());
         $ziConsommateurs = $cvisService->getTopConsommateurs(date('m')); // top du mois en cours
@@ -43,13 +42,8 @@ class CvisController extends Controller
     public function navAction()
     {
         return array(
-            'boquette' => $this->getBoquette(),
+            'boquette' => $this->get('pjm.services.boquette.cvis')->getBoquette(),
             'logo' => 'images/header/Cvis-B.png',
         );
-    }
-
-    private function getBoquette()
-    {
-        return $this->get('pjm.services.boquette_manager')->getByType('epicerie');
     }
 }

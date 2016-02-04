@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PaniersController extends Controller
 {
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Template
@@ -22,7 +20,7 @@ class PaniersController extends Controller
         $commande = isset($panier) ? $paniersService->getCommande($panier, $this->getUser()) : null;
 
         return array(
-            'boquette' => $this->getBoquette(),
+            'boquette' => $paniersService->getBoquette(),
             'panier' => $panier,
             'dejaCommande' => isset($commande),
             'solde' => $paniersService->getSolde($this->getUser()),
@@ -103,13 +101,8 @@ class PaniersController extends Controller
     public function navAction()
     {
         return array(
-            'boquette' => $this->getBoquette(),
+            'boquette' => $this->get('pjm.services.boquette.paniers')->getBoquette(),
             'logo' => 'images/header/Fruits-et-legumes-B.png',
         );
-    }
-
-    private function getBoquette()
-    {
-        return $this->get('pjm.services.boquette_manager')->getByType('paniers');
     }
 }

@@ -12,14 +12,13 @@ class BragsController extends Controller
 {
     public function indexAction()
     {
-        $boquette = $this->getBoquette();
-
         $nbCommandes = $this->getDoctrine()->getManager()
             ->getRepository('PJMAppBundle:Commande')
             ->getTotalCommandes();
 
         $group = $this->get('pjm.services.group');
         $bragsService = $this->get('pjm.services.boquette.brags');
+        $boquette = $bragsService->getBoquette();
 
         $finAnnee = ($this->getUser()->getProms() == $group->getPromsPN(2)) ?
             new \DateTime(date('Y').'-06-05') : // anciens
@@ -38,12 +37,11 @@ class BragsController extends Controller
 
     public function commandeAction(Request $request)
     {
-        $boquette = $this->getBoquette();
-
         $em = $this->getDoctrine()->getManager();
 
         $commande = new Commande();
         $bragsService = $this->get('pjm.services.boquette.brags');
+        $boquette = $bragsService->getBoquette();
 
         $form = $this->createForm(new CommandeType(), $commande, array(
             'method' => 'POST',
@@ -112,13 +110,8 @@ class BragsController extends Controller
     public function navAction()
     {
         return array(
-            'boquette' => $this->getBoquette(),
+            'boquette' => $this->get('pjm.services.boquette.brags')->getBoquette(),
             'logo' => 'images/header/Brags-B.png',
         );
-    }
-
-    private function getBoquette()
-    {
-        return $this->get('pjm.services.boquette_manager')->getByType('boulangerie');
     }
 }
