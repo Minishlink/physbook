@@ -41,3 +41,26 @@ parameters:
     canal: http
 
     exances: false
+
+    special_boquettes:
+        bar:
+            nom: Pian's
+            slug: pians
+        epicerie:
+            nom: C'vis
+            slug: cvis
+        boulangerie:
+            nom: Brag's
+            slug: brags
+        paniers:
+            nom: Paniers de fruits et légumes
+            slug: paniers
+        journal:
+            nom: Tuiss
+            slug: tuiss
+        bde:
+            nom: Asso
+            slug: asso
+        bds:
+            nom: UAI
+            slug: uai
