@@ -55,6 +55,7 @@ class ApplicationAvailabilityFunctionalTest extends BaseTest
             array('/banque/transfert'),
             array('/boquette/asso/'),
             array('/boquette/brags'),
+            array('/boquette/brags/historique'),
             array('/boquette/brags/listeItem'),
             array('/boquette/brags/responsables'),
             array('/boquette/brags/responsables/historique'),
