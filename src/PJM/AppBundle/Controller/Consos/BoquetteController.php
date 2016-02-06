@@ -96,12 +96,11 @@ class BoquetteController extends Controller
         $datatable->setData($serializer->serialize($historique, 'json'));
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
-        $routeRetour = 'pjm_app_boquette_'.$boquette->getSlug().'_index';
 
         return $this->render('PJMAppBundle::datatable.html.twig', array(
             'titre' => 'Historique',
             'layout' => $layout,
-            'routeRetour' => $routeRetour,
+            'urlRetour' => $this->generateUrl('pjm_app_boquette_index', array('slug' => $boquette->getSlug())),
             'datatable' => $datatable,
         ));
     }
@@ -117,12 +116,11 @@ class BoquetteController extends Controller
         $datatable->buildDatatable();
 
         $layout = $this->getTwigTemplatePath($boquette->getSlug()).'layout.html.twig';
-        $routeRetour = 'pjm_app_boquette_'.$boquette->getSlug().'_index';
 
         return $this->render('PJMAppBundle::datatable.html.twig', array(
             'titre' => 'Catalogue',
             'layout' => $layout,
-            'routeRetour' => $routeRetour,
+            'urlRetour' => $this->generateUrl('pjm_app_boquette_index', array('slug' => $boquette->getSlug())),
             'datatable' => $datatable,
         ));
     }
