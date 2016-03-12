@@ -27,8 +27,9 @@ class PushSubscriptionController extends Controller
     public function createAction(Request $request)
     {
         $endpoint = $request->request->get('endpoint');
+        $key = $request->request->get('key');
 
-        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint);
+        $this->get('pjm.services.pushsubscriptions_manager')->create($this->getUser(), $endpoint, $key);
 
         return new JsonResponse(array(
             'success' => true,
@@ -46,12 +47,13 @@ class PushSubscriptionController extends Controller
     public function updateAction(Request $request)
     {
         $endpoint = $request->request->get('endpoint');
+        $key = $request->request->get('key');
 
         $pushSubscriptionManager = $this->get('pjm.services.pushsubscriptions_manager');
         $pushSubscription = $pushSubscriptionManager->find($endpoint);
 
         if (!$pushSubscription) {
-            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), $endpoint);
+            $pushSubscription = $pushSubscriptionManager->create($this->getUser(), $endpoint, $key);
         } else {
             $pushSubscription = $pushSubscriptionManager->update($this->getUser(), $pushSubscription);
         }

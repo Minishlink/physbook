@@ -38,6 +38,13 @@ class PushSubscription
     private $endpoint;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="user_public_key", type="string", length=255, nullable=true)
+     */
+    private $userPublicKey;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="pushSubscriptions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -171,5 +178,29 @@ class PushSubscription
     public function getBrowserUA()
     {
         return $this->browserUA;
+    }
+
+    /**
+     * Set the user public key.
+     *
+     * @param string $key
+     *
+     * @return PushSubscription
+     */
+    public function setUserPublicKey($key)
+    {
+        $this->userPublicKey = $key;
+
+        return $this;
+    }
+
+    /**
+     * Get the user public key.
+     *
+     * @return string
+     */
+    public function getUserPublicKey()
+    {
+        return $this->userPublicKey;
     }
 }

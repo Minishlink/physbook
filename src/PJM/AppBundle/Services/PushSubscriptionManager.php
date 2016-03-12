@@ -20,16 +20,18 @@ class PushSubscriptionManager
     }
 
     /**
-     * @param User   $user
+     * @param User $user
      * @param string $endpoint
+     * @param string $key User public key
      *
      * @return null|PushSubscription
      */
-    public function create(User $user, $endpoint)
+    public function create(User $user, $endpoint, $key)
     {
         $pushSubscription = new PushSubscription();
         $pushSubscription
             ->setEndpoint($endpoint)
+            ->setUserPublicKey($key)
             ->setUser($user)
         ;
 

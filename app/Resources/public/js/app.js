@@ -260,8 +260,10 @@ function push_sendSubscriptionToServer(subscription, action) {
         console.error("[SW] Erreur :" + e.target.status);
     };
 
+    var key = subscription.getKey('p256dh');
     req.send(JSON.stringify({
-        'endpoint': getEndpoint(subscription)
+        'endpoint': getEndpoint(subscription),
+        'key': key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null
     }));
 
     return true;
