@@ -45,6 +45,13 @@ class PushSubscription
     private $userPublicKey;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="user_auth_token", type="string", length=255, nullable=true)
+     */
+    private $userAuthToken;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PJM\AppBundle\Entity\User", inversedBy="pushSubscriptions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -202,5 +209,29 @@ class PushSubscription
     public function getUserPublicKey()
     {
         return $this->userPublicKey;
+    }
+
+    /**
+     * Set the user auth token.
+     *
+     * @param string $userAuthToken
+     *
+     * @return PushSubscription
+     */
+    public function setUserAuthToken($userAuthToken)
+    {
+        $this->userAuthToken = $userAuthToken;
+
+        return $this;
+    }
+
+    /**
+     * Get the user auth token.
+     *
+     * @return string
+     */
+    public function getUserAuthToken()
+    {
+        return $this->userAuthToken;
     }
 }

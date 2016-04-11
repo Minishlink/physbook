@@ -23,15 +23,17 @@ class PushSubscriptionManager
      * @param User $user
      * @param string $endpoint
      * @param string $key User public key
+     * @param string $token User auth token
      *
      * @return null|PushSubscription
      */
-    public function create(User $user, $endpoint, $key)
+    public function create(User $user, $endpoint, $key, $token)
     {
         $pushSubscription = new PushSubscription();
         $pushSubscription
             ->setEndpoint($endpoint)
             ->setUserPublicKey($key)
+            ->setUserAuthToken($token)
             ->setUser($user)
         ;
 

@@ -261,9 +261,12 @@ function push_sendSubscriptionToServer(subscription, action) {
     };
 
     var key = subscription.getKey('p256dh');
+    var token = subscription.getKey('auth');
+
     req.send(JSON.stringify({
         'endpoint': getEndpoint(subscription),
-        'key': key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null
+        'key': key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+        'token': token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
     }));
 
     return true;
