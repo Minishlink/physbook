@@ -142,15 +142,6 @@ self.addEventListener('notificationclick', function (event) {
     );
 });
 
-self.addEventListener('notificationclose', function (event) {
-    console.log('notificationclose, yay !');
-    // mark notification as read
-    /*event.waitUntil(
-        // refreshnotifications + reload /notifications
-        fetch('notifications/read')
-    );*/
-});
-
 self.addEventListener('message', function (event) {
     var message = event.data;
 
