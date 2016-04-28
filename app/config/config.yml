@@ -20,11 +20,11 @@ framework:
         version: v1r20151219
         packages:
             js:
-                version: v1r20160105
+                version: v1r20160428
             css:
                 version: v1r20160105
             sw:
-                version: v1r20160311
+                version: v1r20160428
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
