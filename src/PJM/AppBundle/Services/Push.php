@@ -23,9 +23,9 @@ class Push
      * Envoit des notifications Push aux utilisateurs.
      *
      * @param ArrayCollection $users   Les utilisateurs destinataires.
-     * @param string          $payload Le message de la notification.
+     * @param string          $message Le message de la notification.
      */
-    public function sendNotificationToUsers(ArrayCollection $users, $payload)
+    public function sendNotificationToUsers(ArrayCollection $users, $message)
     {
         // aller chercher tous les endpoints des Users en filtrant les vieilles subscriptions
         $subscriptions = $this->em->getRepository('PJMAppBundle:PushSubscription')->findByUsers($users, new \DateTime('3 months ago'));
@@ -34,9 +34,13 @@ class Push
             return;
         }
 
+        $payload = json_encode(array(
+            'message' => $message,
+        ));
+
         /** @var PushSubscription $subscription */
         foreach ($subscriptions as $subscription) {
-            $this->webPush->sendNotification($subscription->getEndpoint(), $payload, '');
+            $this->webPush->sendNotification($subscription->getEndpoint(), $payload, $subscription->getUserPublicKey(), $subscription->getUserAuthToken());
         }
 
         $this->webPush->flush();

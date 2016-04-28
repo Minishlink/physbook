@@ -9,9 +9,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.7.*",
-        "doctrine/orm": "~2.5",
-        "doctrine/common": "~2.5.2",
-        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/orm": "^2.4.8",
+        "doctrine/doctrine-bundle": "~1.4",
 		"doctrine/doctrine-fixtures-bundle": "~2.2",
 		"doctrine/data-fixtures": "~1.0",
         "stof/doctrine-extensions-bundle": "~1.1",
@@ -23,19 +22,19 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/user-bundle": "2.0.x-dev",
+        "friendsofsymfony/user-bundle": "~2.0.0-alpha",
+        "friendsofsymfony/comment-bundle": "~2.0",
         "sensio/buzz-bundle": "~1.0",
         "ircmaxell/password-compat": "~1.0",
         "sg/datatablesbundle": "~0.8.0",
         "genemu/form-bundle": "~2.2",
         "liuggio/excelbundle": "~2.0",
         "kms/froala-editor-bundle": "dev-master#63f4797e8d9593110c8a27b58c0693461b7478c9",
-        "friendsofsymfony/comment-bundle": "2.0.x-dev",
         "lexik/form-filter-bundle": "~3.0",
         "erusev/parsedown": "^1.5",
         "exercise/htmlpurifier-bundle": "1.0.x-dev",
         "joshtronic/php-loremipsum": "^1.0",
-        "minishlink/web-push-bundle": "^0.3.0"
+        "minishlink/web-push-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

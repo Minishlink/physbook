@@ -118,8 +118,10 @@ class EvenementManager
             // envoyer notifications aux inscrits
             $this->notification->send('event.suppression', array(
                 'event' => $event->getNom(),
-            ), $inscrits);
+            ), $inscrits, false);
         }
+        
+        $this->em->flush();
     }
 
     public function get(Evenement $event = null, User $user, $nombreMax)
