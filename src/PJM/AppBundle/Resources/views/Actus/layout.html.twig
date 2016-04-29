@@ -6,6 +6,26 @@
 <link href="{{ asset('bundles/kmsfroalaeditor/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            tinymce.init({
+                selector:'textarea.tinymce',
+                browser_spellcheck: true,
+                plugins: [
+                    'advlist autolink lists link image autoresize preview hr anchor pagebreak',
+                    'searchreplace wordcount',
+                    'media table contextmenu',
+                    'emoticons paste textcolor colorpicker'
+                ],
+                autoresize_min_height: 300
+            });
+        });
+    </script>
+{% endblock %}
+
 {% set section = "vie" %}
 
 {% block pageName %}actus{% endblock %}

@@ -8,14 +8,8 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('a[href="http://editor.froala.com"]').parent().remove();
-        $(".froala-view").prop("spellcheck", true);
-    });
-</script>
-{{ form_javascript(form) }}
+    {{ parent() }}
+    {{ form_javascript(form) }}
 {% endblock %}
 
 {% block pjm_app_body_actus %}
