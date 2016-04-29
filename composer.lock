@@ -3612,16 +3612,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.7.11",
+            "version": "v2.7.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "66c99826ce3d4392aa1fd08564946cb4277e3897"
+                "reference": "9edf2430f1846602844d2b434f26389a018f494f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/66c99826ce3d4392aa1fd08564946cb4277e3897",
-                "reference": "66c99826ce3d4392aa1fd08564946cb4277e3897",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/9edf2430f1846602844d2b434f26389a018f494f",
+                "reference": "9edf2430f1846602844d2b434f26389a018f494f",
                 "shasum": ""
             },
             "require": {
@@ -3697,7 +3697,11 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Bridge\\": "src/Symfony/Bridge/",
+                    "Symfony\\Bridge\\Doctrine\\": "src/Symfony/Bridge/Doctrine/",
+                    "Symfony\\Bridge\\Monolog\\": "src/Symfony/Bridge/Monolog/",
+                    "Symfony\\Bridge\\ProxyManager\\": "src/Symfony/Bridge/ProxyManager/",
+                    "Symfony\\Bridge\\Swiftmailer\\": "src/Symfony/Bridge/Swiftmailer/",
+                    "Symfony\\Bridge\\Twig\\": "src/Symfony/Bridge/Twig/",
                     "Symfony\\Bundle\\": "src/Symfony/Bundle/",
                     "Symfony\\Component\\": "src/Symfony/Component/"
                 },
@@ -3731,7 +3735,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-03-25 18:14:23"
+            "time": "2016-04-29 09:48:03"
         },
         {
             "name": "twig/extensions",
