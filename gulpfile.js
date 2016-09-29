@@ -3,7 +3,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
-var minifyCSS = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var autoprefixer = require('gulp-autoprefixer');
 var less = require('gulp-less');
 var rework = require('gulp-rework');
@@ -138,7 +138,7 @@ gulp.task('compress:css:site', function() {
         .pipe(rework(reworkUrl(function(url) {
             return '../' + url;
         })))
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(autoprefixer('last 2 versions'))
         .pipe(concat('site.css'))
         .pipe(sourcemaps.write('.'))
@@ -152,7 +152,7 @@ gulp.task('compress:css:connexion', function() {
         .pipe(rework(reworkUrl(function(url) {
             return '../' + url;
         })))
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(autoprefixer('last 2 versions'))
         .pipe(concat('connexion.css'))
         .pipe(sourcemaps.write('.'))
@@ -162,7 +162,7 @@ gulp.task('compress:css:connexion', function() {
 gulp.task('compress:css:ext', function() {
     return gulp.src(paths.css.ext)
         .pipe(sourcemaps.init())
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(autoprefixer('last 2 versions'))
         .pipe(concat('ext.css'))
         .pipe(sourcemaps.write('.'))
@@ -191,7 +191,7 @@ gulp.task('icons:copy', ['icons:copy:css', 'icons:copy:png']);
 
 gulp.task('icons:copy:css', ['icons:task'], function() {
     return gulp.src(paths.icons.css)
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(gulp.dest(path.web + 'css'))
 });
 
