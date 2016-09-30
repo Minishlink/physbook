@@ -12,7 +12,6 @@ class LoginTest extends WebTestCase
         $client->request('GET', '/');
 
         // Make sure we are redirected to the login page
-        var_dump($client->getResponse());
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
 
@@ -24,8 +23,6 @@ class LoginTest extends WebTestCase
             '_username' => 'ancien',
             '_password' => 'test',
         ));
-
-        var_dump($client->getResponse());
 
         // Login is successful
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
