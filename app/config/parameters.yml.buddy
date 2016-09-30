@@ -1,0 +1,9 @@
+imports:
+    - { resource: parameters.yml.dist }
+
+parameters:
+    database_host: mysql
+    database_port: 3306
+    database_name: physbook
+    database_user: root
+    database_password: qwerty
