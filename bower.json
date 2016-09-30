@@ -1,10 +1,10 @@
 {
-  "name": "Phy'sbook",
+  "name": "physbook",
   "version": "1.0.0",
   "authors": [
     "Louis Lagrange <lagrange.louis@gmail.com>"
   ],
-  "description": "Site intranet pour les élèves d'Arts et Métiers ParisTech",
+  "description": "Phy'sbook - Site intranet pour les élèves d'Arts et Métiers ParisTech",
   "license": "See LICENSE",
   "homepage": "https://physbook.fr",
   "private": true,
@@ -27,7 +27,7 @@
     "datatables.net-responsive": "~1.0.7",
     "select2": "~4.0.0",
     "select2-bootstrap-theme": "~0.1.0",
-    "webui-popover": "1.1.4",
+    "webui-popover": "~1.2.11",
     "fullcalendar": "~2.5.0"
   },
   "resolutions": {

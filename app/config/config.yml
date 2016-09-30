@@ -114,15 +114,6 @@ fos_user:
         email:
             template: PJMAppBundle:Mail:resetting.html.twig
 
-kms_froala_editor:
-    language: "fr"
-    imageUpload:
-        folder: /uploads/froala
-    includeJQuery: false
-    inlineMode: false
-    plugins:
-        mediaManager: true
-
 fos_comment:
     db_driver: orm
     class:
@@ -167,3 +158,9 @@ minishlink_web_push:
 sg_datatables:
   query:
     search_on_non_visible_columns: true
+
+exercise_html_purifier:
+  default:
+    URI.AllowedSchemes: ['http', 'https', 'mailto', 'ftp', 'data']
+    HTML.SafeIframe: true
+    URI.SafeIframeRegexp: '%%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%%'
