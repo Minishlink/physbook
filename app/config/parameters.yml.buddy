@@ -1,9 +1,43 @@
-imports:
-    - { resource: parameters.yml.dist }
-
 parameters:
+    database_driver: pdo_mysql
     database_host: mysql
     database_port: 3306
     database_name: physbook
     database_user: root
     database_password: qwerty
+
+    db_rezal_host: localhost
+    db_rezal_user: user
+    db_rezal_pass: password
+
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    mailer_encryption: ~
+    mailer_port: 25
+
+    locale:            fr
+    secret:            SecretAEncoreChangerPourLaProd
+
+    debug_toolbar:          true
+    debug_redirects:        false
+
+    paiement.smoney.url: urlSmoneyAChanger
+    paiement.smoney.auth: Bearer clef
+
+    paiement.lydia.url: 'aChanger'
+    paiement.lydia.auth:
+        provider_token: 'testProvider'
+        pians:
+            public_token: 'testPublic'
+            private_token: 'testPrivate'
+        vie_courante:
+            public_token: 'testPublic'
+            private_token: 'testPrivate'
+
+    android_gcm_api_key: clefAChanger
+
+    canal: http
+
+    exances: false
