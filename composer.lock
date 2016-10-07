@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ff65e719b5269c34a105c5301dc8e494",
-    "content-hash": "9f306a06808e1bc723e149031e42cd5e",
+    "hash": "ac241f88a10eedb39713d8de6fa7812e",
+    "content-hash": "8df268017aeff9b1a261d8d0c728068a",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2428,16 +2428,16 @@
         },
         {
             "name": "minishlink/web-push",
-            "version": "v1.1",
+            "version": "dev-vapid",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Minishlink/web-push.git",
-                "reference": "7f56de6a8bed8542d1ef5475fa1136f4ed50e6db"
+                "reference": "93050587a174ef75437c33d81069ac7d825a0b7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Minishlink/web-push/zipball/7f56de6a8bed8542d1ef5475fa1136f4ed50e6db",
-                "reference": "7f56de6a8bed8542d1ef5475fa1136f4ed50e6db",
+                "url": "https://api.github.com/repos/Minishlink/web-push/zipball/93050587a174ef75437c33d81069ac7d825a0b7b",
+                "reference": "93050587a174ef75437c33d81069ac7d825a0b7b",
                 "shasum": ""
             },
             "require": {
@@ -2446,6 +2446,7 @@
                 "mdanter/ecc": "^0.4.0",
                 "php": ">=5.6",
                 "spomky-labs/base64url": "^1.0",
+                "spomky-labs/jose": "^6.0",
                 "spomky-labs/php-aes-gcm": "^1.0"
             },
             "require-dev": {
@@ -2477,25 +2478,25 @@
                 "push",
                 "web"
             ],
-            "time": "2016-07-28 22:53:50"
+            "time": "2016-10-02 13:41:41"
         },
         {
             "name": "minishlink/web-push-bundle",
-            "version": "v1.0",
+            "version": "dev-vapid",
             "target-dir": "Minishlink/Bundle/WebPushBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Minishlink/web-push-bundle.git",
-                "reference": "c26d06ce29723719865742bd18e426d1db8463ae"
+                "reference": "fa824c6ed79b8c729f74fea361bd524c44fe0e90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Minishlink/web-push-bundle/zipball/c26d06ce29723719865742bd18e426d1db8463ae",
-                "reference": "c26d06ce29723719865742bd18e426d1db8463ae",
+                "url": "https://api.github.com/repos/Minishlink/web-push-bundle/zipball/fa824c6ed79b8c729f74fea361bd524c44fe0e90",
+                "reference": "fa824c6ed79b8c729f74fea361bd524c44fe0e90",
                 "shasum": ""
             },
             "require": {
-                "minishlink/web-push": "^1.0.0",
+                "minishlink/web-push": "dev-vapid",
                 "php": ">=5.4"
             },
             "require-dev": {
@@ -2526,7 +2527,7 @@
                 "push",
                 "web"
             ],
-            "time": "2016-04-28 15:55:04"
+            "time": "2016-10-02 14:13:23"
         },
         {
             "name": "monolog/monolog",
@@ -2808,6 +2809,52 @@
                 "type"
             ],
             "time": "2015-07-25 16:39:46"
+        },
+        {
+            "name": "psr/cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "time": "2016-08-06 20:24:11"
         },
         {
             "name": "psr/log",
@@ -3131,6 +3178,66 @@
             "time": "2015-11-29 16:44:13"
         },
         {
+            "name": "spomky-labs/aes-key-wrap",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Spomky-Labs/aes-key-wrap.git",
+                "reference": "416bb3b26609332fe9be8d425de3a293f5386683"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Spomky-Labs/aes-key-wrap/zipball/416bb3b26609332fe9be8d425de3a293f5386683",
+                "reference": "416bb3b26609332fe9be8d425de3a293f5386683",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.0",
+                "lib-openssl": "*",
+                "php": ">=5.4",
+                "symfony/polyfill-mbstring": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.5|^5.0",
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AESKW\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florent Morselli",
+                    "homepage": "https://github.com/Spomky-Labs/aes-key-wrap/contributors"
+                }
+            ],
+            "description": "AES Kew Wrap for PHP.",
+            "homepage": "https://github.com/Spomky-Labs/aes-key-wrap",
+            "keywords": [
+                "A128KW",
+                "A192KW",
+                "A256KW",
+                "RFC3394",
+                "RFC5649",
+                "aes",
+                "key",
+                "padding",
+                "wrap"
+            ],
+            "time": "2016-03-31 11:02:58"
+        },
+        {
             "name": "spomky-labs/base64url",
             "version": "v1.0.2",
             "source": {
@@ -3181,6 +3288,88 @@
                 "url"
             ],
             "time": "2016-01-21 19:50:30"
+        },
+        {
+            "name": "spomky-labs/jose",
+            "version": "v6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Spomky-Labs/jose.git",
+                "reference": "a5534ace000e518f37c80e3670198bc1dcf47ca7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Spomky-Labs/jose/zipball/a5534ace000e518f37c80e3670198bc1dcf47ca7",
+                "reference": "a5534ace000e518f37c80e3670198bc1dcf47ca7",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.4",
+                "fgrosse/phpasn1": "^1.5",
+                "lib-openssl": "*",
+                "mdanter/ecc": "0.4",
+                "php": "^5.6|^7.0",
+                "psr/cache": "^1.0",
+                "spomky-labs/aes-key-wrap": "^3.0",
+                "spomky-labs/base64url": "^1.0",
+                "spomky-labs/php-aes-gcm": "^1.0",
+                "symfony/polyfill-mbstring": "^1.1",
+                "symfony/polyfill-php70": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0",
+                "satooshi/php-coveralls": "^1.0",
+                "symfony/cache": "^2.0|^3.0"
+            },
+            "suggest": {
+                "ext-crypto": "Highly recommended when you use AES GCM based algorithms.",
+                "ext-curve25519": "For EdDSA with X25519 curves support.",
+                "ext-ed25519": "For EdDSA with Ed25519 curves support."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jose\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florent Morselli",
+                    "homepage": "https://github.com/Spomky"
+                },
+                {
+                    "name": "All contributors",
+                    "homepage": "https://github.com/Spomky-Labs/jose/contributors"
+                }
+            ],
+            "description": "JSON Object Signing and Encryption library for PHP.",
+            "homepage": "https://github.com/Spomky-Labs/Jose",
+            "keywords": [
+                "JOSE",
+                "JWE",
+                "JWK",
+                "JWKSet",
+                "JWS",
+                "Jot",
+                "RFC7515",
+                "RFC7516",
+                "RFC7517",
+                "RFC7518",
+                "RFC7519",
+                "RFC7520",
+                "jwa",
+                "jwt"
+            ],
+            "time": "2016-09-30 07:06:37"
         },
         {
             "name": "spomky-labs/php-aes-gcm",
@@ -3589,6 +3778,65 @@
             "keywords": [
                 "compatibility",
                 "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-05-18 14:26:46"
+        },
+        {
+            "name": "symfony/polyfill-php70",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php70.git",
+                "reference": "a42f4b6b05ed458910f8af4c4e1121b0101b2d85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/a42f4b6b05ed458910f8af4c4e1121b0101b2d85",
+                "reference": "a42f4b6b05ed458910f8af4c4e1121b0101b2d85",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": "~1.0|~2.0",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php70\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.0+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
                 "polyfill",
                 "portable",
                 "shim"
@@ -4033,13 +4281,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 15,
         "kms/froala-editor-bundle": 20,
-        "exercise/htmlpurifier-bundle": 20
+        "exercise/htmlpurifier-bundle": 20,
+        "minishlink/web-push-bundle": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"

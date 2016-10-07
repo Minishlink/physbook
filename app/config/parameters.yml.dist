@@ -37,7 +37,10 @@ parameters:
             private_token: 'testPrivate'
     
     android_gcm_api_key: clefAChanger
-    
+
+    vapid_public_key: 88chars
+    vapid_private_key: 44chars
+
     canal: https
 
     exances: true
