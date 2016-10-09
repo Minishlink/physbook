@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     $('#content').fadeIn(400);
 
-    $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").not('[href^="#"]').on(clickEventName(), function(e) {
+    $('a').not(".disable-fade").not("[target='_blank']").filter("[href]").not('[href^="#"]').not('[href^="mailto:"]').on(clickEventName(), function(e) {
         if (e.ctrlKey === false && e.button === 0) {
             $('#content').fadeOut(200);
             $('ul[id^="menu-"].afficher').removeClass('afficher');
