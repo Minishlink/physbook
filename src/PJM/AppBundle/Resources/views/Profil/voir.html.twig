@@ -15,6 +15,10 @@
         {% if user.photo is not null %}<img src="{{ asset(user.photo.image.webPath) }}" alt="{{ user.photo.image.alt }}">{% else %}<img src="{% if user.genre %}{{ asset('images/profil/Placeholder-F.png') }}{% else %}{{ asset('images/profil/Placeholder-M.png') }}{% endif %}" alt="Pas de photo">{% endif %}
     </p>
 
+    {% if is_granted("ROLE_ADMIN") %}
+    <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+    {% endif %}
+
     {% if online %}<p>En ligne</p>{% endif %}
 
     {% if user == app.user %}
