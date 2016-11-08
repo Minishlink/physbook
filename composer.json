@@ -34,10 +34,8 @@
         "erusev/parsedown": "^1.5",
         "exercise/htmlpurifier-bundle": "1.0.x-dev",
         "joshtronic/php-loremipsum": "^1.0",
-        "minishlink/web-push-bundle": "dev-vapid"
+        "minishlink/web-push-bundle": "^1.3"
     },
-    "minimum-stability": "dev",
-    "prefer-stable" : true,
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
     },

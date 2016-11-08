@@ -27,21 +27,14 @@ class PushSubscriptionRepository extends EntityRepository
 
     /**
      * @param ArrayCollection $users
-     * @param \DateTime|null  $limitDate Too old subscriptions will be filtered.
      *
      * @return array|null
      */
-    public function findByUsers(ArrayCollection $users, \DateTime $limitDate = null)
+    public function findByUsers(ArrayCollection $users)
     {
         $qb = $this->createQueryBuilder('p')
             ->where('p.user IN (:users)')
             ->setParameter('users', $users);
-
-        if (isset($limitDate)) {
-            $qb
-                ->andWhere('p.lastSubscribed > :limitDate')
-                ->setParameter('limitDate', $limitDate);
-        }
 
         try {
             $res = $qb->getQuery()->getResult();
