@@ -201,3 +201,10 @@ gulp.task('icons:copy:png', ['icons:task'], function() {
 });
 
 gulp.task('icons', ['icons:task', 'icons:copy']);
+
+gulp.task('clean:test', shell.task([
+    'php app/console doctrine:database:drop --env=test --force --if-exists',
+    'php app/console doctrine:database:create --env=test',
+    'php app/console doctrine:schema:create --env=test',
+    'php app/console doctrine:fixtures:load -n --env=test'
+]));

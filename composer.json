@@ -4,7 +4,7 @@
     "license": "GPL-3.0+",
     "description": "Social extranet for Arts et Métiers ParisTech students",
     "autoload": {
-        "psr-4": { "": "src/" }
+        "psr-4": { "PJM\\AppBundle\\": "src/PJM/AppBundle/" }
     },
     "require": {
         "php": ">=5.3.3",
@@ -34,7 +34,7 @@
         "erusev/parsedown": "^1.5",
         "exercise/htmlpurifier-bundle": "1.0.x-dev",
         "joshtronic/php-loremipsum": "^1.0",
-        "minishlink/web-push-bundle": "^1.0"
+        "minishlink/web-push-bundle": "^1.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

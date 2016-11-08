@@ -46,6 +46,8 @@ twig:
             - 'PJMAppBundle:Form:datetimepicker_layout.html.twig'
             - 'PJMAppBundle:Form:select2_layout.html.twig'
             - 'PJMAppBundle:Form:helpers.html.twig'
+    globals:
+        vapid_public_key: %vapid_public_key%
 
 # Assetic Configuration
 assetic:
@@ -154,6 +156,10 @@ lexik_form_filter:
 minishlink_web_push:
   api_keys:
     GCM: %android_gcm_api_key%
+  VAPID:
+    subject: https://physbook.fr
+    publicKey: %vapid_public_key%
+    privateKey: %vapid_private_key%
 
 sg_datatables:
   query:

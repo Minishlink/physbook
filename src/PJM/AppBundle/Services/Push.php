@@ -27,8 +27,9 @@ class Push
      */
     public function sendNotificationToUsers(ArrayCollection $users, $message)
     {
-        // aller chercher tous les endpoints des Users en filtrant les vieilles subscriptions
-        $subscriptions = $this->em->getRepository('PJMAppBundle:PushSubscription')->findByUsers($users, new \DateTime('3 months ago'));
+        // aller chercher tous les endpoints des Users
+        $pushSubscriptionRepository = $this->em->getRepository('PJMAppBundle:PushSubscription');
+        $subscriptions = $pushSubscriptionRepository->findByUsers($users);
 
         if (!$subscriptions) {
             return;
@@ -43,7 +44,17 @@ class Push
             $this->webPush->sendNotification($subscription->getEndpoint(), $payload, $subscription->getUserPublicKey(), $subscription->getUserAuthToken());
         }
 
-        $this->webPush->flush();
+        $res = $this->webPush->flush();
+
+        if (is_array($res)) {
+            foreach ($res as $result) {
+                if (!$result['success']) {
+                    if ($result['expired']) {
+                        $this->em->remove($pushSubscriptionRepository->findOneBy(array('endpoint' => $result['endpoint'])));
+                    }
+                }
+            }
+        }
     }
 
     /**

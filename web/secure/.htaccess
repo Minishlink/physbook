@@ -1,0 +1,6 @@
+<If "%{HTTP_HOST} != 'localhost'">
+    AuthType Basic
+    AuthName "Phy'sbook"
+    AuthUserFile /srv/data/web/vhosts/physbook.fr/.htpasswd
+    Require valid-user
+</If>
