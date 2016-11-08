@@ -4,3 +4,5 @@ parameters:
     database_password: ~
     canal: http
     exances: false
+    vapid_public_key: BA6jvk34k6YjElHQ6S0oZwmrsqHdCNajxcod6KJnI77Dagikfb--O_kYXcR2eflRz6l3PcI2r8fPCH3BElLQHDk
+    vapid_private_key: -3CdhFOqjzixgAbUSa0Zv9zi-dwDVmWO7672aBxSFPQ
