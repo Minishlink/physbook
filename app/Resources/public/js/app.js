@@ -42,6 +42,18 @@ window.addEventListener('load', function() {
         console.warn('[SW] Les service workers ne sont pas encore supportés par ce navigateur.');
         changePushButtonState('incompatible');
     }
+
+    if ('credentials' in navigator) {
+        var logout = document.querySelector("a[href='" + Routing.generate('fos_user_security_logout') + "']");
+        if (logout) {
+            logout.addEventListener('click', function(e) {
+                e.preventDefault();
+                navigator.credentials.requireUserMediation().then(function() {
+                    location.assign(logout.href);
+                });
+            });
+        }
+    }
 });
 
 function changePushButtonState(state) {

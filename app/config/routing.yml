@@ -4,6 +4,8 @@ pjm_app:
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    options:
+        expose: true
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
