@@ -42,13 +42,13 @@ if ($json['enable']) {
     execute("php ../composer.phar install --optimize-autoloader --no-interaction");
 
     // update schema
-    execute("php app/console doctrine:schema:update --dump-sql --force");
+    execute("php -d date.timezone='Europe/Paris' app/console doctrine:schema:update --dump-sql --force");
 
     if (isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], array("test.physbook.fr", "push.physbook.fr"))) {
-        execute("php app/console cache:clear --env=staging --no-debug");
-        execute("php app/console doctrine:fixtures:load -n");
+        execute("php -d date.timezone='Europe/Paris' app/console cache:clear --env=staging --no-debug");
+        execute("php -d date.timezone='Europe/Paris' app/console doctrine:fixtures:load -n");
     } else {
-        execute("php app/console cache:clear --env=prod --no-debug");
+        execute("php -d date.timezone='Europe/Paris' app/console cache:clear --env=prod --no-debug");
     }
 
     // put app.php
