@@ -203,6 +203,16 @@ class BoquetteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                $rezal = $this->get('pjm.services.rezal');
+                if ($rezal->connexion() !== true) {
+                    $this->get('pjm.services.notification')->sendFlash(
+                        'danger',
+                        'Le serveur R&z@l est indisponible.'
+                    );
+
+                    return $this->redirect($this->generateUrl('pjm_app_boquette_'.$boquette->getSlug().'_index'));
+                }
+
                 $transaction->setCompte($this->getDoctrine()->getManager()->getRepository('PJMAppBundle:Compte')->findOneByUserAndBoquetteSlug($this->getUser(), $boquette->getSlug()));
 
                 $resInitPayment = $this->get('pjm.services.payments.lydia')->requestRemote($transaction, array(
