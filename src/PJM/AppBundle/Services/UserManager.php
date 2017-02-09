@@ -3,12 +3,12 @@
 namespace PJM\AppBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use FOS\UserBundle\Util\CanonicalizerInterface;
+use FOS\UserBundle\Util\CanonicalFieldsUpdater;
+use FOS\UserBundle\Util\PasswordUpdaterInterface;
 use PJM\AppBundle\Entity\User;
 use PJM\AppBundle\Entity\Inbox\Inbox;
 use PJM\AppBundle\Entity\Compte;
 use FOS\UserBundle\Doctrine\UserManager as BaseUserManager;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager extends BaseUserManager
 {
@@ -21,14 +21,13 @@ class UserManager extends BaseUserManager
     private $trads;
 
     public function __construct(
-        EncoderFactoryInterface $encoderFactory,
-        CanonicalizerInterface $usernameCanonicalizer,
-        CanonicalizerInterface $emailCanonicalizer,
+        PasswordUpdaterInterface $passwordUpdater,
+        CanonicalFieldsUpdater $canonicalFieldsUpdater,
         ObjectManager $om,
         $class,
         Trads $trads
     ) {
-        parent::__construct($encoderFactory, $usernameCanonicalizer, $emailCanonicalizer, $om, $class);
+        parent::__construct($passwordUpdater, $canonicalFieldsUpdater, $om, $class);
 
         $this->trads = $trads;
     }
