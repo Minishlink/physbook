@@ -6,19 +6,19 @@
 <script type="text/javascript">
 if ('credentials' in navigator) {
     // Credential Management API
-    navigator.credentials.get({password: true, unmediated: true}).then(function (credential) {
+    navigator.credentials.get({password: true, mediation: "silent"}).then(function (credential) {
         function fetchResponse(url, credential, doStore) {
             var autoSignInElement = document.createElement('div');
             autoSignInElement.className = "alert alert-info";
             autoSignInElement.innerHTML = "Sal's <b>" + credential.id + "</b> !<br />Connexion en cours...";
             form.replaceWith(autoSignInElement);
 
-            credential.idName = "_username";
-            credential.passwordName = "_password";
-            credential.additionalData = new URLSearchParams('_csrf_token={{ csrf_token }}');
-            credential.password = "nope";
+            const formData = new FormData();
+            formData.set("_username", credential.id);
+            formData.set("_password", credential.password);
+            formData.set("_csrf_token", "{{ csrf_token }}");
 
-            fetch(url, {credentials: credential, method: "POST", redirect: "follow"}).then(function (response) {
+            fetch(url, { body: formData, method: "POST", credentials: "include", redirect: "follow" }).then(function (response) {
                 if (response.ok) {
                     if (response.url !== "{{ url('fos_user_security_login') }}") {
                         autoSignInElement.className = "alert alert-success";
@@ -32,7 +32,7 @@ if ('credentials' in navigator) {
                             location.assign(response.url);
                         }
                     } else {
-                        navigator.credentials.requireUserMediation().then(function() {
+                        navigator.credentials.preventSilentAccess().then(function() {
                             response.text().then(function(content) {
                                 document.open('text/html');
                                 document.write(content);
