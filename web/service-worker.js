@@ -13,28 +13,23 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    // fix for redirect bug in Chrome M40
-    var chromeVersion = navigator.appVersion.match(/Chrome\/(\d+)\./);
-    if (chromeVersion !== null && parseInt(chromeVersion[1], 10) < 41) {
-        return;
-    }
-
-    if (event.request.method === 'GET'
-            && event.request.headers.get('accept').includes('text/html')) {
+    if (event.request.mode === 'navigate' ||
+        (event.request.method === 'GET' &&
+        event.request.headers.get('accept').includes('text/html'))) {
 
         // a GET request should not have any body (blob), but sometimes it does
-        event.request.blob().then(function(blob) {
+        event.waitUntil(event.request.blob().then(function(blob) {
             if (blob.size == 0) {
-                event.respondWith(
-                    fetch(event.request).catch(function (e) {
-                        // hors ligne
+                return event.respondWith(
+                    fetch(event.request).catch(function () {
+                        // offline
                         return caches.open(OFFLINE_CACHE).then(function (cache) {
                             return cache.match(OFFLINE_URL);
                         });
                     })
                 );
             }
-        });
+        }));
     }
 });
 
