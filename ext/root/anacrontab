@@ -6,12 +6,7 @@
 @daily 0 notifications php -d date.timezone='Europe/Paris' -f /srv/data/web/vhosts/physbook.fr/physbook/app/console notifications --env=prod
 @daily 0 brags_bucquage php -d date.timezone='Europe/Paris' -f /srv/data/web/vhosts/physbook.fr/physbook/app/console brags:bucquage --env=prod
 @hourly 0 rezal_sync php -d date.timezone='Europe/Paris' -f /srv/data/web/vhosts/physbook.fr/physbook/app/console rezal:sync --env=prod
-echo $(date +`%Y-%m-%d %H:%i`) && " [START] ExportSQL"
-@daily 0 purgedump_day find /srv/data/tmp/backupSQL -name "backupSQL_daily_*.sql.gz" -type f -ctime 1 -delete > /dev/null
-@daily 0 mysqldump_day mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/backupSQL_daily_`date +%Y-%m-%d`.sql.gz
-@weekly 0 purgedump_week find /srv/data/tmp/backupSQL -name "backupSQL_weekly_*.sql.gz" -type f -ctime 168 -delete > /dev/null
-@weekly 0 mysqldump_week mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/backupSQL_weekly_`date +%Y-%m-%d`.sql.gz
-@monthly 0 purgedump_month find /srv/data/tmp/backupSQL -name "backupSQL_monthly_*.sql.gz" -type f -ctime 5040 -delete > /dev/null
-@monthly 0 mysqldump_month mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/backupSQL_monthly_`date +%Y-%m-%d`.sql.gz
-@yearly 0 mysqldump_year mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/backupSQL_yearly_`date +%Y-%m-%d`.sql.gz
-echo $(date +`%Y-%m-%d %H:%i`) && " [STOP] ExportSQL"
+@daily 0 mysqldump_day mkdir -p /srv/data/tmp/backupSQL ; mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/daily_`date '+%F'`.databases.sql.gz ; rm -f /srv/data/tmp/backupSQL/daily_`date '+%F' --date '1 week ago'`.databases.sql.gz
+@weekly 0 mysqldump_week mkdir -p /srv/data/tmp/backupSQL ; mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/weekly_`date '+%F'`.databases.sql.gz ; rm -f /srv/data/tmp/backupSQL/weekly_`date '+%F' --date '1 month ago'`.databases.sql.gz
+@monthly 0 mysqldump_month mkdir -p /srv/data/tmp/backupSQL ; mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/monthly_`date '+%F'`.databases.sql.gz ; rm -f /srv/data/tmp/backupSQL/monthly_`date '+%F' --date '1 year ago'`.databases.sql.gz
+@yearly 0 mysqldump_year mkdir -p /srv/data/tmp/backupSQL ; mysqldump -u dump -p'down' --opt physbook | /bin/gzip > /srv/data/tmp/backupSQL/yearly`date '+%F'`.databases.sql.gz
